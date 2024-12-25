@@ -22,11 +22,8 @@ import static jbst.iam.domain.events.WebsocketEvent.resetServerProgress;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class WssMessagingTemplateImpl implements WssMessagingTemplate {
 
-    // WebSocket - Stomp
     private final SimpMessagingTemplate messagingTemplate;
-    // Incidents
     private final IncidentPublisher incidentPublisher;
-    // Properties
     private final JbstProperties jbstProperties;
 
     @Override

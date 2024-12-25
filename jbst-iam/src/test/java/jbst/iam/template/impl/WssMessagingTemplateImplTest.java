@@ -34,7 +34,6 @@ import java.util.stream.Stream;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.mockito.Mockito.*;
 
-// TODO [YYL] fixme
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -121,18 +120,19 @@ class WssMessagingTemplateImplTest {
 
     @ParameterizedTest
     @MethodSource("convertAndSendToUserTestArgs")
-    void convertAndSendToUserTest(boolean configs, boolean expectedSend) {
+    void convertAndSendToUserTest(boolean enabled, boolean expectedSend) {
         // Assert
         var securityJwtConfigs = mock(SecurityJwtConfigs.class);
         when(securityJwtConfigs.getWebsocketsConfigs()).thenReturn(
                 new WebsocketsConfigs(
-                        configs,
+                        enabled,
                         CsrfConfigs.hardcoded(),
                         StompEndpointRegistryConfigs.hardcoded(),
                         MessageBrokerRegistryConfigs.hardcoded(),
                         WebsocketsFeaturesConfigs.hardcoded()
                 )
         );
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var username = Username.random();
         var destination = randomString();
         var websocketEvent = mock(WebsocketEvent.class);

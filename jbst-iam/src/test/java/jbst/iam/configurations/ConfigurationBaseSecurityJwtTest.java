@@ -1,9 +1,12 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.Authority;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.*;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.filters.jwt.JwtTokensFilter;
 import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
@@ -17,7 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -26,6 +33,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.StompWebSocketEndpointRegistration;
 
 import java.lang.reflect.Method;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,8 +66,49 @@ class ConfigurationBaseSecurityJwtTest {
                             )
                     )
             );
-            properties.setSecurityJwtConfigs(SecurityJwtConfigs.hardcoded());
+            properties.setSecurityJwtConfigs(
+                    new SecurityJwtConfigs(
+                            new AuthoritiesConfigs(
+                                    "jbst.iam.tests.domain.enums",
+                                    Set.of(
+                                            new Authority(AbstractAuthority.SUPERADMIN),
+                                            new Authority(AbstractAuthority.INVITATIONS_READ),
+                                            new Authority(AbstractAuthority.INVITATIONS_WRITE),
+                                            new Authority(AbstractAuthority.PROMETHEUS_READ),
+                                            new Authority("admin"),
+                                            new Authority("user")
+                                    )
+                            ),
+                            CookiesConfigs.hardcoded(),
+                            EssenceConfigs.hardcoded(),
+                            IncidentsConfigs.hardcoded(),
+                            JwtTokensConfigs.hardcoded(),
+                            LoggingConfigs.hardcoded(),
+                            SessionConfigs.hardcoded(),
+                            UsersEmailsConfigs.hardcoded(),
+                            WebsocketsConfigs.hardcoded(),
+                            UsersTokensConfigs.hardcoded()
+                    )
+            );
             return properties;
+        }
+
+        @Bean
+        PasswordEncoder passwordEncoder() {
+            return mock(PasswordEncoder.class);
+        }
+
+        @SuppressWarnings("unchecked")
+        @Bean
+        DaoAuthenticationConfigurer<AuthenticationManagerBuilder, UserDetailsService> userDetailsService() {
+            return mock(DaoAuthenticationConfigurer.class);
+        }
+
+        @Bean
+        AuthenticationManagerBuilder authenticationManagerBuilder() throws Exception {
+            var authenticationManagerBuilder = mock(AuthenticationManagerBuilder.class);
+            when(authenticationManagerBuilder.userDetailsService(any())).thenReturn(this.userDetailsService());
+            return authenticationManagerBuilder;
         }
 
         @Bean
@@ -73,7 +122,7 @@ class ConfigurationBaseSecurityJwtTest {
         }
 
         @Bean
-        ConfigurationBaseSecurityJwt applicationBaseSecurityJwtWebsockets() {
+        ConfigurationBaseSecurityJwt configurationBaseSecurityJwt() {
             return new ConfigurationBaseSecurityJwt(
                     mock(JwtUserDetailsService.class),
                     mock(BCryptPasswordEncoder.class),
@@ -109,7 +158,7 @@ class ConfigurationBaseSecurityJwtTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(28)
+                .hasSize(30)
                 .contains("registerStompEndpoints")
                 .contains("configureMessageBroker");
     }
@@ -155,5 +204,4 @@ class ConfigurationBaseSecurityJwtTest {
                 registry
         );
     }
-
 }
