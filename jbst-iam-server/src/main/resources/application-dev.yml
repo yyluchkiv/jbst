@@ -6,8 +6,6 @@ logging:
 
 # jbst
 jbst:
-  email-configs:
-    enabled: false
   server-configs:
     springdoc-enabled: true
     server-url: http://localhost:3002
@@ -19,6 +17,8 @@ jbst:
       enabled: false
     user-agent-configs:
       enabled: false
+  email-configs:
+    enabled: false
   incident-configs:
     enabled: true
     remote-server:

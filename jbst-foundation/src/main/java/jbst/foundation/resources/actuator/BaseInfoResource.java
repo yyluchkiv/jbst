@@ -24,7 +24,7 @@ public class BaseInfoResource implements InfoContributor {
     public void contribute(Info.Builder builder) {
         Map<String, Object> details = new HashMap<>();
         details.put("activeProfile", this.environmentUtility.getOneActiveProfileOrDash());
-        details.put("maven", this.jbstProperties.getMavenConfigs().asMavenDetails());
+        details.put("maven", this.jbstProperties.getServerConfigs().getMavenConfigs().asMavenDetails());
         builder.withDetails(details);
     }
 }

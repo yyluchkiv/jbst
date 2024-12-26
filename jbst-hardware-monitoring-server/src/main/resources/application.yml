@@ -16,12 +16,12 @@ jasypt:
 # jbst
 jbst:
   server-configs:
+    maven-configs:
+      group-id: @project.groupId@
+      artifact-id: @project.artifactId@
+      version: v@project.version@
     # omitted behaviour, no spring security, port-forwarding security
     springdoc-enabled: false
-  maven-configs:
-    group-id: @project.groupId@
-    artifact-id: @project.artifactId@
-    version: v@project.version@
   async-configs:
     thread-name-prefix: hms-async
     threadsCorePoolPercentage: 50

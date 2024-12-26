@@ -2,8 +2,12 @@ package jbst.iam.template.impl;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.*;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.WebsocketsConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.domain.events.WebsocketEvent;
 import jbst.iam.template.WssMessagingTemplate;
@@ -37,8 +41,8 @@ class WssMessagingTemplateImplTest {
 
     private static Stream<Arguments> convertAndSendToUserTestArgs() {
         return Stream.of(
-                Arguments.of(WebsocketsTemplateConfigs.enabled(), true),
-                Arguments.of(WebsocketsTemplateConfigs.disabled(), false)
+                Arguments.of(true, true),
+                Arguments.of(false, false)
         );
     }
 
@@ -97,7 +101,7 @@ class WssMessagingTemplateImplTest {
     @Test
     void convertAndSendToUserThrowExceptionTest() {
         // Assert
-        when(this.jbstProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(SecurityJwtWebsocketsConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         var username = Username.random();
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
@@ -108,7 +112,7 @@ class WssMessagingTemplateImplTest {
         this.componentUnderTest.sendEventToUser(username, destination, websocketEvent);
 
         // Assert
-        verify(this.jbstProperties, times(2)).getSecurityJwtWebsocketsConfigs();
+        verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
         verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
         verify(this.incidentPublisher).publishThrowable(ex);
         verifyNoMoreInteractions(this.simpMessagingTemplate);
@@ -116,17 +120,19 @@ class WssMessagingTemplateImplTest {
 
     @ParameterizedTest
     @MethodSource("convertAndSendToUserTestArgs")
-    void convertAndSendToUserTest(WebsocketsTemplateConfigs configs, boolean expectedSend) {
+    void convertAndSendToUserTest(boolean enabled, boolean expectedSend) {
         // Assert
-        when(this.jbstProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(
-                new SecurityJwtWebsocketsConfigs(
+        var securityJwtConfigs = mock(SecurityJwtConfigs.class);
+        when(securityJwtConfigs.getWebsocketsConfigs()).thenReturn(
+                new WebsocketsConfigs(
+                        enabled,
                         CsrfConfigs.hardcoded(),
                         StompEndpointRegistryConfigs.hardcoded(),
                         MessageBrokerRegistryConfigs.hardcoded(),
-                        configs,
                         WebsocketsFeaturesConfigs.hardcoded()
                 )
         );
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var username = Username.random();
         var destination = randomString();
         var websocketEvent = mock(WebsocketEvent.class);
@@ -136,11 +142,11 @@ class WssMessagingTemplateImplTest {
 
         // Assert
         if (expectedSend) {
-            verify(this.jbstProperties, times(2)).getSecurityJwtWebsocketsConfigs();
+            verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
             verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
             verifyNoMoreInteractions(this.simpMessagingTemplate);
         } else {
-            verify(this.jbstProperties).getSecurityJwtWebsocketsConfigs();
+            verify(this.jbstProperties).getSecurityJwtConfigs();
         }
     }
 }

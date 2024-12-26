@@ -17,7 +17,6 @@ import org.springframework.core.PriorityOrdered;
 @Data
 public class JbstProperties implements PriorityOrdered {
     private ServerConfigs serverConfigs;
-    private MavenConfigs mavenConfigs;
     private UtilitiesConfigs utilitiesConfigs;
     private AsyncConfigs asyncConfigs;
     private EventsConfigs eventsConfigs;
@@ -27,12 +26,10 @@ public class JbstProperties implements PriorityOrdered {
     private HardwareMonitoringConfigs hardwareMonitoringConfigs;
     private HardwareServerConfigs hardwareServerConfigs;
     private SecurityJwtConfigs securityJwtConfigs;
-    private SecurityJwtWebsocketsConfigs securityJwtWebsocketsConfigs;
     private MongodbSecurityJwtConfigs mongodbSecurityJwtConfigs;
 
     public static JbstProperties hardcoded() {
         var properties = new JbstProperties();
-        properties.setMavenConfigs(MavenConfigs.hardcoded());
         properties.setServerConfigs(ServerConfigs.hardcoded());
         properties.setUtilitiesConfigs(UtilitiesConfigs.hardcoded());
         properties.setAsyncConfigs(AsyncConfigs.hardcoded());
@@ -43,7 +40,6 @@ public class JbstProperties implements PriorityOrdered {
         properties.setHardwareMonitoringConfigs(HardwareMonitoringConfigs.hardcoded());
         properties.setHardwareServerConfigs(HardwareServerConfigs.hardcoded());
         properties.setSecurityJwtConfigs(SecurityJwtConfigs.hardcoded());
-        properties.setSecurityJwtWebsocketsConfigs(SecurityJwtWebsocketsConfigs.hardcoded());
         properties.setMongodbSecurityJwtConfigs(MongodbSecurityJwtConfigs.hardcoded());
         return properties;
     }

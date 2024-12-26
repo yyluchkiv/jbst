@@ -39,7 +39,7 @@ public class HardwareMonitoringSenderTask extends AbstractInfiniteTimerTask {
         try {
             this.hardwareMonitoringClient.sendHardwareMonitoringMetadata(
                     new HardwareMonitoringMetadata(
-                            this.jbstProperties.getMavenConfigs().getVersion(),
+                            this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion(),
                             getSystemMemories()
                     )
             );
