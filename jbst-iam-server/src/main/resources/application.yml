@@ -25,10 +25,11 @@ springdoc:
 
 # jbst
 jbst:
-  maven-configs:
-    group-id: @project.groupId@
-    artifact-id: @project.artifactId@
-    version: @project.version@
+  server-configs:
+    maven-configs:
+      group-id: @project.groupId@
+      artifact-id: @project.artifactId@
+      version: @project.version@
   async-configs:
     thread-name-prefix: tps1-async
     threads-core-pool-percentage: 25

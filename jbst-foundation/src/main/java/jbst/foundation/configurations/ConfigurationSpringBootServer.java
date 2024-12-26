@@ -38,7 +38,6 @@ public class ConfigurationSpringBootServer {
     @PostConstruct
     public void init() {
         this.jbstProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
-        this.jbstProperties.getMavenConfigs().assertProperties(new PropertyId("mavenConfigs"));
     }
 
     @Bean

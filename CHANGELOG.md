@@ -7,3 +7,4 @@
 — Modification: security-jwt-configs merge websockets-configs (add enabled/disabled configs)
 — Modification: BaseStartupEventListener -> AbstractServerStartupEventListener
 — Modification: DefaultStartupEventListener -> BaseStartupEventListener
+— Modification: mavenConfigs -> serverConfigs

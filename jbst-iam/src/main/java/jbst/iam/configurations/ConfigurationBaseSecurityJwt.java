@@ -192,13 +192,13 @@ public class ConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketMessa
                     }
 
                     authorizeHttpRequests
-                            .requestMatchers(GET, "/system/csrf").authenticated()
                             .requestMatchers(basePathPrefix + "/test-data/**").authenticated()
-                            .requestMatchers(basePathPrefix + "/hardware/**").permitAll()
                             .requestMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN)
                             .requestMatchers(basePathPrefix + "/**").authenticated();
 
+                    authorizeHttpRequests.requestMatchers(GET, "/system/csrf").authenticated();
                     authorizeHttpRequests.requestMatchers("/actuator/**").permitAll();
+                    authorizeHttpRequests.requestMatchers("/hardware/**").permitAll();
 
                     authorizeHttpRequests.anyRequest().authenticated();
         });

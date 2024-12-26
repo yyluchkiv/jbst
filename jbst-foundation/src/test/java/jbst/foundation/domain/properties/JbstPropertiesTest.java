@@ -19,7 +19,7 @@ class JbstPropertiesTest {
         var getters = getGetters(jbstProperties);
 
         // Assert
-        assertThat(getters).hasSize(14);
+        assertThat(getters).hasSize(13);
         getters.forEach(getter -> {
             try {
                 var propertiesConfigs = getter.invoke(jbstProperties);

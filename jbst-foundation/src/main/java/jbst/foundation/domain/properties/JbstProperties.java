@@ -17,7 +17,6 @@ import org.springframework.core.PriorityOrdered;
 @Data
 public class JbstProperties implements PriorityOrdered {
     private ServerConfigs serverConfigs;
-    private MavenConfigs mavenConfigs;
     private UtilitiesConfigs utilitiesConfigs;
     private AsyncConfigs asyncConfigs;
     private EventsConfigs eventsConfigs;
@@ -31,7 +30,6 @@ public class JbstProperties implements PriorityOrdered {
 
     public static JbstProperties hardcoded() {
         var properties = new JbstProperties();
-        properties.setMavenConfigs(MavenConfigs.hardcoded());
         properties.setServerConfigs(ServerConfigs.hardcoded());
         properties.setUtilitiesConfigs(UtilitiesConfigs.hardcoded());
         properties.setAsyncConfigs(AsyncConfigs.hardcoded());

@@ -91,6 +91,6 @@ class BaseInfoResourceTest {
         assertThat(details)
                 .hasSize(2)
                 .containsEntry("activeProfile", activeProfile)
-                .containsEntry("maven", this.jbstProperties.getMavenConfigs().asMavenDetails());
+                .containsEntry("maven", this.jbstProperties.getServerConfigs().getMavenConfigs().asMavenDetails());
     }
 }
