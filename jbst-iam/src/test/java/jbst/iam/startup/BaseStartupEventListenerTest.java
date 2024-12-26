@@ -34,7 +34,7 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class DefaultStartupEventListenerTest {
+class BaseStartupEventListenerTest {
 
     private static Stream<Arguments> onStartupTest() {
         return Stream.of(
@@ -60,8 +60,8 @@ class DefaultStartupEventListenerTest {
         }
 
         @Bean
-        BaseStartupEventListener baseStartupEventListener() {
-            return new DefaultStartupEventListener(
+        AbstractServerStartupEventListener baseStartupEventListener() {
+            return new BaseStartupEventListener(
                     this.essenceConstructor(),
                     this.jbstProperties()
             );
@@ -71,7 +71,7 @@ class DefaultStartupEventListenerTest {
     private final AbstractEssenceConstructor essenceConstructor;
     private final JbstProperties jbstProperties;
 
-    private final DefaultStartupEventListener componentUnderTest;
+    private final BaseStartupEventListener componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

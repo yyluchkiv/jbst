@@ -5,9 +5,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.essence.AbstractEssenceConstructor;
 import jbst.iam.server.configurations.ConfigurationServer;
-import jbst.iam.server.configurations.ConfigurationServerMongo;
-import jbst.iam.server.configurations.ConfigurationServerPostgres;
-import jbst.iam.startup.DefaultStartupEventListener;
+import jbst.iam.startup.BaseStartupEventListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -28,7 +26,7 @@ import static jbst.foundation.domain.enums.Status.COMPLETED;
 @SpringBootApplication(scanBasePackages = {
         "jbst.iam.server.configurations"
 })
-public class Server extends DefaultStartupEventListener {
+public class Server extends BaseStartupEventListener {
 
     // Publishers
     private final IncidentPublisher incidentPublisher;
