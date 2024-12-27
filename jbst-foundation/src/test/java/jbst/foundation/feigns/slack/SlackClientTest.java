@@ -1,7 +1,6 @@
 package jbst.foundation.feigns.slack;
 
 import jbst.foundation.configurations.ConfigurationFeignClientSlack;
-import jbst.foundation.feigns.slack.domain.requests.SlackMessageRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -32,10 +31,10 @@ class SlackClientTest {
     @Test
     void sendMessage() {
         // Arrange
-        var message = new SlackMessageRequest(
+        var message = new SlackClient.SlackMessageRequest(
                 "<?>",
                 "#<?>",
-                "<@username> <b>V1</b>"
+                "<@username> <b>V2</b>"
         );
 
         // Act
