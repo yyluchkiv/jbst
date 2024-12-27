@@ -1,6 +1,6 @@
 package jbst.iam.utils.impl;
 
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -42,7 +42,7 @@ class UserEmailUtilsImplTest {
 
     @Configuration
     @Import({
-            TestConfigurationPropertiesJbstHardcoded.class
+            TestJbstConfigurationPropertiesHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

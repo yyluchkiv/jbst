@@ -1,7 +1,7 @@
 package jbst.foundation.utils;
 
-import jbst.foundation.configurations.ConfigurationUtils;
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.JbstConfigurationUtils;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
 import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +24,8 @@ class GeoLocationIPAPIUtilsConsoleTest {
 
     @Configuration
     @Import({
-            ConfigurationUtils.class,
-            TestConfigurationPropertiesJbstHardcoded.class
+            JbstConfigurationUtils.class,
+            TestJbstConfigurationPropertiesHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

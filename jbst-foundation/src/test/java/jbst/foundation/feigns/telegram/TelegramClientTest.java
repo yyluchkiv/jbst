@@ -1,6 +1,6 @@
 package jbst.foundation.feigns.telegram;
 
-import jbst.foundation.configurations.ConfigurationFeignClientTelegram;
+import jbst.foundation.configurations.JbstConfigurationFeignClientTelegram;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class TelegramClientTest {
 
     @Configuration
     @Import({
-            ConfigurationFeignClientTelegram.class
+            JbstConfigurationFeignClientTelegram.class
     })
     static class TestConfiguration {
 

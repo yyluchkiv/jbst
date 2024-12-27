@@ -1,7 +1,7 @@
 package jbst.iam.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
@@ -91,7 +91,7 @@ class AbstractBaseUsersSessionsServiceTest {
 
     @Configuration
     @Import({
-            TestConfigurationPropertiesJbstHardcoded.class
+            TestJbstConfigurationPropertiesHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

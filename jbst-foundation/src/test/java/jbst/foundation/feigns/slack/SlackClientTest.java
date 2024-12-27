@@ -1,6 +1,6 @@
 package jbst.foundation.feigns.slack;
 
-import jbst.foundation.configurations.ConfigurationFeignClientSlack;
+import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class SlackClientTest {
 
     @Configuration
     @Import({
-            ConfigurationFeignClientSlack.class
+            JbstConfigurationFeignClientSlack.class
     })
     static class TestConfiguration {
 

@@ -5,12 +5,12 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.configurations.ConfigurationAsync;
-import jbst.foundation.configurations.ConfigurationEvents;
-import jbst.foundation.configurations.ConfigurationSpringBootServer;
+import jbst.foundation.configurations.JbstConfigurationAsync;
+import jbst.foundation.configurations.JbstConfigurationEvents;
+import jbst.foundation.configurations.JbstConfigurationSpringBootServer;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.hardware.monitoring.server.client.HardwareMonitoringClientDefinition;
+import jbst.hardware.monitoring.server.client.HardwareMonitoringClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +28,9 @@ import org.springframework.security.web.SecurityFilterChain;
         JbstProperties.class
 })
 @Import({
-        ConfigurationAsync.class,
-        ConfigurationEvents.class,
-        ConfigurationSpringBootServer.class
+        JbstConfigurationAsync.class,
+        JbstConfigurationEvents.class,
+        JbstConfigurationSpringBootServer.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationServer {
@@ -54,12 +54,12 @@ public class ConfigurationServer {
     }
 
     @Bean
-    public HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition() {
+    public HardwareMonitoringClient.HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition() {
         var hardwareServerConfigs = this.jbstProperties.getHardwareServerConfigs();
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(HardwareMonitoringClientDefinition.class, hardwareServerConfigs.getBaseURL());
+                .target(HardwareMonitoringClient.HardwareMonitoringClientDefinition.class, hardwareServerConfigs.getBaseURL());
     }
 }

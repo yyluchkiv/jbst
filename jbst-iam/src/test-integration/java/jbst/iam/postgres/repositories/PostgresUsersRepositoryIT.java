@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.iam.configurations.ConfigurationPostgresRepositories;
+import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
@@ -13,7 +13,7 @@ import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsConfigurationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsJbstJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -43,12 +43,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ConfigurationPostgresRepositories.class
+                JbstConfigurationPostgresRepositories.class
         }
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersRepositoryIT extends TestsConfigurationPostgresRepositoriesRunner {
+class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresRepositoriesRunner {
 
     private final PostgresUsersRepository usersRepository;
 

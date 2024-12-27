@@ -2,13 +2,13 @@ package jbst.iam.postgres.repositories;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.configurations.ConfigurationPostgresRepositories;
+import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.postgres.db.PostgresDbUserToken;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsConfigurationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsJbstJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -31,12 +31,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ConfigurationPostgresRepositories.class
+                JbstConfigurationPostgresRepositories.class
         }
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersTokensRepositoryIT extends TestsConfigurationPostgresRepositoriesRunner {
+class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgresRepositoriesRunner {
 
     private final PostgresUsersTokensRepository usersTokensRepository;
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import static org.mockito.Mockito.mock;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
         "jbst.iam.validators.postgres"
 })
 @Import({
-        TestConfigurationPropertiesJbstHardcoded.class
+        TestJbstConfigurationPropertiesHardcoded.class
 })
 public class TestConfigurationPostgresValidators {
 

@@ -1,6 +1,6 @@
 package jbst.iam.postgres.repositories;
 
-import jbst.iam.configurations.ConfigurationPostgresRepositories;
+import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.JwtAccessToken;
@@ -8,7 +8,7 @@ import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.postgres.db.PostgresDbUserSession;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsConfigurationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsJbstJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -38,12 +38,12 @@ import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ConfigurationPostgresRepositories.class
+                JbstConfigurationPostgresRepositories.class
         }
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersSessionsRepositoryIT extends TestsConfigurationPostgresRepositoriesRunner {
+class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgresRepositoriesRunner {
 
     private final PostgresUsersSessionsRepository usersSessionsRepository;
 

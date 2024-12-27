@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.iam.configurations.ConfigurationMongoRepositories;
+import jbst.iam.configurations.JbstConfigurationMongoRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
@@ -14,7 +14,7 @@ import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
-import jbst.iam.mongo.configs.TestsConfigurationMongoRepositoriesRunner;
+import jbst.iam.mongo.configs.TestsJbstJbstConfigurationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -42,11 +42,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ConfigurationMongoRepositories.class
+                JbstConfigurationMongoRepositories.class
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUsersRepositoryIT extends TestsConfigurationMongoRepositoriesRunner {
+class MongoUsersRepositoryIT extends TestsJbstJbstConfigurationMongoRepositoriesRunner {
 
     private final MongoUsersRepository usersRepository;
 

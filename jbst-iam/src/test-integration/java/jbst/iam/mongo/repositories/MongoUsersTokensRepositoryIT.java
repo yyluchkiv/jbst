@@ -2,13 +2,13 @@ package jbst.iam.mongo.repositories;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.configurations.ConfigurationMongoRepositories;
+import jbst.iam.configurations.JbstConfigurationMongoRepositories;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.mongodb.MongoDbUserToken;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
-import jbst.iam.mongo.configs.TestsConfigurationMongoRepositoriesRunner;
+import jbst.iam.mongo.configs.TestsJbstJbstConfigurationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -30,11 +30,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ConfigurationMongoRepositories.class
+                JbstConfigurationMongoRepositories.class
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRunner {
+class MongoUsersTokensRepositoryIT extends TestsJbstJbstConfigurationMongoRepositoriesRunner {
 
     private final MongoUsersTokensRepository usersTokensRepository;
 
