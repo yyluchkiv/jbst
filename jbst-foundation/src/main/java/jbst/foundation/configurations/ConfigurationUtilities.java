@@ -19,8 +19,6 @@ import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUti
 import jbst.foundation.utilities.geo.functions.ipapi.utility.impl.IPAPIGeoLocationUtilityImpl;
 import jbst.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import jbst.foundation.utilities.geo.functions.mindmax.impl.MindMaxGeoLocationUtilityImpl;
-import jbst.foundation.utils.UserMetadataUtils;
-import jbst.foundation.utils.impl.UserMetadataUtilsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -94,14 +92,6 @@ public class ConfigurationUtilities {
         return new GeoLocationFacadeUtilityImpl(
                 this.ipapiGeoLocationUtility(),
                 this.mindMaxGeoLocationUtility()
-        );
-    }
-
-    @Bean
-    UserMetadataUtils userMetadataUtils() {
-        return new UserMetadataUtilsImpl(
-                this.geoLocationFacadeUtility(),
-                this.userAgentDetailsUtility()
         );
     }
 

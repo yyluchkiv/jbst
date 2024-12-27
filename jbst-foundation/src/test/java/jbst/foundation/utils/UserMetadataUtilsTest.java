@@ -1,11 +1,8 @@
-package jbst.foundation.utils.impl;
+package jbst.foundation.utils;
 
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
-import jbst.foundation.utilities.geo.facades.GeoLocationFacadeUtility;
-import jbst.foundation.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,48 +21,47 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UserMetadataUtilsImplTest {
+class UserMetadataUtilsTest {
 
     @Configuration
     static class ContextConfiguration {
-
         @Bean
-        GeoLocationFacadeUtility geoLocationFacadeUtility() {
-            return mock(GeoLocationFacadeUtility.class);
+        GeoLocationUtils geoLocationUtils() {
+            return mock(GeoLocationUtils.class);
         }
 
         @Bean
-        UserAgentDetailsUtility userAgentDetailsUtility() {
-            return mock(UserAgentDetailsUtility.class);
+        UserAgentDetailsUtils userAgentDetailsUtils() {
+            return mock(UserAgentDetailsUtils.class);
         }
 
         @Bean
         UserMetadataUtils userMetadataUtils() {
-            return new UserMetadataUtilsImpl(
-                    this.geoLocationFacadeUtility(),
-                    this.userAgentDetailsUtility()
+            return new UserMetadataUtils(
+                    this.geoLocationUtils(),
+                    this.userAgentDetailsUtils()
             );
         }
     }
 
-    private final GeoLocationFacadeUtility geoLocationFacadeUtility;
-    private final UserAgentDetailsUtility userAgentDetailsUtility;
+    private final GeoLocationUtils geoLocationUtils;
+    private final UserAgentDetailsUtils userAgentDetailsUtils;
 
     private final UserMetadataUtils componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.geoLocationFacadeUtility,
-                this.userAgentDetailsUtility
+                this.geoLocationUtils,
+                this.userAgentDetailsUtils
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.geoLocationFacadeUtility,
-                this.userAgentDetailsUtility
+                this.geoLocationUtils,
+                this.userAgentDetailsUtils
         );
     }
 
@@ -79,7 +75,7 @@ class UserMetadataUtilsImplTest {
 
         // Assert
         assertThat(metadata.getStatus()).isEqualTo(Status.COMPLETED);
-        verify(this.geoLocationFacadeUtility).getGeoLocation(IPAddress.localhost());
-        verify(this.userAgentDetailsUtility).getUserAgentDetails(UserAgentHeader.hardcoded());
+        verify(this.geoLocationUtils).getGeoLocation(IPAddress.localhost());
+        verify(this.userAgentDetailsUtils).getUserAgentDetails(UserAgentHeader.hardcoded());
     }
 }
