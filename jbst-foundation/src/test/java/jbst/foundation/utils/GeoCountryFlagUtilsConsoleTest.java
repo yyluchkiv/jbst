@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.geo.facades.impl;
+package jbst.foundation.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,9 +11,8 @@ import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
 
-@Deprecated(forRemoval = true)
 @Slf4j
-class GeoCountryFlagUtilityConsoleTest extends AbstractFolderSerializationRunner {
+class GeoCountryFlagUtilsConsoleTest extends AbstractFolderSerializationRunner {
 
     record CountryFlagFull(String name, String code, String emoji, String unicode) {
     }

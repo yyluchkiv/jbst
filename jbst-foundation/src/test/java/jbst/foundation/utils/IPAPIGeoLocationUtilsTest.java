@@ -1,0 +1,124 @@
+package jbst.foundation.utils;
+
+import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UKRAINE;
+import static jbst.foundation.utilities.random.RandomUtility.randomFeignException;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.*;
+
+@ExtendWith({ SpringExtension.class })
+@ContextConfiguration(loader= AnnotationConfigContextLoader.class)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+class IPAPIGeoLocationUtilsTest {
+
+    @Configuration
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+    static class ContextConfiguration {
+        @Bean
+        IPAPIGeoLocationUtils.IPAPIDefinition definition() {
+            return mock(IPAPIGeoLocationUtils.IPAPIDefinition.class);
+        }
+
+        @Bean
+        GeoCountryFlagUtils geoCountryFlagUtils() {
+            return mock(GeoCountryFlagUtils.class);
+        }
+
+        @Bean
+        IPAPIGeoLocationUtils ipapiGeoLocationUtils() {
+            return new IPAPIGeoLocationUtils(
+                    this.definition(),
+                    this.geoCountryFlagUtils()
+            );
+        }
+    }
+
+    private final IPAPIGeoLocationUtils.IPAPIDefinition definition;
+    private final GeoCountryFlagUtils geoCountryFlagUtils;
+
+    private final IPAPIGeoLocationUtility componentUnderTest;
+
+    @BeforeEach
+    void beforeEach() {
+        reset(
+                this.definition,
+                this.geoCountryFlagUtils
+        );
+    }
+
+    @AfterEach
+    void afterEach() {
+        verifyNoMoreInteractions(
+                this.definition,
+                this.geoCountryFlagUtils
+        );
+    }
+
+    @Test
+    void getGeoLocationThrowFeignExceptionTest() {
+        // Arrange
+        var ipAddress = IPAddress.random();
+        var feignException = randomFeignException();
+        when(this.definition.getIPAPIResponse(ipAddress.value())).thenThrow(feignException);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.getGeoLocation(ipAddress));
+
+        // Assert
+        verify(this.definition).getIPAPIResponse(ipAddress.value());
+        assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Geo location not found: " + feignException.getMessage());
+    }
+
+    @Test
+    void getGeoLocationAPIFailureTest() {
+        // Arrange
+        var ipAddress = IPAddress.random();
+        var ipapiResponse = new IPAPIGeoLocationUtils.IPAPIResponse("fail", null, null, null, "reserved range");
+        when(this.definition.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.getGeoLocation(ipAddress));
+
+        // Assert
+        verify(this.definition).getIPAPIResponse(ipAddress.value());
+        assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Geo location not found: reserved range");
+    }
+
+    @Test
+    void getGeoLocationTest() throws GeoLocationNotFoundException {
+        // Arrange
+        var ipAddress = IPAddress.random();
+        var ipapiResponse = new IPAPIGeoLocationUtils.IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
+        when(this.definition.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
+        when(this.geoCountryFlagUtils.getFlagEmojiByCountryCode("UA")).thenReturn(UKRAINE);
+
+        // Act
+        var actual = this.componentUnderTest.getGeoLocation(ipAddress);
+
+        // Assert
+        verify(this.definition).getIPAPIResponse(ipAddress.value());
+        verify(this.geoCountryFlagUtils).getFlagEmojiByCountryCode("UA");
+        assertThat(actual.getIpAddr()).isEqualTo(ipAddress.value());
+        assertThat(actual.getCountry()).isEqualTo("Ukraine");
+        assertThat(actual.getCountryCode()).isEqualTo("UA");
+        assertThat(actual.getCountryFlag()).isEqualTo(UKRAINE);
+        assertThat(actual.getCity()).isEqualTo("Lviv");
+    }
+}

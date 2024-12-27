@@ -8,19 +8,8 @@ import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
-import jbst.foundation.utilities.browsers.impl.UserAgentDetailsUtilityImpl;
-import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
-import jbst.foundation.utilities.geo.facades.GeoLocationFacadeUtility;
-import jbst.foundation.utilities.geo.facades.impl.GeoCountryFlagUtilityImpl;
-import jbst.foundation.utilities.geo.facades.impl.GeoLocationFacadeUtilityImpl;
-import jbst.foundation.utilities.geo.functions.ipapi.feign.IPAPIFeign;
-import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
-import jbst.foundation.utilities.geo.functions.ipapi.utility.impl.IPAPIGeoLocationUtilityImpl;
-import jbst.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
-import jbst.foundation.utilities.geo.functions.mindmax.impl.MindMaxGeoLocationUtilityImpl;
-import jbst.foundation.utils.UserMetadataUtils;
-import jbst.foundation.utils.impl.UserMetadataUtilsImpl;
+import jbst.foundation.utils.GeoCountryFlagUtils;
+import jbst.foundation.utils.IPAPIGeoLocationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -36,7 +25,6 @@ import org.springframework.core.io.ResourceLoader;
 public class ConfigurationUtils {
 
     // Resources
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final ResourceLoader resourceLoader;
     // Properties
     private final JbstProperties jbstProperties;
@@ -47,5 +35,24 @@ public class ConfigurationUtils {
         this.jbstProperties.getUtilitiesConfigs().assertProperties(new PropertyId("utilitiesConfigs"));
     }
 
+    @Bean
+    GeoCountryFlagUtils geoCountryFlagUtils() {
+        return new GeoCountryFlagUtils(
+                this.resourceLoader,
+                this.jbstProperties
+        );
+    }
 
+    @Bean
+    IPAPIGeoLocationUtils ipapiGeoLocationUtils() {
+        return new IPAPIGeoLocationUtils(
+                Feign.builder()
+                        .client(new OkHttpClient())
+                        .encoder(new JacksonEncoder())
+                        .decoder(new JacksonDecoder())
+                        .retryer(Retryer.NEVER_RETRY)
+                        .target(IPAPIGeoLocationUtils.IPAPIDefinition.class, "http://ip-api.com"),
+                this.geoCountryFlagUtils()
+        );
+    }
 }
