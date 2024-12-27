@@ -22,6 +22,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 
+@Deprecated(forRemoval = true)
 @Slf4j
 public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     private static final String CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";

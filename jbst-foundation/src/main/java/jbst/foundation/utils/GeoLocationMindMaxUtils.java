@@ -3,6 +3,7 @@ package jbst.foundation.utils;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -53,7 +54,7 @@ public class GeoLocationMindMaxUtils {
         }
     }
 
-    public GeoLocation getGeoLocation(IPAddress ipAddress) {
+    public GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
         if (!this.jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isEnabled()) {
             return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
@@ -70,7 +71,7 @@ public class GeoLocationMindMaxUtils {
                     response.getCity().getName()
             );
         } catch (IOException | GeoIp2Exception ex) {
-            return GeoLocation.unknown(ipAddress, ex.getMessage());
+            throw new GeoLocationNotFoundException(ex.getMessage());
         }
     }
 }

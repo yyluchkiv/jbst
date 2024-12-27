@@ -8,6 +8,7 @@ import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUti
 import jbst.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.RequiredArgsConstructor;
 
+@Deprecated(forRemoval = true)
 @RequiredArgsConstructor
 public class GeoLocationFacadeUtilityImpl implements GeoLocationFacadeUtility {
 

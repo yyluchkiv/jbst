@@ -11,6 +11,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.GeoCountryFlagUtils;
 import jbst.foundation.utils.GeoLocationIPAPIUtils;
 import jbst.foundation.utils.GeoLocationMindMaxUtils;
+import jbst.foundation.utils.GeoLocationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -63,6 +64,14 @@ public class ConfigurationUtils {
                 this.resourceLoader,
                 this.geoCountryFlagUtils(),
                 this.jbstProperties
+        );
+    }
+
+    @Bean
+    GeoLocationUtils geoLocationUtils() {
+        return new GeoLocationUtils(
+                this.geoLocationIPAPIUtils(),
+                this.geoLocationMindMaxUtils()
         );
     }
 }

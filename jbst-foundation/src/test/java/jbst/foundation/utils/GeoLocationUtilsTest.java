@@ -1,11 +1,8 @@
-package jbst.foundation.utilities.geo.facades.impl;
+package jbst.foundation.utils;
 
 import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.utilities.geo.facades.GeoLocationFacadeUtility;
-import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
-import jbst.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,51 +19,50 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@Deprecated(forRemoval = true)
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class GeoLocationFacadeUtilityImplTest {
+class GeoLocationUtilsTest {
 
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IPAPIGeoLocationUtility ipapiGeoLocationUtility() {
-            return mock(IPAPIGeoLocationUtility.class);
+        GeoLocationIPAPIUtils geoLocationIPAPIUtils() {
+            return mock(GeoLocationIPAPIUtils.class);
         }
 
         @Bean
-        MindMaxGeoLocationUtility mindMaxGeoLocationUtility() {
-            return mock(MindMaxGeoLocationUtility.class);
+        GeoLocationMindMaxUtils geoLocationMindMaxUtils() {
+            return mock(GeoLocationMindMaxUtils.class);
         }
 
         @Bean
-        GeoLocationFacadeUtility geoLocationFacade() {
-            return new GeoLocationFacadeUtilityImpl(
-                    this.ipapiGeoLocationUtility(),
-                    this.mindMaxGeoLocationUtility()
+        GeoLocationUtils geoLocationUtils() {
+            return new GeoLocationUtils(
+                    this.geoLocationIPAPIUtils(),
+                    this.geoLocationMindMaxUtils()
             );
         }
     }
 
-    private final IPAPIGeoLocationUtility ipapiGeoLocationUtility;
-    private final MindMaxGeoLocationUtility mindMaxGeoLocationUtility;
+    private final GeoLocationIPAPIUtils geoLocationIPAPIUtils;
+    private final GeoLocationMindMaxUtils geoLocationMindMaxUtils;
 
-    private final GeoLocationFacadeUtility componentUnderTest;
+    private final GeoLocationUtils componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.ipapiGeoLocationUtility,
-                this.mindMaxGeoLocationUtility
+                this.geoLocationIPAPIUtils,
+                this.geoLocationMindMaxUtils
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.ipapiGeoLocationUtility,
-                this.mindMaxGeoLocationUtility
+                this.geoLocationIPAPIUtils,
+                this.geoLocationMindMaxUtils
         );
     }
 
@@ -75,15 +71,15 @@ class GeoLocationFacadeUtilityImplTest {
         // Arrange
         var ipAddress = IPAddress.random();
         var geoLocation = GeoLocation.random();
-        when(this.ipapiGeoLocationUtility.getGeoLocation(ipAddress)).thenThrow(new GeoLocationNotFoundException(randomString()));
-        when(this.mindMaxGeoLocationUtility.getGeoLocation(ipAddress)).thenReturn(geoLocation);
+        when(this.geoLocationIPAPIUtils.getGeoLocation(ipAddress)).thenThrow(new GeoLocationNotFoundException(randomString()));
+        when(this.geoLocationMindMaxUtils.getGeoLocation(ipAddress)).thenReturn(geoLocation);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiGeoLocationUtility).getGeoLocation(ipAddress);
-        verify(this.mindMaxGeoLocationUtility).getGeoLocation(ipAddress);
+        verify(this.geoLocationIPAPIUtils).getGeoLocation(ipAddress);
+        verify(this.geoLocationMindMaxUtils).getGeoLocation(ipAddress);
         assertThat(actual).isEqualTo(geoLocation);
     }
 
@@ -92,13 +88,13 @@ class GeoLocationFacadeUtilityImplTest {
         // Arrange
         var ipAddress = IPAddress.random();
         var geoLocation = GeoLocation.random();
-        when(this.ipapiGeoLocationUtility.getGeoLocation(ipAddress)).thenReturn(geoLocation);
+        when(this.geoLocationIPAPIUtils.getGeoLocation(ipAddress)).thenReturn(geoLocation);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiGeoLocationUtility).getGeoLocation(ipAddress);
+        verify(this.geoLocationIPAPIUtils).getGeoLocation(ipAddress);
         assertThat(actual).isEqualTo(geoLocation);
     }
 }
