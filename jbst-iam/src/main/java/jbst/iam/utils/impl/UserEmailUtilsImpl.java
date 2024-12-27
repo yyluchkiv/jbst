@@ -69,6 +69,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         );
     }
 
+    // TODO [YYL] add version -> Function
     @Override
     public EmailHTML getEmailConfirmationHTML(@NotNull FunctionEmailConfirmation function) {
         return EmailHTML.of(
