@@ -48,7 +48,7 @@ class JbstConfigurationSpringBootServerTest {
         // Assert
         assertThat(methods)
                 .hasSize(16)
-                .contains("environmentUtility")
+                .contains("environmentUtils")
                 .contains("baseInfoResource");
     }
 }
