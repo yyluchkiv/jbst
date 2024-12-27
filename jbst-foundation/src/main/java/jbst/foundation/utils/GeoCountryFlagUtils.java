@@ -6,9 +6,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoCountryFlag;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
@@ -25,7 +23,7 @@ import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 
 @Slf4j
-public class GeoCountryFlagUtils implements GeoCountryFlagUtility {
+public class GeoCountryFlagUtils {
     private static final String CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";
 
     private final Map<String, GeoCountryFlag> names;
@@ -61,13 +59,11 @@ public class GeoCountryFlagUtils implements GeoCountryFlagUtility {
         }
     }
 
-    @Override
-    public String getFlagEmojiByCountry(String country) {
+    public final String getFlagEmojiByCountry(String country) {
         return this.getEmoji(this.names, country);
     }
 
-    @Override
-    public String getFlagEmojiByCountryCode(String countryCode) {
+    public final String getFlagEmojiByCountryCode(String countryCode) {
         return this.getEmoji(this.codes, countryCode);
     }
 

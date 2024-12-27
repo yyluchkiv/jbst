@@ -7,11 +7,10 @@ import feign.RequestLine;
 import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IPAPIGeoLocationUtils implements IPAPIGeoLocationUtility {
+public class IPAPIGeoLocationUtils {
 
     // Classes: Definitions
     public interface IPAPIDefinition {
@@ -40,8 +39,7 @@ public class IPAPIGeoLocationUtils implements IPAPIGeoLocationUtility {
     // Utils
     private final GeoCountryFlagUtils geoCountryFlagUtils;
 
-    @Override
-    public GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
+    public final GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
         try {
             var queryResponse = this.definition.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {

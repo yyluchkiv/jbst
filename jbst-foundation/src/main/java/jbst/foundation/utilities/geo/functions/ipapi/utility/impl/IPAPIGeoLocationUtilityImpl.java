@@ -8,6 +8,7 @@ import jbst.foundation.utilities.geo.functions.ipapi.feign.IPAPIFeign;
 import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
 import lombok.RequiredArgsConstructor;
 
+@Deprecated(forRemoval = true)
 @RequiredArgsConstructor
 public class IPAPIGeoLocationUtilityImpl implements IPAPIGeoLocationUtility {
 

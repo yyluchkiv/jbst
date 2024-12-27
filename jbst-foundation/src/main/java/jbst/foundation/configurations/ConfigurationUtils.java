@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.GeoCountryFlagUtils;
+import jbst.foundation.utils.GeoLocationMindMaxUtils;
 import jbst.foundation.utils.IPAPIGeoLocationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,15 @@ public class ConfigurationUtils {
                         .retryer(Retryer.NEVER_RETRY)
                         .target(IPAPIGeoLocationUtils.IPAPIDefinition.class, "http://ip-api.com"),
                 this.geoCountryFlagUtils()
+        );
+    }
+
+    @Bean
+    GeoLocationMindMaxUtils geoLocationMindMaxUtils() {
+        return new GeoLocationMindMaxUtils(
+                this.resourceLoader,
+                this.geoCountryFlagUtils(),
+                this.jbstProperties
         );
     }
 }

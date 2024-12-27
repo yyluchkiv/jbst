@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.geo.functions.mindmax.impl;
+package jbst.foundation.utils;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
@@ -6,8 +6,6 @@ import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
-import jbst.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ResourceLoader;
 
@@ -19,24 +17,23 @@ import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
-@Deprecated(forRemoval = true)
 @Slf4j
-public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility {
+public class GeoLocationMindMaxUtils {
     private static final String CONFIGURATION_LOG = PREFIX + " Geo location database GeoLite2-City.mmdb — {}";
 
     // Database
     private final DatabaseReader databaseReader;
     // Utilities
-    private final GeoCountryFlagUtility geoCountryFlagUtility;
+    private final GeoCountryFlagUtils geoCountryFlagUtils;
     // Properties
     private final JbstProperties jbstProperties;
 
-    public MindMaxGeoLocationUtilityImpl(
+    public GeoLocationMindMaxUtils(
             ResourceLoader resourceLoader,
-            GeoCountryFlagUtility geoCountryFlagUtility,
+            GeoCountryFlagUtils geoCountryFlagUtils,
             JbstProperties jbstProperties
     ) {
-        this.geoCountryFlagUtility = geoCountryFlagUtility;
+        this.geoCountryFlagUtils = geoCountryFlagUtils;
         this.jbstProperties = jbstProperties;
         var enabled = jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isEnabled();
         LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).formatAnsi());
@@ -56,7 +53,6 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
         }
     }
 
-    @Override
     public GeoLocation getGeoLocation(IPAddress ipAddress) {
         if (!this.jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isEnabled()) {
             return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
@@ -65,7 +61,7 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
             var inetAddress = InetAddress.getByName(ipAddress.value());
             var response = this.databaseReader.city(inetAddress);
             var countryCode = response.getCountry().getIsoCode();
-            var countryFlag = this.geoCountryFlagUtility.getFlagEmojiByCountryCode(countryCode);
+            var countryFlag = this.geoCountryFlagUtils.getFlagEmojiByCountryCode(countryCode);
             return GeoLocation.processed(
                     ipAddress,
                     response.getCountry().getName(),
