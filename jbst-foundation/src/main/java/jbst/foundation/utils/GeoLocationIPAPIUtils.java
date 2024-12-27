@@ -10,7 +10,7 @@ import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IPAPIGeoLocationUtils {
+public class GeoLocationIPAPIUtils {
 
     // Classes: Definitions
     public interface IPAPIDefinition {

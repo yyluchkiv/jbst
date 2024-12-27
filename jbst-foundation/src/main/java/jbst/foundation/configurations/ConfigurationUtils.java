@@ -10,7 +10,7 @@ import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.GeoCountryFlagUtils;
 import jbst.foundation.utils.GeoLocationMindMaxUtils;
-import jbst.foundation.utils.IPAPIGeoLocationUtils;
+import jbst.foundation.utils.GeoLocationIPAPIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -45,14 +45,14 @@ public class ConfigurationUtils {
     }
 
     @Bean
-    IPAPIGeoLocationUtils ipapiGeoLocationUtils() {
-        return new IPAPIGeoLocationUtils(
+    GeoLocationIPAPIUtils ipapiGeoLocationUtils() {
+        return new GeoLocationIPAPIUtils(
                 Feign.builder()
                         .client(new OkHttpClient())
                         .encoder(new JacksonEncoder())
                         .decoder(new JacksonDecoder())
                         .retryer(Retryer.NEVER_RETRY)
-                        .target(IPAPIGeoLocationUtils.IPAPIDefinition.class, "http://ip-api.com"),
+                        .target(GeoLocationIPAPIUtils.IPAPIDefinition.class, "http://ip-api.com"),
                 this.geoCountryFlagUtils()
         );
     }

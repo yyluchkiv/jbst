@@ -20,7 +20,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class IPAPIGeoLocationUtilsConsoleTest {
+class GeoLocationIPAPIUtilsConsoleTest {
 
     @Configuration
     @Import({
@@ -32,7 +32,7 @@ class IPAPIGeoLocationUtilsConsoleTest {
 
     }
 
-    private final IPAPIGeoLocationUtils componentUnderTest;
+    private final GeoLocationIPAPIUtils componentUnderTest;
 
     @Disabled
     @Test

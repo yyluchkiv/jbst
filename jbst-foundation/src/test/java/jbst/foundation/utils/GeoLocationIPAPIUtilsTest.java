@@ -24,14 +24,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class IPAPIGeoLocationUtilsTest {
+class GeoLocationIPAPIUtilsTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        IPAPIGeoLocationUtils.IPAPIDefinition definition() {
-            return mock(IPAPIGeoLocationUtils.IPAPIDefinition.class);
+        GeoLocationIPAPIUtils.IPAPIDefinition definition() {
+            return mock(GeoLocationIPAPIUtils.IPAPIDefinition.class);
         }
 
         @Bean
@@ -40,15 +40,15 @@ class IPAPIGeoLocationUtilsTest {
         }
 
         @Bean
-        IPAPIGeoLocationUtils ipapiGeoLocationUtils() {
-            return new IPAPIGeoLocationUtils(
+        GeoLocationIPAPIUtils ipapiGeoLocationUtils() {
+            return new GeoLocationIPAPIUtils(
                     this.definition(),
                     this.geoCountryFlagUtils()
             );
         }
     }
 
-    private final IPAPIGeoLocationUtils.IPAPIDefinition definition;
+    private final GeoLocationIPAPIUtils.IPAPIDefinition definition;
     private final GeoCountryFlagUtils geoCountryFlagUtils;
 
     private final IPAPIGeoLocationUtility componentUnderTest;
@@ -89,7 +89,7 @@ class IPAPIGeoLocationUtilsTest {
     void getGeoLocationAPIFailureTest() {
         // Arrange
         var ipAddress = IPAddress.random();
-        var ipapiResponse = new IPAPIGeoLocationUtils.IPAPIResponse("fail", null, null, null, "reserved range");
+        var ipapiResponse = new GeoLocationIPAPIUtils.IPAPIResponse("fail", null, null, null, "reserved range");
         when(this.definition.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
 
         // Act
@@ -105,7 +105,7 @@ class IPAPIGeoLocationUtilsTest {
     void getGeoLocationTest() throws GeoLocationNotFoundException {
         // Arrange
         var ipAddress = IPAddress.random();
-        var ipapiResponse = new IPAPIGeoLocationUtils.IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
+        var ipapiResponse = new GeoLocationIPAPIUtils.IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
         when(this.definition.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
         when(this.geoCountryFlagUtils.getFlagEmojiByCountryCode("UA")).thenReturn(UKRAINE);
 
