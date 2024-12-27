@@ -1,6 +1,5 @@
-package jbst.foundation.utilities.environment.base;
+package jbst.foundation.utils;
 
-import jbst.foundation.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.AfterEach;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseEnvironmentUtilityTest {
+class EnvironmentUtilsTest {
 
     private static Stream<Arguments> isProfilesTest() {
         return Stream.of(
@@ -51,8 +50,8 @@ class BaseEnvironmentUtilityTest {
         }
 
         @Bean
-        EnvironmentUtility environmentUtils() {
-            return new BaseEnvironmentUtility(
+        EnvironmentUtils environmentUtils() {
+            return new EnvironmentUtils(
                     this.environment()
             );
         }
@@ -60,7 +59,7 @@ class BaseEnvironmentUtilityTest {
 
     private final Environment environment;
 
-    private final EnvironmentUtility componentUnderTest;
+    private final EnvironmentUtils componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

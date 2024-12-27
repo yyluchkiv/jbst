@@ -6,8 +6,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.resources.actuator.BaseInfoResource;
-import jbst.foundation.utilities.environment.EnvironmentUtility;
-import jbst.foundation.utilities.environment.base.BaseEnvironmentUtility;
+import jbst.foundation.utils.EnvironmentUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -41,8 +40,8 @@ public class JbstConfigurationSpringBootServer {
     }
 
     @Bean
-    public EnvironmentUtility environmentUtility() {
-        return new BaseEnvironmentUtility(
+    public EnvironmentUtils environmentUtils() {
+        return new EnvironmentUtils(
                 this.environment
         );
     }
@@ -50,7 +49,7 @@ public class JbstConfigurationSpringBootServer {
     @Bean
     public BaseInfoResource baseInfoResource() {
         return new BaseInfoResource(
-                this.environmentUtility(),
+                this.environmentUtils(),
                 this.jbstProperties
         );
     }

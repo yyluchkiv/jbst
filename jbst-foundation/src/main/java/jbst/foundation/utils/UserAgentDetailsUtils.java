@@ -19,7 +19,7 @@ import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
-public class UserAgentDetailsUtils {
+public final class UserAgentDetailsUtils {
     private static final String CONFIGURATION_LOG = PREFIX + " User agent — {}";
 
     private final UserAgentParser userAgentParser;
@@ -62,7 +62,7 @@ public class UserAgentDetailsUtils {
         this.exceptionMessage = exceptionMessageOrNull;
     }
 
-    public final UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
+    public UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
         if (!this.jbstProperties.getUtilsConfigs().getUserAgentConfigs().isEnabled() || !this.configured) {
             return UserAgentDetails.unknown(this.exceptionMessage);
         }

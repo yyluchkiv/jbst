@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserMetadataUtils {
+public final class UserMetadataUtils {
     // Utils
     private final GeoLocationUtils geoLocationUtils;
     private final UserAgentDetailsUtils userAgentDetailsUtils;
 
-    public final UserRequestMetadata getUserRequestMetadataProcessed(IPAddress ipAddress, UserAgentHeader userAgentHeader) {
+    public UserRequestMetadata getUserRequestMetadataProcessed(IPAddress ipAddress, UserAgentHeader userAgentHeader) {
         return UserRequestMetadata.processed(
                 this.geoLocationUtils.getGeoLocation(ipAddress),
                 this.userAgentDetailsUtils.getUserAgentDetails(userAgentHeader)

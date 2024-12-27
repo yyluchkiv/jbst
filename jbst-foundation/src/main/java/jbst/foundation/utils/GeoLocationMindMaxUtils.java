@@ -19,7 +19,7 @@ import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
-public class GeoLocationMindMaxUtils {
+public final class GeoLocationMindMaxUtils {
     private static final String CONFIGURATION_LOG = PREFIX + " Geo location database GeoLite2-City.mmdb — {}";
 
     // Database

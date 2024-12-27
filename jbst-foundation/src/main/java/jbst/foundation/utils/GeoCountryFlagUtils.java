@@ -23,7 +23,7 @@ import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 
 @Slf4j
-public class GeoCountryFlagUtils {
+public final class GeoCountryFlagUtils {
     private static final String CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";
 
     private final Map<String, GeoCountryFlag> names;
@@ -59,11 +59,11 @@ public class GeoCountryFlagUtils {
         }
     }
 
-    public final String getFlagEmojiByCountry(String country) {
+    public String getFlagEmojiByCountry(String country) {
         return this.getEmoji(this.names, country);
     }
 
-    public final String getFlagEmojiByCountryCode(String countryCode) {
+    public String getFlagEmojiByCountryCode(String countryCode) {
         return this.getEmoji(this.codes, countryCode);
     }
 

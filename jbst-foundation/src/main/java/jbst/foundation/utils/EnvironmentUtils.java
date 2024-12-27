@@ -1,7 +1,6 @@
-package jbst.foundation.utilities.environment.base;
+package jbst.foundation.utils;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -15,21 +14,18 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseEnvironmentUtility implements EnvironmentUtility {
+public final class EnvironmentUtils {
 
     private final Environment environment;
 
-    @Override
     public void verifyOneActiveProfile() {
         assertTrueOrThrow(this.environment.getActiveProfiles().length == 1, "Expected one active profile");
     }
 
-    @Override
     public String getOneActiveProfile() {
         return this.environment.getActiveProfiles()[0];
     }
 
-    @Override
     public String getOneActiveProfileOrDash() {
         var activeProfiles = new ArrayList<>(List.of(this.environment.getActiveProfiles()));
         if (isEmpty(activeProfiles) || activeProfiles.size() > 1) {
@@ -39,22 +35,18 @@ public class BaseEnvironmentUtility implements EnvironmentUtility {
         }
     }
 
-    @Override
     public boolean isDev() {
         return this.isProfile("dev");
     }
 
-    @Override
     public boolean isStage() {
         return this.isProfile("stage");
     }
 
-    @Override
     public boolean isProd() {
         return this.isProfile("prod");
     }
 
-    @Override
     public boolean isProfile(String profile) {
         return profile.equals(this.getOneActiveProfile());
     }

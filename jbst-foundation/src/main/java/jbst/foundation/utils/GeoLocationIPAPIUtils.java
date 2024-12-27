@@ -10,7 +10,7 @@ import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class GeoLocationIPAPIUtils {
+public final class GeoLocationIPAPIUtils {
 
     // Classes: Definitions
     public interface IPAPIDefinition {
@@ -39,7 +39,7 @@ public class GeoLocationIPAPIUtils {
     // Utils
     private final GeoCountryFlagUtils geoCountryFlagUtils;
 
-    public final GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
+    public GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
         try {
             var queryResponse = this.definition.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {

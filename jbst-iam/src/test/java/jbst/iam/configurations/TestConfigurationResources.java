@@ -1,9 +1,11 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.utils.EnvironmentUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
 import jbst.iam.services.*;
 import jbst.iam.services.base.BaseUsersEmailsService;
@@ -16,8 +18,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.utilities.environment.EnvironmentUtility;
 
 import static org.mockito.Mockito.mock;
 
@@ -135,16 +135,16 @@ public class TestConfigurationResources {
     }
 
     // =================================================================================================================
-    // Utilities
+    // Utils
     // =================================================================================================================
     @Bean
-    SecurityJwtTokenUtils securityJwtTokenUtility() {
+    SecurityJwtTokenUtils securityJwtTokenUtils() {
         return mock(SecurityJwtTokenUtils.class);
     }
 
     @Bean
-    EnvironmentUtility environmentUtility() {
-        return mock(EnvironmentUtility.class);
+    EnvironmentUtils environmentUtils() {
+        return mock(EnvironmentUtils.class);
     }
 
     // =================================================================================================================

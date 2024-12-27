@@ -6,12 +6,12 @@ import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class GeoLocationUtils{
+public final class GeoLocationUtils{
 
     private final GeoLocationIPAPIUtils geoLocationIPAPIUtils;
     private final GeoLocationMindMaxUtils geoLocationMindMaxUtils;
 
-    public final GeoLocation getGeoLocation(IPAddress ipAddress) {
+    public GeoLocation getGeoLocation(IPAddress ipAddress) {
         try {
             return this.geoLocationIPAPIUtils.getGeoLocation(ipAddress);
         } catch (GeoLocationNotFoundException ex1) {
