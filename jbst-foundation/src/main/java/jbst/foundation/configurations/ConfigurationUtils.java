@@ -28,13 +28,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 
-@Deprecated // TODO [YYL] delete me
 @Configuration
 @EnableConfigurationProperties({
         JbstProperties.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationUtilities {
+public class ConfigurationUtils {
 
     // Resources
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -42,67 +41,11 @@ public class ConfigurationUtilities {
     // Properties
     private final JbstProperties jbstProperties;
 
+    // TODO [YYL] utilities -> utils
     @PostConstruct
     public void init() {
         this.jbstProperties.getUtilitiesConfigs().assertProperties(new PropertyId("utilitiesConfigs"));
     }
 
-    @Bean
-    IPAPIFeign ipapiFeign() {
-        return Feign.builder()
-                .client(new OkHttpClient())
-                .encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
-                .retryer(Retryer.NEVER_RETRY)
-                .target(IPAPIFeign.class, "http://ip-api.com");
-    }
-
-    @Bean
-    UserAgentDetailsUtility userAgentDetailsUtility() {
-        return new UserAgentDetailsUtilityImpl(
-                this.jbstProperties
-        );
-    }
-
-    @Bean
-    GeoCountryFlagUtility geoCountryFlagUtility() {
-        return new GeoCountryFlagUtilityImpl(
-                this.resourceLoader,
-                this.jbstProperties
-        );
-    }
-
-    @Bean
-    IPAPIGeoLocationUtility ipapiGeoLocationUtility() {
-        return new IPAPIGeoLocationUtilityImpl(
-                this.ipapiFeign(),
-                this.geoCountryFlagUtility()
-        );
-    }
-
-    @Bean
-    MindMaxGeoLocationUtility mindMaxGeoLocationUtility() {
-        return new MindMaxGeoLocationUtilityImpl(
-                this.resourceLoader,
-                this.geoCountryFlagUtility(),
-                this.jbstProperties
-        );
-    }
-
-    @Bean
-    GeoLocationFacadeUtility geoLocationFacadeUtility() {
-        return new GeoLocationFacadeUtilityImpl(
-                this.ipapiGeoLocationUtility(),
-                this.mindMaxGeoLocationUtility()
-        );
-    }
-
-    @Bean
-    UserMetadataUtils userMetadataUtils() {
-        return new UserMetadataUtilsImpl(
-                this.geoLocationFacadeUtility(),
-                this.userAgentDetailsUtility()
-        );
-    }
 
 }
