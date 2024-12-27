@@ -37,7 +37,7 @@ public class GeoCountryFlagUtils {
             JbstProperties jbstProperties
     ) {
         this.jbstProperties = jbstProperties;
-        var geoCountryFlagsConfigs = this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
+        var geoCountryFlagsConfigs = this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs();
         LOGGER.info(CONFIGURATION_LOG, Status.of(geoCountryFlagsConfigs.isEnabled()).formatAnsi());
         if (geoCountryFlagsConfigs.isEnabled()) {
             try {
@@ -71,7 +71,7 @@ public class GeoCountryFlagUtils {
     // PRIVATE METHODS
     // =================================================================================================================
     private String getEmoji(Map<String, GeoCountryFlag> mappedBy, String searchKey) {
-        if (!this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs().isEnabled()) {
             return GeoCountryFlag.unknown().emoji();
         }
         if (isNull(searchKey)) {

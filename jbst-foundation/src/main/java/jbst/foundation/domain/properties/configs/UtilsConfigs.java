@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UtilitiesConfigs extends AbstractPropertiesConfigs {
+public class UtilsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final GeoLocationsConfigs geoLocationsConfigs;
     @MandatoryProperty
@@ -21,16 +21,16 @@ public class UtilitiesConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final UserAgentConfigs userAgentConfigs;
 
-    public static UtilitiesConfigs hardcoded() {
-        return new UtilitiesConfigs(
+    public static UtilsConfigs hardcoded() {
+        return new UtilsConfigs(
                 GeoLocationsConfigs.disabled(),
                 GeoCountryFlagsConfigs.enabled(),
                 UserAgentConfigs.enabled()
         );
     }
 
-    public static UtilitiesConfigs random() {
-        return new UtilitiesConfigs(
+    public static UtilsConfigs random() {
+        return new UtilsConfigs(
                 GeoLocationsConfigs.random(),
                 GeoCountryFlagsConfigs.random(),
                 UserAgentConfigs.random()

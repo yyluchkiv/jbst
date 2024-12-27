@@ -32,7 +32,7 @@ public class ConfigurationUtils {
     // TODO [YYL] utilities -> utils
     @PostConstruct
     public void init() {
-        this.jbstProperties.getUtilitiesConfigs().assertProperties(new PropertyId("utilitiesConfigs"));
+        this.jbstProperties.getUtilsConfigs().assertProperties(new PropertyId("utilsConfigs"));
     }
 
     @Bean

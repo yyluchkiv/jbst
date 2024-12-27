@@ -1,2 +1,3 @@
 ### Changelog [v1.9]
-— TBD
+— Modification: simplify utils (slack, telegram, github, user metadata)
+— Modification: utilities-configs -> utils-configs

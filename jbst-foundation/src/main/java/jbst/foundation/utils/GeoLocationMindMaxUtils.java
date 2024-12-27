@@ -36,7 +36,7 @@ public class GeoLocationMindMaxUtils {
     ) {
         this.geoCountryFlagUtils = geoCountryFlagUtils;
         this.jbstProperties = jbstProperties;
-        var enabled = jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isEnabled();
+        var enabled = jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled();
         LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).formatAnsi());
         if (enabled) {
             try {
@@ -55,7 +55,7 @@ public class GeoLocationMindMaxUtils {
     }
 
     public GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
-        if (!this.jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled()) {
             return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
         try {

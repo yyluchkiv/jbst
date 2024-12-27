@@ -10,7 +10,7 @@ jbst:
     springdoc-enabled: true
     server-url: http://localhost:3002
     webclient-url: http://localhost:3000
-  utilities-configs:
+  utils-configs:
     geo-locations-configs:
       enabled: false
     geo-country-flags-configs:

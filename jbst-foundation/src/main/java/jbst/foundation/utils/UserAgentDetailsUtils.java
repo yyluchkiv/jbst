@@ -34,7 +34,7 @@ public class UserAgentDetailsUtils {
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
         String exceptionMessageOrNull;
-        var enabled = this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled();
+        var enabled = this.jbstProperties.getUtilsConfigs().getUserAgentConfigs().isEnabled();
         LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).formatAnsi());
         if (enabled) {
             try {
@@ -63,7 +63,7 @@ public class UserAgentDetailsUtils {
     }
 
     public final UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
-        if (!this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled() || !this.configured) {
+        if (!this.jbstProperties.getUtilsConfigs().getUserAgentConfigs().isEnabled() || !this.configured) {
             return UserAgentDetails.unknown(this.exceptionMessage);
         }
         var capabilities = this.userAgentParser.parse(userAgentHeader.getValue());
