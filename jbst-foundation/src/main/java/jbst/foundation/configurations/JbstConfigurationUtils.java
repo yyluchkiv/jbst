@@ -29,7 +29,6 @@ public class JbstConfigurationUtils {
     // Properties
     private final JbstProperties jbstProperties;
 
-    // TODO [YYL] utilities -> utils
     @PostConstruct
     public void init() {
         this.jbstProperties.getUtilsConfigs().assertProperties(new PropertyId("utilsConfigs"));
