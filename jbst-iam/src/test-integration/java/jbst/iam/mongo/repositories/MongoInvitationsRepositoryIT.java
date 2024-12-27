@@ -1,12 +1,12 @@
 package jbst.iam.mongo.repositories;
 
-import jbst.iam.configurations.ConfigurationMongoRepositories;
+import jbst.iam.configurations.JbstConfigurationMongoRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
-import jbst.iam.mongo.configs.TestsConfigurationMongoRepositoriesRunner;
+import jbst.iam.mongo.configs.TestsJbstJbstConfigurationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -32,11 +32,11 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterO
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ConfigurationMongoRepositories.class
+                JbstConfigurationMongoRepositories.class
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRunner {
+class MongoInvitationsRepositoryIT extends TestsJbstJbstConfigurationMongoRepositoriesRunner {
 
     private final MongoInvitationsRepository invitationsRepository;
 

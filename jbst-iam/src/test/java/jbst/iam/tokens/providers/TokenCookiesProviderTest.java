@@ -3,7 +3,7 @@ package jbst.iam.tokens.providers;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
@@ -54,7 +54,7 @@ class TokenCookiesProviderTest {
 
     @Configuration
     @Import({
-            TestConfigurationPropertiesJbstHardcoded.class
+            TestJbstConfigurationPropertiesHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

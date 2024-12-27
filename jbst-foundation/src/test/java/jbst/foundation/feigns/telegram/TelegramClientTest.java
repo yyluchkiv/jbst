@@ -1,7 +1,6 @@
 package jbst.foundation.feigns.telegram;
 
-import jbst.foundation.configurations.ConfigurationFeignClientTelegram;
-import jbst.foundation.feigns.telegram.domain.requests.TelegramMessageRequest;
+import jbst.foundation.configurations.JbstConfigurationFeignClientTelegram;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ class TelegramClientTest {
 
     @Configuration
     @Import({
-            ConfigurationFeignClientTelegram.class
+            JbstConfigurationFeignClientTelegram.class
     })
     static class TestConfiguration {
 
@@ -32,7 +31,7 @@ class TelegramClientTest {
     @Test
     void sendMessage() {
         // Arrange
-        var message = new TelegramMessageRequest(
+        var message = new TelegramClient.TelegramMessageRequest(
                 "<?>",
                 "<?>",
                 "<@username> <b>V1</b>"

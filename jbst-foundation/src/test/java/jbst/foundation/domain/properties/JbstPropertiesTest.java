@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties;
 
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +13,7 @@ class JbstPropertiesTest {
     @Test
     void jbstPropertiesTest() {
         // Arrange
-        var jbstProperties = new TestConfigurationPropertiesJbstHardcoded().jbstProperties();
+        var jbstProperties = new TestJbstConfigurationPropertiesHardcoded().jbstProperties();
 
         // Act
         var getters = getGetters(jbstProperties);

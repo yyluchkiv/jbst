@@ -56,8 +56,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilitiesConfigsTest() {
         // Act
-        UtilitiesConfigs.hardcoded().assertProperties(new PropertyId("utilitiesConfigs"));
-        UtilitiesConfigs.hardcoded().printProperties(new PropertyId("utilitiesConfigs"));
+        UtilsConfigs.hardcoded().assertProperties(new PropertyId("utilitiesConfigs"));
+        UtilsConfigs.hardcoded().printProperties(new PropertyId("utilitiesConfigs"));
 
         // Assert
         // no asserts

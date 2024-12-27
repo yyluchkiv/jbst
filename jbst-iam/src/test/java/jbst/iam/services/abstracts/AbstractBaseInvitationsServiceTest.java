@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 
 import java.util.stream.Collectors;
 
@@ -33,7 +33,7 @@ class AbstractBaseInvitationsServiceTest {
 
     @Configuration
     @Import({
-            TestConfigurationPropertiesJbstHardcoded.class
+            TestJbstConfigurationPropertiesHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
-        ConfigurationBaseSecurityJwtWebMVC.class,
+        JbstConfigurationBaseSecurityJwtWebMVC.class,
         TestConfigurationResources.class
 })
 public abstract class AbstractTestRunnerResources {

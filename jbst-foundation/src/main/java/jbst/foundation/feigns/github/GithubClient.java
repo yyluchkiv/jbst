@@ -1,17 +1,48 @@
 package jbst.foundation.feigns.github;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import feign.Headers;
+import feign.Param;
+import feign.RequestLine;
 import feign.RetryableException;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.feigns.github.domain.requests.GithubRepoContentsRequest;
-import jbst.foundation.feigns.github.domain.responses.GithubRepoContentsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
 @SuppressWarnings("unused")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GithubClient {
+
+    // Classes: Definitions
+    public interface GithubDefinition {
+        @RequestLine("GET /repos/{owner}/{repo}/contents/{path}")
+        @Headers(
+                {
+                        "Authorization: token {token}",
+                        "Content-Type: " + MediaType.APPLICATION_JSON_VALUE
+                }
+        )
+        GithubRepoContentsResponse getContents(
+                @Param("token") String token,
+                @Param("owner") String owner,
+                @Param("repo") String repo,
+                @Param("path") String path
+        );
+    }
+
+    // Classes: Requests
+    public record GithubRepoContentsRequest(String token, String owner, String repo, String content) {
+
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public record GithubRepoContentsResponse(@JsonProperty("download_url") String downloadUrl) {
+
+    }
 
     // Definitions
     private final GithubDefinition definition;

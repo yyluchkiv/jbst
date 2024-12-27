@@ -1,8 +1,8 @@
 package jbst.iam.server.configurations;
 
 import jbst.iam.configurations.AbstractJbstSecurityJwtConfigurer;
-import jbst.iam.configurations.ConfigurationBaseSecurityJwt;
-import jbst.iam.configurations.ConfigurationBaseSecurityJwtFallbackBases;
+import jbst.iam.configurations.JbstConfigurationBaseSecurityJwt;
+import jbst.iam.configurations.JbstConfigurationBaseSecurityJwtFallbackBases;
 import jbst.iam.server.base.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
 @Configuration
 @Import({
-        ConfigurationBaseSecurityJwt.class,
-        ConfigurationBaseSecurityJwtFallbackBases.class,
+        JbstConfigurationBaseSecurityJwt.class,
+        JbstConfigurationBaseSecurityJwtFallbackBases.class,
         ConfigurationServerBase.class
 })
 @EnableConfigurationProperties({

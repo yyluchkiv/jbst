@@ -1,7 +1,7 @@
 package jbst.iam.utils.impl;
 
 import io.jsonwebtoken.Jwts;
-import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.TimeAmount;
@@ -116,7 +116,7 @@ class SecurityJwtTokenUtilsImplTest {
 
     @Configuration
     @Import({
-            TestConfigurationPropertiesJbstHardcoded.class
+            TestJbstConfigurationPropertiesHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
