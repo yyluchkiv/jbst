@@ -9,8 +9,8 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.GeoCountryFlagUtils;
-import jbst.foundation.utils.GeoLocationMindMaxUtils;
 import jbst.foundation.utils.GeoLocationIPAPIUtils;
+import jbst.foundation.utils.GeoLocationMindMaxUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -45,7 +45,7 @@ public class ConfigurationUtils {
     }
 
     @Bean
-    GeoLocationIPAPIUtils ipapiGeoLocationUtils() {
+    GeoLocationIPAPIUtils geoLocationIPAPIUtils() {
         return new GeoLocationIPAPIUtils(
                 Feign.builder()
                         .client(new OkHttpClient())

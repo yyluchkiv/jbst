@@ -2,7 +2,6 @@ package jbst.foundation.utils;
 
 import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +50,7 @@ class GeoLocationIPAPIUtilsTest {
     private final GeoLocationIPAPIUtils.IPAPIDefinition definition;
     private final GeoCountryFlagUtils geoCountryFlagUtils;
 
-    private final IPAPIGeoLocationUtility componentUnderTest;
+    private final GeoLocationIPAPIUtils componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
