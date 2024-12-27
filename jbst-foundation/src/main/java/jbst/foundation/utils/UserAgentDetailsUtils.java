@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.browsers.impl;
+package jbst.foundation.utils;
 
 import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.ParseException;
@@ -8,7 +8,6 @@ import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -19,9 +18,8 @@ import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
-@Deprecated(forRemoval = true)
 @Slf4j
-public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
+public class UserAgentDetailsUtils {
     private static final String CONFIGURATION_LOG = PREFIX + " User agent — {}";
 
     private final UserAgentParser userAgentParser;
@@ -31,7 +29,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
     // Properties
     private final JbstProperties jbstProperties;
 
-    public UserAgentDetailsUtilityImpl(JbstProperties jbstProperties) {
+    public UserAgentDetailsUtils(JbstProperties jbstProperties) {
         this.jbstProperties = jbstProperties;
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
@@ -64,8 +62,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         this.exceptionMessage = exceptionMessageOrNull;
     }
 
-    @Override
-    public UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
+    public final UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
         if (!this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled() || !this.configured) {
             return UserAgentDetails.unknown(this.exceptionMessage);
         }

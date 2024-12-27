@@ -1,10 +1,9 @@
-package jbst.foundation.utilities.browsers.impl;
+package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,11 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@Deprecated
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UserAgentDetailsUtilityImplTest {
+class UserAgentDetailsUtilsTest {
 
     private static Stream<Arguments> getUserAgentDetailsTest() {
         return Stream.of(
@@ -50,14 +48,14 @@ class UserAgentDetailsUtilityImplTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        UserAgentDetailsUtility userAgentDetailsUtility() {
-            return new UserAgentDetailsUtilityImpl(
+        UserAgentDetailsUtils userAgentDetailsUtils() {
+            return new UserAgentDetailsUtils(
                     this.jbstProperties
             );
         }
     }
 
-    private final UserAgentDetailsUtility componentUnderTest;
+    private final UserAgentDetailsUtils componentUnderTest;
 
     @Test
     void getUserAgentDetailsExceptionTest() throws NoSuchFieldException, IllegalAccessException {
