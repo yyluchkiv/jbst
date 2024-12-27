@@ -24,6 +24,7 @@ import org.springframework.core.io.ResourceLoader;
 public class ConfigurationUtils {
 
     // Resources
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final ResourceLoader resourceLoader;
     // Properties
     private final JbstProperties jbstProperties;

@@ -76,7 +76,7 @@ import static org.springframework.http.HttpMethod.*;
 @Import({
         ConfigurationJasypt.class,
         ConfigurationHardwareMonitoring.class,
-        ConfigurationUtilities.class,
+        ConfigurationUtils.class,
         ConfigurationSpringBootServer.class,
         ConfigurationBaseSecurityJwtWebMVC.class,
         ConfigurationBaseSecurityJwtFilters.class,
