@@ -160,9 +160,9 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         assertThat(this.usersRepository.findAll(new RequestUsers(username, null, null).toSpecification(), pageRequest)).hasSize(1);
         assertThat(this.usersRepository.findAll(new RequestUsers(null, email, null).toSpecification(), pageRequest)).hasSize(1);
         assertThat(this.usersRepository.findAll(new RequestUsers(null, null, name).toSpecification(), pageRequest)).hasSize(1);
-        var all = this.usersRepository.findAll(new RequestUsers(null, null, null).toSpecification(), pageRequest);
-        assertThat(all).hasSize(5);
-        assertThat(all.hasNext()).isTrue();
+        var users = this.usersRepository.findAll(new RequestUsers(null, null, null).toSpecification(), pageRequest);
+        assertThat(users).hasSize(5);
+        assertThat(users.hasNext()).isTrue();
     }
 
     @Test
