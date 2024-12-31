@@ -18,7 +18,7 @@ import org.springframework.core.env.Environment;
 @OpenAPIDefinition(
         info = @Info(
                 title = "${jbst.server-configs.name}",
-                version = "${jbst.maven-configs.version}"
+                version = "${jbst.server-configs.maven-configs.version}"
         )
 )
 // Spring
