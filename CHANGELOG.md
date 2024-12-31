@@ -4,3 +4,4 @@
 — Modification: add prefix "Jbst" to spring-based Configurations
 — Addition: EmailConfigs.gmail()
 — Deletion: LICENCE (migrated privacy)
+— Modification: CODEOWNERS code-review process
