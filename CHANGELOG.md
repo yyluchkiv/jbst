@@ -5,3 +5,4 @@
 — Addition: EmailConfigs.gmail()
 — Deletion: LICENCE (migrated privacy)
 — Addition: JPA Criteria metamodel source generation
+— Modification: CODEOWNERS code-review process
