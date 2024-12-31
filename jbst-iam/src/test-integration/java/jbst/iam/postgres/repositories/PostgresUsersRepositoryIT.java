@@ -8,6 +8,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.dto.requests.RequestUsers;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
@@ -21,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -138,6 +140,29 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
                 .hasMessageStartingWith(entityNotFound("Username", username.value()));
+    }
+
+    @Test
+    void usersSpecificationTest() {
+        // Arrange
+        this.usersRepository.saveAll(PostgresDbUser.dummies1());
+
+        // Act-Assert
+        var pageRequest = PageRequest.of(0, 5);
+        var username = Username.of("user1");
+        var email = Email.of("user2@" + JbstConstants.Domains.HARDCODED);
+        var name = "Sa3 Sa3";
+        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, name).toSpecification(), pageRequest)).hasSize(3);
+        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new RequestUsers(null, email, name).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new RequestUsers(username, null, name).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new RequestUsers(username, null, null).toSpecification(), pageRequest)).hasSize(1);
+        assertThat(this.usersRepository.findAll(new RequestUsers(null, email, null).toSpecification(), pageRequest)).hasSize(1);
+        assertThat(this.usersRepository.findAll(new RequestUsers(null, null, name).toSpecification(), pageRequest)).hasSize(1);
+        var all = this.usersRepository.findAll(new RequestUsers(null, null, null).toSpecification(), pageRequest);
+        assertThat(all).hasSize(5);
+        assertThat(all.hasNext()).isTrue();
     }
 
     @Test
