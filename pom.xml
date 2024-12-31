@@ -62,6 +62,7 @@
         <version.dependency.feign>12.3</version.dependency.feign>
         <version.dependency.geoip2>4.0.1</version.dependency.geoip2>
         <version.dependency.guava>33.3.1-jre</version.dependency.guava>
+        <version.dependency.hibernate.jpamodelgen>6.6.4.Final</version.dependency.hibernate.jpamodelgen>
         <version.dependency.caffeine>3.1.8</version.dependency.caffeine>
         <version.dependency.jackson>2.15.4</version.dependency.jackson>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
@@ -123,6 +124,12 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
+            </dependency>
+            <!-- JPA Criteria API -->
+            <dependency>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${version.dependency.hibernate.jpamodelgen}</version>
             </dependency>
             <!-- Postgres Converters (matches version in Spring Data JPA) -->
             <dependency>
@@ -416,12 +423,24 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- Tests: integration testcontainers folder -->
+                <!-- Source: JPA metamodel, integration testcontainers folders -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>${version.plugin.build.helper}</version>
                     <executions>
+                        <execution>
+                            <id>add-jpa-metamodel-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>target/metamodel</source>
+                                </sources>
+                            </configuration>
+                        </execution>
                         <execution>
                             <id>add-integration-test-source</id>
                             <phase>generate-test-sources</phase>

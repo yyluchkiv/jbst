@@ -45,6 +45,7 @@ import static org.springframework.util.StringUtils.capitalize;
 public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_users";
 
+    @Basic
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)
     private Username username;
@@ -62,6 +63,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(length = 1024, nullable = false)
     private Set<SimpleGrantedAuthority> authorities;
 
+    @Basic
     @Convert(converter = PostgresEmailConverter.class)
     @Column
     private Email email;
@@ -153,7 +155,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 randomBoolean(),
                 UserEmailDetails.random()
         );
-        user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
+        user.setName(capitalize(username) + " " + capitalize(username));
         user.setAttributes(
                 Map.of(
                         randomString(), randomString(),

@@ -14,6 +14,7 @@
     <logger name="com.ulisesbocchio" level="warn" />
     <logger name="org.apache" level="warn" />
     <logger name="org.springframework" level="warn" />
+    <logger name="org.hibernate.metamodel.internal.MetadataContext" level="error" />
 
     <root level="info">
         <appender-ref ref="CONSOLE" />

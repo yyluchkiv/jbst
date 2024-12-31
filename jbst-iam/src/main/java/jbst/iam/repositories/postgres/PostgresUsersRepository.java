@@ -14,6 +14,7 @@ import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.domain.postgres.projections.PostgresDbUserProjection1;
 import jbst.iam.repositories.UsersRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,7 +31,7 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings({"JpaQlInspection", "SqlNoDataSourceInspection"})
-public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, UsersRepository {
+public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, JpaSpecificationExecutor<PostgresDbUser>, UsersRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
