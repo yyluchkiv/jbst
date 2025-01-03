@@ -1,10 +1,2 @@
-### Changelog [v1.9]
-— Modification: simplify utils (slack, telegram, github, openai, environment, user metadata)
-— Modification: utilities-configs -> utils-configs
-— Modification: add prefix "Jbst" to spring-based Configurations
-— Addition: EmailConfigs.gmail()
-— Deletion: LICENCE (migrated privacy)
-— Addition: JPA Criteria metamodel source generation
-— Modification: CODEOWNERS code-review process
-— Addition: StringUtility.toObjectsArray
-— Addition: PostgresDbAbstractPersistableAuditableUUID
+### Changelog [v1.10]
+— TBD
