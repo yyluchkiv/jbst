@@ -4,11 +4,17 @@ import jbst.foundation.domain.constants.JbstConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @UtilityClass
 public class StringUtility {
+
+    public static Object[] toObjectsArray(List<String> values) {
+        return values.toArray(new String[0]);
+    }
 
     public static boolean isNullOrEmpty(String value) {
         return isNull(value) || value.isEmpty();
