@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -31,12 +32,12 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings({"JpaQlInspection", "SqlNoDataSourceInspection"})
-public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, JpaSpecificationExecutor<PostgresDbUser>, UsersRepository {
+public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, UUID>, JpaSpecificationExecutor<PostgresDbUser>, UsersRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
     default TuplePresence<JwtUser> isPresent(UserId userId) {
-        return this.findById(userId.value())
+        return this.findById(userId.asUUID())
                 .map(entity -> present(entity.asJwtUser()))
                 .orElseGet(TuplePresence::absent);
     }

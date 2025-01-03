@@ -1,5 +1,7 @@
 package jbst.iam.postgres.repositories;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
@@ -16,16 +18,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.tuples.TuplePresence;
 
-import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
+import java.util.UUID;
+
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
         PostgresBeforeAllCallback.class
@@ -43,7 +44,7 @@ class PostgresInvitationsRepositoryIT extends TestsJbstJbstConfigurationPostgres
     private final PostgresInvitationsRepository invitationsRepository;
 
     @Override
-    public JpaRepository<PostgresDbInvitation, String> getJpaRepository() {
+    public JpaRepository<PostgresDbInvitation, UUID> getJpaRepository() {
         return this.invitationsRepository;
     }
 
@@ -58,7 +59,7 @@ class PostgresInvitationsRepositoryIT extends TestsJbstJbstConfigurationPostgres
         // Arrange
         var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
 
-        var notExistentInvitationId = entity(InvitationId.class);
+        var notExistentInvitationId = InvitationId.random();
         var notExistentInvitation = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
 
         var savedInvitation = saved.get(0);
@@ -113,7 +114,7 @@ class PostgresInvitationsRepositoryIT extends TestsJbstJbstConfigurationPostgres
     void deletionIntegrationTests() {
         // Arrange
         var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
-        var notExistentInvitationId = entity(InvitationId.class);
+        var notExistentInvitationId = InvitationId.random();
         var existentInvitationId = saved.get(0).invitationId();
 
         // Act-Assert-0
@@ -152,7 +153,7 @@ class PostgresInvitationsRepositoryIT extends TestsJbstJbstConfigurationPostgres
         // Act-Assert-2
         var existentInvitationId = this.invitationsRepository.saveAs(Invitation.random());
         assertThat(this.invitationsRepository.count()).isEqualTo(7);
-        var notExistentInvitationId = entity(InvitationId.class);
+        var notExistentInvitationId = InvitationId.random();
         assertThat(this.invitationsRepository.isPresent(existentInvitationId).present()).isTrue();
         assertThat(this.invitationsRepository.isPresent(notExistentInvitationId).present()).isFalse();
 

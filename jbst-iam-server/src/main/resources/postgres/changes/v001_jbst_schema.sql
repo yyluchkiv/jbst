@@ -2,7 +2,7 @@
 -- jbst
 -- =================================================================================================================
 CREATE TABLE "jbst_users" (
-    "id" varchar(36) PRIMARY KEY,
+    "id" uuid PRIMARY KEY,
     "username" varchar(255) NOT NULL,
     "password" varchar(255) NOT NULL,
     "zone_id" varchar(255) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE "jbst_users" (
 );
 
 CREATE TABLE "jbst_users_tokens" (
-    "id" varchar(36) PRIMARY KEY,
+    "id" uuid PRIMARY KEY,
     "username" varchar(255) NOT NULL,
     "value" varchar(36) NOT NULL,
     "type" varchar(255) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE "jbst_users_tokens" (
 );
 
 CREATE TABLE "jbst_users_sessions" (
-    "id" varchar(36) PRIMARY KEY,
+    "id" uuid PRIMARY KEY,
     "created_at" int8 NOT NULL,
     "updated_at" int8 NOT NULL,
     "username" varchar(255) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE "jbst_users_sessions" (
 );
 
 CREATE TABLE "jbst_invitations" (
-    "id" varchar(36),
+    "id" uuid PRIMARY KEY,
     "owner" varchar(255) NOT NULL,
     "authorities" varchar(1024) NOT NULL,
     "code" varchar(40) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE "jbst_invitations" (
 -- SERVER
 -- =================================================================================================================
 CREATE TABLE "anything" (
-    "id" varchar(36) PRIMARY KEY,
+    "id" uuid PRIMARY KEY,
     "username" varchar(255) NOT NULL,
     "value" varchar
 );

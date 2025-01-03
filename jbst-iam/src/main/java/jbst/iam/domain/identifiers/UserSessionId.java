@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import java.util.UUID;
 
 public record UserSessionId(@NotNull String value) {
 
@@ -19,7 +19,7 @@ public record UserSessionId(@NotNull String value) {
     }
 
     public static UserSessionId random() {
-        return new UserSessionId(randomString());
+        return new UserSessionId(UUID.randomUUID().toString());
     }
 
     @SuppressWarnings("unused")
@@ -29,6 +29,10 @@ public record UserSessionId(@NotNull String value) {
 
     public static UserSessionId hardcoded() {
         return of("8DE052C55BD26A1A6F0E");
+    }
+
+    public UUID asUUID() {
+        return UUID.fromString(this.value);
     }
 
     @JsonValue

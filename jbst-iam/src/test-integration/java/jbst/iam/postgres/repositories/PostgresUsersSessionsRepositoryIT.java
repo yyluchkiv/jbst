@@ -1,5 +1,7 @@
 package jbst.iam.postgres.repositories;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.identifiers.UserSessionId;
@@ -17,20 +19,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
+import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 import static jbst.iam.domain.jwt.JwtAccessToken.accessTokens;
 import static jbst.iam.tests.converters.postgres.PostgresUserConverter.toAccessTokensAsStrings2;
 import static jbst.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings2;
 import static jbst.iam.tests.converters.postgres.PostgresUserSessionConverter.toMetadataRenewCron;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 
 @ExtendWith({
         PostgresBeforeAllCallback.class
@@ -48,7 +48,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgr
     private final PostgresUsersSessionsRepository usersSessionsRepository;
 
     @Override
-    public JpaRepository<PostgresDbUserSession, String> getJpaRepository() {
+    public JpaRepository<PostgresDbUserSession, UUID> getJpaRepository() {
         return this.usersSessionsRepository;
     }
 
@@ -57,7 +57,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgr
         // Arrange
         var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
-        var notExistentSessionId = entity(UserSessionId.class);
+        var notExistentSessionId = UserSessionId.random();
 
         var savedSession = saved.get(0);
         var existentSessionId = savedSession.userSessionId();
@@ -135,8 +135,8 @@ class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgr
         assertThat(toMetadataRenewCron(saved1))
                 .hasSize(1)
                 .contains(false);
-        var sessionId1 = UserSessionId.of(saved1.get(2).getId());
-        var sessionId2 = UserSessionId.of(saved1.get(5).getId());
+        var sessionId1 = UserSessionId.of(saved1.get(2).getPlainId());
+        var sessionId2 = UserSessionId.of(saved1.get(5).getPlainId());
 
         // Act
         var session1 = this.usersSessionsRepository.enableMetadataRenewManually(sessionId1);
@@ -147,7 +147,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgr
         assertThat(session2).isNotNull();
         var sessions = this.usersSessionsRepository.findAll();
         sessions.forEach(session -> {
-            var sessionId = session.getId();
+            var sessionId = session.getPlainId();
             if (sessionId1.value().equals(sessionId) || sessionId2.value().equals(sessionId)) {
                 assertThat(session.isMetadataRenewManually()).isTrue();
             } else {
@@ -228,9 +228,9 @@ class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgr
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
 
         // Act-Assert-2
-        var existentSessionId = this.usersSessionsRepository.saveAs(entity(UserSession.class)).id();
+        var existentSessionId = this.usersSessionsRepository.saveAs(UserSession.randomPersistedSession()).id();
         assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
-        var notExistentSessionId = entity(UserSessionId.class);
+        var notExistentSessionId = UserSessionId.random();
         assertThat(this.usersSessionsRepository.isPresent(existentSessionId).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(notExistentSessionId).present()).isFalse();
     }

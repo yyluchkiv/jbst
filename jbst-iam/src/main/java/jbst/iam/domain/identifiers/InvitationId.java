@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import java.util.UUID;
 
 public record InvitationId(@NotNull String value) {
 
@@ -19,12 +19,16 @@ public record InvitationId(@NotNull String value) {
     }
 
     public static InvitationId random() {
-        return new InvitationId(randomString());
+        return new InvitationId(UUID.randomUUID().toString());
     }
 
     @SuppressWarnings("unused")
     public static InvitationId unknown() {
         return of(JbstConstants.Strings.UNKNOWN);
+    }
+
+    public UUID asUUID() {
+        return UUID.fromString(this.value);
     }
 
     @JsonValue

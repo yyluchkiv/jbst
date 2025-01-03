@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import java.util.UUID;
 
 public record TokenId(@NotNull String value) {
 
@@ -19,7 +19,7 @@ public record TokenId(@NotNull String value) {
     }
 
     public static TokenId random() {
-        return new TokenId(randomString());
+        return new TokenId(UUID.randomUUID().toString());
     }
 
     @SuppressWarnings("unused")
@@ -27,10 +27,13 @@ public record TokenId(@NotNull String value) {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 
+    public UUID asUUID() {
+        return UUID.fromString(this.value);
+    }
+
     @JsonValue
     @Override
     public String toString() {
         return this.value;
     }
-
 }

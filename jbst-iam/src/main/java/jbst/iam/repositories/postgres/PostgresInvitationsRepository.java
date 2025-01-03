@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
@@ -22,12 +23,12 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, InvitationsRepository {
+public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, UUID>, InvitationsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
     default TuplePresence<Invitation> isPresent(InvitationId invitationId) {
-        return this.findById(invitationId.value())
+        return this.findById(invitationId.asUUID())
                 .map(entity -> present(entity.invitation()))
                 .orElseGet(TuplePresence::absent);
     }
@@ -54,7 +55,7 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
     default void delete(InvitationId invitationId) {
         var tuplePresence = this.isPresent(invitationId);
         if (tuplePresence.present()) {
-            this.deleteById(invitationId.value());
+            this.deleteById(invitationId.asUUID());
         }
     }
 

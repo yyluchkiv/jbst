@@ -8,9 +8,9 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
-import jbst.iam.domain.dto.requests.RequestUsers;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.dto.requests.RequestUsers;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
@@ -28,9 +28,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 import static jbst.iam.domain.jwt.JwtUser.randomSuperadmin;
 import static jbst.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings1;
@@ -55,7 +55,7 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
     private final PostgresUsersRepository usersRepository;
 
     @Override
-    public JpaRepository<PostgresDbUser, String> getJpaRepository() {
+    public JpaRepository<PostgresDbUser, UUID> getJpaRepository() {
         return this.usersRepository;
     }
 
@@ -64,7 +64,7 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         // Arrange
         var saved = this.usersRepository.saveAll(PostgresDbUser.dummies1());
 
-        var notExistentUserId = entity(UserId.class);
+        var notExistentUserId = UserId.random();
 
         var savedUser = saved.get(0);
         var existentUserId = savedUser.userId();
@@ -201,7 +201,7 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();
-        assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
+        assertThat(this.usersRepository.isPresent(UserId.random()).present()).isFalse();
 
         // Act-Assert-3
         var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), Invitation.random());
@@ -211,11 +211,11 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         // Act-Assert-4
         var userId3 = this.usersRepository.saveAs(RequestUserRegistration0.hardcoded(), Password.random());
         assertThat(this.usersRepository.count()).isEqualTo(9);
-        var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
+        var user3 = this.usersRepository.findById(userId3.asUUID()).orElse(null);
         assertThat(user3).isNotNull();
         assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.required());
         this.usersRepository.confirmEmail(user3.getUsername());
-        user3 = this.usersRepository.findById(userId3.value()).orElse(null);
+        user3 = this.usersRepository.findById(userId3.asUUID()).orElse(null);
         assertThat(user3).isNotNull();
         assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.confirmed());
         assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Username.random()));
@@ -224,12 +224,12 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         var savedPassword = Password.random();
         var userId4 = this.usersRepository.saveAs(RequestUserRegistration0.random(), savedPassword);
         assertThat(this.usersRepository.count()).isEqualTo(10);
-        var user4 = this.usersRepository.findById(userId4.value()).orElse(null);
+        var user4 = this.usersRepository.findById(userId4.asUUID()).orElse(null);
         assertThat(user4).isNotNull();
         assertThat(user4.getPassword()).isEqualTo(savedPassword);
         var newPassword = Password.random();
         this.usersRepository.resetPassword(user4.getUsername(), newPassword);
-        user4 = this.usersRepository.findById(userId4.value()).orElse(null);
+        user4 = this.usersRepository.findById(userId4.asUUID()).orElse(null);
         assertThat(user4).isNotNull();
         assertThat(user4.getPassword()).isEqualTo(newPassword);
         assertThatNoException().isThrownBy(() -> this.usersRepository.resetPassword(Username.random(), Password.random()));

@@ -17,28 +17,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.iam.domain.dto.responses.ResponseUserSession2.*;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, UsersSessionsRepository {
+public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, UUID>, UsersSessionsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
     default TuplePresence<UserSession> isPresent(UserSessionId sessionId, Username username) {
-        return this.findByIdAndUsername(sessionId.value(), username)
+        return this.findByIdAndUsername(sessionId.asUUID(), username)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
     default TuplePresence<UserSession> isPresent(UserSessionId sessionId) {
-        return this.findById(sessionId.value())
+        return this.findById(sessionId.asUUID())
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
@@ -96,17 +93,17 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     @Transactional
     default UserSession enableMetadataRenewManually(UserSessionId sessionId) {
-        this.setMetadataRenewManually(sessionId.value(), true);
+        this.setMetadataRenewManually(sessionId.asUUID(), true);
         return this.isPresent(sessionId).value();
     }
 
     default void delete(UserSessionId sessionId) {
-        this.deleteById(sessionId.value());
+        this.deleteById(sessionId.asUUID());
     }
 
     @Transactional
     default long delete(Set<UserSessionId> sessionsIds) {
-        return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
+        return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::asUUID).toList());
     }
 
     @Transactional
@@ -127,7 +124,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    Optional<PostgresDbUserSession> findByIdAndUsername(String sessionId, Username username);
+    Optional<PostgresDbUserSession> findByIdAndUsername(UUID sessionId, Username username);
     Optional<PostgresDbUserSession> findByAccessToken(JwtAccessToken accessToken);
     Optional<PostgresDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
     List<PostgresDbUserSession> findByUsername(Username username);
@@ -135,7 +132,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     @Transactional
     @Modifying
-    long deleteByIdIn(List<String> ids);
+    long deleteByIdIn(List<UUID> ids);
 
     // ================================================================================================================
     // Queries
@@ -148,7 +145,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     @Transactional
     @Modifying
     @Query(value = "UPDATE PostgresDbUserSession s SET s.metadataRenewManually = :flag WHERE s.id = :sessionId")
-    void setMetadataRenewManually(@Param("sessionId") String sessionId, @Param("flag") boolean flag);
+    void setMetadataRenewManually(@Param("sessionId") UUID sessionId, @Param("flag") boolean flag);
 
     @Transactional
     @Modifying

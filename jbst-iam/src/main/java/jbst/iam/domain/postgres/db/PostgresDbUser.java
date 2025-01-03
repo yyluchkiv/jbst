@@ -133,7 +133,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbUser(JwtUser user) {
-        this.id = user.id().value();
+        this.id = UUID.fromString(user.id().value());
         this.username = user.username();
         this.password = user.password();
         this.zoneId = user.zoneId();
@@ -197,7 +197,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @JsonIgnore
     @Transient
     public UserId userId() {
-        return new UserId(this.id);
+        return new UserId(this.id.toString());
     }
 
     @JsonIgnore

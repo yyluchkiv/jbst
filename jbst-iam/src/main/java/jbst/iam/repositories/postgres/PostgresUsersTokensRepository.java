@@ -12,9 +12,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static java.util.Objects.nonNull;
 
-public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbUserToken, String>, UsersTokensRepository {
+public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbUserToken, UUID>, UsersTokensRepository {
 
     // ================================================================================================================
     // Any

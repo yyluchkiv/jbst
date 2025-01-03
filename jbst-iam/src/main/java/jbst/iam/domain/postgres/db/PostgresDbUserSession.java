@@ -18,6 +18,7 @@ import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.List;
+import java.util.UUID;
 
 import static jbst.iam.domain.db.UserSession.ofNotPersisted;
 import static jbst.iam.domain.db.UserSession.ofPersisted;
@@ -59,7 +60,7 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     public PostgresDbUserSession(UserSession session) {
         if (session.persisted()) {
-            this.id = session.id().value();
+            this.id = UUID.fromString(session.id().value());
         }
         this.username = session.username();
         this.accessToken = session.accessToken();
@@ -111,7 +112,7 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     @JsonIgnore
     @Transient
     public UserSessionId userSessionId() {
-        return new UserSessionId(this.id);
+        return new UserSessionId(this.id.toString());
     }
 
     @JsonIgnore

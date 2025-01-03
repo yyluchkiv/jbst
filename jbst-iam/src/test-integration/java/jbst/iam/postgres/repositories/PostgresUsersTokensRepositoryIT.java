@@ -18,6 +18,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.UUID;
+
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 import static jbst.iam.domain.enums.UserTokenType.EMAIL_CONFIRMATION;
@@ -41,7 +43,7 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
     private final PostgresUsersTokensRepository usersTokensRepository;
 
     @Override
-    public JpaRepository<?, String> getJpaRepository() {
+    public JpaRepository<?, UUID> getJpaRepository() {
         return this.usersTokensRepository;
     }
 
@@ -50,7 +52,7 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
         // Arrange
         var saved = this.usersTokensRepository.saveAll(PostgresDbUserToken.dummies1());
 
-        var notExistentTokenId = entity(TokenId.class);
+        var notExistentTokenId = TokenId.random();
         var notExistentToken = RandomUtility.randomString();
 
         var notExistentUsername = entity(Username.class);
@@ -70,13 +72,13 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
 
         // Assert
         assertThat(count).isEqualTo(6);
-        assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();
-        assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
+        assertThat(this.usersTokensRepository.findById(existentTokenId.asUUID())).isNotEmpty();
+        assertThat(this.usersTokensRepository.findById(notExistentTokenId.asUUID())).isEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(existentToken)).isNotNull();
         assertThat(this.usersTokensRepository.findByValueAsAny(notExistentToken)).isNull();
-        assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isNotEmpty();
+        assertThat(this.usersTokensRepository.findById(expiredTokenId.asUUID())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNotNull();
-        assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isNotEmpty();
+        assertThat(this.usersTokensRepository.findById(usedTokenId.asUUID())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNotNull();
         assertThat(this.usersTokensRepository.findByUsernameValidOrNull(notExistentUsername, EMAIL_CONFIRMATION)).isNull();
         assertThat(this.usersTokensRepository.findByUsernameValidOrNull(notExistentUsername, PASSWORD_RESET)).isNull();
@@ -106,13 +108,13 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
         // Act-Assert-1
         this.usersTokensRepository.cleanupExpired();
         assertThat(this.usersTokensRepository.count()).isEqualTo(3);
-        assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isEmpty();
+        assertThat(this.usersTokensRepository.findById(expiredTokenId.asUUID())).isEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNull();
 
         // Act-Assert-2
         this.usersTokensRepository.cleanupUsed();
         assertThat(this.usersTokensRepository.count()).isEqualTo(2);
-        assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isEmpty();
+        assertThat(this.usersTokensRepository.findById(usedTokenId.asUUID())).isEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNull();
     }
 
@@ -131,15 +133,15 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
         // Act-Assert-2
         var existentTokenId = this.usersTokensRepository.saveAs(UserToken.random());
         assertThat(this.usersTokensRepository.count()).isEqualTo(7);
-        var notExistentTokenId = entity(TokenId.class);
-        assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();
-        assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
+        var notExistentTokenId = TokenId.random();
+        assertThat(this.usersTokensRepository.findById(existentTokenId.asUUID())).isNotEmpty();
+        assertThat(this.usersTokensRepository.findById(notExistentTokenId.asUUID())).isEmpty();
 
         // Act-Assert-3
         var requestUserEmailToken = RequestUserToken.hardcoded();
         var userEmailToken = this.usersTokensRepository.saveAs(requestUserEmailToken);
         assertThat(this.usersTokensRepository.count()).isEqualTo(8);
-        assertThat(this.usersTokensRepository.findById(userEmailToken.id().value())).isNotEmpty();
+        assertThat(this.usersTokensRepository.findById(userEmailToken.id().asUUID())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(userEmailToken.value())).isNotNull();
 
         // Act-Assert-4
@@ -147,7 +149,7 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
         assertThat(savedToken.isUsed()).isFalse();
         savedToken.setUsed(true);
         var tokenId = this.usersTokensRepository.saveAs(savedToken.asUserToken());
-        var updatedToken = this.usersTokensRepository.findById(tokenId.value());
+        var updatedToken = this.usersTokensRepository.findById(tokenId.asUUID());
         assertThat(updatedToken).isNotEmpty();
         assertThat(updatedToken.get().isUsed()).isTrue();
         var updatedAnyToken = this.usersTokensRepository.findByValueAsAny(savedToken.getValue());

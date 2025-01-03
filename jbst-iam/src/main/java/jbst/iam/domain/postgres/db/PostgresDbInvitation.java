@@ -14,6 +14,7 @@ import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationsAuthoritiesAsField;
@@ -53,7 +54,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbInvitation(Invitation invitation) {
-        this.id = invitation.id().value();
+        this.id = UUID.fromString(invitation.id().value());
         this.owner = invitation.owner();
         this.authorities = invitation.authorities();
         this.code = invitation.code();
@@ -118,7 +119,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     @JsonIgnore
     @Transient
     public InvitationId invitationId() {
-        return new InvitationId(this.id);
+        return new InvitationId(this.id.toString());
     }
 
     @JsonIgnore
