@@ -197,7 +197,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @JsonIgnore
     @Transient
     public UserId userId() {
-        return new UserId(this.id.toString());
+        return nonNull(this.id) ? new UserId(this.id.toString()) : null;
     }
 
     @JsonIgnore

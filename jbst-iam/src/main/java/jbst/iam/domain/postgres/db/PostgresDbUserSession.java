@@ -2,6 +2,9 @@ package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.iam.converters.columns.PostgresJwtAccessTokenConverter;
 import jbst.iam.converters.columns.PostgresJwtRefreshTokenConverter;
 import jbst.iam.converters.columns.PostgresUserRequestMetadataConverter;
@@ -13,13 +16,11 @@ import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable1;
 import lombok.*;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.Objects.nonNull;
 import static jbst.iam.domain.db.UserSession.ofNotPersisted;
 import static jbst.iam.domain.db.UserSession.ofPersisted;
 
@@ -112,7 +113,7 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     @JsonIgnore
     @Transient
     public UserSessionId userSessionId() {
-        return new UserSessionId(this.id.toString());
+        return nonNull(this.id) ? new UserSessionId(this.id.toString()) : null;
     }
 
     @JsonIgnore

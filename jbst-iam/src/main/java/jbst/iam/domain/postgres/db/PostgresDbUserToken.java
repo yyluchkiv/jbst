@@ -18,6 +18,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
@@ -150,14 +151,14 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     @JsonIgnore
     @Transient
     public TokenId tokenId() {
-        return new TokenId(this.id.toString());
+        return nonNull(this.id) ? new TokenId(this.id.toString()) : null;
     }
 
     @JsonIgnore
     @Transient
     public UserToken asUserToken() {
         return new UserToken(
-                new TokenId(this.id.toString()),
+                this.tokenId(),
                 this.username,
                 this.value,
                 this.type,

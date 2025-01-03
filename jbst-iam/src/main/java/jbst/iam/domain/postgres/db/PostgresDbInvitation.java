@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationsAuthoritiesAsField;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
@@ -119,7 +120,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     @JsonIgnore
     @Transient
     public InvitationId invitationId() {
-        return new InvitationId(this.id.toString());
+        return nonNull(this.id) ? new InvitationId(this.id.toString()) : null;
     }
 
     @JsonIgnore
