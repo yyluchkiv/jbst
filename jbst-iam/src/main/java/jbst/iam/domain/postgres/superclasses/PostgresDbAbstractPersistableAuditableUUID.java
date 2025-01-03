@@ -19,6 +19,7 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     @Column(nullable = false, updatable = false)
     protected UUID id;
 
+    @Basic
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(name = "created_by", nullable = false)
     protected Username createdBy;
