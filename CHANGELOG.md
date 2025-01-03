@@ -7,3 +7,4 @@
 — Addition: JPA Criteria metamodel source generation
 — Modification: CODEOWNERS code-review process
 — Addition: StringUtility.toObjectsArray
+— Addition: PostgresDbAbstractPersistableAuditableUUID
