@@ -1,0 +1,133 @@
+#file: noinspection SpringBootApplicationYaml
+
+# Spring Security: actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "info"]
+
+# Jasypt
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+# jbst
+jbst:
+  server-configs:
+    name: ops-server
+    springdoc-enabled: false
+    maven-configs:
+      group-id: @project.groupId@
+      artifact-id: @project.artifactId@
+      version: v@project.version@
+  utils-configs:
+    geo-locations-configs:
+      enabled: false
+  async-configs:
+    thread-name-prefix: ops-async
+    threadsCorePoolPercentage: 50
+    threadsMaxPoolPercentage: 100
+  events-configs:
+    thread-name-prefix: ops-events
+    threadsCorePoolPercentage: 50
+    threadsMaxPoolPercentage: 100
+  email-configs:
+    host: smtp.gmail.com
+    port: 587
+    username: "<?>"
+    password: "<?>"
+    from: "<?>"
+
+# Ops Configs
+ops-configs:
+  crons-configs:
+    servers-or-fs-notification-cron:
+      enabled: true
+      expression: "0 0 8,14,21 * * *"
+      zone-id: "Europe/Kyiv"
+    fs-any-problems-notification-cron:
+      enabled: true
+      expression: "0 0 * * * *"
+      zone-id: "Europe/Kyiv"
+  check-servers-any-changes-job-configs:
+    enabled: true
+    configuration:
+      initial-delay: 0
+      delay: 30
+      unit: SECONDS
+  github-configs:
+    owner: tech1-agency
+  servers-monitoring-configs:
+    zone-id: "Europe/Kyiv"
+    hide-ip: false
+    file-system-filter: 25
+    file-system-threshold: 75
+  tech1-slack-configs:
+    founders: [ "yurii.luchkiv", "pavlo.pastushok" ]
+    communication:
+      enabled: true
+  smart-apps-slack-configs:
+    communication:
+      enabled: true
+  keywords-configs:
+    services:
+      GATEWAY:
+        root-cmd: gateway
+        commands:
+          HELP:
+            key: help
+            description: "Shows infrastructure.bot [options ...]"
+            permissions: FOUNDERS,TEAM
+          STATUS:
+            key: status
+            description: "Executes basic sequence of commands to verify required features"
+            permissions: FOUNDERS
+#      LOGS:
+#        root-cmd: logs
+#        commands:
+#          BY_ID:
+#            key: $serverId
+#            description: "Provides endpoint to download $serverId logs archive"
+#            permissions: FOUNDERS,TEAM
+      MONITORING:
+        root-cmd: mon
+        commands:
+          SHOW:
+            key: show
+            description: "Shows servers online statuses: OK / Failure markers"
+            permissions: FOUNDERS,TEAM
+          ACTUATORS:
+            key: actuators
+            description: "Shows servers actuator /info (ONLY spring-boot servers)"
+            permissions: FOUNDERS
+          RELOAD:
+            key: reload
+            description: "Reloads server-$profile.json configuration"
+            permissions: FOUNDERS
+      FS:
+        root-cmd: fs
+        commands:
+          SHOW:
+            key: show
+            description: "Shows servers file systems metadata"
+            permissions: FOUNDERS
+  messages-configs:
+    help: ":keyboard: Options infrastructure.bot :keyboard:"
+    bot-not-configured-yet: ":rocket: infrastructure.bot is not configured yet. Please wait a moment... :arrows_counterclockwise:"
+    bot-configured: ":rocket: infrastructure.bot is now configured. Enjoy! :white_check_mark:"
+    service-ok: ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:"
+    service-failure: ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:"
+    service-header: ":cloud: Service: *%s* :cloud:"
+    response-info: ":information_source: Executed operation response: *%s*"
+    response-warning: ":warning: Executed operation response. Please resolve provided warning!"
+    expensive-operation-started: ":arrows_counterclockwise: Operation is expensive. Please wait a moment..."
+    expensive-operation-completed: ":pray: Operation is completed. Thanks for you patience!"
+    over-expensive-operation: ":arrows_counterclockwise: Current operation is over-expensive. Please wait a moment..."
+    server-history: "%s Server: *%s*"
+    expired-access-code: "Access code `%s` is expired"
+    unfaithful-user-request: "*Unfaithful request*:\n username = `%s`\n channel = `%s`\n direct = `%s`\n keywords = `%s`\n"
+    incident: ":ladybug: Please review incident details and *take actions* to stabilize production environment :ladybug:"
+    read-only-warning: ":x: Slack bot is working in READ-ONLY mode. Please contact <yurii.luchkiv> or <pavlo.pastushok>"
+    unexpected-warning: ":x: Unexpected behaviour. Please contact <yurii.luchkiv> or <pavlo.pastushok>"
