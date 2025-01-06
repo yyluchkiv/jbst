@@ -1,0 +1,386 @@
+package jbst.ops.server.domain.computed;
+
+import jbst.foundation.domain.base.ObjectId;
+import jbst.foundation.domain.base.ServerName;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.feigns.spring.domain.SpringBootActuatorHealth;
+import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
+import jbst.ops.server.domain.configs.ServerConfigs;
+import jbst.ops.server.domain.configs.ssh.SshRsaKey;
+import jbst.ops.server.domain.servers.*;
+import jbst.ops.server.domain.tasks.AbstractServerComputingInfinityTimerTask;
+import jbst.ops.server.exceptions.SshSessionException;
+import jbst.ops.server.properties.configs.ServersMonitoringConfigs;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
+import org.springframework.boot.actuate.health.Status;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.JbstConstants.Strings.UNDEFINED;
+import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
+import static jbst.foundation.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
+import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
+import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
+import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
+import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.incidentNotificationsMetadata;
+import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.incidentNotificationsNoMetadata;
+
+@Slf4j
+// Lombok
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@ToString
+public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
+    // Configs [base]
+    private final ServerConfigs serverConfigs;
+    private final ServersMonitoringConfigs serversMonitoringConfigs;
+    private final ComputedServerBeans beans;
+
+    // Configs [processed]
+    private final Integer id;
+    private final boolean sshRequired;
+    private final ServerSshConfigs serverSshConfigs;
+    private final boolean isSpringActuatorAuthenticationRequired;
+    private final IncidentsNotificationsMetadata incidentsNotificationsMetadata;
+
+    // Computed
+    private ResponseEntity<SpringBootActuatorInfo> springBootActuatorInfo;
+    private ResponseEntity<SpringBootActuatorHealth> springBootActuatorHealth;
+    private boolean up;
+    private CircularFifoQueue<Boolean> upHistory;
+    private FileSystemMetadata fileSystemMetadata;
+    private Long onlineLastUpdatedAt;
+    private Long sshLastUpdatedAt;
+
+    public ComputedServer(
+            ServerConfigs serverConfigs,
+            ServersMonitoringConfigs serversMonitoringConfigs,
+            ComputedServerBeans beans,
+            String rsaKeysBaseLocation,
+            Map<String, SshRsaKey> mappedSshKeys,
+            Map<SubcontractorId, Subcontractor> teamMembers
+    ) {
+        super(serverConfigs);
+
+        // Configs [base]
+        this.serverConfigs = serverConfigs;
+        this.serversMonitoringConfigs = serversMonitoringConfigs;
+        this.beans = beans;
+
+        // Configs [processed]: attach SSH key password
+        var sshConfigs = serverConfigs.sshConfigs();
+        this.sshRequired = nonNull(sshConfigs);
+        if (this.sshRequired) {
+            var sshKey = sshConfigs.sshKey();
+            var rsaKey = mappedSshKeys.get(sshKey);
+            this.serverSshConfigs = new ServerSshConfigs(
+                    sshConfigs,
+                    rsaKeysBaseLocation + rsaKey.path() + sshKey,
+                    rsaKey.password()
+            );
+        } else {
+            this.serverSshConfigs = null;
+        }
+
+        // Configs [processed]: attach serverId based on SSH key configuration (6 digits serverIds)
+        if (nonNull(sshConfigs) && nonNull(sshConfigs.logs())) {
+            this.id = randomIntegerGreaterThanZeroByBounds(100000, 900000);
+        } else {
+            this.id = null;
+            LOGGER.debug("SSH configs are missing. Server `{}`", this.serverConfigs.name());
+        }
+
+        // Configs [processed]: attach incident notifications metadata
+        if (nonNull(serverConfigs.incidentsNotificationsConfigs()) && serverConfigs.incidentsNotificationsConfigs().enabled()) {
+            this.incidentsNotificationsMetadata = incidentNotificationsMetadata(
+                    teamMembers,
+                    serverConfigs.incidentsNotificationsConfigs()
+            );
+        } else {
+            this.incidentsNotificationsMetadata = incidentNotificationsNoMetadata();
+        }
+
+        // Configs [processed]: Spring Boot
+        this.isSpringActuatorAuthenticationRequired = serverConfigs.type().isServerSpringBoot() &&
+                nonNull(serverConfigs.springActuatorBasicAuthenticationConfigs()) &&
+                nonNull(serverConfigs.springActuatorBasicAuthenticationConfigs().username()) &&
+                nonNull(serverConfigs.springActuatorBasicAuthenticationConfigs().password());
+
+        // Computed: Tech1 servers before verification is considered 'down' to receive notification at restart
+        if (serverConfigs.team().isTech1()) {
+            this.addUpEvent(false);
+        }
+
+        this.onlineTick();
+        this.sshTick();
+
+        this.start(this.sshRequired);
+    }
+
+    public void addUpEvent(Boolean event) {
+        if (isNull(this.upHistory)) {
+            // up running events (previous, current)
+            this.upHistory = new CircularFifoQueue<>(2);
+        }
+        this.upHistory.add(event);
+        this.setUp(event);
+    }
+
+    public boolean isErrorMessageAllowed(String errorMessage) {
+        var allowedErrorMessages = this.serverConfigs.allowedErrorMessages();
+        return nonNull(allowedErrorMessages) &&
+                (allowedErrorMessages.contains(errorMessage) || // HTTP 1.1
+                allowedErrorMessages.stream().anyMatch(errorMessage::startsWith)); // HTTP 2
+    }
+
+    public SpringBootActuatorInfo springBootActuatorInfoEndpointResponse() {
+        return nonNull(this.springBootActuatorInfo) ? this.springBootActuatorInfo.getBody() : SpringBootActuatorInfo.dash();
+    }
+
+    public ObjectId getObjectId() {
+        if (nonNull(this.id)) {
+            return ObjectId.of(this.id);
+        } else {
+            return ObjectId.dash();
+        }
+    }
+
+    public String getHealthAsString() {
+        if (!this.up) {
+            return "✕";
+        }
+        var serverType = this.getServerConfigs().type();
+        if (serverType.isServerPing()) {
+            var allowedErrorMessages = this.serverConfigs.allowedErrorMessages();
+            return isNull(allowedErrorMessages) || allowedErrorMessages.isEmpty() ? "✓" : "[4**] ✓";
+        } else if (serverType.isServerSpringBoot()) {
+            return this.isSpringBootHealthy() ? "✓" : "✕";
+        } else {
+            return UNDEFINED;
+        }
+    }
+
+    public boolean isOk() {
+        var serverType = this.getServerConfigs().type();
+        if (serverType.isServerPing()) {
+            return this.up;
+        } else if (serverType.isServerSpringBoot()) {
+            return this.up && this.isSpringBootHealthy();
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isAnyChanges() {
+        var copyOfUpHistory = this.getUpHistory();
+        if (isNull(copyOfUpHistory)) {
+            return false;
+        }
+        int size = copyOfUpHistory.size();
+        // 2-size queue (only current and previous state of running is stored)
+        var current = copyOfUpHistory.get(0);
+        if (size == 1) {
+            return !current;
+        }
+        var previous = copyOfUpHistory.get(1);
+        return !current.equals(previous);
+    }
+
+    public boolean fileSystemMetadataThresholdReached() {
+        return this.sshRequired &&
+                nonNull(this.fileSystemMetadata) &&
+                this.fileSystemMetadata.rows().stream().anyMatch(row -> isFirstValueGreater(row.getUsePercentageValue(), this.serversMonitoringConfigs.getFileSystemThreshold()));
+    }
+
+    public boolean fileSystemMetadataProblems() {
+        return this.sshRequired &&
+                nonNull(this.fileSystemMetadata) &&
+                (this.fileSystemMetadata.failure() || this.fileSystemMetadataThresholdReached());
+    }
+
+    public ServerName getName() {
+        return this.serverConfigs.name();
+    }
+
+    public String getIpAddress() {
+        return this.serverConfigs.ipAddress();
+    }
+
+    // ================================================================================================================
+    // COMPUTING: Online
+    // ================================================================================================================
+
+    @Override
+    public void onlineTick() {
+        try {
+            var serverType = this.serverConfigs.type();
+            if (serverType.isServerPing()) {
+                this.addServerStatusAsPing();
+            }
+            if (serverType.isServerSpringBoot()) {
+                this.addServerStatusAsSpringBoot();
+            }
+        } catch (RuntimeException ex) {
+            this.addUpEvent(false);
+        }
+    }
+
+    private void addServerStatusAsPing() {
+        try {
+            this.beans.getRestTemplate().getForEntity(this.getIpAddress(), String.class);
+            this.addUpEvent(true);
+        } catch (HttpClientErrorException ex) {
+            boolean upEvent = this.isErrorMessageAllowed(ex.getMessage());
+            this.addUpEvent(upEvent);
+        } catch (ResourceAccessException | HttpServerErrorException | UnknownHttpStatusCodeException ex) {
+            this.addUpEvent(false);
+        }
+        this.onlineLastUpdatedAt = getCurrentTimestamp();
+    }
+
+    private void addServerStatusAsSpringBoot() {
+        // Headers
+        HttpEntity<?> httpEntity;
+        var httpHeaders = new HttpHeaders();
+        if (this.isSpringActuatorAuthenticationRequired) {
+            var springActuatorBasicAuthenticationConfigs = this.getServerConfigs().springActuatorBasicAuthenticationConfigs();
+            var username = springActuatorBasicAuthenticationConfigs.username();
+            var password = springActuatorBasicAuthenticationConfigs.password();
+            var basicAuthenticationHeader = getBasicAuthenticationHeader(username.value(), password.value());
+            httpHeaders.set(basicAuthenticationHeader.a(), basicAuthenticationHeader.b());
+        }
+        httpEntity = new HttpEntity<>(httpHeaders);
+
+        try {
+            // Actuator: Health
+            this.springBootActuatorHealth = this.beans.getRestTemplate().exchange(
+                    this.getIpAddress() + this.getServerConfigs().springActuatorBasicAuthenticationConfigs().healthEndpoint(),
+                    HttpMethod.GET,
+                    httpEntity,
+                    SpringBootActuatorHealth.class
+            );
+            this.addUpEvent(true);
+        } catch (ResourceAccessException | HttpClientErrorException | HttpServerErrorException | UnknownHttpStatusCodeException ex) {
+            this.springBootActuatorHealth = ResponseEntity.internalServerError().build();
+            this.addUpEvent(false);
+        }
+
+        try {
+            // Actuator: Info
+            this.springBootActuatorInfo = this.beans.getRestTemplate().exchange(
+                    this.getIpAddress() + this.getServerConfigs().springActuatorBasicAuthenticationConfigs().infoEndpoint(),
+                    HttpMethod.GET,
+                    httpEntity,
+                    SpringBootActuatorInfo.class
+            );
+        } catch (ResourceAccessException | HttpServerErrorException | HttpClientErrorException | UnknownHttpStatusCodeException ex) {
+            this.springBootActuatorInfo = ResponseEntity.internalServerError().build();
+        }
+        this.onlineLastUpdatedAt = getCurrentTimestamp();
+    }
+
+    // ================================================================================================================
+    // COMPUTING: SSH
+    // ================================================================================================================
+
+    @Override
+    public void sshTick() {
+        try {
+            if (this.sshRequired) {
+                this.ssh();
+            }
+        } catch (SshSessionException | RuntimeException ex) {
+            this.fileSystemMetadata = FileSystemMetadata.failure(ex);
+        }
+    }
+
+
+    private void ssh() throws SshSessionException {
+        LOGGER.debug("SSH into server `{}` by file system metadata configuration started", this.getName());
+        var sshSession = this.beans.getSshService().getSession(this.serverSshConfigs);
+        if (sshSession.getSession().present()) {
+            this.sshLastUpdatedAt = getCurrentTimestamp();
+            var lines = this.beans.getSshService().executeCmd(sshSession.getSession().value(), "df -h");
+            var rows = lines.stream()
+                    .skip(1)
+                    .map(line -> new FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))
+                    .filter(row -> isFirstValueGreater(row.getUsePercentageValue(), this.serversMonitoringConfigs.getFileSystemFilter()))
+                    .filter(row -> {
+                        if (nonNull(this.serverSshConfigs.getFileSystem())
+                                && nonNull(this.serverSshConfigs.getFileSystem().filters())
+                                && nonNull(this.serverSshConfigs.getFileSystem().filters().skipByName())) {
+                            var skipNames = this.serverSshConfigs.getFileSystem().filters().skipByName();
+                            return !skipNames.contains(row.getFs());
+                        }
+                        return true;
+                    })
+                    .collect(Collectors.toList());
+            this.fileSystemMetadata = FileSystemMetadata.success(rows);
+        } else {
+            this.fileSystemMetadata = FileSystemMetadata.failure(sshSession.getThrowable().value());
+        }
+        LOGGER.debug("SSH into server `{}` by file system metadata configuration completed", this.getName());
+    }
+
+    // ================================================================================================================
+    // Section: Server
+    // ================================================================================================================
+    public Server getServer() {
+        return new Server(
+                this.getObjectId(),
+                this.serverConfigs.team(),
+                this.serverConfigs.type(),
+                this.serverConfigs.name(),
+                this.serversMonitoringConfigs.isHideIP() ? randomIPv4() : this.getIpAddress(),
+                this.isOk(),
+                this.getHealthAsString(),
+                this.isAnyChanges(),
+                this.upHistory,
+                this.getTimeOrDash(this.onlineLastUpdatedAt),
+                this.springBootActuatorInfoEndpointResponse(),
+                this.sshRequired,
+                this.fileSystemMetadataProblems(),
+                this.fileSystemMetadataThresholdReached(),
+                this.fileSystemMetadata,
+                this.getTimeOrDash(this.sshLastUpdatedAt)
+        );
+    }
+
+    // ================================================================================================================
+    // PRIVATE
+    // ================================================================================================================
+    private String getTimeOrDash(Long timestamp) {
+        if (nonNull(timestamp)) {
+            return convertTimestamp(timestamp, this.serversMonitoringConfigs.getZoneId()).format(JbstConstants.DateTimeFormatters.DTF51);
+        } else {
+            return DASH;
+        }
+    }
+
+    private boolean isSpringBootHealthy() {
+        if (isNull(this.springBootActuatorHealth) || isNull(this.springBootActuatorHealth.getBody()) || isNull(this.springBootActuatorHealth.getBody().status())) {
+            return false;
+        }
+        return Status.UP.equals(this.springBootActuatorHealth.getBody().status());
+    }
+}
+

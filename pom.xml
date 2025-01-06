@@ -58,6 +58,7 @@
         <!-- dependencies, scope == compile -->
         <version.dependency.jakarta.persistence>3.1.0</version.dependency.jakarta.persistence>
         <version.dependency.apache.collections>4.4</version.dependency.apache.collections>
+        <version.dependency.apache.commons.io>2.11.0</version.dependency.apache.commons.io>
         <version.dependency.browscap>1.4.0</version.dependency.browscap>
         <version.dependency.common.codec>1.16.1</version.dependency.common.codec>
         <version.dependency.feign>12.3</version.dependency.feign>
@@ -196,6 +197,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${version.dependency.apache.collections}</version>
+            </dependency>
+            <!-- Download Files -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.dependency.apache.commons.io}</version>
             </dependency>
             <!-- GeoIP2 -->
             <dependency>
