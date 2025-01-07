@@ -3,7 +3,6 @@ package jbst.ops.server.utils;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.keywords.Operation;
-import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.properties.configs.MessagesConfigs;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +15,6 @@ import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
-import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
-import static jbst.foundation.utilities.slack.SlackUtility.getSlackMessage;
 
 @Slf4j
 @Component
@@ -131,24 +128,6 @@ public class MessagesUtils {
 
     public String getUnexpectedWarning() {
         return ":x: Slack bot unexpected behaviour. Please contact primary workspace owner";
-    }
-
-    public String getUnfaithfulMessage(SlackRequestContext requestContext) {
-        var taggedFounders = this.getTaggedFounders();
-        var urMessage = String.format(
-                this.messagesConfigs.getUnfaithfulUserRequest(),
-                requestContext.getUsername(),
-                requestContext.getUserChannel(),
-                requestContext.isDirect(),
-                requestContext.getRawContent()
-        );
-        return taggedFounders + TWO_NEWLINE + urMessage;
-    }
-
-    public String getUnfaithfulMessage(SlackRequestContext requestContext, Throwable throwable) {
-        var baseUnfaithfulMessage = getUnfaithfulMessage(requestContext);
-        var throwableText = getTrace(throwable).value();
-        return baseUnfaithfulMessage + NEWLINE + getSlackMessage(throwableText);
     }
 
     public Tuple2<String, String> getIncidentTuple(OpsIncident opsIncident) {

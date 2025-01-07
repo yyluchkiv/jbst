@@ -16,8 +16,6 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class SlackTeamEvent {
-    public static final String INCIDENT_FILE_NAME = "incident-trace";
-
     private final SlackRequestContext requestContext;
     private final SlackMessageType messageType;
     private final String message;

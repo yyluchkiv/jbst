@@ -32,6 +32,4 @@ public class MessagesConfigs extends AbstractPropertyConfigs {
     private final String overExpensiveOperation;
     @MandatoryProperty
     private final String serverHistory;
-    @MandatoryProperty
-    private final String unfaithfulUserRequest;
 }

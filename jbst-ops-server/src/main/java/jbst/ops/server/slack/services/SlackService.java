@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.List;
 
-import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.INCIDENT_FILE_NAME;
-
 @Slf4j
 public abstract class SlackService {
 
@@ -91,7 +89,7 @@ public abstract class SlackService {
         try {
             this.slackClient.filesUpload(
                     FilesUploadRequest.builder()
-                            .filename(INCIDENT_FILE_NAME)
+                            .filename("incident-trace")
                             .content(fileContent)
                             .channels(List.of(channel))
                             .build()

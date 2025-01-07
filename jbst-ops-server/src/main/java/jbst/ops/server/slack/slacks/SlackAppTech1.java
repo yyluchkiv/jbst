@@ -3,7 +3,6 @@ package jbst.ops.server.slack.slacks;
 import com.slack.api.app_backend.events.payload.EventsApiPayload;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.model.event.AppMentionEvent;
-import com.slack.api.model.event.MessageEvent;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.exceptions.SlackInitializationException;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.*;
+import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessage;
 
 @Slf4j
 @Component
@@ -31,12 +30,8 @@ public class SlackAppTech1 extends SlackApp {
     private final SlackRequestService slackRequestService;
     // State
     private final StateService stateService;
-    // Messaging
-    private final SlackMessagingService slackMessagingService;
     // Services
     private final OptionsService optionsService;
-    // Utilities
-    private final MessagesUtils messagesUtils;
     // Properties
     private final OpsProperties opsProperties;
 
@@ -52,34 +47,16 @@ public class SlackAppTech1 extends SlackApp {
     ) throws SlackInitializationException {
         super(
                 SlackTeam.TECH1,
-                opsProperties.getTech1SlackConfigs()
+                opsProperties.getTech1SlackConfigs(),
+                slackMessagingService,
+                messagesUtils
         );
         this.slackServiceTech1 = slackServiceTech1;
         this.slackRequestService = slackRequestService;
         this.stateService = stateService;
-        this.slackMessagingService = slackMessagingService;
         this.optionsService = optionsService;
-        this.messagesUtils = messagesUtils;
         this.opsProperties = opsProperties;
         this.configure();
-    }
-
-    @Override
-    public void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
-        var requestContext = new SlackRequestContext(this.team, payload.getEvent());
-        this.slackMessagingService.send(
-                directSlackMessage(
-                        requestContext,
-                        this.messagesUtils.getReadOnlyWarning()
-                )
-        );
-
-        this.slackMessagingService.send(
-                communicationMainSlackMessage(
-                        requestContext,
-                        this.messagesUtils.getUnfaithfulMessage(requestContext)
-                )
-        );
     }
 
     @Override
@@ -133,12 +110,5 @@ public class SlackAppTech1 extends SlackApp {
         );
 
         this.optionsService.sendFallbackMessage(slackRequestContext);
-
-        this.slackMessagingService.send(
-                communicationMainSlackMessage(
-                        slackRequestContext,
-                        this.messagesUtils.getUnfaithfulMessage(slackRequestContext, throwable)
-                )
-        );
     }
 }

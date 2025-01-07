@@ -124,5 +124,3 @@ ops-configs:
     response-warning: ":warning: Executed operation response. Please resolve provided warning!"
     over-expensive-operation: ":arrows_counterclockwise: Current operation is over-expensive. Please wait a moment..."
     server-history: "%s Server: *%s*"
-    unfaithful-user-request: "*Unfaithful request*:\n username = `%s`\n channel = `%s`\n direct = `%s`\n keywords = `%s`\n"
-    unexpected-warning: ":x: Unexpected behaviour. Please contact <yurii.luchkiv> or <pavlo.pastushok>"
