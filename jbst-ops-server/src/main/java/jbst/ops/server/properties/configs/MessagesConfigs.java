@@ -29,10 +29,6 @@ public class MessagesConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String responseWarning;
     @MandatoryProperty
-    private final String expensiveOperationStarted;
-    @MandatoryProperty
-    private final String expensiveOperationCompleted;
-    @MandatoryProperty
     private final String overExpensiveOperation;
     @MandatoryProperty
     private final String serverHistory;
@@ -40,10 +36,4 @@ public class MessagesConfigs extends AbstractPropertyConfigs {
     private final String expiredAccessCode;
     @MandatoryProperty
     private final String unfaithfulUserRequest;
-    @MandatoryProperty
-    private final String incident;
-    @MandatoryProperty
-    private final String readOnlyWarning;
-    @MandatoryProperty
-    private final String unexpectedWarning;
 }

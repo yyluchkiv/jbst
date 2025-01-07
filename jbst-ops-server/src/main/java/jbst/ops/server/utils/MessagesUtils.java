@@ -106,11 +106,11 @@ public class MessagesUtils {
     }
 
     public String getExpensiveOperationStartedMessage() {
-        return this.messagesConfigs.getExpensiveOperationStarted();
+        return ":arrows_counterclockwise: Operation is expensive. Please wait a moment...";
     }
 
     public String getExpensiveOperationCompletedMessage() {
-        return this.messagesConfigs.getExpensiveOperationCompleted();
+        return ":pray: Operation is completed. Thanks for you patience!";
     }
 
     public String getOverExpensiveOperation() {
@@ -133,11 +133,11 @@ public class MessagesUtils {
     }
 
     public String getReadOnlyWarning() {
-        return this.messagesConfigs.getReadOnlyWarning();
+        return ":x: Slack bot is working in READ-ONLY mode. Please contact primary workspace owner";
     }
 
     public String getUnexpectedWarning() {
-        return this.messagesConfigs.getUnexpectedWarning();
+        return ":x: Unexpected behaviour. Please contact primary workspace owner";
     }
 
     public String getUnfaithfulMessage(SlackRequestContext requestContext) {
@@ -159,7 +159,7 @@ public class MessagesUtils {
     }
 
     public Tuple2<String, String> getIncidentTuple(OpsIncident opsIncident) {
-        var incident = this.messagesConfigs.getIncident();
+        var incident = ":ladybug: Please review incident details and *take actions* to stabilize production environment :ladybug:";
         return new Tuple2<>(
                 "<!here>" + TWO_NEWLINE + incident + NEWLINE,
                 opsIncident.getPlainMessage()
