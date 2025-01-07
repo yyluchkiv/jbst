@@ -65,7 +65,6 @@ ops-configs:
     file-system-filter: 25
     file-system-threshold: 75
   tech1-slack-configs:
-    founders: [ "yurii.luchkiv", "pavlo.pastushok" ]
     communication:
       enabled: true
   smart-apps-slack-configs:

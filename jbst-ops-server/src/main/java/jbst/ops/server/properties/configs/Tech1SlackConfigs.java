@@ -1,6 +1,7 @@
 package jbst.ops.server.properties.configs;
 
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.base.AbstractTogglePropertyConfigs;
 import jbst.ops.server.properties.atomics.SlackMainChannelCommunication;
 import jbst.ops.server.properties.atomics.SlackTeamChannelCommunication;
@@ -19,15 +20,13 @@ import java.util.Optional;
 public class Tech1SlackConfigs extends AbstractTogglePropertyConfigs implements SlackConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @MandatoryProperty
+    @MandatoryToggleProperty
     private final String botToken;
-    @MandatoryProperty
+    @MandatoryToggleProperty
     private final String appToken;
-    @MandatoryProperty
+    @MandatoryToggleProperty
     private final SlackMainChannelCommunication communication;
-    @MandatoryProperty
-    private final List<String> founders;
-    @MandatoryProperty
+    @MandatoryToggleProperty
     private final List<SlackTeamChannelCommunication> teamsCommunications;
 
     @Override

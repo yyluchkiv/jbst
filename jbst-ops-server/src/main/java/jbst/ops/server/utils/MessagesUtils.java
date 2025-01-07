@@ -10,9 +10,6 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 
@@ -22,22 +19,14 @@ public class MessagesUtils {
 
     // Messages
     private final MessagesConfigs messagesConfigs;
-    private final List<String> founders;
 
     @Autowired
     public MessagesUtils(OpsProperties opsProperties) {
         this.messagesConfigs = opsProperties.getMessagesConfigs();
-        this.founders = opsProperties.getTech1SlackConfigs().getFounders();
     }
 
     public String getHelp() {
         return this.messagesConfigs.getHelp();
-    }
-
-    public String getTaggedFounders() {
-        return this.founders.stream()
-                .map(assignee -> "<@" + assignee + ">")
-                .collect(Collectors.joining(", "));
     }
 
     public String getBotNotConfiguredYet() {
