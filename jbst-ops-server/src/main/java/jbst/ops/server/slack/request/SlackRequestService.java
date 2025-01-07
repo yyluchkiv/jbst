@@ -2,7 +2,6 @@ package jbst.ops.server.slack.request;
 
 import com.slack.api.model.event.AppMentionEvent;
 import jakarta.annotation.PostConstruct;
-import jbst.ops.server.domain.keywords.KeywordCommand;
 import jbst.ops.server.domain.keywords.ServiceKeywordCommand;
 import jbst.ops.server.domain.keywords.SlackKeywords;
 import jbst.ops.server.exceptions.SlackRuntimeException;
@@ -15,22 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
-import static jbst.ops.server.domain.keywords.KeywordCommand.BY_ID;
 import static jbst.ops.server.properties.atomics.Service.*;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SlackRequestService {
-    private static final List<KeywordCommand> EXCLUDED_KEYWORDS_COMMANDS = List.of(BY_ID);
-
     // Utilities
     private final MessagesUtils messagesUtils;
     // Properties
@@ -48,7 +43,6 @@ public class SlackRequestService {
 
         // root commands
         rootCommands.put(services.get(GATEWAY).getRootCmd(), slackKeywords -> this.processTwoParamsCmd(slackKeywords, GATEWAY));
-//        rootCommands.put(services.get(LOGS).getRootCmd(), this::processLogs);
         rootCommands.put(services.get(MONITORING).getRootCmd(), slackKeywords -> this.processTwoParamsCmd(slackKeywords, MONITORING));
         rootCommands.put(services.get(FS).getRootCmd(), slackKeywords -> this.processTwoParamsCmd(slackKeywords, FS));
 
@@ -61,19 +55,6 @@ public class SlackRequestService {
                         keywordCommand,
                         command.getPermissions()
                 );
-                if (!EXCLUDED_KEYWORDS_COMMANDS.contains(keywordCommand)) {
-                    serviceKeywordCommand.setKey(command.getKey());
-                }
-                this.nestedCommands.put(serviceKeywordCommand, slackKeywords -> {
-                    LOGGER.debug("Execute keywords cmd: `{}`", serviceKeywordCommand);
-                    if (!EXCLUDED_KEYWORDS_COMMANDS.contains(serviceKeywordCommand.getKeywordCommand())) {
-                        slackKeywords.setServiceKeywordCommandAsDefaultEnabled(serviceKeywordCommand);
-                    } else {
-                        // NOTE: attributes was already present
-                        var attributes = slackKeywords.getAttributes();
-                        LOGGER.debug("Execute keywords cmd. Attributes: `{}`", attributes);
-                    }
-                });
             });
         });
     }
@@ -112,22 +93,6 @@ public class SlackRequestService {
         }
     }
 
-//    private void processLogs(SlackKeywords slackKeywords) {
-//        var keywordOpt = this.getNestedCommandBy(LOGS, "<Any>");
-//        if (keywordOpt.isPresent()) {
-//            // logs attributes ($serverId)
-//            var action = keywordOpt.get();
-//            var actionKey = action.getKey();
-//            if (EXCLUDED_KEYWORDS_COMMANDS.contains(actionKey.getKeywordCommand())) {
-//                var attributes = KeywordCommandAttributes.server(Integer.valueOf(slackKeywords.getKeywords()[1]));
-//                slackKeywords.setServiceKeywordCommandBy(actionKey, attributes);
-//            }
-//            keywordOpt.get().getValue().accept(slackKeywords);
-//        } else {
-//            throw new SlackRuntimeException(this.messagesUtils.getUnexpectedWarning());
-//        }
-//    }
-
     private Optional<Map.Entry<ServiceKeywordCommand, Consumer<SlackKeywords>>> getNestedCommandBy(Service service, String keyword) {
         var filteredByService = this.nestedCommands.entrySet().stream()
                 .filter(entry -> service.equals(entry.getKey().getService()))
@@ -140,9 +105,7 @@ public class SlackRequestService {
         if (cmdOpt.isPresent()) {
             return cmdOpt;
         } else {
-            return filteredByService.entrySet().stream()
-                    .filter(entry -> EXCLUDED_KEYWORDS_COMMANDS.contains(entry.getKey().getKeywordCommand()))
-                    .findFirst();
+            throw new RuntimeException("TODO FIX ME");
         }
     }
 }

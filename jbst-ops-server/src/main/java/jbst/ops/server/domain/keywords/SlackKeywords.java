@@ -1,13 +1,12 @@
 package jbst.ops.server.domain.keywords;
 
 import com.slack.api.model.event.AppMentionEvent;
+import jbst.ops.server.domain.authorities.Permission;
+import jbst.ops.server.properties.atomics.Service;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import jbst.ops.server.domain.authorities.Permission;
-import jbst.ops.server.exceptions.SlackRuntimeException;
-import jbst.ops.server.properties.atomics.Service;
 
 import java.util.List;
 
@@ -65,15 +64,6 @@ public class SlackKeywords {
                     this.attributes.isEnabled();
         } else {
             return false;
-        }
-    }
-
-    public Integer getServerIdIfPresent() {
-//        if (this.serviceKeywordCommand.getService().isLogs() && this.serviceKeywordCommand.getKeywordCommand().isId()) {
-        if (this.serviceKeywordCommand.getKeywordCommand().isId()) {
-            return this.attributes.getServerId();
-        } else {
-            throw new SlackRuntimeException("Slack keywords: `serverId` is not present");
         }
     }
 }
