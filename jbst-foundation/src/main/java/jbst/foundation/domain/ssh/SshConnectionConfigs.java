@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
+// TODO [YYL] add constructors/@Nullable
 // Lombok
 @AllArgsConstructor
 @Getter
@@ -25,7 +26,7 @@ public class SshConnectionConfigs {
     private final String sshKeyPath;
     private final Password sshKeyPassword;
     // Timeout
-    private final TimeAmount timeout;
+    private final TimeAmount timeout = new TimeAmount(15L, SECONDS);
 
     public SshConnectionConfigs(Username username, String host, String sshKey, String sshKeyPath, Password sshKeyPassword) {
         this.username = username;
@@ -34,7 +35,6 @@ public class SshConnectionConfigs {
         this.sshKey = sshKey;
         this.sshKeyPath = sshKeyPath;
         this.sshKeyPassword = sshKeyPassword;
-        this.timeout = new TimeAmount(15L, SECONDS);
     }
 
     // WARNING: Please use sshKey/sshKeyPassword
@@ -45,6 +45,5 @@ public class SshConnectionConfigs {
         this.sshKey = sshKey;
         this.sshKeyPath = null;
         this.sshKeyPassword = null;
-        this.timeout = new TimeAmount(15L, SECONDS);
     }
 }

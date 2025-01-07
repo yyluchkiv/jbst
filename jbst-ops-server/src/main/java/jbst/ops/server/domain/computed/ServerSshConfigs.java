@@ -2,6 +2,7 @@ package jbst.ops.server.domain.computed;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.ssh.SshConnectionConfigs;
 import jbst.ops.server.domain.configs.ssh.SshConfigs;
 import jbst.ops.server.domain.configs.ssh.SshConfigsFileSystem;
 import jbst.ops.server.domain.configs.ssh.SshConfigsLogs;
@@ -25,6 +26,17 @@ public class ServerSshConfigs {
     // Filters
     private final SshConfigsLogs logs;
     private final SshConfigsFileSystem fileSystem;
+
+    public SshConnectionConfigs getConnectionConfigs() {
+        return new SshConnectionConfigs(
+                this.username,
+                this.host,
+                this.password,
+                this.sshKey,
+                this.sshKeyPath,
+                this.sshKeyPassword
+        );
+    }
 
     public ServerSshConfigs(
             SshConfigs sshConfigs,

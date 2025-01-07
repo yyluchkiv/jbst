@@ -3,12 +3,13 @@ package jbst.ops.server.domain.computed;
 import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.exceptions.ssh.SshSessionException;
 import jbst.foundation.feigns.spring.SpringBootClient;
+import jbst.foundation.utilities.ssh.SshUtility;
 import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
 import jbst.ops.server.domain.servers.*;
 import jbst.ops.server.domain.tasks.AbstractServerComputingInfinityTimerTask;
-import jbst.ops.server.exceptions.SshSessionException;
 import jbst.ops.server.properties.configs.ServersMonitoringConfigs;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -315,10 +316,10 @@ public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
 
     private void ssh() throws SshSessionException {
         LOGGER.debug("SSH into server `{}` by file system metadata configuration started", this.getName());
-        var sshSession = this.beans.getSshService().getSession(this.serverSshConfigs);
+        var sshSession = SshUtility.getSession(this.serverSshConfigs.getConnectionConfigs());
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
-            var lines = this.beans.getSshService().executeCmd(sshSession.getSession().value(), "df -h");
+            var lines = SshUtility.executeCmd(sshSession.getSession().value(), "df -h");
             var rows = lines.stream()
                     .skip(1)
                     .map(line -> new FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))
