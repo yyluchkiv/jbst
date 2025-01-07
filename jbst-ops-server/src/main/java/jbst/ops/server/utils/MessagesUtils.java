@@ -1,15 +1,15 @@
 package jbst.ops.server.utils;
 
 import jbst.foundation.domain.tuples.Tuple2;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.keywords.Operation;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.properties.configs.MessagesConfigs;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
-import static jbst.ops.server.utils.SlackUtils.getSlackMessage;
+import static jbst.foundation.utilities.slack.SlackUtility.getSlackMessage;
 
 @Slf4j
 @Component

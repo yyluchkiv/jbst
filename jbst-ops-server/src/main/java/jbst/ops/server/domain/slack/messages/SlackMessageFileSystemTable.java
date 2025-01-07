@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.ops.server.utils.SlackUtils.getSlackTable;
+import static jbst.foundation.utilities.slack.SlackUtility.getSlackTable;
 
 // Lombok
 @Getter

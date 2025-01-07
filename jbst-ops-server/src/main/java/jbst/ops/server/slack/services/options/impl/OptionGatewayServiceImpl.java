@@ -1,9 +1,5 @@
 package jbst.ops.server.slack.services.options.impl;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
@@ -11,15 +7,19 @@ import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionGatewayService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
 import jbst.ops.server.utils.MessagesUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
 import static java.util.Collections.disjoint;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TAB;
+import static jbst.foundation.utilities.slack.SlackUtility.getSlackMessage;
 import static jbst.ops.server.constants.OpsConstants.Services.*;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessage;
-import static jbst.ops.server.utils.SlackUtils.getSlackMessage;
 
 @Slf4j
 @Service

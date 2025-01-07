@@ -1,11 +1,6 @@
 package jbst.ops.server.slack.services.options.impl;
 
 import feign.Response;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.domain.storage.SupportedFormat;
@@ -17,6 +12,11 @@ import jbst.ops.server.services.LogsService;
 import jbst.ops.server.services.StorageService;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionLogService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,8 +25,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
+import static jbst.foundation.utilities.slack.SlackUtility.getSlackMessage;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessage;
-import static jbst.ops.server.utils.SlackUtils.getSlackMessage;
 
 @SuppressWarnings({"DataFlowIssue", "deprecation"})
 @Slf4j

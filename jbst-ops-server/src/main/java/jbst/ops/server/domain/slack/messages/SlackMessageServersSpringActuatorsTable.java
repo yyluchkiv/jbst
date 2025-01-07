@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
+import static jbst.foundation.utilities.slack.SlackUtility.getSlackTable;
 import static jbst.foundation.utilities.strings.StringUtility.getShortenValueOrUndefined;
 import static jbst.foundation.utilities.strings.StringUtility.toObjectsArray;
-import static jbst.ops.server.utils.SlackUtils.getSlackTable;
 
 // Lombok
 @Getter
@@ -52,12 +52,8 @@ public class SlackMessageServersSpringActuatorsTable {
                 .sorted()
                 .collect(Collectors.joining(NEWLINE));
         this.value = getSlackTable(
-                getHeader(),
+                format(FORMAT, "Server", "Version", "Profile", "Branch", "CommitId", "CommitTime"),
                 table
         );
-    }
-
-    public static String getHeader() {
-        return format(FORMAT, "Server", "Version", "Profile", "Branch", "CommitId", "CommitTime");
     }
 }

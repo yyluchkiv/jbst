@@ -1,15 +1,15 @@
 package jbst.ops.server.domain.slack.messages;
 
+import jbst.ops.server.domain.servers.Server;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import jbst.ops.server.domain.servers.Server;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.ops.server.utils.SlackUtils.getSlackTable;
+import static jbst.foundation.utilities.slack.SlackUtility.getSlackTable;
 
 // Lombok
 @Getter
