@@ -8,7 +8,7 @@ import jbst.ops.server.properties.OpsProperties;
 
 @Slf4j
 @Service
-public class SlackServiceTech1 extends AbstractSlackService {
+public class SlackServiceTech1 extends SlackService {
 
     @Autowired
     public SlackServiceTech1(OpsProperties opsProperties) {

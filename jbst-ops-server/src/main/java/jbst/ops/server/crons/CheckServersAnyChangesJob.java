@@ -3,7 +3,7 @@ package jbst.ops.server.crons;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.services.NotificationsService;
-import jbst.ops.server.slack.services.state.StateService;
+import jbst.ops.server.services.StateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

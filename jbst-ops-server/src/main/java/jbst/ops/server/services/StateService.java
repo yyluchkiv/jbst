@@ -1,9 +1,7 @@
-package jbst.ops.server.slack.services.state.impl;
+package jbst.ops.server.services;
 
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
-import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
-import jbst.ops.server.slack.services.state.StateService;
 import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +16,7 @@ import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.communicationMai
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class StateServiceImpl implements StateService {
+public class StateService {
 
     private final AtomicBoolean atomicState = new AtomicBoolean(false);
 
@@ -29,8 +27,7 @@ public class StateServiceImpl implements StateService {
     // Utilities
     private final MessagesUtils messagesUtils;
 
-    @Override
-    public boolean assertConfiguredCheck(SlackRequestContext slackRequestContext) {
+    public final boolean assertConfiguredCheck(SlackRequestContext slackRequestContext) {
         var monitoringServerConfigured = this.monitoringService.isConfigured();
         var state = this.atomicState.get();
 
@@ -56,8 +53,7 @@ public class StateServiceImpl implements StateService {
         return monitoringServerConfigured;
     }
 
-    @Override
-    public void configure() {
+    public final void configure() {
         var state = this.atomicState.get();
         if (!state) {
             this.atomicState.set(true);

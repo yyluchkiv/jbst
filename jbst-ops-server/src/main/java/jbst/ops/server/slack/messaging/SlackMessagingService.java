@@ -3,7 +3,7 @@ package jbst.ops.server.slack.messaging;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
-import jbst.ops.server.slack.services.AbstractSlackService;
+import jbst.ops.server.slack.services.SlackService;
 import jbst.ops.server.slack.services.SlackServiceSmartApps;
 import jbst.ops.server.slack.services.SlackServiceTech1;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class SlackMessagingService {
     protected final BlockingQueue<List<SlackTeamEvent>> sendingQueue = new LinkedBlockingQueue<>();
 
     // Services
-    private final Map<SlackTeam, AbstractSlackService> slacksServices = new ConcurrentHashMap<>();
+    private final Map<SlackTeam, SlackService> slacksServices = new ConcurrentHashMap<>();
 
     @Autowired
     public SlackMessagingService(SlackServiceSmartApps slackServiceSmartApps, SlackServiceTech1 slackServiceTech1) {

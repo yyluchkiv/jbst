@@ -17,7 +17,7 @@ import java.util.List;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.INCIDENT_FILE_NAME;
 
 @Slf4j
-public abstract class AbstractSlackService {
+public abstract class SlackService {
 
     @Getter
     private final SlackTeam slackTeam;
@@ -26,7 +26,7 @@ public abstract class AbstractSlackService {
 
     protected final SlackConfigs slackConfigs;
 
-    protected AbstractSlackService(SlackTeam slackTeam, SlackConfigs slackConfigs) {
+    protected SlackService(SlackTeam slackTeam, SlackConfigs slackConfigs) {
         this.slackTeam = slackTeam;
         this.slackConfigs = slackConfigs;
         this.slackClient = Slack.getInstance().methods(slackConfigs.getBotToken());

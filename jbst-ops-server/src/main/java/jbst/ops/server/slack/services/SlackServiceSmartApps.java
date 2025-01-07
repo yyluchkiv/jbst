@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class SlackServiceSmartApps extends AbstractSlackService {
+public class SlackServiceSmartApps extends SlackService {
 
     @Autowired
     public SlackServiceSmartApps(OpsProperties opsProperties) {
