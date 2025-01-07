@@ -33,7 +33,5 @@ public class MessagesConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String serverHistory;
     @MandatoryProperty
-    private final String expiredAccessCode;
-    @MandatoryProperty
     private final String unfaithfulUserRequest;
 }

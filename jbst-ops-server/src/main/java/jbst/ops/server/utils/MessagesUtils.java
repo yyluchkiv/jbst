@@ -125,19 +125,12 @@ public class MessagesUtils {
         );
     }
 
-    public String getExpiredAccessCodeMessage(String accessCode) {
-        return String.format(
-                this.messagesConfigs.getExpiredAccessCode(),
-                accessCode
-        );
-    }
-
     public String getReadOnlyWarning() {
-        return ":x: Slack bot is working in READ-ONLY mode. Please contact primary workspace owner";
+        return ":x: Slack bot is READ-ONLY mode. Please contact primary workspace owner";
     }
 
     public String getUnexpectedWarning() {
-        return ":x: Unexpected behaviour. Please contact primary workspace owner";
+        return ":x: Slack bot unexpected behaviour. Please contact primary workspace owner";
     }
 
     public String getUnfaithfulMessage(SlackRequestContext requestContext) {
