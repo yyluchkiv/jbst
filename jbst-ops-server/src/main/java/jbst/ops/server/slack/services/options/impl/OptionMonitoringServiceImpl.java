@@ -1,9 +1,5 @@
 package jbst.ops.server.slack.services.options.impl;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import jbst.ops.server.domain.servers.Server;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.servers.Team;
@@ -15,6 +11,10 @@ import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
 import jbst.ops.server.utils.MessagesUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Predicate;

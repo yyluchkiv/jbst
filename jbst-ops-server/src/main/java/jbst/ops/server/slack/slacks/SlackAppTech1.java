@@ -4,19 +4,19 @@ import com.slack.api.app_backend.events.payload.EventsApiPayload;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
-import jbst.ops.server.slack.request.SlackRequestService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.exceptions.SlackInitializationException;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
+import jbst.ops.server.slack.request.SlackRequestService;
 import jbst.ops.server.slack.services.SlackServiceTech1;
 import jbst.ops.server.slack.services.options.OptionsService;
 import jbst.ops.server.slack.services.state.StateService;
 import jbst.ops.server.utils.MessagesUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 

@@ -68,7 +68,7 @@ public class SshService {
                 String line;
                 var index = 0;
                 while ((line = reader.readLine()) != null) {
-                    LOGGER.debug(++index + " : " + line);
+                    LOGGER.debug("{} : {}", ++index, line);
                     lines.add(line);
                 }
             }

@@ -1,14 +1,14 @@
 package jbst.ops.server.slack.services.state.impl;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
 import jbst.ops.server.slack.services.state.StateService;
 import jbst.ops.server.utils.MessagesUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

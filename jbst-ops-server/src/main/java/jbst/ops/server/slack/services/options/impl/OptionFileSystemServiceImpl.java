@@ -1,10 +1,6 @@
 package jbst.ops.server.slack.services.options.impl;
 
 import jbst.foundation.domain.collections.Partitions;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import jbst.ops.server.domain.keywords.Operation;
 import jbst.ops.server.domain.servers.FileSystemMetadataRow;
 import jbst.ops.server.domain.servers.Servers;
@@ -16,16 +12,20 @@ import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.utils.MessagesUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.util.CollectionUtils.isEmpty;
 import static jbst.ops.server.constants.OpsConstants.Services.FILE_SYSTEM_SERVICE;
 import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessage;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessages;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
 @Component
