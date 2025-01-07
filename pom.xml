@@ -68,6 +68,7 @@
         <version.dependency.caffeine>3.1.8</version.dependency.caffeine>
         <version.dependency.jackson>2.15.4</version.dependency.jackson>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
+        <version.dependency.jsch>0.1.55</version.dependency.jsch>
         <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
         <version.dependency.jsonwebtoken>0.12.5</version.dependency.jsonwebtoken>
         <version.dependency.liquibase>4.24.0</version.dependency.liquibase>
@@ -204,11 +205,11 @@
                 <artifactId>commons-io</artifactId>
                 <version>${version.dependency.apache.commons.io}</version>
             </dependency>
-            <!-- GeoIP2 -->
+            <!-- Common Codec -->
             <dependency>
-                <groupId>com.maxmind.geoip2</groupId>
-                <artifactId>geoip2</artifactId>
-                <version>${version.dependency.geoip2}</version>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${version.dependency.common.codec}</version>
             </dependency>
             <!-- Browser Capabilities -->
             <dependency>
@@ -216,11 +217,17 @@
                 <artifactId>browscap-java</artifactId>
                 <version>${version.dependency.browscap}</version>
             </dependency>
-            <!-- Common Codec -->
+            <!-- jsch (ssh) -->
             <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${version.dependency.common.codec}</version>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${version.dependency.jsch}</version>
+            </dependency>
+            <!-- GeoIP2 -->
+            <dependency>
+                <groupId>com.maxmind.geoip2</groupId>
+                <artifactId>geoip2</artifactId>
+                <version>${version.dependency.geoip2}</version>
             </dependency>
             <!-- JColor (console asserts) -->
             <dependency>

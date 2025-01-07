@@ -15,7 +15,6 @@
     <properties>
         <!-- dependencies -->
         <version.dependency.httpclient>5.3.1</version.dependency.httpclient>
-        <version.dependency.jsch>0.1.55</version.dependency.jsch>
         <version.dependency.slack.api>1.29.2</version.dependency.slack.api>
         <version.dependency.tyrus.standalone.client>1.19</version.dependency.tyrus.standalone.client>
     </properties>
@@ -38,12 +37,6 @@
             <groupId>org.glassfish.tyrus.bundles</groupId>
             <artifactId>tyrus-standalone-client</artifactId>
             <version>${version.dependency.tyrus.standalone.client}</version>
-        </dependency>
-        <!-- jsch (ssh) -->
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>${version.dependency.jsch}</version>
         </dependency>
         <!-- SSL issue -->
         <dependency>

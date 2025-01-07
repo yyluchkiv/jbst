@@ -1,4 +1,4 @@
-package jbst.ops.server.domain.ssh;
+package jbst.foundation.domain.ssh;
 
 import com.jcraft.jsch.Session;
 import jbst.foundation.domain.tuples.TuplePresence;

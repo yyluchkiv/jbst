@@ -99,11 +99,6 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
-        <!-- JColor (console asserts) -->
-        <dependency>
-            <groupId>com.diogonunes</groupId>
-            <artifactId>JColor</artifactId>
-        </dependency>
         <!-- Browser Capabilities -->
         <dependency>
             <groupId>com.blueconic</groupId>
@@ -113,6 +108,16 @@
         <dependency>
             <groupId>com.maxmind.geoip2</groupId>
             <artifactId>geoip2</artifactId>
+        </dependency>
+        <!-- jsch (ssh) -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+        </dependency>
+        <!-- JColor (console asserts) -->
+        <dependency>
+            <groupId>com.diogonunes</groupId>
+            <artifactId>JColor</artifactId>
         </dependency>
     </dependencies>
 </project>
