@@ -3,8 +3,7 @@ package jbst.ops.server.domain.computed;
 import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.feigns.spring.domain.SpringBootActuatorHealth;
-import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
+import jbst.foundation.feigns.spring.SpringBootClient;
 import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
 import jbst.ops.server.domain.servers.*;
@@ -63,8 +62,8 @@ public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
     private final IncidentsNotificationsMetadata incidentsNotificationsMetadata;
 
     // Computed
-    private ResponseEntity<SpringBootActuatorInfo> springBootActuatorInfo;
-    private ResponseEntity<SpringBootActuatorHealth> springBootActuatorHealth;
+    private ResponseEntity<SpringBootClient.SpringBootActuatorInfo> springBootActuatorInfo;
+    private ResponseEntity<SpringBootClient.SpringBootActuatorHealth> springBootActuatorHealth;
     private boolean up;
     private CircularFifoQueue<Boolean> upHistory;
     private FileSystemMetadata fileSystemMetadata;
@@ -152,8 +151,8 @@ public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
                 allowedErrorMessages.stream().anyMatch(errorMessage::startsWith)); // HTTP 2
     }
 
-    public SpringBootActuatorInfo springBootActuatorInfoEndpointResponse() {
-        return nonNull(this.springBootActuatorInfo) ? this.springBootActuatorInfo.getBody() : SpringBootActuatorInfo.dash();
+    public SpringBootClient.SpringBootActuatorInfo springBootActuatorInfoEndpointResponse() {
+        return nonNull(this.springBootActuatorInfo) ? this.springBootActuatorInfo.getBody() : SpringBootClient.SpringBootActuatorInfo.dash();
     }
 
     public ObjectId getObjectId() {
@@ -276,7 +275,7 @@ public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
                     this.getIpAddress() + this.getServerConfigs().springActuatorBasicAuthenticationConfigs().healthEndpoint(),
                     HttpMethod.GET,
                     httpEntity,
-                    SpringBootActuatorHealth.class
+                    SpringBootClient.SpringBootActuatorHealth.class
             );
             this.addUpEvent(true);
         } catch (ResourceAccessException | HttpClientErrorException | HttpServerErrorException | UnknownHttpStatusCodeException ex) {
@@ -290,7 +289,7 @@ public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
                     this.getIpAddress() + this.getServerConfigs().springActuatorBasicAuthenticationConfigs().infoEndpoint(),
                     HttpMethod.GET,
                     httpEntity,
-                    SpringBootActuatorInfo.class
+                    SpringBootClient.SpringBootActuatorInfo.class
             );
         } catch (ResourceAccessException | HttpServerErrorException | HttpClientErrorException | UnknownHttpStatusCodeException ex) {
             this.springBootActuatorInfo = ResponseEntity.internalServerError().build();

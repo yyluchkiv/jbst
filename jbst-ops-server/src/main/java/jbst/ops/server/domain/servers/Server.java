@@ -2,7 +2,7 @@ package jbst.ops.server.domain.servers;
 
 import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.base.ServerName;
-import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
+import jbst.foundation.feigns.spring.SpringBootClient;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 public record Server(
@@ -16,7 +16,7 @@ public record Server(
         boolean anyChanges,
         CircularFifoQueue<Boolean> upHistory,
         String onlineLastUpdatedAt,
-        SpringBootActuatorInfo springBootActuatorInfo,
+        SpringBootClient.SpringBootActuatorInfo springBootActuatorInfo,
         boolean sshRequired,
         boolean fileSystemMetadataThresholdReached,
         boolean fileSystemMetadataProblems,

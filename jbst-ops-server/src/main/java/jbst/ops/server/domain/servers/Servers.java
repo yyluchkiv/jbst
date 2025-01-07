@@ -3,7 +3,7 @@ package jbst.ops.server.domain.servers;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
+import jbst.foundation.feigns.spring.SpringBootClient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -26,7 +26,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 public class Servers {
     private final List<Server> values;
     private final Map<Team, List<Server>> mappedValues;
-    private final List<Tuple2<ServerName, SpringBootActuatorInfo>> mappedActuatorsResponses;
+    private final List<Tuple2<ServerName, SpringBootClient.SpringBootActuatorInfo>> mappedActuatorsResponses;
     private final boolean anyPresent;
     private final boolean anyChanges;
     private final boolean anyProblems;

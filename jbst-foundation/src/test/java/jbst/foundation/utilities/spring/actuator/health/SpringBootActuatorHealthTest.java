@@ -2,7 +2,7 @@ package jbst.foundation.utilities.spring.actuator.health;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
-import jbst.foundation.feigns.spring.domain.SpringBootActuatorHealth;
+import jbst.foundation.feigns.spring.SpringBootClient;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,9 +18,9 @@ class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> deserializeTest() {
         return Stream.of(
-                Arguments.of(new SpringBootActuatorHealth(Status.UP), "health-1.json"),
-                Arguments.of(new SpringBootActuatorHealth(Status.DOWN), "health-2.json"),
-                Arguments.of(SpringBootActuatorHealth.unknown(), "health-3.json")
+                Arguments.of(new SpringBootClient.SpringBootActuatorHealth(Status.UP), "health-1.json"),
+                Arguments.of(new SpringBootClient.SpringBootActuatorHealth(Status.DOWN), "health-2.json"),
+                Arguments.of(SpringBootClient.SpringBootActuatorHealth.unknown(), "health-3.json")
         );
     }
 
@@ -34,10 +34,10 @@ class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("deserializeTest")
-    void deserializeTest(SpringBootActuatorHealth springBootActuatorHealth, String fileName) {
+    void deserializeTest(SpringBootClient.SpringBootActuatorHealth springBootActuatorHealth, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
-        var typeReference = new TypeReference<SpringBootActuatorHealth>() {};
+        var typeReference = new TypeReference<SpringBootClient.SpringBootActuatorHealth>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);

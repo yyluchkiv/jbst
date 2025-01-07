@@ -2,7 +2,7 @@ package jbst.ops.server.domain.slack.messages;
 
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
+import jbst.foundation.feigns.spring.SpringBootClient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -28,7 +28,7 @@ public class SlackMessageServersSpringActuatorsTable {
     private final String value;
 
     // WARNING: when too many server -> split into table/row
-    public SlackMessageServersSpringActuatorsTable(List<Tuple2<ServerName, SpringBootActuatorInfo>> mappedActuatorsResponses) {
+    public SlackMessageServersSpringActuatorsTable(List<Tuple2<ServerName, SpringBootClient.SpringBootActuatorInfo>> mappedActuatorsResponses) {
         var table = mappedActuatorsResponses.stream()
                 .map(tuple2 -> {
                     List<String> row = new ArrayList<>();
@@ -38,7 +38,7 @@ public class SlackMessageServersSpringActuatorsTable {
                     }
                     var infoEndpointResponse = tuple2.b();
                     if (isNull(infoEndpointResponse)) {
-                        infoEndpointResponse = SpringBootActuatorInfo.dash();
+                        infoEndpointResponse = SpringBootClient.SpringBootActuatorInfo.dash();
                     }
                     var git = infoEndpointResponse.getGitOrDash();
                     row.add(getShortenValueOrUndefined(serverName.value(), 35));
