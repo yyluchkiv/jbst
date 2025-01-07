@@ -43,20 +43,6 @@
             padding: 20px;
             width: 100%;
         }
-
-        .best-regards-section {
-            padding: 10px 0 10px 0;
-            color: #444444
-        }
-
-        .copyright {
-            color: #a8b9c6;
-            width: 550px;
-            margin: 0;
-            padding: 10px 0 10px 0;
-            font-size: 11px;
-            text-align: end;
-        }
     </style>
 </head>
 <body class="body">
@@ -92,9 +78,15 @@
                                     </td>
                                 </tr>
                                 <tr th:if="${whenUA != null}">
-                                    <td class="main-table-left-column">When:</td>
+                                    <td class="main-table-left-column">When/Ukraine:</td>
                                     <td class="main-table-right-column">
                                         <b th:text="${whenUA}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${whenUTC != null}">
+                                    <td class="main-table-left-column">When/UK:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${whenUTC}"></b>
                                     </td>
                                 </tr>
                                 <tr th:if="${where != null}">
@@ -139,11 +131,7 @@
                 </table>
             </td>
         </tr>
-        <tr>
-            <td class="best-regards-section">Best Regards, Tech1 Team</td>
-        </tr>
     </table>
-    <p class="copyright" th:text="'© 2016—' + ${'__${year}__'} + ' Tech1 Team'"></p>
 </center>
 </body>
 </html>

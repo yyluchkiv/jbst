@@ -2,7 +2,6 @@ package jbst.ops.server.domain.incidents;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.IncidentAttributes;
@@ -18,7 +17,9 @@ import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
 
@@ -34,13 +35,15 @@ public class OpsIncident {
     private static final String SERVER_URL = "serverURL";
     private static final String REMOTE_URL = "remoteURL";
     private static final String WHEN_UA = "whenUA";
+    private static final String WHEN_UTC = "whenUTC";
 
     private static final Set<String> PLAIN_MESSAGE_SKIPPED = Set.of(
             MEMBERS,
             YEAR,
             SERVER_URL,
             REMOTE_URL,
-            WHEN_UA
+            WHEN_UA,
+            WHEN_UTC
     );
 
     protected static final List<String> ORDERED_PREFERRED_KEYS = new LinkedList<>(
@@ -82,7 +85,7 @@ public class OpsIncident {
         var readableServerName = "\"" + server.name() + "\"";
         var emailSubject = "[OpsIncidents] " + incidentType +
                 " on " + readableServerName +
-                " — " + LocalDateTime.now(UTC).format(JbstConstants.DateTimeFormatters.DTF11) + " (UTC)";
+                " — " + LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
 
         Set<String> to = new HashSet<>(recipientsConfigs.getTo());
         var notificationsMetadata = server.incidentsNotificationsMetadata();
@@ -97,7 +100,8 @@ public class OpsIncident {
         variables.put(YEAR, now(UTC).getYear());
         variables.put(SERVER_URL, server.ipAddress());
         variables.put(REMOTE_URL, env.getRemoteHost());
-        variables.put(WHEN_UA, LocalDateTime.now(JbstConstants.ZoneIds.UKRAINE).format(JbstConstants.DateTimeFormatters.DTF11) + " in [Ukraine, Lviv]");
+        variables.put(WHEN_UA, LocalDateTime.now(UKRAINE).format(DTF11) + " in Ukraine");
+        variables.put(WHEN_UTC, LocalDateTime.now(UTC).format(DTF11) + " in UK");
 
         incident.getAttributes().entrySet().stream()
                 .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
