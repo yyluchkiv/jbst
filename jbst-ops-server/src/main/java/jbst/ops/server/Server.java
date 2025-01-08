@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
-import jbst.ops.server.crons.CheckServersAnyChangesJob;
+import jbst.ops.server.crons.ServersJob;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.services.IncidentsService;
 import jbst.ops.server.services.MonitoringService;
@@ -30,7 +30,7 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 public class Server {
 
     // Jobs
-    private final CheckServersAnyChangesJob checkServersAnyChangesJob;
+    private final ServersJob serversJob;
     // Services
     private final IncidentsService incidentsService;
     private final MonitoringService monitoringService;
@@ -49,7 +49,7 @@ public class Server {
         try {
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
             this.monitoringService.readServers();
-//            this.checkServersAnyChangesJob.checkServersAnyChanges();
+            this.serversJob.scheduleAnyChangesNotification();
 //            this.incidentsService.configureCleanCronJob();
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         } catch (IOException | RuntimeException ex) {

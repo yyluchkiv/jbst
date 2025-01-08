@@ -48,12 +48,6 @@ ops-configs:
       hide-ip: false
       file-system-filter: 25
       file-system-threshold: 75
-  check-servers-any-changes-job-configs:
-    enabled: true
-    configuration:
-      initial-delay: 0
-      delay: 30
-      unit: SECONDS
   tech1-slack-configs:
     communication:
       enabled: true

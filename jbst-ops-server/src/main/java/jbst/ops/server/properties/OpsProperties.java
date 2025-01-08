@@ -17,8 +17,6 @@ public class OpsProperties implements PriorityOrdered {
     private SpringLogging logging;
     private RemoteServer serverConfigs;
     private ServersConfigs serversConfigs;
-    // TODO [YYL] clean: monitoring
-    private ScheduledJob checkServersAnyChangesJobConfigs;
     // TODO [YYL] clean: incidents
     private RecipientsConfigs recipientsConfigs;
     private ThrowableFiltrationConfigs throwableFiltrationConfigs;
