@@ -1,14 +1,11 @@
 package jbst.ops.server.slack.slacks;
 
-import com.slack.api.app_backend.events.payload.EventsApiPayload;
-import com.slack.api.methods.SlackApiException;
-import com.slack.api.model.event.AppMentionEvent;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.exceptions.SlackInitializationException;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.services.StateService;
-import jbst.ops.server.slack.messaging.SlackMessagingService;
+import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.request.SlackRequestService;
 import jbst.ops.server.slack.services.options.OptionsService;
 import jbst.ops.server.utils.MessagesUtils;
@@ -16,9 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessage;
+import static jbst.ops.server.utilities.MessagesUtility.*;
 
 @Slf4j
 @Component
@@ -58,8 +54,8 @@ public class SlackBotTech1 extends SlackBot {
         this.configure();
     }
 
-    @Override
-    public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
+//    @Override
+//    public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
         // TODO [YYL] fixme
 //        var slackRequestContext = new SlackRequestContext(this.team, payload.getEvent());
 //        try {
@@ -73,7 +69,7 @@ public class SlackBotTech1 extends SlackBot {
 //        } catch (SlackApiException | IOException | RuntimeException ex) {
 //            this.sendExceptionMessage(slackRequestContext, ex);
 //        }
-    }
+//    }
 
     // ================================================================================================================
     // Private Methods
@@ -83,29 +79,29 @@ public class SlackBotTech1 extends SlackBot {
             LOGGER.debug("Process slack message. Permissions: `{}`", slackRequestContext.getPermissions());
             LOGGER.debug("Process slack message. Keywords: `{}`", slackRequestContext.getSlackKeywords());
 
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getExpensiveOperationStartedMessage()
+                            getExpensiveOperationStartedMessage()
                     )
             );
 
             this.optionsService.sendMessagesBy(slackRequestContext);
 
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getExpensiveOperationCompletedMessage()
+                            getExpensiveOperationCompletedMessage()
                     )
             );
         }
     }
 
     private void sendExceptionMessage(SlackRequestContext slackRequestContext, Throwable throwable) {
-        this.slackMessagingService.send(
+        this.slackMessagingService.sendAsync(
                 channelSlackMessage(
                         slackRequestContext,
-                        this.messagesUtils.getUnexpectedWarning()
+                        getUnexpectedWarning()
                 )
         );
 

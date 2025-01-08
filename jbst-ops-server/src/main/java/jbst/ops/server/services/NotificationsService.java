@@ -4,7 +4,7 @@ import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.slack.messages.SlackMessageType;
 import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.slack.messaging.SlackMessagingService;
+import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
 import jbst.ops.server.utils.MessagesUtils;
@@ -91,7 +91,7 @@ public class NotificationsService {
     public final void notifyIncident(OpsIncident opsIncident) {
         var incidentTuple = this.messagesUtils.getIncidentTuple(opsIncident);
         if (opsIncident.getServer().team().isTech1()) {
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     communicationMainSlackIncident(
                             limitedTech1(),
                             incidentTuple
@@ -103,7 +103,7 @@ public class NotificationsService {
                     .filter(tcc -> tcc.getCommunication().isEnabled())
                     .filter(tcc -> opsIncident.getServer().team().equals(tcc.getTeam()))
                     .forEach(tcc ->
-                            this.slackMessagingService.send(
+                            this.slackMessagingService.sendAsync(
                                     communicationTeamSlackIncident(
                                             limitedTech1(),
                                             incidentTuple,

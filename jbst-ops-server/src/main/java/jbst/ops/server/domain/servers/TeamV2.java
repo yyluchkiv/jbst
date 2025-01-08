@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
-@Deprecated
 public record TeamV2(@NotNull String value) {
     @JsonCreator
     public static TeamV2 of(String value) {

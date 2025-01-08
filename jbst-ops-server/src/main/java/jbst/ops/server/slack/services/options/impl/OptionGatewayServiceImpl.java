@@ -2,7 +2,7 @@ package jbst.ops.server.slack.services.options.impl;
 
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.slack.messaging.SlackMessagingService;
+import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionGatewayService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
@@ -59,7 +59,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
                 });
             }
         });
-        this.slackMessagingService.send(
+        this.slackMessagingService.sendAsync(
                 channelSlackMessage(
                         slackRequestContext,
                         this.messagesUtils.getHelp() + NEWLINE + getSlackMessage(sb.toString().trim())
@@ -72,7 +72,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
         try {
             this.optionMonitoringService.sendShow(slackRequestContext);
         } catch (RuntimeException ex) {
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
                             this.messagesUtils.getServiceMessage(true, MONITORING_SERVICE)
@@ -86,7 +86,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
         try {
             this.optionMonitoringService.sendSpringBootActuators(slackRequestContext);
         } catch (RuntimeException ex) {
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
                             this.messagesUtils.getServiceMessage(true, SPRING_BOOT_ACTUATOR_SERVICE)
@@ -100,7 +100,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
         try {
             this.optionFileSystemService.sendFsStatusOnSshRequiredAnyProblemsOnFsMetadata(slackRequestContext);
         } catch (RuntimeException ex) {
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
                             this.messagesUtils.getServiceMessage(true, FILE_SYSTEM_SERVICE)

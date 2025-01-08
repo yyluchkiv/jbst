@@ -1,7 +1,7 @@
 package jbst.ops.server.services;
 
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
-import jbst.ops.server.slack.messaging.SlackMessagingService;
+import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +65,7 @@ public class StateService {
     // PRIVATE METHODS
     // ================================================================================================================
     public void sendBotNotConfiguredYet(SlackRequestContext slackRequestContext) {
-        this.slackMessagingService.send(
+        this.slackMessagingService.sendAsync(
                 communicationMainSlackMessage(
                         slackRequestContext,
                         this.messagesUtils.getBotNotConfiguredYet()
@@ -74,7 +74,7 @@ public class StateService {
     }
 
     public void sendBotConfigured() {
-        this.slackMessagingService.send(
+        this.slackMessagingService.sendAsync(
                 communicationMainSlackMessage(
                         limitedTech1(),
                         this.messagesUtils.getBotConfigured()

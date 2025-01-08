@@ -1,10 +1,8 @@
-package jbst.ops.server.slack.messaging;
+package jbst.ops.server.slack;
 
 import jbst.ops.server.domain.servers.TeamV2;
 import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
 import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.properties.configs.Tech1SlackConfigs;
-import jbst.ops.server.slack.services.SlackService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,22 +22,22 @@ public class SlackMessagingService {
     protected final BlockingQueue<List<SlackTeamEvent>> sendingQueue = new LinkedBlockingQueue<>();
 
     // Services
-    private final Map<TeamV2, SlackService> slacksServices = new ConcurrentHashMap<>();
+    private final Map<TeamV2, SlackClient> slacksServices = new ConcurrentHashMap<>();
 
     @Autowired
     public SlackMessagingService(OpsProperties opsProperties) {
         var slackConfigs1 = opsProperties.getTech1SlackConfigs();
         var slackConfigs2 = opsProperties.getSmartAppsSlackConfigs();
-        this.slacksServices.put(slackConfigs1.getTeam(), new SlackService(slackConfigs1));
-        this.slacksServices.put(slackConfigs2.getTeam(), new SlackService(slackConfigs2));
+        this.slacksServices.put(slackConfigs1.getTeam(), new SlackClient(slackConfigs1));
+        this.slacksServices.put(slackConfigs2.getTeam(), new SlackClient(slackConfigs2));
         this.configure();
     }
 
-    public final void send(SlackTeamEvent slackTeamEvent) {
-        this.send(List.of(slackTeamEvent));
+    public final void sendAsync(SlackTeamEvent slackTeamEvent) {
+        this.sendAsync(List.of(slackTeamEvent));
     }
 
-    public final void send(List<SlackTeamEvent> slackTeamEvents) {
+    public final void sendAsync(List<SlackTeamEvent> slackTeamEvents) {
         try {
             this.sendingQueue.put(slackTeamEvents);
         } catch (InterruptedException ex) {
@@ -50,7 +48,7 @@ public class SlackMessagingService {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private final void configure() {
+    private void configure() {
         newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> {
             try {
                 var slackTeamEvents = this.sendingQueue.take();

@@ -91,14 +91,6 @@ public class MessagesUtils {
         return this.messagesConfigs.getResponseWarning();
     }
 
-    public String getExpensiveOperationStartedMessage() {
-        return ":arrows_counterclockwise: Operation is expensive. Please wait a moment...";
-    }
-
-    public String getExpensiveOperationCompletedMessage() {
-        return ":pray: Operation is completed. Thanks for you patience!";
-    }
-
     public String getOverExpensiveOperation() {
         return this.messagesConfigs.getOverExpensiveOperation();
     }
@@ -109,14 +101,6 @@ public class MessagesUtils {
                 Boolean.TRUE.equals(upHistory.get(upHistory.size() - 1)) ? ":white_check_mark:" : ":no_entry:",
                 serverName
         );
-    }
-
-    public String getReadOnlyWarning() {
-        return ":x: Slack bot is READ-ONLY mode. Please contact primary workspace owner";
-    }
-
-    public String getUnexpectedWarning() {
-        return ":x: Slack bot unexpected behaviour. Please contact primary workspace owner";
     }
 
     public Tuple2<String, String> getIncidentTuple(OpsIncident opsIncident) {

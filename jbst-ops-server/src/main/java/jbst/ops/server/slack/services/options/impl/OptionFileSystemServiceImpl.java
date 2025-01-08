@@ -9,7 +9,7 @@ import jbst.ops.server.domain.slack.messages.SlackMessageType;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
 import jbst.ops.server.services.MonitoringService;
-import jbst.ops.server.slack.messaging.SlackMessagingService;
+import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
         });
 
         if (!isEmpty(successesRows)) {
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
                             this.messagesUtils.getResponseInfo(Operation.FS_TABLES)
@@ -66,7 +66,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
             var partitionsSuccesses = Partitions.ofSize(successesRows, 25);
             partitionsSuccesses.forEach(chuckedMappedRows -> {
                 var table = new SlackMessageFileSystemTable(chuckedMappedRows).getValue();
-                this.slackMessagingService.send(
+                this.slackMessagingService.sendAsync(
                         channelSlackMessage(
                                 slackRequestContext,
                                 table
@@ -77,7 +77,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
 
         if (!isEmpty(warningTables)) {
             warningTables.add(0, this.messagesUtils.getResponseWarnings());
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessages(
                             slackRequestContext,
                             warningTables
@@ -89,7 +89,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
             List<String> messages = new ArrayList<>();
             messages.add(this.messagesUtils.getResponseInfo(Operation.FS_TABLES));
             messages.add(SlackMessageFileSystemTable.getNoFsTable());
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     channelSlackMessages(
                             slackRequestContext,
                             messages
@@ -117,7 +117,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
                     .map(SlackMessageFileSystemTable::getValue)
                     .collect(Collectors.toList());
             tables.add(0, status);
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     SlackTeamEvent.events(
                             slackRequestContext,
                             slackMessageType,
@@ -125,7 +125,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
                     )
             );
         } else {
-            this.slackMessagingService.send(
+            this.slackMessagingService.sendAsync(
                     new SlackTeamEvent(
                             slackRequestContext,
                             slackMessageType,

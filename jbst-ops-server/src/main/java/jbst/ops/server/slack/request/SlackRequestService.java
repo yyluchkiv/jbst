@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.ops.server.properties.atomics.Service.*;
+import static jbst.ops.server.utilities.MessagesUtility.getUnexpectedWarning;
 
 @Slf4j
 @Component
@@ -71,7 +72,7 @@ public class SlackRequestService {
             rootCmdConsumerOpt.get().getValue().accept(slackKeywords);
         } else {
             LOGGER.warn("Authorized request, but invalid user keyword: {}", slackKeywords.getUserKeyword());
-            throw new SlackRuntimeException(this.messagesUtils.getUnexpectedWarning());
+            throw new SlackRuntimeException(getUnexpectedWarning());
         }
         return slackKeywords;
     }
@@ -81,14 +82,14 @@ public class SlackRequestService {
     // ================================================================================================================
     private void processTwoParamsCmd(SlackKeywords slackKeywords, Service service) {
         if (slackKeywords.getKeywords().length != 2) {
-            throw new SlackRuntimeException(this.messagesUtils.getUnexpectedWarning());
+            throw new SlackRuntimeException(getUnexpectedWarning());
         } else {
             var keyword = slackKeywords.getKeywords()[1];
             var keywordOpt = this.getNestedCommandBy(service, keyword);
             if (keywordOpt.isPresent()) {
                 keywordOpt.get().getValue().accept(slackKeywords);
             } else {
-                throw new SlackRuntimeException(this.messagesUtils.getUnexpectedWarning());
+                throw new SlackRuntimeException(getUnexpectedWarning());
             }
         }
     }

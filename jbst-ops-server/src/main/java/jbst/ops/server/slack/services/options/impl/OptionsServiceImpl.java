@@ -1,24 +1,28 @@
 package jbst.ops.server.slack.services.options.impl;
 
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import jbst.ops.server.domain.keywords.ServiceKeywordCommandKey;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.exceptions.SlackRuntimeException;
 import jbst.ops.server.slack.services.keywords.KeywordsService;
-import jbst.ops.server.slack.services.options.*;
+import jbst.ops.server.slack.services.options.OptionFileSystemService;
+import jbst.ops.server.slack.services.options.OptionGatewayService;
+import jbst.ops.server.slack.services.options.OptionMonitoringService;
+import jbst.ops.server.slack.services.options.OptionsService;
 import jbst.ops.server.utils.MessagesUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import static jbst.ops.server.domain.keywords.KeywordCommand.*;
-import static jbst.ops.server.properties.atomics.Service.*;
 import static jbst.ops.server.properties.atomics.Service.FS;
+import static jbst.ops.server.properties.atomics.Service.*;
+import static jbst.ops.server.utilities.MessagesUtility.getUnexpectedWarning;
 
 @Slf4j
 @Component
@@ -92,7 +96,7 @@ public class OptionsServiceImpl implements OptionsService {
             } else if (permissions.containsTeam()) {
                 this.optionMonitoringService.sendShow(slackRequestContext, permissions.getTeam());
             } else {
-                throw new SlackRuntimeException(this.messagesUtils.getUnexpectedWarning());
+                throw new SlackRuntimeException(getUnexpectedWarning());
             }
         });
 
