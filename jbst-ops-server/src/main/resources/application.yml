@@ -57,8 +57,6 @@ ops-configs:
       initial-delay: 0
       delay: 30
       unit: SECONDS
-  github-configs:
-    owner: tech1-agency
   servers-monitoring-configs:
     zone-id: "Europe/Kyiv"
     hide-ip: false

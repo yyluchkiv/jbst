@@ -17,15 +17,13 @@ jbst:
 # Ops Configs
 ops-configs:
   server-configs:
-    base-url: http://localhost:8973
+    base-url: "http://localhost:8973"
     credentials:
-      username: admin
-      password: admin
-  github-configs:
-    repo: "jbst"
-    token: "?"
-    content: "ops-server-dev.json"
-    rsa-keys-base-location: ~/Dropbox/Tech1/rsa-keys
+      username: "admin"
+      password: "admin"
+  servers-configs:
+    mode: "RESOURCES"
+    rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
   recipients-configs:
     to:
       - "yurii.luchkiv@gmail.com"

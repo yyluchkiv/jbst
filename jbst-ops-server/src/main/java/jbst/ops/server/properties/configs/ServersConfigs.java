@@ -1,7 +1,7 @@
 package jbst.ops.server.properties.configs;
 
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.Cron;
+import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,14 +12,21 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CronsConfigs extends AbstractPropertiesConfigs {
+public class ServersConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private final Cron serversOrFsNotificationCron;
+    private final Mode mode;
     @MandatoryProperty
-    private final Cron fsAnyProblemsNotificationCron;
+    private final String rsaKeysBaseLocation;
+    @NonMandatoryProperty
+    private final GithubConfigs githubConfigs;
 
     @Override
     public boolean isParentPropertiesNode() {
         return true;
+    }
+
+    public enum Mode {
+        RESOURCES,
+        GITHUB
     }
 }

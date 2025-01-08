@@ -18,8 +18,9 @@ logs/
 # Sonar
 .scannerwork
 
-# GEO database: java
+# GEO database
 jbst-iam-server/src/main/resources/GeoLite2-City.mmdb
-
-# GEO database: docker
 docker/GeoLite2-City.mmdb
+
+# ops-server-configs.json
+jbst-ops-server/src/main/resources/ops-server-configs.json

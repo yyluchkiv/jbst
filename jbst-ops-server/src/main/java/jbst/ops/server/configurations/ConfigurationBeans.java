@@ -2,6 +2,7 @@ package jbst.ops.server.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.*;
+import jbst.foundation.domain.base.PropertyId;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.config.ConnectionConfig;
@@ -44,8 +45,12 @@ public class ConfigurationBeans {
 
     private final OpsProperties opsProperties;
 
+    // TODO [YYL] CLEAN assertProperties
     @PostConstruct
     public void init() {
+        this.opsProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.opsProperties.getServersConfigs().assertProperties(new PropertyId("serversConfigs"));
+
         var serversConfigs = this.opsProperties.getServersMonitoringConfigs();
         assertTrueOrThrow(
                 isFirstValueGreater(serversConfigs.getFileSystemThreshold(), serversConfigs.getFileSystemFilter()),

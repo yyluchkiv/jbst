@@ -12,7 +12,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class GithubConfigs extends AbstractPropertyConfigs {
-    // GitHub
     @MandatoryProperty
     private final String token;
     @MandatoryProperty
@@ -21,7 +20,4 @@ public class GithubConfigs extends AbstractPropertyConfigs {
     private final String repo;
     @MandatoryProperty
     private final String content;
-    // Tech1
-    @MandatoryProperty
-    private final String rsaKeysBaseLocation;
 }

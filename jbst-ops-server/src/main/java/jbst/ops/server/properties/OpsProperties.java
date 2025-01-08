@@ -1,7 +1,5 @@
 package jbst.ops.server.properties;
 
-import jakarta.annotation.PostConstruct;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.domain.properties.base.RemoteServer;
 import jbst.foundation.domain.properties.base.ScheduledJob;
@@ -17,12 +15,11 @@ import org.springframework.core.PriorityOrdered;
 @Data
 public class OpsProperties implements PriorityOrdered {
     private SpringLogging logging;
-    // TODO [YYL] clean: united
     private RemoteServer serverConfigs;
+    private ServersConfigs serversConfigs;
     // TODO [YYL] clean: monitoring
     private CronsConfigs cronsConfigs;
     private ScheduledJob checkServersAnyChangesJobConfigs;
-    private GithubConfigs githubConfigs;
     private ServersMonitoringConfigs serversMonitoringConfigs;
     // TODO [YYL] clean: incidents
     private RecipientsConfigs recipientsConfigs;
@@ -32,15 +29,6 @@ public class OpsProperties implements PriorityOrdered {
     private MessagesConfigs messagesConfigs;
     private Tech1SlackConfigs tech1SlackConfigs;
     private SmartAppsSlackConfigs smartAppsSlackConfigs;
-
-    // TODO [YYL] CLEAN vs. LEAVE (?)
-    @PostConstruct
-    public void init() {
-        this.cronsConfigs.assertProperties(new PropertyId("cronsConfigs"));
-        this.checkServersAnyChangesJobConfigs.assertProperties(new PropertyId("checkServersAnyChangesJobConfigs"));
-        this.githubConfigs.assertProperties(new PropertyId("githubConfigs"));
-        this.serversMonitoringConfigs.assertProperties(new PropertyId("serversConfigs"));
-    }
 
     @Override
     public int getOrder() {
