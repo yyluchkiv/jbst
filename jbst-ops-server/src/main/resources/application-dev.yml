@@ -8,14 +8,17 @@ logging:
 jbst:
   email-configs:
     enabled: true
+    username: "<?>"
+    password: "<?>"
+    from: "<?>"
   utils-configs:
     geo-country-flags-configs:
       enabled: false
     user-agent-configs:
       enabled: false
 
-# Ops Configs
-ops-configs:
+# ops
+ops:
   server-configs:
     base-url: "http://localhost:8973"
     credentials:
@@ -26,22 +29,7 @@ ops-configs:
     rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
   recipients-configs:
     to:
-      - "yurii.luchkiv@gmail.com"
-  throwable-filtration-configs:
-    enabled: true
-    values:
-      - enabled: false
-        trace: "org.springframework.beans.factory.BeanCreationNotAllowedException"
-        incident-type: "Spring Events Redeployment Failure"
-      - enabled: false
-        trace: "Singleton bean creation not allowed while singletons of this factory are in destruction"
-        incident-type: "Spring Events Redeployment Failure"
-      - enabled: true
-        trace: "com.neovisionaries.ws.client.InsufficientDataException: The end of the stream has been reached unexpectedly"
-        incident-type: "Websocket Reconnect Issue"
-      - enabled: true
-        trace: "com.neovisionaries.ws.client.WebSocketException: The RSV1 bit of a frame is set unexpectedly"
-        incident-type: "Websocket Reconnect Issue"
+      - "<?>"
   tech1-slack-configs:
     enabled: true
     app-token: "<?>"

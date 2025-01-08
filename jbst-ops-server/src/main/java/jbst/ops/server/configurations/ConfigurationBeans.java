@@ -47,6 +47,7 @@ public class ConfigurationBeans {
     public void init() {
         this.opsProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
         this.opsProperties.getServersConfigs().assertProperties(new PropertyId("serversConfigs"));
+        this.opsProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipientsConfigs"));
     }
 
     @Bean

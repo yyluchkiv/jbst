@@ -16,7 +16,7 @@ jasypt:
 # jbst
 jbst:
   server-configs:
-    name: ops-server
+    name: "ops-server"
     springdoc-enabled: false
     maven-configs:
       group-id: @project.groupId@
@@ -26,22 +26,19 @@ jbst:
     geo-locations-configs:
       enabled: false
   async-configs:
-    thread-name-prefix: ops-async
+    thread-name-prefix: "ops-async"
     threadsCorePoolPercentage: 50
     threadsMaxPoolPercentage: 100
   events-configs:
-    thread-name-prefix: ops-events
+    thread-name-prefix: "ops-events"
     threadsCorePoolPercentage: 50
     threadsMaxPoolPercentage: 100
   email-configs:
-    host: smtp.gmail.com
+    host: "smtp.gmail.com"
     port: 587
-    username: "<?>"
-    password: "<?>"
-    from: "<?>"
 
-# Ops Configs
-ops-configs:
+# ops
+ops:
   servers-configs:
     monitoring-configs:
       zone-id: "Europe/Kyiv"
@@ -67,13 +64,6 @@ ops-configs:
             key: status
             description: "Executes basic sequence of commands to verify required features"
             permissions: FOUNDERS
-#      LOGS:
-#        root-cmd: logs
-#        commands:
-#          BY_ID:
-#            key: $serverId
-#            description: "Provides endpoint to download $serverId logs archive"
-#            permissions: FOUNDERS,TEAM
       MONITORING:
         root-cmd: mon
         commands:

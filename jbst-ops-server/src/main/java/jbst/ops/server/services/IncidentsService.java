@@ -6,15 +6,17 @@ import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import jbst.ops.server.domain.incidents.ConcurrentIncidentStats;
 import jbst.ops.server.domain.incidents.IncidentTemplate;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.properties.OpsProperties;
+import jbst.ops.server.properties.configs.ThrowableFiltrationTraceConfigs;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
@@ -24,6 +26,7 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 import static jbst.foundation.incidents.domain.IncidentAttributes.IncidentsTypes.THROWABLE;
+import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.TRACE;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.ops.server.domain.incidents.IncidentTemplate.opsAnyIncident;
 import static jbst.ops.server.domain.incidents.OpsIncident.TIMES;
@@ -51,6 +54,29 @@ public class IncidentsService {
             SESSION_EXPIRED.toString(), opsAnyIncident(),
             REGISTER1.toString(), opsAnyIncident(),
             REGISTER1_FAILURE.toString(), opsAnyIncident()
+    );
+
+    private static final List<ThrowableFiltrationTraceConfigs> TRACES = List.of(
+            new ThrowableFiltrationTraceConfigs(
+                    false,
+                    "org.springframework.beans.factory.BeanCreationNotAllowedException",
+                    "Spring Events Redeployment Failure"
+            ),
+            new ThrowableFiltrationTraceConfigs(
+                    false,
+                    "Singleton bean creation not allowed while singletons of this factory are in destruction",
+                    "Spring Events Redeployment Failure"
+            ),
+            new ThrowableFiltrationTraceConfigs(
+                    true,
+                    "com.neovisionaries.ws.client.InsufficientDataException: The end of the stream has been reached unexpectedly",
+                    "Websocket Reconnect Issue"
+            ),
+            new ThrowableFiltrationTraceConfigs(
+                    true,
+                    "com.neovisionaries.ws.client.WebSocketException: The RSV1 bit of a frame is set unexpectedly",
+                    "Websocket Reconnect Issue"
+            )
     );
 
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
@@ -88,7 +114,7 @@ public class IncidentsService {
         if (incidentHasPredefinedHTML.present()) {
             this.registerIncidentHTMLBased(incident, env, incidentHasPredefinedHTML.value());
         } else {
-            var skip = this.opsProperties.getThrowableFiltrationConfigs().filterOnConfigsAndReturnSkip(incident);
+            var skip = this.filterOnConfigsAndReturnSkip(incident);
             if (!skip && this.isNew(incident, env)) {
                 this.registerIncidentPlainBased(incident, env);
             }
@@ -148,6 +174,23 @@ public class IncidentsService {
         } else {
             this.incidents.put(incidentOnEnv, new ConcurrentIncidentStats(env));
             return true;
+        }
+    }
+
+    public boolean filterOnConfigsAndReturnSkip(Incident incident) {
+        if (!THROWABLE.equals(incident.getType())) {
+            return false;
+        }
+        var trace = incident.getAttributes().get(TRACE).toString();
+        var traceConfigsOpt = TRACES.stream()
+                .filter(item -> trace.contains(item.getTrace()))
+                .findFirst();
+        if (traceConfigsOpt.isPresent()) {
+            var traceConfigs = traceConfigsOpt.get();
+            incident.setType(traceConfigs.getIncidentType());
+            return !traceConfigs.isEnabled();
+        } else {
+            return false;
         }
     }
 }

@@ -44,7 +44,7 @@ public class NotificationsCron extends AbstractBaseCron {
             cron = "0 0 * * * *",
             zone = "Europe/Kyiv"
     )
-    public void notificationInfrastructureFileSystemAnyProblemsCron() {
+    public void notifyFsFailures() {
         this.executeCron(
                 true,
                 () -> {
