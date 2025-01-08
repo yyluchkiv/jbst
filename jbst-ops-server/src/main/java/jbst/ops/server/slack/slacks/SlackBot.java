@@ -11,7 +11,6 @@ import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.exceptions.SlackInitializationException;
 import jbst.ops.server.properties.configs.SlackConfigs;
 import jbst.ops.server.slack.SlackMessagingService;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,8 +25,6 @@ public class SlackBot {
     protected final SlackConfigs configs;
     // Services
     protected final SlackMessagingService slackMessagingService;
-    // Utils
-    protected final MessagesUtils messagesUtils;
 
     public final void configure() throws SlackInitializationException {
         if (this.configs.isDisabled()) {

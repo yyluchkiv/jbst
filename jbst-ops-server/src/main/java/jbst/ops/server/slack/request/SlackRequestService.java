@@ -7,7 +7,6 @@ import jbst.ops.server.domain.keywords.SlackKeywords;
 import jbst.ops.server.exceptions.SlackRuntimeException;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.properties.atomics.Service;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ import static jbst.ops.server.utilities.MessagesUtility.getUnexpectedWarning;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SlackRequestService {
-    // Utilities
-    private final MessagesUtils messagesUtils;
     // Properties
     private final OpsProperties opsProperties;
 

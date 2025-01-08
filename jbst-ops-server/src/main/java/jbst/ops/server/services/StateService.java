@@ -3,7 +3,6 @@ package jbst.ops.server.services;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.utilities.MessagesUtility;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,45 +18,43 @@ import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.communicationMai
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class StateService {
 
-    private final AtomicBoolean atomicState = new AtomicBoolean(false);
+    private final AtomicBoolean configured = new AtomicBoolean(false);
 
     // Services
     private final MonitoringService monitoringService;
     // Messaging
     private final SlackMessagingService slackMessagingService;
-    // Utilities
-    private final MessagesUtils messagesUtils;
 
     public final boolean assertConfiguredCheck(SlackRequestContext slackRequestContext) {
         var monitoringServerConfigured = this.monitoringService.isConfigured();
-        var state = this.atomicState.get();
+        var state = this.configured.get();
 
-        // CASE: monitoring-server is NOT configured, previous state == false
+        // CASE: monitoring-service is NOT configured, previous state == false
         if (!monitoringServerConfigured && !state) {
             this.sendBotNotConfiguredYet(slackRequestContext);
         }
 
-        // CASE: monitoring-server is NOT configured, previous state == true
+        // CASE: monitoring-service is NOT configured, previous state == true
         if (!monitoringServerConfigured && state) {
-            this.atomicState.set(false);
+            this.configured.set(false);
             this.sendBotNotConfiguredYet(slackRequestContext);
         }
 
-        // CASE: monitoring-server is configured, previous state == false
+        // CASE: monitoring-service is configured, previous state == false
         if (monitoringServerConfigured && !state) {
-            this.atomicState.set(true);
+            this.configured.set(true);
             this.sendBotConfigured();
         }
 
-        // CASE: monitoring-server is configured, previous state == true - IGNORED, already bot configured
+        // CASE: monitoring-service is configured, previous state == true - IGNORED, already bot configured
 
         return monitoringServerConfigured;
     }
 
     public final void configure() {
-        var state = this.atomicState.get();
+        var state = this.configured.get();
         if (!state) {
-            this.atomicState.set(true);
+            this.configured.set(true);
             this.sendBotConfigured();
         }
     }

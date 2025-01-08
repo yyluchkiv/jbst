@@ -8,7 +8,6 @@ import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
 import jbst.ops.server.utilities.MessagesUtility;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,6 @@ public class NotificationsService {
     private final OptionMonitoringService optionMonitoringService;
     // Messaging
     private final SlackMessagingService slackMessagingService;
-    // Utilities
-    private final MessagesUtils messagesUtils;
     // Properties
     private final OpsProperties opsProperties;
 

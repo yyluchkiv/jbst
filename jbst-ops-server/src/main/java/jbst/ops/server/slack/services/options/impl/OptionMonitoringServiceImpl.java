@@ -11,7 +11,6 @@ import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
 import jbst.ops.server.utilities.MessagesUtility;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,6 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     private final MonitoringService monitoringService;
     // Messaging
     private final SlackMessagingService slackMessagingService;
-    // Utilities
-    private final MessagesUtils messagesUtils;
 
     @Override
     public void sendShow(SlackRequestContext slackRequestContext) {
@@ -79,7 +76,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
         this.slackMessagingService.sendAsync(
                 channelSlackMessage(
                         slackRequestContext,
-                        this.messagesUtils.getOverExpensiveOperation()
+                        MessagesUtility.getOverExpensiveOperation()
                 )
         );
         var servers = this.monitoringService.reloadServers();
@@ -95,12 +92,12 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     public void sendChanges(SlackRequestContext slackRequestContext, Servers servers) {
         if (servers.isAnyChanges()) {
             var serversHistory = servers.getValues().stream()
-                    .map(server -> this.messagesUtils.getServerHistoryMessage(server.name().value(), server.upHistory()))
+                    .map(server -> MessagesUtility.getServerHistoryMessage(server.name().value(), server.upHistory()))
                     .collect(Collectors.joining(NEWLINE));
             this.slackMessagingService.sendAsync(
                     communicationMainSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getServiceHeaderMessage(MONITORING_HISTORY_SERVICE) + NEWLINE + serversHistory
+                            MessagesUtility.getServiceHeaderMessage(MONITORING_HISTORY_SERVICE) + NEWLINE + serversHistory
                     )
             );
         }

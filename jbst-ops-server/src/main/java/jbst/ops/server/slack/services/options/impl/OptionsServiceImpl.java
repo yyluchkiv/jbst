@@ -9,7 +9,6 @@ import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionGatewayService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
 import jbst.ops.server.slack.services.options.OptionsService;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,6 @@ public class OptionsServiceImpl implements OptionsService {
     private final OptionGatewayService optionGatewayService;
     private final OptionMonitoringService optionMonitoringService;
     private final OptionFileSystemService optionFileSystemService;
-    // Utilities
-    private final MessagesUtils messagesUtils;
 
     private final Map<ServiceKeywordCommandKey, Consumer<SlackRequestContext>> optionsConfigs = new HashMap<>();
 

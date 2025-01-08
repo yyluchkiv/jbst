@@ -88,7 +88,3 @@ ops:
             permissions: FOUNDERS
   messages-configs:
     service-header: ":cloud: Service: *%s* :cloud:"
-    response-info: ":information_source: Executed operation response: *%s*"
-    response-warning: ":warning: Executed operation response. Please resolve provided warning!"
-    over-expensive-operation: ":arrows_counterclockwise: Current operation is over-expensive. Please wait a moment..."
-    server-history: "%s Server: *%s*"

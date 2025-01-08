@@ -1,6 +1,7 @@
 package jbst.ops.server.services;
 
 import jbst.foundation.domain.tuples.Tuple2;
+import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.services.emails.domain.EmailHTML;
@@ -10,7 +11,6 @@ import jbst.ops.server.domain.incidents.ConcurrentIncidentStats;
 import jbst.ops.server.domain.incidents.IncidentTemplate;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.properties.configs.ThrowableFiltrationTraceConfigs;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,23 +56,24 @@ public class IncidentsService {
             REGISTER1_FAILURE.toString(), opsAnyIncident()
     );
 
-    private static final List<ThrowableFiltrationTraceConfigs> TRACES = List.of(
-            new ThrowableFiltrationTraceConfigs(
+    // enabled <-> trace <-> incidentType
+    private static final List<Tuple3<Boolean, String, String>> TRACES = List.of(
+            new Tuple3<>(
                     false,
                     "org.springframework.beans.factory.BeanCreationNotAllowedException",
                     "Spring Events Redeployment Failure"
             ),
-            new ThrowableFiltrationTraceConfigs(
+            new Tuple3<>(
                     false,
                     "Singleton bean creation not allowed while singletons of this factory are in destruction",
                     "Spring Events Redeployment Failure"
             ),
-            new ThrowableFiltrationTraceConfigs(
+            new Tuple3<>(
                     true,
                     "com.neovisionaries.ws.client.InsufficientDataException: The end of the stream has been reached unexpectedly",
                     "Websocket Reconnect Issue"
             ),
-            new ThrowableFiltrationTraceConfigs(
+            new Tuple3<>(
                     true,
                     "com.neovisionaries.ws.client.WebSocketException: The RSV1 bit of a frame is set unexpectedly",
                     "Websocket Reconnect Issue"
@@ -183,12 +184,12 @@ public class IncidentsService {
         }
         var trace = incident.getAttributes().get(TRACE).toString();
         var traceConfigsOpt = TRACES.stream()
-                .filter(item -> trace.contains(item.getTrace()))
+                .filter(item -> trace.contains(item.b()))
                 .findFirst();
         if (traceConfigsOpt.isPresent()) {
             var traceConfigs = traceConfigsOpt.get();
-            incident.setType(traceConfigs.getIncidentType());
-            return !traceConfigs.isEnabled();
+            incident.setType(traceConfigs.c());
+            return !traceConfigs.a();
         } else {
             return false;
         }

@@ -12,7 +12,6 @@ import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.utilities.MessagesUtility;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,6 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
     private final MonitoringService monitoringService;
     // Messaging
     private final SlackMessagingService slackMessagingService;
-    // Utilities
-    private final MessagesUtils messagesUtils;
 
     @Override
     public void sendFsTables(SlackRequestContext slackRequestContext) {
@@ -59,7 +56,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
             this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getResponseInfo(Operation.FS_TABLES)
+                            Operation.FS_TABLES.getMessage()
                     )
             );
             successesRows.sort(PERCENTAGE_REVERSED);
@@ -77,7 +74,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
         }
 
         if (!isEmpty(warningTables)) {
-            warningTables.add(0, this.messagesUtils.getResponseWarnings());
+            warningTables.add(0, MessagesUtility.getResponseWarnings());
             this.slackMessagingService.sendAsync(
                     channelSlackMessages(
                             slackRequestContext,
@@ -88,7 +85,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
 
         if (isEmpty(successesRows) && isEmpty(warningTables)) {
             List<String> messages = new ArrayList<>();
-            messages.add(this.messagesUtils.getResponseInfo(Operation.FS_TABLES));
+            messages.add(Operation.FS_TABLES.getMessage());
             messages.add(SlackMessageFileSystemTable.getNoFsTable());
             this.slackMessagingService.sendAsync(
                     channelSlackMessages(

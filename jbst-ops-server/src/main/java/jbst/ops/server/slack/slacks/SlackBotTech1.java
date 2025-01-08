@@ -8,7 +8,6 @@ import jbst.ops.server.services.StateService;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.request.SlackRequestService;
 import jbst.ops.server.slack.services.options.OptionsService;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,14 +36,12 @@ public class SlackBotTech1 extends SlackBot {
             StateService stateService,
             SlackMessagingService slackMessagingService,
             OptionsService optionsService,
-            MessagesUtils messagesUtils,
             OpsProperties opsProperties
     ) throws SlackInitializationException {
         super(
                 SlackTeam.TECH1,
                 opsProperties.getTech1SlackConfigs(),
-                slackMessagingService,
-                messagesUtils
+                slackMessagingService
         );
 //        this.slackServiceTech1 = slackServiceTech1;
         this.slackRequestService = slackRequestService;

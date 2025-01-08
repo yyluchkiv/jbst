@@ -4,7 +4,6 @@ import jbst.ops.server.domain.keywords.ServiceKeywordCommandKey;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.exceptions.SlackRuntimeException;
 import jbst.ops.server.slack.services.keywords.KeywordsService;
-import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ import static jbst.ops.server.utilities.MessagesUtility.getUnexpectedWarning;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class KeywordsServiceImpl implements KeywordsService {
-
-    // Utilities
-    private final MessagesUtils messagesUtils;
 
     @Override
     public void sendMessagesBy(SlackRequestContext slackRequestContext, Map<ServiceKeywordCommandKey, Consumer<SlackRequestContext>> configs) {
