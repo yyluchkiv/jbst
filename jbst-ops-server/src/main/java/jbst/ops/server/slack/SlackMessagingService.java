@@ -26,11 +26,11 @@ public class SlackMessagingService {
 
     @Autowired
     public SlackMessagingService(OpsProperties opsProperties) {
-        var slackConfigs1 = opsProperties.getTech1SlackConfigs();
-        var slackConfigs2 = opsProperties.getSmartAppsSlackConfigs();
-        this.slacksServices.put(slackConfigs1.getTeam(), new SlackClient(slackConfigs1));
-        this.slacksServices.put(slackConfigs2.getTeam(), new SlackClient(slackConfigs2));
-        this.configure();
+//        var slackConfigs1 = opsProperties.getTech1SlackConfigs();
+//        var slackConfigs2 = opsProperties.getSmartAppsSlackConfigs();
+//        this.slacksServices.put(slackConfigs1.getTeam(), new SlackClient(slackConfigs1));
+//        this.slacksServices.put(slackConfigs2.getTeam(), new SlackClient(slackConfigs2));
+//        this.configure();
     }
 
     public final void sendAsync(SlackTeamEvent slackTeamEvent) {

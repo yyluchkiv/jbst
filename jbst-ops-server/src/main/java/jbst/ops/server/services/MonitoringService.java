@@ -3,8 +3,8 @@ package jbst.ops.server.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.feigns.github.GithubClient;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.ops.server.domain.computed.ComputedServer;
-import jbst.ops.server.domain.computed.ComputedServerBeans;
+import jbst.ops.server.domain.computed.ServerInfinityTimerTask;
+import jbst.ops.server.domain.computed.ServerInfinityTimerTaskSpringBeans;
 import jbst.ops.server.domain.computed.ComputedServers;
 import jbst.ops.server.domain.configs.OpsConfigs;
 import jbst.ops.server.domain.configs.ServerConfigs;
@@ -48,7 +48,7 @@ public class MonitoringService {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Computing
-    private final ComputedServerBeans computedServerBeans;
+    private final ServerInfinityTimerTaskSpringBeans serverInfinityTimerTaskSpringBeans;
     // Clients
     private final GithubClient githubClient;
     // Mapper
@@ -65,14 +65,14 @@ public class MonitoringService {
 
     public final boolean isConfigured() {
         return this.servers.values().stream()
-                .filter(ComputedServer::isSshRequired)
+                .filter(ServerInfinityTimerTask::isSshRequired)
                 .allMatch(server -> nonNull(server.getFileSystemMetadata()));
     }
 
     public final Servers getServers() {
         return new Servers(
                 this.servers.values().stream()
-                        .map(ComputedServer::getServer)
+                        .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -81,7 +81,7 @@ public class MonitoringService {
         return new Servers(
                 this.servers.values().stream()
                         .filter(server -> nonNull(team) && team.equals(server.getServerConfigs().team()))
-                        .map(ComputedServer::getServer)
+                        .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -89,8 +89,8 @@ public class MonitoringService {
     public final Servers getServersAnyChanges() {
         return new Servers(
                 this.servers.values().stream()
-                        .filter(ComputedServer::isAnyChanges)
-                        .map(ComputedServer::getServer)
+                        .filter(ServerInfinityTimerTask::isAnyChanges)
+                        .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -99,7 +99,7 @@ public class MonitoringService {
         return new Servers(
                 this.servers.values().stream()
                         .filter(server -> nonNull(server.getServerConfigs().springActuatorBasicAuthenticationConfigs()))
-                        .map(ComputedServer::getServer)
+                        .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -107,8 +107,8 @@ public class MonitoringService {
     public final Servers getServersSshRequired() {
         return new Servers(
                 this.servers.values().stream()
-                        .filter(ComputedServer::isSshRequired)
-                        .map(ComputedServer::getServer)
+                        .filter(ServerInfinityTimerTask::isSshRequired)
+                        .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -116,9 +116,9 @@ public class MonitoringService {
     public final Servers getServersSshRequiredAnyProblemsOnFsMetadata() {
         return new Servers(
                 this.servers.values().stream()
-                        .filter(ComputedServer::isSshRequired)
-                        .filter(ComputedServer::fileSystemMetadataProblems)
-                        .map(ComputedServer::getServer)
+                        .filter(ServerInfinityTimerTask::isSshRequired)
+                        .filter(ServerInfinityTimerTask::fileSystemMetadataProblems)
+                        .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -133,14 +133,14 @@ public class MonitoringService {
         return this.getServers().isAnyChanges();
     }
 
-    public final ComputedServer getComputedServer(Integer serverId) {
+    public final ServerInfinityTimerTask getComputedServer(Integer serverId) {
         return this.servers.values().stream()
                 .filter(server -> nonNull(serverId) && serverId.equals(server.getId()))
                 .findFirst()
                 .orElseThrow(() -> new ServerNotFoundException(serverId));
     }
 
-    public final ComputedServer getComputedServer(Integer serverId, Team team) {
+    public final ServerInfinityTimerTask getComputedServer(Integer serverId, Team team) {
         return this.servers.values().stream()
                 .filter(server -> nonNull(team) && team.equals(server.getServerConfigs().team()))
                 .filter(server -> nonNull(serverId) && serverId.equals(server.getId()))
@@ -206,6 +206,10 @@ public class MonitoringService {
         );
         var json = readFileToString(configuration, defaultCharset());
 
+        System.out.println("---");
+        System.out.println(json);
+        System.out.println("---");
+
         var opsConfigs = this.objectMapper.readValue(json, OpsConfigs.class);
 
         LOGGER.info("Read GitHub configuration, filtering servers: `{}`. Status: `{}`", opsConfigs.getServersCount(), STARTED);
@@ -223,10 +227,10 @@ public class MonitoringService {
         return new ComputedServers(
                 opsConfigs.serversConfigs().stream()
                         .map(serverConfigs ->
-                                new ComputedServer(
+                                new ServerInfinityTimerTask(
                                         serverConfigs,
                                         this.opsProperties.getServersMonitoringConfigs(),
-                                        this.computedServerBeans,
+                                        this.serverInfinityTimerTaskSpringBeans,
                                         gc.getRsaKeysBaseLocation(),
                                         opsConfigs.getMappedSshKeys(),
                                         opsConfigs.getMappedTeamMembers()

@@ -51,7 +51,7 @@ public class SlackBotTech1 extends SlackBot {
         this.stateService = stateService;
         this.optionsService = optionsService;
         this.opsProperties = opsProperties;
-        this.configure();
+//        this.configure();
     }
 
 //    @Override

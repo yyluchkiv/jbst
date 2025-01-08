@@ -49,11 +49,11 @@ public class Server {
         try {
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
             this.monitoringService.readOpsConfigs();
-            this.checkServersAnyChangesJob.checkServersAnyChanges();
-            this.incidentsService.configureCleanCronJob();
+//            this.checkServersAnyChangesJob.checkServersAnyChanges();
+//            this.incidentsService.configureCleanCronJob();
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         } catch (IOException | RuntimeException ex) {
-            // no actions
+            LOGGER.error("Server startup failure", ex);
         }
     }
 }

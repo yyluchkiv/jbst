@@ -1,0 +1,167 @@
+{
+	"subcontractors": [{
+		"subcontractorId": "yurii.luchkiv",
+		"email": "yurii.luchkiv@gmail.com"
+	}, {
+		"subcontractorId": "pavlo.pastushok",
+		"email": "pavlo.pastushok@gmail.com"
+	}, {
+		"subcontractorId": "tech1.people",
+		"email": "people.tech1.io@gmail.com"
+	}],
+	"sshKeys": [{
+		"name": "tech1-master-rsa",
+		"path": "/servers/tech1/",
+		"password": "pfpwCYCp2UTcsHA62Cfq"
+	}, {
+		"name": "smart-apps-master-rsa",
+		"path": "/servers/smart-apps/",
+		"password": "bFNt5VkQ6uSR1LdZxRe3"
+	}],
+	"teams": ["TECH1", "SMART_APPS", "NK", "TECHSTRAP"],
+	"serversConfigs": [{
+		"disableMonitoring": "true",
+		"team": "TECH1",
+		"type": "SERVER_AS_PING",
+		"name": "unavailable-server",
+		"ipAddress": "https://example.com:81"
+	}, {
+		"disableMonitoring": "true",
+		"team": "SMART_APPS",
+		"type": "SERVER_AS_FULL_SPRING_BOOT",
+		"name": "tech1-platform-server",
+		"ipAddress": "http://localhost:8484",
+		"allowedErrorMessages": ["404"],
+		"springActuatorBasicAuthenticationConfigs": {
+			"healthEndpoint": "/api/actuator/health",
+			"infoEndpoint": "/api/actuator/info"
+		}
+	}, {
+		"team": "TECH1",
+		"type": "SERVER_AS_FULL_SPRING_BOOT",
+		"name": "tech1-gateway-server",
+		"ipAddress": "http://localhost:8971",
+		"springActuatorBasicAuthenticationConfigs": {
+			"username": "admin",
+			"password": "admin",
+			"healthEndpoint": "/actuator/health",
+			"infoEndpoint": "/actuator/info"
+		}
+	}, {
+		"team": "TECH1",
+		"type": "SERVER_AS_PING",
+		"name": "tech1-sonar",
+		"ipAddress": "http://18.184.174.29"
+	}, {
+		"team": "TECH1",
+		"type": "SERVER_AS_FULL_SPRING_BOOT",
+		"name": "ops-server",
+		"ipAddress": "http://195.72.146.234:8973",
+		"aliases": ["127.0.0.1", "localhost"],
+		"allowedErrorMessages": ["404"],
+		"springActuatorBasicAuthenticationConfigs": {
+			"username": "Incident_8x6CBStCLPU7tYbJ9TfR",
+			"password": "bDafwLsnKUv9Lh9p6V65",
+			"healthEndpoint": "/actuator/health",
+			"infoEndpoint": "/actuator/info"
+		},
+		"incidentsNotificationsConfigs": {
+			"enabled": true,
+			"memberIds": [
+				"yurii.luchkiv",
+				"tech1.people"
+			],
+			"usernames": [
+				"admin11",
+				"tech1",
+				"qav31",
+				"qav32",
+				"qav33",
+				"qav34"
+			],
+			"typesConfigs": {
+				"Authentication Login": {
+					"anyUsername": false
+				},
+				"Authentication Login Failure": {
+					"anyUsername": false
+				},
+				"Authentication Logout": {
+					"anyUsername": false
+				},
+				"Session Refreshed": {
+					"anyUsername": false
+				},
+				"Session Expired": {
+					"anyUsername": false
+				},
+				"Xchanges Authenticated Websocket Disconnect": {
+					"anyUsername": false
+				},
+				"Xchanges Authenticated Websocket Reconnect": {
+					"anyUsername": false
+				},
+				"Manually Restarted Shared Xchange": {
+					"anyUsername": false
+				},
+				"Register1": {
+					"anyUsername": true
+				},
+				"Register1 Failure": {
+					"anyUsername": true
+				}
+			}
+		}
+	}, {
+		"disableMonitoring": "true",
+		"team": "SMART_APPS",
+		"type": "SERVER_AS_FULL_SPRING_BOOT",
+		"name": "trader-v2-prod-server",
+		"ipAddress": "https://prod.smartrader.xyz/api",
+		"aliases": ["159.65.115.223"],
+		"allowedErrorMessages": ["403"],
+		"sshConfigs": {
+			"username": "root",
+			"host": "159.65.115.223",
+			"sshKey": "smart-apps-master-rsa",
+			"logs": {
+				"destinations": ["/root/logs/debug.log", "/root/logs/error.log"],
+				"archive": "/root/logs.zip"
+			},
+			"fileSystem": {
+				"filters": {
+					"skipByName": ["/dev/loop0", "/dev/loop1", "/dev/loop2", "/dev/loop3", "/dev/loop4", "/dev/loop5", "/dev/loop6", "/dev/loop7", "/dev/loop8", "/dev/loop9", "/dev/loop10"]
+				}
+			}
+		},
+		"springActuatorBasicAuthenticationConfigs": {
+			"healthEndpoint": "/actuator/health",
+			"infoEndpoint": "/actuator/info"
+		}
+	}, {
+		"team": "SMART_APPS",
+		"type": "SERVER_AS_FULL_SPRING_BOOT",
+		"name": "trader-v3-qa-server",
+		"ipAddress": "https://frankfurt.v3.qa.smartrader.xyz/api",
+		"aliases": ["164.92.188.186"],
+		"allowedErrorMessages": ["401"],
+		"sshConfigs": {
+			"username": "root",
+			"host": "164.92.188.186",
+			"sshKey": "smart-apps-master-rsa",
+			"logs": {
+				"destinations": ["/root/logs/debug.log", "/root/logs/error.log"],
+				"archive": "/root/logs.zip"
+			},
+			"fileSystem": {
+				"filters": {
+					"skipByName": ["/dev/loop0", "/dev/loop1", "/dev/loop2", "/dev/loop3", "/dev/loop4", "/dev/loop5", "/dev/loop6", "/dev/loop7", "/dev/loop8", "/dev/loop9", "/dev/loop10"]
+				}
+			}
+		},
+		"springActuatorBasicAuthenticationConfigs": {
+			"healthEndpoint": "/actuator/health",
+			"infoEndpoint": "/actuator/info"
+		}
+	}]
+}

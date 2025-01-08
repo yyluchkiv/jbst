@@ -31,7 +31,7 @@ public class SlackBotSmartApps extends SlackBot {
                 slackMessagingService,
                 messagesUtils
         );
-        this.configure();
+//        this.configure();
     }
 
 //    @Override

@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Getter
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ComputedServerBeans {
+public class ServerInfinityTimerTaskSpringBeans {
     // REST Client
     private final RestTemplate restTemplate;
 }

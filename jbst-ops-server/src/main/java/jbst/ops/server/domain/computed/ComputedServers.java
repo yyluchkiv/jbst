@@ -3,6 +3,6 @@ package jbst.ops.server.domain.computed;
 import java.util.List;
 
 public record ComputedServers(
-        List<ComputedServer> values
+        List<ServerInfinityTimerTask> values
 ) {
 }

@@ -49,11 +49,11 @@ import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.inci
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @ToString
-public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
+public class ServerInfinityTimerTask extends AbstractServerComputingInfinityTimerTask {
     // Configs [base]
     private final ServerConfigs serverConfigs;
     private final ServersMonitoringConfigs serversMonitoringConfigs;
-    private final ComputedServerBeans beans;
+    private final ServerInfinityTimerTaskSpringBeans beans;
 
     // Configs [processed]
     private final Integer id;
@@ -71,10 +71,10 @@ public class ComputedServer extends AbstractServerComputingInfinityTimerTask {
     private Long onlineLastUpdatedAt;
     private Long sshLastUpdatedAt;
 
-    public ComputedServer(
+    public ServerInfinityTimerTask(
             ServerConfigs serverConfigs,
             ServersMonitoringConfigs serversMonitoringConfigs,
-            ComputedServerBeans beans,
+            ServerInfinityTimerTaskSpringBeans beans,
             String rsaKeysBaseLocation,
             Map<String, SshRsaKey> mappedSshKeys,
             Map<SubcontractorId, Subcontractor> teamMembers
