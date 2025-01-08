@@ -9,7 +9,6 @@ import jbst.ops.server.domain.keywords.ServiceKeywordCommandKey;
 import jbst.ops.server.domain.keywords.SlackKeywords;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.properties.configs.Tech1SlackConfigs;
-import jbst.ops.server.slack.services.SlackServiceTech1;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -68,25 +67,27 @@ public class SlackRequestContext {
         this.permissions = new Permissions();
     }
 
-    public void addSlackKeywords(SlackServiceTech1 slackServiceTech1, Tech1SlackConfigs tech1SlackConfigs, SlackKeywords slackKeywords) throws SlackApiException, IOException {
-        this.slackKeywords = slackKeywords;
+    // TODO [YYL] fixme
 
-        var conversationsInfo = slackServiceTech1.getSlackClient().conversationsInfo(
-                ConversationsInfoRequest.builder()
-                        .channel(this.userChannel)
-                        .build()
-        );
-        var channelName = conversationsInfo.getChannel().getName();
-
-        var communication = tech1SlackConfigs.getCommunication();
-        if (!this.isDirect && communication.isEnabled() && communication.getChannel().equals(channelName)) {
-            this.permissions.addFoundersPermission();
-        }
-        if (!this.isDirect) {
-            var teamOpt = tech1SlackConfigs.getTeamBy(channelName);
-            teamOpt.ifPresent(teamCommunication -> this.permissions.addTeamPermission(teamCommunication.getTeam()));
-        }
-    }
+//    public void addSlackKeywords(SlackServiceTech1 slackServiceTech1, Tech1SlackConfigs tech1SlackConfigs, SlackKeywords slackKeywords) throws SlackApiException, IOException {
+//        this.slackKeywords = slackKeywords;
+//
+//        var conversationsInfo = slackServiceTech1.getSlackClient().conversationsInfo(
+//                ConversationsInfoRequest.builder()
+//                        .channel(this.userChannel)
+//                        .build()
+//        );
+//        var channelName = conversationsInfo.getChannel().getName();
+//
+//        var communication = tech1SlackConfigs.getCommunication();
+//        if (!this.isDirect && communication.isEnabled() && communication.getChannel().equals(channelName)) {
+//            this.permissions.addFoundersPermission();
+//        }
+//        if (!this.isDirect) {
+//            var teamOpt = tech1SlackConfigs.getTeamBy(channelName);
+//            teamOpt.ifPresent(teamCommunication -> this.permissions.addTeamPermission(teamCommunication.getTeam()));
+//        }
+//    }
 
     public boolean hasAnyPermissions() {
         return nonNull(this.permissions) && !isEmpty(this.permissions.getAccesses());

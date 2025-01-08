@@ -19,7 +19,7 @@ import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.directSlackMessa
 
 @AllArgsConstructor
 @Getter
-public abstract class SlackApp {
+public abstract class SlackBot {
     // Configs
     protected final SlackTeam team;
     protected final SlackConfigs configs;

@@ -10,7 +10,6 @@ import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.services.StateService;
 import jbst.ops.server.slack.messaging.SlackMessagingService;
 import jbst.ops.server.slack.request.SlackRequestService;
-import jbst.ops.server.slack.services.SlackServiceTech1;
 import jbst.ops.server.slack.services.options.OptionsService;
 import jbst.ops.server.utils.MessagesUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +22,10 @@ import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMess
 
 @Slf4j
 @Component
-public class SlackAppTech1 extends SlackApp {
+public class SlackBotTech1 extends SlackBot {
 
     // Slack
-    private final SlackServiceTech1 slackServiceTech1;
+//    private final SlackServiceTech1 slackServiceTech1;
     private final SlackRequestService slackRequestService;
     // State
     private final StateService stateService;
@@ -36,8 +35,8 @@ public class SlackAppTech1 extends SlackApp {
     private final OpsProperties opsProperties;
 
     @Autowired
-    public SlackAppTech1(
-            SlackServiceTech1 slackServiceTech1,
+    public SlackBotTech1(
+//            SlackServiceTech1 slackServiceTech1,
             SlackRequestService slackRequestService,
             StateService stateService,
             SlackMessagingService slackMessagingService,
@@ -51,7 +50,7 @@ public class SlackAppTech1 extends SlackApp {
                 slackMessagingService,
                 messagesUtils
         );
-        this.slackServiceTech1 = slackServiceTech1;
+//        this.slackServiceTech1 = slackServiceTech1;
         this.slackRequestService = slackRequestService;
         this.stateService = stateService;
         this.optionsService = optionsService;
@@ -61,18 +60,19 @@ public class SlackAppTech1 extends SlackApp {
 
     @Override
     public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
-        var slackRequestContext = new SlackRequestContext(this.team, payload.getEvent());
-        try {
-            var slackKeywords = this.slackRequestService.getSlackKeywords(payload.getEvent());
-            slackRequestContext.addSlackKeywords(
-                    this.slackServiceTech1,
-                    this.opsProperties.getTech1SlackConfigs(),
-                    slackKeywords
-            );
-            this.sendProcessedMessage(slackRequestContext);
-        } catch (SlackApiException | IOException | RuntimeException ex) {
-            this.sendExceptionMessage(slackRequestContext, ex);
-        }
+        // TODO [YYL] fixme
+//        var slackRequestContext = new SlackRequestContext(this.team, payload.getEvent());
+//        try {
+//            var slackKeywords = this.slackRequestService.getSlackKeywords(payload.getEvent());
+//            slackRequestContext.addSlackKeywords(
+//                    this.slackServiceTech1,
+//                    this.opsProperties.getTech1SlackConfigs(),
+//                    slackKeywords
+//            );
+//            this.sendProcessedMessage(slackRequestContext);
+//        } catch (SlackApiException | IOException | RuntimeException ex) {
+//            this.sendExceptionMessage(slackRequestContext, ex);
+//        }
     }
 
     // ================================================================================================================

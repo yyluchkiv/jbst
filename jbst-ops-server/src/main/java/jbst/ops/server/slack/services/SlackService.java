@@ -5,6 +5,7 @@ import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.request.files.FilesUploadRequest;
+import jbst.ops.server.domain.servers.TeamV2;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
 import jbst.ops.server.properties.configs.SlackConfigs;
@@ -15,17 +16,13 @@ import java.io.IOException;
 import java.util.List;
 
 @Slf4j
-public abstract class SlackService {
+public class SlackService {
 
-    @Getter
-    private final SlackTeam slackTeam;
+    private final SlackConfigs slackConfigs;
     @Getter
     private final MethodsClient slackClient;
 
-    protected final SlackConfigs slackConfigs;
-
-    protected SlackService(SlackTeam slackTeam, SlackConfigs slackConfigs) {
-        this.slackTeam = slackTeam;
+    public SlackService(SlackConfigs slackConfigs) {
         this.slackConfigs = slackConfigs;
         this.slackClient = Slack.getInstance().methods(slackConfigs.getBotToken());
     }

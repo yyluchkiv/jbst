@@ -1,10 +1,10 @@
 package jbst.ops.server.slack.messaging;
 
-import jbst.ops.server.domain.slack.teams.SlackTeam;
+import jbst.ops.server.domain.servers.TeamV2;
 import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
+import jbst.ops.server.properties.OpsProperties;
+import jbst.ops.server.properties.configs.Tech1SlackConfigs;
 import jbst.ops.server.slack.services.SlackService;
-import jbst.ops.server.slack.services.SlackServiceSmartApps;
-import jbst.ops.server.slack.services.SlackServiceTech1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +24,14 @@ public class SlackMessagingService {
     protected final BlockingQueue<List<SlackTeamEvent>> sendingQueue = new LinkedBlockingQueue<>();
 
     // Services
-    private final Map<SlackTeam, SlackService> slacksServices = new ConcurrentHashMap<>();
+    private final Map<TeamV2, SlackService> slacksServices = new ConcurrentHashMap<>();
 
     @Autowired
-    public SlackMessagingService(SlackServiceSmartApps slackServiceSmartApps, SlackServiceTech1 slackServiceTech1) {
-        this.slacksServices.put(slackServiceSmartApps.getSlackTeam(), slackServiceSmartApps);
-        this.slacksServices.put(slackServiceTech1.getSlackTeam(), slackServiceTech1);
+    public SlackMessagingService(OpsProperties opsProperties) {
+        var slackConfigs1 = opsProperties.getTech1SlackConfigs();
+        var slackConfigs2 = opsProperties.getSmartAppsSlackConfigs();
+        this.slacksServices.put(slackConfigs1.getTeam(), new SlackService(slackConfigs1));
+        this.slacksServices.put(slackConfigs2.getTeam(), new SlackService(slackConfigs2));
         this.configure();
     }
 

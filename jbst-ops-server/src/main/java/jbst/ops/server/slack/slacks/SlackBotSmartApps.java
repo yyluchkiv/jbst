@@ -17,10 +17,10 @@ import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMess
 
 @Slf4j
 @Component
-public class SlackAppSmartApps extends SlackApp {
+public class SlackBotSmartApps extends SlackBot {
 
     @Autowired
-    public SlackAppSmartApps(
+    public SlackBotSmartApps(
             SlackMessagingService slackMessagingService,
             MessagesUtils messagesUtils,
             OpsProperties opsProperties
