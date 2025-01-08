@@ -21,4 +21,8 @@ public class OpsConstants {
         // TODO [YYL] SMART_APPS -> SMART_TRADER
         public static final String SMART_APPS = "SMART_APPS";
     }
+
+    public static class Logs {
+        public static final String PREFIX = "[Ops]";
+    }
 }

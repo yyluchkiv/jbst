@@ -48,7 +48,7 @@ public class Server {
     public void start() {
         try {
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
-            this.monitoringService.readOpsConfigs();
+            this.monitoringService.readServers();
 //            this.checkServersAnyChangesJob.checkServersAnyChanges();
 //            this.incidentsService.configureCleanCronJob();
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));

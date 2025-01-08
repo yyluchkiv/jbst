@@ -1,11 +1,13 @@
 package jbst.ops.server.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.feigns.github.GithubClient;
 import jbst.foundation.incidents.domain.Incident;
+import jbst.ops.server.constants.OpsConstants;
 import jbst.ops.server.domain.computed.ServerInfinityTimerTask;
 import jbst.ops.server.domain.computed.ServerInfinityTimerTaskSpringBeans;
-import jbst.ops.server.domain.computed.ComputedServers;
+import jbst.ops.server.domain.computed.ServerInfinityTimerTasks;
 import jbst.ops.server.domain.configs.OpsConfigs;
 import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.incidents.OpsIncident;
@@ -36,6 +38,7 @@ import static java.nio.charset.Charset.defaultCharset;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.ops.server.constants.OpsConstants.Logs.PREFIX;
 import static org.apache.commons.io.FileUtils.copyURLToFile;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -56,11 +59,12 @@ public class MonitoringService {
     // Properties
     private final OpsProperties opsProperties;
 
-    private ComputedServers servers = new ComputedServers(new ArrayList<>());
+    private ServerInfinityTimerTasks servers = new ServerInfinityTimerTasks(new ArrayList<>());
 
-    public final void readOpsConfigs() throws IOException {
-        LOGGER.warn("[Server]: read ops configs");
-        this.servers = this.readComputedServers();
+    public final void readServers() throws IOException {
+        LOGGER.info(PREFIX + " read servers. Status: {}", STARTED.formatAnsi());
+        this.servers = this.readGithubConfigs();
+        LOGGER.info(PREFIX + " read servers. Status: {}", COMPLETED.formatAnsi());
     }
 
     public final boolean isConfigured() {
@@ -123,9 +127,10 @@ public class MonitoringService {
         );
     }
 
+    @Deprecated
     @SneakyThrows
     public final Servers reloadServers() {
-        this.servers = this.readComputedServers();
+        this.servers = this.readGithubConfigs();
         return this.getServers();
     }
 
@@ -186,7 +191,7 @@ public class MonitoringService {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private ComputedServers readComputedServers() throws IOException {
+    private ServerInfinityTimerTasks readGithubConfigs() throws IOException {
         var gc = this.opsProperties.getGithubConfigs();
 
         var configuration = createTempFile("github-", "-contents");
@@ -206,15 +211,15 @@ public class MonitoringService {
         );
         var json = readFileToString(configuration, defaultCharset());
 
-        System.out.println("---");
+        System.out.println("====================================================================================");
         System.out.println(json);
-        System.out.println("---");
+        System.out.println("====================================================================================");
 
         var opsConfigs = this.objectMapper.readValue(json, OpsConfigs.class);
 
-        LOGGER.info("Read GitHub configuration, filtering servers: `{}`. Status: `{}`", opsConfigs.getServersCount(), STARTED);
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Status: {}", opsConfigs.getServersCount(), STARTED.formatAnsi());
         opsConfigs.serversConfigs().removeIf(ServerConfigs::disableMonitoring);
-        LOGGER.info("Read GitHub configuration, filtering servers: `{}`. Status: `{}`", opsConfigs.getServersCount(), COMPLETED);
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Status: {}", opsConfigs.getServersCount(), COMPLETED.formatAnsi());
 
         if (opsConfigs.isAnyUnexpectedServersTeams()) {
             this.applicationEventPublisher.publishEvent(opsConfigs.getIncidentUnexpectedTeams());
@@ -224,7 +229,7 @@ public class MonitoringService {
             this.applicationEventPublisher.publishEvent(opsConfigs.getIncidentUnexpectedSshKeys());
         }
 
-        return new ComputedServers(
+        return new ServerInfinityTimerTasks(
                 opsConfigs.serversConfigs().stream()
                         .map(serverConfigs ->
                                 new ServerInfinityTimerTask(

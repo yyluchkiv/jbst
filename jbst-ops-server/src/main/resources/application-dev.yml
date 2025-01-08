@@ -25,6 +25,7 @@ ops-configs:
     repo: "<?>"
     token: "<?>"
     content: servers-dev.json
+#    content: jbst-ops-server/pom.xml
     rsa-keys-base-location: ~/Dropbox/Tech1/rsa-keys
   recipients-configs:
     to:
