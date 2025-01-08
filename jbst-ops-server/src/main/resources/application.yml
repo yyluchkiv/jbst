@@ -42,15 +42,6 @@ jbst:
 
 # Ops Configs
 ops-configs:
-  crons-configs:
-    servers-or-fs-notification-cron:
-      enabled: true
-      expression: "0 0 8,14,21 * * *"
-      zone-id: "Europe/Kyiv"
-    fs-any-problems-notification-cron:
-      enabled: true
-      expression: "0 0 * * * *"
-      zone-id: "Europe/Kyiv"
   check-servers-any-changes-job-configs:
     enabled: true
     configuration:

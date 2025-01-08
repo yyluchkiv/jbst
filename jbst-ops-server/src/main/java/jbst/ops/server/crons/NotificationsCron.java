@@ -1,15 +1,15 @@
 package jbst.ops.server.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
+import jbst.ops.server.properties.OpsProperties;
+import jbst.ops.server.services.IncidentsProcessor;
+import jbst.ops.server.services.MonitoringService;
+import jbst.ops.server.services.NotificationsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.services.IncidentsProcessor;
-import jbst.ops.server.services.MonitoringService;
-import jbst.ops.server.services.NotificationsService;
 
 @Slf4j
 @Service
@@ -20,8 +20,6 @@ public class NotificationsCron extends AbstractBaseCron {
     private final IncidentsProcessor incidentsProcessor;
     private final MonitoringService monitoringService;
     private final NotificationsService notificationsService;
-    // Properties
-    private final OpsProperties opsProperties;
 
     @Override
     public void processException(Exception ex) {
@@ -29,40 +27,26 @@ public class NotificationsCron extends AbstractBaseCron {
     }
 
     @Scheduled(
-            cron = "${ops-configs.crons-configs.servers-or-fs-notification-cron.expression}",
-            zone = "${ops-configs.crons-configs.servers-or-fs-notification-cron.zone-id}"
-    )
-    public void serversCron() {
-        this.executeCron(
-                this.opsProperties.getCronsConfigs().getServersOrFsNotificationCron().isEnabled(),
-                () -> {
-                    var servers = this.monitoringService.getServers();
-                    this.notificationsService.notifyShow(servers);
-                }
-        );
-    }
-
-    @Scheduled(
-            cron = "${ops-configs.crons-configs.servers-or-fs-notification-cron.expression}",
-            zone = "${ops-configs.crons-configs.servers-or-fs-notification-cron.zone-id}"
+            cron = "0 0 8,14,21 * * *",
+            zone = "Europe/Kyiv"
     )
     public void fsCron() {
         this.executeCron(
-                this.opsProperties.getCronsConfigs().getServersOrFsNotificationCron().isEnabled(),
+                true,
                 () -> {
-                    var servers = this.monitoringService.getServersSshRequiredAnyProblemsOnFsMetadata();
-                    this.notificationsService.notifyFs(servers);
+                    this.notificationsService.notifyShow(this.monitoringService.getServers());
+                    this.notificationsService.notifyFs(this.monitoringService.getServersSshRequiredAnyProblemsOnFsMetadata());
                 }
         );
     }
 
     @Scheduled(
-            cron = "${ops-configs.crons-configs.fs-any-problems-notification-cron.expression}",
-            zone = "${ops-configs.crons-configs.fs-any-problems-notification-cron.zone-id}"
+            cron = "0 0 * * * *",
+            zone = "Europe/Kyiv"
     )
     public void notificationInfrastructureFileSystemAnyProblemsCron() {
         this.executeCron(
-                this.opsProperties.getCronsConfigs().getFsAnyProblemsNotificationCron().isEnabled(),
+                true,
                 () -> {
                     var servers = this.monitoringService.getServersSshRequiredAnyProblemsOnFsMetadata();
                     if (servers.isAnyPresent()) {

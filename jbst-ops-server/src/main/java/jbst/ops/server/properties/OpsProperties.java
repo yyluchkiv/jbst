@@ -18,7 +18,6 @@ public class OpsProperties implements PriorityOrdered {
     private RemoteServer serverConfigs;
     private ServersConfigs serversConfigs;
     // TODO [YYL] clean: monitoring
-    private CronsConfigs cronsConfigs;
     private ScheduledJob checkServersAnyChangesJobConfigs;
     private ServersMonitoringConfigs serversMonitoringConfigs;
     // TODO [YYL] clean: incidents
