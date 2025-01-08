@@ -18,7 +18,7 @@
 		"path": "/servers/smart-apps/",
 		"password": "bFNt5VkQ6uSR1LdZxRe3"
 	}],
-	"teams": ["TECH1", "SMART_APPS", "NK", "TECHSTRAP"],
+	"teams": ["TECH1", "SMARTTRADER"],
 	"serversConfigs": [{
 		"disableMonitoring": "true",
 		"team": "TECH1",
@@ -27,9 +27,9 @@
 		"ipAddress": "https://example.com:81"
 	}, {
 		"disableMonitoring": "true",
-		"team": "SMART_APPS",
+		"team": "SMARTTRADER",
 		"type": "SERVER_AS_FULL_SPRING_BOOT",
-		"name": "tech1-platform-server",
+		"name": "smart-trader-server",
 		"ipAddress": "http://localhost:8484",
 		"allowedErrorMessages": ["404"],
 		"springActuatorBasicAuthenticationConfigs": {
@@ -38,83 +38,11 @@
 		}
 	}, {
 		"team": "TECH1",
-		"type": "SERVER_AS_FULL_SPRING_BOOT",
-		"name": "tech1-gateway-server",
-		"ipAddress": "http://localhost:8971",
-		"springActuatorBasicAuthenticationConfigs": {
-			"username": "admin",
-			"password": "admin",
-			"healthEndpoint": "/actuator/health",
-			"infoEndpoint": "/actuator/info"
-		}
-	}, {
-		"team": "TECH1",
 		"type": "SERVER_AS_PING",
 		"name": "tech1-sonar",
 		"ipAddress": "http://18.184.174.29"
 	}, {
-		"team": "TECH1",
-		"type": "SERVER_AS_FULL_SPRING_BOOT",
-		"name": "ops-server",
-		"ipAddress": "http://195.72.146.234:8973",
-		"aliases": ["127.0.0.1", "localhost"],
-		"allowedErrorMessages": ["404"],
-		"springActuatorBasicAuthenticationConfigs": {
-			"username": "Incident_8x6CBStCLPU7tYbJ9TfR",
-			"password": "bDafwLsnKUv9Lh9p6V65",
-			"healthEndpoint": "/actuator/health",
-			"infoEndpoint": "/actuator/info"
-		},
-		"incidentsNotificationsConfigs": {
-			"enabled": true,
-			"memberIds": [
-				"yurii.luchkiv",
-				"tech1.people"
-			],
-			"usernames": [
-				"admin11",
-				"tech1",
-				"qav31",
-				"qav32",
-				"qav33",
-				"qav34"
-			],
-			"typesConfigs": {
-				"Authentication Login": {
-					"anyUsername": false
-				},
-				"Authentication Login Failure": {
-					"anyUsername": false
-				},
-				"Authentication Logout": {
-					"anyUsername": false
-				},
-				"Session Refreshed": {
-					"anyUsername": false
-				},
-				"Session Expired": {
-					"anyUsername": false
-				},
-				"Xchanges Authenticated Websocket Disconnect": {
-					"anyUsername": false
-				},
-				"Xchanges Authenticated Websocket Reconnect": {
-					"anyUsername": false
-				},
-				"Manually Restarted Shared Xchange": {
-					"anyUsername": false
-				},
-				"Register1": {
-					"anyUsername": true
-				},
-				"Register1 Failure": {
-					"anyUsername": true
-				}
-			}
-		}
-	}, {
-		"disableMonitoring": "true",
-		"team": "SMART_APPS",
+		"team": "SMARTTRADER",
 		"type": "SERVER_AS_FULL_SPRING_BOOT",
 		"name": "trader-v2-prod-server",
 		"ipAddress": "https://prod.smartrader.xyz/api",
@@ -139,7 +67,7 @@
 			"infoEndpoint": "/actuator/info"
 		}
 	}, {
-		"team": "SMART_APPS",
+		"team": "SMARTTRADER",
 		"type": "SERVER_AS_FULL_SPRING_BOOT",
 		"name": "trader-v3-qa-server",
 		"ipAddress": "https://frankfurt.v3.qa.smartrader.xyz/api",
