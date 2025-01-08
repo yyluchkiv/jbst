@@ -15,6 +15,7 @@ public class OpsConstants {
         public static final String SPRING_BOOT_ACTUATOR_SERVICE = "spring-boot-actuator-service";
     }
 
+    @Deprecated
     public static class Teams {
         public static final String TECH1 = "TECH1";
         // TODO [YYL] SMART_APPS -> SMART_TRADER
