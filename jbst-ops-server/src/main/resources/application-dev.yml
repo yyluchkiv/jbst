@@ -22,10 +22,9 @@ ops-configs:
       username: admin
       password: admin
   github-configs:
-    repo: "<?>"
-    token: "<?>"
-    content: servers-dev.json
-#    content: jbst-ops-server/pom.xml
+    repo: "jbst"
+    token: "?"
+    content: "ops-server-dev.json"
     rsa-keys-base-location: ~/Dropbox/Tech1/rsa-keys
   recipients-configs:
     to:

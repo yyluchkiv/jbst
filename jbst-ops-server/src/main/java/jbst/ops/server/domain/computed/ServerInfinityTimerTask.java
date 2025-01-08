@@ -4,12 +4,15 @@ import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.ssh.SshSessionException;
+import jbst.foundation.domain.states.classic.AbstractClassicStateManager;
+import jbst.foundation.domain.states.classic.ClassicState;
+import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.feigns.spring.SpringBootClient;
 import jbst.foundation.utilities.ssh.SshUtility;
+import jbst.ops.server.constants.OpsConstants;
 import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
 import jbst.ops.server.domain.servers.*;
-import jbst.ops.server.domain.tasks.AbstractServerComputingInfinityTimerTask;
 import jbst.ops.server.properties.configs.ServersMonitoringConfigs;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,12 +31,16 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static jbst.foundation.domain.constants.JbstConstants.Strings.UNDEFINED;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
+import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
@@ -49,7 +56,29 @@ import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.inci
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @ToString
-public class ServerInfinityTimerTask extends AbstractServerComputingInfinityTimerTask {
+public class ServerInfinityTimerTask {
+    public static final SchedulerConfiguration EVERY_1_HOUR = new SchedulerConfiguration(1L, 60L, TimeUnit.MINUTES);
+
+    public static class StateManager extends AbstractClassicStateManager {
+        private final ServerConfigs serverConfigs;
+
+        public StateManager(ClassicState state, ServerConfigs serverConfigs) {
+            super(state);
+            this.serverConfigs = serverConfigs;
+        }
+
+        // TODO [YYL, v1.11+] add color -> states
+        @Override
+        public String getLogKeyword() {
+            return OpsConstants.Logs.PREFIX + " InfinityTimerTask: {}. State: {} → {}";
+        }
+
+        @Override
+        public String getLogId() {
+            return this.serverConfigs.name() + "@" + this.serverConfigs.team();
+        }
+    }
+
     // Configs [base]
     private final ServerConfigs serverConfigs;
     private final ServersMonitoringConfigs serversMonitoringConfigs;
@@ -71,6 +100,15 @@ public class ServerInfinityTimerTask extends AbstractServerComputingInfinityTime
     private Long onlineLastUpdatedAt;
     private Long sshLastUpdatedAt;
 
+    // TimerTask
+    private final StateManager stateManager;
+    public final StateManager getLock() {
+        return this.stateManager;
+    }
+
+    private final ScheduledExecutorService onlineSES = newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService sshSES = newSingleThreadScheduledExecutor();
+
     public ServerInfinityTimerTask(
             ServerConfigs serverConfigs,
             ServersMonitoringConfigs serversMonitoringConfigs,
@@ -79,7 +117,7 @@ public class ServerInfinityTimerTask extends AbstractServerComputingInfinityTime
             Map<String, SshRsaKey> mappedSshKeys,
             Map<SubcontractorId, Subcontractor> teamMembers
     ) {
-        super(serverConfigs);
+        this.stateManager = new StateManager(ClassicState.CREATED, serverConfigs);
 
         // Configs [base]
         this.serverConfigs = serverConfigs;
@@ -131,9 +169,33 @@ public class ServerInfinityTimerTask extends AbstractServerComputingInfinityTime
         }
 
         this.onlineTick();
+        // TODO [YYL] postpone SSH at least for 15 seconds
         this.sshTick();
 
-        this.start(this.sshRequired);
+        synchronized (this.getLock()) {
+            if (!this.stateManager.getState().getPermissions().startPermitted()) {
+                return;
+            }
+            this.stateManager.start();
+
+            this.onlineSES.scheduleWithFixedDelay(
+                    this::onlineTick,
+                    EVERY_30_SECONDS.initialDelay(),
+                    EVERY_30_SECONDS.delay(),
+                    EVERY_30_SECONDS.unit()
+            );
+
+            if (this.sshRequired) {
+                this.sshSES.scheduleWithFixedDelay(
+                        this::sshTick,
+                        EVERY_1_HOUR.initialDelay(),
+                        EVERY_1_HOUR.delay(),
+                        EVERY_1_HOUR.unit()
+                );
+            }
+
+            this.stateManager.onActivation();
+        }
     }
 
     public void addUpEvent(Boolean event) {
@@ -229,8 +291,7 @@ public class ServerInfinityTimerTask extends AbstractServerComputingInfinityTime
     // COMPUTING: Online
     // ================================================================================================================
 
-    @Override
-    public void onlineTick() {
+    public final void onlineTick() {
         try {
             var serverType = this.serverConfigs.type();
             if (serverType.isServerPing()) {
@@ -301,9 +362,7 @@ public class ServerInfinityTimerTask extends AbstractServerComputingInfinityTime
     // ================================================================================================================
     // COMPUTING: SSH
     // ================================================================================================================
-
-    @Override
-    public void sshTick() {
+    public final void sshTick() {
         try {
             if (this.sshRequired) {
                 this.ssh();

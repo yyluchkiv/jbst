@@ -211,15 +211,11 @@ public class MonitoringService {
         );
         var json = readFileToString(configuration, defaultCharset());
 
-        System.out.println("====================================================================================");
-        System.out.println(json);
-        System.out.println("====================================================================================");
-
         var opsConfigs = this.objectMapper.readValue(json, OpsConfigs.class);
 
-        LOGGER.info(PREFIX + " github configuration. Servers: {}. Status: {}", opsConfigs.getServersCount(), STARTED.formatAnsi());
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", opsConfigs.getServersCount(), STARTED.formatAnsi());
         opsConfigs.serversConfigs().removeIf(ServerConfigs::disableMonitoring);
-        LOGGER.info(PREFIX + " github configuration. Servers: {}. Status: {}", opsConfigs.getServersCount(), COMPLETED.formatAnsi());
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", opsConfigs.getServersCount(), COMPLETED.formatAnsi());
 
         if (opsConfigs.isAnyUnexpectedServersTeams()) {
             this.applicationEventPublisher.publishEvent(opsConfigs.getIncidentUnexpectedTeams());
