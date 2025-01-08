@@ -24,6 +24,7 @@ public class Tech1SlackConfigs extends AbstractTogglePropertyConfigs implements 
     private final String botToken;
     @MandatoryToggleProperty
     private final String appToken;
+    @Deprecated
     @MandatoryToggleProperty
     private final SlackMainChannelCommunication communication;
     @MandatoryToggleProperty

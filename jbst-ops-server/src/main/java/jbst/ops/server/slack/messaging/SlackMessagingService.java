@@ -1,6 +1,5 @@
 package jbst.ops.server.slack.messaging;
 
-import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
 import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
 import jbst.ops.server.slack.services.SlackService;
@@ -17,13 +16,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_250_MILLISECONDS;
 
 @Slf4j
 @Service
 public class SlackMessagingService {
-    private static final SchedulerConfiguration MESSAGING_INTERVAL = new SchedulerConfiguration(250L, 250L, MILLISECONDS);
-
     protected final BlockingQueue<List<SlackTeamEvent>> sendingQueue = new LinkedBlockingQueue<>();
 
     // Services
@@ -36,7 +33,22 @@ public class SlackMessagingService {
         this.configure();
     }
 
-    public final void configure() {
+    public final void send(SlackTeamEvent slackTeamEvent) {
+        this.send(List.of(slackTeamEvent));
+    }
+
+    public final void send(List<SlackTeamEvent> slackTeamEvents) {
+        try {
+            this.sendingQueue.put(slackTeamEvents);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    // ================================================================================================================
+    // PRIVATE METHODS
+    // ================================================================================================================
+    private final void configure() {
         newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> {
             try {
                 var slackTeamEvents = this.sendingQueue.take();
@@ -62,18 +74,6 @@ public class SlackMessagingService {
             } catch (RuntimeException ex2) {
                 // ignore
             }
-        }, MESSAGING_INTERVAL.initialDelay(), MESSAGING_INTERVAL.delay(), MESSAGING_INTERVAL.unit());
-    }
-
-    public final void send(SlackTeamEvent slackTeamEvent) {
-        this.send(List.of(slackTeamEvent));
-    }
-
-    public final void send(List<SlackTeamEvent> slackTeamEvents) {
-        try {
-            this.sendingQueue.put(slackTeamEvents);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+        }, EVERY_250_MILLISECONDS.initialDelay(), EVERY_250_MILLISECONDS.delay(), EVERY_250_MILLISECONDS.unit());
     }
 }

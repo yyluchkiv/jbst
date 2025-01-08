@@ -11,6 +11,7 @@ public record SchedulerConfiguration(
         long delay,
         TimeUnit unit
 ) {
+    public static final SchedulerConfiguration EVERY_250_MILLISECONDS = new SchedulerConfiguration(250L, 250L, MILLISECONDS);
     public static final SchedulerConfiguration EVERY_5_SECONDS = new SchedulerConfiguration(5L, 5L, SECONDS);
     public static final SchedulerConfiguration EVERY_15_SECONDS = new SchedulerConfiguration(15L, 15L, SECONDS);
     public static final SchedulerConfiguration EVERY_30_SECONDS = new SchedulerConfiguration(30L, 30L, SECONDS);

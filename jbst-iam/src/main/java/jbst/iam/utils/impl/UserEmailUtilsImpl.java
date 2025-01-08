@@ -104,9 +104,9 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         );
     }
 
-    // =================================================================================================================
+    // ================================================================================================================
     // PRIVATE METHODS
-    // =================================================================================================================
+    // ================================================================================================================
     private String getServerOrFallbackJbstTemplateName(String serverTemplateName, String jbstTemplateName) {
         var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
         return resource.exists() ? serverTemplateName : jbstTemplateName;
