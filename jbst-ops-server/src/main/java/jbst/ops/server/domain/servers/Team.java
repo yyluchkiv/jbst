@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import static jbst.ops.server.constants.OpsConstants.Teams.SMART_APPS;
 import static jbst.ops.server.constants.OpsConstants.Teams.TECH1;
 
+@Deprecated
 public record Team(@NotNull String value) {
     @JsonCreator
     public static Team of(String value) {

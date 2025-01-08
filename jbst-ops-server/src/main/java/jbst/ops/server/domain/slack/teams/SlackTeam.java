@@ -1,5 +1,6 @@
 package jbst.ops.server.domain.slack.teams;
 
+@Deprecated
 public enum SlackTeam {
     TECH1,
     SMART_APPS;
