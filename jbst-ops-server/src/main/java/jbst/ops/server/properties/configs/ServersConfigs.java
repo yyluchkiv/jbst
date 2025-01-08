@@ -17,6 +17,8 @@ public class ServersConfigs extends AbstractPropertiesConfigs {
     private final Mode mode;
     @MandatoryProperty
     private final String rsaKeysBaseLocation;
+    @MandatoryProperty
+    private final ServersMonitoringConfigs monitoringConfigs;
     @NonMandatoryProperty
     private final GithubConfigs githubConfigs;
 

@@ -221,7 +221,7 @@ public class MonitoringService {
                         .map(serverConfigs ->
                                 new ServerInfinityTimerTask(
                                         serverConfigs,
-                                        this.opsProperties.getServersMonitoringConfigs(),
+                                        this.opsProperties.getServersConfigs().getMonitoringConfigs(),
                                         this.serverInfinityTimerTaskSpringBeans,
                                         this.opsProperties.getServersConfigs().getRsaKeysBaseLocation(),
                                         opsConfigs.getMappedSshKeys(),

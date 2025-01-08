@@ -19,7 +19,6 @@ public class OpsProperties implements PriorityOrdered {
     private ServersConfigs serversConfigs;
     // TODO [YYL] clean: monitoring
     private ScheduledJob checkServersAnyChangesJobConfigs;
-    private ServersMonitoringConfigs serversMonitoringConfigs;
     // TODO [YYL] clean: incidents
     private RecipientsConfigs recipientsConfigs;
     private ThrowableFiltrationConfigs throwableFiltrationConfigs;

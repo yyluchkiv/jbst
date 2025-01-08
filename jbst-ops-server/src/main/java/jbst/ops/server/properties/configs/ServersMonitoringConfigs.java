@@ -1,5 +1,6 @@
 package jbst.ops.server.properties.configs;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.math.BigDecimal;
 import java.time.ZoneId;
+
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -26,5 +30,14 @@ public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
 
     public boolean isHideIP() {
         return this.hideIP;
+    }
+
+    @Override
+    public void assertProperties(PropertyId propertyId) {
+        super.assertProperties(propertyId);
+        assertTrueOrThrow(
+                isFirstValueGreater(this.fileSystemThreshold, this.fileSystemFilter),
+                "Attribute `fileSystemThreshold` is expected to be greater than `fileSystemFilter`"
+        );
     }
 }

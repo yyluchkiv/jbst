@@ -26,9 +26,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
-
 @Configuration
 @Import({
         JbstConfigurationJasypt.class,
@@ -50,12 +47,6 @@ public class ConfigurationBeans {
     public void init() {
         this.opsProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
         this.opsProperties.getServersConfigs().assertProperties(new PropertyId("serversConfigs"));
-
-        var serversConfigs = this.opsProperties.getServersMonitoringConfigs();
-        assertTrueOrThrow(
-                isFirstValueGreater(serversConfigs.getFileSystemThreshold(), serversConfigs.getFileSystemFilter()),
-                "Attribute `serversConfigs.fileSystemThreshold` is expected to be greater than `serversConfigs.fileSystemFilter`"
-        );
     }
 
     @Bean
