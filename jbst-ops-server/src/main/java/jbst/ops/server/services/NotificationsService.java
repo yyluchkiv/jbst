@@ -7,6 +7,7 @@ import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
+import jbst.ops.server.utilities.MessagesUtility;
 import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -89,7 +90,7 @@ public class NotificationsService {
     }
 
     public final void notifyIncident(OpsIncident opsIncident) {
-        var incidentTuple = this.messagesUtils.getIncidentTuple(opsIncident);
+        var incidentTuple = MessagesUtility.getIncidentTuple(opsIncident);
         if (opsIncident.getServer().team().isTech1()) {
             this.slackMessagingService.sendAsync(
                     communicationMainSlackIncident(

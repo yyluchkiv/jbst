@@ -11,6 +11,7 @@ import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
+import jbst.ops.server.utilities.MessagesUtility;
 import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -110,7 +111,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
     @Override
     public void sendFsStatusOrFailures(SlackRequestContext slackRequestContext, Servers servers, SlackMessageType slackMessageType) {
         var anyPresent = servers.isAnyPresent();
-        var status = this.messagesUtils.getServiceMessage(anyPresent, FILE_SYSTEM_SERVICE);
+        var status = MessagesUtility.getServiceMessage(anyPresent, FILE_SYSTEM_SERVICE);
         if (anyPresent) {
             var tables = servers.getValues().stream()
                     .map(SlackMessageFileSystemTable::new)

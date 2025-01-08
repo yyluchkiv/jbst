@@ -87,11 +87,6 @@ ops:
             description: "Shows servers file systems metadata"
             permissions: FOUNDERS
   messages-configs:
-    help: ":keyboard: Options infrastructure.bot :keyboard:"
-    bot-not-configured-yet: ":rocket: infrastructure.bot is not configured yet. Please wait a moment... :arrows_counterclockwise:"
-    bot-configured: ":rocket: infrastructure.bot is now configured. Enjoy! :white_check_mark:"
-    service-ok: ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:"
-    service-failure: ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:"
     service-header: ":cloud: Service: *%s* :cloud:"
     response-info: ":information_source: Executed operation response: *%s*"
     response-warning: ":warning: Executed operation response. Please resolve provided warning!"

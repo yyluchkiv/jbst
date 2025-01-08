@@ -5,6 +5,7 @@ import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.keywords.Operation;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.properties.configs.MessagesConfigs;
+import jbst.ops.server.utilities.MessagesUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,54 +24,6 @@ public class MessagesUtils {
     @Autowired
     public MessagesUtils(OpsProperties opsProperties) {
         this.messagesConfigs = opsProperties.getMessagesConfigs();
-    }
-
-    public String getHelp() {
-        return this.messagesConfigs.getHelp();
-    }
-
-    public String getBotNotConfiguredYet() {
-        return this.messagesConfigs.getBotNotConfiguredYet();
-    }
-
-    public String getBotConfigured() {
-        return this.messagesConfigs.getBotConfigured();
-    }
-
-    public String getServiceMessage(boolean anyProblems, String serviceName) {
-        return anyProblems ? this.getServiceFailureMessage(serviceName) : this.getServiceOkMessage(serviceName);
-    }
-
-    public String getServiceOkMessage(String serviceName) {
-        return String.format(
-                this.messagesConfigs.getServiceOk(),
-                serviceName
-        );
-    }
-
-    public String getServiceFailureMessage(String serviceName) {
-        return String.format(
-                this.messagesConfigs.getServiceFailure(),
-                serviceName
-        );
-    }
-
-    public String getServicesMessage(boolean anyProblems, String parentServiceName, String subServiceName) {
-        return anyProblems ? this.getServicesFailureMessage(parentServiceName, subServiceName) : this.getServicesOkMessage(parentServiceName, subServiceName);
-    }
-
-    public String getServicesOkMessage(String parentServiceName, String subServiceName) {
-        return String.format(
-                this.messagesConfigs.getServiceOk(),
-                parentServiceName + ", " + subServiceName
-        );
-    }
-
-    public String getServicesFailureMessage(String parentServiceName, String subServiceName) {
-        return String.format(
-                this.messagesConfigs.getServiceFailure(),
-                parentServiceName + ", " + subServiceName
-        );
     }
 
     public String getServiceHeaderMessage(String serviceName) {
@@ -100,14 +53,6 @@ public class MessagesUtils {
                 this.messagesConfigs.getServerHistory(),
                 Boolean.TRUE.equals(upHistory.get(upHistory.size() - 1)) ? ":white_check_mark:" : ":no_entry:",
                 serverName
-        );
-    }
-
-    public Tuple2<String, String> getIncidentTuple(OpsIncident opsIncident) {
-        var incident = ":ladybug: Please review incident details and *take actions* to stabilize production environment :ladybug:";
-        return new Tuple2<>(
-                "<!here>" + TWO_NEWLINE + incident + NEWLINE,
-                opsIncident.getPlainMessage()
         );
     }
 }

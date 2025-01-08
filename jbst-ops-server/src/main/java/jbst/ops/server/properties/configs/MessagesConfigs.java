@@ -13,16 +13,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class MessagesConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
-    private final String help;
-    @MandatoryProperty
-    private final String botNotConfiguredYet;
-    @MandatoryProperty
-    private final String botConfigured;
-    @MandatoryProperty
-    private final String serviceOk;
-    @MandatoryProperty
-    private final String serviceFailure;
-    @MandatoryProperty
     private final String serviceHeader;
     @MandatoryProperty
     private final String responseInfo;

@@ -6,7 +6,7 @@ import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionGatewayService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
-import jbst.ops.server.utils.MessagesUtils;
+import jbst.ops.server.utilities.MessagesUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,6 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
     private final OptionMonitoringService optionMonitoringService;
     // Messaging
     private final SlackMessagingService slackMessagingService;
-    // Utilities
-    private final MessagesUtils messagesUtils;
     // Properties
     private final OpsProperties opsProperties;
 
@@ -62,7 +60,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
         this.slackMessagingService.sendAsync(
                 channelSlackMessage(
                         slackRequestContext,
-                        this.messagesUtils.getHelp() + NEWLINE + getSlackMessage(sb.toString().trim())
+                        MessagesUtility.getHelp() + NEWLINE + getSlackMessage(sb.toString().trim())
                 )
         );
     }
@@ -75,7 +73,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
             this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getServiceMessage(true, MONITORING_SERVICE)
+                            MessagesUtility.getServiceMessage(true, MONITORING_SERVICE)
                     )
             );
         }
@@ -89,7 +87,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
             this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getServiceMessage(true, SPRING_BOOT_ACTUATOR_SERVICE)
+                            MessagesUtility.getServiceMessage(true, SPRING_BOOT_ACTUATOR_SERVICE)
                     )
             );
         }
@@ -103,7 +101,7 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
             this.slackMessagingService.sendAsync(
                     channelSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getServiceMessage(true, FILE_SYSTEM_SERVICE)
+                            MessagesUtility.getServiceMessage(true, FILE_SYSTEM_SERVICE)
                     )
             );
         }

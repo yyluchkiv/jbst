@@ -10,6 +10,7 @@ import jbst.ops.server.properties.atomics.SlackTeamChannelCommunication;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
+import jbst.ops.server.utilities.MessagesUtility;
 import jbst.ops.server.utils.MessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     @Override
     public void sendSpringBootActuators(SlackRequestContext slackRequestContext) {
         var servers = this.monitoringService.getServersSpringBoot();
-        var message = this.messagesUtils.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATOR_SERVICE) +
+        var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATOR_SERVICE) +
                 NEWLINE +
                 new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
         this.slackMessagingService.sendAsync(
@@ -118,7 +119,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
             this.slackMessagingService.sendAsync(
                     communicationMainSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getServiceMessage(false, MONITORING_SERVICE)
+                            MessagesUtility.getServiceMessage(false, MONITORING_SERVICE)
                     )
             );
         }
@@ -140,7 +141,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
             this.slackMessagingService.sendAsync(
                     communicationTeamSlackMessage(
                             slackRequestContext,
-                            this.messagesUtils.getServiceMessage(false, MONITORING_SERVICE),
+                            MessagesUtility.getServiceMessage(false, MONITORING_SERVICE),
                             slackTeamChannelCommunication
                     )
             );
@@ -155,7 +156,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
                 .map(SlackMessageServerTable::new)
                 .map(SlackMessageServerTable::getValue)
                 .collect(Collectors.toList());
-        messages.add(0, this.messagesUtils.getServiceMessage(servers.isAnyProblems(), MONITORING_SERVICE));
+        messages.add(0, MessagesUtility.getServiceMessage(servers.isAnyProblems(), MONITORING_SERVICE));
         return messages;
     }
 
@@ -166,7 +167,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
             }
             return slackRequestContext.getSlackTeam().isTech1();
         };
-        return this.messagesUtils.getServiceMessage(true, MONITORING_SERVICE) +
+        return MessagesUtility.getServiceMessage(true, MONITORING_SERVICE) +
                 NEWLINE +
                 new SlackMessageServerTable(servers.getServersFailure(slackTeamPredicate).getValues()).getValue();
     }
