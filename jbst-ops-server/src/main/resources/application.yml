@@ -45,12 +45,6 @@ ops:
       hide-ip: false
       file-system-filter: 25
       file-system-threshold: 75
-  tech1-slack-configs:
-    communication:
-      enabled: true
-  smart-apps-slack-configs:
-    communication:
-      enabled: true
   keywords-configs:
     services:
       GATEWAY:
@@ -86,5 +80,3 @@ ops:
             key: show
             description: "Shows servers file systems metadata"
             permissions: FOUNDERS
-  messages-configs:
-    service-header: ":cloud: Service: *%s* :cloud:"

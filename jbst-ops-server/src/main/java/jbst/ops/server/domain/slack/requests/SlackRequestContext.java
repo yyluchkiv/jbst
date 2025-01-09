@@ -1,19 +1,14 @@
 package jbst.ops.server.domain.slack.requests;
 
-import com.slack.api.methods.SlackApiException;
-import com.slack.api.methods.request.conversations.ConversationsInfoRequest;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
 import jbst.ops.server.domain.authorities.Permissions;
 import jbst.ops.server.domain.keywords.ServiceKeywordCommandKey;
 import jbst.ops.server.domain.keywords.SlackKeywords;
 import jbst.ops.server.domain.slack.teams.SlackTeam;
-import jbst.ops.server.properties.configs.Tech1SlackConfigs;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.io.IOException;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;

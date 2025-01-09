@@ -22,13 +22,15 @@ public class SlackBotsService {
     private final OpsProperties opsProperties;
 
     // Services
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final Map<TeamV2, SlackBot> bots = new ConcurrentHashMap<>();
 
     public final void initialize() {
-        var sc1 = this.opsProperties.getTech1SlackConfigs();
-        var sc2 = this.opsProperties.getSmartAppsSlackConfigs();
-        this.bots.put(sc1.getTeam(), new SlackBot(sc1, this.slackMessagingService, new SlackClient(sc1)));
-        this.bots.put(sc2.getTeam(), new SlackBot(sc2, this.slackMessagingService, new SlackClient(sc2)));
-        this.bots.values().forEach(SlackBot::initialize);
+        var slacksConfigs = this.opsProperties.getSlacksConfigs().getValues();
+        slacksConfigs.forEach(sc -> {
+            var bot = new SlackBot(this.slackMessagingService, new SlackClient(sc));
+            bot.initialize();
+            this.bots.put(sc.getTeam(), bot);
+        });
     }
 }

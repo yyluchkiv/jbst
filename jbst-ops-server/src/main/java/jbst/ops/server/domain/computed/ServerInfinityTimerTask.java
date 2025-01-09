@@ -13,7 +13,7 @@ import jbst.ops.server.constants.OpsConstants;
 import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
 import jbst.ops.server.domain.servers.*;
-import jbst.ops.server.properties.configs.ServersMonitoringConfigs;
+import jbst.ops.server.properties.base.ServersMonitoringConfigs;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

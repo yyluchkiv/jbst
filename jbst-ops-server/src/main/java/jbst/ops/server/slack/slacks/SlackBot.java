@@ -7,34 +7,27 @@ import com.slack.api.bolt.socket_mode.SocketModeApp;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
 import jbst.ops.server.domain.slack.teams.SlackTeamEventContext;
-import jbst.ops.server.properties.configs.SlackConfigs;
 import jbst.ops.server.slack.SlackClient;
 import jbst.ops.server.slack.SlackMessagingService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import static jbst.ops.server.utilities.MessagesUtility.getReadOnlyWarning;
 
 @Slf4j
 public record SlackBot(
-        SlackConfigs configs,
         SlackMessagingService slackMessagingService,
         SlackClient slackClient
 ) {
 
     public void initialize() {
-        if (this.configs.isDisabled()) {
-            return;
-        }
         try {
             var app = new App(
                     AppConfig.builder()
-                            .singleTeamBotToken(this.configs.getBotToken())
+                            .singleTeamBotToken(this.slackClient.getConfigs().getBotToken())
                             .build()
             );
 
-            var socketModeApp = new SocketModeApp(this.configs.getAppToken(), app);
+            var socketModeApp = new SocketModeApp(this.slackClient.getConfigs().getAppToken(), app);
             socketModeApp.startAsync();
 
             socketModeApp.getApp().event(AppMentionEvent.class, (req, ctx) -> {
@@ -47,7 +40,7 @@ public record SlackBot(
                 return ctx.ack();
             });
         } catch (Exception ex) {
-            LOGGER.error("Slack initialization failure. Configs: {}", this.configs, ex);
+            LOGGER.error("Slack initialization failure. Configs: {}", this.slackClient.getConfigs(), ex);
             throw new RuntimeException(ex);
         }
     }
@@ -55,7 +48,7 @@ public record SlackBot(
     public void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
         this.slackClient.sendDirectOrChannel(
                 new SlackTeamEventContext(
-                        this.configs,
+                        this.slackClient.getConfigs(),
                         payload.getEvent(),
                         getReadOnlyWarning()
                 )
