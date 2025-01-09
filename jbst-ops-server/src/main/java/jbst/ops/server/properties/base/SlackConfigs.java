@@ -19,4 +19,15 @@ public class SlackConfigs extends AbstractPropertyConfigs {
     private final String botToken;
     @MandatoryProperty
     private final String appToken;
+    @MandatoryProperty
+    private final Mode communicationMode;
+
+    public boolean isCommunicationReadOnly() {
+        return Mode.READONLY.equals(this.communicationMode);
+    }
+
+    public enum Mode {
+        OPERATIONAL,
+        READONLY
+    }
 }

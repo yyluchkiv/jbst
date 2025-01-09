@@ -5,7 +5,7 @@ import jbst.ops.server.exceptions.SlackInitializationException;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.services.StateService;
 import jbst.ops.server.slack.SlackMessagingService;
-import jbst.ops.server.slack.request.SlackRequestService;
+import jbst.ops.server.slack.SlackRequestService;
 import jbst.ops.server.slack.services.options.OptionsService;
 import lombok.extern.slf4j.Slf4j;
 

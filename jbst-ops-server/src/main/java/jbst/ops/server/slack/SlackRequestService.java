@@ -1,4 +1,4 @@
-package jbst.ops.server.slack.request;
+package jbst.ops.server.slack;
 
 import com.slack.api.model.event.AppMentionEvent;
 import jakarta.annotation.PostConstruct;

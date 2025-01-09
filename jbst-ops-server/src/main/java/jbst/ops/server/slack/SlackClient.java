@@ -26,10 +26,6 @@ public class SlackClient {
         this.methodsClient = Slack.getInstance().methods(this.configs.getBotToken());
     }
 
-    public final void sendDirectOrChannel(SlackTeamEventContext event) {
-        this.sendMessage(event.message(), event.messageEvent().getChannel());
-    }
-
     @Deprecated(forRemoval = true)
     public final void sendDirectOrChannelV2(SlackTeamEventV1 event) {
 //        if (this.slackConfigs.isDisabled()) {

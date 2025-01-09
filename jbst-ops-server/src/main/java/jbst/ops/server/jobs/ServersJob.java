@@ -1,4 +1,4 @@
-package jbst.ops.server.crons;
+package jbst.ops.server.jobs;
 
 import jbst.foundation.domain.properties.base.SchedulerConfiguration;
 import jbst.ops.server.services.MonitoringService;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-@Deprecated
+// TODO [YYL] encapsulate in monitoring-service
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -5,10 +5,6 @@ public enum SlackMessageType {
     COMMUNICATION_MAIN,
     COMMUNICATION_TEAM;
 
-    public boolean isChannel() {
-        return CHANNEL.equals(this);
-    }
-
     public boolean isCommunicationMain() {
         return COMMUNICATION_MAIN.equals(this);
     }

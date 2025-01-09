@@ -57,10 +57,6 @@ public class SlackMessagingService {
 
                     var messageType = slackTeamEvent.getMessageType();
 
-                    if (messageType.isChannel()) {
-                        slackService.sendDirectOrChannelV2(slackTeamEvent);
-                    }
-
                     if (messageType.isCommunicationMain()) {
                         slackService.sendCommunicationMain(slackTeamEvent);
                     }

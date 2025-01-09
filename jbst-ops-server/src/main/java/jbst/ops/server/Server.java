@@ -11,12 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
-import jbst.ops.server.crons.ServersJob;
+import jbst.ops.server.jobs.ServersJob;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.services.IncidentsService;
 import jbst.ops.server.services.MonitoringService;
-
-import java.io.IOException;
 
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;

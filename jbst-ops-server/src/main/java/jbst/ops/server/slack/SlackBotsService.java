@@ -1,8 +1,9 @@
 package jbst.ops.server.slack;
 
+import com.slack.api.Slack;
 import jbst.ops.server.domain.servers.TeamV2;
+import jbst.ops.server.domain.slack.bots.SlackBot;
 import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.slack.slacks.SlackBot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class SlackBotsService {
     public final void initialize() {
         var slacksConfigs = this.opsProperties.getSlacksConfigs().getValues();
         slacksConfigs.forEach(sc -> {
-            var bot = new SlackBot(this.slackMessagingService, new SlackClient(sc));
+            var bot = new SlackBot(sc, this.slackMessagingService, Slack.getInstance().methods(sc.getBotToken()));
             bot.initialize();
             this.bots.put(sc.getTeam(), bot);
         });
