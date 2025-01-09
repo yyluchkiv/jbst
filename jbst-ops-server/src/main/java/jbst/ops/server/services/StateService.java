@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedTech1;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.communicationMainSlackMessage;
+import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.communicationMainSlackMessage;
 
 @Slf4j
 @Service

@@ -19,7 +19,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TAB;
 import static jbst.foundation.utilities.slack.SlackUtility.getSlackMessage;
 import static jbst.ops.server.constants.OpsConstants.Services.*;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessage;
+import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.channelSlackMessage;
 
 @Slf4j
 @Service

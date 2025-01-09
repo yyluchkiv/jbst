@@ -5,7 +5,8 @@ import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.request.files.FilesUploadRequest;
-import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
+import jbst.ops.server.domain.slack.teams.SlackTeamEventContext;
+import jbst.ops.server.domain.slack.teams.SlackTeamEventV1;
 import jbst.ops.server.properties.configs.SlackConfigs;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,12 @@ public class SlackClient {
         this.slackClient = Slack.getInstance().methods(slackConfigs.getBotToken());
     }
 
-    public final void sendDirectOrChannel(SlackTeamEvent event) {
+    public final void sendDirectOrChannel(SlackTeamEventContext event) {
+        this.sendMessage(event.message(), event.messageEvent().getChannel());
+    }
+
+    @Deprecated(forRemoval = true)
+    public final void sendDirectOrChannelV2(SlackTeamEventV1 event) {
         if (this.slackConfigs.isDisabled()) {
             return;
         }
@@ -34,7 +40,7 @@ public class SlackClient {
         this.sendMessage(message, requestContext.getUserChannel());
     }
 
-    public void sendCommunicationMain(SlackTeamEvent event) {
+    public void sendCommunicationMain(SlackTeamEventV1 event) {
         if (this.slackConfigs.isDisabled()) {
             return;
         }
@@ -49,7 +55,7 @@ public class SlackClient {
         }
     }
 
-    public void sendCommunicationTeam(SlackTeamEvent event) {
+    public void sendCommunicationTeam(SlackTeamEventV1 event) {
         if (this.slackConfigs.isDisabled()) {
             return;
         }

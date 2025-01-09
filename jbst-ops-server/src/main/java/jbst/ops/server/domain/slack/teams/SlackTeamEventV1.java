@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class SlackTeamEvent {
+public class SlackTeamEventV1 {
     private final SlackRequestContext requestContext;
     private final SlackMessageType messageType;
     private final String message;
@@ -27,7 +27,7 @@ public class SlackTeamEvent {
     private boolean filePresent;
     private String fileContent;
 
-    public SlackTeamEvent(
+    public SlackTeamEventV1(
             @NotNull SlackRequestContext requestContext,
             @NotNull SlackMessageType messageType,
             @NotNull String message
@@ -38,39 +38,39 @@ public class SlackTeamEvent {
         this.filePresent = false;
     }
 
-    public static List<SlackTeamEvent> events(
+    public static List<SlackTeamEventV1> events(
             SlackRequestContext requestContext,
             SlackMessageType type,
             List<String> messages
     ) {
         return messages.stream()
-                .map(message -> new SlackTeamEvent(requestContext, type, message))
+                .map(message -> new SlackTeamEventV1(requestContext, type, message))
                 .toList();
     }
 
-    public static SlackTeamEvent directSlackMessage(
+    public static SlackTeamEventV1 directSlackMessage(
             SlackRequestContext requestContext,
             String message
     ) {
-        return new SlackTeamEvent(
+        return new SlackTeamEventV1(
                 requestContext,
                 SlackMessageType.DIRECT,
                 message
         );
     }
 
-    public static SlackTeamEvent channelSlackMessage(
+    public static SlackTeamEventV1 channelSlackMessage(
             SlackRequestContext requestContext,
             String message
     ) {
-        return new SlackTeamEvent(
+        return new SlackTeamEventV1(
                 requestContext,
                 SlackMessageType.CHANNEL,
                 message
         );
     }
 
-    public static List<SlackTeamEvent> channelSlackMessages(
+    public static List<SlackTeamEventV1> channelSlackMessages(
             SlackRequestContext requestContext,
             List<String> messages
     ) {
@@ -79,22 +79,22 @@ public class SlackTeamEvent {
                 .toList();
     }
 
-    public static SlackTeamEvent communicationMainSlackMessage(
+    public static SlackTeamEventV1 communicationMainSlackMessage(
             SlackRequestContext requestContext,
             String text
     ) {
-        return new SlackTeamEvent(
+        return new SlackTeamEventV1(
                 requestContext,
                 SlackMessageType.COMMUNICATION_MAIN,
                 text
         );
     }
 
-    public static SlackTeamEvent communicationMainSlackIncident(
+    public static SlackTeamEventV1 communicationMainSlackIncident(
             SlackRequestContext requestContext,
             Tuple2<String, String> incidentTuple
     ) {
-        var event = new SlackTeamEvent(
+        var event = new SlackTeamEventV1(
                 requestContext,
                 SlackMessageType.COMMUNICATION_MAIN,
                 incidentTuple.a()
@@ -104,12 +104,12 @@ public class SlackTeamEvent {
         return event;
     }
 
-    public static SlackTeamEvent communicationTeamSlackMessage(
+    public static SlackTeamEventV1 communicationTeamSlackMessage(
             SlackRequestContext requestContext,
             String text,
             SlackTeamChannelCommunication slackTeamChannelCommunication
     ) {
-        var instance = new SlackTeamEvent(
+        var instance = new SlackTeamEventV1(
                 requestContext,
                 SlackMessageType.COMMUNICATION_TEAM,
                 text
@@ -118,12 +118,12 @@ public class SlackTeamEvent {
         return instance;
     }
 
-    public static SlackTeamEvent communicationTeamSlackIncident(
+    public static SlackTeamEventV1 communicationTeamSlackIncident(
             SlackRequestContext requestContext,
             Tuple2<String, String> incidentTuple,
             SlackTeamChannelCommunication slackTeamChannelCommunication
     ) {
-        var event = new SlackTeamEvent(
+        var event = new SlackTeamEventV1(
                 requestContext,
                 SlackMessageType.COMMUNICATION_TEAM,
                 incidentTuple.a()

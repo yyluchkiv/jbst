@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 import static jbst.ops.server.constants.OpsConstants.Services.*;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.*;
+import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.*;
 
 @Slf4j
 @Component

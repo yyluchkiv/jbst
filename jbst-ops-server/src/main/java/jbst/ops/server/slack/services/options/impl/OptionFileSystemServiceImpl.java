@@ -7,7 +7,7 @@ import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.slack.messages.SlackMessageFileSystemTable;
 import jbst.ops.server.domain.slack.messages.SlackMessageType;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
-import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
+import jbst.ops.server.domain.slack.teams.SlackTeamEventV1;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 
 import static jbst.ops.server.constants.OpsConstants.Services.FILE_SYSTEM_SERVICE;
 import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessage;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMessages;
+import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.channelSlackMessage;
+import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.channelSlackMessages;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
@@ -116,7 +116,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
                     .collect(Collectors.toList());
             tables.add(0, status);
             this.slackMessagingService.sendAsync(
-                    SlackTeamEvent.events(
+                    SlackTeamEventV1.events(
                             slackRequestContext,
                             slackMessageType,
                             tables
@@ -124,7 +124,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
             );
         } else {
             this.slackMessagingService.sendAsync(
-                    new SlackTeamEvent(
+                    new SlackTeamEventV1(
                             slackRequestContext,
                             slackMessageType,
                             status

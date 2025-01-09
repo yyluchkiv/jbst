@@ -6,12 +6,15 @@ import com.slack.api.bolt.AppConfig;
 import com.slack.api.bolt.socket_mode.SocketModeApp;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
+import jbst.ops.server.domain.slack.teams.SlackTeamEventContext;
 import jbst.ops.server.properties.configs.SlackConfigs;
 import jbst.ops.server.slack.SlackClient;
 import jbst.ops.server.slack.SlackMessagingService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import static jbst.ops.server.utilities.MessagesUtility.getReadOnlyWarning;
 
 @Slf4j
 @AllArgsConstructor
@@ -54,22 +57,14 @@ public class SlackBot {
     }
 
     public final void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
-        System.out.println("======");
-        System.out.println(payload.getEvent().getText());
-        System.out.println(payload.getEvent().getTeam());
-        System.out.println("======");
+        this.slackClient.sendDirectOrChannel(
+                new SlackTeamEventContext(
+                        this.configs,
+                        payload.getEvent(),
+                        getReadOnlyWarning()
+                )
+        );
     }
-
-    // TODO [YYL] reuse/fixme
-//    public final void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
-//        var slackContext = new SlackRequestContext(this.team, payload.getEvent());
-//        this.slackMessagingService.sendAsync(
-//                directSlackMessage(
-//                        slackContext,
-//                        getReadOnlyWarning()
-//                )
-//        );
-//    }
 
     public final void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
         // TODO [YYL] add code

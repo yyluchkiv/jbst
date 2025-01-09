@@ -1,7 +1,7 @@
 package jbst.ops.server.slack;
 
 import jbst.ops.server.domain.servers.TeamV2;
-import jbst.ops.server.domain.slack.teams.SlackTeamEvent;
+import jbst.ops.server.domain.slack.teams.SlackTeamEventV1;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_250_MILLI
 @Slf4j
 @Service
 public class SlackMessagingService {
-    protected final BlockingQueue<List<SlackTeamEvent>> sendingQueue = new LinkedBlockingQueue<>();
+    protected final BlockingQueue<List<SlackTeamEventV1>> sendingQueue = new LinkedBlockingQueue<>();
 
     // Services
     private final Map<TeamV2, SlackClient> slacksServices = new ConcurrentHashMap<>();
@@ -33,13 +33,13 @@ public class SlackMessagingService {
 //        this.configure();
     }
 
-    public final void sendAsync(SlackTeamEvent slackTeamEvent) {
-        this.sendAsync(List.of(slackTeamEvent));
+    public final void sendAsync(SlackTeamEventV1 slackTeamEventV1) {
+        this.sendAsync(List.of(slackTeamEventV1));
     }
 
-    public final void sendAsync(List<SlackTeamEvent> slackTeamEvents) {
+    public final void sendAsync(List<SlackTeamEventV1> slackTeamEventV1s) {
         try {
-            this.sendingQueue.put(slackTeamEvents);
+            this.sendingQueue.put(slackTeamEventV1s);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
@@ -58,7 +58,7 @@ public class SlackMessagingService {
                     var messageType = slackTeamEvent.getMessageType();
 
                     if (messageType.isDirectOrChannel()) {
-                        slackService.sendDirectOrChannel(slackTeamEvent);
+                        slackService.sendDirectOrChannelV2(slackTeamEvent);
                     }
 
                     if (messageType.isCommunicationMain()) {
