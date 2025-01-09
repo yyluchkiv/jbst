@@ -17,17 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 import static jbst.ops.server.utilities.MessagesUtility.getReadOnlyWarning;
 
 @Slf4j
-@AllArgsConstructor
-@Getter
-public class SlackBot {
-    // Configs
-    private final SlackConfigs configs;
-    // Services
-    private final SlackMessagingService slackMessagingService;
-    // Clients
-    private final SlackClient slackClient;
+public record SlackBot(
+        SlackConfigs configs,
+        SlackMessagingService slackMessagingService,
+        SlackClient slackClient
+) {
 
-    public final void initialize() {
+    public void initialize() {
         if (this.configs.isDisabled()) {
             return;
         }
@@ -56,7 +52,7 @@ public class SlackBot {
         }
     }
 
-    public final void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
+    public void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
         this.slackClient.sendDirectOrChannel(
                 new SlackTeamEventContext(
                         this.configs,
@@ -66,7 +62,7 @@ public class SlackBot {
         );
     }
 
-    public final void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
+    public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
         // TODO [YYL] add code
     }
 }
