@@ -7,6 +7,7 @@ import com.slack.api.bolt.socket_mode.SocketModeApp;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
+import com.slack.api.methods.request.conversations.ConversationsInfoRequest;
 import com.slack.api.methods.request.files.FilesUploadRequest;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
@@ -58,11 +59,21 @@ public record SlackBot(
     }
 
     public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
-        System.out.println("-----");
-        System.out.println("A: " + this.configs.isCommunicationReadOnly());
-        System.out.println("B: " + !this.configs.getMainChannel().equals(payload.getEvent().getChannel()));
-        System.out.println("-----");
-        if (this.configs.isCommunicationReadOnly() || !this.configs.getMainChannel().equals(payload.getEvent().getChannel())) {
+        if (this.configs.isCommunicationReadOnly()) {
+            this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
+            return;
+        }
+        try {
+            var conversationsInfo = methodsClient.conversationsInfo(
+                    ConversationsInfoRequest.builder()
+                            .channel(payload.getEvent().getChannel())
+                            .build()
+            );
+            if (!this.configs.getMainChannel().equals(conversationsInfo.getChannel().getName())) {
+                this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
+                return;
+            }
+        } catch (IOException | SlackApiException ex) {
             this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
@@ -86,6 +97,7 @@ public record SlackBot(
         }
     }
 
+    @SuppressWarnings("unused")
     private void sendFile(String fileContent, String channel) {
         try {
             this.methodsClient.filesUpload(

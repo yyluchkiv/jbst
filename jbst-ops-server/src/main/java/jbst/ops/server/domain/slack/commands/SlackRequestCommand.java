@@ -1,13 +1,17 @@
 package jbst.ops.server.domain.slack.commands;
 
 import com.slack.api.model.event.AppMentionEvent;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Slf4j
 @Getter
+@EqualsAndHashCode
+@ToString
 public class SlackRequestCommand {
     private final boolean valid;
     @NotNull
