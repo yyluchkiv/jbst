@@ -21,6 +21,8 @@ public class SlackConfigs extends AbstractPropertyConfigs {
     private final String appToken;
     @MandatoryProperty
     private final Mode communicationMode;
+    @MandatoryProperty
+    private final String mainChannel;
 
     public boolean isCommunicationReadOnly() {
         return Mode.READONLY.equals(this.communicationMode);

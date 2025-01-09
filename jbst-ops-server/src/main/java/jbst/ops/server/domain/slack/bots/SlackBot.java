@@ -53,18 +53,12 @@ public record SlackBot(
     }
 
     public void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
-        this.sendMessage(
-                getReadOnlyWarning(),
-                payload.getEvent().getChannel()
-        );
+        this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
     }
 
     public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
-        if (this.configs.isCommunicationReadOnly()) {
-            this.sendMessage(
-                    getReadOnlyWarning(),
-                    payload.getEvent().getChannel()
-            );
+        if (this.configs.isCommunicationReadOnly() || !this.configs.getMainChannel().equals(payload.getEvent().getChannel())) {
+            this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
         System.out.println("-->");
