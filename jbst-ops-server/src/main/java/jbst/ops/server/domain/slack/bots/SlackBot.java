@@ -10,6 +10,7 @@ import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.request.files.FilesUploadRequest;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
+import jbst.ops.server.domain.slack.commands.SlackRequestCommand;
 import jbst.ops.server.properties.base.SlackConfigs;
 import jbst.ops.server.slack.SlackMessagingService;
 import lombok.extern.slf4j.Slf4j;
@@ -57,12 +58,16 @@ public record SlackBot(
     }
 
     public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
+        System.out.println("-----");
+        System.out.println("A: " + this.configs.isCommunicationReadOnly());
+        System.out.println("B: " + !this.configs.getMainChannel().equals(payload.getEvent().getChannel()));
+        System.out.println("-----");
         if (this.configs.isCommunicationReadOnly() || !this.configs.getMainChannel().equals(payload.getEvent().getChannel())) {
             this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
-        System.out.println("-->");
-        // TODO [YYL] add code
+        var slackRequestCommand = new SlackRequestCommand(payload.getEvent());
+        System.out.println("slackRequestCommand: " + slackRequestCommand);
     }
 
     // ================================================================================================================

@@ -14,6 +14,7 @@ import static java.util.Collections.disjoint;
 import static java.util.Objects.nonNull;
 import static jbst.ops.server.domain.keywords.KeywordCommandAttributes.enabledDefault;
 
+@Deprecated
 @Slf4j
 // Lombok
 @Getter
