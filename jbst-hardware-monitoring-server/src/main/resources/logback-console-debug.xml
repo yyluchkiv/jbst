@@ -3,11 +3,11 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
                 %d{ISO8601} %clr(%5p) %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){yellow} %clr(:){faint} %m%n
-            </Pattern>
-        </layout>
+            </pattern>
+        </encoder>
     </appender>
 
     <logger name="jbst" level="debug" />
