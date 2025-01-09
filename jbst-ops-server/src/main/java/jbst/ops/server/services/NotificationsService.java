@@ -38,29 +38,30 @@ public class NotificationsService {
         );
     }
 
+    // TODO [YYL] fixme
     public final void notifyShowTeams(Servers servers) {
-        var tcs = this.opsProperties.getTech1SlackConfigs().getTeamsCommunications();
-        tcs.stream()
-                .filter(tcc -> tcc.getCommunication().isEnabled())
-                .filter(tcc -> servers.isAnyChanges(tcc.getTeam()))
-                .forEach(tcc -> {
-                    var team = tcc.getTeam();
-
-                    // parent slack - Tech1: `any` team
-                    this.optionMonitoringService.sendShowShortOrFailures(
-                            limitedTech1(),
-                            servers,
-                            tcc
-                    );
-
-                    // child slack - SmartApps: SmartApps team
-                    if (team.isSmartApps()) {
-                        this.optionMonitoringService.sendShowShortOrFailures(
-                                limitedSmartApps(),
-                                servers
-                        );
-                    }
-                });
+//        var tcs = this.opsProperties.getTech1SlackConfigs().getTeamsCommunications();
+//        tcs.stream()
+//                .filter(tcc -> tcc.getCommunication().isEnabled())
+//                .filter(tcc -> servers.isAnyChanges(tcc.getTeam()))
+//                .forEach(tcc -> {
+//                    var team = tcc.getTeam();
+//
+//                    // parent slack - Tech1: `any` team
+//                    this.optionMonitoringService.sendShowShortOrFailures(
+//                            limitedTech1(),
+//                            servers,
+//                            tcc
+//                    );
+//
+//                    // child slack - SmartApps: SmartApps team
+//                    if (team.isSmartApps()) {
+//                        this.optionMonitoringService.sendShowShortOrFailures(
+//                                limitedSmartApps(),
+//                                servers
+//                        );
+//                    }
+//                });
     }
 
     public final void notifyFs(Servers servers) {
@@ -86,29 +87,30 @@ public class NotificationsService {
         );
     }
 
+    // TODO [YYL] fixme: add "incident" flag
     public final void notifyIncident(OpsIncident opsIncident) {
-        var incidentTuple = MessagesUtility.getIncidentTuple(opsIncident);
-        if (opsIncident.getServer().team().isTech1()) {
-            this.slackMessagingService.sendAsync(
-                    communicationMainSlackIncident(
-                            limitedTech1(),
-                            incidentTuple
-                    )
-            );
-        } else {
-            var tcs = this.opsProperties.getTech1SlackConfigs().getTeamsCommunications();
-            tcs.stream()
-                    .filter(tcc -> tcc.getCommunication().isEnabled())
-                    .filter(tcc -> opsIncident.getServer().team().equals(tcc.getTeam()))
-                    .forEach(tcc ->
-                            this.slackMessagingService.sendAsync(
-                                    communicationTeamSlackIncident(
-                                            limitedTech1(),
-                                            incidentTuple,
-                                            tcc
-                                    )
-                            )
-                    );
-        }
+//        var incidentTuple = MessagesUtility.getIncidentTuple(opsIncident);
+//        if (opsIncident.getServer().team().isTech1()) {
+//            this.slackMessagingService.sendAsync(
+//                    communicationMainSlackIncident(
+//                            limitedTech1(),
+//                            incidentTuple
+//                    )
+//            );
+//        } else {
+//            var tcs = this.opsProperties.getTech1SlackConfigs().getTeamsCommunications();
+//            tcs.stream()
+//                    .filter(tcc -> tcc.getCommunication().isEnabled())
+//                    .filter(tcc -> opsIncident.getServer().team().equals(tcc.getTeam()))
+//                    .forEach(tcc ->
+//                            this.slackMessagingService.sendAsync(
+//                                    communicationTeamSlackIncident(
+//                                            limitedTech1(),
+//                                            incidentTuple,
+//                                            tcc
+//                                    )
+//                            )
+//                    );
+//        }
     }
 }

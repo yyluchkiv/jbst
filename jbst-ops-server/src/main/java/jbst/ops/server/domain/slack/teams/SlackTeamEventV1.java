@@ -48,17 +48,6 @@ public class SlackTeamEventV1 {
                 .toList();
     }
 
-    public static SlackTeamEventV1 directSlackMessage(
-            SlackRequestContext requestContext,
-            String message
-    ) {
-        return new SlackTeamEventV1(
-                requestContext,
-                SlackMessageType.DIRECT,
-                message
-        );
-    }
-
     public static SlackTeamEventV1 channelSlackMessage(
             SlackRequestContext requestContext,
             String message
