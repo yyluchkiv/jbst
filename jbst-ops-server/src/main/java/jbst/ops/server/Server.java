@@ -2,6 +2,7 @@ package jbst.ops.server;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.ops.server.slack.SlackBotsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,12 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class Server {
 
+    // Services
+    private final SlackBotsService slackBotsService;
+    private final MonitoringService monitoringService;
+    private final IncidentsService incidentsService;
     // Jobs
     private final ServersJob serversJob;
-    // Services
-    private final IncidentsService incidentsService;
-    private final MonitoringService monitoringService;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -48,11 +50,12 @@ public class Server {
     public void start() {
         try {
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
-            this.monitoringService.readServers();
-            this.serversJob.scheduleAnyChangesNotification();
+            this.slackBotsService.initialize();
+//            this.monitoringService.initialize();
+//            this.serversJob.scheduleAnyChangesNotification();
 //            this.incidentsService.configureCleanCronJob();
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
-        } catch (IOException | RuntimeException ex) {
+        } catch (RuntimeException ex) {
             LOGGER.error("Server startup failure", ex);
         }
     }

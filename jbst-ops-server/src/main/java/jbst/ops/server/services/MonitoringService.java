@@ -1,11 +1,9 @@
 package jbst.ops.server.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
 import jbst.foundation.feigns.github.GithubClient;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.ops.server.constants.OpsConstants;
 import jbst.ops.server.domain.computed.ServerInfinityTimerTask;
 import jbst.ops.server.domain.computed.ServerInfinityTimerTaskSpringBeans;
 import jbst.ops.server.domain.computed.ServerInfinityTimerTasks;
@@ -18,24 +16,18 @@ import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.exceptions.ServerNotFoundException;
 import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.properties.configs.ServersConfigs;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.io.File.createTempFile;
@@ -45,7 +37,8 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.ops.server.constants.OpsConstants.Logs.PREFIX;
-import static jbst.ops.server.properties.configs.ServersConfigs.Mode.*;
+import static jbst.ops.server.properties.configs.ServersConfigs.Mode.GITHUB;
+import static jbst.ops.server.properties.configs.ServersConfigs.Mode.RESOURCES;
 import static org.apache.commons.io.FileUtils.copyURLToFile;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -54,7 +47,6 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MonitoringService {
-
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Computing
@@ -69,9 +61,9 @@ public class MonitoringService {
 
     private ServerInfinityTimerTasks servers = new ServerInfinityTimerTasks(new ArrayList<>());
 
-    public final void readServers() throws IOException {
+    public final void initialize() {
         LOGGER.info(PREFIX + " read servers. Status: {}", STARTED.formatAnsi());
-        this.servers = this.readGithubConfigs();
+        this.servers = this.initializeServersInfinityTimerTasks();
         LOGGER.info(PREFIX + " read servers. Status: {}", COMPLETED.formatAnsi());
     }
 
@@ -138,7 +130,7 @@ public class MonitoringService {
     @Deprecated
     @SneakyThrows
     public final Servers reloadServers() {
-        this.servers = this.readGithubConfigs();
+        this.servers = this.initializeServersInfinityTimerTasks();
         return this.getServers();
     }
 
@@ -201,8 +193,8 @@ public class MonitoringService {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private ServerInfinityTimerTasks readGithubConfigs() throws IOException {
-        var opsConfigs = this.objectMapper.readValue(this.readServersJSON(), OpsConfigs.class);
+    private ServerInfinityTimerTasks initializeServersInfinityTimerTasks() {
+        var opsConfigs = this.readOpsConfigs();
 
         LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", opsConfigs.getServersCount(), STARTED.formatAnsi());
         opsConfigs.serversConfigs().removeIf(ServerConfigs::disableMonitoring);
@@ -231,30 +223,42 @@ public class MonitoringService {
         );
     }
 
-    private String readServersJSON() throws IOException {
-        if (GITHUB.equals(this.opsProperties.getServersConfigs().getMode())) {
-            var configuration = createTempFile("github-", "-contents");
-            configuration.deleteOnExit();
-            var gc = this.opsProperties.getServersConfigs().getGithubConfigs();
-            copyURLToFile(
-                    new URL(
-                            this.githubClient.getContents(
-                                    new GithubClient.GithubRepoContentsRequest(
-                                            gc.getToken(),
-                                            gc.getOwner(),
-                                            gc.getRepo(),
-                                            gc.getContent()
-                                    )
-                            ).downloadUrl()
-                    ),
-                    configuration
+    private OpsConfigs readOpsConfigs() {
+        try {
+            if (GITHUB.equals(this.opsProperties.getServersConfigs().getMode())) {
+                var configuration = createTempFile("github-", "-contents");
+                configuration.deleteOnExit();
+                var gc = this.opsProperties.getServersConfigs().getGithubConfigs();
+                copyURLToFile(
+                        new URL(
+                                this.githubClient.getContents(
+                                        new GithubClient.GithubRepoContentsRequest(
+                                                gc.getToken(),
+                                                gc.getOwner(),
+                                                gc.getRepo(),
+                                                gc.getContent()
+                                        )
+                                ).downloadUrl()
+                        ),
+                        configuration
+                );
+                var json = readFileToString(configuration, defaultCharset());
+                return this.objectMapper.readValue(json, OpsConfigs.class);
+            }
+            if (RESOURCES.equals(this.opsProperties.getServersConfigs().getMode())) {
+                var resource = this.resourceLoader.getResource("classpath:ops-server-configs.json");
+                var json = new String(resource.getInputStream().readAllBytes(), UTF_8);
+                return this.objectMapper.readValue(json, OpsConfigs.class);
+            }
+            throw new JbstUnreachableCodeException();
+        } catch (IOException ex) {
+            LOGGER.error("Failure reading ops configs", ex);
+            return new OpsConfigs(
+                    new HashSet<>(),
+                    new HashSet<>(),
+                    new HashSet<>(),
+                    new ArrayList<>()
             );
-            return readFileToString(configuration, defaultCharset());
         }
-        if (RESOURCES.equals(this.opsProperties.getServersConfigs().getMode())) {
-            var resource = this.resourceLoader.getResource("classpath:ops-server-configs.json");
-            return new String(resource.getInputStream().readAllBytes(), UTF_8);
-        }
-        throw new JbstUnreachableCodeException();
     }
 }

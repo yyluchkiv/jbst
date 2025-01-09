@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+@Deprecated
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

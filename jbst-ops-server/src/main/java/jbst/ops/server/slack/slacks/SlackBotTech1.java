@@ -16,8 +16,8 @@ import static jbst.ops.server.domain.slack.teams.SlackTeamEvent.channelSlackMess
 import static jbst.ops.server.utilities.MessagesUtility.*;
 
 @Slf4j
-@Component
-public class SlackBotTech1 extends SlackBot {
+//@Component
+public class SlackBotTech1 {
 
     // Slack
 //    private final SlackServiceTech1 slackServiceTech1;
@@ -29,7 +29,7 @@ public class SlackBotTech1 extends SlackBot {
     // Properties
     private final OpsProperties opsProperties;
 
-    @Autowired
+//    @Autowired
     public SlackBotTech1(
 //            SlackServiceTech1 slackServiceTech1,
             SlackRequestService slackRequestService,
@@ -38,11 +38,11 @@ public class SlackBotTech1 extends SlackBot {
             OptionsService optionsService,
             OpsProperties opsProperties
     ) throws SlackInitializationException {
-        super(
-                SlackTeam.TECH1,
-                opsProperties.getTech1SlackConfigs(),
-                slackMessagingService
-        );
+//        super(
+//                SlackTeam.TECH1,
+//                opsProperties.getTech1SlackConfigs(),
+//                slackMessagingService
+//        );
 //        this.slackServiceTech1 = slackServiceTech1;
         this.slackRequestService = slackRequestService;
         this.stateService = stateService;
@@ -76,31 +76,31 @@ public class SlackBotTech1 extends SlackBot {
             LOGGER.debug("Process slack message. Permissions: `{}`", slackRequestContext.getPermissions());
             LOGGER.debug("Process slack message. Keywords: `{}`", slackRequestContext.getSlackKeywords());
 
-            this.slackMessagingService.sendAsync(
-                    channelSlackMessage(
-                            slackRequestContext,
-                            getExpensiveOperationStartedMessage()
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    channelSlackMessage(
+//                            slackRequestContext,
+//                            getExpensiveOperationStartedMessage()
+//                    )
+//            );
 
             this.optionsService.sendMessagesBy(slackRequestContext);
 
-            this.slackMessagingService.sendAsync(
-                    channelSlackMessage(
-                            slackRequestContext,
-                            getExpensiveOperationCompletedMessage()
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    channelSlackMessage(
+//                            slackRequestContext,
+//                            getExpensiveOperationCompletedMessage()
+//                    )
+//            );
         }
     }
 
     private void sendExceptionMessage(SlackRequestContext slackRequestContext, Throwable throwable) {
-        this.slackMessagingService.sendAsync(
-                channelSlackMessage(
-                        slackRequestContext,
-                        getUnexpectedWarning()
-                )
-        );
+//        this.slackMessagingService.sendAsync(
+//                channelSlackMessage(
+//                        slackRequestContext,
+//                        getUnexpectedWarning()
+//                )
+//        );
 
         this.optionsService.sendFallbackMessage(slackRequestContext);
     }

@@ -8,21 +8,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 @Slf4j
-@Component
-public class SlackBotSmartApps extends SlackBot {
+//@Component
+public class SlackBotSmartApps {
 
-    @Autowired
+//    @Autowired
     public SlackBotSmartApps(
             SlackMessagingService slackMessagingService,
             OpsProperties opsProperties
     ) throws SlackInitializationException {
-        super(
-                SlackTeam.SMART_APPS,
-                opsProperties.getSmartAppsSlackConfigs(),
-                slackMessagingService
-        );
+//        super(
+//                SlackTeam.SMART_APPS,
+//                opsProperties.getSmartAppsSlackConfigs(),
+//                slackMessagingService
+//        );
 //        this.configure();
     }
 
