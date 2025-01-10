@@ -19,9 +19,6 @@ public enum SlackOpsCommand {
     ACTUATORS("actuators", "Shows servers actuator /info (ONLY spring-boot servers)"),
     FS("fs", "Shows servers file systems metadata");
 
-    private final String value;
-    private final String description;
-
     public static Optional<SlackOpsCommand> findOpt(String command) {
         return Stream.of(SlackOpsCommand.values())
                 .filter(op -> op.name().equalsIgnoreCase(command))
@@ -41,5 +38,12 @@ public enum SlackOpsCommand {
             }
         }
         return SlackUtility.getSlackMessage(sb.toString());
+    }
+
+    private final String value;
+    private final String description;
+
+    public boolean isActuators() {
+        return SlackOpsCommand.ACTUATORS.equals(this);
     }
 }

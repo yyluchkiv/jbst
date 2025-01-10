@@ -49,7 +49,7 @@ public class Server {
         try {
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
             this.slackBotsService.initialize();
-//            this.monitoringService.initialize();
+            this.monitoringService.initialize();
 //            this.serversJob.scheduleAnyChangesNotification();
 //            this.incidentsService.configureCleanCronJob();
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
