@@ -43,6 +43,10 @@ public enum SlackOpsCommand {
     private final String value;
     private final String description;
 
+    public boolean isStatus() {
+        return SlackOpsCommand.STATUS.equals(this);
+    }
+
     public boolean isActuators() {
         return SlackOpsCommand.ACTUATORS.equals(this);
     }

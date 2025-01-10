@@ -90,8 +90,8 @@ public record SlackBot(
         }
         // PRODUCTION: "ops $cmd" scenario
         this.sendMessage(MessagesUtility.getExpensiveOperationStartedMessage(), payload.getEvent().getChannel());
-        var message = this.slackCommandsService.getMessage(slackRequestCommand);
-        this.sendMessage(message, payload.getEvent().getChannel());
+        var messages = this.slackCommandsService.getMessages(slackRequestCommand);
+        messages.forEach(message -> this.sendMessage(message, payload.getEvent().getChannel()));
         this.sendMessage(MessagesUtility.getExpensiveOperationCompletedMessage(), payload.getEvent().getChannel());
     }
 
