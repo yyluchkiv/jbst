@@ -4,7 +4,8 @@ import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.domain.properties.base.RemoteServer;
 import jbst.foundation.domain.properties.base.SpringLogging;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
-import jbst.ops.server.properties.configs.*;
+import jbst.ops.server.properties.configs.ServersConfigs;
+import jbst.ops.server.properties.configs.SlacksConfigs;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.Ordered;
@@ -18,8 +19,6 @@ public class OpsProperties implements PriorityOrdered {
     private SlacksConfigs slacksConfigs;
     private ServersConfigs serversConfigs;
     private RecipientsConfigs recipientsConfigs;
-    // TODO [YYL] clean: gateway
-    private KeywordsConfigs keywordsConfigs;
 
     @Override
     public int getOrder() {

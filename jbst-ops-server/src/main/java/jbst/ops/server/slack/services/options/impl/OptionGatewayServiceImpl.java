@@ -31,39 +31,6 @@ public class OptionGatewayServiceImpl implements OptionGatewayService {
     private final OptionMonitoringService optionMonitoringService;
     // Messaging
     private final SlackMessagingService slackMessagingService;
-    // Properties
-    private final OpsProperties opsProperties;
-
-    @Override
-    public void sendHelp(SlackRequestContext slackRequestContext) {
-        var accesses = slackRequestContext.getPermissions().getAccesses();
-        var sb = new StringBuilder();
-        var keywordsConfig = opsProperties.getKeywordsConfigs();
-        var cmdFormat = "%-20s %10s";
-        keywordsConfig.getServices().forEach((service, serviceConfig) -> {
-            var commands = serviceConfig.getCommands();
-            var servicePermissions = commands.entrySet().stream()
-                    .flatMap(entry -> entry.getValue().getPermissions().stream())
-                    .collect(Collectors.toSet());
-
-            // WARNING: permissions have at least one in common
-            if (!disjoint(accesses, servicePermissions)) {
-                sb.append(serviceConfig.getRootCmd()).append(":").append(NEWLINE);
-                commands.forEach((keyword, command) -> {
-                    // WARNING: permissions have at least one in common
-                    if (!disjoint(accesses, command.getPermissions())) {
-                        sb.append(TAB).append(String.format(cmdFormat, command.getKey() + ":", command.getDescription())).append(NEWLINE);
-                    }
-                });
-            }
-        });
-        this.slackMessagingService.sendAsync(
-                channelSlackMessage(
-                        slackRequestContext,
-                        MessagesUtility.getHelp() + NEWLINE + getSlackMessage(sb.toString().trim())
-                )
-        );
-    }
 
     @Override
     public void sendGatewayStatus(SlackRequestContext slackRequestContext) {

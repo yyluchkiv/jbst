@@ -52,7 +52,7 @@ public class OptionsServiceImpl implements OptionsService {
     @Override
     public void sendFallbackMessage(SlackRequestContext slackRequestContext) {
         if (slackRequestContext.hasAnyPermissions()) {
-            this.optionGatewayService.sendHelp(slackRequestContext);
+//            this.optionGatewayService.sendHelp(slackRequestContext);
         }
     }
 
@@ -60,10 +60,10 @@ public class OptionsServiceImpl implements OptionsService {
     // Private Methods
     // ================================================================================================================
     private void gatewayConfigs() {
-         this.optionsConfigs.put(new ServiceKeywordCommandKey(GATEWAY, HELP), this.optionGatewayService::sendHelp);
+//         this.optionsConfigs.put(new ServiceKeywordCommandKey(GATEWAY, HELP), this.optionGatewayService::sendHelp);
 
         this.optionsConfigs.put(new ServiceKeywordCommandKey(GATEWAY, STATUS), slackRequestContext -> {
-            this.optionGatewayService.sendHelp(slackRequestContext);
+//            this.optionGatewayService.sendHelp(slackRequestContext);
 
             this.optionGatewayService.sendSpringBootActuatorsGatewayStatus(slackRequestContext);
             this.optionGatewayService.sendGatewayStatus(slackRequestContext);

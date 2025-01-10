@@ -45,38 +45,3 @@ ops:
       hide-ip: false
       file-system-filter: 25
       file-system-threshold: 75
-  keywords-configs:
-    services:
-      GATEWAY:
-        root-cmd: gateway
-        commands:
-          HELP:
-            key: help
-            description: "Shows infrastructure.bot [options ...]"
-            permissions: FOUNDERS,TEAM
-          STATUS:
-            key: status
-            description: "Executes basic sequence of commands to verify required features"
-            permissions: FOUNDERS
-      MONITORING:
-        root-cmd: mon
-        commands:
-          SHOW:
-            key: show
-            description: "Shows servers online statuses: OK / Failure markers"
-            permissions: FOUNDERS,TEAM
-          ACTUATORS:
-            key: actuators
-            description: "Shows servers actuator /info (ONLY spring-boot servers)"
-            permissions: FOUNDERS
-          RELOAD:
-            key: reload
-            description: "Reloads server-$profile.json configuration"
-            permissions: FOUNDERS
-      FS:
-        root-cmd: fs
-        commands:
-          SHOW:
-            key: show
-            description: "Shows servers file systems metadata"
-            permissions: FOUNDERS

@@ -7,6 +7,7 @@ import jbst.ops.server.domain.keywords.SlackKeywords;
 import jbst.ops.server.exceptions.SlackRuntimeException;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.properties.atomics.Service;
+import jbst.ops.server.properties.atomics.ServiceConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,7 @@ public class SlackRequestService {
     @PostConstruct
     public void postConstruct() {
         // keywords
-        var keywordsConfig = this.opsProperties.getKeywordsConfigs();
-        var services = keywordsConfig.getServices();
+        var services = new HashMap<jbst.ops.server.properties.atomics.Service, ServiceConfig>();
 
         // root commands
         rootCommands.put(services.get(GATEWAY).getRootCmd(), slackKeywords -> this.processTwoParamsCmd(slackKeywords, GATEWAY));

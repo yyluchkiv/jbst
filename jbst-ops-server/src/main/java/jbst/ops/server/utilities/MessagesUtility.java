@@ -12,8 +12,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE
 @UtilityClass
 public class MessagesUtility {
 
-    @Deprecated
-    public static String getHelp() {
+    public static String getHelpTableHeader() {
         return ":keyboard: Options infrastructure.bot :keyboard:";
     }
 

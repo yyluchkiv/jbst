@@ -11,9 +11,11 @@ import com.slack.api.methods.request.conversations.ConversationsInfoRequest;
 import com.slack.api.methods.request.files.FilesUploadRequest;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
+import jbst.ops.server.domain.slack.commands.SlackOpsCommand;
 import jbst.ops.server.domain.slack.commands.SlackRequestCommand;
 import jbst.ops.server.properties.base.SlackConfigs;
 import jbst.ops.server.slack.SlackMessagingService;
+import jbst.ops.server.utilities.MessagesUtility;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -59,10 +61,12 @@ public record SlackBot(
     }
 
     public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
+        // READONLY: communication-mode scenario
         if (this.configs.isCommunicationReadOnly()) {
             this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
+        // READONLY: main-channel scenario
         try {
             var conversationsInfo = methodsClient.conversationsInfo(
                     ConversationsInfoRequest.builder()
@@ -77,8 +81,14 @@ public record SlackBot(
             this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
+        // HELP: invalid scenario
         var slackRequestCommand = new SlackRequestCommand(payload.getEvent());
-        System.out.println("slackRequestCommand: " + slackRequestCommand);
+        if (!slackRequestCommand.isValid()) {
+            this.sendMessage(MessagesUtility.getHelpTableHeader(), payload.getEvent().getChannel());
+            this.sendMessage(SlackOpsCommand.getHelpTable(), payload.getEvent().getChannel());
+            return;
+        }
+        this.sendMessage("OPS...", payload.getEvent().getChannel());
     }
 
     // ================================================================================================================

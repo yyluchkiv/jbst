@@ -6,7 +6,6 @@ import lombok.experimental.UtilityClass;
 public class OpsConstants {
     public static class Services {
         // service-as-server
-        public static final String GATEWAY_SERVICE = "gateway-service";
         public static final String MONITORING_SERVICE = "monitoring-service";
 
         // service-as-sub-service
