@@ -50,4 +50,8 @@ public enum SlackOpsCommand {
     public boolean isActuators() {
         return SlackOpsCommand.ACTUATORS.equals(this);
     }
+
+    public boolean isFS() {
+        return SlackOpsCommand.FS.equals(this);
+    }
 }
