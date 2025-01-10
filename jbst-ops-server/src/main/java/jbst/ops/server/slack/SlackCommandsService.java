@@ -10,6 +10,7 @@ import jbst.ops.server.domain.slack.messages.SlackMessageFileSystemTable;
 import jbst.ops.server.domain.slack.messages.SlackMessageServerTable;
 import jbst.ops.server.domain.slack.messages.SlackMessageServersSpringActuatorsTable;
 import jbst.ops.server.services.MonitoringService;
+import jbst.ops.server.services.ServersService;
 import jbst.ops.server.utilities.MessagesUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 public class SlackCommandsService {
 
     // Services
+    private final ServersService serversService;
     private final MonitoringService monitoringService;
 
     public final List<String> getMessages(SlackRequestCommand command) {
@@ -43,16 +45,11 @@ public class SlackCommandsService {
         }
         // "ops status"
         if (nonNull(command.getCmd()) && command.getCmd().isStatus()) {
-            var servers = this.monitoringService.getServers();
-            messages.addAll(this.getStatus(servers));
+            messages.addAll(this.serversService.getStatus());
         }
         // "ops actuators"
         if (nonNull(command.getCmd()) && command.getCmd().isActuators()) {
-            var servers = this.monitoringService.getServersSpringBoot();
-            var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATOR_SERVICE) +
-                    NEWLINE +
-                    new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
-            messages.add(message);
+            messages.addAll(this.serversService.getActuators());
         }
         // "ops fs"
         if (nonNull(command.getCmd()) && command.getCmd().isFS()) {

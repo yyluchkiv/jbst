@@ -14,7 +14,6 @@ import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.domain.servers.ServerMin;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.servers.Team;
-import jbst.ops.server.exceptions.ServerNotFoundException;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -133,24 +132,7 @@ public class MonitoringService {
         return this.getServers().isAnyChanges();
     }
 
-    // TODO [YYL] deleteme
-    public final ServerInfinityTimerTask getComputedServer(Integer serverId) {
-        return this.servers.values().stream()
-                .filter(server -> nonNull(serverId) && serverId.equals(server.getId()))
-                .findFirst()
-                .orElseThrow(() -> new ServerNotFoundException(serverId));
-    }
-
-    // TODO [YYL] deleteme
-    public final ServerInfinityTimerTask getComputedServer(Integer serverId, Team team) {
-        return this.servers.values().stream()
-                .filter(server -> nonNull(team) && team.equals(server.getServerConfigs().team()))
-                .filter(server -> nonNull(serverId) && serverId.equals(server.getId()))
-                .findFirst()
-                .orElseThrow(() -> new ServerNotFoundException(serverId));
-    }
-
-    public OpsIncident getOpsIncident(Incident incident, OpsIncidentEnv opsIncidentEnv) {
+    public final OpsIncident getOpsIncident(Incident incident, OpsIncidentEnv opsIncidentEnv) {
         // WARNING #1: 6001 - tehms
         // WARNING #2: find more efficient solution (E.G. add infrastructure.getServersSkipInfrastructure method)
         var skipPorts = Set.of(6001);
