@@ -16,12 +16,12 @@ public class MessagesUtility {
         return ":keyboard: Options infrastructure.bot :keyboard:";
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static String getBotNotConfiguredYet() {
         return ":rocket: infrastructure.bot is not configured yet. Please wait a moment... :arrows_counterclockwise:";
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static String getBotConfigured() {
         return ":rocket: infrastructure.bot is now configured. Enjoy! :white_check_mark:";
     }
@@ -77,7 +77,7 @@ public class MessagesUtility {
         );
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static String getServicesOkMessage(String parentServiceName, String subServiceName) {
         return String.format(
                 ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:",
@@ -85,7 +85,7 @@ public class MessagesUtility {
         );
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static String getServicesFailureMessage(String parentServiceName, String subServiceName) {
         return String.format(
                 ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:",

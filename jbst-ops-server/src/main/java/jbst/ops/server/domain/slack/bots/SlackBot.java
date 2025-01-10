@@ -87,7 +87,9 @@ public record SlackBot(
             return;
         }
         // PRODUCTION: "ops $cmd" scenario
+        this.sendMessage(MessagesUtility.getExpensiveOperationStartedMessage(), payload.getEvent().getChannel());
         this.sendMessage("OPS...", payload.getEvent().getChannel());
+        this.sendMessage(MessagesUtility.getExpensiveOperationCompletedMessage(), payload.getEvent().getChannel());
     }
 
     // ================================================================================================================
