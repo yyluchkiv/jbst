@@ -1,6 +1,5 @@
 package jbst.ops.server.slack;
 
-import jbst.ops.server.domain.servers.TeamV2;
 import jbst.ops.server.domain.slack.teams.SlackTeamEventV1;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;

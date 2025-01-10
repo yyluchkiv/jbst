@@ -3,6 +3,7 @@ package jbst.ops.server.properties.configs;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
+import jbst.ops.server.properties.base.GithubConfigs;
 import jbst.ops.server.properties.base.ServersMonitoringConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;

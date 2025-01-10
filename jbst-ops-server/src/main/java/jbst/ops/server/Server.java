@@ -2,6 +2,10 @@ package jbst.ops.server;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.ops.server.jobs.ServersJob;
+import jbst.ops.server.properties.OpsProperties;
+import jbst.ops.server.services.IncidentsService;
+import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackBotsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +15,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
-import jbst.ops.server.jobs.ServersJob;
-import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.services.IncidentsService;
-import jbst.ops.server.services.MonitoringService;
 
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
@@ -50,8 +50,8 @@ public class Server {
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
             this.slackBotsService.initialize();
             this.monitoringService.initialize();
-//            this.serversJob.scheduleAnyChangesNotification();
-//            this.incidentsService.configureCleanCronJob();
+            this.serversJob.scheduleAnyChangesNotification();
+            this.incidentsService.configureCleanCronJob();
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         } catch (RuntimeException ex) {
             LOGGER.error("Server startup failure", ex);

@@ -16,16 +16,6 @@ public class MessagesUtility {
         return ":keyboard: Options infrastructure.bot :keyboard:";
     }
 
-    @Deprecated(forRemoval = true)
-    public static String getBotNotConfiguredYet() {
-        return ":rocket: infrastructure.bot is not configured yet. Please wait a moment... :arrows_counterclockwise:";
-    }
-
-    @Deprecated(forRemoval = true)
-    public static String getBotConfigured() {
-        return ":rocket: infrastructure.bot is now configured. Enjoy! :white_check_mark:";
-    }
-
     public static String getReadOnlyWarning() {
         return ":x: Slack bot is READ-ONLY mode. Please contact primary workspace owner";
     }

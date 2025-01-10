@@ -1,7 +1,7 @@
 package jbst.ops.server.slack;
 
 import com.slack.api.Slack;
-import jbst.ops.server.domain.servers.TeamV2;
+import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.domain.slack.bots.SlackBot;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class SlackBotsService {
 
     // Services
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    private final Map<TeamV2, SlackBot> bots = new ConcurrentHashMap<>();
+    private final Map<Team, SlackBot> bots = new ConcurrentHashMap<>();
 
     public final void initialize() {
         var slacksConfigs = this.opsProperties.getSlacksConfigs().getValues();

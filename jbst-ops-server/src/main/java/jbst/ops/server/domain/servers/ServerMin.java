@@ -7,7 +7,7 @@ import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.inci
 
 public record ServerMin(
         ServerName name,
-        TeamV2 team,
+        Team team,
         String ipAddress,
         IncidentsNotificationsMetadata incidentsNotificationsMetadata
 ) {
@@ -16,7 +16,7 @@ public record ServerMin(
     public static ServerMin unexpected(OpsIncidentEnv opsIncidentEnv) {
         return new ServerMin(
                 ServerName.dash(),
-                new TeamV2("TECH1"),
+                new Team("TECH1"),
                 opsIncidentEnv.getRemoteHost(),
                 incidentNotificationsNoMetadata()
         );

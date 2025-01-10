@@ -6,7 +6,7 @@ import jbst.foundation.incidents.domain.IncidentAttributes;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
 import jbst.ops.server.domain.servers.Subcontractor;
 import jbst.ops.server.domain.servers.SubcontractorId;
-import jbst.ops.server.domain.servers.TeamV2;
+import jbst.ops.server.domain.servers.Team;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import static java.util.Objects.nonNull;
 public record OpsConfigs(
         Set<Subcontractor> subcontractors,
         Set<SshRsaKey> sshKeys,
-        Set<TeamV2> teams,
+        Set<Team> teams,
         List<ServerConfigs> serversConfigs
 ) {
     @JsonIgnore
@@ -37,7 +37,7 @@ public record OpsConfigs(
     }
 
     @JsonIgnore
-    public Set<TeamV2> getServersTeams() {
+    public Set<Team> getServersTeams() {
         return this.serversConfigs.stream()
                 .map(ServerConfigs::team)
                 .collect(Collectors.toSet());

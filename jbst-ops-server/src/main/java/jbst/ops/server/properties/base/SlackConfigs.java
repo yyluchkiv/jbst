@@ -3,7 +3,7 @@ package jbst.ops.server.properties.base;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
-import jbst.ops.server.domain.servers.TeamV2;
+import jbst.ops.server.domain.servers.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class SlackConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
-    private final TeamV2 team;
+    private final Team team;
     @MandatoryProperty
     private final String botToken;
     @MandatoryProperty

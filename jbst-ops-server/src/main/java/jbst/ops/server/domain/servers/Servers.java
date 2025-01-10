@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
@@ -25,7 +24,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @ToString
 public class Servers {
     private final List<Server> values;
-    private final Map<TeamV2, List<Server>> mappedValues;
+    private final Map<Team, List<Server>> mappedValues;
     private final List<Tuple2<ServerName, SpringBootClient.SpringBootActuatorInfo>> mappedActuatorsResponses;
     private final boolean anyPresent;
     private final boolean anyChanges;
