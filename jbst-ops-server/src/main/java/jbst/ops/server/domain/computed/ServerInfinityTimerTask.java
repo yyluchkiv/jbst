@@ -164,9 +164,10 @@ public class ServerInfinityTimerTask {
                 nonNull(serverConfigs.springActuatorBasicAuthenticationConfigs().password());
 
         // Computed: Tech1 servers before verification is considered 'down' to receive notification at restart
-        if (serverConfigs.team().isTech1()) {
-            this.addUpEvent(false);
-        }
+        // TODO [YYL] fixme
+//        if (serverConfigs.team().isTech1()) {
+//            this.addUpEvent(false);
+//        }
 
         this.onlineTick();
         // TODO [YYL] postpone SSH at least for 15 seconds

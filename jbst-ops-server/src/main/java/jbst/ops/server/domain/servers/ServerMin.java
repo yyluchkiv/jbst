@@ -7,15 +7,16 @@ import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.inci
 
 public record ServerMin(
         ServerName name,
-        Team team,
+        TeamV2 team,
         String ipAddress,
         IncidentsNotificationsMetadata incidentsNotificationsMetadata
 ) {
 
+    // TODO [YYL] delete me
     public static ServerMin unexpected(OpsIncidentEnv opsIncidentEnv) {
         return new ServerMin(
                 ServerName.dash(),
-                Team.tech1(),
+                new TeamV2("TECH1"),
                 opsIncidentEnv.getRemoteHost(),
                 incidentNotificationsNoMetadata()
         );

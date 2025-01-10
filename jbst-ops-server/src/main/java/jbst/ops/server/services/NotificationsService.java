@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedSmartApps;
 import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedTech1;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.communicationMainSlackIncident;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.communicationTeamSlackIncident;
 
 @Slf4j
 @Service

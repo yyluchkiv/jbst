@@ -5,13 +5,13 @@ import jbst.ops.server.domain.configs.spring.SpringActuatorBasicAuthenticationCo
 import jbst.ops.server.domain.configs.ssh.SshConfigs;
 import jbst.ops.server.domain.servers.IncidentsNotificationsConfigs;
 import jbst.ops.server.domain.servers.ServerType;
-import jbst.ops.server.domain.servers.Team;
+import jbst.ops.server.domain.servers.TeamV2;
 
 import java.util.List;
 
 public record ServerConfigs(
         boolean disableMonitoring,
-        Team team,
+        TeamV2 team,
         ServerType type,
         ServerName name,
         String ipAddress,

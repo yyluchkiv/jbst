@@ -13,7 +13,6 @@ import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.domain.servers.ServerMin;
 import jbst.ops.server.domain.servers.Servers;
-import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,14 +81,15 @@ public class MonitoringService {
         );
     }
 
-    public final Servers getServers(Team team) {
-        return new Servers(
-                this.servers.values().stream()
-                        .filter(server -> nonNull(team) && team.equals(server.getServerConfigs().team()))
-                        .map(ServerInfinityTimerTask::getServer)
-                        .collect(Collectors.toList())
-        );
-    }
+    // TODO [YYL] fixme
+//    public final Servers getServers(Team team) {
+//        return new Servers(
+//                this.servers.values().stream()
+//                        .filter(server -> nonNull(team) && team.equals(server.getServerConfigs().team()))
+//                        .map(ServerInfinityTimerTask::getServer)
+//                        .collect(Collectors.toList())
+//        );
+//    }
 
     public final Servers getServersAnyChanges() {
         return new Servers(

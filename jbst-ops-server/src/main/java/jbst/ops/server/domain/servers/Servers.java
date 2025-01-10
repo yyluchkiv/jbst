@@ -25,7 +25,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @ToString
 public class Servers {
     private final List<Server> values;
-    private final Map<Team, List<Server>> mappedValues;
+    private final Map<TeamV2, List<Server>> mappedValues;
     private final List<Tuple2<ServerName, SpringBootClient.SpringBootActuatorInfo>> mappedActuatorsResponses;
     private final boolean anyPresent;
     private final boolean anyChanges;
@@ -55,25 +55,27 @@ public class Servers {
                 );
     }
 
-    @JsonIgnore
-    public boolean isAnyProblems(Team team) {
-        if (isNull(team)) {
-            return false;
-        }
-        return this.values.stream()
-                .filter(server -> team.equals(server.team()))
-                .anyMatch(server -> !server.ok());
-    }
+    // TODO [YYL] fixme
+//    @JsonIgnore
+//    public boolean isAnyProblems(Team team) {
+//        if (isNull(team)) {
+//            return false;
+//        }
+//        return this.values.stream()
+//                .filter(server -> team.equals(server.team()))
+//                .anyMatch(server -> !server.ok());
+//    }
 
-    @JsonIgnore
-    public boolean isAnyChanges(Team team) {
-        if (isNull(team)) {
-            return false;
-        }
-        return this.values.stream()
-                .filter(server -> team.equals(server.team()))
-                .anyMatch(Server::anyChanges);
-    }
+    // TODO [YYL] fixme
+//    @JsonIgnore
+//    public boolean isAnyChanges(Team team) {
+//        if (isNull(team)) {
+//            return false;
+//        }
+//        return this.values.stream()
+//                .filter(server -> team.equals(server.team()))
+//                .anyMatch(Server::anyChanges);
+//    }
 
     @JsonIgnore
     public Servers getServersFailure(Predicate<Server> predicate) {
@@ -85,12 +87,12 @@ public class Servers {
         );
     }
 
-    @JsonIgnore
-    public Servers getServers(Team team) {
-        return new Servers(
-                this.values.stream()
-                        .filter(app -> nonNull(team) && team.equals(app.team()))
-                        .collect(Collectors.toList())
-        );
-    }
+//    @JsonIgnore
+//    public Servers getServers(Team team) {
+//        return new Servers(
+//                this.values.stream()
+//                        .filter(app -> nonNull(team) && team.equals(app.team()))
+//                        .collect(Collectors.toList())
+//        );
+//    }
 }

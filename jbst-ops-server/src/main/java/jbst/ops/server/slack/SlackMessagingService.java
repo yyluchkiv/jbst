@@ -22,7 +22,7 @@ public class SlackMessagingService {
     protected final BlockingQueue<List<SlackTeamEventV1>> sendingQueue = new LinkedBlockingQueue<>();
 
     // Services
-    private final Map<TeamV2, SlackClient> slacksServices = new ConcurrentHashMap<>();
+//    private final Map<TeamV2, SlackClient> slacksServices = new ConcurrentHashMap<>();
 
     @Autowired
     public SlackMessagingService(OpsProperties opsProperties) {
@@ -53,17 +53,17 @@ public class SlackMessagingService {
             try {
                 var slackTeamEvents = this.sendingQueue.take();
                 for (var slackTeamEvent : slackTeamEvents) {
-                    var slackService = this.slacksServices.get(slackTeamEvent.getRequestContext().getSlackTeam());
+//                    var slackService = this.slacksServices.get(slackTeamEvent.getRequestContext().getSlackTeam());
 
                     var messageType = slackTeamEvent.getMessageType();
 
-                    if (messageType.isCommunicationMain()) {
-                        slackService.sendCommunicationMain(slackTeamEvent);
-                    }
-
-                    if (messageType.isCommunicationTeam()) {
-                        slackService.sendCommunicationTeam(slackTeamEvent);
-                    }
+//                    if (messageType.isCommunicationMain()) {
+//                        slackService.sendCommunicationMain(slackTeamEvent);
+//                    }
+//
+//                    if (messageType.isCommunicationTeam()) {
+//                        slackService.sendCommunicationTeam(slackTeamEvent);
+//                    }
                 }
             } catch (InterruptedException ex1) {
                 Thread.currentThread().interrupt();

@@ -7,7 +7,7 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 public record Server(
         ObjectId id,
-        Team team,
+        TeamV2 team,
         ServerType type,
         ServerName name,
         String ipAddress,

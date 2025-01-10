@@ -2,11 +2,9 @@ package jbst.ops.server.slack.services.options.impl;
 
 import jbst.ops.server.domain.servers.Server;
 import jbst.ops.server.domain.servers.Servers;
-import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.domain.slack.messages.SlackMessageServerTable;
 import jbst.ops.server.domain.slack.messages.SlackMessageServersSpringActuatorsTable;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
-import jbst.ops.server.properties.atomics.SlackTeamChannelCommunication;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
@@ -21,7 +19,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 import static jbst.ops.server.constants.OpsConstants.Services.*;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.*;
 
@@ -38,17 +35,6 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     @Override
     public void sendShow(SlackRequestContext slackRequestContext) {
         var servers = this.monitoringService.getServers();
-        this.slackMessagingService.sendAsync(
-                channelSlackMessages(
-                        slackRequestContext,
-                        this.getServersTables(servers)
-                )
-        );
-    }
-
-    @Override
-    public void sendShow(SlackRequestContext slackRequestContext, Team team) {
-        var servers = this.monitoringService.getServers(team);
         this.slackMessagingService.sendAsync(
                 channelSlackMessages(
                         slackRequestContext,
@@ -105,28 +91,28 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
         }
     }
 
-    @Override
-    public void sendShowShortOrFailures(SlackRequestContext slackRequestContext, Servers servers, SlackTeamChannelCommunication slackTeamChannelCommunication) {
-        var team = slackTeamChannelCommunication.getTeam();
-        if (servers.isAnyProblems(team)) {
-            var filteredInfrastructure = servers.getServers(team);
-            this.slackMessagingService.sendAsync(
-                    communicationTeamSlackMessage(
-                            slackRequestContext,
-                            "<!here>" + TWO_NEWLINE + this.getFailureServersSlackMessage(slackRequestContext, filteredInfrastructure),
-                            slackTeamChannelCommunication
-                    )
-            );
-        } else {
-            this.slackMessagingService.sendAsync(
-                    communicationTeamSlackMessage(
-                            slackRequestContext,
-                            MessagesUtility.getServiceMessage(false, MONITORING_SERVICE),
-                            slackTeamChannelCommunication
-                    )
-            );
-        }
-    }
+//    @Override
+//    public void sendShowShortOrFailures(SlackRequestContext slackRequestContext, Servers servers, SlackTeamChannelCommunication slackTeamChannelCommunication) {
+//        var team = slackTeamChannelCommunication.getTeam();
+//        if (servers.isAnyProblems(team)) {
+//            var filteredInfrastructure = servers.getServers(team);
+//            this.slackMessagingService.sendAsync(
+//                    communicationTeamSlackMessage(
+//                            slackRequestContext,
+//                            "<!here>" + TWO_NEWLINE + this.getFailureServersSlackMessage(slackRequestContext, filteredInfrastructure),
+//                            slackTeamChannelCommunication
+//                    )
+//            );
+//        } else {
+//            this.slackMessagingService.sendAsync(
+//                    communicationTeamSlackMessage(
+//                            slackRequestContext,
+//                            MessagesUtility.getServiceMessage(false, MONITORING_SERVICE),
+//                            slackTeamChannelCommunication
+//                    )
+//            );
+//        }
+//    }
 
     // ================================================================================================================
     // Private Methods
@@ -143,7 +129,8 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     private String getFailureServersSlackMessage(SlackRequestContext slackRequestContext, Servers servers) {
         Predicate<Server> slackTeamPredicate = server -> {
             if (slackRequestContext.getSlackTeam().isSmartApps()) {
-                return server.team().isSmartApps();
+                // TODO [YYL] fixme
+//                return server.team().isSmartApps();
             }
             return slackRequestContext.getSlackTeam().isTech1();
         };
