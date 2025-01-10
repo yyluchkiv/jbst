@@ -56,11 +56,14 @@ public record SlackBot(
         }
     }
 
-    public void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
+    // ================================================================================================================
+    // PRIVATE METHODS: onEvents
+    // ================================================================================================================
+    private void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
         this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
     }
 
-    public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
+    private void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
         // READONLY: communication-mode scenario
         if (this.configs.isReadOnlyMode()) {
             this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
