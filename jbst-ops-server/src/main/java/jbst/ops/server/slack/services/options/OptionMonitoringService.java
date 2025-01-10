@@ -9,7 +9,6 @@ public interface OptionMonitoringService {
     void sendShow(SlackRequestContext slackRequestContext);
     void sendShow(SlackRequestContext slackRequestContext, Team team);
     void sendSpringBootActuators(SlackRequestContext slackRequestContext);
-    void sendReload(SlackRequestContext slackRequestContext);
 
     void sendChanges(SlackRequestContext slackRequestContext, Servers servers);
     void sendShowShortOrFailures(SlackRequestContext slackRequestContext, Servers servers);

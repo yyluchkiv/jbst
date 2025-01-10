@@ -17,7 +17,6 @@ import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.exceptions.ServerNotFoundException;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,7 +26,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.io.File.createTempFile;
@@ -125,13 +127,6 @@ public class MonitoringService {
                         .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
-    }
-
-    @Deprecated
-    @SneakyThrows
-    public final Servers reloadServers() {
-        this.servers = this.initializeServersInfinityTimerTasks();
-        return this.getServers();
     }
 
     public final boolean isAnyChanges() {
@@ -250,15 +245,9 @@ public class MonitoringService {
                 var json = new String(resource.getInputStream().readAllBytes(), UTF_8);
                 return this.objectMapper.readValue(json, OpsConfigs.class);
             }
-            throw new JbstUnreachableCodeException();
         } catch (IOException ex) {
             LOGGER.error("Failure reading ops configs", ex);
-            return new OpsConfigs(
-                    new HashSet<>(),
-                    new HashSet<>(),
-                    new HashSet<>(),
-                    new ArrayList<>()
-            );
         }
+        throw new JbstUnreachableCodeException();
     }
 }

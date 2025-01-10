@@ -40,8 +40,6 @@ public class IncidentsService {
     private final NotificationsService notificationsService;
     private final MonitoringService monitoringService;
     private final EmailService emailService;
-    // Properties
-    private final OpsProperties opsProperties;
 
     // IncidentType <-> HTML template name
     private static final Map<String, IncidentTemplate> TEMPLATES_MAPPINGS = Map.of(

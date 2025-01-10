@@ -72,23 +72,6 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     }
 
     @Override
-    public void sendReload(SlackRequestContext slackRequestContext) {
-        this.slackMessagingService.sendAsync(
-                channelSlackMessage(
-                        slackRequestContext,
-                        MessagesUtility.getOverExpensiveOperation()
-                )
-        );
-        var servers = this.monitoringService.reloadServers();
-        this.slackMessagingService.sendAsync(
-                channelSlackMessages(
-                        slackRequestContext,
-                        this.getServersTables(servers)
-                )
-        );
-    }
-
-    @Override
     public void sendChanges(SlackRequestContext slackRequestContext, Servers servers) {
         if (servers.isAnyChanges()) {
             var serversHistory = servers.getValues().stream()
