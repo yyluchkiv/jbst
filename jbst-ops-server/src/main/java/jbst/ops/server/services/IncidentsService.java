@@ -14,6 +14,7 @@ import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,8 @@ public class IncidentsService {
     private final NotificationsService notificationsService;
     private final MonitoringService monitoringService;
     private final EmailService emailService;
+    // Properties
+    private final OpsProperties opsProperties;
 
     // IncidentType <-> HTML template name
     private static final Map<String, IncidentTemplate> TEMPLATES_MAPPINGS = Map.of(
@@ -80,6 +83,11 @@ public class IncidentsService {
 
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
     private final ConcurrentHashMap<Tuple2<Incident, OpsIncidentEnv>, ConcurrentIncidentStats> incidents = new ConcurrentHashMap<>();
+
+    @EventListener
+    public void onEvent(Incident incident) {
+        this.registerIncident(incident, this.opsProperties.getOpsIncidentEnv());
+    }
 
     // WARNING #1: every 15 seconds check on incident "times" == 10 -> register incident + NO cleanup
     // WARNING #2: every 15 seconds check on incident "lastTime" was more than 15 minutes ago -> register incident + cleanup

@@ -1,8 +1,9 @@
 package jbst.ops.server.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
+import jbst.foundation.incidents.domain.Incident;
 import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.services.IncidentsProcessor;
+import jbst.ops.server.services.IncidentsService;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.services.NotificationsService;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +18,16 @@ import org.springframework.stereotype.Service;
 public class NotificationsCron extends AbstractBaseCron {
 
     // Services
-    private final IncidentsProcessor incidentsProcessor;
+    private final IncidentsService incidentsService;
     private final MonitoringService monitoringService;
     private final NotificationsService notificationsService;
+    // Properties
+    private final OpsProperties opsProperties;
 
     @Override
     public void processException(Exception ex) {
-        this.incidentsProcessor.processIncident(ex);
+        var incident = new Incident(ex);
+        this.incidentsService.registerIncident(incident, this.opsProperties.getOpsIncidentEnv());
     }
 
     @Scheduled(
