@@ -65,6 +65,8 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
             UserTokenType type,
             long timestamp
     );
+    @Transactional
     void deleteAllByExpiryTimestampBefore(long timestamp);
+    @Transactional
     void deleteAllByUsedIsTrue();
 }
