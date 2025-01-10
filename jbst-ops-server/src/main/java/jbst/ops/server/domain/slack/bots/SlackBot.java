@@ -21,8 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.List;
 
-import static jbst.ops.server.utilities.MessagesUtility.getReadOnlyWarning;
-
 @Slf4j
 public record SlackBot(
         SlackConfigs configs,
@@ -57,13 +55,13 @@ public record SlackBot(
     }
 
     public void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
-        this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
+        this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
     }
 
     public void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {
         // READONLY: communication-mode scenario
-        if (this.configs.isCommunicationReadOnly()) {
-            this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
+        if (this.configs.isReadOnlyMode()) {
+            this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
         // READONLY: main-channel scenario
@@ -73,12 +71,12 @@ public record SlackBot(
                             .channel(payload.getEvent().getChannel())
                             .build()
             );
-            if (!this.configs.getMainChannel().equals(conversationsInfo.getChannel().getName())) {
-                this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
+            if (!this.configs.getMainCommunication().equals(conversationsInfo.getChannel().getName())) {
+                this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
                 return;
             }
         } catch (IOException | SlackApiException ex) {
-            this.sendMessage(getReadOnlyWarning(), payload.getEvent().getChannel());
+            this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
         // HELP: invalid scenario
@@ -88,6 +86,7 @@ public record SlackBot(
             this.sendMessage(SlackOpsCommand.getHelpTable(), payload.getEvent().getChannel());
             return;
         }
+        // PRODUCTION: "ops $cmd" scenario
         this.sendMessage("OPS...", payload.getEvent().getChannel());
     }
 

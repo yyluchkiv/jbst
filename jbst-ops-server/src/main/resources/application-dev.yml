@@ -24,31 +24,25 @@ ops:
     credentials:
       username: "admin"
       password: "admin"
+  slacks-configs:
+    values:
+      - team: "TECH1"
+        app-token: "<?>"
+        bot-token: "<?>"
+        mode: "OPERATIONAL"
+        main-communication: "ops-founders"
+        teams-communications:
+          - team: "SMARTTRADER"
+            mode: "DISABLED"
+            name: "ops-team-smart-apps"
+      - team: "SMARTTRADER"
+        app-token: "<?>"
+        bot-token: "<?>"
+        mode: "READONLY"
+        main-communication: "ops-founders"
   servers-configs:
     mode: "RESOURCES"
     rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
   recipients-configs:
     to:
       - "<?>"
-  tech1-slack-configs:
-    enabled: true
-    app-token: "<?>"
-    bot-token: "<?>"
-    communication:
-      channel: ops-founders
-    teams-communications:
-      - team: SMART_APPS
-        communication:
-          enabled: false
-          channel: ops-team-smart-apps
-      - team: TECH1
-        communication:
-          enabled: false
-          channel: ops-founders
-  smart-apps-slack-configs:
-    enabled: false
-    app-token: "<?>"
-    bot-token: "<?>"
-    communication:
-      channel: ops-founders
-
