@@ -42,7 +42,7 @@ public class MessagesUtility {
         return ":pray: Operation is completed. Thanks for you patience!";
     }
 
-    public String getServiceHeaderMessage(String serviceName) {
+    public static String getServiceHeaderMessage(String serviceName) {
         return String.format(
                 ":cloud: Service: *%s* :cloud:",
                 serviceName

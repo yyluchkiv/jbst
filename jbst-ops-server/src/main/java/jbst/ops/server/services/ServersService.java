@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.ops.server.constants.OpsConstants.Services.MONITORING_SERVICE;
-import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATOR_SERVICE;
+import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATORS_SERVICE;
+import static jbst.ops.server.constants.OpsConstants.Services.STATUS_SERVICE;
 import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -37,7 +37,7 @@ public class ServersService {
 
     public final List<String> getActuators() {
         var servers = this.monitoringService.getServersSpringBoot();
-        var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATOR_SERVICE) +
+        var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATORS_SERVICE) +
                 NEWLINE +
                 new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
         return List.of(message);
@@ -87,7 +87,7 @@ public class ServersService {
                 .map(SlackMessageServerTable::new)
                 .map(SlackMessageServerTable::getValue)
                 .collect(Collectors.toList());
-        messages.add(0, MessagesUtility.getServiceMessage(servers.isAnyProblems(), MONITORING_SERVICE));
+        messages.add(0, MessagesUtility.getServiceMessage(servers.isAnyProblems(), STATUS_SERVICE));
         return messages;
     }
 }

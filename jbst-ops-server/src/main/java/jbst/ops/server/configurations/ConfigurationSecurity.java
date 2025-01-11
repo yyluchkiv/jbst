@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -23,8 +24,6 @@ import jbst.ops.server.properties.OpsProperties;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationSecurity {
 
-    // Password
-    private final PasswordEncoder passwordEncoder;
     // Filters
     private final AuthenticationIncidentFilter authenticationIncidentFilter;
     // Properties
@@ -57,10 +56,18 @@ public class ConfigurationSecurity {
         try {
             auth.inMemoryAuthentication()
                     .withUser(remoteServer.getCredentials().username().value())
-                    .password(this.passwordEncoder.encode(remoteServer.getCredentials().password().value()))
+                    .password(this.passwordEncoder().encode(remoteServer.getCredentials().password().value()))
                     .roles(Username.ops().value());
         } catch (Exception ex) {
             throw new IllegalArgumentException("ops-server security configuration failure");
         }
+    }
+
+    // ================================================================================================================
+    // Passwords + Security
+    // ================================================================================================================
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

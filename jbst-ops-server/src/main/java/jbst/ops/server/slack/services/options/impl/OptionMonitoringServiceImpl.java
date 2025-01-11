@@ -19,8 +19,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.ops.server.constants.OpsConstants.Services.*;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.*;
+import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATORS_SERVICE;
+import static jbst.ops.server.constants.OpsConstants.Services.STATUS_SERVICE;
+import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.communicationMainSlackMessage;
 
 @Slf4j
 @Component
@@ -46,7 +47,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     @Override
     public void sendSpringBootActuators(SlackRequestContext slackRequestContext) {
         var servers = this.monitoringService.getServersSpringBoot();
-        var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATOR_SERVICE) +
+        var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATORS_SERVICE) +
                 NEWLINE +
                 new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
 //        this.slackMessagingService.sendAsync(
@@ -122,7 +123,7 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
                 .map(SlackMessageServerTable::new)
                 .map(SlackMessageServerTable::getValue)
                 .collect(Collectors.toList());
-        messages.add(0, MessagesUtility.getServiceMessage(servers.isAnyProblems(), MONITORING_SERVICE));
+        messages.add(0, MessagesUtility.getServiceMessage(servers.isAnyProblems(), STATUS_SERVICE));
         return messages;
     }
 
@@ -134,7 +135,8 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
             }
             return slackRequestContext.getSlackTeam().isTech1();
         };
-        return MessagesUtility.getServiceMessage(true, MONITORING_SERVICE) +
+        // TODO [YYL] STATUS_SERVICE?
+        return MessagesUtility.getServiceMessage(true, STATUS_SERVICE) +
                 NEWLINE +
                 new SlackMessageServerTable(servers.getServersFailure(slackTeamPredicate).getValues()).getValue();
     }
