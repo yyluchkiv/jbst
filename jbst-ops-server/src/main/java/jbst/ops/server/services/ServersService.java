@@ -1,6 +1,9 @@
 package jbst.ops.server.services;
 
+import jbst.foundation.domain.collections.Partitions;
+import jbst.ops.server.domain.servers.FileSystemMetadataRow;
 import jbst.ops.server.domain.servers.Servers;
+import jbst.ops.server.domain.slack.messages.SlackMessageFileSystemTable;
 import jbst.ops.server.domain.slack.messages.SlackMessageServerTable;
 import jbst.ops.server.domain.slack.messages.SlackMessageServersSpringActuatorsTable;
 import jbst.ops.server.utilities.MessagesUtility;
@@ -9,12 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.ops.server.constants.OpsConstants.Services.MONITORING_SERVICE;
 import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATOR_SERVICE;
+import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
 @Service
@@ -35,6 +41,42 @@ public class ServersService {
                 NEWLINE +
                 new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
         return List.of(message);
+    }
+
+    public final List<String> getFS() {
+        List<String> messages = this.getStatus();
+        var servers = this.monitoringService.getServersSshRequired();
+
+        List<String> warningTables = new ArrayList<>();
+        List<FileSystemMetadataRow> successesRows = new ArrayList<>();
+
+        servers.getValues().forEach(server -> {
+            if (server.fileSystemMetadataProblems()) {
+                warningTables.add(new SlackMessageFileSystemTable(server).getValue());
+            } else if (server.fileSystemMetadata().isAnyRows()) {
+                successesRows.addAll(server.fileSystemMetadata().rows());
+            }
+        });
+
+        if (!isEmpty(successesRows)) {
+            successesRows.sort(PERCENTAGE_REVERSED);
+            // WARNING: 25 is practical number is this case as max slack rows to wrap a message
+            var partitionsSuccesses = Partitions.ofSize(successesRows, 25);
+            partitionsSuccesses.forEach(chuckedMappedRows -> {
+                var table = new SlackMessageFileSystemTable(chuckedMappedRows).getValue();
+                messages.add(table);
+            });
+        }
+
+        if (!isEmpty(warningTables)) {
+            warningTables.add(0, MessagesUtility.getResponseWarnings());
+            messages.addAll(warningTables);
+        }
+
+        if (isEmpty(successesRows) && isEmpty(warningTables)) {
+            messages.add(SlackMessageFileSystemTable.getNoFsTable());
+        }
+        return messages;
     }
 
     // ================================================================================================================
