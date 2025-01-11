@@ -12,14 +12,14 @@ import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestam
 // Lombok
 @EqualsAndHashCode
 @ToString
-public class ConcurrentIncidentStats {
+public class OpsConcurrentIncidentStats {
     @Getter
     private final OpsIncidentEnv env;
     private final AtomicInteger currentTimes;
     private final AtomicInteger previousTimes;
     private final AtomicLong lastTime;
 
-    public ConcurrentIncidentStats(OpsIncidentEnv env) {
+    public OpsConcurrentIncidentStats(OpsIncidentEnv env) {
         this.env = env;
         this.currentTimes = new AtomicInteger(1);
         this.previousTimes = new AtomicInteger(1);

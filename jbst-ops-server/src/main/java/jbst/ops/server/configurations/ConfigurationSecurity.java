@@ -41,7 +41,6 @@ public class ConfigurationSecurity {
         http.authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests
                     .requestMatchers("/api/incidents/**").permitAll()
-                    .requestMatchers("/api/storage/**").permitAll()
                     .requestMatchers("/actuator/**").hasRole(Username.ops().value());
             if (this.jbstProperties.getServerConfigs().isSpringdocEnabled()) {
                 authorizeHttpRequests.requestMatchers(JbstConstants.Swagger.ENDPOINTS.toArray(new String[0])).permitAll();

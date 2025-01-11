@@ -5,6 +5,7 @@ import jbst.foundation.domain.base.Username;
 import java.util.Map;
 import java.util.Set;
 
+@Deprecated(forRemoval = true)
 public record IncidentsNotificationsConfigs(
         boolean enabled,
         Set<SubcontractorId> memberIds,

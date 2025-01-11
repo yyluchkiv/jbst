@@ -14,6 +14,7 @@ import static java.util.stream.Collectors.toSet;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
+@Deprecated(forRemoval = true)
 // Lombok
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter

@@ -42,7 +42,6 @@ public class ConfigurationBeans {
 
     private final OpsProperties opsProperties;
 
-    // TODO [YYL] CLEAN assertProperties
     @PostConstruct
     public void init() {
         this.opsProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));

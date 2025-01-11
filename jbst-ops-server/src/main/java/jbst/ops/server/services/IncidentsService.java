@@ -7,8 +7,8 @@ import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.ops.server.domain.incidents.ConcurrentIncidentStats;
-import jbst.ops.server.domain.incidents.IncidentTemplate;
+import jbst.ops.server.domain.incidents.OpsConcurrentIncidentStats;
+import jbst.ops.server.domain.incidents.OpsIncidentHTML;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 import static jbst.foundation.incidents.domain.IncidentAttributes.IncidentsTypes.THROWABLE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.TRACE;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static jbst.ops.server.domain.incidents.IncidentTemplate.opsAnyIncident;
+import static jbst.ops.server.domain.incidents.OpsIncidentHTML.opsAnyIncident;
 import static jbst.ops.server.domain.incidents.OpsIncident.TIMES;
 
 @Slf4j
@@ -45,7 +45,7 @@ public class IncidentsService {
     private final OpsProperties opsProperties;
 
     // IncidentType <-> HTML template name
-    private static final Map<String, IncidentTemplate> TEMPLATES_MAPPINGS = Map.of(
+    private static final Map<String, OpsIncidentHTML> TEMPLATES_MAPPINGS = Map.of(
             AUTHENTICATION_LOGIN.toString(), opsAnyIncident(),
             AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD.toString(), opsAnyIncident(),
             AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD.toString(), opsAnyIncident(),
@@ -82,7 +82,7 @@ public class IncidentsService {
     );
 
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
-    private final ConcurrentHashMap<Tuple2<Incident, OpsIncidentEnv>, ConcurrentIncidentStats> incidents = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Tuple2<Incident, OpsIncidentEnv>, OpsConcurrentIncidentStats> incidents = new ConcurrentHashMap<>();
 
     @EventListener
     public void onEvent(Incident incident) {
@@ -131,7 +131,7 @@ public class IncidentsService {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private TuplePresence<IncidentTemplate> isIncidentHasPredefinedHTML(Incident incident) {
+    private TuplePresence<OpsIncidentHTML> isIncidentHasPredefinedHTML(Incident incident) {
         var incidentType = incident.getType();
         return new TuplePresence<>(
                 TEMPLATES_MAPPINGS.containsKey(incidentType),
@@ -161,7 +161,7 @@ public class IncidentsService {
         }
     }
 
-    private void registerIncidentHTMLBased(Incident incident, OpsIncidentEnv env, IncidentTemplate htmlTemplate) {
+    private void registerIncidentHTMLBased(Incident incident, OpsIncidentEnv env, OpsIncidentHTML htmlTemplate) {
         var opsIncident = this.monitoringService.getOpsIncident(incident, env);
         this.emailService.sendHTML(
                 new EmailHTML(
@@ -179,7 +179,7 @@ public class IncidentsService {
             this.incidents.get(incidentOnEnv).incrementStats();
             return false;
         } else {
-            this.incidents.put(incidentOnEnv, new ConcurrentIncidentStats(env));
+            this.incidents.put(incidentOnEnv, new OpsConcurrentIncidentStats(env));
             return true;
         }
     }
