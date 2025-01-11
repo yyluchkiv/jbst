@@ -5,8 +5,6 @@ import jbst.foundation.domain.base.Username;
 
 public record SpringActuatorBasicAuthenticationConfigs(
         Username username,
-        Password password,
-        String healthEndpoint,
-        String infoEndpoint
+        Password password
 ) {
 }

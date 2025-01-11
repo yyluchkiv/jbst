@@ -321,7 +321,7 @@ public class ServerInfinityTimerTask {
         try {
             // Actuator: Health
             this.springBootActuatorHealth = this.beans.getRestTemplate().exchange(
-                    this.getIpAddress() + this.getServerConfigs().springActuatorBasicAuthenticationConfigs().healthEndpoint(),
+                    this.getIpAddress() + "/actuator/health",
                     HttpMethod.GET,
                     httpEntity,
                     SpringBootClient.SpringBootActuatorHealth.class
@@ -335,7 +335,7 @@ public class ServerInfinityTimerTask {
         try {
             // Actuator: Info
             this.springBootActuatorInfo = this.beans.getRestTemplate().exchange(
-                    this.getIpAddress() + this.getServerConfigs().springActuatorBasicAuthenticationConfigs().infoEndpoint(),
+                    this.getIpAddress() + "/actuator/info",
                     HttpMethod.GET,
                     httpEntity,
                     SpringBootClient.SpringBootActuatorInfo.class
