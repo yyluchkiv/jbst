@@ -1,7 +1,7 @@
 package jbst.ops.server.domain.configs;
 
 import jbst.foundation.domain.base.ServerName;
-import jbst.ops.server.domain.configs.spring.SpringActuatorBasicAuthenticationConfigs;
+import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.ops.server.domain.configs.ssh.SshConfigs;
 import jbst.ops.server.domain.servers.ServerType;
 import jbst.ops.server.domain.servers.Team;
@@ -17,7 +17,7 @@ public record ServerConfigs(
         List<String> allowedErrorMessages,
         List<String> aliases,
         SshConfigs sshConfigs,
-        SpringActuatorBasicAuthenticationConfigs springActuatorBasicAuthenticationConfigs
+        UsernamePasswordCredentials usernamePasswordCredentials
 ) {
 }
 

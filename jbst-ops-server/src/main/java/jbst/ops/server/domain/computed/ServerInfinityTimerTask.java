@@ -145,9 +145,9 @@ public class ServerInfinityTimerTask {
 
         // Configs [processed]: Spring Boot
         this.isSpringActuatorAuthenticationRequired = serverConfigs.type().isServerSpringBoot() &&
-                nonNull(serverConfigs.springActuatorBasicAuthenticationConfigs()) &&
-                nonNull(serverConfigs.springActuatorBasicAuthenticationConfigs().username()) &&
-                nonNull(serverConfigs.springActuatorBasicAuthenticationConfigs().password());
+                nonNull(serverConfigs.usernamePasswordCredentials()) &&
+                nonNull(serverConfigs.usernamePasswordCredentials().username()) &&
+                nonNull(serverConfigs.usernamePasswordCredentials().password());
 
         // Computed: Tech1 servers before verification is considered 'down' to receive notification at restart
         // TODO [YYL] fixme
@@ -310,10 +310,10 @@ public class ServerInfinityTimerTask {
         HttpEntity<?> httpEntity;
         var httpHeaders = new HttpHeaders();
         if (this.isSpringActuatorAuthenticationRequired) {
-            var springActuatorBasicAuthenticationConfigs = this.getServerConfigs().springActuatorBasicAuthenticationConfigs();
-            var username = springActuatorBasicAuthenticationConfigs.username();
-            var password = springActuatorBasicAuthenticationConfigs.password();
-            var basicAuthenticationHeader = getBasicAuthenticationHeader(username.value(), password.value());
+            var basicAuthenticationHeader = getBasicAuthenticationHeader(
+                    this.getServerConfigs().usernamePasswordCredentials().username().value(),
+                    this.getServerConfigs().usernamePasswordCredentials().password().value()
+            );
             httpHeaders.set(basicAuthenticationHeader.a(), basicAuthenticationHeader.b());
         }
         httpEntity = new HttpEntity<>(httpHeaders);

@@ -12,6 +12,7 @@ import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.domain.servers.ServerMin;
+import jbst.ops.server.domain.servers.ServerType;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.ops.server.constants.OpsConstants.Logs.PREFIX;
+import static jbst.ops.server.domain.servers.ServerType.SERVER_AS_FULL_SPRING_BOOT;
 import static jbst.ops.server.properties.configs.ServersConfigs.Mode.GITHUB;
 import static jbst.ops.server.properties.configs.ServersConfigs.Mode.RESOURCES;
 import static org.apache.commons.io.FileUtils.copyURLToFile;
@@ -103,7 +105,7 @@ public class MonitoringService {
     public final Servers getServersSpringBoot() {
         return new Servers(
                 this.servers.values().stream()
-                        .filter(server -> nonNull(server.getServerConfigs().springActuatorBasicAuthenticationConfigs()))
+                        .filter(server -> server.getServerConfigs().type().equals(SERVER_AS_FULL_SPRING_BOOT))
                         .map(ServerInfinityTimerTask::getServer)
                         .collect(Collectors.toList())
         );
