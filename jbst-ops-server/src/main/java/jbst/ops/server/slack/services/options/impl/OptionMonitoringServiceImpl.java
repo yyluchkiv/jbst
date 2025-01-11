@@ -35,12 +35,12 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     @Override
     public void sendShow(SlackRequestContext slackRequestContext) {
         var servers = this.monitoringService.getServers();
-        this.slackMessagingService.sendAsync(
-                channelSlackMessages(
-                        slackRequestContext,
-                        this.getServersTables(servers)
-                )
-        );
+//        this.slackMessagingService.sendAsync(
+//                channelSlackMessages(
+//                        slackRequestContext,
+//                        this.getServersTables(servers)
+//                )
+//        );
     }
 
     @Override
@@ -49,12 +49,12 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
         var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATOR_SERVICE) +
                 NEWLINE +
                 new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
-        this.slackMessagingService.sendAsync(
-                channelSlackMessage(
-                        slackRequestContext,
-                        message
-                )
-        );
+//        this.slackMessagingService.sendAsync(
+//                channelSlackMessage(
+//                        slackRequestContext,
+//                        message
+//                )
+//        );
     }
 
     @Override
@@ -63,31 +63,31 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
             var serversHistory = servers.getValues().stream()
                     .map(server -> MessagesUtility.getServerHistoryMessage(server.name().value(), server.upHistory()))
                     .collect(Collectors.joining(NEWLINE));
-            this.slackMessagingService.sendAsync(
-                    communicationMainSlackMessage(
-                            slackRequestContext,
-                            MessagesUtility.getServiceHeaderMessage(MONITORING_HISTORY_SERVICE) + NEWLINE + serversHistory
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    communicationMainSlackMessage(
+//                            slackRequestContext,
+//                            MessagesUtility.getServiceHeaderMessage(MONITORING_HISTORY_SERVICE) + NEWLINE + serversHistory
+//                    )
+//            );
         }
     }
 
     @Override
     public void sendShowShortOrFailures(SlackRequestContext slackRequestContext, Servers servers) {
         if (servers.isAnyProblems()) {
-            this.slackMessagingService.sendAsync(
-                    communicationMainSlackMessage(
-                            slackRequestContext,
-                            this.getFailureServersSlackMessage(slackRequestContext, servers)
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    communicationMainSlackMessage(
+//                            slackRequestContext,
+//                            this.getFailureServersSlackMessage(slackRequestContext, servers)
+//                    )
+//            );
         } else {
-            this.slackMessagingService.sendAsync(
-                    communicationMainSlackMessage(
-                            slackRequestContext,
-                            MessagesUtility.getServiceMessage(false, MONITORING_SERVICE)
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    communicationMainSlackMessage(
+//                            slackRequestContext,
+//                            MessagesUtility.getServiceMessage(false, MONITORING_SERVICE)
+//                    )
+//            );
         }
     }
 

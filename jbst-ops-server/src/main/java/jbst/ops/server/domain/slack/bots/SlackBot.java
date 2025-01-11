@@ -14,7 +14,6 @@ import com.slack.api.model.event.MessageEvent;
 import jbst.ops.server.domain.slack.commands.SlackOpsCommand;
 import jbst.ops.server.domain.slack.commands.SlackRequestCommand;
 import jbst.ops.server.properties.base.SlackConfigs;
-import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.SlackCommandsService;
 import jbst.ops.server.utilities.MessagesUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,6 @@ import java.util.List;
 @Slf4j
 public record SlackBot(
         SlackConfigs configs,
-        SlackMessagingService slackMessagingService,
         SlackCommandsService slackCommandsService,
         MethodsClient methodsClient
 ) {

@@ -3,19 +3,14 @@ package jbst.ops.server.services;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.slack.messages.SlackMessageType;
-import jbst.ops.server.properties.OpsProperties;
-import jbst.ops.server.slack.SlackMessagingService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
-import jbst.ops.server.utilities.MessagesUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedSmartApps;
 import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedTech1;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.communicationMainSlackIncident;
 
 @Slf4j
 @Service
@@ -25,10 +20,6 @@ public class NotificationsService {
     // Services
     private final OptionFileSystemService optionFileSystemService;
     private final OptionMonitoringService optionMonitoringService;
-    // Messaging
-    private final SlackMessagingService slackMessagingService;
-    // Properties
-    private final OpsProperties opsProperties;
 
     public final void notifyShow(Servers servers) {
         this.optionMonitoringService.sendShowShortOrFailures(

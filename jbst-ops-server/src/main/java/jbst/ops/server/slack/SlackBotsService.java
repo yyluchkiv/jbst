@@ -18,7 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SlackBotsService {
 
     // Services
-    private final SlackMessagingService slackMessagingService;
     private final SlackCommandsService slackCommandsService;
     // Properties
     private final OpsProperties opsProperties;
@@ -30,7 +29,7 @@ public class SlackBotsService {
     public final void initialize() {
         var slacksConfigs = this.opsProperties.getSlacksConfigs().getValues();
         slacksConfigs.forEach(sc -> {
-            var bot = new SlackBot(sc, this.slackMessagingService, this.slackCommandsService, Slack.getInstance().methods(sc.getBotToken()));
+            var bot = new SlackBot(sc, this.slackCommandsService, Slack.getInstance().methods(sc.getBotToken()));
             bot.initialize();
             this.bots.put(sc.getTeam(), bot);
         });
