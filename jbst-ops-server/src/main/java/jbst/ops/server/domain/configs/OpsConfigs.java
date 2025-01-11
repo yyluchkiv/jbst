@@ -16,7 +16,6 @@ import static java.util.Objects.nonNull;
 public record OpsConfigs(
         Set<SshRsaKey> sshKeys,
         Set<Team> teams,
-        Team mainTeam,
         List<ServerConfigs> serversConfigs
 ) {
     @JsonIgnore

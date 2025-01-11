@@ -1,7 +1,9 @@
 package jbst.ops.server.properties.configs;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
+import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.properties.base.SlackConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +11,8 @@ import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.List;
+
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -21,5 +25,23 @@ public class SlacksConfigs extends AbstractPropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return true;
+    }
+
+    @Override
+    public void assertProperties(PropertyId propertyId) {
+        super.assertProperties(propertyId);
+        assertTrueOrThrow(
+                this.values.stream().map(SlackConfigs::isMain).filter(Boolean::booleanValue).count() == 1,
+                "Slacks configs must have one main team"
+        );
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public Team getMainTeam() {
+        return this.values.stream()
+                .filter(SlackConfigs::isMain)
+                .findFirst()
+                .get()
+                .getTeam();
     }
 }

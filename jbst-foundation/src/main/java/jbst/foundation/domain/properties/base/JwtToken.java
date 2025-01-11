@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.base;
 
-import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
@@ -12,6 +11,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
@@ -46,7 +46,7 @@ public class JwtToken extends AbstractPropertyConfigs {
     @Override
     public void assertProperties(PropertyId propertyId) {
         super.assertProperties(propertyId);
-        Asserts.assertFalseOrThrow(
+        assertFalseOrThrow(
                 nonNull(this.cookieKey) && nonNull(this.headerKey),
                 "Attribute \"%s\" requires only \"cookieKey\" or \"headerKey\" to be provided".formatted(
                         ConsoleAsserts.RED_TEXT.format(propertyId.value())

@@ -159,7 +159,7 @@ public class MonitoringService {
                 }
             }
         });
-        var server = serversMappedByTeams.getOrDefault(remoteHost, ServerMin.unexpected(this.opsConfigs.mainTeam() ,opsIncidentEnv));
+        var server = serversMappedByTeams.getOrDefault(remoteHost, ServerMin.unexpected(this.opsProperties.getSlacksConfigs().getMainTeam(), opsIncidentEnv));
         return OpsIncident.of(
                 incident,
                 server,
@@ -195,7 +195,7 @@ public class MonitoringService {
                                         this.serverInfinityTimerTaskSpringBeans,
                                         this.opsProperties.getServersConfigs().getRsaKeysBaseLocation(),
                                         this.opsConfigs.getMappedSshKeys(),
-                                        this.opsConfigs.mainTeam()
+                                        this.opsProperties.getSlacksConfigs().getMainTeam()
                                 )
                         ).collect(Collectors.toList())
         );

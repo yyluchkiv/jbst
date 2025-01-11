@@ -27,6 +27,7 @@ ops:
   slacks-configs:
     values:
       - team: "TECH1"
+        main: true
         app-token: "<?>"
         bot-token: "<?>"
         mode: "OPERATIONAL"
@@ -36,6 +37,7 @@ ops:
             mode: "DISABLED"
             name: "ops-team-smart-apps"
       - team: "SMARTTRADER"
+        main: false
         app-token: "<?>"
         bot-token: "<?>"
         mode: "READONLY"

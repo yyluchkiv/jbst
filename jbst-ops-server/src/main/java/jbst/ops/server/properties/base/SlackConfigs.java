@@ -11,6 +11,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.List;
 
+import static java.lang.Boolean.TRUE;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -18,6 +20,8 @@ import java.util.List;
 public class SlackConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Team team;
+    @MandatoryProperty
+    private final Boolean main;
     @MandatoryProperty
     private final String botToken;
     @MandatoryProperty
@@ -28,6 +32,10 @@ public class SlackConfigs extends AbstractPropertyConfigs {
     private final String mainCommunication;
     @NonMandatoryProperty
     private final List<SlackTeamCommunication> teamsCommunications;
+
+    public boolean isMain() {
+        return TRUE.equals(this.main);
+    }
 
     public boolean isReadOnlyMode() {
         return Mode.READONLY.equals(this.mode);
