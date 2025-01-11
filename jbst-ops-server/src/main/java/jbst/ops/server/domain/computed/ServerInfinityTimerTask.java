@@ -47,8 +47,6 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.incidentNotificationsMetadata;
-import static jbst.ops.server.domain.servers.IncidentsNotificationsMetadata.incidentNotificationsNoMetadata;
 
 @Slf4j
 // Lombok
@@ -89,7 +87,6 @@ public class ServerInfinityTimerTask {
     private final boolean sshRequired;
     private final ServerSshConfigs serverSshConfigs;
     private final boolean isSpringActuatorAuthenticationRequired;
-    private final IncidentsNotificationsMetadata incidentsNotificationsMetadata;
 
     // Computed
     private ResponseEntity<SpringBootClient.SpringBootActuatorInfo> springBootActuatorInfo;
@@ -114,8 +111,7 @@ public class ServerInfinityTimerTask {
             ServersMonitoringConfigs serversMonitoringConfigs,
             ServerInfinityTimerTaskSpringBeans beans,
             String rsaKeysBaseLocation,
-            Map<String, SshRsaKey> mappedSshKeys,
-            Map<SubcontractorId, Subcontractor> teamMembers
+            Map<String, SshRsaKey> mappedSshKeys
     ) {
         this.stateManager = new StateManager(ClassicState.CREATED, serverConfigs);
 
@@ -145,16 +141,6 @@ public class ServerInfinityTimerTask {
         } else {
             this.id = null;
             LOGGER.debug("SSH configs are missing. Server `{}`", this.serverConfigs.name());
-        }
-
-        // Configs [processed]: attach incident notifications metadata
-        if (nonNull(serverConfigs.incidentsNotificationsConfigs()) && serverConfigs.incidentsNotificationsConfigs().enabled()) {
-            this.incidentsNotificationsMetadata = incidentNotificationsMetadata(
-                    teamMembers,
-                    serverConfigs.incidentsNotificationsConfigs()
-            );
-        } else {
-            this.incidentsNotificationsMetadata = incidentNotificationsNoMetadata();
         }
 
         // Configs [processed]: Spring Boot

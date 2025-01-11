@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import static java.time.ZoneOffset.UTC;
 import static java.util.Comparator.naturalOrder;
-import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
@@ -88,13 +87,6 @@ public class OpsIncident {
                 " — " + LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
 
         Set<String> to = new HashSet<>(recipientsConfigs.getTo());
-        var notificationsMetadata = server.incidentsNotificationsMetadata();
-        if (notificationsMetadata.isPresent()) {
-            var incidentNotificationConfig = notificationsMetadata.getTypesConfigs().get(incidentType);
-            if (nonNull(incidentNotificationConfig) && (incidentNotificationConfig.anyUsername() || notificationsMetadata.getUsernames().contains(username))) {
-                to.addAll(notificationsMetadata.getEmailsAsStrings());
-            }
-        }
         Map<String, Object> variables = new HashMap<>();
         variables.put(MEMBERS, to.stream().map(email -> "@" + email.split("@")[0]).collect(joining(", ")));
         variables.put(YEAR, now(UTC).getYear());

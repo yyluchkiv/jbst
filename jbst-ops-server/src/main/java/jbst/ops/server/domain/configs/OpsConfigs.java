@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.IncidentAttributes;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
-import jbst.ops.server.domain.servers.Subcontractor;
-import jbst.ops.server.domain.servers.SubcontractorId;
 import jbst.ops.server.domain.servers.Team;
 
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 
 public record OpsConfigs(
-        Set<Subcontractor> subcontractors,
         Set<SshRsaKey> sshKeys,
         Set<Team> teams,
         List<ServerConfigs> serversConfigs
@@ -29,11 +26,6 @@ public record OpsConfigs(
     @JsonIgnore
     public Map<String, SshRsaKey> getMappedSshKeys() {
         return this.sshKeys.stream().collect(Collectors.toMap(SshRsaKey::name, entry -> entry));
-    }
-
-    @JsonIgnore
-    public Map<SubcontractorId, Subcontractor> getMappedTeamMembers() {
-        return this.subcontractors.stream().collect(Collectors.toMap(Subcontractor::subcontractorId, entry -> entry));
     }
 
     @JsonIgnore

@@ -147,8 +147,7 @@ public class MonitoringService {
                 var serverMin = new ServerMin(
                         server.getName(),
                         team,
-                        serverIpAddress,
-                        server.getIncidentsNotificationsMetadata()
+                        serverIpAddress
                 );
 
                 serversMappedByTeams.put(serverIpAddressURI.getHost(), serverMin);
@@ -193,8 +192,7 @@ public class MonitoringService {
                                         this.opsProperties.getServersConfigs().getMonitoringConfigs(),
                                         this.serverInfinityTimerTaskSpringBeans,
                                         this.opsProperties.getServersConfigs().getRsaKeysBaseLocation(),
-                                        opsConfigs.getMappedSshKeys(),
-                                        opsConfigs.getMappedTeamMembers()
+                                        opsConfigs.getMappedSshKeys()
                                 )
                         ).collect(Collectors.toList())
         );
