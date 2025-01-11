@@ -9,11 +9,10 @@ public record ServerMin(
         String ipAddress
 ) {
 
-    // TODO [YYL] delete me
-    public static ServerMin unexpected(OpsIncidentEnv opsIncidentEnv) {
+    public static ServerMin unexpected(Team team, OpsIncidentEnv opsIncidentEnv) {
         return new ServerMin(
                 ServerName.dash(),
-                new Team("TECH1"),
+                team,
                 opsIncidentEnv.getRemoteHost()
         );
     }

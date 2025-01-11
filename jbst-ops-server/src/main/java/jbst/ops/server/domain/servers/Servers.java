@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -30,12 +29,6 @@ public class Servers {
     private final boolean anyChanges;
     private final boolean anyProblems;
     private final boolean anyProblemsOnSpringBootActuators;
-
-    public Servers() {
-        this(
-                new ArrayList<>()
-        );
-    }
 
     public Servers(@NotNull List<Server> values) {
         this.values = values;

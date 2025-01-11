@@ -12,7 +12,6 @@ import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.domain.servers.ServerMin;
-import jbst.ops.server.domain.servers.ServerType;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +60,7 @@ public class MonitoringService {
     // Properties
     private final OpsProperties opsProperties;
 
+    private OpsConfigs opsConfigs;
     private ServerInfinityTimerTasks servers = new ServerInfinityTimerTasks(new ArrayList<>());
 
     public final void initialize() {
@@ -159,7 +159,7 @@ public class MonitoringService {
                 }
             }
         });
-        var server = serversMappedByTeams.getOrDefault(remoteHost, ServerMin.unexpected(opsIncidentEnv));
+        var server = serversMappedByTeams.getOrDefault(remoteHost, ServerMin.unexpected(this.opsConfigs.mainTeam() ,opsIncidentEnv));
         return OpsIncident.of(
                 incident,
                 server,
@@ -172,29 +172,29 @@ public class MonitoringService {
     // PRIVATE METHODS
     // ================================================================================================================
     private ServerInfinityTimerTasks initializeServersInfinityTimerTasks() {
-        var opsConfigs = this.readOpsConfigs();
+        this.opsConfigs = this.readOpsConfigs();
 
-        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", opsConfigs.getServersCount(), STARTED.formatAnsi());
-        opsConfigs.serversConfigs().removeIf(ServerConfigs::disableMonitoring);
-        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", opsConfigs.getServersCount(), COMPLETED.formatAnsi());
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", this.opsConfigs.getServersCount(), STARTED.formatAnsi());
+        this.opsConfigs.serversConfigs().removeIf(ServerConfigs::disableMonitoring);
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", this.opsConfigs.getServersCount(), COMPLETED.formatAnsi());
 
-        if (opsConfigs.isAnyUnexpectedServersTeams()) {
-            this.applicationEventPublisher.publishEvent(opsConfigs.getIncidentUnexpectedTeams());
+        if (this.opsConfigs.isAnyUnexpectedServersTeams()) {
+            this.applicationEventPublisher.publishEvent(this.opsConfigs.getIncidentUnexpectedTeams());
         }
 
-        if (opsConfigs.isAnyUnexpectedSshKeys()) {
-            this.applicationEventPublisher.publishEvent(opsConfigs.getIncidentUnexpectedSshKeys());
+        if (this.opsConfigs.isAnyUnexpectedSshKeys()) {
+            this.applicationEventPublisher.publishEvent(this.opsConfigs.getIncidentUnexpectedSshKeys());
         }
 
         return new ServerInfinityTimerTasks(
-                opsConfigs.serversConfigs().stream()
+                this.opsConfigs.serversConfigs().stream()
                         .map(serverConfigs ->
                                 new ServerInfinityTimerTask(
                                         serverConfigs,
                                         this.opsProperties.getServersConfigs().getMonitoringConfigs(),
                                         this.serverInfinityTimerTaskSpringBeans,
                                         this.opsProperties.getServersConfigs().getRsaKeysBaseLocation(),
-                                        opsConfigs.getMappedSshKeys()
+                                        this.opsConfigs.getMappedSshKeys()
                                 )
                         ).collect(Collectors.toList())
         );
