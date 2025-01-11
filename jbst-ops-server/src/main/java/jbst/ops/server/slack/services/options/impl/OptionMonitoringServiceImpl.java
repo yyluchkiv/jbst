@@ -75,12 +75,12 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     @Override
     public void sendShowShortOrFailures(SlackRequestContext slackRequestContext, Servers servers) {
         if (servers.isAnyProblems()) {
-//            this.slackMessagingService.sendAsync(
-//                    communicationMainSlackMessage(
-//                            slackRequestContext,
-//                            this.getFailureServersSlackMessage(slackRequestContext, servers)
-//                    )
-//            );
+            this.slackMessagingService.sendAsync(
+                    communicationMainSlackMessage(
+                            slackRequestContext,
+                            this.getFailureServersSlackMessage(slackRequestContext, servers)
+                    )
+            );
         } else {
 //            this.slackMessagingService.sendAsync(
 //                    communicationMainSlackMessage(

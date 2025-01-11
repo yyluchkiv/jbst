@@ -28,13 +28,14 @@ public class NotificationsService {
     // Services
     private final SlackBotsService slackBotsService;
     private final OptionFileSystemService optionFileSystemService;
-    private final OptionMonitoringService optionMonitoringService;
 
     public final void notifyShow(Servers servers) {
-        this.optionMonitoringService.sendShowShortOrFailures(
-                limitedTech1(),
-                servers
-        );
+        if (servers.isAnyProblems()) {
+
+        } else {
+
+        }
+
     }
 
     // TODO [YYL] fixme
