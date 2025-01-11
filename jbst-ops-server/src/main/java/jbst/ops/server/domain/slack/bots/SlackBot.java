@@ -54,6 +54,10 @@ public record SlackBot(
         }
     }
 
+    public void sendMainCommunication(List<String> messages) {
+        messages.forEach(message -> this.sendMessage(message, this.configs.getMainCommunication()));
+    }
+
     // ================================================================================================================
     // PRIVATE METHODS: onEvents
     // ================================================================================================================

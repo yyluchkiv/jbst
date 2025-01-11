@@ -3,14 +3,22 @@ package jbst.ops.server.services;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.slack.messages.SlackMessageType;
+import jbst.ops.server.slack.SlackBotsService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.slack.services.options.OptionMonitoringService;
+import jbst.ops.server.utilities.MessagesUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
+import static jbst.ops.server.constants.OpsConstants.Services.MONITORING_HISTORY_SERVICE;
 import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedTech1;
+import static jbst.ops.server.utilities.MessagesUtility.getServiceHeaderMessage;
 
 @Slf4j
 @Service
@@ -18,6 +26,7 @@ import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedT
 public class NotificationsService {
 
     // Services
+    private final SlackBotsService slackBotsService;
     private final OptionFileSystemService optionFileSystemService;
     private final OptionMonitoringService optionMonitoringService;
 
@@ -71,10 +80,13 @@ public class NotificationsService {
     }
 
     public final void notifyShowChanges(Servers servers) {
-        this.optionMonitoringService.sendChanges(
-                limitedTech1(),
-                servers
-        );
+        if (servers.isAnyChanges()) {
+            var serversHistory = servers.getValues().stream()
+                    .map(server -> MessagesUtility.getServerHistoryMessage(server.name().value(), server.upHistory()))
+                    .collect(Collectors.joining(NEWLINE));
+            var message = getServiceHeaderMessage(MONITORING_HISTORY_SERVICE) + NEWLINE + serversHistory;
+            this.slackBotsService.sendMainBotMainCommunication(List.of(message));
+        }
     }
 
     // TODO [YYL] fixme: add "incident" flag

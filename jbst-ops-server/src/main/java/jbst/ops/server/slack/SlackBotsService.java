@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,7 +36,18 @@ public class SlackBotsService {
         });
     }
 
+    public final void sendMainBotMainCommunication(List<String> messages) {
+        this.getMainSlackBot().sendMainCommunication(messages);
+    }
+
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    private SlackBot getMainSlackBot() {
+        return this.bots.values().stream()
+                .filter(bot -> bot.configs().isMain())
+                .findFirst()
+                .get();
+    }
 }
