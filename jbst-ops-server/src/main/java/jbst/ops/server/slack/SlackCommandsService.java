@@ -1,14 +1,12 @@
 package jbst.ops.server.slack;
 
 import jbst.foundation.domain.collections.Partitions;
-import jbst.ops.server.domain.keywords.Operation;
 import jbst.ops.server.domain.servers.FileSystemMetadataRow;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.slack.commands.SlackOpsCommand;
 import jbst.ops.server.domain.slack.commands.SlackRequestCommand;
 import jbst.ops.server.domain.slack.messages.SlackMessageFileSystemTable;
 import jbst.ops.server.domain.slack.messages.SlackMessageServerTable;
-import jbst.ops.server.domain.slack.messages.SlackMessageServersSpringActuatorsTable;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.services.ServersService;
 import jbst.ops.server.utilities.MessagesUtility;
@@ -23,9 +21,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.ops.server.constants.OpsConstants.Services.MONITORING_SERVICE;
-import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATOR_SERVICE;
 import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -67,7 +63,6 @@ public class SlackCommandsService {
             });
 
             if (!isEmpty(successesRows)) {
-                messages.add(Operation.FS_TABLES.getMessage());
                 successesRows.sort(PERCENTAGE_REVERSED);
                 // WARNING: 25 is practical number is this case as max slack rows to wrap a message
                 var partitionsSuccesses = Partitions.ofSize(successesRows, 25);
@@ -83,7 +78,6 @@ public class SlackCommandsService {
             }
 
             if (isEmpty(successesRows) && isEmpty(warningTables)) {
-                messages.add(Operation.FS_TABLES.getMessage());
                 messages.add(SlackMessageFileSystemTable.getNoFsTable());
             }
         }

@@ -1,7 +1,6 @@
 package jbst.ops.server.slack.services.options.impl;
 
 import jbst.foundation.domain.collections.Partitions;
-import jbst.ops.server.domain.keywords.Operation;
 import jbst.ops.server.domain.servers.FileSystemMetadataRow;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.slack.messages.SlackMessageFileSystemTable;
@@ -23,8 +22,6 @@ import java.util.stream.Collectors;
 
 import static jbst.ops.server.constants.OpsConstants.Services.FILE_SYSTEM_SERVICE;
 import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.channelSlackMessage;
-import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.channelSlackMessages;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
@@ -53,46 +50,45 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
         });
 
         if (!isEmpty(successesRows)) {
-            this.slackMessagingService.sendAsync(
-                    channelSlackMessage(
-                            slackRequestContext,
-                            Operation.FS_TABLES.getMessage()
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    channelSlackMessage(
+//                            slackRequestContext,
+//                            Operation.FS_TABLES.getMessage()
+//                    )
+//            );
             successesRows.sort(PERCENTAGE_REVERSED);
             // WARNING: 25 is practical number is this case as max slack rows to wrap a message
             var partitionsSuccesses = Partitions.ofSize(successesRows, 25);
             partitionsSuccesses.forEach(chuckedMappedRows -> {
                 var table = new SlackMessageFileSystemTable(chuckedMappedRows).getValue();
-                this.slackMessagingService.sendAsync(
-                        channelSlackMessage(
-                                slackRequestContext,
-                                table
-                        )
-                );
+//                this.slackMessagingService.sendAsync(
+//                        channelSlackMessage(
+//                                slackRequestContext,
+//                                table
+//                        )
+//                );
             });
         }
 
         if (!isEmpty(warningTables)) {
             warningTables.add(0, MessagesUtility.getResponseWarnings());
-            this.slackMessagingService.sendAsync(
-                    channelSlackMessages(
-                            slackRequestContext,
-                            warningTables
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    channelSlackMessages(
+//                            slackRequestContext,
+//                            warningTables
+//                    )
+//            );
         }
 
         if (isEmpty(successesRows) && isEmpty(warningTables)) {
             List<String> messages = new ArrayList<>();
-            messages.add(Operation.FS_TABLES.getMessage());
             messages.add(SlackMessageFileSystemTable.getNoFsTable());
-            this.slackMessagingService.sendAsync(
-                    channelSlackMessages(
-                            slackRequestContext,
-                            messages
-                    )
-            );
+//            this.slackMessagingService.sendAsync(
+//                    channelSlackMessages(
+//                            slackRequestContext,
+//                            messages
+//                    )
+//            );
         }
     }
 

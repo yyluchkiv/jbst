@@ -194,7 +194,8 @@ public class MonitoringService {
                                         this.opsProperties.getServersConfigs().getMonitoringConfigs(),
                                         this.serverInfinityTimerTaskSpringBeans,
                                         this.opsProperties.getServersConfigs().getRsaKeysBaseLocation(),
-                                        this.opsConfigs.getMappedSshKeys()
+                                        this.opsConfigs.getMappedSshKeys(),
+                                        this.opsConfigs.mainTeam()
                                 )
                         ).collect(Collectors.toList())
         );

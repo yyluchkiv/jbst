@@ -12,7 +12,10 @@ import jbst.foundation.utilities.ssh.SshUtility;
 import jbst.ops.server.constants.OpsConstants;
 import jbst.ops.server.domain.configs.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
-import jbst.ops.server.domain.servers.*;
+import jbst.ops.server.domain.servers.FileSystemMetadata;
+import jbst.ops.server.domain.servers.FileSystemMetadataRow;
+import jbst.ops.server.domain.servers.Server;
+import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.properties.base.ServersMonitoringConfigs;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,9 +40,12 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static java.util.concurrent.CompletableFuture.runAsync;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static jbst.foundation.domain.constants.JbstConstants.Strings.UNDEFINED;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
+import static jbst.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
@@ -81,6 +87,7 @@ public class ServerInfinityTimerTask {
     private final ServerConfigs serverConfigs;
     private final ServersMonitoringConfigs serversMonitoringConfigs;
     private final ServerInfinityTimerTaskSpringBeans beans;
+    private final Team mainTeam;
 
     // Configs [processed]
     private final Integer id;
@@ -111,7 +118,8 @@ public class ServerInfinityTimerTask {
             ServersMonitoringConfigs serversMonitoringConfigs,
             ServerInfinityTimerTaskSpringBeans beans,
             String rsaKeysBaseLocation,
-            Map<String, SshRsaKey> mappedSshKeys
+            Map<String, SshRsaKey> mappedSshKeys,
+            Team mainTeam
     ) {
         this.stateManager = new StateManager(ClassicState.CREATED, serverConfigs);
 
@@ -119,6 +127,7 @@ public class ServerInfinityTimerTask {
         this.serverConfigs = serverConfigs;
         this.serversMonitoringConfigs = serversMonitoringConfigs;
         this.beans = beans;
+        this.mainTeam = mainTeam;
 
         // Configs [processed]: attach SSH key password
         var sshConfigs = serverConfigs.sshConfigs();
@@ -150,14 +159,12 @@ public class ServerInfinityTimerTask {
                 nonNull(serverConfigs.usernamePasswordCredentials().password());
 
         // Computed: Tech1 servers before verification is considered 'down' to receive notification at restart
-        // TODO [YYL] fixme
-//        if (serverConfigs.team().isTech1()) {
-//            this.addUpEvent(false);
-//        }
+        if (this.mainTeam.equals(serverConfigs.team())) {
+            this.addUpEvent(false);
+        }
 
         this.onlineTick();
-        // TODO [YYL] postpone SSH at least for 15 seconds
-//        this.sshTick();
+        runAsync(this::sshTick);
 
         synchronized (this.getLock()) {
             if (!this.stateManager.getState().getPermissions().startPermitted()) {
@@ -359,9 +366,8 @@ public class ServerInfinityTimerTask {
         }
     }
 
-
     private void ssh() throws SshSessionException {
-        LOGGER.debug("SSH into server `{}` by file system metadata configuration started", this.getName());
+        LOGGER.info("[Ops] SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
         var sshSession = SshUtility.getSession(this.serverSshConfigs.getConnectionConfigs());
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
@@ -384,7 +390,7 @@ public class ServerInfinityTimerTask {
         } else {
             this.fileSystemMetadata = FileSystemMetadata.failure(sshSession.getThrowable().value());
         }
-        LOGGER.debug("SSH into server `{}` by file system metadata configuration completed", this.getName());
+        LOGGER.info("[Ops] SSH into server {}. Status: {}", this.getName(), COMPLETED.formatAnsi());
     }
 
     // ================================================================================================================
