@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static java.util.Objects.nonNull;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -38,6 +40,15 @@ public class SlackBotsService {
 
     public final void sendMainBotMainCommunication(List<String> messages) {
         this.getMainSlackBot().sendMainCommunication(messages);
+    }
+
+    public final void sendMainCommunication(Map<Team, List<String>> teamsMessages) {
+        teamsMessages.forEach((team, messages) -> {
+            var bot = this.bots.get(team);
+            if (nonNull(bot)) {
+                bot.sendMainCommunication(messages);
+            }
+        });
     }
 
     // ================================================================================================================
