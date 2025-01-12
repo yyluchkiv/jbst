@@ -9,11 +9,10 @@ import jbst.foundation.domain.states.classic.ClassicState;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.feigns.spring.SpringBootClient;
 import jbst.foundation.utilities.ssh.SshUtility;
-import jbst.ops.server.constants.OpsConstants;
 import jbst.ops.server.domain.configs.servers.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
-import jbst.ops.server.domain.servers.ServerFileSystemMetadata;
 import jbst.ops.server.domain.servers.Server;
+import jbst.ops.server.domain.servers.ServerFileSystemMetadata;
 import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.properties.base.ServersMonitoringConfigs;
 import lombok.EqualsAndHashCode;
@@ -52,6 +51,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.ops.server.constants.OpsConstants.Logs.PREFIX;
 
 @Slf4j
 // Lombok
@@ -73,7 +73,7 @@ public class ServerInfinityTimerTask {
         // TODO [YYL, v1.11+] add color -> states
         @Override
         public String getLogKeyword() {
-            return OpsConstants.Logs.PREFIX + " InfinityTimerTask: {}. State: {} → {}";
+            return PREFIX + " InfinityTimerTask: {}. State: {} → {}";
         }
 
         @Override
@@ -366,7 +366,7 @@ public class ServerInfinityTimerTask {
     }
 
     private void ssh() throws SshSessionException {
-        LOGGER.info("[Ops] SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
+        LOGGER.info(PREFIX + "SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
         var sshSession = SshUtility.getSession(this.serverSshConfigs.getConnectionConfigs());
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
@@ -389,7 +389,7 @@ public class ServerInfinityTimerTask {
         } else {
             this.fileSystemMetadata = ServerFileSystemMetadata.failure(sshSession.getThrowable().value());
         }
-        LOGGER.info("[Ops] SSH into server {}. Status: {}", this.getName(), COMPLETED.formatAnsi());
+        LOGGER.info(PREFIX + "SSH into server {}. Status: {}", this.getName(), COMPLETED.formatAnsi());
     }
 
     // ================================================================================================================
