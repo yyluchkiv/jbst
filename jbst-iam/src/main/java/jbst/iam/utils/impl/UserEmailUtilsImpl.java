@@ -58,6 +58,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 this.getSubject("Account Accessed"),
                 templateName,
                 Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("username", function.username().value()),
                         Map.entry("accessMethod", function.accountAccessMethod().getValue()),
@@ -69,7 +70,6 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         );
     }
 
-    // TODO [YYL] add version -> Function
     @Override
     public EmailHTML getEmailConfirmationHTML(@NotNull FunctionEmailConfirmation function) {
         return EmailHTML.of(
@@ -80,6 +80,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                         "jbst-email-confirmation"
                 ),
                 Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("username", function.username().value()),
                         Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, function.token()))
@@ -97,6 +98,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                         "jbst-password-reset"
                 ),
                 Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("username", function.username().value()),
                         Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(function.token()))
