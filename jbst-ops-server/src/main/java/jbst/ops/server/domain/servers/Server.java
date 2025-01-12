@@ -20,7 +20,7 @@ public record Server(
         boolean sshRequired,
         boolean fileSystemMetadataThresholdReached,
         boolean fileSystemMetadataProblems,
-        FileSystemMetadata fileSystemMetadata,
+        ServerFileSystemMetadata fileSystemMetadata,
         String sshLastUpdatedAt
 ) {
 }

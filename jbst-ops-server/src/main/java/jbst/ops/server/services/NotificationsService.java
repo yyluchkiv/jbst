@@ -2,7 +2,6 @@ package jbst.ops.server.services;
 
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.servers.Servers;
-import jbst.ops.server.domain.slack.messages.SlackMessageType;
 import jbst.ops.server.slack.SlackBotsService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.utilities.MessagesUtility;

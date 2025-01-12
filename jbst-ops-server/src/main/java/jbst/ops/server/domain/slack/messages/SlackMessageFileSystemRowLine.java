@@ -1,6 +1,6 @@
 package jbst.ops.server.domain.slack.messages;
 
-import jbst.ops.server.domain.servers.FileSystemMetadataRow;
+import jbst.ops.server.domain.servers.ServerFileSystemMetadata;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -28,7 +28,7 @@ public class SlackMessageFileSystemRowLine {
 
     private final String value;
 
-    public SlackMessageFileSystemRowLine(FileSystemMetadataRow row) {
+    public SlackMessageFileSystemRowLine(ServerFileSystemMetadata.FileSystemMetadataRow row) {
         this.value = format(
                 FORMAT,
                 toObjectsArray(

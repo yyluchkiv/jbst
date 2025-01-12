@@ -12,8 +12,7 @@ import jbst.foundation.utilities.ssh.SshUtility;
 import jbst.ops.server.constants.OpsConstants;
 import jbst.ops.server.domain.configs.servers.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
-import jbst.ops.server.domain.servers.FileSystemMetadata;
-import jbst.ops.server.domain.servers.FileSystemMetadataRow;
+import jbst.ops.server.domain.servers.ServerFileSystemMetadata;
 import jbst.ops.server.domain.servers.Server;
 import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.properties.base.ServersMonitoringConfigs;
@@ -100,7 +99,7 @@ public class ServerInfinityTimerTask {
     private ResponseEntity<SpringBootClient.SpringBootActuatorHealth> springBootActuatorHealth;
     private boolean up;
     private CircularFifoQueue<Boolean> upHistory;
-    private FileSystemMetadata fileSystemMetadata;
+    private ServerFileSystemMetadata fileSystemMetadata;
     private Long onlineLastUpdatedAt;
     private Long sshLastUpdatedAt;
 
@@ -362,7 +361,7 @@ public class ServerInfinityTimerTask {
                 this.ssh();
             }
         } catch (SshSessionException | RuntimeException ex) {
-            this.fileSystemMetadata = FileSystemMetadata.failure(ex);
+            this.fileSystemMetadata = ServerFileSystemMetadata.failure(ex);
         }
     }
 
@@ -374,7 +373,7 @@ public class ServerInfinityTimerTask {
             var lines = SshUtility.executeCmd(sshSession.getSession().value(), "df -h");
             var rows = lines.stream()
                     .skip(1)
-                    .map(line -> new FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))
+                    .map(line -> new ServerFileSystemMetadata.FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))
                     .filter(row -> isFirstValueGreater(row.getUsePercentageValue(), this.serversMonitoringConfigs.getFileSystemFilter()))
                     .filter(row -> {
                         if (nonNull(this.serverSshConfigs.getFileSystem())
@@ -386,9 +385,9 @@ public class ServerInfinityTimerTask {
                         return true;
                     })
                     .collect(Collectors.toList());
-            this.fileSystemMetadata = FileSystemMetadata.success(rows);
+            this.fileSystemMetadata = ServerFileSystemMetadata.success(rows);
         } else {
-            this.fileSystemMetadata = FileSystemMetadata.failure(sshSession.getThrowable().value());
+            this.fileSystemMetadata = ServerFileSystemMetadata.failure(sshSession.getThrowable().value());
         }
         LOGGER.info("[Ops] SSH into server {}. Status: {}", this.getName(), COMPLETED.formatAnsi());
     }

@@ -11,8 +11,6 @@ import com.slack.api.methods.request.conversations.ConversationsInfoRequest;
 import com.slack.api.methods.request.files.FilesUploadRequest;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
-import jbst.ops.server.domain.slack.commands.SlackOpsCommand;
-import jbst.ops.server.domain.slack.commands.SlackRequestCommand;
 import jbst.ops.server.properties.base.SlackConfigs;
 import jbst.ops.server.slack.SlackCommandsService;
 import jbst.ops.server.utilities.MessagesUtility;
@@ -87,10 +85,10 @@ public record SlackBot(
             return;
         }
         // HELP: invalid scenario
-        var slackRequestCommand = new SlackRequestCommand(payload.getEvent());
+        var slackRequestCommand = new SlackRequest(payload.getEvent());
         if (!slackRequestCommand.isValid()) {
             this.sendMessage(MessagesUtility.getHelpTableHeader(), payload.getEvent().getChannel());
-            this.sendMessage(SlackOpsCommand.getHelpTable(), payload.getEvent().getChannel());
+            this.sendMessage(SlackCommand.getHelpTable(), payload.getEvent().getChannel());
             return;
         }
         // PRODUCTION: "ops $cmd" scenario

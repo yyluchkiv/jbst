@@ -1,6 +1,6 @@
 package jbst.ops.server.domain.slack.messages;
 
-import jbst.ops.server.domain.servers.FileSystemMetadataRow;
+import jbst.ops.server.domain.servers.ServerFileSystemMetadata;
 import jbst.ops.server.domain.servers.Server;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,7 +19,7 @@ import static jbst.foundation.utilities.slack.SlackUtility.getSlackTable;
 public class SlackMessageFileSystemTable {
     private final String value;
 
-    public SlackMessageFileSystemTable(List<FileSystemMetadataRow> rows) {
+    public SlackMessageFileSystemTable(List<ServerFileSystemMetadata.FileSystemMetadataRow> rows) {
         this.value = getSlackTable(
                 SlackMessageFileSystemRowLine.HEADER_SERVERS_INCLUDED,
                 rows.stream()

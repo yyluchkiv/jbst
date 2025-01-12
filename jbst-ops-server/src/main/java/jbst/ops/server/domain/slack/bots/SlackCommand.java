@@ -1,4 +1,4 @@
-package jbst.ops.server.domain.slack.commands;
+package jbst.ops.server.domain.slack.bots;
 
 import jbst.foundation.utilities.slack.SlackUtility;
 import lombok.AllArgsConstructor;
@@ -13,14 +13,14 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.TAB;
 // Lombok
 @AllArgsConstructor
 @Getter
-public enum SlackOpsCommand {
+public enum SlackCommand {
     HELP("help", "Shows infrastructure.bot [options ...]"),
     STATUS("status", "Shows servers online statuses: OK / Failure markers"),
     ACTUATORS("actuators", "Shows servers actuator /info (ONLY spring-boot servers)"),
     FS("fs", "Shows servers file systems metadata");
 
-    public static Optional<SlackOpsCommand> findOpt(String command) {
-        return Stream.of(SlackOpsCommand.values())
+    public static Optional<SlackCommand> findOpt(String command) {
+        return Stream.of(SlackCommand.values())
                 .filter(op -> op.name().equalsIgnoreCase(command))
                 .findFirst();
     }
@@ -28,7 +28,7 @@ public enum SlackOpsCommand {
     public static String getHelpTable() {
         var sb = new StringBuilder("ops:");
         sb.append(NEWLINE);
-        var commands = SlackOpsCommand.values();
+        var commands = SlackCommand.values();
         for (int i = 0; i < commands.length; i++) {
             var command = commands[i];
             sb.append(TAB);
@@ -44,14 +44,14 @@ public enum SlackOpsCommand {
     private final String description;
 
     public boolean isStatus() {
-        return SlackOpsCommand.STATUS.equals(this);
+        return SlackCommand.STATUS.equals(this);
     }
 
     public boolean isActuators() {
-        return SlackOpsCommand.ACTUATORS.equals(this);
+        return SlackCommand.ACTUATORS.equals(this);
     }
 
     public boolean isFS() {
-        return SlackOpsCommand.FS.equals(this);
+        return SlackCommand.FS.equals(this);
     }
 }

@@ -1,7 +1,7 @@
 package jbst.ops.server.slack;
 
-import jbst.ops.server.domain.slack.commands.SlackOpsCommand;
-import jbst.ops.server.domain.slack.commands.SlackRequestCommand;
+import jbst.ops.server.domain.slack.bots.SlackCommand;
+import jbst.ops.server.domain.slack.bots.SlackRequest;
 import jbst.ops.server.services.MonitoringService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +22,10 @@ public class SlackCommandsService {
     // Services
     private final MonitoringService monitoringService;
 
-    public final List<String> getMessages(SlackRequestCommand command) {
+    public final List<String> getMessages(SlackRequest command) {
         List<String> messages = new ArrayList<>();
         if (!command.isValid() || isNull(command.getCmd())) {
-            messages.add(SlackOpsCommand.getHelpTable());
+            messages.add(SlackCommand.getHelpTable());
         }
         // "ops status"
         if (nonNull(command.getCmd()) && command.getCmd().isStatus()) {

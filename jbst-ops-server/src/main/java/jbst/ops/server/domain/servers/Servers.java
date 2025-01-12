@@ -21,10 +21,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATORS_SERVICE;
 import static jbst.ops.server.constants.OpsConstants.Services.STATUS_SERVICE;
-import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
+import static jbst.ops.server.domain.servers.ServerFileSystemMetadata.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
@@ -121,7 +120,7 @@ public class Servers {
         List<String> messages = new ArrayList<>();
 
         List<String> warningTables = new ArrayList<>();
-        List<FileSystemMetadataRow> successesRows = new ArrayList<>();
+        List<ServerFileSystemMetadata.FileSystemMetadataRow> successesRows = new ArrayList<>();
 
         this.values.forEach(server -> {
             if (server.fileSystemMetadataProblems()) {
