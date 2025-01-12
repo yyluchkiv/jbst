@@ -1,6 +1,7 @@
 package jbst.ops.server.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
 import jbst.foundation.feigns.github.GithubClient;
 import jbst.foundation.incidents.domain.Incident;
@@ -11,7 +12,7 @@ import jbst.ops.server.domain.configs.OpsConfigs;
 import jbst.ops.server.domain.configs.servers.ServerConfigs;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
-import jbst.ops.server.domain.servers.ServerMin;
+import jbst.ops.server.domain.servers.Server;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.io.File.createTempFile;
@@ -135,34 +133,26 @@ public class MonitoringService {
     }
 
     public final OpsIncident getOpsIncident(Incident incident, OpsIncidentEnv opsIncidentEnv) {
-        // WARNING #1: 6001 - tehms
-        // WARNING #2: find more efficient solution (E.G. add infrastructure.getServersSkipInfrastructure method)
+        Map<String, Server> serversHosts = new HashMap<>();
+        // WARNING #1: 6001 - hms
         var skipPorts = Set.of(6001);
-        // Incident -> Server
-        var remoteHost = opsIncidentEnv.getRemoteHost();
-        Map<String, ServerMin> serversMappedByTeams = new HashMap<>();
-        this.servers.values().forEach(server -> {
-            var team = server.getServerConfigs().team();
-            var serverIpAddress = server.getIpAddress();
+        this.servers.values().forEach(serverTask -> {
+            var serverIpAddress = serverTask.getIpAddress();
             var serverIpAddressURI = URI.create(serverIpAddress);
             if (!skipPorts.contains(serverIpAddressURI.getPort())) {
-                var serverMin = new ServerMin(
-                        server.getName(),
-                        team,
-                        serverIpAddress
-                );
-
-                serversMappedByTeams.put(serverIpAddressURI.getHost(), serverMin);
-                var aliases = server.getServerConfigs().aliases();
+                serversHosts.put(serverIpAddressURI.getHost(), serverTask.getServer());
+                var aliases = serverTask.getServerConfigs().aliases();
                 if (!isEmpty(aliases)) {
-                    aliases.forEach(alias -> serversMappedByTeams.put(alias, serverMin));
+                    aliases.forEach(alias -> serversHosts.put(alias, serverTask.getServer()));
                 }
             }
         });
-        var server = serversMappedByTeams.getOrDefault(remoteHost, ServerMin.unexpected(this.opsProperties.getSlacksConfigs().getMainTeam(), opsIncidentEnv));
+        var remoteHost = opsIncidentEnv.getRemoteHost();
+        var server = serversHosts.get(remoteHost);
         return OpsIncident.of(
                 incident,
-                server,
+                nonNull(server) ? server.name() : ServerName.dash(),
+                remoteHost,
                 opsIncidentEnv,
                 this.opsProperties.getRecipientsConfigs()
         );

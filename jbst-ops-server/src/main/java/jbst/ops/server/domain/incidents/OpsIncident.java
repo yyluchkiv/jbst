@@ -1,11 +1,11 @@
 package jbst.ops.server.domain.incidents;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.IncidentAttributes;
-import jbst.ops.server.domain.servers.ServerMin;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -67,7 +67,7 @@ public class OpsIncident {
     );
 
     private final Set<String> to;
-    private final ServerMin server;
+//    private final ServerMin server;
     private final String incidentType;
     private final Username username;
     private final String emailSubject;
@@ -75,13 +75,14 @@ public class OpsIncident {
 
     public static OpsIncident of(
             Incident incident,
-            ServerMin server,
+            ServerName serverName,
+            String serverURL,
             OpsIncidentEnv env,
             RecipientsConfigs recipientsConfigs
     ) {
         var incidentType = incident.getType();
         var username = incident.getUsername();
-        var readableServerName = "\"" + server.name() + "\"";
+        var readableServerName = "\"" + serverName.value() + "\"";
         var emailSubject = "[OpsIncidents] " + incidentType +
                 " on " + readableServerName +
                 " — " + LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
@@ -90,7 +91,7 @@ public class OpsIncident {
         Map<String, Object> variables = new HashMap<>();
         variables.put(MEMBERS, to.stream().map(email -> "@" + email.split("@")[0]).collect(joining(", ")));
         variables.put(YEAR, now(UTC).getYear());
-        variables.put(SERVER_URL, server.ipAddress());
+        variables.put(SERVER_URL, serverURL);
         variables.put(REMOTE_URL, env.getRemoteHost());
         variables.put(WHEN_UA, LocalDateTime.now(UKRAINE).format(DTF11) + " in Ukraine");
         variables.put(WHEN_UTC, LocalDateTime.now(UTC).format(DTF11) + " in UK");
@@ -109,7 +110,6 @@ public class OpsIncident {
                 });
         return new OpsIncident(
                 to,
-                server,
                 incidentType,
                 username,
                 emailSubject,

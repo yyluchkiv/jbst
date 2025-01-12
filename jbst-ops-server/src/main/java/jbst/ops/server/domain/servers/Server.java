@@ -23,5 +23,6 @@ public record Server(
         ServerFileSystemMetadata fileSystemMetadata,
         String sshLastUpdatedAt
 ) {
+
 }
 
