@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.ops.server.constants.OpsConstants.Services.HISTORY_SERVICE;
-import static jbst.ops.server.domain.slack.requests.SlackRequestContext.limitedTech1;
 import static jbst.ops.server.utilities.MessagesUtility.getServiceHeaderMessage;
 
 @Slf4j
@@ -64,19 +63,19 @@ public class NotificationsService {
     }
 
     public final void notifyFs(Servers servers) {
-        this.optionFileSystemService.sendFsStatusOrFailures(
-                limitedTech1(),
-                servers,
-                SlackMessageType.COMMUNICATION_MAIN
-        );
+//        this.optionFileSystemService.sendFsStatusOrFailures(
+//                limitedTech1(),
+//                servers,
+//                SlackMessageType.COMMUNICATION_MAIN
+//        );
     }
 
     public final void notifyFsFailures(Servers servers) {
-        this.optionFileSystemService.sendFsFailures(
-                limitedTech1(),
-                servers,
-                SlackMessageType.COMMUNICATION_MAIN
-        );
+//        this.optionFileSystemService.sendFsFailures(
+//                limitedTech1(),
+//                servers,
+//                SlackMessageType.COMMUNICATION_MAIN
+//        );
     }
 
     public final void notifyShowChanges(Servers servers) {
