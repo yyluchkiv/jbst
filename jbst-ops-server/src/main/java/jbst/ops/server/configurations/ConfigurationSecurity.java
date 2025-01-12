@@ -3,6 +3,8 @@ package jbst.ops.server.configurations;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.ops.server.filters.AuthenticationIncidentFilter;
+import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +15,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import jbst.ops.server.filters.AuthenticationIncidentFilter;
-import jbst.ops.server.properties.OpsProperties;
 
 @Configuration
 @EnableWebSecurity
@@ -56,18 +55,10 @@ public class ConfigurationSecurity {
         try {
             auth.inMemoryAuthentication()
                     .withUser(remoteServer.getCredentials().username().value())
-                    .password(this.passwordEncoder().encode(remoteServer.getCredentials().password().value()))
+                    .password(new BCryptPasswordEncoder().encode(remoteServer.getCredentials().password().value()))
                     .roles(Username.ops().value());
         } catch (Exception ex) {
-            throw new IllegalArgumentException("ops-server security configuration failure");
+            throw new IllegalArgumentException("ops-server security configuration failure: " + ex.getMessage());
         }
-    }
-
-    // ================================================================================================================
-    // Passwords + Security
-    // ================================================================================================================
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

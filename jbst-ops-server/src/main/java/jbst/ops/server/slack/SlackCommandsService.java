@@ -2,7 +2,7 @@ package jbst.ops.server.slack;
 
 import jbst.ops.server.domain.slack.commands.SlackOpsCommand;
 import jbst.ops.server.domain.slack.commands.SlackRequestCommand;
-import jbst.ops.server.services.ServersService;
+import jbst.ops.server.services.MonitoringService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static java.util.Objects.nonNull;
 public class SlackCommandsService {
 
     // Services
-    private final ServersService serversService;
+    private final MonitoringService monitoringService;
 
     public final List<String> getMessages(SlackRequestCommand command) {
         List<String> messages = new ArrayList<>();
@@ -29,15 +29,15 @@ public class SlackCommandsService {
         }
         // "ops status"
         if (nonNull(command.getCmd()) && command.getCmd().isStatus()) {
-            messages.addAll(this.serversService.getStatus());
+            messages.addAll(this.monitoringService.getServers().getStatus());
         }
         // "ops actuators"
         if (nonNull(command.getCmd()) && command.getCmd().isActuators()) {
-            messages.addAll(this.serversService.getActuators());
+            messages.addAll(this.monitoringService.getServersSpringBoot().getActuators());
         }
         // "ops fs"
         if (nonNull(command.getCmd()) && command.getCmd().isFS()) {
-            messages.addAll(this.serversService.getFS());
+            messages.addAll(this.monitoringService.getServersSshRequired().getFS());
         }
         return messages;
     }

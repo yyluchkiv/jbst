@@ -2,19 +2,29 @@ package jbst.ops.server.domain.servers;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.ServerName;
+import jbst.foundation.domain.collections.Partitions;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.feigns.spring.SpringBootClient;
+import jbst.ops.server.domain.slack.messages.SlackMessageFileSystemTable;
+import jbst.ops.server.domain.slack.messages.SlackMessageServerTable;
+import jbst.ops.server.domain.slack.messages.SlackMessageServersSpringActuatorsTable;
+import jbst.ops.server.utilities.MessagesUtility;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
+import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATORS_SERVICE;
+import static jbst.ops.server.constants.OpsConstants.Services.STATUS_SERVICE;
+import static jbst.ops.server.domain.servers.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
@@ -87,4 +97,58 @@ public class Servers {
 //                        .collect(Collectors.toList())
 //        );
 //    }
+
+    // ================================================================================================================
+    // MESSAGES
+    // ================================================================================================================
+    public List<String> getStatus() {
+        var messages = this.mappedValues.values().stream()
+                .map(SlackMessageServerTable::new)
+                .map(SlackMessageServerTable::getValue)
+                .collect(Collectors.toList());
+        messages.add(0, MessagesUtility.getServiceMessage(STATUS_SERVICE, this.anyProblems));
+        return messages;
+    }
+
+    public List<String> getActuators() {
+        List<String> messages = new ArrayList<>();
+        messages.add(0, MessagesUtility.getServiceMessage(SPRING_BOOT_ACTUATORS_SERVICE, this.anyProblemsOnSpringBootActuators));
+        messages.add(new SlackMessageServersSpringActuatorsTable(this.mappedActuatorsResponses).getValue());
+        return messages;
+    }
+
+    public final List<String> getFS() {
+        List<String> messages = new ArrayList<>();
+
+        List<String> warningTables = new ArrayList<>();
+        List<FileSystemMetadataRow> successesRows = new ArrayList<>();
+
+        this.values.forEach(server -> {
+            if (server.fileSystemMetadataProblems()) {
+                warningTables.add(new SlackMessageFileSystemTable(server).getValue());
+            } else if (server.fileSystemMetadata().isAnyRows()) {
+                successesRows.addAll(server.fileSystemMetadata().rows());
+            }
+        });
+
+        if (!isEmpty(successesRows)) {
+            successesRows.sort(PERCENTAGE_REVERSED);
+            // WARNING: 25 is practical number is this case as max slack rows to wrap a message
+            var partitionsSuccesses = Partitions.ofSize(successesRows, 25);
+            partitionsSuccesses.forEach(chuckedMappedRows -> {
+                var table = new SlackMessageFileSystemTable(chuckedMappedRows).getValue();
+                messages.add(table);
+            });
+        }
+
+        if (!isEmpty(warningTables)) {
+            warningTables.add(0, MessagesUtility.getResponseWarnings());
+            messages.addAll(warningTables);
+        }
+
+        if (isEmpty(successesRows) && isEmpty(warningTables)) {
+            messages.add(SlackMessageFileSystemTable.getNoFsTable());
+        }
+        return messages;
+    }
 }
