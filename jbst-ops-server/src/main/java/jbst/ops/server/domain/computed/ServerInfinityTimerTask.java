@@ -10,7 +10,7 @@ import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.feigns.spring.SpringBootClient;
 import jbst.foundation.utilities.ssh.SshUtility;
 import jbst.ops.server.constants.OpsConstants;
-import jbst.ops.server.domain.configs.ServerConfigs;
+import jbst.ops.server.domain.configs.servers.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
 import jbst.ops.server.domain.servers.FileSystemMetadata;
 import jbst.ops.server.domain.servers.FileSystemMetadataRow;

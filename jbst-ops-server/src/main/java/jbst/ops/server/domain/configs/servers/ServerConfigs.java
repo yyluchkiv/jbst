@@ -1,4 +1,4 @@
-package jbst.ops.server.domain.configs;
+package jbst.ops.server.domain.configs.servers;
 
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;

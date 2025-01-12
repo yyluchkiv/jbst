@@ -8,7 +8,7 @@ import jbst.ops.server.domain.computed.ServerInfinityTimerTask;
 import jbst.ops.server.domain.computed.ServerInfinityTimerTaskSpringBeans;
 import jbst.ops.server.domain.computed.ServerInfinityTimerTasks;
 import jbst.ops.server.domain.configs.OpsConfigs;
-import jbst.ops.server.domain.configs.ServerConfigs;
+import jbst.ops.server.domain.configs.servers.ServerConfigs;
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
 import jbst.ops.server.domain.servers.ServerMin;

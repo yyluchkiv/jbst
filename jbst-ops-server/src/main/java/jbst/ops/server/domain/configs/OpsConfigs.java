@@ -3,6 +3,7 @@ package jbst.ops.server.domain.configs;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.IncidentAttributes;
+import jbst.ops.server.domain.configs.servers.ServerConfigs;
 import jbst.ops.server.domain.configs.ssh.SshRsaKey;
 import jbst.ops.server.domain.servers.Team;
 

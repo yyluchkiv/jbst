@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+@Deprecated(forRemoval = true)
 // Lombok
 @Getter
 @EqualsAndHashCode
