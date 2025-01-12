@@ -49,22 +49,25 @@ public class MessagesUtility {
         );
     }
 
-    public static String getServiceMessage(boolean anyProblems, String serviceName) {
-        return anyProblems ? MessagesUtility.getServiceFailureMessage(serviceName) : MessagesUtility.getServiceOkMessage(serviceName);
-    }
-
-    public static String getServiceOkMessage(String serviceName) {
-        return String.format(
+    public static String getServiceMessage(String serviceName, boolean anyProblems) {
+        return anyProblems ? String.format(
+                ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:",
+                serviceName
+        ) : String.format(
                 ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:",
                 serviceName
         );
     }
 
-    public static String getServiceFailureMessage(String serviceName) {
-        return String.format(
-                ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:",
-                serviceName
-        );
+    @Deprecated(forRemoval = true)
+    public static String getServiceMessageV1(boolean anyProblems, String serviceName) {
+        return anyProblems ? String.format(
+                        ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:",
+                        serviceName
+                ) : String.format(
+                        ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:",
+                        serviceName
+                );
     }
 
     @Deprecated(forRemoval = true)

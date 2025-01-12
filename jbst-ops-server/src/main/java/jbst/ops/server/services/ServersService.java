@@ -37,7 +37,7 @@ public class ServersService {
 
     public final List<String> getActuators() {
         var servers = this.monitoringService.getServersSpringBoot();
-        var message = MessagesUtility.getServiceMessage(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATORS_SERVICE) +
+        var message = MessagesUtility.getServiceMessage(SPRING_BOOT_ACTUATORS_SERVICE, servers.isAnyProblemsOnSpringBootActuators()) +
                 NEWLINE +
                 new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
         return List.of(message);
@@ -87,7 +87,7 @@ public class ServersService {
                 .map(SlackMessageServerTable::new)
                 .map(SlackMessageServerTable::getValue)
                 .collect(Collectors.toList());
-        messages.add(0, MessagesUtility.getServiceMessage(servers.isAnyProblems(), STATUS_SERVICE));
+        messages.add(0, MessagesUtility.getServiceMessageV1(servers.isAnyProblems(), STATUS_SERVICE));
         return messages;
     }
 }

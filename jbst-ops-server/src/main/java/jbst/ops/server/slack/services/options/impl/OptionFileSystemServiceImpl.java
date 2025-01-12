@@ -40,7 +40,7 @@ public class OptionFileSystemServiceImpl implements OptionFileSystemService {
     @Override
     public void sendFsStatusOrFailures(SlackRequestContext slackRequestContext, Servers servers, SlackMessageType slackMessageType) {
         var anyPresent = servers.isAnyPresent();
-        var status = MessagesUtility.getServiceMessage(anyPresent, FILE_SYSTEM_SERVICE);
+        var status = MessagesUtility.getServiceMessageV1(anyPresent, FILE_SYSTEM_SERVICE);
         if (anyPresent) {
             var tables = servers.getValues().stream()
                     .map(SlackMessageFileSystemTable::new)
