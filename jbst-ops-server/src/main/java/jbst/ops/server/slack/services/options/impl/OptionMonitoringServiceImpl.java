@@ -3,7 +3,6 @@ package jbst.ops.server.slack.services.options.impl;
 import jbst.ops.server.domain.servers.Server;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.domain.slack.messages.SlackMessageServerTable;
-import jbst.ops.server.domain.slack.messages.SlackMessageServersSpringActuatorsTable;
 import jbst.ops.server.domain.slack.requests.SlackRequestContext;
 import jbst.ops.server.services.MonitoringService;
 import jbst.ops.server.slack.SlackMessagingService;
@@ -14,12 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATORS_SERVICE;
 import static jbst.ops.server.constants.OpsConstants.Services.STATUS_SERVICE;
 import static jbst.ops.server.domain.slack.teams.SlackTeamEventV1.communicationMainSlackMessage;
 
@@ -32,46 +28,6 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     private final MonitoringService monitoringService;
     // Messaging
     private final SlackMessagingService slackMessagingService;
-
-    @Override
-    public void sendShow(SlackRequestContext slackRequestContext) {
-        var servers = this.monitoringService.getServers();
-//        this.slackMessagingService.sendAsync(
-//                channelSlackMessages(
-//                        slackRequestContext,
-//                        this.getServersTables(servers)
-//                )
-//        );
-    }
-
-    @Override
-    public void sendSpringBootActuators(SlackRequestContext slackRequestContext) {
-        var servers = this.monitoringService.getServersSpringBoot();
-        var message = MessagesUtility.getServiceMessageV1(servers.isAnyProblemsOnSpringBootActuators(), SPRING_BOOT_ACTUATORS_SERVICE) +
-                NEWLINE +
-                new SlackMessageServersSpringActuatorsTable(servers.getMappedActuatorsResponses()).getValue();
-//        this.slackMessagingService.sendAsync(
-//                channelSlackMessage(
-//                        slackRequestContext,
-//                        message
-//                )
-//        );
-    }
-
-    @Override
-    public void sendChanges(SlackRequestContext slackRequestContext, Servers servers) {
-        if (servers.isAnyChanges()) {
-            var serversHistory = servers.getValues().stream()
-                    .map(server -> MessagesUtility.getServerHistoryMessage(server.name().value(), server.upHistory()))
-                    .collect(Collectors.joining(NEWLINE));
-//            this.slackMessagingService.sendAsync(
-//                    communicationMainSlackMessage(
-//                            slackRequestContext,
-//                            MessagesUtility.getServiceHeaderMessage(MONITORING_HISTORY_SERVICE) + NEWLINE + serversHistory
-//                    )
-//            );
-        }
-    }
 
     @Override
     public void sendShowShortOrFailures(SlackRequestContext slackRequestContext, Servers servers) {
@@ -118,15 +74,6 @@ public class OptionMonitoringServiceImpl implements OptionMonitoringService {
     // ================================================================================================================
     // Private Methods
     // ================================================================================================================
-    private List<String> getServersTables(Servers servers) {
-        var messages = servers.getMappedValues().values().stream()
-                .map(SlackMessageServerTable::new)
-                .map(SlackMessageServerTable::getValue)
-                .collect(Collectors.toList());
-        messages.add(0, MessagesUtility.getServiceMessageV1(servers.isAnyProblems(), STATUS_SERVICE));
-        return messages;
-    }
-
     private String getFailureServersSlackMessage(SlackRequestContext slackRequestContext, Servers servers) {
         Predicate<Server> slackTeamPredicate = server -> {
             if (slackRequestContext.getSlackTeam().isSmartApps()) {

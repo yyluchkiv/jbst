@@ -34,11 +34,11 @@ public class NotificationsCron extends AbstractBaseCron {
             cron = "0 0 8,14,21 * * *",
             zone = "Europe/Kyiv"
     )
-    public void fsCron() {
+    public void notifyStatus() {
         this.executeCron(
                 true,
                 () -> {
-                    this.notificationsService.notifyShow(this.monitoringService.getServers());
+                    this.notificationsService.notifyStatus(this.monitoringService.getServers());
                     this.notificationsService.notifyFs(this.monitoringService.getServersSshRequiredAnyProblemsOnFsMetadata());
                 }
         );

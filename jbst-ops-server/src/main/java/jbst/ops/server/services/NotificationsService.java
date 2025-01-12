@@ -28,7 +28,7 @@ public class NotificationsService {
     private final SlackBotsService slackBotsService;
     private final OptionFileSystemService optionFileSystemService;
 
-    public final void notifyShow(Servers servers) {
+    public final void notifyStatus(Servers servers) {
         if (servers.isAnyProblems()) {
 
         } else {
