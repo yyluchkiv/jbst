@@ -68,6 +68,8 @@ class UserEmailUtilsImplTest {
 
     private final UserEmailUtils componentUnderTest;
 
+    private final JbstProperties jbstProperties;
+
     @RepeatedTest(FIVE_TIMES)
     void getSubjectTest() {
         // Act
@@ -93,7 +95,8 @@ class UserEmailUtilsImplTest {
         assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed at ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
-                .hasSize(7)
+                .hasSize(8)
+                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
                 .containsEntry("year", now(UTC).getYear())
                 .containsEntry("username", Username.hardcoded().value())
                 .containsEntry("accessMethod", AccountAccessMethod.USERNAME_PASSWORD.getValue())
@@ -116,7 +119,8 @@ class UserEmailUtilsImplTest {
         assertThat(emailHTML.subject()).startsWith("[jbst.com] Email Confirmation at ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-email-confirmation");
         assertThat(emailHTML.templateVariables())
-                .hasSize(3)
+                .hasSize(4)
+                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
                 .containsEntry("username", function.username().value())
                 .containsEntry("emailConfirmationLink", "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + function.token())
                 .containsEntry("year", now(UTC).getYear());
@@ -135,7 +139,8 @@ class UserEmailUtilsImplTest {
         assertThat(emailHTML.subject()).startsWith("[jbst.com] Password Reset at ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-password-reset");
         assertThat(emailHTML.templateVariables())
-                .hasSize(3)
+                .hasSize(4)
+                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
                 .containsEntry("username", function.username().value())
                 .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + function.token())
                 .containsEntry("year", now(UTC).getYear());
