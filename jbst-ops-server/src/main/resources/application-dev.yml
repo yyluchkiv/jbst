@@ -1,0 +1,50 @@
+#file: noinspection SpringBootApplicationYaml
+
+# Logging
+logging:
+  config: classpath:logback-console.xml
+
+# jbst
+jbst:
+  email-configs:
+    enabled: true
+    username: "<?>"
+    password: "<?>"
+    from: "<?>"
+  utils-configs:
+    geo-country-flags-configs:
+      enabled: false
+    user-agent-configs:
+      enabled: false
+
+# ops
+ops:
+  server-configs:
+    base-url: "http://localhost:8973"
+    credentials:
+      username: "admin"
+      password: "admin"
+  slacks-configs:
+    values:
+      - team: "TECH1"
+        main: true
+        app-token: "<?>"
+        bot-token: "<?>"
+        mode: "OPERATIONAL"
+        main-communication: "ops-founders"
+        teams-communications:
+          - team: "SMARTTRADER"
+            mode: "DISABLED"
+            name: "ops-team-smart-apps"
+      - team: "SMARTTRADER"
+        main: false
+        app-token: "<?>"
+        bot-token: "<?>"
+        mode: "READONLY"
+        main-communication: "ops-founders"
+  servers-configs:
+    mode: "RESOURCES"
+    rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
+  recipients-configs:
+    to:
+      - "<?>"

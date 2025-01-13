@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--suppress HtmlDeprecatedAttribute, HtmlDeprecatedTag, XmlDeprecatedElement, ThymeleafVariablesResolveInspection -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <style>
+        .body {
+            font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .href-blue {
+            color: #007ee6;
+            text-decoration: none;
+        }
+
+        .main-table {
+            color: #444444;
+            width: 550px;
+            padding: 25px;
+            border: 1px #dceaf4 solid;
+            border-radius: 4px;
+        }
+
+        .main-table-tr {
+            padding: 10px 0 10px 0;
+        }
+
+        .main-table-left-column {
+            vertical-align: top;
+            padding: 5px 40px 5px 0;
+        }
+
+        .main-table-right-column {
+            padding: 5px 0 5px 0;
+        }
+
+        .details-table {
+            background: #e8f2fb;
+            border-radius: 4px;
+            color: #444444;
+            padding: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="body">
+<center>
+    <table cellpadding="0" cellspacing="0" class="main-table">
+        <tr>
+            <td class="main-table-tr" th:text="'Hi ' + ${'__${members}__'}"></td>
+          </tr>
+        <tr>
+            <td class="main-table-tr">
+                Please review the incident details that occurred on:
+                <a class="href-blue" target="_blank" th:href="${serverURL}">serverURL</a>
+                or
+                <a class="href-blue" target="_blank" th:href="${remoteURL}">remoteURL</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="main-table-tr">
+                <table class="details-table">
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="0">
+                                <tr th:if="${username != null}">
+                                    <td class="main-table-left-column">Who:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${username}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${password != null}">
+                                    <td class="main-table-left-column">Password:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${password}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${whenUA != null}">
+                                    <td class="main-table-left-column">When/Ukraine:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${whenUA}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${whenUTC != null}">
+                                    <td class="main-table-left-column">When/UK:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${whenUTC}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${where != null}">
+                                    <td class="main-table-left-column">Where:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${where}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${what != null}">
+                                    <td class="main-table-left-column">What:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${what}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${ipAddress != null}">
+                                    <td class="main-table-left-column">IP Address:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${ipAddress}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${invitationCode != null}">
+                                    <td class="main-table-left-column">Invitation Code:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${invitationCode}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${invitationCodeOwner != null}">
+                                    <td class="main-table-left-column">Invitation Code Owner:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${invitationCodeOwner}"></b>
+                                    </td>
+                                </tr>
+                                <tr th:if="${exception != null}">
+                                    <td class="main-table-left-column">Exception:</td>
+                                    <td class="main-table-right-column">
+                                        <b th:text="${exception}"></b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+</html>

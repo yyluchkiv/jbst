@@ -44,6 +44,7 @@
         <!-- Servers -->
         <module>jbst-iam-server</module>
         <module>jbst-hardware-monitoring-server</module>
+        <module>jbst-ops-server</module>
     </modules>
 
     <properties>
@@ -57,6 +58,7 @@
         <!-- dependencies, scope == compile -->
         <version.dependency.jakarta.persistence>3.1.0</version.dependency.jakarta.persistence>
         <version.dependency.apache.collections>4.4</version.dependency.apache.collections>
+        <version.dependency.apache.commons.io>2.11.0</version.dependency.apache.commons.io>
         <version.dependency.browscap>1.4.0</version.dependency.browscap>
         <version.dependency.common.codec>1.16.1</version.dependency.common.codec>
         <version.dependency.feign>12.3</version.dependency.feign>
@@ -66,6 +68,7 @@
         <version.dependency.caffeine>3.1.8</version.dependency.caffeine>
         <version.dependency.jackson>2.15.4</version.dependency.jackson>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
+        <version.dependency.jsch>0.1.55</version.dependency.jsch>
         <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
         <version.dependency.jsonwebtoken>0.12.5</version.dependency.jsonwebtoken>
         <version.dependency.liquibase>4.24.0</version.dependency.liquibase>
@@ -196,11 +199,17 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>${version.dependency.apache.collections}</version>
             </dependency>
-            <!-- GeoIP2 -->
+            <!-- Download Files -->
             <dependency>
-                <groupId>com.maxmind.geoip2</groupId>
-                <artifactId>geoip2</artifactId>
-                <version>${version.dependency.geoip2}</version>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.dependency.apache.commons.io}</version>
+            </dependency>
+            <!-- Common Codec -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${version.dependency.common.codec}</version>
             </dependency>
             <!-- Browser Capabilities -->
             <dependency>
@@ -208,11 +217,17 @@
                 <artifactId>browscap-java</artifactId>
                 <version>${version.dependency.browscap}</version>
             </dependency>
-            <!-- Common Codec -->
+            <!-- jsch (ssh) -->
             <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${version.dependency.common.codec}</version>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${version.dependency.jsch}</version>
+            </dependency>
+            <!-- GeoIP2 -->
+            <dependency>
+                <groupId>com.maxmind.geoip2</groupId>
+                <artifactId>geoip2</artifactId>
+                <version>${version.dependency.geoip2}</version>
             </dependency>
             <!-- JColor (console asserts) -->
             <dependency>
