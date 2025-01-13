@@ -1,25 +1,24 @@
 package jbst.iam.repositories.postgres;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.tuples.TuplePresence;
+import jbst.iam.repositories.InvitationsRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, InvitationsRepository {
@@ -83,10 +82,8 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
     PostgresDbInvitation findByCode(String value);
 
     @Transactional
-    @Modifying
     void deleteByInvitedIsNull();
 
     @Transactional
-    @Modifying
     void deleteByInvitedIsNotNull();
 }

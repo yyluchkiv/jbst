@@ -134,7 +134,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     List<PostgresDbUserSession> findByUsernameIn(Set<Username> usernames);
 
     @Transactional
-    @Modifying
     long deleteByIdIn(List<String> ids);
 
     // ================================================================================================================
