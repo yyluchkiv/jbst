@@ -39,7 +39,7 @@ public class NotificationsCron extends AbstractBaseCron {
                 true,
                 () -> {
                     this.notificationsService.notifyStatus(this.monitoringService.getServers());
-                    this.notificationsService.notifyFs(this.monitoringService.getServersSshRequiredAnyProblemsOnFsMetadata());
+                    this.notificationsService.notifyFS(this.monitoringService.getServersSshRequiredAnyProblemsOnFsMetadata());
                 }
         );
     }
@@ -54,7 +54,7 @@ public class NotificationsCron extends AbstractBaseCron {
                 () -> {
                     var servers = this.monitoringService.getServersSshRequiredAnyProblemsOnFsMetadata();
                     if (servers.isAnyPresent()) {
-                        this.notificationsService.notifyFsFailures(servers);
+                        this.notificationsService.notifyFS(servers);
                     }
                 }
         );

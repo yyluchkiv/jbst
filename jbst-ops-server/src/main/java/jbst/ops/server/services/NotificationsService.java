@@ -29,7 +29,6 @@ public class NotificationsService {
 
     public final void notifyStatus(Servers servers) {
         this.slackBotsService.sendMainBotMainCommunication(servers.getStatus());
-
     }
 
     // TODO [YYL] fixme
@@ -58,20 +57,8 @@ public class NotificationsService {
 //                });
     }
 
-    public final void notifyFs(Servers servers) {
-//        this.optionFileSystemService.sendFsStatusOrFailures(
-//                limitedTech1(),
-//                servers,
-//                SlackMessageType.COMMUNICATION_MAIN
-//        );
-    }
-
-    public final void notifyFsFailures(Servers servers) {
-//        this.optionFileSystemService.sendFsFailures(
-//                limitedTech1(),
-//                servers,
-//                SlackMessageType.COMMUNICATION_MAIN
-//        );
+    public final void notifyFS(Servers servers) {
+        this.slackBotsService.sendMainBotMainCommunication(servers.getFS());
     }
 
     public final void notifyServersHistory(Servers servers) {
