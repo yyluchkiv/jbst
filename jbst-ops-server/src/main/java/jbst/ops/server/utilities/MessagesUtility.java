@@ -42,47 +42,20 @@ public class MessagesUtility {
         return ":pray: Operation is completed. Thanks for you patience!";
     }
 
-    public static String getServiceHeaderMessage(String serviceName) {
+    public static String getTaskHeader(String taskName) {
         return String.format(
                 ":cloud: Service: *%s* :cloud:",
-                serviceName
+                taskName
         );
     }
 
-    public static String getServiceMessage(String serviceName, boolean anyProblems) {
+    public static String getTaskMessage(String taskName, boolean anyProblems) {
         return anyProblems ? String.format(
                 ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:",
-                serviceName
+                taskName
         ) : String.format(
                 ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:",
-                serviceName
-        );
-    }
-
-    @Deprecated(forRemoval = true)
-    public static String getServiceMessageV1(boolean anyProblems, String serviceName) {
-        return anyProblems ? String.format(
-                        ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:",
-                        serviceName
-                ) : String.format(
-                        ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:",
-                        serviceName
-                );
-    }
-
-    @Deprecated(forRemoval = true)
-    public static String getServicesOkMessage(String parentServiceName, String subServiceName) {
-        return String.format(
-                ":cloud: Service: *%s* :cloud: \n :white_check_mark: Hi guys, everything is OK! Don't worry, be happy! :+1:",
-                parentServiceName + ", " + subServiceName
-        );
-    }
-
-    @Deprecated(forRemoval = true)
-    public static String getServicesFailureMessage(String parentServiceName, String subServiceName) {
-        return String.format(
-                ":cloud: Service: *%s* :cloud: \n :no_entry: Oops, we have a problem! Failure Alert :no_entry:",
-                parentServiceName + ", " + subServiceName
+                taskName
         );
     }
 

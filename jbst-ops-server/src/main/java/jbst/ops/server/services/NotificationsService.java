@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.ops.server.constants.OpsConstants.Services.HISTORY_SERVICE;
-import static jbst.ops.server.utilities.MessagesUtility.getServiceHeaderMessage;
+import static jbst.ops.server.utilities.MessagesUtility.getTaskHeader;
 
 @Slf4j
 @Service
@@ -36,7 +36,7 @@ public class NotificationsService {
     }
 
     // TODO [YYL] fixme
-    public final void notifyShowTeams(Servers servers) {
+    public final void notifyStatusOnTeams(Servers servers) {
 //        var tcs = this.opsProperties.getTech1SlackConfigs().getTeamsCommunications();
 //        tcs.stream()
 //                .filter(tcc -> tcc.getCommunication().isEnabled())
@@ -77,12 +77,12 @@ public class NotificationsService {
 //        );
     }
 
-    public final void notifyShowChanges(Servers servers) {
+    public final void notifyServersHistory(Servers servers) {
         if (servers.isAnyChanges()) {
             var serversHistory = servers.getValues().stream()
                     .map(server -> MessagesUtility.getServerHistoryMessage(server.name().value(), server.upHistory()))
                     .collect(Collectors.joining(NEWLINE));
-            var message = getServiceHeaderMessage(HISTORY_SERVICE) + NEWLINE + serversHistory;
+            var message = getTaskHeader(HISTORY_SERVICE) + NEWLINE + serversHistory;
             this.slackBotsService.sendMainBotMainCommunication(List.of(message));
         }
     }

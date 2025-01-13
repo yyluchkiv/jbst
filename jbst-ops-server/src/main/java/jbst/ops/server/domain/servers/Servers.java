@@ -105,13 +105,13 @@ public class Servers {
                 .map(SlackMessageServerTable::new)
                 .map(SlackMessageServerTable::getValue)
                 .collect(Collectors.toList());
-        messages.add(0, MessagesUtility.getServiceMessage(STATUS_SERVICE, this.anyProblems));
+        messages.add(0, MessagesUtility.getTaskMessage(STATUS_SERVICE, this.anyProblems));
         return messages;
     }
 
     public List<String> getActuators() {
         List<String> messages = new ArrayList<>();
-        messages.add(0, MessagesUtility.getServiceMessage(SPRING_BOOT_ACTUATORS_SERVICE, this.anyProblemsOnSpringBootActuators));
+        messages.add(0, MessagesUtility.getTaskMessage(SPRING_BOOT_ACTUATORS_SERVICE, this.anyProblemsOnSpringBootActuators));
         messages.add(new SlackMessageServersSpringActuatorsTable(this.mappedActuatorsResponses).getValue());
         return messages;
     }

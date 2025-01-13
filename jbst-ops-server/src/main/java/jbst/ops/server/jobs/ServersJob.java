@@ -27,9 +27,9 @@ public class ServersJob {
             try {
                 if (this.monitoringService.isAnyChanges()) {
                     var servers = this.monitoringService.getServersAnyChanges();
-                    this.notificationsService.notifyShowChanges(servers);
+                    this.notificationsService.notifyServersHistory(servers);
                     this.notificationsService.notifyStatus(servers);
-                    this.notificationsService.notifyShowTeams(servers);
+                    this.notificationsService.notifyStatusOnTeams(servers);
                 }
             } catch (RuntimeException ex) {
                 // no actions
