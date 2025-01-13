@@ -13,8 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.ops.server.constants.OpsConstants.Services.HISTORY_SERVICE;
+import static jbst.ops.server.constants.OpsConstants.Tasks.HISTORY_TASK;
 import static jbst.ops.server.utilities.MessagesUtility.getTaskHeader;
 
 @Slf4j
@@ -31,30 +32,17 @@ public class NotificationsService {
         this.slackBotsService.sendMainBotMainCommunication(servers.getStatus());
     }
 
-    // TODO [YYL] fixme
     public final void notifyStatusOnTeams(Servers servers) {
-//        var tcs = this.opsProperties.getTech1SlackConfigs().getTeamsCommunications();
-//        tcs.stream()
-//                .filter(tcc -> tcc.getCommunication().isEnabled())
-//                .filter(tcc -> servers.isAnyChanges(tcc.getTeam()))
-//                .forEach(tcc -> {
-//                    var team = tcc.getTeam();
-//
-//                    // parent slack - Tech1: `any` team
-//                    this.optionMonitoringService.sendShowShortOrFailures(
-//                            limitedTech1(),
-//                            servers,
-//                            tcc
-//                    );
-//
-//                    // child slack - SmartApps: SmartApps team
-//                    if (team.isSmartApps()) {
-//                        this.optionMonitoringService.sendShowShortOrFailures(
-//                                limitedSmartApps(),
-//                                servers
-//                        );
-//                    }
-//                });
+        var mappedServers = servers.getMappedValues();
+        var sc = this.opsProperties.getSlacksConfigs().getMainSlackConfig();
+        sc.getTeamsCommunications().forEach(tc -> {
+            if (tc.isOperationalMode()) {
+                var teamServers = mappedServers.get(tc.getTeam());
+                if (nonNull(teamServers)) {
+                    this.slackBotsService.sendMainCommunication(new Servers(teamServers).getStatusShortOrFailures(), tc.getTeam());
+                }
+            }
+        });
     }
 
     public final void notifyFS(Servers servers) {
@@ -66,7 +54,7 @@ public class NotificationsService {
             var serversHistory = servers.getValues().stream()
                     .map(server -> MessagesUtility.getServerHistoryMessage(server.name(), server.upHistory()))
                     .collect(Collectors.joining(NEWLINE));
-            var message = getTaskHeader(HISTORY_SERVICE) + NEWLINE + serversHistory;
+            var message = getTaskHeader(HISTORY_TASK) + NEWLINE + serversHistory;
             this.slackBotsService.sendMainBotMainCommunication(List.of(message));
         }
     }

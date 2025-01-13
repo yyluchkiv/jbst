@@ -1,6 +1,5 @@
 package jbst.ops.server.domain.servers;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.collections.Partitions;
 import jbst.foundation.domain.tuples.Tuple2;
@@ -17,12 +16,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
-import static jbst.ops.server.constants.OpsConstants.Services.SPRING_BOOT_ACTUATORS_SERVICE;
-import static jbst.ops.server.constants.OpsConstants.Services.STATUS_SERVICE;
+import static jbst.ops.server.constants.OpsConstants.Tasks.SPRING_BOOT_ACTUATORS_TASK;
+import static jbst.ops.server.constants.OpsConstants.Tasks.STATUS_TASK;
 import static jbst.ops.server.domain.servers.ServerFileSystemMetadata.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -56,38 +54,6 @@ public class Servers {
                 );
     }
 
-    // TODO [YYL] fixme
-//    @JsonIgnore
-//    public boolean isAnyProblems(Team team) {
-//        if (isNull(team)) {
-//            return false;
-//        }
-//        return this.values.stream()
-//                .filter(server -> team.equals(server.team()))
-//                .anyMatch(server -> !server.ok());
-//    }
-
-    // TODO [YYL] fixme
-//    @JsonIgnore
-//    public boolean isAnyChanges(Team team) {
-//        if (isNull(team)) {
-//            return false;
-//        }
-//        return this.values.stream()
-//                .filter(server -> team.equals(server.team()))
-//                .anyMatch(Server::anyChanges);
-//    }
-
-    @JsonIgnore
-    public Servers getServersFailure(Predicate<Server> predicate) {
-        return new Servers(
-                this.values.stream()
-                        .filter(predicate)
-                        .filter(server -> !server.ok())
-                        .collect(Collectors.toList())
-        );
-    }
-
 //    @JsonIgnore
 //    public Servers getServers(Team team) {
 //        return new Servers(
@@ -105,13 +71,13 @@ public class Servers {
                 .map(SlackMessageServerTable::new)
                 .map(SlackMessageServerTable::getValue)
                 .collect(Collectors.toList());
-        messages.add(0, MessagesUtility.getTaskMessage(STATUS_SERVICE, this.anyProblems));
+        messages.add(0, MessagesUtility.getTaskMessage(STATUS_TASK, this.anyProblems));
         return messages;
     }
 
     public List<String> getActuators() {
         List<String> messages = new ArrayList<>();
-        messages.add(0, MessagesUtility.getTaskMessage(SPRING_BOOT_ACTUATORS_SERVICE, this.anyProblemsOnSpringBootActuators));
+        messages.add(0, MessagesUtility.getTaskMessage(SPRING_BOOT_ACTUATORS_TASK, this.anyProblemsOnSpringBootActuators));
         messages.add(new SlackMessageServersSpringActuatorsTable(this.mappedActuatorsResponses).getValue());
         return messages;
     }
@@ -147,6 +113,17 @@ public class Servers {
 
         if (isEmpty(successesRows) && isEmpty(warningTables)) {
             messages.add(SlackMessageFileSystemTable.getNoFsTable());
+        }
+        return messages;
+    }
+
+    public final List<String> getStatusShortOrFailures() {
+        List<String> messages = new ArrayList<>();
+        if (this.anyProblems) {
+            messages.add(MessagesUtility.getTaskMessage(STATUS_TASK, true));
+            messages.add(new SlackMessageServerTable(this.getValues()).getValue());
+        } else {
+            messages.add(MessagesUtility.getTaskMessage(STATUS_TASK, false));
         }
         return messages;
     }

@@ -25,7 +25,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.io.File.createTempFile;
@@ -67,6 +70,7 @@ public class MonitoringService {
         LOGGER.info(PREFIX + " read servers. Status: {}", COMPLETED.formatAnsi());
     }
 
+    @SuppressWarnings("unused")
     public final boolean isConfigured() {
         return this.servers.values().stream()
                 .filter(ServerInfinityTimerTask::isSshRequired)
@@ -80,16 +84,6 @@ public class MonitoringService {
                         .collect(Collectors.toList())
         );
     }
-
-    // TODO [YYL] fixme
-//    public final Servers getServers(Team team) {
-//        return new Servers(
-//                this.servers.values().stream()
-//                        .filter(server -> nonNull(team) && team.equals(server.getServerConfigs().team()))
-//                        .map(ServerInfinityTimerTask::getServer)
-//                        .collect(Collectors.toList())
-//        );
-//    }
 
     public final Servers getServersAnyChanges() {
         return new Servers(

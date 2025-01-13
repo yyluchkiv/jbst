@@ -37,11 +37,14 @@ public class SlacksConfigs extends AbstractPropertiesConfigs {
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public Team getMainTeam() {
+    public SlackConfigs getMainSlackConfig() {
         return this.values.stream()
                 .filter(SlackConfigs::isMain)
                 .findFirst()
-                .get()
-                .getTeam();
+                .get();
+    }
+
+    public Team getMainTeam() {
+        return this.getMainSlackConfig().getTeam();
     }
 }

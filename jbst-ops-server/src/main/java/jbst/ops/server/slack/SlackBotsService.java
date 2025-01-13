@@ -62,6 +62,13 @@ public class SlackBotsService {
         slackBotOpt.ifPresent(slackBot -> slackBot.sendMainCommunication(messages));
     }
 
+    public final void sendMainCommunication(List<String> messages, Team team) {
+        var bot = this.bots.get(team);
+        if (nonNull(bot)) {
+            bot.sendMainCommunication(messages);
+        }
+    }
+
     public final void sendMainCommunication(Map<Team, List<String>> teamsMessages) {
         teamsMessages.forEach((team, messages) -> {
             var bot = this.bots.get(team);
