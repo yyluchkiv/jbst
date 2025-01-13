@@ -1,6 +1,6 @@
 services:
   jbst-server:
-    image: ghcr.io/tech1-agency/jbst-iam-server:1.9
+    image: ghcr.io/tech1-agency/jbst-iam-server:1.10
     restart: unless-stopped
     container_name: jbst-server
     networks:
