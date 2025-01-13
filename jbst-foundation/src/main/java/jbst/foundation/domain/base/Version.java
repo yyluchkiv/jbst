@@ -13,6 +13,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Comparator;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -20,6 +21,8 @@ import static org.springframework.util.StringUtils.hasLength;
 
 @SuppressWarnings("unused")
 public record Version(@NotNull String value) {
+    public static final Comparator<Version> NATURAL_ORDER = Comparator.comparing(Version::value);
+
     public static final Version VERSION_1_0 = Version.of("1.0");
     public static final Version VERSION_1_1 = Version.of("1.1");
     public static final Version VERSION_1_2 = Version.of("1.2");
