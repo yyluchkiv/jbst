@@ -19,11 +19,11 @@ public record Versions(List<Version> values) {
         );
     }
 
-    public Versions(List<Version> values) {
-        this.values = values.stream().sorted(Version.NATURAL_ORDER).toList();
-    }
-
     public static Versions empty() {
         return new Versions(List.of());
+    }
+
+    public Versions(List<Version> values) {
+        this.values = values.stream().sorted(Version.NATURAL_ORDER).toList();
     }
 }
