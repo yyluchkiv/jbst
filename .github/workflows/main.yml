@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
 
 env:
-  MAVEN_DEPLOYMENT_ENABLED: 'false'
+  MAVEN_DEPLOYMENT_ENABLED: 'true'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-iam-server
   DOCKER_OPS_SERVER_IMAGE: tech1-agency/jbst-ops-server
-  DOCKER_VERSION: '1.10-SNAPSHOT'
+  DOCKER_VERSION: '1.10'
   DOCKER_PUSH_ENABLED: 'true'
 
 concurrency:
