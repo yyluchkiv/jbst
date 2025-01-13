@@ -11,6 +11,7 @@ env:
   MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-iam-server
+  DOCKER_OPS_SERVER_IMAGE: tech1-agency/jbst-ops-server
   DOCKER_VERSION: '1.10-SNAPSHOT'
   DOCKER_PUSH_ENABLED: 'false'
 
@@ -61,6 +62,13 @@ jobs:
           cd jbst-iam-server
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
+
+      - name: Docker [ops-server]
+        if: env.DOCKER_PUSH_ENABLED == 'true'
+        run: |
+          cd jbst-ops-server
+          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
+          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
 
       - name: Notifications
         if: always()
