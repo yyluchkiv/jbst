@@ -7,9 +7,11 @@ import jbst.ops.server.domain.servers.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.Boolean.TRUE;
 
@@ -39,6 +41,12 @@ public class SlackConfigs extends AbstractPropertyConfigs {
 
     public boolean isReadOnlyMode() {
         return Mode.READONLY.equals(this.mode);
+    }
+
+    public Optional<SlackTeamCommunication> getTeamCommunication(@NotNull Team team) {
+        return this.teamsCommunications.stream()
+                .filter(tc -> tc.getTeam().equals(team))
+                .findFirst();
     }
 
     public enum Mode {

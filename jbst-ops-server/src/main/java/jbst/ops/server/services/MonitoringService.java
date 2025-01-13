@@ -152,6 +152,7 @@ public class MonitoringService {
         return OpsIncident.of(
                 incident,
                 nonNull(server) ? server.name() : ServerName.dash(),
+                nonNull(server) ? server.team() : this.opsProperties.getSlacksConfigs().getMainTeam(),
                 remoteHost,
                 opsIncidentEnv,
                 this.opsProperties.getRecipientsConfigs()

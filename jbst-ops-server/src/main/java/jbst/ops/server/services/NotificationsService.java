@@ -2,6 +2,7 @@ package jbst.ops.server.services;
 
 import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.servers.Servers;
+import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.slack.SlackBotsService;
 import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.utilities.MessagesUtility;
@@ -25,6 +26,8 @@ public class NotificationsService {
     // Services
     private final SlackBotsService slackBotsService;
     private final OptionFileSystemService optionFileSystemService;
+    // Properties
+    private final OpsProperties opsProperties;
 
     public final void notifyStatus(Servers servers) {
         if (servers.isAnyProblems()) {
@@ -80,37 +83,18 @@ public class NotificationsService {
     public final void notifyServersHistory(Servers servers) {
         if (servers.isAnyChanges()) {
             var serversHistory = servers.getValues().stream()
-                    .map(server -> MessagesUtility.getServerHistoryMessage(server.name().value(), server.upHistory()))
+                    .map(server -> MessagesUtility.getServerHistoryMessage(server.name(), server.upHistory()))
                     .collect(Collectors.joining(NEWLINE));
             var message = getTaskHeader(HISTORY_SERVICE) + NEWLINE + serversHistory;
             this.slackBotsService.sendMainBotMainCommunication(List.of(message));
         }
     }
 
-    // TODO [YYL] fixme: add "incident" flag
     public final void notifyIncident(OpsIncident opsIncident) {
-//        var incidentTuple = MessagesUtility.getIncidentTuple(opsIncident);
-//        if (opsIncident.getServer().team().isTech1()) {
-//            this.slackMessagingService.sendAsync(
-//                    communicationMainSlackIncident(
-//                            limitedTech1(),
-//                            incidentTuple
-//                    )
-//            );
-//        } else {
-//            var tcs = this.opsProperties.getTech1SlackConfigs().getTeamsCommunications();
-//            tcs.stream()
-//                    .filter(tcc -> tcc.getCommunication().isEnabled())
-//                    .filter(tcc -> opsIncident.getServer().team().equals(tcc.getTeam()))
-//                    .forEach(tcc ->
-//                            this.slackMessagingService.sendAsync(
-//                                    communicationTeamSlackIncident(
-//                                            limitedTech1(),
-//                                            incidentTuple,
-//                                            tcc
-//                                    )
-//                            )
-//                    );
-//        }
+        if (opsIncident.getTeam().equals(this.opsProperties.getSlacksConfigs().getMainTeam())) {
+            this.slackBotsService.sendMainTeamIncident(opsIncident);
+        } else {
+            this.slackBotsService.sendIncident(opsIncident);
+        }
     }
 }

@@ -313,7 +313,6 @@ public class ServerInfinityTimerTask {
 
     private void addServerStatusAsSpringBoot() {
         // Headers
-        HttpEntity<?> httpEntity;
         var httpHeaders = new HttpHeaders();
         if (this.isSpringActuatorAuthenticationRequired) {
             var basicAuthenticationHeader = getBasicAuthenticationHeader(
@@ -322,10 +321,9 @@ public class ServerInfinityTimerTask {
             );
             httpHeaders.set(basicAuthenticationHeader.a(), basicAuthenticationHeader.b());
         }
-        httpEntity = new HttpEntity<>(httpHeaders);
+        var httpEntity = new HttpEntity<>(httpHeaders);
 
         try {
-            // Actuator: Health
             this.springBootActuatorHealth = this.beans.getRestTemplate().exchange(
                     this.getIpAddress() + "/actuator/health",
                     HttpMethod.GET,
@@ -339,7 +337,6 @@ public class ServerInfinityTimerTask {
         }
 
         try {
-            // Actuator: Info
             this.springBootActuatorInfo = this.beans.getRestTemplate().exchange(
                     this.getIpAddress() + "/actuator/info",
                     HttpMethod.GET,

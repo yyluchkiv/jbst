@@ -11,13 +11,16 @@ import com.slack.api.methods.request.conversations.ConversationsInfoRequest;
 import com.slack.api.methods.request.files.FilesUploadRequest;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
+import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.properties.base.SlackConfigs;
+import jbst.ops.server.properties.base.SlackTeamCommunication;
 import jbst.ops.server.slack.SlackCommandsService;
 import jbst.ops.server.utilities.MessagesUtility;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public record SlackBot(
@@ -52,8 +55,21 @@ public record SlackBot(
         }
     }
 
+    public void sendMainCommunication(String message) {
+        this.sendMessage(message, this.configs.getMainCommunication());
+    }
+
     public void sendMainCommunication(List<String> messages) {
-        messages.forEach(message -> this.sendMessage(message, this.configs.getMainCommunication()));
+        messages.forEach(this::sendMainCommunication);
+    }
+
+    public void sendTeamCommunication(String message, Team team) {
+        var stcOpt = this.configs.getTeamCommunication(team);
+        stcOpt.ifPresent(stc -> {
+            if (stc.isOperationalMode()) {
+                this.sendMessage(message, stc.getName());
+            }
+        });
     }
 
     // ================================================================================================================
@@ -71,7 +87,7 @@ public record SlackBot(
         }
         // READONLY: main-channel scenario
         try {
-            var conversationsInfo = methodsClient.conversationsInfo(
+            var conversationsInfo = this.methodsClient.conversationsInfo(
                     ConversationsInfoRequest.builder()
                             .channel(payload.getEvent().getChannel())
                             .build()

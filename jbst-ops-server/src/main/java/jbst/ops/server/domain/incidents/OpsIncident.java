@@ -6,6 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.IncidentAttributes;
+import jbst.ops.server.domain.servers.Team;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.range;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
+import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
@@ -66,8 +68,8 @@ public class OpsIncident {
             )
     );
 
+    private final Team team;
     private final Set<String> to;
-//    private final ServerMin server;
     private final String incidentType;
     private final Username username;
     private final String emailSubject;
@@ -76,6 +78,7 @@ public class OpsIncident {
     public static OpsIncident of(
             Incident incident,
             ServerName serverName,
+            Team team,
             String serverURL,
             OpsIncidentEnv env,
             RecipientsConfigs recipientsConfigs
@@ -109,12 +112,19 @@ public class OpsIncident {
                     }
                 });
         return new OpsIncident(
+                team,
                 to,
                 incidentType,
                 username,
                 emailSubject,
                 variables
         );
+    }
+
+    @JsonIgnore
+    public String getSlackHeader() {
+        var message = ":ladybug: Please review incident details and *take actions* to stabilize production environment :ladybug:";
+        return "<!here>" + TWO_NEWLINE + message + NEWLINE;
     }
 
     @JsonIgnore

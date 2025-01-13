@@ -24,4 +24,8 @@ public class SlackTeamCommunication extends AbstractPropertyConfigs {
         DISABLED,
         OPERATIONAL
     }
+
+    public boolean isOperationalMode() {
+        return Mode.OPERATIONAL.equals(this.mode);
+    }
 }

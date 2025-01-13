@@ -1,6 +1,7 @@
 package jbst.ops.server.slack;
 
 import com.slack.api.Slack;
+import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.domain.slack.bots.SlackBot;
 import jbst.ops.server.properties.OpsProperties;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Objects.nonNull;
@@ -38,8 +40,26 @@ public class SlackBotsService {
         });
     }
 
+    public final void sendMainTeamIncident(OpsIncident opsIncident) {
+        var slackBotOpt = this.getMainSlackBot();
+        slackBotOpt.ifPresent(slackBot -> {
+            slackBot.sendMainCommunication(opsIncident.getSlackHeader());
+            slackBot.sendMainCommunication(opsIncident.getPlainMessage());
+        });
+    }
+
+    public final void sendIncident(OpsIncident opsIncident) {
+        var team = opsIncident.getTeam();
+        var slackBot = this.bots.get(team);
+        if (nonNull(slackBot)) {
+            slackBot.sendTeamCommunication(opsIncident.getSlackHeader(), team);
+            slackBot.sendTeamCommunication(opsIncident.getPlainMessage(), team);
+        }
+    }
+
     public final void sendMainBotMainCommunication(List<String> messages) {
-        this.getMainSlackBot().sendMainCommunication(messages);
+        var slackBotOpt = this.getMainSlackBot();
+        slackBotOpt.ifPresent(slackBot -> slackBot.sendMainCommunication(messages));
     }
 
     public final void sendMainCommunication(Map<Team, List<String>> teamsMessages) {
@@ -54,11 +74,9 @@ public class SlackBotsService {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    private SlackBot getMainSlackBot() {
+    private Optional<SlackBot> getMainSlackBot() {
         return this.bots.values().stream()
                 .filter(bot -> bot.configs().isMain())
-                .findFirst()
-                .get();
+                .findFirst();
     }
 }
