@@ -4,7 +4,6 @@ import jbst.ops.server.domain.incidents.OpsIncident;
 import jbst.ops.server.domain.servers.Servers;
 import jbst.ops.server.properties.OpsProperties;
 import jbst.ops.server.slack.SlackBotsService;
-import jbst.ops.server.slack.services.options.OptionFileSystemService;
 import jbst.ops.server.utilities.MessagesUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +24,11 @@ public class NotificationsService {
 
     // Services
     private final SlackBotsService slackBotsService;
-    private final OptionFileSystemService optionFileSystemService;
     // Properties
     private final OpsProperties opsProperties;
 
     public final void notifyStatus(Servers servers) {
-        if (servers.isAnyProblems()) {
-
-        } else {
-
-        }
+        this.slackBotsService.sendMainBotMainCommunication(servers.getStatus());
 
     }
 
