@@ -363,7 +363,7 @@ public class ServerInfinityTimerTask {
     }
 
     private void ssh() throws SshSessionException {
-        LOGGER.info(PREFIX + "SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
+        LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
         var sshSession = SshUtility.getSession(this.serverSshConfigs.getConnectionConfigs());
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
@@ -386,7 +386,7 @@ public class ServerInfinityTimerTask {
         } else {
             this.fileSystemMetadata = ServerFileSystemMetadata.failure(sshSession.getThrowable().value());
         }
-        LOGGER.info(PREFIX + "SSH into server {}. Status: {}", this.getName(), COMPLETED.formatAnsi());
+        LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), COMPLETED.formatAnsi());
     }
 
     // ================================================================================================================
