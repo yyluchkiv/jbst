@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,6 +37,18 @@ public class ResourceExceptionHandler {
     // =================================================================================================================
     // DEDICATED EXCEPTIONS
     // =================================================================================================================
+    @ExceptionHandler({
+            BadCredentialsException.class
+    })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ExceptionEntity> handleBadCredentials(BadCredentialsException ex) {
+        var response = new ExceptionEntity(
+                ExceptionEntityType.ERROR,
+                ex.getMessage(),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler({
             RegistrationException.class

@@ -4,8 +4,16 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.ExceptionEntity;
+import jbst.foundation.domain.exceptions.ExceptionEntityType;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenExpiredException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenInvalidException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.jwt.*;
@@ -14,11 +22,11 @@ import jbst.iam.domain.sessions.Session;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
-import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,13 +36,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenExpiredException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenInvalidException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 
 import java.util.stream.Stream;
 
@@ -52,7 +57,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
         return Stream.of(
                 Arguments.of(new RefreshTokenNotFoundException()),
                 Arguments.of(new RefreshTokenInvalidException()),
-                Arguments.of( new RefreshTokenExpiredException(Username.random())),
+                Arguments.of(new RefreshTokenExpiredException(Username.random())),
                 Arguments.of(new RefreshTokenDbNotFoundException(Username.random()))
         );
     }
@@ -148,6 +153,36 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
+    }
+
+    @Test
+    void loginWithInvalidCredentialsTest() throws Exception {
+        // Arrange
+        var request = RequestUserLogin.hardcoded();
+        var username = request.username();
+        var password = request.password();
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
+        var exception = new BadCredentialsException("Bad credentials");
+        var exceptionEntity = new ExceptionEntity(
+                ExceptionEntityType.ERROR,
+                exception.getMessage(),
+                exception.getMessage()
+        );
+        when(this.authenticationManager.authenticate(authenticationToken)).thenThrow(exception);
+
+        // Act
+        this.mvc.perform(
+                        post("/authentication/login")
+                                .content(this.objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exceptionEntityType", equalTo(exceptionEntity.getExceptionEntityType().name())))
+                .andExpect(jsonPath("$.attributes", equalTo(exceptionEntity.getAttributes())))
+                .andExpect(jsonPath("$.timestamp", Matchers.greaterThan(exceptionEntity.getTimestamp())));
+
+        // Assert
+        verify(this.authenticationManager).authenticate(authenticationToken);
     }
 
     @Test
