@@ -76,7 +76,9 @@ public record SlackBot(
     // PRIVATE METHODS: onEvents
     // ================================================================================================================
     private void onDirectMessagePosted(EventsApiPayload<MessageEvent> payload) {
-        this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
+        if ("im".equals(payload.getEvent().getChannelType())) {
+            this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
+        }
     }
 
     private void onMentionedMessagePosted(EventsApiPayload<AppMentionEvent> payload) {

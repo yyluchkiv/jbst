@@ -184,7 +184,7 @@ public class IncidentsService {
         }
     }
 
-    public boolean filterOnConfigsAndReturnSkip(Incident incident) {
+    private boolean filterOnConfigsAndReturnSkip(Incident incident) {
         if (!THROWABLE.equals(incident.getType())) {
             return false;
         }
