@@ -13,14 +13,14 @@ import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
 import jbst.ops.server.domain.servers.Team;
 import jbst.ops.server.properties.base.SlackConfigs;
-import jbst.ops.server.properties.base.SlackTeamCommunication;
 import jbst.ops.server.slack.SlackCommandsService;
 import jbst.ops.server.utilities.MessagesUtility;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 @Slf4j
 public record SlackBot(
@@ -102,16 +102,16 @@ public record SlackBot(
             this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
-        // HELP: invalid scenario
-        var slackRequestCommand = new SlackRequest(payload.getEvent());
-        if (!slackRequestCommand.isValid()) {
+        // HELP: invalid scenario or help request
+        var request = new SlackRequest(payload.getEvent());
+        if (!request.isValid() || isNull(request.getCmd()) || request.getCmd().isHelp()) {
             this.sendMessage(MessagesUtility.getHelpTableHeader(), payload.getEvent().getChannel());
             this.sendMessage(SlackCommand.getHelpTable(), payload.getEvent().getChannel());
             return;
         }
         // PRODUCTION: "ops $cmd" scenario
         this.sendMessage(MessagesUtility.getExpensiveOperationStartedMessage(), payload.getEvent().getChannel());
-        var messages = this.slackCommandsService.getMessages(slackRequestCommand);
+        var messages = this.slackCommandsService.getMessages(request);
         messages.forEach(message -> this.sendMessage(message, payload.getEvent().getChannel()));
         this.sendMessage(MessagesUtility.getExpensiveOperationCompletedMessage(), payload.getEvent().getChannel());
     }
