@@ -44,7 +44,7 @@ public class SlackBotsService {
         var slackBotOpt = this.getMainSlackBot();
         slackBotOpt.ifPresent(slackBot -> {
             slackBot.sendMainCommunication(opsIncident.getSlackHeader());
-            slackBot.sendMainCommunication(opsIncident.getPlainMessage());
+            slackBot.sendMainCommunicationFile(opsIncident.getPlainMessage());
         });
     }
 
@@ -53,7 +53,7 @@ public class SlackBotsService {
         var slackBot = this.bots.get(team);
         if (nonNull(slackBot)) {
             slackBot.sendTeamCommunication(opsIncident.getSlackHeader(), team);
-            slackBot.sendTeamCommunication(opsIncident.getPlainMessage(), team);
+            slackBot.sendTeamCommunicationFile(opsIncident.getPlainMessage(), team);
         }
     }
 

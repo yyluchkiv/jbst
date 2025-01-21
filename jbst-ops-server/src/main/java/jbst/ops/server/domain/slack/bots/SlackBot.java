@@ -8,7 +8,7 @@ import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.request.conversations.ConversationsInfoRequest;
-import com.slack.api.methods.request.files.FilesUploadRequest;
+import com.slack.api.methods.request.files.FilesUploadV2Request;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
 import jbst.ops.server.domain.servers.Team;
@@ -59,6 +59,10 @@ public record SlackBot(
         this.sendMessage(message, this.configs.getMainCommunication());
     }
 
+    public void sendMainCommunicationFile(String fileContent) {
+        this.sendFile(fileContent, this.configs.getMainCommunicationId());
+    }
+
     public void sendMainCommunication(List<String> messages) {
         messages.forEach(this::sendMainCommunication);
     }
@@ -68,6 +72,15 @@ public record SlackBot(
         stcOpt.ifPresent(stc -> {
             if (stc.isOperationalMode()) {
                 this.sendMessage(message, stc.getName());
+            }
+        });
+    }
+
+    public void sendTeamCommunicationFile(String fileContent, Team team) {
+        var stcOpt = this.configs.getTeamCommunication(team);
+        stcOpt.ifPresent(stc -> {
+            if (stc.isOperationalMode()) {
+                this.sendFile(fileContent, stc.getId());
             }
         });
     }
@@ -132,14 +145,20 @@ public record SlackBot(
         }
     }
 
-    @SuppressWarnings("unused")
-    private void sendFile(String fileContent, String channel) {
+    private void sendFile(String fileContent, String channelId) {
         try {
-            this.methodsClient.filesUpload(
-                    FilesUploadRequest.builder()
-                            .filename("incident-trace")
-                            .content(fileContent)
-                            .channels(List.of(channel))
+            this.methodsClient.filesUploadV2(
+                    FilesUploadV2Request.builder()
+                            .uploadFiles(
+                                    List.of(
+                                            FilesUploadV2Request.UploadFile.builder()
+                                                    .title("incident-trace.txt")
+                                                    .filename("incident-trace.txt")
+                                                    .content(fileContent)
+                                                    .build()
+                                    )
+                            )
+                            .channel(channelId)
                             .build()
             );
         } catch (SlackApiException | IOException ex) {
