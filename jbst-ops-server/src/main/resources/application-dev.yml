@@ -32,16 +32,19 @@ ops:
         bot-token: "<?>"
         mode: "OPERATIONAL"
         main-communication: "ops-founders"
+        main-communication-id: "<?>"
         teams-communications:
           - team: "SMARTTRADER"
             mode: "DISABLED"
             name: "ops-team-smart-apps"
+            id: "<?>"
       - team: "SMARTTRADER"
         main: false
         app-token: "<?>"
         bot-token: "<?>"
         mode: "READONLY"
         main-communication: "ops-founders"
+        main-communication-id: "<?>"
   servers-configs:
     mode: "RESOURCES"
     rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
