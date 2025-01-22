@@ -157,7 +157,7 @@ public class ServerInfinityTimerTask {
                 nonNull(serverConfigs.usernamePasswordCredentials().username()) &&
                 nonNull(serverConfigs.usernamePasswordCredentials().password());
 
-        // Computed: Tech1 servers before verification is considered 'down' to receive notification at restart
+        // Computed: servers before verification is considered 'down' to receive notification at restart
         if (this.mainTeam.equals(serverConfigs.team())) {
             this.addUpEvent(false);
         }
