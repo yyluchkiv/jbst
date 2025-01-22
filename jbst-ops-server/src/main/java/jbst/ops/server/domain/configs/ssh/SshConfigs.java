@@ -6,7 +6,6 @@ public record SshConfigs(
         Username username,
         String host,
         String sshKey,
-        SshConfigsLogs logs,
         SshConfigsFileSystem fileSystem
 ) {
 }

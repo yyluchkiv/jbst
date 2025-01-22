@@ -5,7 +5,6 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.ssh.SshConnectionConfigs;
 import jbst.ops.server.domain.configs.ssh.SshConfigs;
 import jbst.ops.server.domain.configs.ssh.SshConfigsFileSystem;
-import jbst.ops.server.domain.configs.ssh.SshConfigsLogs;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,7 +23,6 @@ public class ServerSshConfigs {
     private final String sshKeyPath;
     private final Password sshKeyPassword;
     // Filters
-    private final SshConfigsLogs logs;
     private final SshConfigsFileSystem fileSystem;
 
     public SshConnectionConfigs getConnectionConfigs() {
@@ -49,7 +47,6 @@ public class ServerSshConfigs {
         this.sshKey = sshConfigs.sshKey();
         this.sshKeyPath = sshKeyPath;
         this.sshKeyPassword = sshKeyPassword;
-        this.logs = sshConfigs.logs();
         this.fileSystem = sshConfigs.fileSystem();
     }
 
@@ -64,7 +61,6 @@ public class ServerSshConfigs {
         this.sshKey = sshConfigs.sshKey();
         this.sshKeyPath = null;
         this.sshKeyPassword = null;
-        this.logs = sshConfigs.logs();
         this.fileSystem = sshConfigs.fileSystem();
     }
 }

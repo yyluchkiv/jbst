@@ -1,6 +1,5 @@
 package jbst.ops.server.domain.computed;
 
-import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.ssh.SshSessionException;
@@ -48,7 +47,6 @@ import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECOND
 import static jbst.foundation.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
-import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.ops.server.constants.OpsConstants.Logs.PREFIX;
@@ -89,7 +87,6 @@ public class ServerInfinityTimerTask {
     private final Team mainTeam;
 
     // Configs [processed]
-    private final Integer id;
     private final boolean sshRequired;
     private final ServerSshConfigs serverSshConfigs;
     private final boolean isSpringActuatorAuthenticationRequired;
@@ -141,14 +138,6 @@ public class ServerInfinityTimerTask {
             );
         } else {
             this.serverSshConfigs = null;
-        }
-
-        // Configs [processed]: attach serverId based on SSH key configuration (6 digits serverIds)
-        if (nonNull(sshConfigs) && nonNull(sshConfigs.logs())) {
-            this.id = randomIntegerGreaterThanZeroByBounds(100000, 900000);
-        } else {
-            this.id = null;
-            LOGGER.debug("SSH configs are missing. Server `{}`", this.serverConfigs.name());
         }
 
         // Configs [processed]: Spring Boot
@@ -211,14 +200,6 @@ public class ServerInfinityTimerTask {
         return nonNull(this.springBootActuatorInfo) ? this.springBootActuatorInfo.getBody() : SpringBootClient.SpringBootActuatorInfo.dash();
     }
 
-    public ObjectId getObjectId() {
-        if (nonNull(this.id)) {
-            return ObjectId.of(this.id);
-        } else {
-            return ObjectId.dash();
-        }
-    }
-
     public String getHealthAsString() {
         if (!this.up) {
             return "✕";
@@ -250,7 +231,7 @@ public class ServerInfinityTimerTask {
         if (isNull(copyOfUpHistory)) {
             return false;
         }
-        int size = copyOfUpHistory.size();
+        var size = copyOfUpHistory.size();
         // 2-size queue (only current and previous state of running is stored)
         var current = copyOfUpHistory.get(0);
         if (size == 1) {
@@ -303,7 +284,7 @@ public class ServerInfinityTimerTask {
             this.beans.getRestTemplate().getForEntity(this.getIpAddress(), String.class);
             this.addUpEvent(true);
         } catch (HttpClientErrorException ex) {
-            boolean upEvent = this.isErrorMessageAllowed(ex.getMessage());
+            var upEvent = this.isErrorMessageAllowed(ex.getMessage());
             this.addUpEvent(upEvent);
         } catch (ResourceAccessException | HttpServerErrorException | UnknownHttpStatusCodeException ex) {
             this.addUpEvent(false);
@@ -394,7 +375,6 @@ public class ServerInfinityTimerTask {
     // ================================================================================================================
     public Server getServer() {
         return new Server(
-                this.getObjectId(),
                 this.serverConfigs.team(),
                 this.serverConfigs.type(),
                 this.serverConfigs.name(),
