@@ -3,6 +3,7 @@ package jbst.ops.server.domain.computed;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.ssh.SshSessionException;
+import jbst.foundation.domain.ssh.SshConnectionConfigs;
 import jbst.foundation.domain.states.classic.AbstractClassicStateManager;
 import jbst.foundation.domain.states.classic.ClassicState;
 import jbst.foundation.domain.time.SchedulerConfiguration;
@@ -88,7 +89,7 @@ public class ServerInfinityTimerTask {
 
     // Configs [processed]
     private final boolean sshRequired;
-    private final ServerSshConfigs serverSshConfigs;
+    private final SshConnectionConfigs sshConnectionConfigs;
     private final boolean isSpringActuatorAuthenticationRequired;
 
     // Computed
@@ -129,15 +130,9 @@ public class ServerInfinityTimerTask {
         var sshConfigs = serverConfigs.sshConfigs();
         this.sshRequired = nonNull(sshConfigs);
         if (this.sshRequired) {
-            var sshKey = sshConfigs.sshKey();
-            var rsaKey = mappedSshKeys.get(sshKey);
-            this.serverSshConfigs = new ServerSshConfigs(
-                    sshConfigs,
-                    rsaKeysBaseLocation + rsaKey.path() + sshKey,
-                    rsaKey.password()
-            );
+            this.sshConnectionConfigs = sshConfigs.asSshConnectionConfigs(rsaKeysBaseLocation, mappedSshKeys);
         } else {
-            this.serverSshConfigs = null;
+            this.sshConnectionConfigs = null;
         }
 
         // Configs [processed]: Spring Boot
@@ -345,7 +340,7 @@ public class ServerInfinityTimerTask {
 
     private void ssh() throws SshSessionException {
         LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
-        var sshSession = SshUtility.getSession(this.serverSshConfigs.getConnectionConfigs());
+        var sshSession = SshUtility.getSession(this.sshConnectionConfigs);
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
             var lines = SshUtility.executeCmd(sshSession.getSession().value(), "df -h");
@@ -353,7 +348,7 @@ public class ServerInfinityTimerTask {
                     .skip(1)
                     .map(line -> new ServerFileSystemMetadata.FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))
                     .filter(this.serversMonitoringConfigs::isFileSystemProcessable)
-                    .filter(this.serverSshConfigs::isFileSystemProcessable)
+                    .filter(this.serverConfigs::isFileSystemProcessable)
                     .collect(Collectors.toList());
             this.fileSystemMetadata = ServerFileSystemMetadata.success(rows);
         } else {
