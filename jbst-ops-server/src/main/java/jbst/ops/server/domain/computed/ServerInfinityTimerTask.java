@@ -133,6 +133,7 @@ public class ServerInfinityTimerTask {
             this.sshConnectionConfigs = sshConfigs.asSshConnectionConfigs(rsaKeysBaseLocation, mappedSshKeys);
         } else {
             this.sshConnectionConfigs = null;
+            LOGGER.debug(PREFIX + " SSH configs are missing. Server `{}`", this.serverConfigs.name());
         }
 
         // Configs [processed]: Spring Boot
