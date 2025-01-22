@@ -15,8 +15,8 @@ import static jbst.foundation.utilities.strings.StringUtility.toObjectsArray;
 @EqualsAndHashCode
 @ToString
 public class SlackMessageServerRowLine {
-    private static final String FORMAT = "%-35s %10s %10s %58s %10s %10s";
-    public static final String HEADER = FORMAT.formatted("Server", "Health", "Online", "IP Address", "ServerId", "SSHed");
+    private static final String FORMAT = "%-35s %10s %10s %58s %10s";
+    public static final String HEADER = FORMAT.formatted("Server", "Health", "Online", "IP Address", "SSHed");
 
     private final String value;
 
@@ -29,7 +29,6 @@ public class SlackMessageServerRowLine {
                                 getShortenValueOrUndefined(server.health(), 10),
                                 getShortenValueOrUndefined(server.onlineLastUpdatedAt(), 10),
                                 getShortenValueOrUndefined(server.ipAddress(), 58),
-                                getShortenValueOrUndefined(server.id().value(), 10),
                                 getShortenValueOrUndefined(server.sshLastUpdatedAt(), 10)
                         )
                 )
