@@ -19,6 +19,8 @@ public class SlackTeamCommunication extends AbstractPropertyConfigs {
     private final Mode mode;
     @MandatoryProperty
     private final String name;
+    @MandatoryProperty
+    private final String id;
 
     public enum Mode {
         DISABLED,

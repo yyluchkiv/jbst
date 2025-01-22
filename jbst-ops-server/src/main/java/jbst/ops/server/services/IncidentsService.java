@@ -1,5 +1,6 @@
 package jbst.ops.server.services;
 
+import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -8,8 +9,8 @@ import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.ops.server.domain.incidents.OpsConcurrentIncidentStats;
-import jbst.ops.server.domain.incidents.OpsIncidentHTML;
 import jbst.ops.server.domain.incidents.OpsIncidentEnv;
+import jbst.ops.server.domain.incidents.OpsIncidentHTML;
 import jbst.ops.server.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,20 +18,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 import static jbst.foundation.incidents.domain.IncidentAttributes.IncidentsTypes.THROWABLE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.TRACE;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static jbst.ops.server.domain.incidents.OpsIncidentHTML.opsAnyIncident;
 import static jbst.ops.server.domain.incidents.OpsIncident.TIMES;
+import static jbst.ops.server.domain.incidents.OpsIncidentHTML.opsAnyIncident;
 
 @Slf4j
 @Service
@@ -45,17 +47,9 @@ public class IncidentsService {
     private final OpsProperties opsProperties;
 
     // IncidentType <-> HTML template name
-    private static final Map<String, OpsIncidentHTML> TEMPLATES_MAPPINGS = Map.of(
-            AUTHENTICATION_LOGIN.toString(), opsAnyIncident(),
-            AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD.toString(), opsAnyIncident(),
-            AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD.toString(), opsAnyIncident(),
-            AUTHENTICATION_LOGOUT.toString(), opsAnyIncident(),
-            AUTHENTICATION_LOGOUT_MIN.toString(), opsAnyIncident(),
-            SESSION_REFRESHED.toString(), opsAnyIncident(),
-            SESSION_EXPIRED.toString(), opsAnyIncident(),
-            REGISTER1.toString(), opsAnyIncident(),
-            REGISTER1_FAILURE.toString(), opsAnyIncident()
-    );
+    private static final Map<String, OpsIncidentHTML> TEMPLATES_MAPPINGS = Arrays.stream(JbstIamIncidentType.values())
+            .map(type -> new Tuple2<>(type.toString(), opsAnyIncident()))
+            .collect(Collectors.toMap(Tuple2::a, Tuple2::b));
 
     // enabled <-> trace <-> incidentType
     private static final List<Tuple3<Boolean, String, String>> TRACES = List.of(
@@ -148,7 +142,7 @@ public class IncidentsService {
                             opsIncident.getTo(),
                             opsIncident.getEmailSubject(),
                             opsIncident.getPlainMessage(),
-                            "incident-trace",
+                            "incident-trace.txt",
                             opsIncident.getTrace()
                     )
             );
@@ -184,7 +178,7 @@ public class IncidentsService {
         }
     }
 
-    public boolean filterOnConfigsAndReturnSkip(Incident incident) {
+    private boolean filterOnConfigsAndReturnSkip(Incident incident) {
         if (!THROWABLE.equals(incident.getType())) {
             return false;
         }

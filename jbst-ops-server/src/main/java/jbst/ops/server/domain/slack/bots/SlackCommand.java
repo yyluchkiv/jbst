@@ -43,6 +43,10 @@ public enum SlackCommand {
     private final String value;
     private final String description;
 
+    public boolean isHelp() {
+        return SlackCommand.HELP.equals(this);
+    }
+
     public boolean isStatus() {
         return SlackCommand.STATUS.equals(this);
     }
