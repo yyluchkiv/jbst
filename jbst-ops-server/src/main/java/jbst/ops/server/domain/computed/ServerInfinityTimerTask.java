@@ -352,16 +352,8 @@ public class ServerInfinityTimerTask {
             var rows = lines.stream()
                     .skip(1)
                     .map(line -> new ServerFileSystemMetadata.FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))
-                    .filter(row -> isFirstValueGreater(row.getUsePercentageValue(), this.serversMonitoringConfigs.getFileSystemFilter()))
-                    .filter(row -> {
-                        if (nonNull(this.serverSshConfigs.getFileSystem())
-                                && nonNull(this.serverSshConfigs.getFileSystem().filters())
-                                && nonNull(this.serverSshConfigs.getFileSystem().filters().skipByName())) {
-                            var skipNames = this.serverSshConfigs.getFileSystem().filters().skipByName();
-                            return !skipNames.contains(row.getFs());
-                        }
-                        return true;
-                    })
+                    .filter(this.serversMonitoringConfigs::isFileSystemProcessable)
+                    .filter(this.serverSshConfigs::isFileSystemProcessable)
                     .collect(Collectors.toList());
             this.fileSystemMetadata = ServerFileSystemMetadata.success(rows);
         } else {
