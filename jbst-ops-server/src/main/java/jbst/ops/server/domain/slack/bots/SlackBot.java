@@ -7,7 +7,6 @@ import com.slack.api.bolt.socket_mode.SocketModeApp;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
-import com.slack.api.methods.request.conversations.ConversationsInfoRequest;
 import com.slack.api.methods.request.files.FilesUploadV2Request;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
@@ -56,7 +55,7 @@ public record SlackBot(
     }
 
     public void sendMainCommunication(String message) {
-        this.sendMessage(message, this.configs.getMainCommunication());
+        this.sendMessage(message, this.configs.getMainCommunicationId());
     }
 
     public void sendMainCommunicationFile(String fileContent) {
@@ -71,7 +70,7 @@ public record SlackBot(
         var stcOpt = this.configs.getTeamCommunication(team);
         stcOpt.ifPresent(stc -> {
             if (stc.isOperationalMode()) {
-                this.sendMessage(message, stc.getName());
+                this.sendMessage(message, stc.getId());
             }
         });
     }
@@ -101,17 +100,7 @@ public record SlackBot(
             return;
         }
         // READONLY: main-channel scenario
-        try {
-            var conversationsInfo = this.methodsClient.conversationsInfo(
-                    ConversationsInfoRequest.builder()
-                            .channel(payload.getEvent().getChannel())
-                            .build()
-            );
-            if (!this.configs.getMainCommunication().equals(conversationsInfo.getChannel().getName())) {
-                this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
-                return;
-            }
-        } catch (IOException | SlackApiException ex) {
+        if (!this.configs.getMainCommunicationId().equals(payload.getEvent().getChannel())) {
             this.sendMessage(MessagesUtility.getReadOnlyWarning(), payload.getEvent().getChannel());
             return;
         }
@@ -132,12 +121,12 @@ public record SlackBot(
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private void sendMessage(String message, String channel) {
+    private void sendMessage(String message, String channelId) {
         try {
             this.methodsClient.chatPostMessage(
                     ChatPostMessageRequest.builder()
                             .text(message)
-                            .channel(channel)
+                            .channel(channelId)
                             .build()
             );
         } catch (SlackApiException | IOException ex) {
