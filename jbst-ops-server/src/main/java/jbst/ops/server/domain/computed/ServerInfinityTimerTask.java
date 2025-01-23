@@ -1,9 +1,9 @@
 package jbst.ops.server.domain.computed;
 
-import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.ssh.SshSessionException;
+import jbst.foundation.domain.ssh.SshConnectionConfigs;
 import jbst.foundation.domain.states.classic.AbstractClassicStateManager;
 import jbst.foundation.domain.states.classic.ClassicState;
 import jbst.foundation.domain.time.SchedulerConfiguration;
@@ -48,7 +48,6 @@ import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECOND
 import static jbst.foundation.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
-import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.ops.server.constants.OpsConstants.Logs.PREFIX;
@@ -89,9 +88,8 @@ public class ServerInfinityTimerTask {
     private final Team mainTeam;
 
     // Configs [processed]
-    private final Integer id;
     private final boolean sshRequired;
-    private final ServerSshConfigs serverSshConfigs;
+    private final SshConnectionConfigs sshConnectionConfigs;
     private final boolean isSpringActuatorAuthenticationRequired;
 
     // Computed
@@ -132,23 +130,10 @@ public class ServerInfinityTimerTask {
         var sshConfigs = serverConfigs.sshConfigs();
         this.sshRequired = nonNull(sshConfigs);
         if (this.sshRequired) {
-            var sshKey = sshConfigs.sshKey();
-            var rsaKey = mappedSshKeys.get(sshKey);
-            this.serverSshConfigs = new ServerSshConfigs(
-                    sshConfigs,
-                    rsaKeysBaseLocation + rsaKey.path() + sshKey,
-                    rsaKey.password()
-            );
+            this.sshConnectionConfigs = sshConfigs.asSshConnectionConfigs(rsaKeysBaseLocation, mappedSshKeys);
         } else {
-            this.serverSshConfigs = null;
-        }
-
-        // Configs [processed]: attach serverId based on SSH key configuration (6 digits serverIds)
-        if (nonNull(sshConfigs) && nonNull(sshConfigs.logs())) {
-            this.id = randomIntegerGreaterThanZeroByBounds(100000, 900000);
-        } else {
-            this.id = null;
-            LOGGER.debug("SSH configs are missing. Server `{}`", this.serverConfigs.name());
+            this.sshConnectionConfigs = null;
+            LOGGER.debug(PREFIX + " SSH configs are missing. Server `{}`", this.serverConfigs.name());
         }
 
         // Configs [processed]: Spring Boot
@@ -157,7 +142,7 @@ public class ServerInfinityTimerTask {
                 nonNull(serverConfigs.usernamePasswordCredentials().username()) &&
                 nonNull(serverConfigs.usernamePasswordCredentials().password());
 
-        // Computed: Tech1 servers before verification is considered 'down' to receive notification at restart
+        // Computed: servers before verification is considered 'down' to receive notification at restart
         if (this.mainTeam.equals(serverConfigs.team())) {
             this.addUpEvent(false);
         }
@@ -211,14 +196,6 @@ public class ServerInfinityTimerTask {
         return nonNull(this.springBootActuatorInfo) ? this.springBootActuatorInfo.getBody() : SpringBootClient.SpringBootActuatorInfo.dash();
     }
 
-    public ObjectId getObjectId() {
-        if (nonNull(this.id)) {
-            return ObjectId.of(this.id);
-        } else {
-            return ObjectId.dash();
-        }
-    }
-
     public String getHealthAsString() {
         if (!this.up) {
             return "✕";
@@ -250,7 +227,7 @@ public class ServerInfinityTimerTask {
         if (isNull(copyOfUpHistory)) {
             return false;
         }
-        int size = copyOfUpHistory.size();
+        var size = copyOfUpHistory.size();
         // 2-size queue (only current and previous state of running is stored)
         var current = copyOfUpHistory.get(0);
         if (size == 1) {
@@ -303,7 +280,7 @@ public class ServerInfinityTimerTask {
             this.beans.getRestTemplate().getForEntity(this.getIpAddress(), String.class);
             this.addUpEvent(true);
         } catch (HttpClientErrorException ex) {
-            boolean upEvent = this.isErrorMessageAllowed(ex.getMessage());
+            var upEvent = this.isErrorMessageAllowed(ex.getMessage());
             this.addUpEvent(upEvent);
         } catch (ResourceAccessException | HttpServerErrorException | UnknownHttpStatusCodeException ex) {
             this.addUpEvent(false);
@@ -364,23 +341,15 @@ public class ServerInfinityTimerTask {
 
     private void ssh() throws SshSessionException {
         LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
-        var sshSession = SshUtility.getSession(this.serverSshConfigs.getConnectionConfigs());
+        var sshSession = SshUtility.getSession(this.sshConnectionConfigs);
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
             var lines = SshUtility.executeCmd(sshSession.getSession().value(), "df -h");
             var rows = lines.stream()
                     .skip(1)
                     .map(line -> new ServerFileSystemMetadata.FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))
-                    .filter(row -> isFirstValueGreater(row.getUsePercentageValue(), this.serversMonitoringConfigs.getFileSystemFilter()))
-                    .filter(row -> {
-                        if (nonNull(this.serverSshConfigs.getFileSystem())
-                                && nonNull(this.serverSshConfigs.getFileSystem().filters())
-                                && nonNull(this.serverSshConfigs.getFileSystem().filters().skipByName())) {
-                            var skipNames = this.serverSshConfigs.getFileSystem().filters().skipByName();
-                            return !skipNames.contains(row.getFs());
-                        }
-                        return true;
-                    })
+                    .filter(this.serversMonitoringConfigs::isFileSystemProcessable)
+                    .filter(this.serverConfigs::isFileSystemProcessable)
                     .collect(Collectors.toList());
             this.fileSystemMetadata = ServerFileSystemMetadata.success(rows);
         } else {
@@ -394,7 +363,6 @@ public class ServerInfinityTimerTask {
     // ================================================================================================================
     public Server getServer() {
         return new Server(
-                this.getObjectId(),
                 this.serverConfigs.team(),
                 this.serverConfigs.type(),
                 this.serverConfigs.name(),

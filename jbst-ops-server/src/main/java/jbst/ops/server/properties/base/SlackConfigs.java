@@ -31,7 +31,7 @@ public class SlackConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Mode mode;
     @MandatoryProperty
-    private final String mainCommunication;
+    private final String mainCommunicationId;
     @NonMandatoryProperty
     private final List<SlackTeamCommunication> teamsCommunications;
 

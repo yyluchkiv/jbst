@@ -3,6 +3,7 @@ package jbst.ops.server.properties.base;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
+import jbst.ops.server.domain.servers.ServerFileSystemMetadata;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,5 +40,9 @@ public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
                 isFirstValueGreater(this.fileSystemThreshold, this.fileSystemFilter),
                 "Attribute `fileSystemThreshold` is expected to be greater than `fileSystemFilter`"
         );
+    }
+
+    public boolean isFileSystemProcessable(ServerFileSystemMetadata.FileSystemMetadataRow row) {
+        return row.isUsePercentageAbove(this.fileSystemThreshold);
     }
 }

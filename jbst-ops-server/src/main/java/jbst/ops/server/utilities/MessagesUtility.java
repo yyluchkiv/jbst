@@ -18,7 +18,7 @@ public class MessagesUtility {
     }
 
     public static String getResponseWarnings() {
-        return ":warning: Executed operation response. Please resolve provided warning!";
+        return ":warning: Please resolve provided warning!";
     }
 
     @SuppressWarnings("unused")
