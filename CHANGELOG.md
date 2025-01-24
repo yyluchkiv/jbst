@@ -1,2 +1,2 @@
-### Changelog [v1.11]
-— Migration: ops-server
+### Changelog [v1.12]
+— TBD
