@@ -19,8 +19,8 @@ logs/
 .scannerwork
 
 # GEO database
-jbst-iam-server/src/main/resources/GeoLite2-City.mmdb
+jbst-server-iam/src/main/resources/GeoLite2-City.mmdb
 docker/GeoLite2-City.mmdb
 
 # ops-server-configs.json
-jbst-ops-server/src/main/resources/ops-server-configs.json
+jbst-server-ops/src/main/resources/ops-server-configs.json
