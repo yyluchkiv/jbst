@@ -69,7 +69,7 @@ jbst:
         - value: "prometheus:read"
         - value: "user"
         - value: "admin"
-      package-name: jbst.iam.server.base.domain.enums
+      package-name: "jbst.server.iam.base.domain.enums"
     cookies-configs:
       jwt-access-token-cookie-creation-latency:
         unit: SECONDS
