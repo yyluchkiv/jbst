@@ -10,7 +10,7 @@
         <version>1.12-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jbst-hardware-monitoring-server</artifactId>
+    <artifactId>jbst-server-hardware-monitoring</artifactId>
 
     <dependencies>
         <!-- jbst -->
