@@ -26,11 +26,11 @@ jbst:
     geo-locations-configs:
       enabled: false
   async-configs:
-    thread-name-prefix: "ops-async"
+    thread-name-prefix: "jbstops-async"
     threadsCorePoolPercentage: 50
     threadsMaxPoolPercentage: 100
   events-configs:
-    thread-name-prefix: "ops-events"
+    thread-name-prefix: "jbstops-events"
     threadsCorePoolPercentage: 50
     threadsMaxPoolPercentage: 100
   email-configs:
