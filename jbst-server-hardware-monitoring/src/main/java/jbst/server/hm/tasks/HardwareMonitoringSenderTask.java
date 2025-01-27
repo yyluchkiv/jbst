@@ -1,16 +1,16 @@
-package jbst.hardware.monitoring.server.tasks;
+package jbst.server.hm.tasks;
 
 import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.time.SchedulerConfiguration;
-import jbst.hardware.monitoring.server.client.HardwareMonitoringClient;
+import jbst.server.hm.client.HardwareMonitoringClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static jbst.hardware.monitoring.server.utilities.HardwareMonitoringUtility.getSystemMemories;
+import static jbst.server.hm.utilities.HardwareMonitoringUtility.getSystemMemories;
 
 @Slf4j
 @Component

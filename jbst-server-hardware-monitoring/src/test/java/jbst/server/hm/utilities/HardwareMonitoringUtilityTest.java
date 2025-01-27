@@ -1,4 +1,4 @@
-package jbst.hardware.monitoring.server.utilities;
+package jbst.server.hm.utilities;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package jbst.hardware.monitoring.server.client;
+package jbst.server.hm.client;
 
 import feign.FeignException;
 import feign.Headers;

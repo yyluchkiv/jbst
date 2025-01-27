@@ -1,4 +1,4 @@
-package jbst.hardware.monitoring.server.configurations;
+package jbst.server.hm.configurations;
 
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -10,7 +10,7 @@ import jbst.foundation.configurations.JbstConfigurationEvents;
 import jbst.foundation.configurations.JbstConfigurationSpringBootServer;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.hardware.monitoring.server.client.HardwareMonitoringClient;
+import jbst.server.hm.client.HardwareMonitoringClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

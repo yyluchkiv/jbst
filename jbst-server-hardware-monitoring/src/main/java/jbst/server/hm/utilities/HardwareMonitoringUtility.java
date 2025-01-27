@@ -1,4 +1,4 @@
-package jbst.hardware.monitoring.server.utilities;
+package jbst.server.hm.utilities;
 
 import jbst.foundation.domain.hardware.memories.CpuMemory;
 import jbst.foundation.domain.hardware.memories.GlobalMemory;

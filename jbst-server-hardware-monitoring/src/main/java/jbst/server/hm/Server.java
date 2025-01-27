@@ -1,4 +1,4 @@
-package jbst.hardware.monitoring.server;
+package jbst.server.hm;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
