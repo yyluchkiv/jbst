@@ -42,9 +42,9 @@
         <module>jbst-foundation</module>
         <module>jbst-iam</module>
         <!-- Servers -->
-        <module>jbst-iam-server</module>
-        <module>jbst-hardware-monitoring-server</module>
-        <module>jbst-ops-server</module>
+        <module>jbst-server-iam</module>
+        <module>jbst-server-hardware-monitoring</module>
+        <module>jbst-server-ops</module>
     </modules>
 
     <properties>

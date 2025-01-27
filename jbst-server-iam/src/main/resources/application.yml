@@ -1,0 +1,113 @@
+#file: noinspection SpringBootApplicationYaml
+
+# Server
+server:
+  servlet:
+    context-path: /api
+
+# Spring Security: actuator endpoints (no security check)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "info"]
+
+# Jasypt
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+# Swagger
+springdoc:
+  swagger-ui:
+    tags-sorter: "alpha"
+
+# jbst
+jbst:
+  server-configs:
+    maven-configs:
+      group-id: @project.groupId@
+      artifact-id: @project.artifactId@
+      version: @project.version@
+  async-configs:
+    thread-name-prefix: tps1-async
+    threads-core-pool-percentage: 25
+    threads-max-pool-percentage: 50
+  events-configs:
+    thread-name-prefix: tps1-events
+    threads-core-pool-percentage: 75
+    threads-max-pool-percentage: 100
+  mvc-configs:
+    enabled: true
+    base-path-prefix: /jbst/security
+    cors-configs:
+      path-pattern: /**
+      allowed-methods:
+        - DELETE
+        - GET
+        - POST
+        - PUT
+      allowed-headers:
+        - Cache-Control
+        - Content-Type
+      allow-credentials: true
+  hardware-monitoring-configs:
+    enabled: true
+    thresholds-configs:
+      CPU: 80
+      HEAP: 80
+      SERVER: 85
+      SWAP: 95
+      VIRTUAL: 85
+  security-jwt-configs:
+    authorities-configs:
+      authorities:
+        - value: "superadmin"
+        - value: "invitations:read"
+        - value: "invitations:write"
+        - value: "prometheus:read"
+        - value: "user"
+        - value: "admin"
+      package-name: "jbst.server.iam.base.domain.enums"
+    cookies-configs:
+      jwt-access-token-cookie-creation-latency:
+        unit: SECONDS
+        amount: 5
+    jwt-tokens-configs:
+      access-token:
+        cookie-key: "ajwt"
+      refreshToken:
+        cookie-key: "rjwt"
+    websockets-configs:
+      enabled: true
+      csrf-configs:
+        header-name: "t-csrf-header"
+        parameter-name: "_csrf"
+        token-key: "t-csrf-token"
+      stomp-configs:
+        endpoint: "/jbst-server-websockets"
+      broker-configs:
+        application-destination-prefix: "/app"
+        simple-destination: "/queue"
+        user-destination-prefix: "/user"
+      features-configs:
+        hardware-configs:
+          enabled: true
+          user-destination: "/accounts"
+        reset-server-configs:
+          enabled: true
+          user-destination: "/accounts"
+    users-emails-configs:
+      authentication-login:
+        enabled: true
+      session-refreshed:
+        enabled: true
+
+# jbst server
+jbst-server:
+  server-configs:
+    target-attribute1: "value1"
+    target-attribute2: 10
+    target-authority: "USER"
+

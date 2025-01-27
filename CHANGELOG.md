@@ -1,2 +1,3 @@
 ### Changelog [v1.12]
-— TBD
+— Modification: add jbst-server prefix
+— Modification: hms-${project.version} → jbstshm-${project.version}

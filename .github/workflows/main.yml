@@ -10,8 +10,8 @@ on:
 env:
   MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-iam-server
-  DOCKER_OPS_SERVER_IMAGE: tech1-agency/jbst-ops-server
+  DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-server-iam
+  DOCKER_OPS_SERVER_IMAGE: tech1-agency/jbst-server-ops
   DOCKER_VERSION: '1.12-SNAPSHOT'
   DOCKER_PUSH_ENABLED: 'false'
 
@@ -59,14 +59,14 @@ jobs:
       - name: Docker [iam-server]
         if: env.DOCKER_PUSH_ENABLED == 'true'
         run: |
-          cd jbst-iam-server
+          cd jbst-server-iam
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
 
       - name: Docker [ops-server]
         if: env.DOCKER_PUSH_ENABLED == 'true'
         run: |
-          cd jbst-ops-server
+          cd jbst-server-ops
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
 
