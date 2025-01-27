@@ -29,20 +29,20 @@ jobs:
 
       # Delete packages - package-type: container
 
-      - name: Delete Container Package Untagged Versions [jbst-iam-server]
+      - name: Delete Container Package Untagged Versions [jbst-server-iam]
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'jbst-iam-server'
+          package-name: 'jbst-server-iam'
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
           delete-only-untagged-versions: true
 
-      - name: Delete Container Package [jbst-iam-server]
+      - name: Delete Container Package [jbst-server-iam]
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'jbst-iam-server'
+          package-name: 'jbst-server-iam'
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_CONTAINERS }}
