@@ -44,7 +44,7 @@
         <!-- Servers -->
         <module>jbst-iam-server</module>
         <module>jbst-hardware-monitoring-server</module>
-        <module>jbst-ops-server</module>
+        <module>jbst-server-ops</module>
     </modules>
 
     <properties>
