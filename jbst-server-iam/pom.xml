@@ -10,7 +10,7 @@
         <version>1.12-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jbst-iam-server</artifactId>
+    <artifactId>jbst-server-iam</artifactId>
 
     <dependencies>
         <!-- jbst -->
