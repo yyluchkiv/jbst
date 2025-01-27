@@ -7,6 +7,6 @@ logging:
 # jbst
 jbst:
   server-configs:
-    name: hms-dev
+    name: jbstshm-dev
   hardware-server-configs:
     base-url: http://localhost:3002
