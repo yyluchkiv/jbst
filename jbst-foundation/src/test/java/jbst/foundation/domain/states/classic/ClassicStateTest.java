@@ -22,6 +22,7 @@ class ClassicStateTest extends AbstractSerializationDeserializationRunner {
                 Arguments.of(ClassicState.CREATED, new ClassicStatePermissions(false, true, true, false, false)),
                 Arguments.of(ClassicState.STARTING, new ClassicStatePermissions(false, false, false, false, false)),
                 Arguments.of(ClassicState.ACTIVE, new ClassicStatePermissions(false, false, true, true, true)),
+                Arguments.of(ClassicState.IDLE, new ClassicStatePermissions(false, false, false, false, true)),
                 Arguments.of(ClassicState.PAUSING, new ClassicStatePermissions(false, false, false, false, false)),
                 Arguments.of(ClassicState.PAUSED, new ClassicStatePermissions(false, false, true, false, true)),
                 Arguments.of(ClassicState.STOPPING, new ClassicStatePermissions(false, false, false, false, false)),
@@ -44,7 +45,7 @@ class ClassicStateTest extends AbstractSerializationDeserializationRunner {
     @Test
     void assertRequiredStatesTest() {
         // Assert
-        assertThat(ClassicState.values()).hasSize(10);
+        assertThat(ClassicState.values()).hasSize(11);
     }
 
     @ParameterizedTest

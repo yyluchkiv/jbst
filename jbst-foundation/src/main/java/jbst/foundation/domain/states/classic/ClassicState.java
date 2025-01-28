@@ -16,6 +16,7 @@ public enum ClassicState implements EnumValue<String> {
     CREATED("Created"),
     STARTING("Starting"),
     ACTIVE("Active"),
+    IDLE("Idle"),
     PAUSING("Pausing"),
     PAUSED("Paused"),
     STOPPING("Stopping"),
@@ -49,7 +50,7 @@ public enum ClassicState implements EnumValue<String> {
                 Set.of(CREATED, TERMINATED).contains(this),
                 Set.of(CREATED, ACTIVE, PAUSED, TERMINATED, COMPLETED).contains(this),
                 this.isActive(),
-                this.isActiveOrPaused()
+                Set.of(ACTIVE, IDLE, PAUSED).contains(this)
         );
     }
 
@@ -67,6 +68,10 @@ public enum ClassicState implements EnumValue<String> {
 
     public boolean isActive() {
         return ACTIVE.equals(this);
+    }
+
+    public boolean isIdle() {
+        return IDLE.equals(this);
     }
 
     public boolean isPaused() {
@@ -87,6 +92,10 @@ public enum ClassicState implements EnumValue<String> {
 
     public boolean isCreatedOrDisabled() {
         return this.isCreated() || this.isDisabled();
+    }
+
+    public boolean isActiveOrIdle() {
+        return this.isActive() || this.isIdle();
     }
 
     public boolean isActiveOrPaused() {
