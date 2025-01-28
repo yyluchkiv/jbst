@@ -8,7 +8,7 @@
     <groupId>jbst</groupId>
     <artifactId>jbst</artifactId>
     <packaging>pom</packaging>
-    <version>1.12-SNAPSHOT</version>
+    <version>1.13-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <url>https://github.com/tech1-agency/jbst</url>
@@ -42,9 +42,9 @@
         <module>jbst-foundation</module>
         <module>jbst-iam</module>
         <!-- Servers -->
-        <module>jbst-iam-server</module>
-        <module>jbst-hardware-monitoring-server</module>
-        <module>jbst-ops-server</module>
+        <module>jbst-server-iam</module>
+        <module>jbst-server-hardware-monitoring</module>
+        <module>jbst-server-ops</module>
     </modules>
 
     <properties>

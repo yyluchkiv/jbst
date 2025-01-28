@@ -1,0 +1,12 @@
+#file: noinspection SpringBootApplicationYaml
+
+# Logging
+logging:
+  config: classpath:logback-console.xml
+
+# jbst
+jbst:
+  server-configs:
+    name: jbstshm-dev
+  hardware-server-configs:
+    base-url: http://localhost:3002
