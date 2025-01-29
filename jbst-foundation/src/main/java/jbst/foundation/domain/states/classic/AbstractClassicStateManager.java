@@ -3,17 +3,19 @@ package jbst.foundation.domain.states.classic;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @Slf4j
 @Getter
 public abstract class AbstractClassicStateManager {
-    private ClassicState state;
+    private final AtomicReference<ClassicState> state;
 
     protected AbstractClassicStateManager() {
-        this.state = ClassicState.CREATED;
+        this.state = new AtomicReference<>(ClassicState.CREATED);
     }
 
     protected AbstractClassicStateManager(ClassicState state) {
-        this.state = state;
+        this.state = new AtomicReference<>(state);
     }
 
     // ================================================================================================================
@@ -22,12 +24,15 @@ public abstract class AbstractClassicStateManager {
     public abstract String getLogKeyword();
     public abstract String getLogId();
 
+    public ClassicState getState() {
+        return this.state.get();
+    }
     // ================================================================================================================
     // States: Mutation
     // ================================================================================================================
     public final void setState(ClassicState state) {
-        LOGGER.info(this.getLogKeyword(), this.getLogId(), this.state, state);
-        this.state = state;
+        LOGGER.info(this.getLogKeyword(), this.getLogId(), this.state.get(), state);
+        this.state.set(state);
     }
 
     public void start() {
