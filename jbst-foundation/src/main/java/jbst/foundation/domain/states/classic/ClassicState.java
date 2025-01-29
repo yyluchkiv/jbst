@@ -1,38 +1,32 @@
 package jbst.foundation.domain.states.classic;
 
 import com.diogonunes.jcolor.AnsiFormat;
-import com.diogonunes.jcolor.Attribute;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.enums.EnumValue;
-import jbst.foundation.utilities.colors.ColorUtility;
 import lombok.AllArgsConstructor;
 
 import java.util.Comparator;
 import java.util.Set;
 
+import static jbst.foundation.utilities.colors.AnsiUtility.getBoldHexAnsiFormat;
 import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
 
 @AllArgsConstructor
 public enum ClassicState implements EnumValue<String> {
-    DISABLED("Disabled", getAnsiFormat("#808080")), // Gray
-    CREATED("Created", getAnsiFormat("#ADD8E6")),  // Light Blue
-    STARTING("Starting", getAnsiFormat("#FFA500")), // Orange
-    ACTIVE("Active", getAnsiFormat("#008000")), // Green
-    PAUSING("Pausing", getAnsiFormat("#FFD700")), // Gold
-    PAUSED("Paused", getAnsiFormat("#DAA520")), // Dark Goldenrod
-    STOPPING("Stopping", getAnsiFormat("#FF4500")), // Orange-Red
-    TERMINATED("Terminated", getAnsiFormat("#8B0000")), // Dark Red
-    COMPLETING("Completing", getAnsiFormat("#6495ED")), // Cornflower Blue
-    COMPLETED("Completed", getAnsiFormat("#0000FF")); // Blue
+    DISABLED("Disabled", getBoldHexAnsiFormat("#808080")), // Gray
+    CREATED("Created", getBoldHexAnsiFormat("#ADD8E6")),  // Light Blue
+    STARTING("Starting", getBoldHexAnsiFormat("#FFA500")), // Orange
+    ACTIVE("Active", getBoldHexAnsiFormat("#008000")), // Green
+    PAUSING("Pausing", getBoldHexAnsiFormat("#FFD700")), // Gold
+    PAUSED("Paused", getBoldHexAnsiFormat("#DAA520")), // Dark Goldenrod
+    STOPPING("Stopping", getBoldHexAnsiFormat("#FF4500")), // Orange-Red
+    TERMINATED("Terminated", getBoldHexAnsiFormat("#8B0000")), // Dark Red
+    COMPLETING("Completing", getBoldHexAnsiFormat("#6495ED")), // Cornflower Blue
+    COMPLETED("Completed", getBoldHexAnsiFormat("#0000FF")); // Blue
 
     public static final Comparator<ClassicState> ORDINAL_COMPARATOR = Comparator.comparing(ClassicState::ordinal);
-
-    private static AnsiFormat getAnsiFormat(String hex) {
-        var rgb = ColorUtility.hexToRgb(hex);
-        return new AnsiFormat(Attribute.TEXT_COLOR(rgb[0], rgb[1], rgb[2]), Attribute.BOLD());
-    }
 
     private final String value;
     private final AnsiFormat ansiFormat;
@@ -49,7 +43,7 @@ public enum ClassicState implements EnumValue<String> {
     }
 
     @JsonIgnore
-    public String formatAnsi() {
+    public String asANSI() {
         return this.ansiFormat.format(this.value);
     }
 

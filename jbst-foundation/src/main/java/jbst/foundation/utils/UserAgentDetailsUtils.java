@@ -35,7 +35,7 @@ public final class UserAgentDetailsUtils {
         boolean configuredFlag;
         String exceptionMessageOrNull;
         var enabled = this.jbstProperties.getUtilsConfigs().getUserAgentConfigs().isEnabled();
-        LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).formatAnsi());
+        LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).asANSI());
         if (enabled) {
             try {
                 userAgentParserOrNull = new UserAgentService().loadParser(

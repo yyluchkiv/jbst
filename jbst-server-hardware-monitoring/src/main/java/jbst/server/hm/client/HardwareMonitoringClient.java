@@ -54,7 +54,7 @@ public class HardwareMonitoringClient {
         LOGGER.info(
                 "SEND HARDWARE METADATA #{} — {}. Success Rate: {}%",
                 this.iterations,
-                status.formatAnsi(),
+                status.asANSI(),
                 percentage
         );
     }

@@ -37,15 +37,15 @@ public final class GeoLocationMindMaxUtils {
         this.geoCountryFlagUtils = geoCountryFlagUtils;
         this.jbstProperties = jbstProperties;
         var enabled = jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled();
-        LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).formatAnsi());
+        LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).asANSI());
         if (enabled) {
             try {
                 var resource = resourceLoader.getResource("classpath:GeoLite2-City.mmdb");
                 var inputStream = resource.getInputStream();
                 this.databaseReader = new DatabaseReader.Builder(inputStream).build();
-                LOGGER.info(CONFIGURATION_LOG, SUCCESS.formatAnsi());
+                LOGGER.info(CONFIGURATION_LOG, SUCCESS.asANSI());
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error(CONFIGURATION_LOG, FAILURE.formatAnsi());
+                LOGGER.error(CONFIGURATION_LOG, FAILURE.asANSI());
                 LOGGER.error("Please make sure GeoLite2-City.mmdb is in classpath");
                 throw new IllegalArgumentException(ex.getMessage());
             }

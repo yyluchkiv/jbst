@@ -14,7 +14,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.diogonunes.jcolor.Attribute.*;
+import static com.diogonunes.jcolor.Attribute.BLACK_TEXT;
+import static com.diogonunes.jcolor.Attribute.BOLD;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 
 @UtilityClass
@@ -68,10 +69,6 @@ public class JbstConstants {
     @SuppressWarnings("unused")
     public static class JColor {
         public static final AnsiFormat BLACK_BOLD_TEXT = new AnsiFormat(BLACK_TEXT(), BOLD());
-        public static final AnsiFormat BLUE_BOLD_TEXT = new AnsiFormat(BLUE_TEXT(), BOLD());
-        public static final AnsiFormat GREEN_BOLD_TEXT = new AnsiFormat(GREEN_TEXT(), BOLD());
-        public static final AnsiFormat RED_BOLD_TEXT = new AnsiFormat(RED_TEXT(), BOLD());
-        public static final AnsiFormat YELLOW_BOLD_TEXT = new AnsiFormat(YELLOW_TEXT(), BOLD());
     }
 
     public class Files {
@@ -95,22 +92,22 @@ public class JbstConstants {
         // Server
         // =================================================================================================================
         public static String getServerContainer(ServerConfigs serverConfigs, Status status) {
-            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " container/server: " + status.formatAnsi();
+            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " container/server: " + status.asANSI();
         }
 
         public static String getServerStartup(ServerConfigs serverConfigs, Status status) {
-            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " startup listener: " + status.formatAnsi();
+            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " startup listener: " + status.asANSI();
         }
 
         public static String getServerProcess(String processId, Status status) {
-            return "ProcessId: " + BLACK_BOLD_TEXT.format(processId) + ": " + status.formatAnsi();
+            return "ProcessId: " + BLACK_BOLD_TEXT.format(processId) + ": " + status.asANSI();
         }
 
         // =================================================================================================================
         // User
         // =================================================================================================================
         public static String getUserProcess(Username username, String processId, Status status) {
-            return "User: " + username + ". ProcessId: " + BLACK_BOLD_TEXT.format(processId) + " " + status.formatAnsi();
+            return "User: " + username + ". ProcessId: " + BLACK_BOLD_TEXT.format(processId) + " " + status.asANSI();
         }
     }
 

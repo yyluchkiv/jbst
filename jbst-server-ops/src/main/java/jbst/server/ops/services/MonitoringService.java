@@ -65,9 +65,9 @@ public class MonitoringService {
     private ServerInfinityTimerTasks servers = new ServerInfinityTimerTasks(new ArrayList<>());
 
     public final void initialize() {
-        LOGGER.info(PREFIX + " read servers. Status: {}", STARTED.formatAnsi());
+        LOGGER.info(PREFIX + " read servers. Status: {}", STARTED.asANSI());
         this.servers = this.initializeServersInfinityTimerTasks();
-        LOGGER.info(PREFIX + " read servers. Status: {}", COMPLETED.formatAnsi());
+        LOGGER.info(PREFIX + " read servers. Status: {}", COMPLETED.asANSI());
     }
 
     @SuppressWarnings("unused")
@@ -159,9 +159,9 @@ public class MonitoringService {
     private ServerInfinityTimerTasks initializeServersInfinityTimerTasks() {
         this.opsConfigs = this.readOpsConfigs();
 
-        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", this.opsConfigs.getServersCount(), STARTED.formatAnsi());
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", this.opsConfigs.getServersCount(), STARTED.asANSI());
         this.opsConfigs.serversConfigs().removeIf(ServerConfigs::disableMonitoring);
-        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", this.opsConfigs.getServersCount(), COMPLETED.formatAnsi());
+        LOGGER.info(PREFIX + " github configuration. Servers: {}. Filtration: {}", this.opsConfigs.getServersCount(), COMPLETED.asANSI());
 
         if (this.opsConfigs.isAnyUnexpectedServersTeams()) {
             this.applicationEventPublisher.publishEvent(this.opsConfigs.getIncidentUnexpectedTeams());
