@@ -31,7 +31,7 @@ public abstract class AbstractClassicStateManager {
     // States: Mutation
     // ================================================================================================================
     public final void setState(ClassicState state) {
-        LOGGER.info(this.getLogKeyword(), this.getLogId(), this.state, state);
+        LOGGER.info(this.getLogKeyword(), this.getLogId(), this.state.get(), state);
         this.state.set(state);
     }
 
