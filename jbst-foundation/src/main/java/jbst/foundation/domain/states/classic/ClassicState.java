@@ -6,31 +6,32 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.enums.EnumValue;
+import jbst.foundation.utilities.colors.ColorUtility;
 import lombok.AllArgsConstructor;
 
 import java.util.Comparator;
 import java.util.Set;
 
-import static jbst.foundation.domain.enums.Status.getAnsiFormat;
 import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
 
 @AllArgsConstructor
 public enum ClassicState implements EnumValue<String> {
-    DISABLED("Disabled", getAnsiFormat(128, 128, 128)), // Gray
-    CREATED("Created", getAnsiFormat(173, 216, 230)), // Light Blue
-    STARTING("Starting", getAnsiFormat(255, 165, 0)), // Orange
-    ACTIVE("Active", getAnsiFormat(0, 128, 0)), // Green
-    PAUSING("Pausing", getAnsiFormat(255, 215, 0)), // Gold
-    PAUSED("Paused", getAnsiFormat(218, 165, 32)), // Dark Goldenrod
-    STOPPING("Stopping", getAnsiFormat(255, 69, 0)), // Orange-Red
-    TERMINATED("Terminated", getAnsiFormat(139, 0, 0)), // Dark Red
-    COMPLETING("Completing", getAnsiFormat(100, 149, 237)), // Cornflower Blue
-    COMPLETED("Completed", getAnsiFormat(0, 0, 255)); // Blue
+    DISABLED("Disabled", getAnsiFormat("#808080")), // Gray
+    CREATED("Created", getAnsiFormat("#ADD8E6")),  // Light Blue
+    STARTING("Starting", getAnsiFormat("#FFA500")), // Orange
+    ACTIVE("Active", getAnsiFormat("#008000")), // Green
+    PAUSING("Pausing", getAnsiFormat("#FFD700")), // Gold
+    PAUSED("Paused", getAnsiFormat("#DAA520")), // Dark Goldenrod
+    STOPPING("Stopping", getAnsiFormat("#FF4500")), // Orange-Red
+    TERMINATED("Terminated", getAnsiFormat("#8B0000")), // Dark Red
+    COMPLETING("Completing", getAnsiFormat("#6495ED")), // Cornflower Blue
+    COMPLETED("Completed", getAnsiFormat("#0000FF")); // Blue
 
     public static final Comparator<ClassicState> ORDINAL_COMPARATOR = Comparator.comparing(ClassicState::ordinal);
 
-    private static AnsiFormat getAnsiFormat(int r, int g, int b) {
-        return new AnsiFormat(Attribute.TEXT_COLOR(r, g, b), Attribute.BOLD());
+    private static AnsiFormat getAnsiFormat(String hex) {
+        var rgb = ColorUtility.hexToRgb(hex);
+        return new AnsiFormat(Attribute.TEXT_COLOR(rgb[0], rgb[1], rgb[2]), Attribute.BOLD());
     }
 
     private final String value;

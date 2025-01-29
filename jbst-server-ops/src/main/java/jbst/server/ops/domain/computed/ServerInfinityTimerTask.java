@@ -69,10 +69,9 @@ public class ServerInfinityTimerTask {
             this.serverConfigs = serverConfigs;
         }
 
-        // TODO [YYL, v1.11+] add color -> states
         @Override
         public String getLogKeyword() {
-            return PREFIX + " InfinityTimerTask: {}. State: {} → {}";
+            return PREFIX + " Server: {}. State: {} → {}";
         }
 
         @Override

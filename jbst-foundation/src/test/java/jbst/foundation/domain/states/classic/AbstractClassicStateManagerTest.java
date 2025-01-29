@@ -23,5 +23,11 @@ class AbstractClassicStateManagerTest {
         var stateManager = new TestClassicStateManager();
         stateManager.start();
         stateManager.onActivation();
+        stateManager.pause();
+        stateManager.onPaused();
+        stateManager.stop();
+        stateManager.onTermination();
+        stateManager.complete();
+        stateManager.onComplete();
     }
 }
