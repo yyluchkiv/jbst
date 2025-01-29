@@ -2,63 +2,38 @@ package jbst.foundation.domain.enums;
 
 import com.diogonunes.jcolor.AnsiFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.foundation.domain.constants.JbstConstants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Map;
+import static jbst.foundation.utilities.colors.AnsiUtility.getBoldHexAnsiFormat;
 
 // Lombok
 @AllArgsConstructor
 @Getter
 public enum Status {
     // MAIN
-    ENABLED("ENABLED"),
-    DISABLED("DISABLED"),
+    ENABLED("ENABLED", getBoldHexAnsiFormat("#000000")),
+    DISABLED("DISABLED", getBoldHexAnsiFormat("#000000")),
 
-    SCHEDULED("SCHEDULED"),
-    STARTED("STARTED"),
-    COMPLETED("COMPLETED"),
+    SCHEDULED("SCHEDULED", getBoldHexAnsiFormat("#0000FF")),
+    STARTED("STARTED", getBoldHexAnsiFormat("#0000FF")),
+    COMPLETED("COMPLETED", getBoldHexAnsiFormat("#008000")),
 
-    FAILURE("FAILURE"),
-    SUCCESS("SUCCESS"),
+    FAILURE("FAILURE", getBoldHexAnsiFormat("#FF0000")),
+    SUCCESS("SUCCESS", getBoldHexAnsiFormat("#008000")),
 
     // PROGRESS
 
-    PROGRESS_0("PROGRESS: 0%"),
-    PROGRESS_20("PROGRESS: 20%"),
-    PROGRESS_25("PROGRESS: 25%"),
-    PROGRESS_33("PROGRESS: 33%"),
-    PROGRESS_40("PROGRESS: 40%"),
-    PROGRESS_50("PROGRESS: 50%"),
-    PROGRESS_60("PROGRESS: 60%"),
-    PROGRESS_66("PROGRESS: 66%"),
-    PROGRESS_75("PROGRESS: 75%"),
-    PROGRESS_80("PROGRESS: 80%");
-
-    private static final Map<Status, AnsiFormat> MAPPINGS = Map.ofEntries(
-            // MAIN
-            Map.entry(DISABLED, JbstConstants.JColor.BLACK_BOLD_TEXT),
-            Map.entry(ENABLED, JbstConstants.JColor.BLACK_BOLD_TEXT),
-
-            Map.entry(SCHEDULED, JbstConstants.JColor.BLUE_BOLD_TEXT),
-            Map.entry(STARTED, JbstConstants.JColor.BLUE_BOLD_TEXT),
-            Map.entry(COMPLETED, JbstConstants.JColor.GREEN_BOLD_TEXT),
-
-            Map.entry(FAILURE, JbstConstants.JColor.RED_BOLD_TEXT),
-            Map.entry(SUCCESS, JbstConstants.JColor.GREEN_BOLD_TEXT),
-            // PROGRESS
-            Map.entry(PROGRESS_0, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_20, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_25, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_33, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_40, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_50, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_60, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_66, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_75, JbstConstants.JColor.YELLOW_BOLD_TEXT),
-            Map.entry(PROGRESS_80, JbstConstants.JColor.YELLOW_BOLD_TEXT)
-    );
+    PROGRESS_0("PROGRESS: 0%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_20("PROGRESS: 20%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_25("PROGRESS: 25%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_33("PROGRESS: 33%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_40("PROGRESS: 40%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_50("PROGRESS: 50%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_60("PROGRESS: 60%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_66("PROGRESS: 66%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_75("PROGRESS: 75%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_80("PROGRESS: 80%", getBoldHexAnsiFormat("#DAA520"));
 
     public static Status of(boolean toggle) {
         if (toggle) {
@@ -67,15 +42,17 @@ public enum Status {
         return Status.DISABLED;
     }
 
-    public static AnsiFormat getAnsiFormat(Status status) {
-        return MAPPINGS.getOrDefault(status, JbstConstants.JColor.BLACK_BOLD_TEXT);
-    }
-
     private final String value;
+    private final AnsiFormat ansiFormat;
 
     @Override
     public String toString() {
         return this.value;
+    }
+
+    @JsonIgnore
+    public String asANSI() {
+        return this.ansiFormat.format(this.value);
     }
 
     public boolean isStarted() {
@@ -84,10 +61,5 @@ public enum Status {
 
     public boolean isCompleted() {
         return COMPLETED.equals(this);
-    }
-
-    @JsonIgnore
-    public String formatAnsi() {
-        return getAnsiFormat(this).format(this.getValue());
     }
 }

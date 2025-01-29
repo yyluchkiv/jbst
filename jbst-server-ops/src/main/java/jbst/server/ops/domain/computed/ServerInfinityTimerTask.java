@@ -61,7 +61,7 @@ import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 public class ServerInfinityTimerTask {
     public static final SchedulerConfiguration EVERY_1_HOUR = new SchedulerConfiguration(1L, 60L, TimeUnit.MINUTES);
 
-    public static class StateManager extends AbstractClassicStateManager {
+    private static class StateManager extends AbstractClassicStateManager {
         private final ServerConfigs serverConfigs;
 
         public StateManager(ClassicState state, ServerConfigs serverConfigs) {
@@ -69,10 +69,9 @@ public class ServerInfinityTimerTask {
             this.serverConfigs = serverConfigs;
         }
 
-        // TODO [YYL, v1.11+] add color -> states
         @Override
         public String getLogKeyword() {
-            return PREFIX + " InfinityTimerTask: {}. State: {} → {}";
+            return PREFIX + " Server: {}. State: {} → {}";
         }
 
         @Override
@@ -103,7 +102,7 @@ public class ServerInfinityTimerTask {
 
     // TimerTask
     private final StateManager stateManager;
-    public final StateManager getLock() {
+    private StateManager getLock() {
         return this.stateManager;
     }
 
@@ -340,7 +339,7 @@ public class ServerInfinityTimerTask {
     }
 
     private void ssh() throws SshSessionException {
-        LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.formatAnsi());
+        LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.asANSI());
         var sshSession = SshUtility.getSession(this.sshConnectionConfigs);
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
@@ -355,7 +354,7 @@ public class ServerInfinityTimerTask {
         } else {
             this.fileSystemMetadata = ServerFileSystemMetadata.failure(sshSession.getThrowable().value());
         }
-        LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), COMPLETED.formatAnsi());
+        LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), COMPLETED.asANSI());
     }
 
     // ================================================================================================================

@@ -28,13 +28,13 @@ public class BaseStartupEventListener implements AbstractServerStartupEventListe
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
-        LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(defaultUsers.isEnabled()).formatAnsi());
+        LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(defaultUsers.isEnabled()).asANSI());
         if (defaultUsers.isEnabled()) {
             this.essenceConstructor.addDefaultUsers();
         }
 
         var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
-        LOGGER.info("{} Essence 'invitations' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).formatAnsi());
+        LOGGER.info("{} Essence 'invitations' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).asANSI());
         if (invitations.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitations();
         }

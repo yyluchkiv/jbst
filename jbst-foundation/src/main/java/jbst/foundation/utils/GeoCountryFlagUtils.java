@@ -38,7 +38,7 @@ public final class GeoCountryFlagUtils {
     ) {
         this.jbstProperties = jbstProperties;
         var geoCountryFlagsConfigs = this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs();
-        LOGGER.info(CONFIGURATION_LOG, Status.of(geoCountryFlagsConfigs.isEnabled()).formatAnsi());
+        LOGGER.info(CONFIGURATION_LOG, Status.of(geoCountryFlagsConfigs.isEnabled()).asANSI());
         if (geoCountryFlagsConfigs.isEnabled()) {
             try {
                 var resource = resourceLoader.getResource("classpath:geo-countries-flags.json");
@@ -47,9 +47,9 @@ public final class GeoCountryFlagUtils {
                 var geoCountryFlags = objectMapper.readValue(resource.getInputStream(), typeReference);
                 this.names = geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.name().toLowerCase(), identity()));
                 this.codes = geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.code().toLowerCase(), identity()));
-                LOGGER.info(CONFIGURATION_LOG, SUCCESS.formatAnsi());
+                LOGGER.info(CONFIGURATION_LOG, SUCCESS.asANSI());
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error(CONFIGURATION_LOG, FAILURE.formatAnsi());
+                LOGGER.error(CONFIGURATION_LOG, FAILURE.asANSI());
                 LOGGER.error("Please make sure geo-countries-flags.json is in classpath");
                 throw new IllegalArgumentException(ex.getMessage());
             }

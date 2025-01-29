@@ -35,7 +35,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
             var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
             LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — saved users: {}", usersCount);
         }
-        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — {}", COMPLETED.formatAnsi());
+        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — {}", COMPLETED.asANSI());
     }
 
     public void addDefaultUsersInvitations() {
@@ -53,6 +53,6 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
                 this.saveInvitations(defaultUser, authorities);
             }
         });
-        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations' — {}", COMPLETED.formatAnsi());
+        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations' — {}", COMPLETED.asANSI());
     }
 }
