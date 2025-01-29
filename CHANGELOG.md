@@ -1,2 +1,2 @@
 ### Changelog [v1.13]
-— TBD
+— Modification: SshConnectionConfigs construction @NotNull vs. @Nullable 
