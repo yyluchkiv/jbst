@@ -24,3 +24,6 @@ docker/GeoLite2-City.mmdb
 
 # ops-server-configs.json
 jbst-server-ops/src/main/resources/ops-server-configs.json
+
+# jars
+mvn-jars/
