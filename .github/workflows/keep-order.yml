@@ -53,7 +53,7 @@ jobs:
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'packages.jbst.jbst-hardware-monitoring-server'
+          package-name: 'packages.jbst.jbst-server-hardware-monitoring'
           package-type: 'maven'
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
