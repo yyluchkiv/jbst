@@ -2,6 +2,9 @@ package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.iam.converters.columns.PostgresJwtAccessTokenConverter;
 import jbst.iam.converters.columns.PostgresJwtRefreshTokenConverter;
 import jbst.iam.converters.columns.PostgresUserRequestMetadataConverter;
@@ -13,11 +16,9 @@ import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable1;
 import lombok.*;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 import static jbst.iam.domain.db.UserSession.ofNotPersisted;
 import static jbst.iam.domain.db.UserSession.ofPersisted;
@@ -82,6 +83,10 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     }
 
     public static List<PostgresDbUserSession> dummies1() {
+        UnaryOperator<PostgresDbUserSession> removeId = session -> {
+            session.id = null;
+            return session;
+        };
         var session1 = PostgresDbUserSession.random(Username.hardcoded().value(), "awt1", "rwt1");
         var session2 = PostgresDbUserSession.random(Username.hardcoded().value(), "awt2", "rwt2");
         var session3 = PostgresDbUserSession.random(Username.hardcoded().value(), "awt3", "rwt3");
@@ -90,22 +95,31 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
         var session6 = PostgresDbUserSession.random("user1", "atoken12", "rtoken12");
         var session7 = PostgresDbUserSession.random("sa", "atoken", "rtoken");
         return List.of(
-                session1,
-                session2,
-                session3,
-                session4,
-                session5,
-                session6,
-                session7
+                removeId.apply(session1),
+                removeId.apply(session2),
+                removeId.apply(session3),
+                removeId.apply(session4),
+                removeId.apply(session5),
+                removeId.apply(session6),
+                removeId.apply(session7)
         );
     }
 
     public static List<PostgresDbUserSession> dummies2() {
+        UnaryOperator<PostgresDbUserSession> removeId = session -> {
+            session.id = null;
+            return session;
+        };
         var session1 = PostgresDbUserSession.random(Username.hardcoded(), "token1");
         var session2 = PostgresDbUserSession.random(Username.hardcoded(), "token2");
         var session3 = PostgresDbUserSession.random(Username.hardcoded(), "token3");
         var session4 = PostgresDbUserSession.random(Username.of("admin"), "token4");
-        return List.of(session1, session2, session3, session4);
+        return List.of(
+                removeId.apply(session1),
+                removeId.apply(session2),
+                removeId.apply(session3),
+                removeId.apply(session4)
+        );
     }
 
     @JsonIgnore

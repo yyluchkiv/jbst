@@ -32,7 +32,7 @@ import java.util.Set;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
-import static jbst.iam.domain.jwt.JwtUser.randomSuperadmin;
+import static jbst.iam.domain.jwt.JwtUser.randomSuperadminNotPersisted;
 import static jbst.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -197,7 +197,7 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var userId1 = this.usersRepository.saveAs(randomSuperadmin());
+        var userId1 = this.usersRepository.saveAs(randomSuperadminNotPersisted());
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();
