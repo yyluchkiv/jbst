@@ -45,6 +45,17 @@ public record UserToken(
         );
     }
 
+    public static UserToken randomNotPersisted() {
+        return new UserToken(
+                null,
+                Username.random(),
+                RandomUtility.randomString(),
+                RandomUtility.randomEnum(UserTokenType.class),
+                RandomUtility.randomLongGreaterThanZero(),
+                RandomUtility.randomBoolean()
+        );
+    }
+
     public UserToken withUsed(boolean used) {
         return new UserToken(
                 this.id,

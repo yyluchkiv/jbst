@@ -148,6 +148,21 @@ public record JwtUser(
         );
     }
 
+    public static JwtUser randomSuperadminNotPersisted() {
+        return new JwtUser(
+                null,
+                Username.random(),
+                Password.random(),
+                randomZoneId(),
+                getSimpleGrantedAuthorities(SUPERADMIN),
+                Email.random(),
+                randomString(),
+                false,
+                UserEmailDetails.unnecessary(),
+                new HashMap<>()
+        );
+    }
+
     @JsonIgnore
     public JwtTokenCreationParams getJwtTokenCreationParams() {
         return new JwtTokenCreationParams(

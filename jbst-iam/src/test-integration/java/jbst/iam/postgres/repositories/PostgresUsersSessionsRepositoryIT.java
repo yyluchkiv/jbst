@@ -228,7 +228,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgr
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
 
         // Act-Assert-2
-        var existentSessionId = this.usersSessionsRepository.saveAs(entity(UserSession.class)).id();
+        var existentSessionId = this.usersSessionsRepository.saveAs(UserSession.randomNotPersistedSession()).id();
         assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
         var notExistentSessionId = entity(UserSessionId.class);
         assertThat(this.usersSessionsRepository.isPresent(existentSessionId).present()).isTrue();

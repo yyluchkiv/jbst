@@ -78,7 +78,7 @@ class CsrfInterceptorHandshakeTest {
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
         when(request.getServletRequest()).thenReturn(httpRequest);
-        when(this.tokensProvider.readCsrfToken(httpRequest)).thenThrow(new NullPointerException());
+        when(this.tokensProvider.readCsrfToken(httpRequest)).thenThrow(new NullPointerException("Test exception"));
 
         // Act
         var actual = this.componentUnderTest.beforeHandshake(request, response, wsHandler, attributes);

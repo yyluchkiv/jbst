@@ -68,7 +68,7 @@ class JbstConfigurationWebMVC3Test {
 
         // Assert
         assertThat(methods)
-                .hasSize(28)
+                .hasSize(29)
                 .contains("addCorsMappings");
     }
 

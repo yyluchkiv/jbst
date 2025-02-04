@@ -133,7 +133,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbUser(JwtUser user) {
-        this.id = user.id().value();
+        this.id = nonNull(user.id()) ? user.id().value() : null;
         this.username = user.username();
         this.password = user.password();
         this.zoneId = user.zoneId();

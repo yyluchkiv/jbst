@@ -17,6 +17,7 @@ import org.springframework.data.annotation.Transient;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
@@ -76,7 +77,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbUserToken(UserToken token) {
-        this.id = token.id().value();
+        this.id = nonNull(token.id()) ? token.id().value() : null;
         this.username = token.username();
         this.value = token.value();
         this.type = token.type();

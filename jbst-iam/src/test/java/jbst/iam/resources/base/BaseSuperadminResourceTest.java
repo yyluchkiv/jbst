@@ -191,7 +191,7 @@ class BaseSuperadminResourceTest extends TestRunnerResources1 {
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
 
         // Act
-        this.mvc.perform(delete("/superadmin/sessions/"))
+        this.mvc.perform(delete("/superadmin/sessions"))
                 .andExpect(status().isOk());
 
         // Assert

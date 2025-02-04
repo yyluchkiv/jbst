@@ -58,7 +58,7 @@ class JbstConfigurationBaseSecurityJwtWebMVCTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(28)
+                .hasSize(29)
                 .contains("addCorsMappings")
                 .contains("configurePathMatch");
     }
