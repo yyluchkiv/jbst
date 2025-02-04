@@ -9,6 +9,7 @@ import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
 import jbst.iam.services.*;
 import jbst.iam.services.base.BaseUsersEmailsService;
+import jbst.iam.services.base.AuthenticationServiceImpl;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
@@ -39,6 +40,21 @@ public class TestConfigurationResources {
     // =================================================================================================================
     // Authentication
     // =================================================================================================================
+    @Bean
+    AuthenticationService authenticationService() {
+        return new AuthenticationServiceImpl(
+                this.authenticationManager(),
+                this.currentSessionAssistant(),
+                this.jwtUserDetailsAssistant(),
+                this.sessionRegistry(),
+                this.baseUsersSessionsService(),
+                this.tokenService(),
+                this.tokensProvider(),
+                this.securityJwtTokenUtils(),
+                this.securityJwtEventsPublisher()
+        );
+    }
+
     @Bean
     AuthenticationManager authenticationManager() {
         return mock(AuthenticationManager.class);
