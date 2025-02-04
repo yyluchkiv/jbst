@@ -150,7 +150,7 @@ class PostgresInvitationsRepositoryIT extends TestsJbstJbstConfigurationPostgres
         assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentInvitationId = this.invitationsRepository.saveAs(Invitation.random());
+        var existentInvitationId = this.invitationsRepository.saveAs(Invitation.randomNotPersisted());
         assertThat(this.invitationsRepository.count()).isEqualTo(7);
         var notExistentInvitationId = entity(InvitationId.class);
         assertThat(this.invitationsRepository.isPresent(existentInvitationId).present()).isTrue();

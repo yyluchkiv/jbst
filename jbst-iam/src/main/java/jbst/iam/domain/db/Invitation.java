@@ -34,6 +34,16 @@ public record Invitation(
         );
     }
 
+    public static Invitation randomNotPersisted() {
+        return new Invitation(
+                null,
+                Username.random(),
+                getSimpleGrantedAuthorities(SUPERADMIN),
+                randomString(),
+                Username.random()
+        );
+    }
+
     public static Invitation randomNoInvited() {
         return new Invitation(
                 InvitationId.random(),

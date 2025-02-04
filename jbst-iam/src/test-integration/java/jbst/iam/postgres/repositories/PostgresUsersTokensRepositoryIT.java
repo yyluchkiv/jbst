@@ -129,7 +129,7 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
         assertThat(this.usersTokensRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentTokenId = this.usersTokensRepository.saveAs(UserToken.random());
+        var existentTokenId = this.usersTokensRepository.saveAs(UserToken.randomNotPersisted());
         assertThat(this.usersTokensRepository.count()).isEqualTo(7);
         var notExistentTokenId = entity(TokenId.class);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();

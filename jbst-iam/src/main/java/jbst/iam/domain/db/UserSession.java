@@ -37,6 +37,15 @@ public record UserSession(
         );
     }
 
+    public static UserSession randomNotPersistedSession() {
+        return UserSession.ofNotPersisted(
+                Username.random(),
+                JwtAccessToken.random(),
+                JwtRefreshToken.random(),
+                UserRequestMetadata.random()
+        );
+    }
+
     public static UserSession ofPersisted(
             UserSessionId id,
             long createdAt,

@@ -15,6 +15,7 @@ import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationsAuthoritiesAsField;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
@@ -53,7 +54,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbInvitation(Invitation invitation) {
-        this.id = invitation.id().value();
+        this.id = nonNull(invitation.id()) ? invitation.id().value() : null;
         this.owner = invitation.owner();
         this.authorities = invitation.authorities();
         this.code = invitation.code();
