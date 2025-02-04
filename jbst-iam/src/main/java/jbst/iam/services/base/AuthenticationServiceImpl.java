@@ -58,10 +58,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public CurrentClientUser login(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
-        var username = request.username();
-        var password = request.password();
-
         try {
+            var username = request.username();
+            var password = request.password();
             LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Login Attempt", STARTED));
 
             var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
@@ -82,6 +81,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Login Attempt", COMPLETED));
 
             this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
+
+            return this.currentSessionAssistant.getCurrentClientUser();
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(
@@ -93,8 +94,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             );
             throw new LoginException(ex.getMessage());
         }
-
-        return this.currentSessionAssistant.getCurrentClientUser();
     }
 
     @Override
