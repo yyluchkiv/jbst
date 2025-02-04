@@ -58,42 +58,42 @@
         <!-- dependencies, scope == compile -->
         <version.dependency.jakarta.persistence>3.1.0</version.dependency.jakarta.persistence>
         <version.dependency.apache.collections>4.4</version.dependency.apache.collections>
-        <version.dependency.apache.commons.io>2.11.0</version.dependency.apache.commons.io>
-        <version.dependency.browscap>1.4.0</version.dependency.browscap>
-        <version.dependency.common.codec>1.16.1</version.dependency.common.codec>
-        <version.dependency.feign>12.3</version.dependency.feign>
-        <version.dependency.geoip2>4.0.1</version.dependency.geoip2>
-        <version.dependency.guava>33.3.1-jre</version.dependency.guava>
-        <version.dependency.hibernate.jpamodelgen>6.6.4.Final</version.dependency.hibernate.jpamodelgen>
-        <version.dependency.caffeine>3.1.8</version.dependency.caffeine>
-        <version.dependency.jackson>2.15.4</version.dependency.jackson>
+        <version.dependency.apache.commons.io>2.18.0</version.dependency.apache.commons.io>
+        <version.dependency.browscap>1.4.4</version.dependency.browscap>
+        <version.dependency.common.codec>1.17.2</version.dependency.common.codec>
+        <version.dependency.feign>13.5</version.dependency.feign>
+        <version.dependency.geoip2>4.2.1</version.dependency.geoip2>
+        <version.dependency.guava>33.4.0-jre</version.dependency.guava>
+        <version.dependency.hibernate.jpamodelgen>6.6.5.Final</version.dependency.hibernate.jpamodelgen>
+        <version.dependency.caffeine>3.2.0</version.dependency.caffeine>
+        <version.dependency.jackson>2.18.2</version.dependency.jackson>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
-        <version.dependency.jsch>0.1.55</version.dependency.jsch>
+        <version.dependency.jsch>0.2.23</version.dependency.jsch>
         <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
-        <version.dependency.jsonwebtoken>0.12.5</version.dependency.jsonwebtoken>
-        <version.dependency.liquibase>4.24.0</version.dependency.liquibase>
-        <version.dependency.lombok>1.18.26</version.dependency.lombok>
-        <version.dependency.oshi>6.4.1</version.dependency.oshi>
-        <version.dependency.postresql.hibernate.utils>3.7.4</version.dependency.postresql.hibernate.utils>
-        <version.dependency.springdoc.openapi>2.5.0</version.dependency.springdoc.openapi>
-        <version.dependency.springframework.boot>3.2.5</version.dependency.springframework.boot>
+        <version.dependency.jsonwebtoken>0.12.6</version.dependency.jsonwebtoken>
+        <version.dependency.liquibase>4.29.2</version.dependency.liquibase>
+        <version.dependency.lombok>1.18.36</version.dependency.lombok>
+        <version.dependency.oshi>6.6.6</version.dependency.oshi>
+        <version.dependency.postresql.hibernate.utils>3.9.1</version.dependency.postresql.hibernate.utils>
+        <version.dependency.springdoc.openapi>2.8.4</version.dependency.springdoc.openapi>
+        <version.dependency.springframework.boot>3.4.2</version.dependency.springframework.boot>
         <!-- dependencies, scope == test -->
-        <version.dependency.assertj>3.24.2</version.dependency.assertj>
+        <version.dependency.assertj>3.26.3</version.dependency.assertj>
         <version.dependency.jsonpath>2.9.0</version.dependency.jsonpath>
-        <version.dependency.junit>5.10.2</version.dependency.junit>
-        <version.dependency.testcontainers>1.19.7</version.dependency.testcontainers>
+        <version.dependency.junit>5.11.4</version.dependency.junit>
+        <version.dependency.testcontainers>1.20.4</version.dependency.testcontainers>
         <!-- plugins -->
-        <version.plugin.build.helper>3.4.0</version.plugin.build.helper>
-        <version.plugin.compiler>3.11.0</version.plugin.compiler>
-        <version.plugin.dependency>3.5.0</version.plugin.dependency>
-        <version.plugin.failsafe>3.1.2</version.plugin.failsafe>
-        <version.plugin.git.commit>8.0.2</version.plugin.git.commit>
-        <version.plugin.jacoco>0.8.9</version.plugin.jacoco>
-        <version.plugin.javadoc>3.5.0</version.plugin.javadoc>
+        <version.plugin.build.helper>3.6.0</version.plugin.build.helper>
+        <version.plugin.compiler>3.13.0</version.plugin.compiler>
+        <version.plugin.dependency>3.8.1</version.plugin.dependency>
+        <version.plugin.failsafe>3.5.2</version.plugin.failsafe>
+        <version.plugin.git.commit>9.0.1</version.plugin.git.commit>
+        <version.plugin.jacoco>0.8.12</version.plugin.jacoco>
+        <version.plugin.javadoc>3.11.2</version.plugin.javadoc>
         <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
         <version.plugin.resource>3.3.1</version.plugin.resource>
-        <version.plugin.source>3.2.1</version.plugin.source>
-        <version.plugin.surefire>3.0.0</version.plugin.surefire>
+        <version.plugin.source>3.3.1</version.plugin.source>
+        <version.plugin.surefire>3.5.2</version.plugin.surefire>
     </properties>
 
     <dependencyManagement>
@@ -125,10 +125,22 @@
             <!-- JWT Security -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
+                <artifactId>jjwt-api</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
             </dependency>
-            <!-- JPA Criteria API -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${version.dependency.jsonwebtoken}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${version.dependency.jsonwebtoken}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!-- JPA Criteria API (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>org.hibernate.orm</groupId>
                 <artifactId>hibernate-jpamodelgen</artifactId>
@@ -152,7 +164,7 @@
                 <artifactId>hypersistence-utils-hibernate-63</artifactId>
                 <version>${version.dependency.postresql.hibernate.utils}</version>
             </dependency>
-            <!-- Liquibase -->
+            <!-- Liquibase (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
@@ -186,7 +198,7 @@
                 <artifactId>feign-slf4j</artifactId>
                 <version>${version.dependency.feign}</version>
             </dependency>
-            <!-- JSONs: Jackson -->
+            <!-- JSONs: Jackson (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
@@ -205,7 +217,7 @@
                 <artifactId>commons-io</artifactId>
                 <version>${version.dependency.apache.commons.io}</version>
             </dependency>
-            <!-- Common Codec -->
+            <!-- Common Codec (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
@@ -219,7 +231,7 @@
             </dependency>
             <!-- jsch (ssh) -->
             <dependency>
-                <groupId>com.jcraft</groupId>
+                <groupId>com.github.mwiede</groupId>
                 <artifactId>jsch</artifactId>
                 <version>${version.dependency.jsch}</version>
             </dependency>
@@ -241,7 +253,7 @@
                 <artifactId>oshi-core-java11</artifactId>
                 <version>${version.dependency.oshi}</version>
             </dependency>
-            <!-- Lombok -->
+            <!-- Lombok (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -260,7 +272,7 @@
                 <version>${version.dependency.springframework.boot}</version>
                 <scope>test</scope>
             </dependency>
-            <!-- Testcontainers -->
+            <!-- Testcontainers (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers</artifactId>
@@ -285,7 +297,7 @@
                 <version>${version.dependency.testcontainers}</version>
                 <scope>test</scope>
             </dependency>
-            <!-- JUnit -->
+            <!-- JUnit (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -293,14 +305,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- JSON Path -->
+            <!-- JSON Path (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>com.jayway.jsonpath</groupId>
                 <artifactId>json-path</artifactId>
                 <version>${version.dependency.jsonpath}</version>
                 <scope>test</scope>
             </dependency>
-            <!-- Asserts -->
+            <!-- Asserts (matches version in spring-boot-dependencies) -->
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
