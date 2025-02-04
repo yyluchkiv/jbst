@@ -16,9 +16,11 @@ import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
+import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.jwt.*;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
+import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
@@ -36,7 +38,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -78,6 +79,8 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
+    // Publishers
+    private final SecurityJwtEventsPublisher securityJwtPublisher;
 
     // Resource
     private final BaseSecurityAuthenticationResource componentUnderTest;
@@ -94,7 +97,8 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
                 this.jwtUserDetailsService,
                 this.tokensProvider,
                 this.baseAuthenticationRequestsValidator,
-                this.securityJwtTokenUtils
+                this.securityJwtTokenUtils,
+                this.securityJwtPublisher
         );
     }
 
@@ -109,7 +113,8 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
                 this.jwtUserDetailsService,
                 this.tokensProvider,
                 this.baseAuthenticationRequestsValidator,
-                this.securityJwtTokenUtils
+                this.securityJwtTokenUtils,
+                this.securityJwtPublisher
         );
     }
 
@@ -176,13 +181,14 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.exceptionEntityType", equalTo(exceptionEntity.getExceptionEntityType().name())))
                 .andExpect(jsonPath("$.attributes", equalTo(exceptionEntity.getAttributes())))
                 .andExpect(jsonPath("$.timestamp", Matchers.greaterThan(exceptionEntity.getTimestamp())));
 
         // Assert
         verify(this.authenticationManager).authenticate(authenticationToken);
+        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(any(EventAuthenticationLoginFailure.class));
     }
 
     @Test
