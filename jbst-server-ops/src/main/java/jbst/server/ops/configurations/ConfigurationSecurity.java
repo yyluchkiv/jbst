@@ -10,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.ArrayList;
 
 @Configuration
 @EnableWebSecurity
@@ -49,16 +52,21 @@ public class ConfigurationSecurity {
         return http.build();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) {
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager(BCryptPasswordEncoder passwordEncoder) {
         var remoteServer = this.opsProperties.getServerConfigs();
-        try {
-            auth.inMemoryAuthentication()
-                    .withUser(remoteServer.getCredentials().username().value())
-                    .password(new BCryptPasswordEncoder().encode(remoteServer.getCredentials().password().value()))
-                    .roles(Username.ops().value());
-        } catch (Exception ex) {
-            throw new IllegalArgumentException("ops-server security configuration failure: " + ex.getMessage());
-        }
+        var credentials = remoteServer.getCredentials();
+        return new InMemoryUserDetailsManager(
+                new User(
+                        credentials.username().value(),
+                        passwordEncoder.encode(credentials.password().value()),
+                        new ArrayList<>()
+                )
+        );
     }
 }

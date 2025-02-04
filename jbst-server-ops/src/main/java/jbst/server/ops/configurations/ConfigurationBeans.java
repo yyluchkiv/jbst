@@ -51,6 +51,7 @@ public class ConfigurationBeans {
     @Bean
     public RestTemplate restTemplate() {
         var connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+                // TODO [YYL] setSSLSocketFactory deprecated, use setTlsSocketStrategy
                 .setSSLSocketFactory(
                         SSLConnectionSocketFactoryBuilder.create()
                                 .setSslContext(SSLContexts.createSystemDefault())
