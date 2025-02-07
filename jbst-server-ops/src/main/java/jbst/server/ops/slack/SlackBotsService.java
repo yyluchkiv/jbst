@@ -48,13 +48,14 @@ public class SlackBotsService {
         });
     }
 
+    // TODO [YYL] improve API
     public final void sendIncident(OpsIncident opsIncident) {
         var team = opsIncident.getTeam();
-        var slackBot = this.bots.get(team);
-        if (nonNull(slackBot)) {
+        var slackBotOpt = this.getMainSlackBot();
+        slackBotOpt.ifPresent(slackBot -> {
             slackBot.sendTeamCommunication(opsIncident.getSlackHeader(), team);
             slackBot.sendTeamCommunicationFile(opsIncident.getPlainMessage(), team);
-        }
+        });
     }
 
     public final void sendMainBotMainCommunication(List<String> messages) {

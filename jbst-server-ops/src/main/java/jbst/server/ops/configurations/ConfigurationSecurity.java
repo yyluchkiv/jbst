@@ -19,8 +19,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.ArrayList;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -62,11 +60,10 @@ public class ConfigurationSecurity {
         var remoteServer = this.opsProperties.getServerConfigs();
         var credentials = remoteServer.getCredentials();
         return new InMemoryUserDetailsManager(
-                new User(
-                        credentials.username().value(),
-                        passwordEncoder.encode(credentials.password().value()),
-                        new ArrayList<>()
-                )
+                User.withUsername(credentials.username().value())
+                        .password(passwordEncoder.encode(credentials.password().value()))
+                        .roles(Username.ops().value())
+                        .build()
         );
     }
 }
