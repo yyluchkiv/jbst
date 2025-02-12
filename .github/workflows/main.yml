@@ -12,7 +12,7 @@ env:
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-server-iam
   DOCKER_OPS_SERVER_IMAGE: tech1-agency/jbst-server-ops
-  DOCKER_VERSION: '1.15-SNAPSHOT'
+  DOCKER_VERSION: '1.16-SNAPSHOT'
   DOCKER_PUSH_ENABLED: 'false'
 
 concurrency:
