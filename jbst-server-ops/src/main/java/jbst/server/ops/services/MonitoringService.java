@@ -147,7 +147,7 @@ public class MonitoringService {
                 incident,
                 nonNull(server) ? server.name() : ServerName.dash(),
                 nonNull(server) ? server.team() : this.opsProperties.getSlacksConfigs().getMainTeam(),
-                remoteHost,
+                server.ipAddress(),
                 opsIncidentEnv,
                 this.opsProperties.getRecipientsConfigs()
         );
