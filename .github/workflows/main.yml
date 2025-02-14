@@ -71,7 +71,7 @@ jobs:
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
 
       - name: Notifications
-        if: always()
+        if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
