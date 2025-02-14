@@ -24,12 +24,12 @@ jobs:
       contents: write
       packages: write
     steps:
-      - name: Checkout
+      - name: "checkout"
         uses: actions/checkout@v4
 
       # Delete packages - package-type: container
 
-      - name: Delete Container Package Untagged Versions [jbst-server-iam]
+      - name: "delete container package untagged versions [jbst-server-iam]"
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
@@ -38,7 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           delete-only-untagged-versions: true
 
-      - name: Delete Container Package [jbst-server-iam]
+      - name: "delete container package [jbst-server-iam]"
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
@@ -49,7 +49,7 @@ jobs:
 
       # Delete packages - package-type: maven
 
-      - name: Delete Packages
+      - name: "delete Packages"
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
@@ -60,7 +60,7 @@ jobs:
 
       # Delete releases and tags
 
-      - name: Delete Releases and Tags
+      - name: "delete releases and tags"
         uses: dev-drprasad/delete-older-releases@v0.3.4
         with:
           keep_latest: ${{ env.KEEP_COUNT_RELEASES_AND_TAGS }}
@@ -68,7 +68,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Notifications
+      - name: "notifications"
         if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
