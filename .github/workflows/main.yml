@@ -36,11 +36,11 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: "test authentication"
-        run: |
-          echo "GitHub Actor: $GITHUB_ACTOR"
-          curl -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" -i \
-            https://maven.pkg.github.com/tscgen/jbst
+#      - name: "test authentication"
+#        run: |
+#          echo "GitHub Actor: $GITHUB_ACTOR"
+#          curl -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" -i \
+#            https://maven.pkg.github.com/tscgen/jbst
 
       - name: "maven [settings]"
         uses: s4u/maven-settings-action@v3.0.0
