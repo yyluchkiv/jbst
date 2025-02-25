@@ -49,7 +49,7 @@ jobs:
 
       # Delete packages - package-type: maven
 
-      - name: "delete Packages"
+      - name: "delete packages"
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}

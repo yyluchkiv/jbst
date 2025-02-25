@@ -8,7 +8,7 @@
     <groupId>jbst</groupId>
     <artifactId>jbst</artifactId>
     <packaging>pom</packaging>
-    <version>1.16</version>
+    <version>1.17-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <url>https://github.com/tscgen/jbst</url>
