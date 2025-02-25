@@ -37,12 +37,6 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: "test authentication"
-        run: |
-          echo "GitHub Actor: $GITHUB_ACTOR"
-          curl -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" -i \
-            https://maven.pkg.github.com/tscgen/jbst
-
       - name: "maven [settings]"
         uses: s4u/maven-settings-action@v3.0.0
         with:
@@ -52,16 +46,6 @@ jobs:
                 "username": "${{ github.actor }}",
                 "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
-
-#      - name: "maven [settings]"
-#        uses: s4u/maven-settings-action@v3.0.0
-#        with:
-#          servers: |
-#            [{
-#                "id": "github-jbst",
-#                "username": "${{ vars.MAVEN_PACKAGES_USERNAME }}",
-#                "password": "${{ secrets.TOKEN_MAVEN_PACKAGES }}"
-#            }]
 
       - name: "maven [build]"
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'false'
