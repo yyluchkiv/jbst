@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
 
 env:
-  MAVEN_DEPLOYMENT_ENABLED: 'false'
+  MAVEN_DEPLOYMENT_ENABLED: 'true'
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-server-iam
-  DOCKER_OPS_SERVER_IMAGE: tech1-agency/jbst-server-ops
+  DOCKER_IAM_SERVER_IMAGE: tscgen/jbst-server-iam
+  DOCKER_OPS_SERVER_IMAGE: tscgen/jbst-server-ops
   DOCKER_VERSION: '1.16-SNAPSHOT'
-  DOCKER_PUSH_ENABLED: 'false'
+  DOCKER_PUSH_ENABLED: 'true'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -40,9 +40,19 @@ jobs:
           servers: |
             [{
                 "id": "github-jbst",
-                "username": "${{ vars.USERNAME_MAVEN_PACKAGES }}",
-                "password": "${{ secrets.TOKEN_MAVEN_PACKAGES }}"
+                "username": "${{ github.actor }}",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
+
+#      - name: "maven [settings]"
+#        uses: s4u/maven-settings-action@v3.0.0
+#        with:
+#          servers: |
+#            [{
+#                "id": "github-jbst",
+#                "username": "${{ vars.MAVEN_PACKAGES_USERNAME }}",
+#                "password": "${{ secrets.TOKEN_MAVEN_PACKAGES }}"
+#            }]
 
       - name: "maven [build]"
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'false'
@@ -71,14 +81,14 @@ jobs:
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
 
       - name: "notifications"
-        if: failure()
+        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 587
-          username: ${{ secrets.SMTP_GMAIL_USERNAME }}
+          username: ${{ vars.SMTP_GMAIL_USERNAME }}
           password: ${{ secrets.SMTP_GMAIL_PASSWORD }}
           subject: "${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.workflow }} # ${{ github.run_number }}"
           from: ${{ vars.SMTP_GMAIL_FROM }}
           html_body: "<b>Actions</b>: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          to: ${{ vars.EMAILS_ADMINS }}
+          to: ${{ vars.EMAILS_TSCGEN }}

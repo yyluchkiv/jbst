@@ -11,31 +11,18 @@
     <version>1.16-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
-    <url>https://github.com/tech1-agency/jbst</url>
+    <url>https://github.com/tscgen/jbst</url>
     <inceptionYear>2022</inceptionYear>
     <organization>
-        <name>Tech1</name>
-        <url>https://github.com/tech1-agency</url>
+        <name>TSCGEN</name>
+        <url>https://github.com/tscgen</url>
     </organization>
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>https://opensource.org/licenses/mit-license.php</url>
-        </license>
-    </licenses>
-
     <developers>
         <developer>
             <name>Yurii Luchkiv</name>
             <email>yyluchkiv@gmail.com</email>
         </developer>
     </developers>
-
-    <scm>
-        <connection>scm:git:ssh://git@github.com/tech1-agency/jbst.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/tech1-agency/jbst.git</developerConnection>
-        <url>https://github.com/tech1-agency/jbst</url>
-    </scm>
 
     <modules>
         <!-- JARs -->
@@ -410,7 +397,7 @@
                 <repository>
                     <id>github-jbst</id>
                     <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/tech1-agency/jbst/packages</url>
+                    <url>https://maven.pkg.github.com/tscgen/jbst/packages</url>
                 </repository>
             </distributionManagement>
         </profile>
