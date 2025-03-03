@@ -53,8 +53,8 @@ class EmailServiceConsoleTest {
                             true,
                             "smtp.gmail.com",
                             587,
-                            "Tech1 Ops <hq.tech1.io@gmail.com>",
-                            Username.of("hq.tech1.io@gmail.com"),
+                            "<?> <?>",
+                            Username.of("<?>"),
                             Password.of("<?>")
                     )
             );
@@ -155,18 +155,18 @@ class EmailServiceConsoleTest {
         var ukraineFlag = this.geoCountryFlagUtils.getFlagEmojiByCountryCode("UA");
         var emailHTML = new EmailHTML(
                 this.getTo(),
-                "[OpsIncidents] Authentication Login on [trading-server-v2-prod@prod] — " + TimestampUtility.getCurrentTimestamp() + " — [AnyIncident]",
+                "[OpsIncidents] Authentication Login on [server-prod@prod] — " + TimestampUtility.getCurrentTimestamp() + " — [AnyIncident]",
                 "ops-any-incident",
                 Map.of(
                         "members", "sherlock.holmes, mycroft.holmes",
                         "year", "2100",
-                        "serverURL", "http://tech1.agency/",
-                        "remoteURL", "http://tech1.agency/",
-                        "username", "tech1",
+                        "serverURL", "https://127.0.0.1",
+                        "remoteURL", "https://127.0.0.1",
+                        "username", "junit",
                         "whereCombined", ukraineFlag + " Ukraine, Lviv",
                         "what", "Chrome on Mac OS X",
                         "ipAddress", "8.8.8.8",
-                        "invitationCodeOwner", "tech1-owner"
+                        "invitationCodeOwner", "junit-owner"
                 )
         );
 
