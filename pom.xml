@@ -11,11 +11,11 @@
     <version>1.17-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
-    <url>https://github.com/tscgen/jbst</url>
+    <url>https://github.com/tech1-agency/jbst</url>
     <inceptionYear>2022</inceptionYear>
     <organization>
         <name>TSCGEN</name>
-        <url>https://github.com/tscgen</url>
+        <url>https://github.com/tech1-agency</url>
     </organization>
     <developers>
         <developer>
@@ -397,7 +397,7 @@
                 <repository>
                     <id>github-jbst</id>
                     <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/tscgen/jbst/packages</url>
+                    <url>https://maven.pkg.github.com/tech1-agency/jbst/packages</url>
                 </repository>
             </distributionManagement>
         </profile>
