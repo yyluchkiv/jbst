@@ -72,16 +72,3 @@ jobs:
           cd jbst-server-ops
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
-
-      - name: "notifications"
-        if: always()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ vars.SMTP_GMAIL_USERNAME }}
-          password: ${{ secrets.SMTP_GMAIL_PASSWORD }}
-          subject: "${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.workflow }} # ${{ github.run_number }}"
-          from: ${{ vars.SMTP_GMAIL_FROM }}
-          html_body: "<b>Actions</b>: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          to: ${{ vars.EMAILS_TSCGEN }}
