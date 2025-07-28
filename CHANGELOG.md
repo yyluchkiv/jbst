@@ -3,4 +3,5 @@
 — Modification: NumbersUtility include TRILLION
 — Addition: JbstConstants.Numbers class
 — DeletionScheduled: JbstConstants.BigDecimals + JbstConstants.BigIntegers
+— Addition: JbstConstants hourly/daily/yearly time constants in BigDecimals/Longs
 

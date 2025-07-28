@@ -124,17 +124,30 @@ public class JbstConstants {
     public static class Numbers {
 
         public static class BigDecimals {
+            // plain numbers
             public static final BigDecimal TWO = new BigDecimal("2");
             public static final BigDecimal HUNDRED = new BigDecimal("100");
             public static final BigDecimal THOUSAND = new BigDecimal("1000");
             public static final BigDecimal MILLION = new BigDecimal("1000000");
             public static final BigDecimal BILLION = new BigDecimal("1000000000");
             public static final BigDecimal TRILLION = new BigDecimal("1000000000000");
+
+            // time
+            public static final BigDecimal HOURLY = new BigDecimal("1");
+            public static final BigDecimal DAILY = new BigDecimal("24");
+            public static final BigDecimal YEARLY = new BigDecimal("365");
         }
 
         @SuppressWarnings("unused")
         public static class BigIntegers {
             public static final BigInteger HUNDRED = new BigInteger("100");
+        }
+
+        public static class Longs {
+            // time
+            public static final long HOURLY = 1L;
+            public static final long DAILY = 24L;
+            public static final long YEARLY = 365L;
         }
     }
 
