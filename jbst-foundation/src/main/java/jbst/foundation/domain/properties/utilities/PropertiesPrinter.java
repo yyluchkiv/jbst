@@ -1,7 +1,6 @@
 package jbst.foundation.domain.properties.utilities;
 
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.comparators.ReflectionsComparators;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
@@ -46,7 +45,7 @@ public class PropertiesPrinter {
     public static void printMandatoryBasedConfigs(AbstractPropertyConfigs propertyConfigs, PropertyId propertyId) {
         var fields = PropertiesAsserter.getMandatoryBasedFields(propertyConfigs, propertyId);
         var rfs = getProperties(propertyConfigs, propertyId, fields);
-        rfs.sort(ReflectionsComparators.PROPERTIES_PRINTER_COMPARATOR);
+        rfs.sort(ReflectionProperty.PRINTER_COMPARATOR);
         rfs.forEach(PropertiesPrinter::printProperty);
     }
 }

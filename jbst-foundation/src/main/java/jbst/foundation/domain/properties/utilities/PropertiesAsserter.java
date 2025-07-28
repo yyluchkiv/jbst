@@ -3,7 +3,6 @@ package jbst.foundation.domain.properties.utilities;
 import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.comparators.ReflectionsComparators;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
@@ -175,6 +174,7 @@ public class PropertiesAsserter {
                 .ifPresent(consumer -> consumer.accept(rf));
     }
 
+    @SuppressWarnings("ConstantValue")
     private static List<Field> getFields(Object property, PropertyId propertyId, Set<Class<? extends Annotation>> presentAnnotations) {
         ConsoleAsserts.assertNonNullOrThrow(property, propertyId);
         return Stream.of(property.getClass().getDeclaredFields())
@@ -189,7 +189,14 @@ public class PropertiesAsserter {
                     return null;
                 })
                 .filter(Objects::nonNull)
-                .sorted(ReflectionsComparators.PROPERTIES_ASSERTION_COMPARATOR)
+                .sorted((o1, o2) -> {
+                    if ("enabled".equals(o1.getName())) {
+                        return -1;
+                    } else if ("enabled".equals(o2.getName())) {
+                        return 1;
+                    }
+                    return o1.getName().compareTo(o2.getName());
+                })
                 .toList();
     }
 }

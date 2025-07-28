@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.uncapitalize;
@@ -15,6 +16,15 @@ import static org.springframework.util.StringUtils.uncapitalize;
 @Data
 public class ReflectionProperty {
     private static final String READABLE_PROPERTY = "%s: `%s`";
+
+    public static final Comparator<ReflectionProperty> PRINTER_COMPARATOR = (o1, o2) -> {
+        if ("enabled".equals(o1.getPropertyName())) {
+            return -1;
+        } else if ("enabled".equals(o2.getPropertyName())) {
+            return 1;
+        }
+        return o1.getReadableValue().compareTo(o2.getReadableValue());
+    };
 
     private final Field field;
     private final String propertyName;
