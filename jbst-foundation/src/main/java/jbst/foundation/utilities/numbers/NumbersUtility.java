@@ -6,23 +6,20 @@ import java.math.BigDecimal;
 
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.*;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
 import static jbst.foundation.utilities.numbers.RoundingUtility.divide;
 import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
 
 @UtilityClass
 public class NumbersUtility {
-    private static final BigDecimal THOUSAND = new BigDecimal("1000");
-    private static final BigDecimal MILLION = new BigDecimal("1000000");
-    private static final BigDecimal BILLION = new BigDecimal("1000000000");
-    private static final BigDecimal TRILLION = new BigDecimal("1000000000000");
 
     public String getReadableNumber(BigDecimal number) {
         return getReadableNumber(number, 2);
     }
 
     public String getReadableNumber(BigDecimal number, int scale) {
-        // N == 0.0
+        // N == 0
         if (isNull(number) || isZero(number)) {
             return scale(ZERO, scale).toString();
         }

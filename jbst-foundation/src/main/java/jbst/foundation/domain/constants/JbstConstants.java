@@ -126,6 +126,10 @@ public class JbstConstants {
         public static class BigDecimals {
             public static final BigDecimal TWO = new BigDecimal("2");
             public static final BigDecimal HUNDRED = new BigDecimal("100");
+            public static final BigDecimal THOUSAND = new BigDecimal("1000");
+            public static final BigDecimal MILLION = new BigDecimal("1000000");
+            public static final BigDecimal BILLION = new BigDecimal("1000000000");
+            public static final BigDecimal TRILLION = new BigDecimal("1000000000000");
         }
 
         @SuppressWarnings("unused")
