@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.numbers;
 
+import jbst.foundation.domain.annotations.DeletionScheduled;
 import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
 import jbst.foundation.domain.tuples.TupleRange;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
@@ -21,6 +22,7 @@ public class BigDecimalUtility {
     private static final String NUMBER1_PARAM = "number1";
     private static final String NUMBER2_PARAM = "number2";
 
+    @DeletionScheduled(version = "1.8")
     public static boolean areValuesEquals(BigDecimal number1, BigDecimal number2) {
         if (isNull(number1) && isNull(number2)) {
             return true;
