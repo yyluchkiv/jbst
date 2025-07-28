@@ -46,6 +46,30 @@ class BigDecimalUtilityTest {
         );
     }
 
+    private static Stream<Arguments> isExceptionTest() {
+        return Stream.of(
+                Arguments.of(TWO, "=", TWO, "Available operators: [>, >=, <, <=]"),
+                Arguments.of(TWO, "!=", TWO, "Available operators: [>, >=, <, <=]")
+        );
+    }
+
+    private static Stream<Arguments> isTest() {
+        return Stream.of(
+                Arguments.of(TWO, ">", TWO, false),
+                Arguments.of(TWO, ">=", TWO, true),
+                Arguments.of(TWO, "<", TWO, false),
+                Arguments.of(TWO, "<=", TWO, true),
+                Arguments.of(TWO, ">", HUNDRED, false),
+                Arguments.of(TWO, ">=", HUNDRED, false),
+                Arguments.of(TWO, "<", HUNDRED, true),
+                Arguments.of(TWO, "<=", HUNDRED, true),
+                Arguments.of(HUNDRED, ">", TWO, true),
+                Arguments.of(HUNDRED, ">=", TWO, true),
+                Arguments.of(HUNDRED, "<", TWO, false),
+                Arguments.of(HUNDRED, "<=", TWO, false)
+        );
+    }
+
     private static Stream<Arguments> isFirstValueGreaterTest() {
         return Stream.of(
                 Arguments.of(ZERO, new BigDecimal("-1"), true),
@@ -247,6 +271,27 @@ class BigDecimalUtilityTest {
         // Assert
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isExceptionTest")
+    void isExceptionTest(BigDecimal number1, String operator, BigDecimal number2, String expected) {
+        // Act
+        var throwable = catchThrowable(() -> is(number1, operator, number2));
+
+        // Assert
+        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isTest")
+    void isTest(BigDecimal number1, String operator, BigDecimal number2, boolean expected) {
+        // Act
+        var actual = is(number1, operator, number2);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest

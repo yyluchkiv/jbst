@@ -1,18 +1,23 @@
 package jbst.foundation.utilities.numbers;
 
+import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
 import jbst.foundation.domain.tuples.TupleRange;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import lombok.experimental.UtilityClass;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 
 @UtilityClass
 public class BigDecimalUtility {
+    private static final List<String> OPERATORS = List.of(">", ">=", "<", "<=");
     private static final String NUMBER1_PARAM = "number1";
     private static final String NUMBER2_PARAM = "number2";
 
@@ -24,6 +29,17 @@ public class BigDecimalUtility {
             return false;
         }
         return number1.compareTo(number2) == 0;
+    }
+
+    public static boolean is(@NotNull BigDecimal number1, @NotNull String operator, @NotNull BigDecimal number2) {
+        assertTrueOrThrow(OPERATORS.contains(operator), "Available operators: " + OPERATORS);
+        return switch (operator) {
+            case ">" -> isFirstValueGreater(number1, number2);
+            case ">=" -> isFirstValueGreaterOrEqual(number1, number2);
+            case "<" -> isFirstValueLesser(number1, number2);
+            case "<=" -> isFirstValueLesserOrEqual(number1, number2);
+            default -> throw new JbstUnreachableCodeException();
+        };
     }
 
     public static boolean isFirstValueGreater(BigDecimal number1, BigDecimal number2) {

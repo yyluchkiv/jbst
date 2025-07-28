@@ -4,4 +4,5 @@
 — Addition: JbstConstants.Numbers class
 — DeletionScheduled: JbstConstants.BigDecimals + JbstConstants.BigIntegers
 — Addition: JbstConstants hourly/daily/yearly time constants in BigDecimals/Longs
+— Addition: BigDecimalUtility.is(number1, (">", ">=", "<", "<="), number2)
 
