@@ -12,9 +12,10 @@ import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
 
 @UtilityClass
 public class NumbersUtility {
-    private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
-    private static final BigDecimal MILLION = BigDecimal.valueOf(1000000);
-    private static final BigDecimal BILLION = BigDecimal.valueOf(1000000000);
+    private static final BigDecimal THOUSAND = new BigDecimal("1000");
+    private static final BigDecimal MILLION = new BigDecimal("1000000");
+    private static final BigDecimal BILLION = new BigDecimal("1000000000");
+    private static final BigDecimal TRILLION = new BigDecimal("1000000000000");
 
     public String getReadableNumber(BigDecimal number) {
         return getReadableNumber(number, 2);
@@ -27,16 +28,20 @@ public class NumbersUtility {
         }
         var positiveNumber = absOrZero(number);
         // -1K < N < 1K
-        // N =< -1B
-        // N >= 1B
-        if (isFirstValueLesser(positiveNumber, THOUSAND) || isFirstValueGreaterOrEqual(positiveNumber, BILLION)) {
+        // N =< -1T
+        // N >= 1T
+        if (isFirstValueLesser(positiveNumber, THOUSAND) || isFirstValueGreaterOrEqual(positiveNumber, TRILLION)) {
             return scale(number, scale).toString();
+        }
+        // N >= 1B
+        if (isFirstValueGreaterOrEqual(positiveNumber, BILLION)) {
+            return scale(divide(number, BILLION), 2).stripTrailingZeros() + "B";
         }
         // N >= 1M
         if (isFirstValueGreaterOrEqual(positiveNumber, MILLION)) {
-            return scale(divide(number, MILLION), 2) + "M";
+            return scale(divide(number, MILLION), 2).stripTrailingZeros() + "M";
         }
         // N >= 1K
-        return scale(divide(number, THOUSAND), 2) + "K";
+        return scale(divide(number, THOUSAND), 2).stripTrailingZeros() + "K";
     }
 }

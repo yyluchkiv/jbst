@@ -27,16 +27,18 @@ class NumbersUtilityTest {
 
                 // N =< -1B
                 // N >= 1B
-                Arguments.of(BigDecimal.valueOf(-1500000000), "-1500000000.00"),
-                Arguments.of(BigDecimal.valueOf(-1000000000), "-1000000000.00"),
-                Arguments.of(BigDecimal.valueOf(1000000000), "1000000000.00"),
-                Arguments.of(BigDecimal.valueOf(1500000000), "1500000000.00"),
+                Arguments.of(BigDecimal.valueOf(-1750000000), "-1.75B"),
+                Arguments.of(BigDecimal.valueOf(-1500000000), "-1.5B"),
+                Arguments.of(BigDecimal.valueOf(-1000000000), "-1B"),
+                Arguments.of(BigDecimal.valueOf(1000000000), "1B"),
+                Arguments.of(BigDecimal.valueOf(1500000000), "1.5B"),
+                Arguments.of(BigDecimal.valueOf(1750000000), "1.75B"),
 
                 // N >= 1M
                 Arguments.of(BigDecimal.valueOf(-12345678.555), "-12.35M"),
                 Arguments.of(BigDecimal.valueOf(-12345678), "-12.35M"),
-                Arguments.of(BigDecimal.valueOf(-1000000), "-1.00M"),
-                Arguments.of(BigDecimal.valueOf(1000000), "1.00M"),
+                Arguments.of(BigDecimal.valueOf(-1000000), "-1M"),
+                Arguments.of(BigDecimal.valueOf(1000000), "1M"),
                 Arguments.of(BigDecimal.valueOf(12345678), "12.35M"),
                 Arguments.of(BigDecimal.valueOf(12345678.999), "12.35M"),
 
@@ -48,10 +50,10 @@ class NumbersUtilityTest {
                 Arguments.of(BigDecimal.valueOf(-1150), "-1.15K"),
                 Arguments.of(BigDecimal.valueOf(-1050), "-1.05K"),
                 Arguments.of(BigDecimal.valueOf(-1005), "-1.01K"),
-                Arguments.of(BigDecimal.valueOf(-1004), "-1.00K"),
-                Arguments.of(BigDecimal.valueOf(-1000), "-1.00K"),
-                Arguments.of(BigDecimal.valueOf(1000), "1.00K"),
-                Arguments.of(BigDecimal.valueOf(1004), "1.00K"),
+                Arguments.of(BigDecimal.valueOf(-1004), "-1K"),
+                Arguments.of(BigDecimal.valueOf(-1000), "-1K"),
+                Arguments.of(BigDecimal.valueOf(1000), "1K"),
+                Arguments.of(BigDecimal.valueOf(1004), "1K"),
                 Arguments.of(BigDecimal.valueOf(1005), "1.01K"),
                 Arguments.of(BigDecimal.valueOf(1050), "1.05K"),
                 Arguments.of(BigDecimal.valueOf(1150), "1.15K"),
