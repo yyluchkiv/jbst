@@ -13,22 +13,23 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
 @UtilityClass
 public class Printer {
 
-    public static void printTable(String[] tableHeaders, Object[][] tableCells) {
-        var columnWidths = Arrays.stream(tableHeaders).mapToInt(String::length).toArray();
-
-        Arrays.stream(tableCells).forEach(row -> range(0, row.length).forEach(i -> columnWidths[i] = max(columnWidths[i], row[i].toString().length())));
-
+    public static void printTable(String[] headers, Object[][] cells) {
+        var columnWidths = Arrays.stream(headers).mapToInt(String::length).toArray();
         var rowFormat = Arrays.stream(columnWidths).mapToObj(width -> "%-" + (width + 2) + "s").collect(joining());
 
+        Arrays.stream(cells)
+                .forEach(row -> range(0, row.length)
+                        .forEach(i -> columnWidths[i] = max(columnWidths[i], row[i].toString().length())));
+
         Arrays.stream(columnWidths).mapToObj(width -> DASH.repeat(width + 2)).forEach(System.out::print);
         System.out.println();
 
-        System.out.printf(rowFormat + "%n", (Object[]) tableHeaders);
+        System.out.printf(rowFormat + "%n", (Object[]) headers);
 
         Arrays.stream(columnWidths).mapToObj(width -> DASH.repeat(width + 2)).forEach(System.out::print);
         System.out.println();
 
-        Arrays.stream(tableCells).forEach(row -> System.out.printf(rowFormat + "%n", row));
+        Arrays.stream(cells).forEach(row -> System.out.printf(rowFormat + "%n", row));
         System.out.println();
     }
 }
