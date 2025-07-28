@@ -1,2 +1,2 @@
 ### Changelog [v1.17]
-— TBD
+— Addition: DeletionScheduled annotation
