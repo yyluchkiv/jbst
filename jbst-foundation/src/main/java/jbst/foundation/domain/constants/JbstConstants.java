@@ -1,6 +1,7 @@
 package jbst.foundation.domain.constants;
 
 import com.diogonunes.jcolor.AnsiFormat;
+import jbst.foundation.domain.annotations.DeletionScheduled;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.enums.Status;
@@ -21,6 +22,8 @@ import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_T
 @UtilityClass
 public class JbstConstants {
 
+    @SuppressWarnings("unused")
+    @DeletionScheduled(version = "1.8")
     public class BigDecimals {
         public static final BigDecimal MINUS_ONE = BigDecimal.valueOf(-1);
         public static final BigDecimal TWO = BigDecimal.valueOf(2L);
@@ -28,6 +31,7 @@ public class JbstConstants {
     }
 
     @SuppressWarnings("unused")
+    @DeletionScheduled(version = "1.8")
     public class BigIntegers {
         public static final BigInteger MINUS_ONE = BigInteger.valueOf(-1);
         public static final BigInteger ONE_HUNDRED = BigInteger.valueOf(100);
@@ -115,6 +119,19 @@ public class JbstConstants {
         public static final long BYTES_IN_KILOBYTE = 1024L;
         public static final long BYTES_IN_MEGABYTE = 1048576L;
         public static final long BYTES_IN_GIGABYTE = 1073741824L;
+    }
+
+    public static class Numbers {
+
+        public static class BigDecimals {
+            public static final BigDecimal TWO = new BigDecimal("2");
+            public static final BigDecimal HUNDRED = new BigDecimal("100");
+        }
+
+        @SuppressWarnings("unused")
+        public static class BigIntegers {
+            public static final BigInteger HUNDRED = new BigInteger("100");
+        }
     }
 
     @SuppressWarnings("unused")

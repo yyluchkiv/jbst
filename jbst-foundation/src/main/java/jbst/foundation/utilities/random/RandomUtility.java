@@ -123,7 +123,7 @@ public class RandomUtility {
     }
 
     public static BigDecimal randomBigDecimalLessThanZero() {
-        return randomBigDecimalGreaterThanZero().multiply(JbstConstants.BigDecimals.MINUS_ONE);
+        return randomBigDecimalGreaterThanZero().multiply(BigDecimal.ONE.negate());
     }
 
     public static BigDecimal randomBigDecimalGreaterThanZeroByBounds(long lowerBound, long upperBound) {
@@ -133,7 +133,7 @@ public class RandomUtility {
     }
 
     public static BigDecimal randomBigDecimalLessThanZeroByBounds(long lowerBound, long upperBound) {
-        return randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound).multiply(JbstConstants.BigDecimals.MINUS_ONE);
+        return randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound).multiply(BigDecimal.ONE.negate());
     }
 
     public static BigDecimal randomBigDecimalByBounds(long lowerBound, long upperBound) {

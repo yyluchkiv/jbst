@@ -1,9 +1,11 @@
 package jbst.foundation.domain.tuples;
 
+import jbst.foundation.domain.annotations.DeletionScheduled;
+
 import java.math.BigDecimal;
 
 import static java.math.BigDecimal.ZERO;
-import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.ONE_HUNDRED;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 import static jbst.foundation.utilities.numbers.RoundingUtility.divideOrZero;
 import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
 
@@ -15,7 +17,7 @@ public record TuplePercentage(
     public static TuplePercentage of(BigDecimal value, BigDecimal maxValue, int valueScale, int percentageScale) {
         return new TuplePercentage(
                 scale(value, valueScale),
-                divideOrZero(value.abs().multiply(ONE_HUNDRED), maxValue, percentageScale)
+                divideOrZero(value.abs().multiply(HUNDRED), maxValue, percentageScale)
         );
     }
 
@@ -28,10 +30,15 @@ public record TuplePercentage(
     }
 
     public static TuplePercentage zero() {
-        return progressTuplePercentage(ZERO, ONE_HUNDRED);
+        return progressTuplePercentage(ZERO, HUNDRED);
     }
 
+    public static TuplePercentage hundred() {
+        return progressTuplePercentage(HUNDRED, HUNDRED);
+    }
+
+    @DeletionScheduled(version = "1.8")
     public static TuplePercentage oneHundred() {
-        return progressTuplePercentage(ONE_HUNDRED, ONE_HUNDRED);
+        return progressTuplePercentage(HUNDRED, HUNDRED);
     }
 }

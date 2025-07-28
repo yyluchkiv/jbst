@@ -69,9 +69,9 @@ class TuplePercentageTest extends AbstractTupleTest {
     }
 
     @Test
-    void oneHundredTest() {
+    void hundred() {
         // Act
-        var actual = TuplePercentage.oneHundred();
+        var actual = TuplePercentage.hundred();
 
         // Assert
         assertThat(actual).isNotNull();

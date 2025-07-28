@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.ONE_HUNDRED;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 import static jbst.foundation.utilities.json.JsonNodeUtility.getJsonNodeFieldValueAsBigDecimalOrZero;
 import static jbst.foundation.utilities.json.JsonNodeUtility.getJsonNodeValueAsBigDecimalOrZero;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -71,6 +71,6 @@ class JsonNodeUtilityTest {
         var actual = getJsonNodeFieldValueAsBigDecimalOrZero(jsonNode, fieldName);
 
         // Assert
-        assertThat(actual).isEqualTo(ONE_HUNDRED);
+        assertThat(actual).isEqualTo(HUNDRED);
     }
 }

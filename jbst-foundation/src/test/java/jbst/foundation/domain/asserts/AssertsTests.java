@@ -9,11 +9,13 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.*;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.TWO;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -102,10 +104,10 @@ class AssertsTests {
 
     private static Stream<Arguments> assertBigDecimalsBetweenArgs() {
         return Stream.of(
-                Arguments.of(MINUS_ONE, ZERO, TWO, true, true),
-                Arguments.of(MINUS_ONE, MINUS_ONE, TWO, false, true),
-                Arguments.of(MINUS_ONE, TWO, TWO, false, true),
-                Arguments.of(MINUS_ONE, ONE_HUNDRED, TWO, false, false)
+                Arguments.of(ONE.negate(), ZERO, TWO, true, true),
+                Arguments.of(ONE.negate(), ONE.negate(), TWO, false, true),
+                Arguments.of(ONE.negate(), TWO, TWO, false, true),
+                Arguments.of(ONE.negate(), HUNDRED, TWO, false, false)
         );
     }
 

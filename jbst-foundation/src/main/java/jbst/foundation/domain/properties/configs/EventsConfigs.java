@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.math.BigDecimal;
 
-import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.ONE_HUNDRED;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
@@ -25,11 +25,11 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
     private final BigDecimal threadsMaxPoolPercentage;
 
     public static EventsConfigs hardcoded() {
-        return new EventsConfigs("jbst-events", new BigDecimal("75"), ONE_HUNDRED);
+        return new EventsConfigs("jbst-events", new BigDecimal("75"), HUNDRED);
     }
 
     public static EventsConfigs random() {
-        return new EventsConfigs(randomString(), new BigDecimal("25"), ONE_HUNDRED);
+        return new EventsConfigs(randomString(), new BigDecimal("25"), HUNDRED);
     }
 
     @Override
@@ -38,10 +38,10 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
     }
 
     public TuplePercentage asThreadsCorePoolTuplePercentage() {
-        return TuplePercentage.progressTuplePercentage(this.threadsCorePoolPercentage, ONE_HUNDRED);
+        return TuplePercentage.progressTuplePercentage(this.threadsCorePoolPercentage, HUNDRED);
     }
 
     public TuplePercentage asThreadsMaxPoolTuplePercentage() {
-        return TuplePercentage.progressTuplePercentage(this.threadsMaxPoolPercentage, ONE_HUNDRED);
+        return TuplePercentage.progressTuplePercentage(this.threadsMaxPoolPercentage, HUNDRED);
     }
 }

@@ -1,7 +1,6 @@
 package jbst.foundation.utilities.random;
 
 import feign.Request;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.random.IllegalEnumException;
 import jbst.foundation.domain.tests.enums.EnumOneValueUnderTests;
 import jbst.foundation.domain.tests.enums.EnumUnderTests;
@@ -24,10 +23,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Arrays.asList;
-import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.MINUS_ONE;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.enums.EnumUnderTests.*;
@@ -44,7 +41,7 @@ class RandomUtilityTest {
                 Arguments.of(Integer.class, 1),
                 Arguments.of(Long.class, 1L),
                 Arguments.of(Double.class, 1.0d),
-                Arguments.of(BigDecimal.class, ONE)
+                Arguments.of(BigDecimal.class, BigDecimal.ONE)
         );
     }
 
@@ -246,8 +243,8 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE))
-                .isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(MINUS_ONE));
+                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimal.ONE.negate()))
+                .isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(BigDecimal.ONE.negate()));
     }
 
     @RepeatedTest(RANDOM_ITERATIONS_COUNT)
@@ -261,7 +258,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE))
+                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimal.ONE.negate()))
                 .isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 
@@ -318,8 +315,8 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(JbstConstants.BigIntegers.MINUS_ONE))
-                .isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(JbstConstants.BigIntegers.MINUS_ONE));
+                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigInteger.ONE.negate()))
+                .isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(BigInteger.ONE.negate()));
     }
 
     @RepeatedTest(RANDOM_ITERATIONS_COUNT)
@@ -333,7 +330,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(JbstConstants.BigIntegers.MINUS_ONE))
+                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigInteger.ONE.negate()))
                 .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 

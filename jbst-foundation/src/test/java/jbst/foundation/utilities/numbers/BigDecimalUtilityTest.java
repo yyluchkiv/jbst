@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
-import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.*;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.TWO;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
 import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalGreaterThanZero;
 import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalLessThanZero;
@@ -157,7 +159,7 @@ class BigDecimalUtilityTest {
                 Arguments.of(null, false),
                 Arguments.of(ZERO, false),
                 Arguments.of(randomBigDecimalLessThanZero(), false),
-                Arguments.of(ONE_HUNDRED, true),
+                Arguments.of(HUNDRED, true),
                 Arguments.of(new BigDecimal("100"), true),
                 Arguments.of(new BigDecimal("100.00"), true),
                 Arguments.of(new BigDecimal("100.00000"), true)
@@ -200,7 +202,7 @@ class BigDecimalUtilityTest {
         return Stream.of(
                 Arguments.of(ZERO, 0),
                 Arguments.of(TWO, 0),
-                Arguments.of(ONE_HUNDRED, 0),
+                Arguments.of(HUNDRED, 0),
                 Arguments.of(new BigDecimal("33"), 0),
                 Arguments.of(new BigDecimal("1.1"), 1),
                 Arguments.of(new BigDecimal("1.11"), 2),
@@ -441,7 +443,7 @@ class BigDecimalUtilityTest {
         cases.add(new Tuple2<>(null, ZERO));
         cases.add(new Tuple2<>(ZERO, ZERO));
         cases.add(new Tuple2<>(positive, positive));
-        cases.add(new Tuple2<>(negative, negative.multiply(MINUS_ONE)));
+        cases.add(new Tuple2<>(negative, negative.multiply(ONE.negate())));
 
         cases.forEach(item -> {
             // Arrange

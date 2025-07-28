@@ -5,6 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.CLASS)
 public @interface DeletionScheduled {
-    String reason();
+    String reason() default "";
     String version();
 }
