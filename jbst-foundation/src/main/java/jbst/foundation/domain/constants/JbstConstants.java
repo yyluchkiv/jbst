@@ -19,10 +19,10 @@ import static com.diogonunes.jcolor.Attribute.BLACK_TEXT;
 import static com.diogonunes.jcolor.Attribute.BOLD;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 
+@SuppressWarnings("unused")
 @UtilityClass
 public class JbstConstants {
 
-    @SuppressWarnings("unused")
     @DeletionScheduled(version = "1.8")
     public class BigDecimals {
         public static final BigDecimal MINUS_ONE = BigDecimal.valueOf(-1);
@@ -30,14 +30,12 @@ public class JbstConstants {
         public static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
     }
 
-    @SuppressWarnings("unused")
     @DeletionScheduled(version = "1.8")
     public class BigIntegers {
         public static final BigInteger MINUS_ONE = BigInteger.valueOf(-1);
         public static final BigInteger ONE_HUNDRED = BigInteger.valueOf(100);
     }
 
-    @SuppressWarnings("unused")
     public class DateTimeFormatters {
         public static final DateTimeFormatter DTF10 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.SSS");
         public static final DateTimeFormatter DTF11 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -65,12 +63,10 @@ public class JbstConstants {
         public static final String HARDCODED = "yyluchkiv.com";
     }
 
-    @SuppressWarnings("unused")
     public class Dropdowns {
         public static final String ALL = "All";
     }
 
-    @SuppressWarnings("unused")
     public static class JColor {
         public static final AnsiFormat BLACK_BOLD_TEXT = new AnsiFormat(BLACK_TEXT(), BOLD());
     }
@@ -79,7 +75,6 @@ public class JbstConstants {
         public static final String PATH_DELIMITER = "/";
     }
 
-    @SuppressWarnings("unused")
     public class Logs {
         // =================================================================================================================
         // Prefixes
@@ -138,7 +133,6 @@ public class JbstConstants {
             public static final BigDecimal YEARLY = new BigDecimal("365");
         }
 
-        @SuppressWarnings("unused")
         public static class BigIntegers {
             public static final BigInteger HUNDRED = new BigInteger("100");
         }
@@ -151,7 +145,6 @@ public class JbstConstants {
         }
     }
 
-    @SuppressWarnings("unused")
     public static class Properties {
         public static final String ACCOUNT = "account";
         public static final String ANY_PROBLEM = "anyProblem";
@@ -170,14 +163,12 @@ public class JbstConstants {
         public static final String WEBSOCKET = "websocket";
     }
 
-    @SuppressWarnings("unused")
     public static class SpringAuthorities {
         public static final SimpleGrantedAuthority SUPERADMIN = new SimpleGrantedAuthority(AbstractAuthority.SUPERADMIN);
         public static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority("admin");
         public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority("user");
     }
 
-    @SuppressWarnings("unused")
     public static class Strings {
         public static final String ACCOUNT = "ACCOUNT";
         public static final String SUM = "SUM";
@@ -197,7 +188,6 @@ public class JbstConstants {
         );
     }
 
-    @SuppressWarnings("unused")
     public static class Symbols {
         public static final String LINE_SEPARATOR_INTERPUNCT = "··································································································";
 
