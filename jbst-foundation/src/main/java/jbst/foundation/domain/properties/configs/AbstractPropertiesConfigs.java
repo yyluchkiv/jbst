@@ -1,8 +1,11 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.utilities.PropertiesAsserter;
-import jbst.foundation.domain.properties.utilities.PropertiesPrinter;
+import jbst.foundation.domain.reflections.ReflectionProperty;
+
+import static java.util.Objects.isNull;
 
 public abstract class AbstractPropertiesConfigs {
     public abstract boolean isParentPropertiesNode();
@@ -15,6 +18,32 @@ public abstract class AbstractPropertiesConfigs {
     }
 
     public void printProperties(PropertyId propertyId) {
-        PropertiesPrinter.printMandatoryPropertiesConfigs(this, propertyId);
+        this.printMandatoryPropertiesConfigs(propertyId);
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private void printMandatoryPropertiesConfigs(PropertyId propertyId) {
+        var fields = PropertiesAsserter.getMandatoryBasedFields(this, propertyId);
+        fields.forEach(field -> {
+            try {
+                var rf = new ReflectionProperty(propertyId, field, field.get(this));
+                if (isNull(rf.getPropertyValue())) {
+                    rf.print();
+                } else {
+                    var nestedPropertyClass = rf.getPropertyValue().getClass();
+                    if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        ((AbstractPropertiesConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyId());
+                    } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        ((AbstractPropertyConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyId());
+                    } else {
+                        rf.print();
+                    }
+                }
+            } catch (IllegalAccessException ex) {
+                throw new IllegalArgumentException(ex);
+            }
+        });
     }
 }
