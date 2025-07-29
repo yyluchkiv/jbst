@@ -10,6 +10,7 @@ import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import lombok.*;
@@ -42,6 +43,7 @@ public class MongoDbUser {
 
     @Id
     private String id;
+    private UserCreationOption creationOption; // TODO [YYL] persist in constructors
     private Username username;
     private Password password;
     @Schema(type = "string")
@@ -176,6 +178,7 @@ public class MongoDbUser {
     public JwtUser asJwtUser() {
         return new JwtUser(
                 this.userId(),
+                this.creationOption,
                 this.username,
                 this.password,
                 this.zoneId,

@@ -33,6 +33,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     public void updateUser1(JwtUser user, RequestUserUpdate1 request) {
         user = new JwtUser(
                 user.id(),
+                user.creationOption(),
                 user.username(),
                 user.password(),
                 request.zoneId(),
@@ -50,6 +51,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     public void updateUser2(JwtUser user, RequestUserUpdate2 request) {
         user = new JwtUser(
                 user.id(),
+                user.creationOption(),
                 user.username(),
                 user.password(),
                 request.zoneId(),
@@ -68,6 +70,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
         var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
         user = new JwtUser(
                 user.id(),
+                user.creationOption(),
                 user.username(),
                 Password.of(hashPassword),
                 user.zoneId(),
@@ -86,6 +89,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
         var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
         user = new JwtUser(
                 user.id(),
+                user.creationOption(),
                 user.username(),
                 Password.of(hashPassword),
                 user.zoneId(),

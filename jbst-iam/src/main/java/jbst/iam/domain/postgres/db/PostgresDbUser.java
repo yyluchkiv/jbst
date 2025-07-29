@@ -14,6 +14,7 @@ import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
@@ -44,6 +45,10 @@ import static org.springframework.util.StringUtils.capitalize;
 @Table(name = PostgresDbUser.PG_TABLE_NAME)
 public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_users";
+
+    @Convert(converter = UserCreationOption.UserCreationOptionPostgresConverter.class)
+    @Column(nullable = false, updatable = false)
+    private UserCreationOption creationOption; // TODO [YYL] persist in constructors
 
     @Basic
     @Convert(converter = PostgresUsernameConverter.class)
@@ -205,6 +210,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public JwtUser asJwtUser() {
         return new JwtUser(
                 this.userId(),
+                this.creationOption,
                 this.username,
                 this.password,
                 this.zoneId,
