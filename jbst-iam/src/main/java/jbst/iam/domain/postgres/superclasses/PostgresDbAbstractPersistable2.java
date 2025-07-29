@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 

@@ -1,4 +1,4 @@
-package jbst.iam.converters.columns;
+package jbst.iam.converters.postgres;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

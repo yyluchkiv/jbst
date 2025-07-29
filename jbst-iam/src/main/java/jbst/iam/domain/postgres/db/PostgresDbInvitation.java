@@ -2,7 +2,7 @@ package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jbst.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
+import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
@@ -10,7 +10,7 @@ import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 
 import java.util.List;
 import java.util.Set;

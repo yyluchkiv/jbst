@@ -1,4 +1,4 @@
-package jbst.iam.converters.columns;
+package jbst.iam.converters.postgres;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;

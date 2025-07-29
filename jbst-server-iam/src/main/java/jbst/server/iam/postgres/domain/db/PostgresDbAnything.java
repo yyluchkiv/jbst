@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 
 import static jbst.server.iam.postgres.constants.TablesConstants.ANYTHING;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;

@@ -3,7 +3,7 @@ package jbst.iam.domain.postgres.db;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;

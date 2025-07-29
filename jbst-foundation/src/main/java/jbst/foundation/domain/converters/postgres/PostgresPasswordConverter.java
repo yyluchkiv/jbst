@@ -1,4 +1,4 @@
-package jbst.foundation.domain.converters.columns;
+package jbst.foundation.domain.converters.postgres;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,5 +1,6 @@
 package jbst.iam.converters.columns;
 
+import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
