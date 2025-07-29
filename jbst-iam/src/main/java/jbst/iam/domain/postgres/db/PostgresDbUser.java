@@ -89,8 +89,8 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     private Map<String, Object> attributes;
 
     public PostgresDbUser(
-            @NotNull Username username,
             @NotNull UserCreationOption creationOption,
+            @NotNull Username username,
             @NotNull Password password,
             @NotNull ZoneId zoneId,
             @NotNull Set<SimpleGrantedAuthority> authorities,
@@ -98,8 +98,8 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             boolean passwordChangeRequired,
             @NotNull UserEmailDetails emailDetails
     ) {
-        this.username = username;
         this.creationOption = creationOption;
+        this.username = username;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
@@ -114,8 +114,8 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull Password password
     ) {
         this(
-                requestUserRegistration0.username(),
                 UserCreationOption.STANDARD,
+                requestUserRegistration0.username(),
                 password,
                 requestUserRegistration0.zoneId(),
                 new HashSet<>(),
@@ -131,8 +131,8 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull Invitation invitation
     ) {
         this(
-                requestUserRegistration1.username(),
                 UserCreationOption.STANDARD,
+                requestUserRegistration1.username(),
                 password,
                 requestUserRegistration1.zoneId(),
                 invitation.authorities(),
@@ -158,8 +158,8 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     public static PostgresDbUser random(String username, Set<String> authorities) {
         var user = new PostgresDbUser(
-                Username.of(username),
                 UserCreationOption.random(),
+                Username.of(username),
                 Password.random(),
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),

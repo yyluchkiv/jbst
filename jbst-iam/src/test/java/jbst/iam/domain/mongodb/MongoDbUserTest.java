@@ -1,18 +1,19 @@
 package jbst.iam.domain.mongodb;
 
 import jbst.foundation.domain.base.Email;
-import jbst.iam.domain.db.UserEmailDetails;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.enums.UserCreationOption;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
 import static jbst.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MongoDbUserTest {
 
@@ -20,6 +21,7 @@ class MongoDbUserTest {
     void getNotNullAttributesTest() {
         // Arrange
         var user = new MongoDbUser(
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
@@ -42,6 +44,7 @@ class MongoDbUserTest {
     void getNotNullAttributesLegacyMigrationNullPointerExceptionTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var user = new MongoDbUser(
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),

@@ -42,8 +42,8 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                 map(defaultUser -> {
                     var username = defaultUser.getUsername();
                     var user = new MongoDbUser(
-                            username,
                             UserCreationOption.STANDARD,
+                            username,
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities()),

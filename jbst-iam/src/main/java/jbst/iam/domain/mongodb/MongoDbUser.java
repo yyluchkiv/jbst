@@ -56,8 +56,8 @@ public class MongoDbUser {
     private Map<String, Object> attributes;
 
     public MongoDbUser(
-            @NotNull Username username,
             @NotNull UserCreationOption creationOption,
+            @NotNull Username username,
             @NotNull Password password,
             @NotNull ZoneId zoneId,
             @NotNull Set<SimpleGrantedAuthority> authorities,
@@ -65,8 +65,8 @@ public class MongoDbUser {
             boolean passwordChangeRequired,
             @NotNull UserEmailDetails emailDetails
     ) {
-        this.username = username;
         this.creationOption = creationOption;
+        this.username = username;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
@@ -81,8 +81,8 @@ public class MongoDbUser {
             @NotNull Password password
     ) {
         this(
-                requestUserRegistration0.username(),
                 UserCreationOption.STANDARD,
+                requestUserRegistration0.username(),
                 password,
                 requestUserRegistration0.zoneId(),
                 new HashSet<>(),
@@ -98,8 +98,8 @@ public class MongoDbUser {
             @NotNull Invitation invitation
     ) {
         this(
-                requestUserRegistration1.username(),
                 UserCreationOption.STANDARD,
+                requestUserRegistration1.username(),
                 password,
                 requestUserRegistration1.zoneId(),
                 invitation.authorities(),
@@ -129,8 +129,8 @@ public class MongoDbUser {
 
     public static MongoDbUser random(String username, Set<String> authorities) {
         var user = new MongoDbUser(
-                Username.of(username),
                 UserCreationOption.random(),
+                Username.of(username),
                 Password.random(),
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),

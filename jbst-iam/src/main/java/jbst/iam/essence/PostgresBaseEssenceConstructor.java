@@ -42,8 +42,8 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                 map(defaultUser -> {
                     var username = defaultUser.getUsername();
                     var user = new PostgresDbUser(
-                            username,
                             UserCreationOption.STANDARD,
+                            username,
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities()),
