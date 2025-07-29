@@ -36,17 +36,17 @@ public enum UserCreationOption implements EnumValue<String> {
         return this.value;
     }
 
-    @Converter
-    public class UserCreationOptionPostgresConverter implements AttributeConverter<UserCreationOption, String> {
-
-        @Override
-        public String convertToDatabaseColumn(UserCreationOption obj) {
-            return nonNull(obj) ? obj.value : null;
-        }
-
-        @Override
-        public UserCreationOption convertToEntityAttribute(String column) {
-            return nonNull(column) ? UserCreationOption.find(column) : null;
-        }
-    }
+//    @Converter
+//    public class UserCreationOptionPostgresConverter implements AttributeConverter<UserCreationOption, String> {
+//
+//        @Override
+//        public String convertToDatabaseColumn(UserCreationOption obj) {
+//            return nonNull(obj) ? obj.value : null;
+//        }
+//
+//        @Override
+//        public UserCreationOption convertToEntityAttribute(String column) {
+//            return nonNull(column) ? UserCreationOption.find(column) : null;
+//        }
+//    }
 }

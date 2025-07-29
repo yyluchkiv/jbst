@@ -10,6 +10,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.columns.*;
 import jbst.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
+import jbst.iam.converters.columns.PostgresUserCreationOptionConverter;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
@@ -46,8 +47,8 @@ import static org.springframework.util.StringUtils.capitalize;
 public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_users";
 
-    @Convert(converter = UserCreationOption.UserCreationOptionPostgresConverter.class)
-    @Column(nullable = false, updatable = false)
+    @Convert(converter = PostgresUserCreationOptionConverter.class)
+    @Column(name = "creation_option", nullable = false, updatable = false)
     private UserCreationOption creationOption; // TODO [YYL] persist in constructors
 
     @Basic

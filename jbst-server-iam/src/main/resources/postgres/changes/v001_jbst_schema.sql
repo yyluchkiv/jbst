@@ -3,6 +3,7 @@
 -- =================================================================================================================
 CREATE TABLE "jbst_users" (
     "id" varchar(36) PRIMARY KEY,
+    "creation_option" varchar(255) NOT NULL,
     "username" varchar(255) NOT NULL,
     "password" varchar(255) NOT NULL,
     "zone_id" varchar(255) NOT NULL,

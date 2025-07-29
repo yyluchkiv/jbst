@@ -9,4 +9,5 @@
 — Deletion: ReflectionsComparators
 — DeletionScheduled: JbstConstants.BigDecimals + JbstConstants.BigIntegers
 — DeletionScheduled: BigDecimalUtility.areValuesEquals()
+— Database Migration: PostgresDbUser."creation_option" column
 
