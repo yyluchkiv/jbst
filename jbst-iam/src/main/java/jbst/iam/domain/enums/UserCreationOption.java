@@ -2,12 +2,9 @@ package jbst.iam.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
 import jbst.foundation.domain.enums.EnumValue;
 import lombok.AllArgsConstructor;
 
-import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
 
 @AllArgsConstructor
@@ -35,18 +32,4 @@ public enum UserCreationOption implements EnumValue<String> {
     public String toString() {
         return this.value;
     }
-
-//    @Converter
-//    public class UserCreationOptionPostgresConverter implements AttributeConverter<UserCreationOption, String> {
-//
-//        @Override
-//        public String convertToDatabaseColumn(UserCreationOption obj) {
-//            return nonNull(obj) ? obj.value : null;
-//        }
-//
-//        @Override
-//        public UserCreationOption convertToEntityAttribute(String column) {
-//            return nonNull(column) ? UserCreationOption.find(column) : null;
-//        }
-//    }
 }

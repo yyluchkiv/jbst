@@ -6,7 +6,6 @@ import jbst.foundation.domain.base.Username;
 
 import static java.util.Objects.nonNull;
 
-// TODO [YYL] migrate columns to dedicated classes
 @Converter
 public class PostgresUsernameConverter implements AttributeConverter<Username, String> {
 
