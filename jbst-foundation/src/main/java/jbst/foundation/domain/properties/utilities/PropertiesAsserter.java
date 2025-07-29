@@ -148,7 +148,7 @@ public class PropertiesAsserter {
         });
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     private static void verifyProperty(ReflectionProperty rf) {
         var property = rf.getPropertyValue();
         if (rf.getField().isAnnotationPresent(MandatoryMapProperty.class)) {

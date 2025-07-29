@@ -1,7 +1,9 @@
 package jbst.foundation.domain.reflections;
 
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.constants.JbstConstants;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -12,7 +14,7 @@ import java.util.Comparator;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.uncapitalize;
 
-// Lombok
+@Slf4j
 @Data
 public class ReflectionProperty {
     private static final String READABLE_PROPERTY = "%s: `%s`";
@@ -58,5 +60,9 @@ public class ReflectionProperty {
         } else {
             this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyId.value(), this.propertyValue);
         }
+    }
+
+    public void print() {
+        LOGGER.debug(JbstConstants.Logs.PREFIX + " — {}", this.readableValue);
     }
 }
