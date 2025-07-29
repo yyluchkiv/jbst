@@ -1,4 +1,4 @@
-package jbst.iam.converters.columns;
+package jbst.iam.converters.postgres;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;

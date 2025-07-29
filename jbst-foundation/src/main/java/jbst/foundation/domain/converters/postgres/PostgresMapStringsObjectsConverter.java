@@ -1,4 +1,4 @@
-package jbst.foundation.domain.converters.columns;
+package jbst.foundation.domain.converters.postgres;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

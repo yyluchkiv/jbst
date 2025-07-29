@@ -8,12 +8,14 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.converters.columns.*;
-import jbst.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
+import jbst.foundation.domain.converters.postgres.*;
+import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
+import jbst.iam.converters.postgres.PostgresUserCreationOptionConverter;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
@@ -44,6 +46,10 @@ import static org.springframework.util.StringUtils.capitalize;
 @Table(name = PostgresDbUser.PG_TABLE_NAME)
 public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_users";
+
+    @Convert(converter = PostgresUserCreationOptionConverter.class)
+    @Column(name = "creation_option", nullable = false, updatable = false)
+    private UserCreationOption creationOption;
 
     @Basic
     @Convert(converter = PostgresUsernameConverter.class)
@@ -84,6 +90,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     public PostgresDbUser(
             @NotNull Username username,
+            @NotNull UserCreationOption creationOption,
             @NotNull Password password,
             @NotNull ZoneId zoneId,
             @NotNull Set<SimpleGrantedAuthority> authorities,
@@ -92,6 +99,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull UserEmailDetails emailDetails
     ) {
         this.username = username;
+        this.creationOption = creationOption;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
@@ -107,6 +115,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     ) {
         this(
                 requestUserRegistration0.username(),
+                UserCreationOption.STANDARD,
                 password,
                 requestUserRegistration0.zoneId(),
                 new HashSet<>(),
@@ -123,6 +132,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     ) {
         this(
                 requestUserRegistration1.username(),
+                UserCreationOption.STANDARD,
                 password,
                 requestUserRegistration1.zoneId(),
                 invitation.authorities(),
@@ -134,6 +144,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     public PostgresDbUser(JwtUser user) {
         this.id = nonNull(user.id()) ? user.id().value() : null;
+        this.creationOption = user.creationOption();
         this.username = user.username();
         this.password = user.password();
         this.zoneId = user.zoneId();
@@ -148,6 +159,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public static PostgresDbUser random(String username, Set<String> authorities) {
         var user = new PostgresDbUser(
                 Username.of(username),
+                UserCreationOption.random(),
                 Password.random(),
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
@@ -205,6 +217,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public JwtUser asJwtUser() {
         return new JwtUser(
                 this.userId(),
+                this.creationOption,
                 this.username,
                 this.password,
                 this.zoneId,

@@ -2,7 +2,7 @@ package jbst.iam.domain.postgres.superclasses;
 
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.domain.Persistable;
 import org.springframework.lang.Nullable;

@@ -1,13 +1,14 @@
 package jbst.iam.essence;
 
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
 import java.util.Set;
@@ -42,6 +43,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                     var username = defaultUser.getUsername();
                     var user = new MongoDbUser(
                             username,
+                            UserCreationOption.STANDARD,
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities()),

@@ -10,6 +10,7 @@ import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import lombok.*;
@@ -42,6 +43,7 @@ public class MongoDbUser {
 
     @Id
     private String id;
+    private UserCreationOption creationOption;
     private Username username;
     private Password password;
     @Schema(type = "string")
@@ -55,6 +57,7 @@ public class MongoDbUser {
 
     public MongoDbUser(
             @NotNull Username username,
+            @NotNull UserCreationOption creationOption,
             @NotNull Password password,
             @NotNull ZoneId zoneId,
             @NotNull Set<SimpleGrantedAuthority> authorities,
@@ -63,6 +66,7 @@ public class MongoDbUser {
             @NotNull UserEmailDetails emailDetails
     ) {
         this.username = username;
+        this.creationOption = creationOption;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
@@ -78,6 +82,7 @@ public class MongoDbUser {
     ) {
         this(
                 requestUserRegistration0.username(),
+                UserCreationOption.STANDARD,
                 password,
                 requestUserRegistration0.zoneId(),
                 new HashSet<>(),
@@ -94,6 +99,7 @@ public class MongoDbUser {
     ) {
         this(
                 requestUserRegistration1.username(),
+                UserCreationOption.STANDARD,
                 password,
                 requestUserRegistration1.zoneId(),
                 invitation.authorities(),
@@ -105,6 +111,7 @@ public class MongoDbUser {
 
     public MongoDbUser(JwtUser user) {
         this.id = user.id().value();
+        this.creationOption = user.creationOption();
         this.username = user.username();
         this.password = user.password();
         this.zoneId = user.zoneId();
@@ -123,6 +130,7 @@ public class MongoDbUser {
     public static MongoDbUser random(String username, Set<String> authorities) {
         var user = new MongoDbUser(
                 Username.of(username),
+                UserCreationOption.random(),
                 Password.random(),
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
@@ -176,6 +184,7 @@ public class MongoDbUser {
     public JwtUser asJwtUser() {
         return new JwtUser(
                 this.userId(),
+                this.creationOption,
                 this.username,
                 this.password,
                 this.zoneId,

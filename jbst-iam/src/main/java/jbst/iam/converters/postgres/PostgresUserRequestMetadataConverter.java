@@ -1,4 +1,4 @@
-package jbst.iam.converters.columns;
+package jbst.iam.converters.postgres;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.persistence.Converter;

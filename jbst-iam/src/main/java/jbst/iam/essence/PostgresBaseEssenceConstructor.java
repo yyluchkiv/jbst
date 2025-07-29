@@ -1,13 +1,14 @@
 package jbst.iam.essence;
 
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
 import java.util.Set;
@@ -42,6 +43,7 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                     var username = defaultUser.getUsername();
                     var user = new PostgresDbUser(
                             username,
+                            UserCreationOption.STANDARD,
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities()),

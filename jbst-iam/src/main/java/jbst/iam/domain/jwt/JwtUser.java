@@ -5,6 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +21,7 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 
 public record JwtUser(
         UserId id,
+        UserCreationOption creationOption,
         Username username,
         Password password,
         ZoneId zoneId,
@@ -75,6 +77,7 @@ public record JwtUser(
     public static JwtUser hardcoded(Set<SimpleGrantedAuthority> authorities) {
         return new JwtUser(
                 UserId.hardcoded(),
+                UserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
                 UKRAINE,
@@ -93,6 +96,7 @@ public record JwtUser(
     ) {
         return new JwtUser(
                 UserId.hardcoded(),
+                UserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
                 UKRAINE,
@@ -114,6 +118,7 @@ public record JwtUser(
     public static JwtUser random() {
         return new JwtUser(
                 UserId.random(),
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
@@ -136,6 +141,7 @@ public record JwtUser(
     public static JwtUser randomSuperadmin() {
         return new JwtUser(
                 UserId.random(),
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
@@ -151,6 +157,7 @@ public record JwtUser(
     public static JwtUser randomSuperadminNotPersisted() {
         return new JwtUser(
                 null,
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
