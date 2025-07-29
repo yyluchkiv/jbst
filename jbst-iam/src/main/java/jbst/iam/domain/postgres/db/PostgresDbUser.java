@@ -49,7 +49,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     @Convert(converter = PostgresUserCreationOptionConverter.class)
     @Column(name = "creation_option", nullable = false, updatable = false)
-    private UserCreationOption creationOption; // TODO [YYL] persist in constructors
+    private UserCreationOption creationOption;
 
     @Basic
     @Convert(converter = PostgresUsernameConverter.class)
@@ -90,6 +90,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     public PostgresDbUser(
             @NotNull Username username,
+            @NotNull UserCreationOption creationOption,
             @NotNull Password password,
             @NotNull ZoneId zoneId,
             @NotNull Set<SimpleGrantedAuthority> authorities,
@@ -98,6 +99,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull UserEmailDetails emailDetails
     ) {
         this.username = username;
+        this.creationOption = creationOption;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
@@ -113,6 +115,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     ) {
         this(
                 requestUserRegistration0.username(),
+                UserCreationOption.STANDARD,
                 password,
                 requestUserRegistration0.zoneId(),
                 new HashSet<>(),
@@ -129,6 +132,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     ) {
         this(
                 requestUserRegistration1.username(),
+                UserCreationOption.STANDARD,
                 password,
                 requestUserRegistration1.zoneId(),
                 invitation.authorities(),
@@ -140,6 +144,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     public PostgresDbUser(JwtUser user) {
         this.id = nonNull(user.id()) ? user.id().value() : null;
+        this.creationOption = user.creationOption();
         this.username = user.username();
         this.password = user.password();
         this.zoneId = user.zoneId();
@@ -154,6 +159,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public static PostgresDbUser random(String username, Set<String> authorities) {
         var user = new PostgresDbUser(
                 Username.of(username),
+                UserCreationOption.random(),
                 Password.random(),
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),

@@ -118,7 +118,7 @@ public record JwtUser(
     public static JwtUser random() {
         return new JwtUser(
                 UserId.random(),
-                UserCreationOption.hardcoded(),
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
@@ -141,7 +141,7 @@ public record JwtUser(
     public static JwtUser randomSuperadmin() {
         return new JwtUser(
                 UserId.random(),
-                UserCreationOption.hardcoded(),
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
@@ -157,7 +157,7 @@ public record JwtUser(
     public static JwtUser randomSuperadminNotPersisted() {
         return new JwtUser(
                 null,
-                UserCreationOption.hardcoded(),
+                UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),

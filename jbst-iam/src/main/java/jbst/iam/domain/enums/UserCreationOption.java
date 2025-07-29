@@ -6,6 +6,7 @@ import jbst.foundation.domain.enums.EnumValue;
 import lombok.AllArgsConstructor;
 
 import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
+import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 
 @AllArgsConstructor
 public enum UserCreationOption implements EnumValue<String> {
@@ -15,6 +16,10 @@ public enum UserCreationOption implements EnumValue<String> {
 
     public static UserCreationOption hardcoded() {
         return STANDARD;
+    }
+
+    public static UserCreationOption random() {
+        return randomEnum(UserCreationOption.class);
     }
 
     @JsonCreator
