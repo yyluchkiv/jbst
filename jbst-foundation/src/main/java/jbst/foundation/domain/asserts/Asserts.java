@@ -252,7 +252,7 @@ public class Asserts {
     }
 
     public static void assertFirstValueLesserOrEqualOrThrow(BigDecimal value1, BigDecimal value2, String message) {
-        if (isFirstValueLesserOrEqual(value1, value2)) {
+        if (is(value1, "<=", value2)) {
             return;
         }
         if (hasLength(message)) {
@@ -283,7 +283,7 @@ public class Asserts {
     }
 
     public static void assertBetweenIncludedOrThrow(BigDecimal value, BigDecimal left, BigDecimal right, String message) {
-        if (isFirstValueLesserOrEqual(left, value) && isFirstValueLesserOrEqual(value, right)) {
+        if (is(left, "<=", value) && is(value, "<=", right)) {
             return;
         }
         if (hasLength(message)) {
