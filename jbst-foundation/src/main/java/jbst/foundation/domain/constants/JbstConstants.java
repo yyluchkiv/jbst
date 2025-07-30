@@ -1,7 +1,6 @@
 package jbst.foundation.domain.constants;
 
 import com.diogonunes.jcolor.AnsiFormat;
-import jbst.foundation.domain.annotations.DeletionScheduled;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.enums.Status;
@@ -22,19 +21,6 @@ import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_T
 @SuppressWarnings("unused")
 @UtilityClass
 public class JbstConstants {
-
-    @DeletionScheduled(version = "1.8")
-    public class BigDecimals {
-        public static final BigDecimal MINUS_ONE = BigDecimal.valueOf(-1);
-        public static final BigDecimal TWO = BigDecimal.valueOf(2L);
-        public static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
-    }
-
-    @DeletionScheduled(version = "1.8")
-    public class BigIntegers {
-        public static final BigInteger MINUS_ONE = BigInteger.valueOf(-1);
-        public static final BigInteger ONE_HUNDRED = BigInteger.valueOf(100);
-    }
 
     public class DateTimeFormatters {
         public static final DateTimeFormatter DTF10 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.SSS");

@@ -4,3 +4,6 @@
 — Modification: BigDecimalUtility.isOneHundred -> BigDecimalUtility.isHundred
 — Deletion: BigDecimalUtility isGreater**(), isLesser**() methods
 — Deletion: BigDecimalUtility areValuesEquals()
+— Deletion: JbstConstants.BigDecimals
+— Deletion: JbstConstants.BigIntegers
+— Deletion: TuplePercentage.oneHundred()

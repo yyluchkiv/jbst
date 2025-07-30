@@ -1,7 +1,5 @@
 package jbst.foundation.domain.tuples;
 
-import jbst.foundation.domain.annotations.DeletionScheduled;
-
 import java.math.BigDecimal;
 
 import static java.math.BigDecimal.ZERO;
@@ -34,11 +32,6 @@ public record TuplePercentage(
     }
 
     public static TuplePercentage hundred() {
-        return progressTuplePercentage(HUNDRED, HUNDRED);
-    }
-
-    @DeletionScheduled(version = "1.8")
-    public static TuplePercentage oneHundred() {
         return progressTuplePercentage(HUNDRED, HUNDRED);
     }
 }

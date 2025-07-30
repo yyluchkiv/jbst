@@ -1,6 +1,5 @@
 package jbst.foundation.utilities.numbers;
 
-import jbst.foundation.domain.annotations.DeletionScheduled;
 import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
 import jbst.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
@@ -18,17 +17,6 @@ import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals
 @UtilityClass
 public class BigDecimalUtility {
     private static final List<String> OPERATORS = List.of("==", ">", ">=", "<", "<=");
-
-    @DeletionScheduled(version = "1.8")
-    public static boolean areValuesEquals(BigDecimal number1, BigDecimal number2) {
-        if (isNull(number1) && isNull(number2)) {
-            return true;
-        }
-        if (isNull(number1) || isNull(number2)) {
-            return false;
-        }
-        return number1.compareTo(number2) == 0;
-    }
 
     public static boolean is(BigDecimal number1, @NotNull String operator, BigDecimal number2) {
         assertTrueOrThrow(OPERATORS.contains(operator), "Available operators: " + OPERATORS);
