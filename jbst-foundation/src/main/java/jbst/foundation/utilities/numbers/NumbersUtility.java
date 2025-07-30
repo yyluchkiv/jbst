@@ -27,7 +27,7 @@ public class NumbersUtility {
         // -1K < N < 1K
         // N =< -1T
         // N >= 1T
-        if (isFirstValueLesser(positiveNumber, THOUSAND) || is(positiveNumber, ">=", TRILLION)) {
+        if (is(positiveNumber, "<", THOUSAND) || is(positiveNumber, ">=", TRILLION)) {
             return scale(number, scale).toString();
         }
         // N >= 1B
