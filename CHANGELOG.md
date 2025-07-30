@@ -1,2 +1,2 @@
 ### Changelog [v1.18]
-— TBD
+— Addition: PrintMode(FULL, SHORT)
