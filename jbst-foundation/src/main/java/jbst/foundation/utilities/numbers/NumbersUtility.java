@@ -27,15 +27,15 @@ public class NumbersUtility {
         // -1K < N < 1K
         // N =< -1T
         // N >= 1T
-        if (isFirstValueLesser(positiveNumber, THOUSAND) || isFirstValueGreaterOrEqual(positiveNumber, TRILLION)) {
+        if (isFirstValueLesser(positiveNumber, THOUSAND) || is(positiveNumber, ">=", TRILLION)) {
             return scale(number, scale).toString();
         }
         // N >= 1B
-        if (isFirstValueGreaterOrEqual(positiveNumber, BILLION)) {
+        if (is(positiveNumber, ">=", BILLION)) {
             return scale(divide(number, BILLION), 2).stripTrailingZeros() + "B";
         }
         // N >= 1M
-        if (isFirstValueGreaterOrEqual(positiveNumber, MILLION)) {
+        if (is(positiveNumber, ">=", MILLION)) {
             return scale(divide(number, MILLION), 2).stripTrailingZeros() + "M";
         }
         // N >= 1K
