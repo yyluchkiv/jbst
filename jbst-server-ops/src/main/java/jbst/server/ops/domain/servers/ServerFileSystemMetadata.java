@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
+import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 import static jbst.server.ops.domain.servers.ServerFileSystemMetadata.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -56,7 +56,7 @@ public record ServerFileSystemMetadata(
         }
 
         public boolean isUsePercentageAbove(BigDecimal value) {
-            return isFirstValueGreater(this.usePercentageValue, value);
+            return is(this.usePercentageValue, ">", value);
         }
     }
 

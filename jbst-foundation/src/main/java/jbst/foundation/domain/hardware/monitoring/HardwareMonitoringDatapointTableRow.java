@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
+import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 import static jbst.foundation.utilities.random.RandomUtility.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -44,7 +44,7 @@ public class HardwareMonitoringDatapointTableRow {
         this.usage = usage;
         this.value = value;
         if (!isEmpty(thresholds.getThresholds()) && thresholds.getThresholds().containsKey(hardwareName)) {
-            this.thresholdReached = isFirstValueGreater(usage, thresholds.getThresholds().get(hardwareName).value());
+            this.thresholdReached = is(usage, ">", thresholds.getThresholds().get(hardwareName).value());
         } else {
             this.thresholdReached = false;
         }

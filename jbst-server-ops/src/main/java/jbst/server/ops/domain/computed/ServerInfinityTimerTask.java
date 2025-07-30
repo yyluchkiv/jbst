@@ -46,7 +46,7 @@ import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
+import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -239,7 +239,7 @@ public class ServerInfinityTimerTask {
     public boolean fileSystemMetadataThresholdReached() {
         return this.sshRequired &&
                 nonNull(this.fileSystemMetadata) &&
-                this.fileSystemMetadata.rows().stream().anyMatch(row -> isFirstValueGreater(row.getUsePercentageValue(), this.serversMonitoringConfigs.getFileSystemThreshold()));
+                this.fileSystemMetadata.rows().stream().anyMatch(row -> is(row.getUsePercentageValue(), ">", this.serversMonitoringConfigs.getFileSystemThreshold()));
     }
 
     public boolean fileSystemMetadataProblems() {

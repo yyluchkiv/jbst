@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
+import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -37,7 +37,7 @@ public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
     public void assertProperties(PropertyId propertyId) {
         super.assertProperties(propertyId);
         assertTrueOrThrow(
-                isFirstValueGreater(this.fileSystemThreshold, this.fileSystemFilter),
+                is(this.fileSystemThreshold, ">", this.fileSystemFilter),
                 "Attribute `fileSystemThreshold` is expected to be greater than `fileSystemFilter`"
         );
     }
