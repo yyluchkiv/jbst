@@ -38,14 +38,6 @@ class BigDecimalUtilityTest {
         );
     }
 
-    private static Stream<Arguments> isFirstValueGreaterExceptionTest() {
-        return Stream.of(
-                Arguments.of(null, null, "Attribute `number1` is invalid"),
-                Arguments.of(null, ZERO, "Attribute `number1` is invalid"),
-                Arguments.of(ZERO, null, "Attribute `number2` is invalid")
-        );
-    }
-
     private static Stream<Arguments> isExceptionTest() {
         return Stream.of(
                 Arguments.of(TWO, "=", TWO, "Available operators: [>, >=, <, <=]"),
@@ -67,62 +59,6 @@ class BigDecimalUtilityTest {
                 Arguments.of(HUNDRED, ">=", TWO, true),
                 Arguments.of(HUNDRED, "<", TWO, false),
                 Arguments.of(HUNDRED, "<=", TWO, false)
-        );
-    }
-
-    private static Stream<Arguments> isFirstValueGreaterTest() {
-        return Stream.of(
-                Arguments.of(ZERO, new BigDecimal("-1"), true),
-                Arguments.of(ZERO, new BigDecimal("1"), false),
-                Arguments.of(ZERO, ZERO, false)
-        );
-    }
-
-    private static Stream<Arguments> isFirstValueGreaterOrEqualExceptionTest() {
-        return Stream.of(
-                Arguments.of(null, null, "Attribute `number1` is invalid"),
-                Arguments.of(null, ZERO, "Attribute `number1` is invalid"),
-                Arguments.of(ZERO, null, "Attribute `number2` is invalid")
-        );
-    }
-
-    private static Stream<Arguments> isFirstValueGreaterOrEqualTest() {
-        return Stream.of(
-                Arguments.of(ZERO, new BigDecimal("-1"), true),
-                Arguments.of(ZERO, new BigDecimal("1"), false),
-                Arguments.of(ZERO, ZERO, true)
-        );
-    }
-
-    private static Stream<Arguments> isFirstValueLesserExceptionTest() {
-        return Stream.of(
-                Arguments.of(null, null, "Attribute `number1` is invalid"),
-                Arguments.of(null, ZERO, "Attribute `number1` is invalid"),
-                Arguments.of(ZERO, null, "Attribute `number2` is invalid")
-        );
-    }
-
-    private static Stream<Arguments> isFirstValueLesserTest() {
-        return Stream.of(
-                Arguments.of(ZERO, new BigDecimal("-1"), false),
-                Arguments.of(ZERO, new BigDecimal("1"), true),
-                Arguments.of(ZERO, ZERO, false)
-        );
-    }
-
-    private static Stream<Arguments> isFirstValueLesserOrEqualExceptionTest() {
-        return Stream.of(
-                Arguments.of(null, null, "Attribute `number1` is invalid"),
-                Arguments.of(null, ZERO, "Attribute `number1` is invalid"),
-                Arguments.of(ZERO, null, "Attribute `number2` is invalid")
-        );
-    }
-
-    private static Stream<Arguments> isFirstValueLesserOrEqualTest() {
-        return Stream.of(
-                Arguments.of(ZERO, new BigDecimal("-1"), false),
-                Arguments.of(ZERO, new BigDecimal("1"), true),
-                Arguments.of(ZERO, ZERO, true)
         );
     }
 
@@ -263,17 +199,6 @@ class BigDecimalUtilityTest {
     }
 
     @ParameterizedTest
-    @MethodSource("isFirstValueGreaterExceptionTest")
-    void isFirstValueGreaterExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
-        // Act
-        var throwable = catchThrowable(() -> isFirstValueGreater(value1, value2));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
     @MethodSource("isExceptionTest")
     void isExceptionTest(BigDecimal number1, String operator, BigDecimal number2, String expected) {
         // Act
@@ -289,79 +214,6 @@ class BigDecimalUtilityTest {
     void isTest(BigDecimal number1, String operator, BigDecimal number2, boolean expected) {
         // Act
         var actual = is(number1, operator, number2);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isFirstValueGreaterTest")
-    void isFirstValueGreaterTest(BigDecimal value1, BigDecimal value2, boolean expected) {
-        // Act
-        var actual = isFirstValueGreater(value1, value2);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isFirstValueGreaterOrEqualExceptionTest")
-    void isFirstValueGreaterOrEqualExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
-        // Act
-        var throwable = catchThrowable(() -> isFirstValueGreaterOrEqual(value1, value2));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isFirstValueGreaterOrEqualTest")
-    void isFirstValueGreaterOrEqualTest(BigDecimal value1, BigDecimal value2, boolean expected) {
-        // Act
-        var actual = isFirstValueGreaterOrEqual(value1, value2);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isFirstValueLesserExceptionTest")
-    void isFirstValueLesserExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
-        // Act
-        var throwable = catchThrowable(() -> isFirstValueLesser(value1, value2));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isFirstValueLesserTest")
-    void isFirstValueLesserTest(BigDecimal value1, BigDecimal value2, boolean expected) {
-        // Act
-        var actual = isFirstValueLesser(value1, value2);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isFirstValueLesserOrEqualExceptionTest")
-    void isFirstValueLesserOrEqualExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
-        // Act
-        var throwable = catchThrowable(() -> isFirstValueLesserOrEqual(value1, value2));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isFirstValueLesserOrEqualTest")
-    void isFirstValueLesserOrEqualTest(BigDecimal value1, BigDecimal value2, boolean expected) {
-        // Act
-        var actual = isFirstValueLesserOrEqual(value1, value2);
 
         // Assert
         assertThat(actual).isEqualTo(expected);
