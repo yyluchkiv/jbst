@@ -24,29 +24,22 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 class BigDecimalUtilityTest {
 
-    private static Stream<Arguments> areValuesEqualsTest() {
-        return Stream.of(
-                Arguments.of(null, null, true),
-                Arguments.of(null, ZERO, false),
-                Arguments.of(ZERO, null, false),
-                Arguments.of(ZERO, ZERO, true),
-                Arguments.of(ZERO, new BigDecimal("0"), true),
-                Arguments.of(ZERO, new BigDecimal("0.00"), true),
-                Arguments.of(ZERO, new BigDecimal(0L), true),
-                Arguments.of(ZERO, new BigDecimal("1"), false),
-                Arguments.of(ZERO, new BigDecimal("1.0"), false)
-        );
-    }
-
     private static Stream<Arguments> isExceptionTest() {
         return Stream.of(
-                Arguments.of(TWO, "=", TWO, "Available operators: [>, >=, <, <=]"),
-                Arguments.of(TWO, "!=", TWO, "Available operators: [>, >=, <, <=]")
+                Arguments.of(TWO, "=", TWO, "Available operators: [==, >, >=, <, <=]"),
+                Arguments.of(TWO, "!=", TWO, "Available operators: [==, >, >=, <, <=]")
         );
     }
 
     private static Stream<Arguments> isTest() {
         return Stream.of(
+                Arguments.of(null, "==", null, false),
+                Arguments.of(null, "==", TWO, false),
+                Arguments.of(TWO, "==", null, false),
+                Arguments.of(TWO, "==", TWO, true),
+                Arguments.of(TWO, "==", HUNDRED, false),
+                Arguments.of(HUNDRED, "==", TWO, false),
+                Arguments.of(HUNDRED, "==", HUNDRED, true),
                 Arguments.of(TWO, ">", TWO, false),
                 Arguments.of(TWO, ">=", TWO, true),
                 Arguments.of(TWO, "<", TWO, false),
@@ -62,13 +55,6 @@ class BigDecimalUtilityTest {
         );
     }
 
-    private static Stream<Arguments> inRangeExceptionTest() {
-        return Stream.of(
-                Arguments.of(null, new TupleRange<>(ZERO, ZERO), "Attribute `number` is invalid"),
-                Arguments.of(ZERO, null, "Attribute `range` is invalid")
-        );
-    }
-
     private static Stream<Arguments> inRangeTest() {
         return Stream.of(
                 Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), new BigDecimal("2")), true),
@@ -76,13 +62,6 @@ class BigDecimalUtilityTest {
                 Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), ZERO), false),
                 Arguments.of(ZERO, new TupleRange<>(new BigDecimal("1"), new BigDecimal("2")), false),
                 Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), new BigDecimal("-1")), false)
-        );
-    }
-
-    private static Stream<Arguments> inRangeClosedExceptionTest() {
-        return Stream.of(
-                Arguments.of(null, new TupleRange<>(ZERO, ZERO), "Attribute `number` is invalid"),
-                Arguments.of(ZERO, null, "Attribute `range` is invalid")
         );
     }
 
@@ -114,7 +93,7 @@ class BigDecimalUtilityTest {
         );
     }
 
-    private static Stream<Arguments> isOneHundredTest() {
+    private static Stream<Arguments> isHundredTest() {
         return Stream.of(
                 Arguments.of(null, false),
                 Arguments.of(ZERO, false),
@@ -189,16 +168,6 @@ class BigDecimalUtilityTest {
     }
 
     @ParameterizedTest
-    @MethodSource("areValuesEqualsTest")
-    void areValuesEqualsTest(BigDecimal value1, BigDecimal value2, boolean expected) {
-        // Act
-        var actual = areValuesEquals(value1, value2);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
     @MethodSource("isExceptionTest")
     void isExceptionTest(BigDecimal number1, String operator, BigDecimal number2, String expected) {
         // Act
@@ -220,17 +189,6 @@ class BigDecimalUtilityTest {
     }
 
     @ParameterizedTest
-    @MethodSource("inRangeExceptionTest")
-    void inRangeExceptionTest(BigDecimal value, TupleRange<BigDecimal> range, String expected) {
-        // Act
-        var throwable = catchThrowable(() -> inRange(value, range));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
     @MethodSource("inRangeTest")
     void inRangeTest(BigDecimal value, TupleRange<BigDecimal> range, boolean expected) {
         // Act
@@ -238,17 +196,6 @@ class BigDecimalUtilityTest {
 
         // Assert
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("inRangeClosedExceptionTest")
-    void inRangeClosedExceptionTest(BigDecimal value, TupleRange<BigDecimal> range, String expected) {
-        // Act
-        var throwable = catchThrowable(() -> inRangeClosed(value, range));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -282,10 +229,10 @@ class BigDecimalUtilityTest {
     }
 
     @ParameterizedTest
-    @MethodSource("isOneHundredTest")
-    void isOneHundredTest(BigDecimal value, boolean expected) {
+    @MethodSource("isHundredTest")
+    void isHundredTest(BigDecimal value, boolean expected) {
         // Act
-        var actual = isOneHundred(value);
+        var actual = isHundred(value);
 
         // Assert
         assertThat(actual).isEqualTo(expected);
