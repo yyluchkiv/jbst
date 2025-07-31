@@ -1,2 +1,5 @@
 ### Changelog [v1.19]
-— TBD
+— Addition: SlackClient.submitMessage()
+— Addition: SleepUtility.sleep(timeout, timeUnit)
+— DeletionScheduled: SleepUtility.sleep(timeUnit, timeout)
+

@@ -1,6 +1,8 @@
 package jbst.foundation.feigns.slack;
 
 import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.utilities.concurrent.SleepUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
+
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -19,11 +24,15 @@ class SlackClientTest {
 
     @Configuration
     @Import({
-            JbstConfigurationFeignClientSlack.class
+            JbstConfigurationFeignClientSlack.class,
+            TestJbstConfigurationPropertiesHardcoded.class
     })
     static class TestConfiguration {
 
     }
+
+    private static final String SLACK_TOKEN = "<?>";
+    private static final String SLACK_CHAT = "<?>";
 
     private final SlackClient slackClient;
 
@@ -32,9 +41,9 @@ class SlackClientTest {
     void sendMessage() {
         // Arrange
         var message = new SlackClient.SlackMessageRequest(
-                "<?>",
-                "#<?>",
-                "<@username> <b>V2</b>"
+                SLACK_TOKEN,
+                SLACK_CHAT,
+                "<@username> <b>text</b>"
         );
 
         // Act
@@ -42,5 +51,25 @@ class SlackClientTest {
 
         // Assert
         // no asserts
+    }
+
+
+    @Disabled
+    @Test
+    void submitMessages() {
+        // Arrange
+        var messages = IntStream.range(0, 5)
+                .mapToObj(i -> new SlackClient.SlackMessageRequest(
+                        SLACK_TOKEN,
+                        SLACK_CHAT,
+                        "<@username> <b>" + i + "</b>"
+                ))
+                .toList();
+
+        // Act
+        messages.forEach(this.slackClient::submitMessage);
+
+        // Assert
+        SleepUtility.sleep(5, TimeUnit.SECONDS);
     }
 }

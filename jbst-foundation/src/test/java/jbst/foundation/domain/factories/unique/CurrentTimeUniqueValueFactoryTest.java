@@ -53,7 +53,7 @@ class CurrentTimeUniqueValueFactoryTest {
 
         // Act
         var values1 = IntStream.range(0, iterations).mapToObj(i -> randomFactory.createValue()).collect(Collectors.toSet());
-        SleepUtility.sleep(TimeUnit.SECONDS, 2);
+        SleepUtility.sleep(2, TimeUnit.SECONDS);
         var values2 = IntStream.range(0, iterations).mapToObj(i -> randomFactory.createValue()).collect(Collectors.toSet());
 
         // Assert
