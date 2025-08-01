@@ -1,2 +1,2 @@
 ### Changelog [v1.20]
-— TBD
+— Addition: BigDecimalUtility.equalsApproximately(n1, n2, proximityPercent)

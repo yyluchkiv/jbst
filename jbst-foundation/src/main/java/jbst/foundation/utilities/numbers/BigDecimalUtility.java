@@ -13,6 +13,7 @@ import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
+import static jbst.foundation.utilities.numbers.RoundingUtility.divide;
 
 @UtilityClass
 public class BigDecimalUtility {
@@ -49,6 +50,18 @@ public class BigDecimalUtility {
             }
             default -> throw new JbstUnreachableCodeException();
         };
+    }
+
+    public static boolean equalsApproximately(BigDecimal n1, BigDecimal n2, BigDecimal proximityPercent) {
+        if (is(proximityPercent, "<", ZERO)) {
+            throw new IllegalArgumentException("Proximity must be non-negative");
+        }
+        var diffAbs = n1.subtract(n2).abs();
+        if (is(diffAbs, "==", ZERO)) {
+            return true;
+        }
+        // |n1-n2| <= MAX(|n1|,|n2|)*proximity%
+        return is(diffAbs, "<=", n1.abs().max(n2.abs()).multiply(divide(proximityPercent, HUNDRED, 10)));
     }
 
     public static boolean inRange(@NotNull BigDecimal number, @NotNull TupleRange<BigDecimal> range) {

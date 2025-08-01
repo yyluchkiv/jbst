@@ -55,6 +55,48 @@ class BigDecimalUtilityTest {
         );
     }
 
+    private static Stream<Arguments> equalsApproximatelyTest() {
+        return Stream.of(
+                // 100 == 100
+                Arguments.of(HUNDRED, HUNDRED, new BigDecimal("0.1"), true),
+                Arguments.of(HUNDRED, HUNDRED, new BigDecimal("0.5"), true),
+                Arguments.of(HUNDRED, HUNDRED, new BigDecimal("0.001"), true),
+                Arguments.of(HUNDRED, HUNDRED, new BigDecimal("150"), true),
+
+                // <0.5% true
+                Arguments.of(HUNDRED, new BigDecimal("100.4"), new BigDecimal("0.5"), true),
+                Arguments.of(HUNDRED, new BigDecimal("99.5"), new BigDecimal("0.5"), true),
+
+                // >0.5% false
+                Arguments.of(HUNDRED, new BigDecimal("100.6"), new BigDecimal("0.5"), false),
+                Arguments.of(HUNDRED, new BigDecimal("99.4"), new BigDecimal("0.5"), false),
+
+                // <1% true
+                Arguments.of(HUNDRED, new BigDecimal("101.0"), new BigDecimal("1.0"), true),
+                Arguments.of(HUNDRED, new BigDecimal("99.0"), new BigDecimal("1.0"), true),
+
+                // >1% false
+                Arguments.of(HUNDRED, new BigDecimal("101.1"), new BigDecimal("1.0"), false),
+                Arguments.of(HUNDRED, new BigDecimal("98.9"), new BigDecimal("1.0"), false),
+
+                // negative values, same sign
+                Arguments.of(new BigDecimal("-200"), new BigDecimal("-198"), new BigDecimal("1.0"), true),
+                Arguments.of(new BigDecimal("-200"), new BigDecimal("-196"), new BigDecimal("1.0"), false),
+
+                // mixed signs
+                Arguments.of(HUNDRED, HUNDRED.negate(), new BigDecimal("200.0"), true),
+                Arguments.of(HUNDRED, HUNDRED.negate(), new BigDecimal("100.0"), false),
+                Arguments.of(HUNDRED, HUNDRED.negate(), new BigDecimal("99.9"), false),
+
+                // 0 == 0
+                Arguments.of(ZERO, ZERO, new BigDecimal("0.1"), true),
+
+                // 0 != non-zero
+                Arguments.of(ZERO, new BigDecimal("0.1"), new BigDecimal("0.1"), false),
+                Arguments.of(new BigDecimal("0.01"), ZERO, new BigDecimal("0.1"), false)
+        );
+    }
+
     private static Stream<Arguments> inRangeTest() {
         return Stream.of(
                 Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), new BigDecimal("2")), true),
@@ -99,7 +141,7 @@ class BigDecimalUtilityTest {
                 Arguments.of(ZERO, false),
                 Arguments.of(randomBigDecimalLessThanZero(), false),
                 Arguments.of(HUNDRED, true),
-                Arguments.of(new BigDecimal("100"), true),
+                Arguments.of(HUNDRED, true),
                 Arguments.of(new BigDecimal("100.00"), true),
                 Arguments.of(new BigDecimal("100.00000"), true)
         );
@@ -186,6 +228,18 @@ class BigDecimalUtilityTest {
 
         // Assert
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("equalsApproximatelyTest")
+    void equalsApproximatelyTest(BigDecimal n1, BigDecimal n2, BigDecimal proximity, boolean expected) {
+        // Act
+        var actual = equalsApproximately(n1, n2, proximity);
+
+        // Assert
+        assertThat(actual)
+                .withFailMessage("{n1, n2, proximity} = %s, %s, %s", n1, n2, proximity)
+                .isEqualTo(expected);
     }
 
     @ParameterizedTest
