@@ -60,9 +60,7 @@ public class TimestampUtility {
     }
 
     public static TupleRange<Long> getPastRange(TimeAmount timeAmount) {
-        var currentTimestamp = getCurrentTimestamp();
-        var past = currentTimestamp - timeAmount.toMillis();
-        return new TupleRange<>(past, currentTimestamp);
+        return getPastRange(getCurrentTimestamp(), timeAmount);
     }
 
     static TupleRange<Long> getPastRange(long timestamp, TimeAmount timeAmount) {
@@ -71,9 +69,7 @@ public class TimestampUtility {
     }
 
     public static TupleRange<Long> getFutureRange(TimeAmount timeAmount) {
-        var currentTimestamp = getCurrentTimestamp();
-        var future = currentTimestamp + timeAmount.toMillis();
-        return new TupleRange<>(currentTimestamp, future);
+        return getFutureRange(getCurrentTimestamp(), timeAmount);
     }
 
     public static TupleRange<Long> getFutureRange(long timestamp, TimeAmount timeAmount) {
