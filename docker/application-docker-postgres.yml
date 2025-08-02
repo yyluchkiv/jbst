@@ -23,8 +23,9 @@ jbst:
       enabled: false
     user-agent-configs:
       enabled: false
-  incident-configs:
+  incidents-manager-configs:
     enabled: true
+    type: "SERVER"
     remote-server:
       base-url: http://localhost:8973
       credentials:

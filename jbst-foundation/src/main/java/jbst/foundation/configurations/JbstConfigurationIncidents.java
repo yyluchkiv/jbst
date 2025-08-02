@@ -58,7 +58,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     public void init() {
         this.jbstProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
         this.jbstProperties.getEventsConfigs().assertProperties(new PropertyId("eventsConfigs"));
-        this.jbstProperties.getIncidentConfigs().assertProperties(new PropertyId("incidentConfigs"));
+        this.jbstProperties.getIncidentsManagerConfigs().assertProperties(new PropertyId("incidentsManagerConfigs"));
     }
 
     // ================================================================================================================
@@ -133,9 +133,9 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     // ================================================================================================================
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.incident-configs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "true")
     IncidentClientDefinition incidentClientDefinition() {
-        var incidentServer = this.jbstProperties.getIncidentConfigs().getRemoteServer();
+        var incidentServer = this.jbstProperties.getIncidentsManagerConfigs().getRemoteServer();
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())

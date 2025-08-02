@@ -129,8 +129,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void incidentConfigsTest() {
         // Act
-        IncidentConfigs.hardcoded().assertProperties(new PropertyId("incidentConfigs"));
-        IncidentConfigs.hardcoded().printProperties(new PropertyId("incidentConfigs"));
+        IncidentsManagerConfigs.hardcoded().assertProperties(new PropertyId("incidentsManagerConfigs"));
+        IncidentsManagerConfigs.hardcoded().printProperties(new PropertyId("incidentsManagerConfigs"));
 
         // Assert
         // no asserts
