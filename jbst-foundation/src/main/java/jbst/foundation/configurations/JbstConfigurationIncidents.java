@@ -150,7 +150,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.incident-configs.enabled", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "false", matchIfMissing = true)
     IncidentClientDefinition incidentClientDefinitionSlf4j() {
         return new IncidentClientDefinitionSlf4j();
     }
