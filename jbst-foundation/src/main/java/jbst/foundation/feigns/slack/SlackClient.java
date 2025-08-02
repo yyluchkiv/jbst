@@ -5,21 +5,22 @@ import feign.Param;
 import feign.RequestLine;
 import feign.RetryableException;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.Objects.nonNull;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SlackClient {
 
     // Classes: Definitions
@@ -52,6 +53,7 @@ public class SlackClient {
         }
     }
 
+    private final AtomicBoolean configured = new AtomicBoolean(false);
     private final BlockingQueue<SlackMessageRequest> queue = new LinkedBlockingQueue<>();
 
     // Definitions
@@ -59,29 +61,35 @@ public class SlackClient {
     // Incidents
     private final IncidentPublisher incidentPublisher;
 
-    public SlackClient(SlackDefinition definition, IncidentPublisher incidentPublisher) {
-        // beans
-        this.definition = definition;
-        this.incidentPublisher = incidentPublisher;
-        // queue
-        var ses = Executors.newSingleThreadScheduledExecutor(r -> {
-            var thread = new Thread(r, "jbst-slack-client");
-            thread.setDaemon(true);
-            return thread;
-        });
-        ses.scheduleWithFixedDelay(() -> {
-            try {
-                var request = queue.poll();
-                if (nonNull(request)) {
-                    this.sendMessage(request);
+    @SuppressWarnings("BusyWait")
+    public final void configure(TimeAmount timeAmount) {
+        if (this.configured.get()) {
+            return;
+        }
+        this.configured.compareAndSet(false, true);
+        var worker = new Thread(() -> {
+            while (true) {
+                try {
+                    var request = this.queue.take();
+                    sendMessage(request);
+                    Thread.sleep(timeAmount.toMillis());
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                } catch (RuntimeException ex) {
+                    this.incidentPublisher.publishThrowable(ex);
                 }
-            } catch (RuntimeException ex) {
-                this.incidentPublisher.publishThrowable(ex);
             }
-        }, 0, 250, TimeUnit.MILLISECONDS);
+        }, "jbst-slack-client");
+        worker.setDaemon(true);
+        worker.start();
     }
 
     public final void sendMessage(SlackMessageRequest request) {
+        if (!this.configured.get()) {
+            this.logConfigurationFailure();
+            return;
+        }
         try {
             this.definition.sendMessage(
                     request.token(),
@@ -94,15 +102,30 @@ public class SlackClient {
     }
 
     public final void submitMessage(SlackMessageRequest request) {
+        if (!this.configured.get()) {
+            this.logConfigurationFailure();
+            return;
+        }
         var success = this.queue.offer(request);
         if (!success) {
-            this.incidentPublisher.publishThrowable(new IllegalStateException("slack-client queue is full"));
+            this.incidentPublisher.publishThrowable(new IllegalStateException("jbst-slack-client queue is full"));
         }
     }
 
     public final void submitMessages(List<SlackMessageRequest> requests) {
+        if (!this.configured.get()) {
+            this.logConfigurationFailure();
+            return;
+        }
         for (var request : requests) {
             this.submitMessage(request);
         }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private void logConfigurationFailure() {
+        LOGGER.warn("Please configure jbst-slack-client");
     }
 }

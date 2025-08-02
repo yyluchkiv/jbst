@@ -27,10 +27,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
                 "jbst.events-configs.thread-name-prefix=tps1-events",
                 "jbst.events-configs.threads-core-pool-percentage=75",
                 "jbst.events-configs.threads-max-pool-percentage=100",
-                "jbst.incident-configs.enabled=true",
-                "jbst.incident-configs.remote-server.baseURL=localhost",
-                "jbst.incident-configs.remote-server.credentials.username=jbst",
-                "jbst.incident-configs.remote-server.credentials.password=jbst"
+                "jbst.incidents-manager-configs.enabled=true",
+                "jbst.incidents-manager-configs.type=SERVER",
+                "jbst.incidents-manager-configs.remote-server.baseURL=localhost",
+                "jbst.incidents-manager-configs.remote-server.credentials.username=jbst",
+                "jbst.incidents-manager-configs.remote-server.credentials.password=jbst"
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
                 "jbst.events-configs.thread-name-prefix=tps1-events",
                 "jbst.events-configs.threads-core-pool-percentage=75",
                 "jbst.events-configs.threads-max-pool-percentage=100",
-                "jbst.incident-configs.enabled=false"
+                "jbst.incidents-manager-configs.enabled=false"
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
