@@ -1,2 +1,2 @@
 ### Changelog [v1.21]
-— TBD
+— Modification: SlackClient required external configuration
