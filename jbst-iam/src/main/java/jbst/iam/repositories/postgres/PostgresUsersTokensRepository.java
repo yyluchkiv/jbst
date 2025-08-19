@@ -1,7 +1,6 @@
 package jbst.iam.repositories.postgres;
 
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.utilities.time.TimestampUtility;
+import jbst.foundation.domain.base.Email;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.enums.UserTokenType;
@@ -12,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbUserToken, String>, UsersTokensRepository {
 
@@ -23,15 +23,18 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
-    default UserToken findByUsernameValidOrNull(Username username, UserTokenType type) {
-        var currentTimestamp = TimestampUtility.getCurrentTimestamp();
-        var entity = this.findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(username, type, currentTimestamp);
+    default UserToken findByEmailValidOrNull(RequestUserToken request) {
+        var entity = this.findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
+                request.email(),
+                request.type(),
+                getCurrentTimestamp()
+        );
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
     @Transactional
     default void cleanupExpired() {
-        this.deleteAllByExpiryTimestampBefore(TimestampUtility.getCurrentTimestamp());
+        this.deleteAllByExpiryTimestampBefore(getCurrentTimestamp());
     }
 
     @Transactional
@@ -57,8 +60,8 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
     // Spring Data
     // ================================================================================================================
     PostgresDbUserToken findByValue(String value);
-    PostgresDbUserToken findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
-            Username username,
+    PostgresDbUserToken findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
+            Email email,
             UserTokenType type,
             long timestamp
     );

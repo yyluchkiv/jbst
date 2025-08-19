@@ -111,7 +111,7 @@ class AbstractBaseUsersTokensServiceTest {
         // Arrange
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
         when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
-        var username = nonNull(userToken) ? userToken.username() : null;
+        var email = nonNull(userToken) ? userToken.email() : null;
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.confirmEmail(token));
@@ -123,7 +123,7 @@ class AbstractBaseUsersTokensServiceTest {
                     .isInstanceOf(UserEmailConfirmException.class)
                     .hasMessage(exception.getMessage());
         } else {
-            verify(this.usersRepository).confirmEmail(username);
+            verify(this.usersRepository).confirmEmail(email);
             verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         }
     }
@@ -148,7 +148,7 @@ class AbstractBaseUsersTokensServiceTest {
     void getOrCreateTest(UserToken foundUserToken) {
         // Arrange
         var request = RequestUserToken.hardcoded();
-        when(this.usersTokensRepository.findByUsernameValidOrNull(request.username(), request.type())).thenReturn(foundUserToken);
+        when(this.usersTokensRepository.findByEmailValidOrNull(request)).thenReturn(foundUserToken);
         var savedUserToken = UserToken.random();
         when(this.usersTokensRepository.saveAs(request)).thenReturn(savedUserToken);
 
@@ -156,7 +156,7 @@ class AbstractBaseUsersTokensServiceTest {
         var actual = this.componentUnderTest.getOrCreate(request);
 
         // Arrange
-        verify(this.usersTokensRepository).findByUsernameValidOrNull(request.username(), request.type());
+        verify(this.usersTokensRepository).findByEmailValidOrNull(request);
         if (nonNull(foundUserToken)) {
             verify(this.usersTokensRepository, never()).saveAs(request);
             assertThat(actual).isEqualTo(foundUserToken);

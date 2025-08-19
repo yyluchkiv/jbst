@@ -1,7 +1,6 @@
 package jbst.iam.repositories.mongodb;
 
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.utilities.time.TimestampUtility;
+import jbst.foundation.domain.base.Email;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.enums.UserTokenType;
@@ -11,6 +10,7 @@ import jbst.iam.repositories.UsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserToken, String>, UsersTokensRepository {
 
@@ -22,14 +22,17 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
-    default UserToken findByUsernameValidOrNull(Username username, UserTokenType type) {
-        var currentTimestamp = TimestampUtility.getCurrentTimestamp();
-        var entity = this.findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(username, type, currentTimestamp);
+    default UserToken findByEmailValidOrNull(RequestUserToken request) {
+        var entity = this.findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
+                request.email(),
+                request.type(),
+                getCurrentTimestamp()
+        );
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
     default void cleanupExpired() {
-        this.deleteAllByExpiryTimestampBefore(TimestampUtility.getCurrentTimestamp());
+        this.deleteAllByExpiryTimestampBefore(getCurrentTimestamp());
     }
 
     default void cleanupUsed() {
@@ -54,8 +57,8 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
     // Spring Data
     // ================================================================================================================
     MongoDbUserToken findByValue(String value);
-    MongoDbUserToken findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
-            Username username,
+    MongoDbUserToken findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
+            Email email,
             UserTokenType type,
             long timestamp
     );

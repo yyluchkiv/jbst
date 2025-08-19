@@ -35,7 +35,6 @@ public class MongoDbUserToken {
     @Id
     private String id;
     private Email email;
-    private Username username;
     private String value;
     private UserTokenType type;
     private long expiryTimestamp;
@@ -43,14 +42,12 @@ public class MongoDbUserToken {
 
     public MongoDbUserToken(
             @NotNull Email email,
-            @NotNull Username username,
             @NotNull String value,
             @NotNull UserTokenType type,
             long expiryTimestamp,
             boolean used
     ) {
         this.email = email;
-        this.username = username;
         this.value = value;
         this.type = type;
         this.expiryTimestamp = expiryTimestamp;
@@ -60,7 +57,6 @@ public class MongoDbUserToken {
     public MongoDbUserToken(RequestUserToken request) {
         this(
                 request.email(),
-                request.username(),
                 randomStringLetterOrNumbersOnly(255),
                 request.type(),
                 getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
@@ -71,7 +67,6 @@ public class MongoDbUserToken {
     public MongoDbUserToken(UserToken token) {
         this(
                 token.email(),
-                token.username(),
                 token.value(),
                 token.type(),
                 token.expiryTimestamp(),
@@ -88,7 +83,6 @@ public class MongoDbUserToken {
     ) {
         return new MongoDbUserToken(
                 new Email(username.value() + "@gmail.com"),
-                username,
                 randomStringLetterOrNumbersOnly(36),
                 type,
                 expiryTimestamp,
@@ -155,7 +149,6 @@ public class MongoDbUserToken {
         return new UserToken(
                 new TokenId(this.id),
                 this.email,
-                this.username,
                 this.value,
                 this.type,
                 this.expiryTimestamp,

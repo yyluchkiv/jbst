@@ -60,16 +60,16 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default void confirmEmail(Username username) {
-        var user = this.findByUsername(username);
+    default void confirmEmail(Email email) {
+        var user = this.findByEmail(email);
         if (nonNull(user)) {
             user.setEmailDetails(UserEmailDetails.confirmed());
             this.save(user);
         }
     }
 
-    default void resetPassword(Username username, Password password) {
-        var user = this.findByUsername(username);
+    default void resetPassword(Email email, Password password) {
+        var user = this.findByEmail(email);
         if (nonNull(user)) {
             user.setPassword(password);
             this.save(user);

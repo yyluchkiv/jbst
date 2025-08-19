@@ -2,11 +2,9 @@ package jbst.iam.validators.abstracts;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.UserEmailDetails;
@@ -37,6 +35,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -88,8 +87,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.EMAIL_CONFIRMATION,
                                 validTimestamp,
                                 true
@@ -100,8 +98,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.EMAIL_CONFIRMATION,
                                 expiredTimestamp,
                                 false
@@ -112,8 +109,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.PASSWORD_RESET,
                                 validTimestamp,
                                 false
@@ -124,8 +120,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.EMAIL_CONFIRMATION,
                                 validTimestamp,
                                 false
@@ -180,7 +175,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         new RequestUserPasswordReset(
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 Password.of("655c0667533246a9afdb197466001934"),
                                 Password.of("e4f937b04d9f44519ed58346b9aa67ff")
 
@@ -193,8 +188,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.PASSWORD_RESET,
                                 validTimestamp,
                                 true
@@ -206,8 +200,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.PASSWORD_RESET,
                                 expiredTimestamp,
                                 false
@@ -219,8 +212,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.EMAIL_CONFIRMATION,
                                 validTimestamp,
                                 false
@@ -232,8 +224,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new UserToken(
                                 TokenId.random(),
                                 Email.random(),
-                                Username.random(),
-                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                randomStringLetterOrNumbersOnly(255),
                                 UserTokenType.PASSWORD_RESET,
                                 validTimestamp,
                                 false
@@ -300,7 +291,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
             UserTokenValidationException expected
     ) {
         // Arrange
-        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        var token = randomStringLetterOrNumbersOnly(255);
         when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
 
         // Act

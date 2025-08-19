@@ -81,7 +81,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
-                        Map.entry("username", userToken.username().value()),
+                        Map.entry("email", userToken.email().value()),
                         Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, userToken.value()))
                 )
         );
@@ -99,7 +99,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
-                        Map.entry("username", userToken.username().value()),
+                        Map.entry("email", userToken.email().value()),
                         Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(userToken.value()))
                 )
         );

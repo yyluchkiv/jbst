@@ -187,11 +187,11 @@ class MongoUsersRepositoryIT extends TestsJbstJbstConfigurationMongoRepositories
         var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
         assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.required());
-        this.usersRepository.confirmEmail(user3.getUsername());
+        this.usersRepository.confirmEmail(user3.getEmail());
         user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
         assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.confirmed());
-        assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Username.random()));
+        assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Email.random()));
 
         // Act-Assert-5
         var savedPassword = Password.random();
@@ -201,10 +201,10 @@ class MongoUsersRepositoryIT extends TestsJbstJbstConfigurationMongoRepositories
         assertThat(user4).isNotNull();
         assertThat(user4.getPassword()).isEqualTo(savedPassword);
         var newPassword = Password.random();
-        this.usersRepository.resetPassword(user4.getUsername(), newPassword);
+        this.usersRepository.resetPassword(user4.getEmail(), newPassword);
         user4 = this.usersRepository.findById(userId4.value()).orElse(null);
         assertThat(user4).isNotNull();
         assertThat(user4.getPassword()).isEqualTo(newPassword);
-        assertThatNoException().isThrownBy(() -> this.usersRepository.resetPassword(Username.random(), Password.random()));
+        assertThatNoException().isThrownBy(() -> this.usersRepository.resetPassword(Email.random(), Password.random()));
     }
 }

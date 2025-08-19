@@ -176,7 +176,6 @@ public record JwtUser(
     public RequestUserToken getRequestUserTokenAsEmailConfirmation() {
         return new RequestUserToken(
                 this.email,
-                this.username,
                 UserTokenType.EMAIL_CONFIRMATION
         );
     }
@@ -185,7 +184,6 @@ public record JwtUser(
     public RequestUserToken getRequestUserTokenAsPasswordReset() {
         return new RequestUserToken(
                 this.email,
-                this.username,
                 UserTokenType.PASSWORD_RESET
         );
     }

@@ -25,7 +25,7 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
         if (isNull(userToken)) {
             throw UserEmailConfirmException.tokenNotFound();
         }
-        this.usersRepository.confirmEmail(userToken.username());
+        this.usersRepository.confirmEmail(userToken.email());
         userToken = userToken.withUsed(true);
         this.usersTokensRepository.saveAs(userToken);
     }
@@ -37,7 +37,7 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
 
     @Override
     public UserToken getOrCreate(RequestUserToken request) {
-        var token = this.usersTokensRepository.findByUsernameValidOrNull(request.username(), request.type());
+        var token = this.usersTokensRepository.findByEmailValidOrNull(request);
         if (nonNull(token)) {
             return token;
         } else {

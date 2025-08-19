@@ -19,8 +19,8 @@ public interface UsersRepository {
     boolean existsByUsername(Username username);
     boolean existsByEmail(Email email);
     long count();
-    void confirmEmail(Username username);
-    void resetPassword(Username username, Password password);
+    void confirmEmail(Email email);
+    void resetPassword(Email email, Password password);
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation);

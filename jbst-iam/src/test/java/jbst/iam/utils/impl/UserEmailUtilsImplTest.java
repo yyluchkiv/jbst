@@ -120,7 +120,7 @@ class UserEmailUtilsImplTest {
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
                 .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
-                .containsEntry("username", userToken.username().value())
+                .containsEntry("email", userToken.email().value())
                 .containsEntry("emailConfirmationLink", "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
     }
@@ -140,7 +140,7 @@ class UserEmailUtilsImplTest {
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
                 .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
-                .containsEntry("username", userToken.username().value())
+                .containsEntry("email", userToken.email().value())
                 .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
     }

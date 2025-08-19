@@ -25,9 +25,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -193,7 +193,7 @@ class AbstractBaseUsersServiceTest {
 
         // Assert
         verify(this.usersTokensRepository).findByValueAsAny(request.token());
-        verify(this.usersRepository).resetPassword(eq(userToken.username()), passwordAC.capture());
+        verify(this.usersRepository).resetPassword(eq(userToken.email()), passwordAC.capture());
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         assertThat(
                 this.bCryptPasswordEncoder.matches(

@@ -58,7 +58,6 @@ public record RequestUserRegistration0(
     public RequestUserToken asRequestUserToken() {
         return new RequestUserToken(
                 this.email,
-                this.username,
                 UserTokenType.EMAIL_CONFIRMATION
         );
     }

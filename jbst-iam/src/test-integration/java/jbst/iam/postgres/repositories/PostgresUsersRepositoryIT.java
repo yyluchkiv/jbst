@@ -8,9 +8,9 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
-import jbst.iam.domain.dto.requests.RequestUsers;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.dto.requests.RequestUsers;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
@@ -214,11 +214,11 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
         assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.required());
-        this.usersRepository.confirmEmail(user3.getUsername());
+        this.usersRepository.confirmEmail(user3.getEmail());
         user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
         assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.confirmed());
-        assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Username.random()));
+        assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Email.random()));
 
         // Act-Assert-5
         var savedPassword = Password.random();
@@ -228,10 +228,10 @@ class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresReposi
         assertThat(user4).isNotNull();
         assertThat(user4.getPassword()).isEqualTo(savedPassword);
         var newPassword = Password.random();
-        this.usersRepository.resetPassword(user4.getUsername(), newPassword);
+        this.usersRepository.resetPassword(user4.getEmail(), newPassword);
         user4 = this.usersRepository.findById(userId4.value()).orElse(null);
         assertThat(user4).isNotNull();
         assertThat(user4.getPassword()).isEqualTo(newPassword);
-        assertThatNoException().isThrownBy(() -> this.usersRepository.resetPassword(Username.random(), Password.random()));
+        assertThatNoException().isThrownBy(() -> this.usersRepository.resetPassword(Email.random(), Password.random()));
     }
 }
