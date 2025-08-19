@@ -33,6 +33,10 @@ public enum UserCreationOption implements EnumValue<String> {
         return this.value;
     }
 
+    public boolean isStandard() {
+        return UserCreationOption.STANDARD.equals(this);
+    }
+
     @Override
     public String toString() {
         return this.value;

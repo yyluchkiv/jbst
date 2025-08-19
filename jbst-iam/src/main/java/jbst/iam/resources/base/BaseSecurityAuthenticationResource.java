@@ -32,7 +32,7 @@ public class BaseSecurityAuthenticationResource {
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public CurrentClientUser login(@RequestBody @Valid RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
-        return this.authenticationService.usernamePassword(request, httpRequest, httpResponse);
+        return this.authenticationService.asStandard(request, httpRequest, httpResponse);
     }
 
     @PostMapping("/logout")

@@ -57,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final SecurityJwtEventsPublisher securityJwtPublisher;
 
     @Override
-    public CurrentClientUser usernamePassword(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser asStandard(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
             var username = request.username();
             var password = request.password();
@@ -67,6 +67,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             var authentication = this.authenticationManager.authenticate(authenticationToken);
 
             var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
+            if (!user.creationOption().isStandard()) {
+                throw new BadCredentialsException("Unexpected user creation option");
+            }
 
             var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
             var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
