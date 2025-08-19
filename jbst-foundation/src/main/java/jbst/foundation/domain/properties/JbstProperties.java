@@ -52,6 +52,14 @@ public class JbstProperties implements PriorityOrdered {
     // ================================================================================================================
     // MERGED METHODS
     // ================================================================================================================
+    public String getMagicLink(@NotNull String token) {
+        return "%s%s?token=%s".formatted(
+                this.serverConfigs.getWebclientURL(),
+                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientMagicLinkPath(),
+                token
+        );
+    }
+
     public String getEmailConfirmationRedirectLink() {
         return "%s%s".formatted(
                 this.serverConfigs.getWebclientURL(),
@@ -68,14 +76,6 @@ public class JbstProperties implements PriorityOrdered {
     }
 
     public String getPasswordResetLink(@NotNull String token) {
-        return "%s%s?token=%s".formatted(
-                this.serverConfigs.getWebclientURL(),
-                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),
-                token
-        );
-    }
-
-    public String getMagicLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
                 this.serverConfigs.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),

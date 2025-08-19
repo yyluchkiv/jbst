@@ -103,6 +103,10 @@ jbst:
         enabled: true
       session-refreshed:
         enabled: true
+    users-tokens-configs:
+      webclient-magic-link-path: "/magic-link"
+      webclient-email-confirmation-redirect-path: "/email-confirmation"
+      webclient-password-reset-path: "/password-reset"
 
 # jbst server
 jbst-server:

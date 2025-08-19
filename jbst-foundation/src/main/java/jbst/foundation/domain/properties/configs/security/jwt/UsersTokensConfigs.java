@@ -15,12 +15,15 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @EqualsAndHashCode(callSuper = true)
 public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
+    private String webclientMagicLinkPath;
+    @NonMandatoryProperty
     private String webclientEmailConfirmationRedirectPath;
     @NonMandatoryProperty
     private String webclientPasswordResetPath;
 
     public static UsersTokensConfigs hardcoded() {
         return new UsersTokensConfigs(
+                "/magic-link",
                 "/email-confirmation",
                 "/password-reset"
         );
@@ -28,6 +31,7 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
 
     public static UsersTokensConfigs random() {
         return new UsersTokensConfigs(
+                randomString(),
                 randomString(),
                 randomString()
         );

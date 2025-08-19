@@ -5,4 +5,5 @@
 — Migration: execute v008_modify_user_token_value_field.sql
 — Migration: execute v009_delete_user_token_username_field.sql
 — Addition: MagicLink authentication
+— Addition: "jbst.security-jwt-configs.users-tokens-configs.webclient-magic-link-path"
 

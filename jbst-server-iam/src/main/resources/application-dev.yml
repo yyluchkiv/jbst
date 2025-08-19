@@ -89,6 +89,3 @@ jbst:
         enabled: true
     users-emails-configs:
       subject-prefix: "[jbst.com]"
-    users-tokens-configs:
-      webclient-email-confirmation-redirect-path: /email-confirmation
-      webclient-password-reset-path: /password-reset

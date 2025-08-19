@@ -17,22 +17,31 @@ class JbstPropertiesTest {
 
     @Test
     void jbstPropertiesTest() {
-        // Arrange
-        var jbstProperties = new TestJbstConfigurationPropertiesHardcoded().jbstProperties();
-
         // Act
-        var getters = getGetters(jbstProperties);
+        var getters = getGetters(this.jbstProperties);
 
         // Assert
         assertThat(getters).hasSize(13);
         getters.forEach(getter -> {
             try {
-                var propertiesConfigs = getter.invoke(jbstProperties);
+                var propertiesConfigs = getter.invoke(this.jbstProperties);
                 assertThat(propertiesConfigs).isNotNull();
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);
             }
         });
+    }
+
+    @Test
+    void getMagicLink() {
+        // Act
+        var token = "9F2FCF5EFC2A026B319D5D267C06D8D06B0C18C1";
+        var link = this.jbstProperties.getMagicLink(
+                token
+        );
+
+        // Assert
+        assertThat(link).isEqualTo("http://127.0.0.1:3000/magic-link?token=" + token);
     }
 
     @Test
@@ -60,5 +69,17 @@ class JbstPropertiesTest {
 
         // Assert
         assertThat(link).isEqualTo("http://127.0.0.1:3002/tests-context-path/jbst/security/tokens/email/confirm?token=" + token);
+    }
+
+    @Test
+    void getPasswordResetLink() {
+        // Act
+        var token = "9F2FCF5EFC2A026B319D5D267C06D8D06B0C18C1";
+        var link = this.jbstProperties.getPasswordResetLink(
+                token
+        );
+
+        // Assert
+        assertThat(link).isEqualTo("http://127.0.0.1:3000/password-reset?token=" + token);
     }
 }
