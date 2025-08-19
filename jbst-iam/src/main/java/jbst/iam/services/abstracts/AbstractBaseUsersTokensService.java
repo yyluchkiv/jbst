@@ -10,7 +10,6 @@ import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.BaseUsersTokensService;
-import jbst.iam.services.UsersEmailsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,23 +24,20 @@ import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensService {
 
-    // TODO [YYL, MagicLink] move to resource
-    // Services
-    private final UsersEmailsService usersEmailsService;
     // Repositories
     private final UsersTokensRepository usersTokensRepository;
     private final UsersRepository usersRepository;
 
     // TODO [YYL, MagicLink]
     @Override
-    public void magicLink(RequestUserRegistrationMagicLink request) {
+    public UserToken magicLink(RequestUserRegistrationMagicLink request) {
         var email = request.email();
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
 
         if (user == null) {
             LOGGER.warn("Magic link requested for non-existent email: {}", email.value());
             // For security, don't reveal whether email exists
-            return;
+            // return;
         }
 
         // Create magic link token (15 minutes expiry for security)
@@ -58,10 +54,8 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
         // Save token
         this.usersTokensRepository.saveAs(magicLinkToken);
 
-        // Send email with magic link
-        this.usersEmailsService.executeMagicLinkEmail(magicLinkToken);
-
         LOGGER.debug("Magic link sent to user with email: {}", email.value());
+        return magicLinkToken;
     }
 
     @Override

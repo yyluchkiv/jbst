@@ -60,7 +60,8 @@ public class BaseSecurityUsersTokensResource {
     @PostMapping("/magic-link")
     @ResponseStatus(HttpStatus.OK)
     public void magicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) {
-        this.baseUsersTokensService.magicLink(request);
+        var userToken = this.baseUsersTokensService.magicLink(request);
+        this.usersEmailsService.executeMagicLinkEmail(userToken);
     }
 
     @PostMapping("/email/confirm")
