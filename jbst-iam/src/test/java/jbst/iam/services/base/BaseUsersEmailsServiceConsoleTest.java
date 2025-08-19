@@ -11,6 +11,7 @@ import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.services.emails.utilities.EmailUtility;
 import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
+import jbst.foundation.utilities.concurrent.SleepUtility;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
@@ -36,6 +37,7 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -61,9 +63,9 @@ class BaseUsersEmailsServiceConsoleTest {
                             true,
                             "smtp.gmail.com",
                             587,
-                            "jbst <?>",
-                            Username.of("?"),
-                            Password.of("?")
+                            "jbst.com",
+                            Username.of("-"),
+                            Password.of("-")
                     )
             );
             return jbstProperties;
@@ -150,6 +152,18 @@ class BaseUsersEmailsServiceConsoleTest {
 
     @Disabled
     @Test
+    void executeMagicLinkEmail() {
+        // Act
+        this.componentUnderTest.executeMagicLinkEmail(
+                UserToken.hardcodedMagicLink()
+        );
+
+        // Assert
+        SleepUtility.sleep(5, TimeUnit.SECONDS);
+    }
+
+    @Disabled
+    @Test
     void executeEmailConfirmation() {
         // Act
         this.componentUnderTest.executeEmailConfirmation(
@@ -157,7 +171,7 @@ class BaseUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        // no asserts
+        SleepUtility.sleep(5, TimeUnit.SECONDS);
     }
 
     @Disabled
@@ -169,7 +183,7 @@ class BaseUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        // no asserts
+        SleepUtility.sleep(5, TimeUnit.SECONDS);
     }
 
     @Disabled
@@ -183,7 +197,7 @@ class BaseUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        // no asserts
+        SleepUtility.sleep(5, TimeUnit.SECONDS);
     }
 
     @Disabled
@@ -197,6 +211,6 @@ class BaseUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        // no asserts
+        SleepUtility.sleep(5, TimeUnit.SECONDS);
     }
 }

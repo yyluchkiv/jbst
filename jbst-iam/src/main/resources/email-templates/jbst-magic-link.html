@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--suppress HtmlDeprecatedTag, XmlDeprecatedElement, HtmlDeprecatedAttribute, ThymeleafVariablesResolveInspection -->
+<html lang="en">
+<head>
+    <title>Magic Link</title>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+</head>
+<body>
+<p>
+    Hi, <span th:text="${email}"></span>
+</p>
+<p>
+    Please click to log in: <a th:href="${magicLink}" th:text="${magicLink}"></a>
+</p>
+<p>
+    Best Regards
+</p>
+</body>
+</html>
