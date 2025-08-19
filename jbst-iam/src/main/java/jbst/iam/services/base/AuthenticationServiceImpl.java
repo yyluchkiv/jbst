@@ -12,7 +12,7 @@ import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
-import jbst.iam.domain.dto.requests.RequestMagicLinkEmail;
+import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
@@ -116,10 +116,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void sendMagicLink(RequestMagicLinkEmail request) throws LoginException {
+    public void sendMagicLink(RequestUserRegistrationMagicLink request) throws LoginException {
         var email = request.email();
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
-        
+
         if (user == null) {
             LOGGER.warn("Magic link requested for non-existent email: {}", email.value());
             // For security, don't reveal whether email exists
@@ -149,10 +149,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asMagicLink(RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
         var tokenValue = request.token();
-        
+
         // Find valid magic link token
         var userToken = this.usersTokensRepository.findByValueAsAny(tokenValue);
-        
+
         if (userToken == null || !userToken.type().equals(UserTokenType.MAGIC_LINK) || userToken.used() || userToken.isExpired()) {
             throw new TokenUnauthorizedException("Invalid or expired magic link token");
         }
@@ -166,7 +166,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new TokenUnauthorizedException("User not found for magic link token");
         }
 
-        // Generate JWT tokens  
+        // Generate JWT tokens
         var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 

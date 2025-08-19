@@ -8,7 +8,7 @@ import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.TokenUnauthorizedException;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
-import jbst.iam.domain.dto.requests.RequestMagicLinkEmail;
+import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.exceptions.LoginException;
@@ -39,7 +39,7 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/magic-link/send")
     @ResponseStatus(HttpStatus.OK)
-    public void sendMagicLink(@RequestBody @Valid RequestMagicLinkEmail request) throws LoginException {
+    public void sendMagicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws LoginException {
         this.authenticationService.sendMagicLink(request);
     }
 
