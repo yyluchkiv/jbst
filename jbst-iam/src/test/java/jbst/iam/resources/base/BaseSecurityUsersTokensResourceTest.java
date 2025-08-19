@@ -10,7 +10,6 @@ import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
-import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
@@ -100,7 +99,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         // Arrange
         var user = JwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
-        var requestUserToken = RequestUserToken.emailConfirmation(user.username());
+        var requestUserToken = user.getRequestUserTokenAsEmailConfirmation();
         var userToken = UserToken.hardcoded();
         when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
 
@@ -116,7 +115,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
         verify(this.baseUsersTokensRequestsValidator, times(2)).validateExecuteConfirmEmail(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executeEmailConfirmation(userToken.asFunctionEmailConfirmation(user.email()));
+        verify(this.baseUsersEmailsService).executeEmailConfirmation(userToken.asFunctionEmailConfirmation());
     }
 
     @ParameterizedTest
@@ -159,7 +158,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         var request = RequestUserEmail.hardcoded();
         var user = JwtUser.hardcoded(request.email(), UserEmailDetails.confirmed());
         when(this.baseUsersService.findByEmail(request.email())).thenReturn(user);
-        var requestUserToken = RequestUserToken.passwordReset(user.username());
+        var requestUserToken = user.getRequestUserTokenAsPasswordReset();
         var userToken = UserToken.hardcoded();
         when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
 
@@ -174,7 +173,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verify(this.baseUsersService).findByEmail(request.email());
         verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executePasswordReset(userToken.asFunctionPasswordReset(user.email()));
+        verify(this.baseUsersEmailsService).executePasswordReset(userToken.asFunctionPasswordReset());
     }
 
     @Test

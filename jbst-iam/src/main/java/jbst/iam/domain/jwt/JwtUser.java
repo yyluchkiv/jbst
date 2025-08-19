@@ -5,7 +5,9 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.enums.UserCreationOption;
+import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -167,6 +169,24 @@ public record JwtUser(
                 false,
                 UserEmailDetails.unnecessary(),
                 new HashMap<>()
+        );
+    }
+
+    @JsonIgnore
+    public RequestUserToken getRequestUserTokenAsEmailConfirmation() {
+        return new RequestUserToken(
+                this.email,
+                this.username,
+                UserTokenType.EMAIL_CONFIRMATION
+        );
+    }
+
+    @JsonIgnore
+    public RequestUserToken getRequestUserTokenAsPasswordReset() {
+        return new RequestUserToken(
+                this.email,
+                this.username,
+                UserTokenType.PASSWORD_RESET
         );
     }
 

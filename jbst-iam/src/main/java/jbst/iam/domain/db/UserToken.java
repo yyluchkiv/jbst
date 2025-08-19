@@ -16,6 +16,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 
 public record UserToken(
         TokenId id,
+        Email email,
         Username username,
         String value,
         UserTokenType type,
@@ -26,6 +27,7 @@ public record UserToken(
     public static UserToken hardcoded() {
         return new UserToken(
                 TokenId.hardcoded(),
+                Email.hardcoded(),
                 Username.hardcoded(),
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
                 UserTokenType.EMAIL_CONFIRMATION,
@@ -37,6 +39,7 @@ public record UserToken(
     public static UserToken random() {
         return new UserToken(
                 TokenId.random(),
+                Email.random(),
                 Username.random(),
                 RandomUtility.randomString(),
                 RandomUtility.randomEnum(UserTokenType.class),
@@ -48,6 +51,7 @@ public record UserToken(
     public static UserToken randomNotPersisted() {
         return new UserToken(
                 null,
+                Email.random(),
                 Username.random(),
                 RandomUtility.randomString(),
                 RandomUtility.randomEnum(UserTokenType.class),
@@ -59,6 +63,7 @@ public record UserToken(
     public UserToken withUsed(boolean used) {
         return new UserToken(
                 this.id,
+                this.email,
                 this.username,
                 this.value,
                 this.type,
@@ -71,18 +76,20 @@ public record UserToken(
         return isPast(this.expiryTimestamp);
     }
 
-    public FunctionEmailConfirmation asFunctionEmailConfirmation(Email email) {
+    @Deprecated
+    public FunctionEmailConfirmation asFunctionEmailConfirmation() {
         return new FunctionEmailConfirmation(
                 this.username,
-                email,
+                this.email,
                 this.value
         );
     }
 
-    public FunctionPasswordReset asFunctionPasswordReset(Email email) {
+    @Deprecated
+    public FunctionPasswordReset asFunctionPasswordReset() {
         return new FunctionPasswordReset(
                 this.username,
-                email,
+                this.email,
                 this.value
         );
     }

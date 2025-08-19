@@ -1,6 +1,7 @@
 package jbst.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.iam.domain.db.UserToken;
@@ -33,6 +34,7 @@ public class MongoDbUserToken {
 
     @Id
     private String id;
+    private Email email;
     private Username username;
     private String value;
     private UserTokenType type;
@@ -40,12 +42,14 @@ public class MongoDbUserToken {
     private boolean used;
 
     public MongoDbUserToken(
+            @NotNull Email email,
             @NotNull Username username,
             @NotNull String value,
             @NotNull UserTokenType type,
             long expiryTimestamp,
             boolean used
     ) {
+        this.email = email;
         this.username = username;
         this.value = value;
         this.type = type;
@@ -55,6 +59,7 @@ public class MongoDbUserToken {
 
     public MongoDbUserToken(RequestUserToken request) {
         this(
+                request.email(),
                 request.username(),
                 randomStringLetterOrNumbersOnly(36),
                 request.type(),
@@ -64,12 +69,15 @@ public class MongoDbUserToken {
     }
 
     public MongoDbUserToken(UserToken token) {
+        this(
+                token.email(),
+                token.username(),
+                token.value(),
+                token.type(),
+                token.expiryTimestamp(),
+                token.used()
+        );
         this.id = token.id().value();
-        this.username = token.username();
-        this.value = token.value();
-        this.type = token.type();
-        this.expiryTimestamp = token.expiryTimestamp();
-        this.used = token.used();
     }
 
     public static MongoDbUserToken random(
@@ -79,6 +87,7 @@ public class MongoDbUserToken {
             boolean used
     ) {
         return new MongoDbUserToken(
+                new Email(username.value() + "@gmail.com"),
                 username,
                 randomStringLetterOrNumbersOnly(36),
                 type,
@@ -145,6 +154,7 @@ public class MongoDbUserToken {
     public UserToken asUserToken() {
         return new UserToken(
                 new TokenId(this.id),
+                this.email,
                 this.username,
                 this.value,
                 this.type,

@@ -2,6 +2,7 @@ package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 import jbst.foundation.domain.time.TimeAmount;
@@ -37,6 +38,10 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)
+    private Email email;
+
+    @Convert(converter = PostgresUsernameConverter.class)
+    @Column(nullable = false, updatable = false)
     private Username username;
 
     @Column(length = 36, nullable = false, updatable = false)
@@ -53,12 +58,14 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     private boolean used;
 
     public PostgresDbUserToken(
+            @NotNull Email email,
             @NotNull Username username,
             @NotNull String value,
             @NotNull UserTokenType type,
             long expiryTimestamp,
             boolean used
     ) {
+        this.email = email;
         this.username = username;
         this.value = value;
         this.type = type;
@@ -68,6 +75,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     public PostgresDbUserToken(RequestUserToken request) {
         this(
+                request.email(),
                 request.username(),
                 randomStringLetterOrNumbersOnly(36),
                 request.type(),
@@ -77,12 +85,15 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbUserToken(UserToken token) {
+        this(
+                token.email(),
+                token.username(),
+                token.value(),
+                token.type(),
+                token.expiryTimestamp(),
+                token.used()
+        );
         this.id = nonNull(token.id()) ? token.id().value() : null;
-        this.username = token.username();
-        this.value = token.value();
-        this.type = token.type();
-        this.expiryTimestamp = token.expiryTimestamp();
-        this.used = token.used();
     }
 
     public static PostgresDbUserToken random(
@@ -92,6 +103,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
             boolean used
     ) {
         return new PostgresDbUserToken(
+                new Email(username.value() + "@gmail.com"),
                 username,
                 randomStringLetterOrNumbersOnly(36),
                 type,
@@ -158,6 +170,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     public UserToken asUserToken() {
         return new UserToken(
                 new TokenId(this.id),
+                this.email,
                 this.username,
                 this.value,
                 this.type,

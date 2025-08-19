@@ -18,7 +18,6 @@ import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
-import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
 import jbst.iam.services.UsersEmailsService;
@@ -62,8 +61,8 @@ public class BaseSecurityUsersTokensResource {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         this.emailConfirmationRL.acquire(user.username());
-        var userToken = this.baseUsersTokensService.getOrCreate(RequestUserToken.emailConfirmation(user.username()));
-        this.usersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation(user.email()));
+        var userToken = this.baseUsersTokensService.getOrCreate(user.getRequestUserTokenAsEmailConfirmation());
+        this.usersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation());
     }
 
     @ApiResponse(responseCode = "302", content = @Content(schema = @Schema(implementation = String.class)))
@@ -94,8 +93,8 @@ public class BaseSecurityUsersTokensResource {
         try {
             var user = this.baseUsersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
-            var userToken = this.baseUsersTokensService.getOrCreate(RequestUserToken.passwordReset(user.username()));
-            this.usersEmailsService.executePasswordReset(userToken.asFunctionPasswordReset(user.email()));
+            var userToken = this.baseUsersTokensService.getOrCreate(user.getRequestUserTokenAsPasswordReset());
+            this.usersEmailsService.executePasswordReset(userToken.asFunctionPasswordReset());
         } catch (JbstPasswordResetException ex) {
             // ignored
         }
