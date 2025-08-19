@@ -1,2 +1,2 @@
 ### Changelog [v1.22]
-— TBD
+— Modification: Authentication login() → usernamePassword()

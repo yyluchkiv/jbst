@@ -57,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final SecurityJwtEventsPublisher securityJwtPublisher;
 
     @Override
-    public CurrentClientUser login(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser usernamePassword(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
             var username = request.username();
             var password = request.password();

@@ -10,7 +10,7 @@ import jbst.iam.domain.exceptions.LoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 
 public interface AuthenticationService {
-    CurrentClientUser login(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException;
+    CurrentClientUser usernamePassword(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException;
     void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws AccessTokenNotFoundException;
     ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException;
 }
