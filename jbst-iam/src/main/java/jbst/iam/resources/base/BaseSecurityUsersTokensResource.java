@@ -18,6 +18,7 @@ import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
+import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
 import jbst.iam.services.UsersEmailsService;
@@ -54,6 +55,13 @@ public class BaseSecurityUsersTokensResource {
     private final JbstProperties jbstProperties;
 
     private final RateLimiter<Username> emailConfirmationRL = RateLimiterFactory.executeEmailConfirmation();
+
+    // TODO [YYL, MagicLink]
+    @PostMapping("/magic-link")
+    @ResponseStatus(HttpStatus.OK)
+    public void magicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) {
+        this.baseUsersTokensService.magicLink(request);
+    }
 
     @PostMapping("/email/confirm")
     @ResponseStatus(HttpStatus.OK)

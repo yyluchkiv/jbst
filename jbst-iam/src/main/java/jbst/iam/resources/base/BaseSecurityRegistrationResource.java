@@ -8,7 +8,6 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.iam.domain.events.EventRegistration0;
 import jbst.iam.domain.events.EventRegistration1;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -38,12 +37,6 @@ public class BaseSecurityRegistrationResource {
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Validators
     private final BaseRegistrationRequestsValidator baseRegistrationRequestsValidator;
-
-    @PostMapping("/magic-link")
-    @ResponseStatus(HttpStatus.OK)
-    public void magicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) {
-        this.baseRegistrationService.registerMagicLink(request);
-    }
 
     @PostMapping("/register0")
     @ResponseStatus(HttpStatus.OK)
