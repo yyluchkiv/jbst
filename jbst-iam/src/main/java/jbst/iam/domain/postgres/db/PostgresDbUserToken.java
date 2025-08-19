@@ -45,7 +45,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     @Column(nullable = false, updatable = false)
     private Username username;
 
-    @Column(length = 36, nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     private String value;
 
     @Enumerated(EnumType.STRING)
@@ -78,7 +78,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
         this(
                 request.email(),
                 request.username(),
-                randomStringLetterOrNumbersOnly(36),
+                randomStringLetterOrNumbersOnly(255),
                 request.type(),
                 getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
                 false

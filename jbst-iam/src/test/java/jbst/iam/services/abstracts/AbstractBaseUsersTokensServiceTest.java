@@ -132,7 +132,7 @@ class AbstractBaseUsersTokensServiceTest {
     void saveAsTest() {
         // Arrange
         var request = RequestUserToken.hardcoded();
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedEmailConfirmation();
         when(this.usersTokensRepository.saveAs(request)).thenReturn(userToken);
 
         // Act

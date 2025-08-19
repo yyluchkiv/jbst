@@ -87,7 +87,7 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executeEmailConfirmation() {
         // Arrange
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedEmailConfirmation();
         when(this.userEmailUtils.getEmailConfirmationHTML(userToken)).thenReturn(EmailHTML.hardcoded());
 
         // Act
@@ -101,7 +101,7 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executePasswordReset() {
         // Arrange
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedPasswordReset();
         when(this.userEmailUtils.getPasswordResetHTML(userToken)).thenReturn(EmailHTML.hardcoded());
 
         // Act

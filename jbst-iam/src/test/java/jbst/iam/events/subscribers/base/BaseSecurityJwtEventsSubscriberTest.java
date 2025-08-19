@@ -296,7 +296,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Arrange
         var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
         var event = new EventRegistration0(requestUserRegistration0);
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedEmailConfirmation();
         when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
         if (nonNull(ex)) {
             doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(userToken);

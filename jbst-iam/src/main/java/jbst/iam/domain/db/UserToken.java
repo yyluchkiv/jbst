@@ -22,13 +22,25 @@ public record UserToken(
         boolean used
 ) {
 
-    public static UserToken hardcoded() {
+    public static UserToken hardcodedEmailConfirmation() {
         return new UserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 Username.hardcoded(),
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
                 UserTokenType.EMAIL_CONFIRMATION,
+                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
+                false
+        );
+    }
+
+    public static UserToken hardcodedPasswordReset() {
+        return new UserToken(
+                TokenId.hardcoded(),
+                Email.hardcoded(),
+                Username.hardcoded(),
+                "0BF9F5865172B5C7DDE5C84048E8BE8150CFCC4C",
+                UserTokenType.PASSWORD_RESET,
                 getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
                 false
         );

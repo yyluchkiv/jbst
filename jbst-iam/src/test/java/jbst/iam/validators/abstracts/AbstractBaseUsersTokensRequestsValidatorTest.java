@@ -185,7 +185,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 Password.of("e4f937b04d9f44519ed58346b9aa67ff")
 
                         ),
-                        UserToken.hardcoded(),
+                        UserToken.hardcodedPasswordReset(),
                         new IllegalArgumentException("Passwords must be same")
                 ),
                 Arguments.of(

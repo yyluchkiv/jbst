@@ -184,7 +184,7 @@ class AbstractBaseUsersServiceTest {
     void resetPasswordTest() {
         // Arrange
         var request = RequestUserPasswordReset.hardcoded();
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedPasswordReset();
         when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
         var passwordAC = ArgumentCaptor.forClass(Password.class);
 

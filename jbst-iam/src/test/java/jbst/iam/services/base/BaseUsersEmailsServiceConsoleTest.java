@@ -153,7 +153,7 @@ class BaseUsersEmailsServiceConsoleTest {
     void executeEmailConfirmation() {
         // Act
         this.componentUnderTest.executeEmailConfirmation(
-                UserToken.hardcoded()
+                UserToken.hardcodedEmailConfirmation()
         );
 
         // Assert
@@ -165,7 +165,7 @@ class BaseUsersEmailsServiceConsoleTest {
     void executePasswordReset() {
         // Act
         this.componentUnderTest.executePasswordReset(
-                UserToken.hardcoded()
+                UserToken.hardcodedPasswordReset()
         );
 
         // Assert

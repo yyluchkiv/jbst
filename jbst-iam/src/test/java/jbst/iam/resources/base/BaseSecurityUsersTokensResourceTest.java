@@ -100,7 +100,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         var user = JwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsEmailConfirmation();
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedEmailConfirmation();
         when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
 
         // Act
@@ -159,7 +159,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         var user = JwtUser.hardcoded(request.email(), UserEmailDetails.confirmed());
         when(this.baseUsersService.findByEmail(request.email())).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsPasswordReset();
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedPasswordReset();
         when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
 
         // Act

@@ -61,7 +61,7 @@ public class MongoDbUserToken {
         this(
                 request.email(),
                 request.username(),
-                randomStringLetterOrNumbersOnly(36),
+                randomStringLetterOrNumbersOnly(255),
                 request.type(),
                 getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
                 false

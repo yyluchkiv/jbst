@@ -108,7 +108,7 @@ class UserEmailUtilsImplTest {
     @Test
     void getEmailConfirmationHTML() {
         // Arrange
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedEmailConfirmation();
 
         // Act
         var emailHTML = this.componentUnderTest.getEmailConfirmationHTML(userToken);
@@ -128,7 +128,7 @@ class UserEmailUtilsImplTest {
     @Test
     void getPasswordResetHTML() {
         // Arrange
-        var userToken = UserToken.hardcoded();
+        var userToken = UserToken.hardcodedPasswordReset();
 
         // Act
         var emailHTML = this.componentUnderTest.getPasswordResetHTML(userToken);
