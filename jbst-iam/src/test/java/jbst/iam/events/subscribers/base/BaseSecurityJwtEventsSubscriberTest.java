@@ -298,9 +298,8 @@ class BaseSecurityJwtEventsSubscriberTest {
         var event = new EventRegistration0(requestUserRegistration0);
         var userToken = UserToken.hardcoded();
         when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
-        var functionConfirmEmail = userToken.asFunctionEmailConfirmation();
         if (nonNull(ex)) {
-            doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(functionConfirmEmail);
+            doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(userToken);
         }
 
         // Act
@@ -309,7 +308,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Assert
         assertThat(event).isNotNull();
         verify(this.baseUsersTokensService).saveAs(requestUserRegistration0.asRequestUserToken());
-        verify(this.usersEmailsService).executeEmailConfirmation(functionConfirmEmail);
+        verify(this.usersEmailsService).executeEmailConfirmation(userToken);
         verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 

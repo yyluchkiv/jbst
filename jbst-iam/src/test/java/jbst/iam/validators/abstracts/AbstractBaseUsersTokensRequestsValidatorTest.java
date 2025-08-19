@@ -87,6 +87,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 Arguments.of(
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.EMAIL_CONFIRMATION,
@@ -98,6 +99,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 Arguments.of(
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.EMAIL_CONFIRMATION,
@@ -109,6 +111,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 Arguments.of(
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.PASSWORD_RESET,
@@ -120,6 +123,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 Arguments.of(
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.EMAIL_CONFIRMATION,
@@ -188,6 +192,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.PASSWORD_RESET,
@@ -200,6 +205,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.PASSWORD_RESET,
@@ -212,6 +218,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.EMAIL_CONFIRMATION,
@@ -224,6 +231,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
+                                Email.random(),
                                 Username.random(),
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 UserTokenType.PASSWORD_RESET,

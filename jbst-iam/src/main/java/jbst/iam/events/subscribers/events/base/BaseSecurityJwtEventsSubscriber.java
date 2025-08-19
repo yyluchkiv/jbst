@@ -85,9 +85,8 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onRegistration0(EventRegistration0 event) {
         try {
             LOGGER.debug(USER_ACTION, event.requestUserRegistration0().username(), "[sub, events] register0");
-            var requestUserRegistration0 = event.requestUserRegistration0();
-            var userToken = this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserToken());
-            this.usersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation());
+            var userToken = this.baseUsersTokensService.saveAs(event.requestUserRegistration0().asRequestUserToken());
+            this.usersEmailsService.executeEmailConfirmation(userToken);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

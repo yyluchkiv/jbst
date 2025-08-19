@@ -115,7 +115,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
         verify(this.baseUsersTokensRequestsValidator, times(2)).validateExecuteConfirmEmail(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executeEmailConfirmation(userToken.asFunctionEmailConfirmation());
+        verify(this.baseUsersEmailsService).executeEmailConfirmation(userToken);
     }
 
     @ParameterizedTest
@@ -173,7 +173,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verify(this.baseUsersService).findByEmail(request.email());
         verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executePasswordReset(userToken.asFunctionPasswordReset());
+        verify(this.baseUsersEmailsService).executePasswordReset(userToken);
     }
 
     @Test

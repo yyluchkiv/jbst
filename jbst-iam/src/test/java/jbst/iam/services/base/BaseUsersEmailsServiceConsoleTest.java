@@ -1,6 +1,5 @@
 package jbst.iam.services.base;
 
-import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -12,10 +11,9 @@ import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.services.emails.utilities.EmailUtility;
 import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
+import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
-import jbst.iam.domain.functions.FunctionEmailConfirmation;
-import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
 import jbst.iam.utils.impl.UserEmailUtilsImpl;
@@ -39,7 +37,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 import java.nio.charset.StandardCharsets;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -151,19 +148,12 @@ class BaseUsersEmailsServiceConsoleTest {
 
     private final UsersEmailsService componentUnderTest;
 
-    private final Username username = Username.hardcoded();
-    private final Email email = Email.of("?");
-
     @Disabled
     @Test
     void executeEmailConfirmation() {
         // Act
         this.componentUnderTest.executeEmailConfirmation(
-                new FunctionEmailConfirmation(
-                        this.username,
-                        this.email,
-                        randomStringLetterOrNumbersOnly(36)
-                )
+                UserToken.hardcoded()
         );
 
         // Assert
@@ -175,11 +165,7 @@ class BaseUsersEmailsServiceConsoleTest {
     void executePasswordReset() {
         // Act
         this.componentUnderTest.executePasswordReset(
-                new FunctionPasswordReset(
-                        this.username,
-                        this.email,
-                        randomStringLetterOrNumbersOnly(36)
-                )
+                UserToken.hardcoded()
         );
 
         // Assert

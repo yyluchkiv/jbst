@@ -4,9 +4,8 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
+import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
-import jbst.iam.domain.functions.FunctionEmailConfirmation;
-import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
@@ -88,28 +87,28 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executeEmailConfirmation() {
         // Arrange
-        var function = FunctionEmailConfirmation.hardcoded();
-        when(this.userEmailUtils.getEmailConfirmationHTML(function)).thenReturn(EmailHTML.hardcoded());
+        var userToken = UserToken.hardcoded();
+        when(this.userEmailUtils.getEmailConfirmationHTML(userToken)).thenReturn(EmailHTML.hardcoded());
 
         // Act
-        this.componentUnderTest.executeEmailConfirmation(function);
+        this.componentUnderTest.executeEmailConfirmation(userToken);
 
         // Assert
-        verify(this.userEmailUtils).getEmailConfirmationHTML(function);
+        verify(this.userEmailUtils).getEmailConfirmationHTML(userToken);
         verify(this.emailService).sendHTML(EmailHTML.hardcoded());
     }
 
     @Test
     void executePasswordReset() {
         // Arrange
-        var function = FunctionPasswordReset.hardcoded();
-        when(this.userEmailUtils.getPasswordResetHTML(function)).thenReturn(EmailHTML.hardcoded());
+        var userToken = UserToken.hardcoded();
+        when(this.userEmailUtils.getPasswordResetHTML(userToken)).thenReturn(EmailHTML.hardcoded());
 
         // Act
-        this.componentUnderTest.executePasswordReset(function);
+        this.componentUnderTest.executePasswordReset(userToken);
 
         // Assert
-        verify(this.userEmailUtils).getPasswordResetHTML(function);
+        verify(this.userEmailUtils).getPasswordResetHTML(userToken);
         verify(this.emailService).sendHTML(EmailHTML.hardcoded());
     }
 

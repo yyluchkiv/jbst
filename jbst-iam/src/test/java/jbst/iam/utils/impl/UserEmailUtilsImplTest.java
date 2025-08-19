@@ -5,10 +5,9 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
+import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
-import jbst.iam.domain.functions.FunctionEmailConfirmation;
-import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.RepeatedTest;
@@ -109,40 +108,40 @@ class UserEmailUtilsImplTest {
     @Test
     void getEmailConfirmationHTML() {
         // Arrange
-        var function = FunctionEmailConfirmation.hardcoded();
+        var userToken = UserToken.hardcoded();
 
         // Act
-        var emailHTML = this.componentUnderTest.getEmailConfirmationHTML(FunctionEmailConfirmation.hardcoded());
+        var emailHTML = this.componentUnderTest.getEmailConfirmationHTML(userToken);
 
         // Assert
-        assertThat(emailHTML.to()).isEqualTo(Set.of(function.email().value()));
+        assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
         assertThat(emailHTML.subject()).startsWith("[jbst.com] Email Confirmation at ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-email-confirmation");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
                 .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
-                .containsEntry("username", function.username().value())
-                .containsEntry("emailConfirmationLink", "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + function.token())
+                .containsEntry("username", userToken.username().value())
+                .containsEntry("emailConfirmationLink", "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
     }
 
     @Test
     void getPasswordResetHTML() {
         // Arrange
-        var function = FunctionPasswordReset.hardcoded();
+        var userToken = UserToken.hardcoded();
 
         // Act
-        var emailHTML = this.componentUnderTest.getPasswordResetHTML(function);
+        var emailHTML = this.componentUnderTest.getPasswordResetHTML(userToken);
 
         // Assert
-        assertThat(emailHTML.to()).isEqualTo(Set.of(function.email().value()));
+        assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
         assertThat(emailHTML.subject()).startsWith("[jbst.com] Password Reset at ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-password-reset");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
                 .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
-                .containsEntry("username", function.username().value())
-                .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + function.token())
+                .containsEntry("username", userToken.username().value())
+                .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
     }
 }

@@ -5,8 +5,6 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.domain.enums.UserTokenType;
-import jbst.iam.domain.functions.FunctionEmailConfirmation;
-import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.domain.identifiers.TokenId;
 
 import java.time.temporal.ChronoUnit;
@@ -74,23 +72,5 @@ public record UserToken(
 
     public boolean isExpired() {
         return isPast(this.expiryTimestamp);
-    }
-
-    @Deprecated
-    public FunctionEmailConfirmation asFunctionEmailConfirmation() {
-        return new FunctionEmailConfirmation(
-                this.username,
-                this.email,
-                this.value
-        );
-    }
-
-    @Deprecated
-    public FunctionPasswordReset asFunctionPasswordReset() {
-        return new FunctionPasswordReset(
-                this.username,
-                this.email,
-                this.value
-        );
     }
 }

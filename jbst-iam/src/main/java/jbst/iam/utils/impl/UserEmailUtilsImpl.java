@@ -2,9 +2,8 @@ package jbst.iam.utils.impl;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
+import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
-import jbst.iam.domain.functions.FunctionEmailConfirmation;
-import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -71,9 +70,9 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public EmailHTML getEmailConfirmationHTML(@NotNull FunctionEmailConfirmation function) {
+    public EmailHTML getEmailConfirmationHTML(@NotNull UserToken userToken) {
         return EmailHTML.of(
-                function.email(),
+                userToken.email(),
                 this.getSubject("Email Confirmation"),
                 this.getServerOrFallbackJbstTemplateName(
                         "server-email-confirmation",
@@ -82,16 +81,16 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
-                        Map.entry("username", function.username().value()),
-                        Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, function.token()))
+                        Map.entry("username", userToken.username().value()),
+                        Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, userToken.value()))
                 )
         );
     }
 
     @Override
-    public EmailHTML getPasswordResetHTML(@NotNull FunctionPasswordReset function) {
+    public EmailHTML getPasswordResetHTML(@NotNull UserToken userToken) {
         return EmailHTML.of(
-                function.email(),
+                userToken.email(),
                 this.getSubject("Password Reset"),
                 this.getServerOrFallbackJbstTemplateName(
                         "server-password-reset",
@@ -100,8 +99,8 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
-                        Map.entry("username", function.username().value()),
-                        Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(function.token()))
+                        Map.entry("username", userToken.username().value()),
+                        Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(userToken.value()))
                 )
         );
     }

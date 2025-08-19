@@ -62,7 +62,7 @@ public class BaseSecurityUsersTokensResource {
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         this.emailConfirmationRL.acquire(user.username());
         var userToken = this.baseUsersTokensService.getOrCreate(user.getRequestUserTokenAsEmailConfirmation());
-        this.usersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation());
+        this.usersEmailsService.executeEmailConfirmation(userToken);
     }
 
     @ApiResponse(responseCode = "302", content = @Content(schema = @Schema(implementation = String.class)))
@@ -94,7 +94,7 @@ public class BaseSecurityUsersTokensResource {
             var user = this.baseUsersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
             var userToken = this.baseUsersTokensService.getOrCreate(user.getRequestUserTokenAsPasswordReset());
-            this.usersEmailsService.executePasswordReset(userToken.asFunctionPasswordReset());
+            this.usersEmailsService.executePasswordReset(userToken);
         } catch (JbstPasswordResetException ex) {
             // ignored
         }
