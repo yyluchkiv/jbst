@@ -6,6 +6,8 @@ import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 
 import java.time.Duration;
 
+import static java.util.Objects.nonNull;
+
 @SuppressWarnings("UnstableApiUsage")
 public class RateLimiter<T> {
 
@@ -22,18 +24,21 @@ public class RateLimiter<T> {
                 .build(key -> com.google.common.util.concurrent.RateLimiter.create(permitsPerSecond));
     }
 
-    protected static double calculatePermitsPerSecond(int requests, Duration duration) {
-        return (double) requests / duration.getSeconds();
-    }
-
     public boolean tryAcquire(T key) {
-        return this.cache.get(key).tryAcquire();
+        var rateLimiter = this.cache.get(key);
+        return nonNull(rateLimiter) && rateLimiter.tryAcquire();
     }
 
     public void acquire(T key) throws TooManyRequestsException {
-        if (!this.cache.get(key).tryAcquire()) {
+        if (!this.tryAcquire(key)) {
             throw new TooManyRequestsException();
         }
     }
 
+    // =================================================================================================================
+    // PROTECTED METHODS
+    // =================================================================================================================
+    protected static double calculatePermitsPerSecond(int requests, Duration duration) {
+        return (double) requests / duration.getSeconds();
+    }
 }
