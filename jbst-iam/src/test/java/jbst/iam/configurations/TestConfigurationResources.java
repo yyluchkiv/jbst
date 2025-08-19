@@ -7,11 +7,11 @@ import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
-import jbst.iam.services.*;
-import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
+import jbst.iam.services.*;
 import jbst.iam.services.base.AuthenticationServiceImpl;
+import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
@@ -76,6 +76,11 @@ public class TestConfigurationResources {
     // =================================================================================================================
     // Services
     // =================================================================================================================
+    @Bean
+    RateLimitsService rateLimitsService() {
+        return mock(RateLimitsService.class);
+    }
+
     @Bean
     BaseUsersService baseUsersService() {
         return mock(BaseUsersService.class);

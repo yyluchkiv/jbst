@@ -5,13 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.concurrent.RateLimiter;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
-import jbst.foundation.domain.factories.concurrent.RateLimiterFactory;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
@@ -21,6 +18,7 @@ import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
+import jbst.iam.services.RateLimitsService;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +42,7 @@ public class BaseSecurityUsersTokensResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
+    private final RateLimitsService rateLimitsService;
     private final BaseUsersTokensService baseUsersTokensService;
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersService baseUsersService;
@@ -53,8 +52,6 @@ public class BaseSecurityUsersTokensResource {
     private final IncidentPublisher incidentPublisher;
     // Properties
     private final JbstProperties jbstProperties;
-
-    private final RateLimiter<Username> emailConfirmationRL = RateLimiterFactory.executeEmailConfirmation();
 
     // TODO [YYL, MagicLink]
     @PostMapping("/magic-link")
@@ -69,7 +66,7 @@ public class BaseSecurityUsersTokensResource {
     public void executeConfirmEmail() throws TooManyRequestsException {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
-        this.emailConfirmationRL.acquire(user.username());
+        this.rateLimitsService.acquireEmailConfirmationOrThrow(user);
         var userToken = this.baseUsersTokensService.getOrCreate(user.getRequestUserTokenAsEmailConfirmation());
         this.usersEmailsService.executeEmailConfirmation(userToken);
     }
