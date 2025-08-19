@@ -144,4 +144,24 @@ class UserEmailUtilsImplTest {
                 .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
     }
+
+    @Test
+    void getMagicLinkHTML() {
+        // Arrange
+        var userToken = UserToken.hardcodedMagicLink();
+
+        // Act
+        var emailHTML = this.componentUnderTest.getMagicLinkHTML(userToken);
+
+        // Assert
+        assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Password Reset at ");
+        assertThat(emailHTML.templateName()).isEqualTo("jbst-magic-link");
+        assertThat(emailHTML.templateVariables())
+                .hasSize(4)
+                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
+                .containsEntry("email", userToken.email().value())
+                .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + userToken.value())
+                .containsEntry("year", now(UTC).getYear());
+    }
 }

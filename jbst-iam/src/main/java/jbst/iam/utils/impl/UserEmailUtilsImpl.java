@@ -109,7 +109,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     public EmailHTML getMagicLinkHTML(@NotNull UserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
-                this.getSubject("Magic Link Authentication"),
+                this.getSubject("Magic Link"),
                 this.getServerOrFallbackJbstTemplateName(
                         "server-magic-link",
                         "jbst-magic-link"

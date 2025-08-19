@@ -6,7 +6,7 @@ import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
-import static jbst.iam.domain.enums.UserTokenType.EMAIL_CONFIRMATION;
+import static jbst.iam.domain.enums.UserTokenType.*;
 
 public record UserToken(
         TokenId id,
@@ -33,8 +33,19 @@ public record UserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "0BF9F5865172B5C7DDE5C84048E8BE8150CFCC4C",
-                UserTokenType.PASSWORD_RESET,
-                UserTokenType.PASSWORD_RESET.getExpiryTimestamp(),
+                PASSWORD_RESET,
+                PASSWORD_RESET.getExpiryTimestamp(),
+                false
+        );
+    }
+
+    public static UserToken hardcodedMagicLink() {
+        return new UserToken(
+                TokenId.hardcoded(),
+                Email.hardcoded(),
+                "B3A85D887DB47A307330C93DC06787EF54A0F46F",
+                MAGIC_LINK,
+                MAGIC_LINK.getExpiryTimestamp(),
                 false
         );
     }

@@ -74,4 +74,12 @@ public class JbstProperties implements PriorityOrdered {
                 token
         );
     }
+
+    public String getMagicLink(@NotNull String token) {
+        return "%s%s?token=%s".formatted(
+                this.serverConfigs.getWebclientURL(),
+                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),
+                token
+        );
+    }
 }

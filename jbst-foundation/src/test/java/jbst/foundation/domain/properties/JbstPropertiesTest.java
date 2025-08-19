@@ -10,6 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstPropertiesTest {
 
+    private final JbstProperties jbstProperties = new TestJbstConfigurationPropertiesHardcoded().jbstProperties();
+
     @Test
     void jbstPropertiesTest() {
         // Arrange
@@ -28,5 +30,14 @@ class JbstPropertiesTest {
                 throw new RuntimeException(ex);
             }
         });
+    }
+
+    @Test
+    void getEmailConfirmationRedirectLink() {
+        // Act
+        var link = this.jbstProperties.getEmailConfirmationRedirectLink();
+
+        // Assert
+        assertThat(link).isEqualTo("http://127.0.0.1:3000/email-confirmation");
     }
 }
