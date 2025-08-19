@@ -34,6 +34,12 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     }
 
     @Override
+    public void executeMagicLinkEmail(UserToken userToken) {
+        var emailHTML = this.userEmailUtils.getMagicLinkHTML(userToken);
+        this.emailService.sendHTML(emailHTML);
+    }
+
+    @Override
     public void executeAuthenticationLogin(FunctionAccountAccessed function) {
         if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin().isEnabled()) {
             return;

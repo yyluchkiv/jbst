@@ -10,6 +10,8 @@ public interface UsersEmailsService {
     @Async
     void executePasswordReset(UserToken userToken);
     @Async
+    void executeMagicLinkEmail(UserToken userToken);
+    @Async
     void executeAuthenticationLogin(FunctionAccountAccessed function);
     @Async
     void executeSessionRefreshed(FunctionAccountAccessed function);

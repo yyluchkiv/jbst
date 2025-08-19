@@ -5,9 +5,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.time.TimeAmount;
+import jbst.foundation.utilities.random.RandomUtility;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
+import jbst.iam.domain.dto.requests.RequestMagicLinkEmail;
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.exceptions.LoginException;
@@ -17,6 +23,9 @@ import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.services.AuthenticationService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
+import jbst.iam.services.UsersEmailsService;
+import jbst.iam.repositories.UsersRepository;
+import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
@@ -29,7 +38,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.temporal.ChronoUnit;
+
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
@@ -49,6 +61,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
+    private final UsersEmailsService usersEmailsService;
+    // Repositories
+    private final UsersRepository usersRepository;
+    private final UsersTokensRepository usersTokensRepository;
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
@@ -97,6 +113,77 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             );
             throw new LoginException(ex.getMessage());
         }
+    }
+
+    @Override
+    public void sendMagicLink(RequestMagicLinkEmail request) throws LoginException {
+        var email = request.email();
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
+        
+        if (user == null) {
+            LOGGER.warn("Magic link requested for non-existent email: {}", email.value());
+            // For security, don't reveal whether email exists
+            return;
+        }
+
+        // Create magic link token (15 minutes expiry for security)
+        var token = RandomUtility.randomString();
+        var magicLinkToken = new UserToken(
+                null,
+                email,
+                token,
+                UserTokenType.MAGIC_LINK,
+                getFutureRange(new TimeAmount(15, ChronoUnit.MINUTES)).to(),
+                false
+        );
+
+        // Save token
+        this.usersTokensRepository.saveAs(magicLinkToken);
+
+        // Send email with magic link
+        this.usersEmailsService.executeMagicLinkEmail(magicLinkToken);
+
+        LOGGER.debug("Magic link sent to user with email: {}", email.value());
+    }
+
+    @Override
+    public CurrentClientUser asMagicLink(RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
+        var tokenValue = request.token();
+        
+        // Find valid magic link token
+        var userToken = this.usersTokensRepository.findByValueAsAny(tokenValue);
+        
+        if (userToken == null || !userToken.type().equals(UserTokenType.MAGIC_LINK) || userToken.used() || userToken.isExpired()) {
+            throw new TokenUnauthorizedException("Invalid or expired magic link token");
+        }
+
+        // Mark token as used
+        this.usersTokensRepository.saveAs(userToken.withUsed(true));
+
+        // Find user by email
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+        if (user == null) {
+            throw new TokenUnauthorizedException("User not found for magic link token");
+        }
+
+        // Generate JWT tokens  
+        var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+
+        // Save session
+        this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
+
+        // Set cookies
+        this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
+        this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
+
+        // Register session
+        this.sessionRegistry.register(new Session(user.username(), accessToken, refreshToken));
+
+        LOGGER.debug("User authenticated via magic link: {}", user.username().value());
+
+        // Return current client user
+        return this.currentSessionAssistant.getCurrentClientUser();
     }
 
     @Override

@@ -105,11 +105,35 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         );
     }
 
+    @Override
+    public EmailHTML getMagicLinkHTML(@NotNull UserToken userToken) {
+        return EmailHTML.of(
+                userToken.email(),
+                this.getSubject("Magic Link Authentication"),
+                this.getServerOrFallbackJbstTemplateName(
+                        "server-magic-link",
+                        "jbst-magic-link"
+                ),
+                Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("email", userToken.email().value()),
+                        Map.entry("magicLinkUrl", this.getMagicLinkUrl(userToken.value()))
+                )
+        );
+    }
+
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
     private String getServerOrFallbackJbstTemplateName(String serverTemplateName, String jbstTemplateName) {
         var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
         return resource.exists() ? serverTemplateName : jbstTemplateName;
+    }
+
+    private String getMagicLinkUrl(String token) {
+        var baseUrl = this.jbstProperties.getServerConfigs().getWebclientURL();
+        var contextPath = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
+        return baseUrl + contextPath + "/authentication/magic-link/authenticate?token=" + token;
     }
 }

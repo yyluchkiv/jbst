@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public interface UserEmailUtils {
     String getSubject(@NotNull String eventName);
     EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function);
-    EmailHTML getEmailConfirmationHTML(@NotNull UserToken userToke);
+    EmailHTML getEmailConfirmationHTML(@NotNull UserToken userToken);
     EmailHTML getPasswordResetHTML(@NotNull UserToken userToken);
+    EmailHTML getMagicLinkHTML(@NotNull UserToken userToken);
 }

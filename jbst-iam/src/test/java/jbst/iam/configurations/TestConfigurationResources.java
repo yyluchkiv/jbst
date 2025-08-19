@@ -9,6 +9,8 @@ import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
 import jbst.iam.services.*;
 import jbst.iam.services.base.BaseUsersEmailsService;
+import jbst.iam.repositories.UsersRepository;
+import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.base.AuthenticationServiceImpl;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
@@ -49,6 +51,9 @@ public class TestConfigurationResources {
                 this.sessionRegistry(),
                 this.baseUsersSessionsService(),
                 this.tokenService(),
+                this.usersEmailsService(),
+                this.usersRepository(),
+                this.usersTokensRepository(),
                 this.tokensProvider(),
                 this.securityJwtTokenUtils(),
                 this.securityJwtEventsPublisher()
@@ -194,5 +199,26 @@ public class TestConfigurationResources {
     @Bean
     BaseUsersTokensRequestsValidator tokensRequestsValidator() {
         return mock(BaseUsersTokensRequestsValidator.class);
+    }
+
+    // =================================================================================================================
+    // Repositories
+    // =================================================================================================================
+    @Bean
+    UsersRepository usersRepository() {
+        return mock(UsersRepository.class);
+    }
+
+    @Bean
+    UsersTokensRepository usersTokensRepository() {
+        return mock(UsersTokensRepository.class);
+    }
+
+    // =================================================================================================================
+    // Services
+    // =================================================================================================================
+    @Bean
+    UsersEmailsService usersEmailsService() {
+        return mock(UsersEmailsService.class);
     }
 }
