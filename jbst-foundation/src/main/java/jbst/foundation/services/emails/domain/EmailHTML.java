@@ -5,6 +5,8 @@ import jbst.foundation.domain.base.Email;
 import java.util.Map;
 import java.util.Set;
 
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+
 public record EmailHTML(
         Set<String> to,
         String subject,
@@ -23,5 +25,9 @@ public record EmailHTML(
 
     public static EmailHTML hardcoded() {
         return EmailHTML.of(Email.hardcoded(), "Account Accessed", "jbst-account-accessed", Map.of());
+    }
+
+    public static EmailHTML random() {
+        return EmailHTML.of(Email.random(), randomString(), randomString(), Map.of());
     }
 }

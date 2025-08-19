@@ -6,11 +6,11 @@ import org.springframework.scheduling.annotation.Async;
 
 public interface UsersEmailsService {
     @Async
+    void executeMagicLinkEmail(UserToken userToken);
+    @Async
     void executeEmailConfirmation(UserToken userToken);
     @Async
     void executePasswordReset(UserToken userToken);
-    @Async
-    void executeMagicLinkEmail(UserToken userToken);
     @Async
     void executeAuthenticationLogin(FunctionAccountAccessed function);
     @Async

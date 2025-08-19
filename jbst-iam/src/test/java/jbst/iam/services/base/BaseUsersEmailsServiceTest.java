@@ -85,6 +85,21 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
+    void executeMagicLinkEmail() {
+        // Arrange
+        var emailHTML = EmailHTML.random();
+        var userToken = UserToken.hardcodedMagicLink();
+        when(this.userEmailUtils.getMagicLinkHTML(userToken)).thenReturn(emailHTML);
+
+        // Act
+        this.componentUnderTest.executeMagicLinkEmail(userToken);
+
+        // Assert
+        verify(this.userEmailUtils).getMagicLinkHTML(userToken);
+        verify(this.emailService).sendHTML(emailHTML);
+    }
+
+    @Test
     void executeEmailConfirmation() {
         // Arrange
         var userToken = UserToken.hardcodedEmailConfirmation();

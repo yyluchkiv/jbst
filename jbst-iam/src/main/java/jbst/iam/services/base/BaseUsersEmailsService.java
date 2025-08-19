@@ -22,6 +22,12 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private final JbstProperties jbstProperties;
 
     @Override
+    public void executeMagicLinkEmail(UserToken userToken) {
+        var emailHTML = this.userEmailUtils.getMagicLinkHTML(userToken);
+        this.emailService.sendHTML(emailHTML);
+    }
+
+    @Override
     public void executeEmailConfirmation(UserToken userToken) {
         var emailHTML = this.userEmailUtils.getEmailConfirmationHTML(userToken);
         this.emailService.sendHTML(emailHTML);
@@ -30,12 +36,6 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     @Override
     public void executePasswordReset(UserToken userToken) {
         var emailHTML = this.userEmailUtils.getPasswordResetHTML(userToken);
-        this.emailService.sendHTML(emailHTML);
-    }
-
-    @Override
-    public void executeMagicLinkEmail(UserToken userToken) {
-        var emailHTML = this.userEmailUtils.getMagicLinkHTML(userToken);
         this.emailService.sendHTML(emailHTML);
     }
 
