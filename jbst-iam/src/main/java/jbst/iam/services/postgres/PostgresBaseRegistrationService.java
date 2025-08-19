@@ -30,13 +30,13 @@ public class PostgresBaseRegistrationService extends AbstractBaseRegistrationSer
 
     @Transactional
     @Override
-    public void register0(RequestUserRegistration0 requestUserRegistration0) {
-        super.register0(requestUserRegistration0);
+    public void register0(RequestUserRegistration0 request) {
+        super.register0(request);
     }
 
     @Transactional
     @Override
-    public void register1(RequestUserRegistration1 requestUserRegistration1) {
-        super.register1(requestUserRegistration1);
+    public void register1(RequestUserRegistration1 request) {
+        super.register1(request);
     }
 }

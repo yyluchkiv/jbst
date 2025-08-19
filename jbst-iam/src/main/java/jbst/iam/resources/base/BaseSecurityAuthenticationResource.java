@@ -7,9 +7,8 @@ import jakarta.validation.Valid;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.TokenUnauthorizedException;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
-import jbst.iam.domain.dto.requests.RequestUserLogin;
-import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
+import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.exceptions.LoginException;
 import jbst.iam.domain.security.CurrentClientUser;
@@ -35,12 +34,6 @@ public class BaseSecurityAuthenticationResource {
     @ResponseStatus(HttpStatus.OK)
     public CurrentClientUser login(@RequestBody @Valid RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         return this.authenticationService.asStandard(request, httpRequest, httpResponse);
-    }
-
-    @PostMapping("/magic-link/send")
-    @ResponseStatus(HttpStatus.OK)
-    public void sendMagicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws LoginException {
-        this.authenticationService.sendMagicLink(request);
     }
 
     @PostMapping("/magic-link/authenticate")

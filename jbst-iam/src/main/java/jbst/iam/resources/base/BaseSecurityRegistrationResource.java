@@ -2,14 +2,17 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jbst.foundation.domain.exceptions.authentication.RegistrationException;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.iam.domain.events.EventRegistration0;
 import jbst.iam.domain.events.EventRegistration1;
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.services.BaseRegistrationService;
 import jbst.iam.validators.BaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import jbst.foundation.domain.exceptions.authentication.RegistrationException;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 
 // Swagger
 @Tag(name = "[jbst] Registration API")
@@ -37,6 +38,12 @@ public class BaseSecurityRegistrationResource {
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Validators
     private final BaseRegistrationRequestsValidator baseRegistrationRequestsValidator;
+
+    @PostMapping("/magic-link")
+    @ResponseStatus(HttpStatus.OK)
+    public void magicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) {
+        this.baseRegistrationService.registerMagicLink(request);
+    }
 
     @PostMapping("/register0")
     @ResponseStatus(HttpStatus.OK)

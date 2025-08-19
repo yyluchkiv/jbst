@@ -171,11 +171,11 @@ public class JbstConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketM
                 .authorizeHttpRequests(authorizeHttpRequests -> {
                     authorizeHttpRequests
                             .requestMatchers(POST, basePathPrefix + "/authentication/login").permitAll()
-                            .requestMatchers(POST, basePathPrefix + "/authentication/magic-link/send").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/magic-link/authenticate").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                             .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
+                            .requestMatchers(POST, basePathPrefix + "/registration/magic-link").denyAll()
                             .requestMatchers(POST, basePathPrefix + "/registration/register0").anonymous()
                             .requestMatchers(POST, basePathPrefix + "/registration/register1").anonymous()
                             .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
