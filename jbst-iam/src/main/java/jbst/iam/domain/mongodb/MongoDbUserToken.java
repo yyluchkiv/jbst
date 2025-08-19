@@ -59,7 +59,7 @@ public class MongoDbUserToken {
                 request.email(),
                 randomStringLetterOrNumbersOnly(255),
                 request.type(),
-                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
+                request.getExpiryTimestamp(),
                 false
         );
     }
