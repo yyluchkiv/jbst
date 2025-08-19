@@ -72,7 +72,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
                 request.email(),
                 randomStringLetterOrNumbersOnly(255),
                 request.type(),
-                request.getExpiryTimestamp(),
+                request.type().getExpiryTimestamp(),
                 false
         );
     }
