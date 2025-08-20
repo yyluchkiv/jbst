@@ -4,8 +4,8 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
-import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.*;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -42,11 +42,12 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
             while (!created) {
                 var username = (index == -1) ? email.getUsername() : new Username(email.getUsername().value() + index);
                 try {
-                    user = this.usersRepository.saveAsMagicLinkOrThrow(
+                    user = this.usersRepository.saveAsOrThrow(
+                            UserCreationOption.MAGICLINK,
                             username,
                             password,
                             email,
-                            request
+                            request.zoneId()
                     );
                     created = true;
                 } catch (UsernameAlreadyExistException ex) {

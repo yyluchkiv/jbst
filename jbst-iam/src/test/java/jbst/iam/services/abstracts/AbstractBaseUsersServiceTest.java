@@ -120,7 +120,7 @@ class AbstractBaseUsersServiceTest {
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var user = JwtUser.hardcodedMagicLink();
         var username = email.getUsername();
-        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(email), eq(request))).thenReturn(user);
+        when(this.usersRepository.saveAsOrThrow(eq(username), any(Password.class), eq(email), eq(request))).thenReturn(user);
 
         // Act
         var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
@@ -128,7 +128,7 @@ class AbstractBaseUsersServiceTest {
         // Assert
         assertThat(actualUser).isEqualTo(user);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(email), eq(request));
+        verify(this.usersRepository).saveAsOrThrow(eq(username), any(Password.class), eq(email), eq(request));
     }
 
     @Test
@@ -141,8 +141,8 @@ class AbstractBaseUsersServiceTest {
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
 
-        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request))).thenThrow(new UsernameAlreadyExistException(baseUsername));
-        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request))).thenReturn(user);
+        when(this.usersRepository.saveAsOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request))).thenThrow(new UsernameAlreadyExistException(baseUsername));
+        when(this.usersRepository.saveAsOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request))).thenReturn(user);
 
         // Act
         var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
@@ -150,8 +150,8 @@ class AbstractBaseUsersServiceTest {
         // Assert
         assertThat(actualUser).isEqualTo(user);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request));
-        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request));
+        verify(this.usersRepository).saveAsOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request));
+        verify(this.usersRepository).saveAsOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request));
     }
 
     @Test

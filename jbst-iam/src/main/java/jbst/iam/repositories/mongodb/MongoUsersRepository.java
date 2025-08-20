@@ -7,7 +7,6 @@ import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
-import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.enums.UserCreationOption;
@@ -20,6 +19,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -99,17 +99,17 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return entity.userId();
     }
 
-    default JwtUser saveAsMagicLinkOrThrow(Username username, Password password, Email email, RequestMagicLinkToken request) throws UsernameAlreadyExistException {
+    default JwtUser saveAsOrThrow(UserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws UsernameAlreadyExistException {
         var exist = this.existsByUsername(username);
         if (exist) {
             throw new UsernameAlreadyExistException(username);
         } else {
             return this.save(
                     new MongoDbUser(
-                            UserCreationOption.MAGICLINK,
+                            creationOption,
                             username,
                             password,
-                            request.zoneId(),
+                            zoneId,
                             new HashSet<>(),
                             email,
                             false,

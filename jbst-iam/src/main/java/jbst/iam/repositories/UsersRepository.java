@@ -6,13 +6,14 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
-import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.time.ZoneId;
 
 public interface UsersRepository {
     TuplePresence<JwtUser> isPresent(UserId userId);
@@ -27,6 +28,5 @@ public interface UsersRepository {
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation);
-    // TODO [YYL, rename]
-    JwtUser saveAsMagicLinkOrThrow(Username username, Password password, Email email, RequestMagicLinkToken request) throws UsernameAlreadyExistException;
+    JwtUser saveAsOrThrow(UserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws UsernameAlreadyExistException;
 }
