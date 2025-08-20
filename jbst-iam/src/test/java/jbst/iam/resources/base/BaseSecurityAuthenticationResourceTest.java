@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
@@ -20,6 +19,7 @@ import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.jwt.*;
 import jbst.iam.domain.security.CurrentClientUser;
@@ -27,6 +27,7 @@ import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
+import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
@@ -74,6 +75,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     // Session
     private final SessionRegistry sessionRegistry;
     // Services
+    private final BaseUsersService baseUsersService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
@@ -100,6 +102,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
         reset(
                 this.authenticationManager,
                 this.sessionRegistry,
+                this.baseUsersService,
                 this.baseUsersSessionsService,
                 this.tokensService,
                 this.usersRepository,
@@ -118,6 +121,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.authenticationManager,
                 this.sessionRegistry,
+                this.baseUsersService,
                 this.baseUsersSessionsService,
                 this.tokensService,
                 this.usersRepository,
@@ -182,12 +186,14 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     void loginMagicLinkTest() throws Exception {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
-        var email = Email.hardcoded();
         var userToken = UserToken.hardcodedMagicLink();
         when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(userToken);
+
         var user = JwtUser.hardcodedMagicLink();
-        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
+        var userCreationOption = UserCreationOption.MAGICLINK;
+        when(this.baseUsersService.safeSave(userCreationOption, userToken.email(), request.zoneId())).thenReturn(user);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
+
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
         when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
@@ -212,7 +218,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
-        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+        verify(this.baseUsersService).safeSave(userCreationOption, userToken.email(), request.zoneId());
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(this.jwtUserDetailsService).loadUserByUsername(user.username().value());
