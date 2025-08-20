@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.inv
 public class BaseBaseAuthenticationRequestsValidatorImpl implements BaseAuthenticationRequestsValidator {
 
     @Override
-    public void validateAuthenticationStandard(RequestUserLogin requestUserLogin) {
+    public void validateLoginStandard(RequestUserLogin requestUserLogin) {
         var username = requestUserLogin.username();
         var password = requestUserLogin.password();
 

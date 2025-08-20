@@ -36,7 +36,7 @@ class BaseAuthenticationRequestsValidatorImplTest {
         }
     }
 
-    private static Stream<Arguments> validateAuthenticationStandardTest() {
+    private static Stream<Arguments> validateLoginStandardTest() {
         return Stream.of(
                 Arguments.of(
                         new RequestUserLogin(null, Password.of("admin")),
@@ -58,10 +58,10 @@ class BaseAuthenticationRequestsValidatorImplTest {
     private final BaseAuthenticationRequestsValidator componentUnderTest;
 
     @ParameterizedTest
-    @MethodSource("validateAuthenticationStandardTest")
-    void validateAuthenticationStandardTest(RequestUserLogin requestUserLogin, String exceptionMessage) {
+    @MethodSource("validateLoginStandardTest")
+    void validateLoginStandardTest(RequestUserLogin requestUserLogin, String exceptionMessage) {
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateAuthenticationStandard(requestUserLogin));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateLoginStandard(requestUserLogin));
 
         // Assert
         if (nonNull(exceptionMessage)) {
