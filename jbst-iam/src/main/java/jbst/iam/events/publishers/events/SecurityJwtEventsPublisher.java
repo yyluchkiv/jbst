@@ -3,6 +3,7 @@ package jbst.iam.events.publishers.events;
 import jbst.iam.domain.events.*;
 
 public interface SecurityJwtEventsPublisher {
+    void publishAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event);
     void publishAuthenticationLogin(EventAuthenticationLogin event);
     void publishAuthenticationLoginFailure(EventAuthenticationLoginFailure event);
     void publishAuthenticationLogout(EventAuthenticationLogout event);

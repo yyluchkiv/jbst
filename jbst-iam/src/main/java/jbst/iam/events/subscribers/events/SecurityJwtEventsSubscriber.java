@@ -5,6 +5,8 @@ import org.springframework.context.event.EventListener;
 
 public interface SecurityJwtEventsSubscriber {
     @EventListener
+    void onAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event);
+    @EventListener
     void onAuthenticationLogin(EventAuthenticationLogin event);
     @EventListener
     void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event);

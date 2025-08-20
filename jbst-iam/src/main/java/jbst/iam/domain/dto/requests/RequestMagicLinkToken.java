@@ -3,16 +3,18 @@ package jbst.iam.domain.dto.requests;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+
 public record RequestMagicLinkToken(
         @Schema(type = "string")
         @NotBlank String token
 ) {
 
     public static RequestMagicLinkToken hardcoded() {
-        return new RequestMagicLinkToken("V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw");
+        return new RequestMagicLinkToken("E4944FFE506B2838A8F667D95C5FB28DB3ABAE54");
     }
 
     public static RequestMagicLinkToken random() {
-        return new RequestMagicLinkToken("randomToken123456789");
+        return new RequestMagicLinkToken(randomString());
     }
 }

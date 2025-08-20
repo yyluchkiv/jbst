@@ -21,6 +21,12 @@ public class BaseSecurityJwtEventsPublisher extends AbstractEventPublisher imple
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
+    public void publishAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event) {
+        LOGGER.debug(USER_ACTION, event.email(), "[pub, events] login magic-link failure");
+        this.applicationEventPublisher.publishEvent(event);
+    }
+
+    @Override
     public void publishAuthenticationLogin(EventAuthenticationLogin event) {
         LOGGER.debug(USER_ACTION, event.username(), "[pub, events] login");
         this.applicationEventPublisher.publishEvent(event);
