@@ -7,15 +7,16 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.iam.domain.exceptions.LoginException;
-import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -34,9 +35,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.getUserProcess;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
@@ -63,6 +64,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UsersTokensRepository usersTokensRepository;
     // Tokens
     private final TokensProvider tokensProvider;
+    // Password
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
     // Publishers
@@ -92,18 +95,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public CurrentClientUser asMagicLink(UserToken userToken, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
-            if (isNull(user)) {
-                boolean created = false;
-                while (!created) {
-                    created = true;
-                }
-                // TODO [YYL, MagicLink] create user, generate username based on email
-                user = JwtUser.hardcoded();
-                this.usersTokensRepository.saveAs(userToken.withUsed(true));
-            }
+            var user = this.usersRepository.saveAsMagicLink(
+                    userToken,
+                    request,
+                    Password.of(this.bCryptPasswordEncoder.encode(RandomUtility.randomStringLetterOrNumbersOnly(20)))
+            );
+            this.usersTokensRepository.saveAs(userToken.withUsed(true));
             return this.asAuthentication(
                     user.username(),
                     user.password(),

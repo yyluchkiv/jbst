@@ -1,14 +1,16 @@
 package jbst.iam.repositories;
 
-import jbst.iam.domain.db.Invitation;
-import jbst.iam.domain.dto.requests.RequestUserRegistration0;
-import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.domain.identifiers.UserId;
-import jbst.iam.domain.jwt.JwtUser;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
+import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
+import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.identifiers.UserId;
+import jbst.iam.domain.jwt.JwtUser;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UsersRepository {
@@ -24,4 +26,5 @@ public interface UsersRepository {
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation);
+    JwtUser saveAsMagicLink(UserToken userToken, RequestMagicLinkToken request, Password password);
 }

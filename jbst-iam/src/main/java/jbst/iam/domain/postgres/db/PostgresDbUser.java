@@ -13,6 +13,8 @@ import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConvert
 import jbst.iam.converters.postgres.PostgresUserCreationOptionConverter;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.enums.UserCreationOption;
@@ -154,6 +156,19 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
         this.passwordChangeRequired = user.passwordChangeRequired();
         this.emailDetails = user.emailDetails();
         this.attributes = user.attributes();
+    }
+
+    public static PostgresDbUser magicLink(Username username, Password password, UserToken userToken, RequestMagicLinkToken request) {
+        return new PostgresDbUser(
+                UserCreationOption.MAGICLINK,
+                username,
+                password,
+                request.zoneId(),
+                new HashSet<>(),
+                userToken.email(),
+                false,
+                UserEmailDetails.unnecessary()
+        );
     }
 
     public static PostgresDbUser random(String username, Set<String> authorities) {

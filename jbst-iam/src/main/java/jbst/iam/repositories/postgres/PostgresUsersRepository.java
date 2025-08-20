@@ -6,6 +6,8 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.SpringAuthorities.SUPERADMIN;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
@@ -98,6 +101,34 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         );
         var entity = this.save(user);
         return entity.userId();
+    }
+
+    default JwtUser saveAsMagicLink(UserToken userToken, RequestMagicLinkToken request, Password password) {
+        var jwtUser = this.findByEmailAsJwtUserOrNull(userToken.email());
+        if (isNull(jwtUser)) {
+            var created = false;
+            var index = 0;
+            PostgresDbUser dbUser = null;
+            while (!created) {
+                var username = (index == 0) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
+                var exist = this.existsByUsername(username);
+                if (!exist) {
+                    dbUser = this.save(
+                            PostgresDbUser.magicLink(
+                                    username,
+                                    password,
+                                    userToken,
+                                    request
+                            )
+                    );
+                    created = true;
+                }
+                index++;
+            }
+            return dbUser.asJwtUser();
+        } else {
+            return jwtUser;
+        }
     }
 
     // ================================================================================================================

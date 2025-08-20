@@ -52,8 +52,9 @@ public class BaseSecurityAuthenticationResource {
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws LoginException {
+        request = request.createReworkedUkraineZoneId();
         var userToken = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
-        return this.authenticationService.asMagicLink(userToken, httpRequest, httpResponse);
+        return this.authenticationService.asMagicLink(userToken, request, httpRequest, httpResponse);
     }
 
     @PostMapping("/logout")
