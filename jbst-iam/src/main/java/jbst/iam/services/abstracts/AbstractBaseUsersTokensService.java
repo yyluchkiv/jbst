@@ -4,7 +4,7 @@ import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.iam.domain.dto.requests.RequestUserTokenMagicLink;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.repositories.UsersRepository;
@@ -30,7 +30,7 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
 
     // TODO [YYL, MagicLink]
     @Override
-    public UserToken magicLink(RequestUserRegistrationMagicLink request) {
+    public UserToken magicLink(RequestUserTokenMagicLink request) {
         var email = request.email();
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
 

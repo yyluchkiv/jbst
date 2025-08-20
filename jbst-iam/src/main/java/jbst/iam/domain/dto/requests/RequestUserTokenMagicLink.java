@@ -3,18 +3,18 @@ package jbst.iam.domain.dto.requests;
 import jbst.foundation.domain.base.Email;
 import jbst.iam.domain.enums.UserTokenType;
 
-public record RequestUserRegistrationMagicLink(
+public record RequestUserTokenMagicLink(
         @Email.ValidEmail Email email
 ) {
 
-    public static RequestUserRegistrationMagicLink hardcoded() {
-        return new RequestUserRegistrationMagicLink(
+    public static RequestUserTokenMagicLink hardcoded() {
+        return new RequestUserTokenMagicLink(
                 Email.hardcoded()
         );
     }
 
-    public static RequestUserRegistrationMagicLink random() {
-        return new RequestUserRegistrationMagicLink(
+    public static RequestUserTokenMagicLink random() {
+        return new RequestUserTokenMagicLink(
                 Email.random()
         );
     }

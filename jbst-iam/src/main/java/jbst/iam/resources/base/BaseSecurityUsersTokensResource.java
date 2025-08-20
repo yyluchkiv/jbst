@@ -15,7 +15,7 @@ import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
-import jbst.iam.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.iam.domain.dto.requests.RequestUserTokenMagicLink;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
 import jbst.iam.services.RateLimitsService;
@@ -56,7 +56,7 @@ public class BaseSecurityUsersTokensResource {
     // TODO [YYL, MagicLink]
     @PostMapping("/magic-link")
     @ResponseStatus(HttpStatus.OK)
-    public void magicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws TooManyRequestsException {
+    public void magicLink(@RequestBody @Valid RequestUserTokenMagicLink request) throws TooManyRequestsException {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         var userToken = this.baseUsersTokensService.getOrCreate(request.asRequestUserToken());
         this.usersEmailsService.executeMagicLink(userToken);
