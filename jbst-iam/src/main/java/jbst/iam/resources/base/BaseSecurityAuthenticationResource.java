@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.TokenUnauthorizedException;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
@@ -42,7 +41,7 @@ public class BaseSecurityAuthenticationResource {
             HttpServletResponse httpResponse
     ) throws LoginException {
         var credentials = this.baseAuthenticationRequestsValidator.validateLoginStandard(request);
-        return this.authenticationService.asStandard(request, httpRequest, httpResponse);
+        return this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
     }
 
     @PostMapping("/login/magic-link")
