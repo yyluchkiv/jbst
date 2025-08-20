@@ -7,10 +7,10 @@ import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
-import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.mongodb.MongoDbUser;
@@ -20,6 +20,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -104,11 +105,15 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
             throw new UsernameAlreadyExistException(username);
         } else {
             return this.save(
-                    MongoDbUser.magicLink(
+                    new MongoDbUser(
+                            UserCreationOption.MAGICLINK,
                             username,
                             password,
+                            request.zoneId(),
+                            new HashSet<>(),
                             email,
-                            request
+                            false,
+                            UserEmailDetails.unnecessary()
                     )
             ).asJwtUser();
         }

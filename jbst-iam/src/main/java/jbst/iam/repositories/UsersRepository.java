@@ -27,5 +27,6 @@ public interface UsersRepository {
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation);
+    // TODO [YYL, rename]
     JwtUser saveAsMagicLinkOrThrow(Username username, Password password, Email email, RequestMagicLinkToken request) throws UsernameAlreadyExistException;
 }

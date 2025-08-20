@@ -8,8 +8,6 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
-import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.enums.UserCreationOption;
@@ -123,19 +121,6 @@ public class MongoDbUser {
         this.passwordChangeRequired = user.passwordChangeRequired();
         this.emailDetails = user.emailDetails();
         this.attributes = user.attributes();
-    }
-
-    public static MongoDbUser magicLink(Username username, Password password, Email email, RequestMagicLinkToken request) {
-        return new MongoDbUser(
-                UserCreationOption.MAGICLINK,
-                username,
-                password,
-                request.zoneId(),
-                new HashSet<>(),
-                email,
-                false,
-                UserEmailDetails.unnecessary()
-        );
     }
 
     public static MongoDbUser random(String username, String authority) {

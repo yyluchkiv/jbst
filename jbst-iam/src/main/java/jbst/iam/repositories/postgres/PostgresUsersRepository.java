@@ -11,6 +11,7 @@ import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
@@ -24,6 +25,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -109,11 +111,15 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
             throw new UsernameAlreadyExistException(username);
         } else {
             return this.save(
-                    PostgresDbUser.magicLink(
+                    new PostgresDbUser(
+                            UserCreationOption.MAGICLINK,
                             username,
                             password,
+                            request.zoneId(),
+                            new HashSet<>(),
                             email,
-                            request
+                            false,
+                            UserEmailDetails.unnecessary()
                     )
             ).asJwtUser();
         }
