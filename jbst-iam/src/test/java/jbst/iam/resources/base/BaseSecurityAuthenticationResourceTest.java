@@ -119,7 +119,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     }
 
     @Test
-    void loginTest() throws Exception {
+    void authenticateStandardTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
         var username = request.username();
@@ -135,7 +135,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                        post("/authentication/login")
+                        post("/authentication/authenticate/standard")
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -161,7 +161,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     }
 
     @Test
-    void loginWithInvalidCredentialsTest() throws Exception {
+    void authenticateStandardWithInvalidCredentialsTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
         var username = request.username();
@@ -177,7 +177,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                        post("/authentication/login")
+                        post("/authentication/authenticate/standard")
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
