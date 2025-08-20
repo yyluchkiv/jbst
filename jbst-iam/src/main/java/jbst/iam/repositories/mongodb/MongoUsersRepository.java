@@ -3,9 +3,12 @@ package jbst.iam.repositories.mongodb;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
@@ -93,6 +96,22 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         );
         var entity = this.save(user);
         return entity.userId();
+    }
+
+    default JwtUser saveAsMagicLinkOrThrow(Username username, Password password, UserToken userToken, RequestMagicLinkToken request) throws UsernameAlreadyExistException {
+        var exist = this.existsByUsername(username);
+        if (exist) {
+            throw new UsernameAlreadyExistException(username);
+        } else {
+            return this.save(
+                    MongoDbUser.magicLink(
+                            username,
+                            password,
+                            userToken,
+                            request
+                    )
+            ).asJwtUser();
+        }
     }
 
     // ================================================================================================================

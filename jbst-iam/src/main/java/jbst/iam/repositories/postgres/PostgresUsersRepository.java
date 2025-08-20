@@ -3,6 +3,7 @@ package jbst.iam.repositories.postgres;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
@@ -27,7 +28,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.SpringAuthorities.SUPERADMIN;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
@@ -103,31 +103,19 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         return entity.userId();
     }
 
-    default JwtUser saveAsMagicLink(UserToken userToken, RequestMagicLinkToken request, Password password) {
-        var jwtUser = this.findByEmailAsJwtUserOrNull(userToken.email());
-        if (isNull(jwtUser)) {
-            var created = false;
-            var index = 0;
-            PostgresDbUser dbUser = null;
-            while (!created) {
-                var username = (index == 0) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
-                var exist = this.existsByUsername(username);
-                if (!exist) {
-                    dbUser = this.save(
-                            PostgresDbUser.magicLink(
-                                    username,
-                                    password,
-                                    userToken,
-                                    request
-                            )
-                    );
-                    created = true;
-                }
-                index++;
-            }
-            return dbUser.asJwtUser();
+    default JwtUser saveAsMagicLinkOrThrow(Username username, Password password, UserToken userToken, RequestMagicLinkToken request) throws UsernameAlreadyExistException {
+        var exist = this.existsByUsername(username);
+        if (exist) {
+            throw new UsernameAlreadyExistException(username);
         } else {
-            return jwtUser;
+            return this.save(
+                    PostgresDbUser.magicLink(
+                            username,
+                            password,
+                            userToken,
+                            request
+                    )
+            ).asJwtUser();
         }
     }
 

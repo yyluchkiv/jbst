@@ -5,9 +5,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.db.UserToken;
@@ -38,11 +38,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.getUserProcess;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 @Slf4j
 @Service
@@ -97,11 +99,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            var user = this.usersRepository.saveAsMagicLink(
-                    userToken,
-                    request,
-                    Password.of(this.bCryptPasswordEncoder.encode(RandomUtility.randomStringLetterOrNumbersOnly(20)))
-            );
+            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+            if (isNull(user)) {
+                var created = false;
+                var index = 0;
+                var password = Password.of(this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20)));
+                while (!created) {
+                    var username = (index == 0) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
+                    try {
+                        user = this.usersRepository.saveAsMagicLinkOrThrow(
+                                username,
+                                password,
+                                userToken,
+                                request
+                        );
+                        created = true;
+                    } catch (UsernameAlreadyExistException ex) {
+                        index++;
+                    }
+                }
+            }
             this.usersTokensRepository.saveAs(userToken.withUsed(true));
             return this.asAuthentication(
                     user.username(),

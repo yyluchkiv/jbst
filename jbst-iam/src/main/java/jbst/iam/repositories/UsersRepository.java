@@ -3,6 +3,7 @@ package jbst.iam.repositories;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserToken;
@@ -26,5 +27,5 @@ public interface UsersRepository {
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation);
-    JwtUser saveAsMagicLink(UserToken userToken, RequestMagicLinkToken request, Password password);
+    JwtUser saveAsMagicLinkOrThrow(Username username, Password password, UserToken userToken, RequestMagicLinkToken request) throws UsernameAlreadyExistException;
 }
