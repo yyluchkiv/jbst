@@ -1,14 +1,14 @@
 package jbst.iam.utils.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.utils.HttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 
@@ -26,7 +26,7 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
 
     @Override
     public boolean isCachedEndpoint(HttpServletRequest request) {
-        return this.isAuthenticationLoginEndpoint(request);
+        return this.isAuthenticationAuthenticateStandardEndpoint(request) || this.isAuthenticationAuthenticateMagicLinkEndpoint(request);
     }
 
     @Override
@@ -39,12 +39,6 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
     @Override
     public String getCachedPayload(HttpServletRequest request) {
         return (String) request.getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
-    }
-
-    @Deprecated
-    @Override
-    public boolean isAuthenticationLoginEndpoint(HttpServletRequest request) {
-        return isPOST(request) && this.isEndpoint(request, "/authentication/login");
     }
 
     @Override
