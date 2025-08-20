@@ -40,7 +40,6 @@ public class BaseSecurityAuthenticationResource {
         return this.authenticationService.asStandard(request, httpRequest, httpResponse);
     }
 
-    // TODO [YYL, MagicLink]
     @PostMapping("/login/magic-link")
     @ResponseStatus(HttpStatus.OK)
     public CurrentClientUser loginMagicLink(
