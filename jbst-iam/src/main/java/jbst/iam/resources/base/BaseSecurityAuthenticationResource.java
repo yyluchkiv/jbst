@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.TokenUnauthorizedException;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
@@ -40,6 +41,7 @@ public class BaseSecurityAuthenticationResource {
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws LoginException {
+        var credentials = this.baseAuthenticationRequestsValidator.validateLoginStandard(request);
         return this.authenticationService.asStandard(request, httpRequest, httpResponse);
     }
 

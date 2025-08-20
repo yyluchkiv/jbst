@@ -1,11 +1,11 @@
 package jbst.iam.validators.base;
 
+import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.exceptions.LoginException;
-import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,10 @@ public class BaseBaseAuthenticationRequestsValidatorImpl implements BaseAuthenti
     private final UsersTokensRepository usersTokensRepository;
 
     @Override
-    public void validateLoginStandard(RequestUserLogin request) {
-        var username = request.username();
-        var password = request.password();
-
-        assertNonNullOrThrow(username, invalidAttribute("username"));
-        assertNonNullOrThrow(password, invalidAttribute("password"));
+    public UsernamePasswordCredentials validateLoginStandard(RequestUserLogin request) {
+        assertNonNullOrThrow(request.username(), invalidAttribute("username"));
+        assertNonNullOrThrow(request.password(), invalidAttribute("password"));
+        return new UsernamePasswordCredentials(request.username(), request.password());
     }
 
     @Override

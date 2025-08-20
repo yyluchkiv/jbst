@@ -4,12 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
@@ -69,11 +69,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final SecurityJwtEventsPublisher securityJwtPublisher;
 
     @Override
-    public CurrentClientUser asStandard(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
             return this.asAuthentication(
-                    request.username(),
-                    request.password(),
+                    credentials.username(),
+                    credentials.password(),
                     UserCreationOption.STANDARD,
                     httpRequest,
                     httpResponse
@@ -81,8 +81,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(
-                            request.username(),
-                            request.password(),
+                            credentials.username(),
+                            credentials.password(),
                             getClientIpAddr(httpRequest),
                             new UserAgentHeader(httpRequest)
                     )
