@@ -41,7 +41,6 @@ class SessionsCronTest {
     }
 
     @Configuration
-    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
         SessionRegistry sessionRegistry() {
