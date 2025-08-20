@@ -77,9 +77,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
             return this.asAuthentication(
+                    UserCreationOption.STANDARD,
                     credentials.username(),
                     credentials.password(),
-                    UserCreationOption.STANDARD,
                     httpRequest,
                     httpResponse
             );
@@ -121,9 +121,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             }
             this.usersTokensRepository.saveAs(userToken.withUsed(true));
             return this.asAuthentication(
+                    UserCreationOption.MAGICLINK,
                     user.username(),
                     user.password(),
-                    UserCreationOption.MAGICLINK,
                     httpRequest,
                     httpResponse
             );
@@ -178,9 +178,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // PRIVATE METHODS
     // =================================================================================================================
     public CurrentClientUser asAuthentication(
+            UserCreationOption userCreationOption,
             Username username,
             Password password,
-            UserCreationOption userCreationOption,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) {
