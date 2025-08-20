@@ -33,7 +33,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     }
 
     @Override
-    public void safeCreateMagicLinkUser(UserToken userToken, RequestMagicLinkToken request) {
+    public JwtUser safeCreateMagicLinkUser(UserToken userToken, RequestMagicLinkToken request) {
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
         if (isNull(user)) {
             var created = false;
@@ -54,6 +54,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 }
             }
         }
+        return user;
     }
 
     @Override
