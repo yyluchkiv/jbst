@@ -171,7 +171,7 @@ public class JbstConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketM
                 .authorizeHttpRequests(authorizeHttpRequests -> {
                     authorizeHttpRequests
                             .requestMatchers(POST, basePathPrefix + "/authentication/login").permitAll()
-                            .requestMatchers(POST, basePathPrefix + "/authentication/magic-link/authenticate").permitAll()
+                            .requestMatchers(POST, basePathPrefix + "/authentication/authenticate/magic-link").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                             .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
@@ -180,7 +180,7 @@ public class JbstConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketM
                             .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated()
-                            .requestMatchers(GET, basePathPrefix + "/tokens/magic-link").denyAll()
+                            .requestMatchers(GET, basePathPrefix + "/tokens/magic-link").permitAll()
                             .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").permitAll()
                             .requestMatchers(basePathPrefix + "/tokens/password/reset").anonymous();
 
