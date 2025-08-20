@@ -14,7 +14,6 @@ import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
-import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.iam.domain.exceptions.LoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
@@ -93,17 +92,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public CurrentClientUser asMagicLink(RequestMagicLinkToken token, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
-        try {
-            var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
-            if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
-                throw new LoginException("Invalid magic link token: %s".formatted(token.value()));
-            }
+        var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
+        if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
+            throw new LoginException("Invalid magic link token: %s".formatted(token.value()));
+        }
 
-            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
-            if (nonNull(user) && !user.creationOption().isMagicLink()) {
-                throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
-            }
-
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+        if (nonNull(user)) {
+            return this.authenticate(
+                    user.username(),
+                    user.password(),
+                    UserCreationOption.MAGICLINK,
+                    httpRequest,
+                    httpResponse
+            );
+        } else {
             // Mark token as used
             this.usersTokensRepository.saveAs(userToken.withUsed(true));
 
@@ -131,15 +134,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             // Return current client user
             return this.currentSessionAssistant.getCurrentClientUser();
-        } catch (BadCredentialsException ex) {
-            this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
-                    new EventAuthenticationMagicLinkFailure(
-                            token,
-                            getClientIpAddr(httpRequest),
-                            new UserAgentHeader(httpRequest)
-                    )
-            );
-            throw new LoginException(ex.getMessage());
         }
     }
 
