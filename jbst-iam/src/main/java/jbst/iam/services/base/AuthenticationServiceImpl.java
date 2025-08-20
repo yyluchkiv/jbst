@@ -128,7 +128,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     httpResponse
             );
         } catch (BadCredentialsException ex) {
-            System.out.println("R11: " + ex.getMessage());
             this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
                     new EventAuthenticationMagicLinkFailure(
                             userToken,
