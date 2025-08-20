@@ -41,9 +41,20 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
         return (String) request.getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
     }
 
+    @Deprecated
     @Override
     public boolean isAuthenticationLoginEndpoint(HttpServletRequest request) {
         return isPOST(request) && this.isEndpoint(request, "/authentication/login");
+    }
+
+    @Override
+    public boolean isAuthenticationAuthenticateStandardEndpoint(HttpServletRequest request) {
+        return isPOST(request) && this.isEndpoint(request, "/authentication/authenticate/standard");
+    }
+
+    @Override
+    public boolean isAuthenticationAuthenticateMagicLinkEndpoint(HttpServletRequest request) {
+        return isPOST(request) && this.isEndpoint(request, "/authentication/authenticate/magic-link");
     }
 
     @Override

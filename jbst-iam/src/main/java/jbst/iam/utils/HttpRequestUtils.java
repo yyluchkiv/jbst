@@ -8,5 +8,7 @@ public interface HttpRequestUtils {
     void cachePayload(CachedBodyHttpServletRequest cachedRequest);
     String getCachedPayload(HttpServletRequest request);
     boolean isAuthenticationLoginEndpoint(HttpServletRequest request);
+    boolean isAuthenticationAuthenticateStandardEndpoint(HttpServletRequest request);
+    boolean isAuthenticationAuthenticateMagicLinkEndpoint(HttpServletRequest request);
     boolean isAuthenticationRefreshTokenEndpoint(HttpServletRequest request);
 }
