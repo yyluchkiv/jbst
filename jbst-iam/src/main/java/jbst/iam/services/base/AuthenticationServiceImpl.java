@@ -93,14 +93,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
+            var userCreationOption = UserCreationOption.MAGICLINK;
             var user = this.baseUsersService.safeSave(
-                    UserCreationOption.MAGICLINK,
+                    userCreationOption,
                     userToken.email(),
                     request.zoneId()
             );
             this.usersTokensRepository.saveAs(userToken.withUsed(true));
             return this.asAuthentication(
-                    UserCreationOption.MAGICLINK,
+                    userCreationOption,
                     user.username(),
                     user.password(),
                     httpRequest,

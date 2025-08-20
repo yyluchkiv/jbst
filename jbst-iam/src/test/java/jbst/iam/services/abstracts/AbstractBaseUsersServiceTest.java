@@ -5,7 +5,11 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.*;
+import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
+import jbst.iam.domain.dto.requests.RequestUserUpdate1;
+import jbst.iam.domain.dto.requests.RequestUserUpdate2;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -23,6 +27,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.time.ZoneId;
 
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -99,13 +105,14 @@ class AbstractBaseUsersServiceTest {
     @Test
     void safeSaveAlreadyExistsTest() {
         // Arrange
-        var request = RequestMagicLinkToken.hardcoded();
+        var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
+        var zoneId = ZoneId.systemDefault();
         var user = JwtUser.hardcodedMagicLink();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeSave(email, request);
+        var actualUser = this.componentUnderTest.safeSave(creationOption, email, zoneId);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
@@ -115,43 +122,45 @@ class AbstractBaseUsersServiceTest {
     @Test
     void safeSaveFirstIterationTest() throws UsernameAlreadyExistException {
         // Arrange
-        var request = RequestMagicLinkToken.hardcoded();
+        var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
+        var zoneId = ZoneId.systemDefault();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var user = JwtUser.hardcodedMagicLink();
         var username = email.getUsername();
-        when(this.usersRepository.saveAsOrThrow(eq(username), any(Password.class), eq(email), eq(request))).thenReturn(user);
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(zoneId))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeSave(email, request);
+        var actualUser = this.componentUnderTest.safeSave(creationOption, email, zoneId);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsOrThrow(eq(username), any(Password.class), eq(email), eq(request));
+        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(zoneId));
     }
 
     @Test
     void safeSaveSecondIterationTest() throws UsernameAlreadyExistException {
         // Arrange
-        var request = RequestMagicLinkToken.hardcoded();
+        var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
+        var zoneId = ZoneId.systemDefault();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var user = JwtUser.hardcodedMagicLink();
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
 
-        when(this.usersRepository.saveAsOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request))).thenThrow(new UsernameAlreadyExistException(baseUsername));
-        when(this.usersRepository.saveAsOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request))).thenReturn(user);
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(zoneId))).thenThrow(new UsernameAlreadyExistException(baseUsername));
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(zoneId))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeSave(email, request);
+        var actualUser = this.componentUnderTest.safeSave(creationOption, email, zoneId);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request));
-        verify(this.usersRepository).saveAsOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request));
+        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(zoneId));
+        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(zoneId));
     }
 
     @Test
