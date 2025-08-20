@@ -42,7 +42,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
 
     @Override
     public void onAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event) {
-        LOGGER.debug(USER_ACTION, event.email(), "[sub, events] login magic-link");
+        LOGGER.debug(USER_ACTION, event.token(), "[sub, events] login magic-link");
     }
 
     @Override

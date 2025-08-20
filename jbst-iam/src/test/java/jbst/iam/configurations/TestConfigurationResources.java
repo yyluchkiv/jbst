@@ -51,7 +51,6 @@ public class TestConfigurationResources {
                 this.sessionRegistry(),
                 this.baseUsersSessionsService(),
                 this.tokenService(),
-                this.usersEmailsService(),
                 this.usersRepository(),
                 this.usersTokensRepository(),
                 this.tokensProvider(),
