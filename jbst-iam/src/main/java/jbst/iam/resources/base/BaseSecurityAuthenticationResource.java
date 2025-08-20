@@ -44,7 +44,6 @@ public class BaseSecurityAuthenticationResource {
         return this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
     }
 
-    // TODO [YYL] add unit tests
     @PostMapping("/login/magic-link")
     @ResponseStatus(HttpStatus.OK)
     public CurrentClientUser loginMagicLink(

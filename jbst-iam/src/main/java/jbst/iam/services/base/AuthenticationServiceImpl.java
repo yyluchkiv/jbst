@@ -99,7 +99,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
+            System.out.println("R4: " + request);
             var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+            System.out.println("R5: " + request);
             if (isNull(user)) {
                 var created = false;
                 var index = 0;
@@ -128,6 +130,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     httpResponse
             );
         } catch (BadCredentialsException ex) {
+            System.out.println("R11: " + ex.getMessage());
             this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
                     new EventAuthenticationMagicLinkFailure(
                             userToken,

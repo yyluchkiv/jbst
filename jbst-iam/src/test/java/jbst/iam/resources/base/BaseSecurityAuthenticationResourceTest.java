@@ -4,10 +4,12 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.exceptions.ExceptionEntityType;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenExpiredException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenInvalidException;
@@ -15,13 +17,19 @@ import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.configurations.TestRunnerResources1;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
+import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
+import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.jwt.*;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.iam.repositories.UsersRepository;
+import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
@@ -71,6 +79,9 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
+    // Repositories
+    private final UsersRepository usersRepository;
+    private final UsersTokensRepository usersTokensRepository;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     private final JwtUserDetailsService jwtUserDetailsService;
@@ -94,6 +105,8 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
                 this.sessionRegistry,
                 this.baseUsersSessionsService,
                 this.tokensService,
+                this.usersRepository,
+                this.usersTokensRepository,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.tokensProvider,
@@ -110,6 +123,8 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
                 this.sessionRegistry,
                 this.baseUsersSessionsService,
                 this.tokensService,
+                this.usersRepository,
+                this.usersTokensRepository,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.tokensProvider,
@@ -120,7 +135,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     }
 
     @Test
-    void authenticateStandardTest() throws Exception {
+    void loginStandardTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
         when(this.baseAuthenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
@@ -163,6 +178,121 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
+        verify(this.currentSessionAssistant).getCurrentClientUser();
+    }
+
+    @Test
+    void loginMagicLinkTest() throws Exception {
+        // Arrange
+        var request = RequestMagicLinkToken.hardcoded();
+        var email = Email.hardcoded();
+        var userToken = UserToken.hardcodedMagicLink();
+        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(userToken);
+        var user = JwtUser.hardcoded();
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
+        when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
+        var accessToken = JwtAccessToken.random();
+        var refreshToken = JwtRefreshToken.random();
+        when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
+        when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
+
+        var currentClientUser = CurrentClientUser.random();
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
+
+        // Act
+        this.mvc.perform(
+                        post("/authentication/login/magic-link")
+                                .content(this.objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().value())))
+                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())))
+                .andExpect(jsonPath("$.name", equalTo(currentClientUser.getName())))
+                .andExpect(jsonPath("$.zoneId", equalTo(currentClientUser.getZoneId().getId())))
+                .andExpect(jsonPath("$.authorities", notNullValue()))
+                .andExpect(jsonPath("$.attributes", notNullValue()));
+
+        // Assert
+        verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+        verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
+        verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(this.jwtUserDetailsService).loadUserByUsername(user.username().value());
+        verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
+        verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
+        verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
+        verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
+        verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));
+        verify(this.currentSessionAssistant).getCurrentClientUser();
+    }
+
+    @Test
+    void authenticateMagicLinkUsernameCollisionTest() throws Exception {
+        // Arrange
+        var request = RequestMagicLinkToken.hardcoded();
+        var email = Email.hardcoded();
+        var userToken = new UserToken(
+                TokenId.hardcoded(),
+                email,
+                request.value(),
+                UserTokenType.MAGIC_LINK,
+                System.currentTimeMillis() + 3600000, // 1 hour in future
+                false
+        );
+        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(userToken);
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null); // User doesn't exist
+
+        var newUser = JwtUser.hardcoded();
+        var baseUsername = email.getUsername();
+        var finalUsername = new Username(baseUsername.value() + "1"); // Will succeed on second try
+
+        // First attempt with base username fails (username0 exists)
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(baseUsername), any(), eq(userToken), eq(request)))
+                .thenThrow(new UsernameAlreadyExistException(baseUsername));
+        // Second attempt with username1 succeeds
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(finalUsername), any(), eq(userToken), eq(request)))
+                .thenReturn(newUser);
+
+        when(this.jwtUserDetailsService.loadUserByUsername(finalUsername.value())).thenReturn(newUser);
+
+        var accessToken = JwtAccessToken.random();
+        var refreshToken = JwtRefreshToken.random();
+        when(this.securityJwtTokenUtils.createJwtAccessToken(newUser.getJwtTokenCreationParams())).thenReturn(accessToken);
+        when(this.securityJwtTokenUtils.createJwtRefreshToken(newUser.getJwtTokenCreationParams())).thenReturn(refreshToken);
+
+        var currentClientUser = CurrentClientUser.random();
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
+
+        // Act
+        this.mvc.perform(
+                        post("/authentication/login/magic-link")
+                                .content(this.objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().value())))
+                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())))
+                .andExpect(jsonPath("$.name", equalTo(currentClientUser.getName())))
+                .andExpect(jsonPath("$.zoneId", equalTo(currentClientUser.getZoneId().getId())))
+                .andExpect(jsonPath("$.authorities", notNullValue()))
+                .andExpect(jsonPath("$.attributes", notNullValue()));
+
+        // Assert
+        verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(baseUsername), any(), eq(userToken), eq(request)); // First attempt
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(finalUsername), any(), eq(userToken), eq(request)); // Second attempt
+        verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
+        verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(this.jwtUserDetailsService).loadUserByUsername(finalUsername.value());
+        verify(this.securityJwtTokenUtils).createJwtAccessToken(newUser.getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtils).createJwtRefreshToken(newUser.getJwtTokenCreationParams());
+        verify(this.baseUsersSessionsService).save(eq(newUser), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
+        verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
+        verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
+        verify(this.sessionRegistry).register(new Session(finalUsername, accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
 
