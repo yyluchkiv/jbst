@@ -70,6 +70,22 @@ public record JwtUser(
         return true;
     }
 
+    public static JwtUser hardcodedMagicLink() {
+        return new JwtUser(
+                UserId.hardcoded(),
+                UserCreationOption.MAGICLINK,
+                Username.hardcoded(),
+                Password.hardcoded(),
+                UKRAINE,
+                new HashSet<>(),
+                Email.hardcoded(),
+                "",
+                false,
+                UserEmailDetails.unnecessary(),
+                new HashMap<>()
+        );
+    }
+
     public static JwtUser hardcoded() {
         return hardcoded(
                 getSimpleGrantedAuthorities("user")

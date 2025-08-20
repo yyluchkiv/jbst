@@ -99,15 +99,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            System.out.println("R4: " + request);
             var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
-            System.out.println("R5: " + request);
             if (isNull(user)) {
                 var created = false;
-                var index = 0;
+                var index = -1;
                 var password = Password.of(this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20)));
                 while (!created) {
-                    var username = (index == 0) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
+                    var username = (index == -1) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
                     try {
                         user = this.usersRepository.saveAsMagicLinkOrThrow(
                                 username,
