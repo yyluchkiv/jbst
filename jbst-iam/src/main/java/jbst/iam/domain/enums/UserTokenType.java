@@ -2,8 +2,7 @@ package jbst.iam.domain.enums;
 
 import jbst.foundation.domain.time.TimeAmount;
 
-import static java.time.temporal.ChronoUnit.HOURS;
-import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.*;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 
 public enum UserTokenType {
@@ -35,6 +34,6 @@ public enum UserTokenType {
             return getFutureRange(new TimeAmount(10, MINUTES)).to();
         }
         // fallback
-        return getFutureRange(new TimeAmount(5, MINUTES)).to();
+        return getFutureRange(new TimeAmount(1, SECONDS)).to();
     }
 }
