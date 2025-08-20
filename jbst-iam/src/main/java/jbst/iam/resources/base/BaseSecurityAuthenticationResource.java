@@ -13,6 +13,7 @@ import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.exceptions.LoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.services.AuthenticationService;
+import jbst.iam.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,8 @@ public class BaseSecurityAuthenticationResource {
 
     // Services
     private final AuthenticationService authenticationService;
+    // Validators
+    private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
 
     @PostMapping("/login/standard")
     @ResponseStatus(HttpStatus.OK)
@@ -47,7 +50,7 @@ public class BaseSecurityAuthenticationResource {
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws LoginException {
-
+        this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
         return this.authenticationService.asMagicLink(request, httpRequest, httpResponse);
     }
 
