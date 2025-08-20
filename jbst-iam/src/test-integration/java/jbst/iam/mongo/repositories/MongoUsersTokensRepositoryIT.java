@@ -74,15 +74,15 @@ class MongoUsersTokensRepositoryIT extends TestsJbstJbstConfigurationMongoReposi
         assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNotNull();
         assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNotNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.random(), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.random(), PASSWORD_RESET))).isNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.of("username1@gmail.com"), EMAIL_CONFIRMATION))).isNotNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.of("username1@gmail.com"), PASSWORD_RESET))).isNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.of("username2@gmail.com"), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.of("username2@gmail.com"), PASSWORD_RESET))).isNotNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.of("username3@gmail.com"), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.of("username5@gmail.com"), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByEmailValidOrNull(new RequestUserToken(Email.of("username6@gmail.com"),EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.random(), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.random(), PASSWORD_RESET))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username1@gmail.com"), EMAIL_CONFIRMATION))).isNotNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username1@gmail.com"), PASSWORD_RESET))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username2@gmail.com"), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username2@gmail.com"), PASSWORD_RESET))).isNotNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username3@gmail.com"), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username5@gmail.com"), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username6@gmail.com"),EMAIL_CONFIRMATION))).isNull();
     }
 
     @Test

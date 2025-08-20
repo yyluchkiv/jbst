@@ -1,8 +1,7 @@
 package jbst.iam.domain.dto.requests;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import jbst.foundation.domain.base.Email;
+import jbst.iam.domain.enums.UserTokenType;
 
 public record RequestUserRegistrationMagicLink(
         @Email.ValidEmail Email email
@@ -17,6 +16,13 @@ public record RequestUserRegistrationMagicLink(
     public static RequestUserRegistrationMagicLink random() {
         return new RequestUserRegistrationMagicLink(
                 Email.random()
+        );
+    }
+
+    public RequestUserToken asRequestUserToken() {
+        return new RequestUserToken(
+                this.email,
+                UserTokenType.MAGIC_LINK
         );
     }
 }

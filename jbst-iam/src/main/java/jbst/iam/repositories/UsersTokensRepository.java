@@ -6,7 +6,7 @@ import jbst.iam.domain.identifiers.TokenId;
 
 public interface UsersTokensRepository {
     UserToken findByValueAsAny(String value);
-    UserToken findByEmailValidOrNull(RequestUserToken request);
+    UserToken findByUserTokenValidOrNull(RequestUserToken request);
     void cleanupExpired();
     void cleanupUsed();
     TokenId saveAs(UserToken token);

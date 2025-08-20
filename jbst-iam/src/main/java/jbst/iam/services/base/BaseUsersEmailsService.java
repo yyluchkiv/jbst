@@ -22,7 +22,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private final JbstProperties jbstProperties;
 
     @Override
-    public void executeMagicLinkEmail(UserToken userToken) {
+    public void executeMagicLink(UserToken userToken) {
         var emailHTML = this.userEmailUtils.getMagicLinkHTML(userToken);
         this.emailService.sendHTML(emailHTML);
     }

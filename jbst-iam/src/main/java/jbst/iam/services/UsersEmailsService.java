@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 
 public interface UsersEmailsService {
     @Async
-    void executeMagicLinkEmail(UserToken userToken);
+    void executeMagicLink(UserToken userToken);
     @Async
     void executeEmailConfirmation(UserToken userToken);
     @Async

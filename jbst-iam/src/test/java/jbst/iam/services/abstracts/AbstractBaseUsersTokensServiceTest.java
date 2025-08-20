@@ -148,7 +148,7 @@ class AbstractBaseUsersTokensServiceTest {
     void getOrCreateTest(UserToken foundUserToken) {
         // Arrange
         var request = RequestUserToken.hardcoded();
-        when(this.usersTokensRepository.findByEmailValidOrNull(request)).thenReturn(foundUserToken);
+        when(this.usersTokensRepository.findByUserTokenValidOrNull(request)).thenReturn(foundUserToken);
         var savedUserToken = UserToken.random();
         when(this.usersTokensRepository.saveAs(request)).thenReturn(savedUserToken);
 
@@ -156,7 +156,7 @@ class AbstractBaseUsersTokensServiceTest {
         var actual = this.componentUnderTest.getOrCreate(request);
 
         // Arrange
-        verify(this.usersTokensRepository).findByEmailValidOrNull(request);
+        verify(this.usersTokensRepository).findByUserTokenValidOrNull(request);
         if (nonNull(foundUserToken)) {
             verify(this.usersTokensRepository, never()).saveAs(request);
             assertThat(actual).isEqualTo(foundUserToken);

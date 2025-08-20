@@ -76,12 +76,11 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
 
     @Override
     public UserToken getOrCreate(RequestUserToken request) {
-        var token = this.usersTokensRepository.findByEmailValidOrNull(request);
+        var token = this.usersTokensRepository.findByUserTokenValidOrNull(request);
         if (nonNull(token)) {
             return token;
         } else {
             return this.usersTokensRepository.saveAs(request);
         }
     }
-
 }

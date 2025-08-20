@@ -23,7 +23,7 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
-    default UserToken findByEmailValidOrNull(RequestUserToken request) {
+    default UserToken findByUserTokenValidOrNull(RequestUserToken request) {
         var entity = this.findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
                 request.email(),
                 request.type(),

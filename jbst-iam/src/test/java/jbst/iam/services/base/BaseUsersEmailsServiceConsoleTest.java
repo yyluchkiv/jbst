@@ -152,9 +152,9 @@ class BaseUsersEmailsServiceConsoleTest {
 
     @Disabled
     @Test
-    void executeMagicLinkEmail() {
+    void executeMagicLink() {
         // Act
-        this.componentUnderTest.executeMagicLinkEmail(
+        this.componentUnderTest.executeMagicLink(
                 UserToken.hardcodedMagicLink()
         );
 
