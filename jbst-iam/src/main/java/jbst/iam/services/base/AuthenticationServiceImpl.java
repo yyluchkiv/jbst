@@ -2,7 +2,8 @@ package jbst.iam.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
@@ -10,6 +11,7 @@ import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
+import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
@@ -36,6 +38,7 @@ import org.springframework.stereotype.Service;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.getUserProcess;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
@@ -68,33 +71,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asStandard(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            var username = request.username();
-            var password = request.password();
-            LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Authentication as-'Standard' attempt", STARTED));
-
-            var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
-            var authentication = this.authenticationManager.authenticate(authenticationToken);
-
-            var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
-            if (!user.creationOption().isStandard()) {
-                throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
-            }
-
-            var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
-            var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
-
-            this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
-
-            this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
-            this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Authentication as-'Standard' attempt", COMPLETED));
-
-            this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
-
-            return this.currentSessionAssistant.getCurrentClientUser();
+            return this.authenticate(
+                    request.username(),
+                    request.password(),
+                    UserCreationOption.STANDARD,
+                    httpRequest,
+                    httpResponse
+            );
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(
@@ -175,7 +158,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 if (nonNull(session)) {
                     session.invalidate();
                 }
-                LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Logout Attempt", COMPLETED));
+                LOGGER.debug(getUserProcess(username, "Logout Attempt", COMPLETED));
             }
         }
     }
@@ -195,4 +178,40 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    public CurrentClientUser authenticate(
+            Username username,
+            Password password,
+            UserCreationOption userCreationOption,
+            HttpServletRequest httpRequest,
+            HttpServletResponse httpResponse
+    ) {
+        LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), STARTED));
+
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
+        var authentication = this.authenticationManager.authenticate(authenticationToken);
+
+        var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
+        if (!user.creationOption().isStandard()) {
+            throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
+        }
+
+        var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+
+        this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
+
+        this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
+        this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), COMPLETED));
+
+        this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
+
+        return this.currentSessionAssistant.getCurrentClientUser();
+    }
 }

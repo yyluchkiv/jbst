@@ -34,6 +34,10 @@ public enum UserCreationOption implements EnumValue<String> {
         return this.value;
     }
 
+    public boolean is(UserCreationOption option) {
+        return this.equals(option);
+    }
+
     public boolean isStandard() {
         return STANDARD.equals(this);
     }
