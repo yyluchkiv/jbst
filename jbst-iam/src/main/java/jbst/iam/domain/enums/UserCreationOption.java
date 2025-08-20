@@ -10,7 +10,8 @@ import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 
 @AllArgsConstructor
 public enum UserCreationOption implements EnumValue<String> {
-    STANDARD("Standard");
+    STANDARD("Standard"),
+    MAGICLINK("MagicLink");
 
     private final String value;
 
@@ -34,7 +35,11 @@ public enum UserCreationOption implements EnumValue<String> {
     }
 
     public boolean isStandard() {
-        return UserCreationOption.STANDARD.equals(this);
+        return STANDARD.equals(this);
+    }
+
+    public boolean isMagicLink() {
+        return MAGICLINK.equals(this);
     }
 
     @Override

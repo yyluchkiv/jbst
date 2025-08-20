@@ -77,7 +77,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
             if (!user.creationOption().isStandard()) {
-                throw new BadCredentialsException("Unexpected user creation option");
+                throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
             }
 
             var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
@@ -113,14 +113,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
             if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
-                throw new LoginException("Invalid or expired magic link token");
+                throw new LoginException("Invalid magic link token: %s".formatted(token.value()));
+            }
+
+            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+            if (nonNull(user) && !user.creationOption().isMagicLink()) {
+                throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
             }
 
             // Mark token as used
             this.usersTokensRepository.saveAs(userToken.withUsed(true));
 
             // Find user by email
-            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+
             if (user == null) {
                 throw new LoginException("User not found for magic link token");
             }
