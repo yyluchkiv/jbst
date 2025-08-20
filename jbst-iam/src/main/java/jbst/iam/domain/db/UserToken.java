@@ -86,4 +86,8 @@ public record UserToken(
     public boolean isExpired() {
         return isPast(this.expiryTimestamp);
     }
+
+    public boolean isInvalid(UserTokenType expected) {
+        return !this.type.equals(expected) || this.used || this.isExpired();
+    }
 }

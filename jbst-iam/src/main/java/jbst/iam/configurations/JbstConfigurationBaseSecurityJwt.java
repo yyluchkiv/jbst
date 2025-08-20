@@ -170,8 +170,8 @@ public class JbstConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketM
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
                 .authorizeHttpRequests(authorizeHttpRequests -> {
                     authorizeHttpRequests
-                            .requestMatchers(POST, basePathPrefix + "/authentication/authenticate/standard").permitAll()
-                            .requestMatchers(POST, basePathPrefix + "/authentication/authenticate/magic-link").permitAll()
+                            .requestMatchers(POST, basePathPrefix + "/authentication/login/standard").permitAll()
+                            .requestMatchers(POST, basePathPrefix + "/authentication/login/magic-link").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                             .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()

@@ -135,7 +135,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                        post("/authentication/authenticate/standard")
+                        post("/authentication/login/standard")
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -177,7 +177,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                        post("/authentication/authenticate/standard")
+                        post("/authentication/login/standard")
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )

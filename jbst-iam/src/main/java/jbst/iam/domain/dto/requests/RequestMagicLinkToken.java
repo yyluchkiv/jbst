@@ -7,7 +7,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record RequestMagicLinkToken(
         @Schema(type = "string")
-        @NotBlank String token
+        @NotBlank String value
 ) {
 
     public static RequestMagicLinkToken hardcoded() {

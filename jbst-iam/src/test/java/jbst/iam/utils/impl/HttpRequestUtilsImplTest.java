@@ -38,23 +38,23 @@ class HttpRequestUtilsImplTest {
 
     private static Stream<Arguments> authenticationAuthenticateStandardEndpointCases() {
         return Stream.of(
-                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/standard", false),
-                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/standard", false),
-                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/standard", true),
-                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/standard1", false),
-                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/standard1", false),
-                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/standard1", false)
+                Arguments.of("GET", "/api/jbst/security/authentication/login/standard", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/standard", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/standard", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/login/standard1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/standard1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/standard1", false)
         );
     }
 
     private static Stream<Arguments> authenticationAuthenticateMagicLinkEndpointCases() {
         return Stream.of(
-                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/magic-link", false),
-                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/magic-link", false),
-                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/magic-link", true),
-                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/magic-link1", false),
-                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/magic-link1", false),
-                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/magic-link1", false)
+                Arguments.of("GET", "/api/jbst/security/authentication/login/magic-link", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/magic-link", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/magic-link", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/login/magic-link1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/magic-link1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/magic-link1", false)
         );
     }
 
@@ -122,7 +122,7 @@ class HttpRequestUtilsImplTest {
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn("POST");
         when(cachedRequest.getCachedPayload()).thenReturn(CachedPayload.hardcoded());
-        when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/authenticate/standard");
+        when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/login/standard");
 
         // Act
         this.componentUnderTest.cachePayload(cachedRequest);

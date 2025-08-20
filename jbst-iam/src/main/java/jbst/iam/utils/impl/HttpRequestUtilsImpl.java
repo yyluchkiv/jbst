@@ -43,12 +43,12 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
 
     @Override
     public boolean isAuthenticationAuthenticateStandardEndpoint(HttpServletRequest request) {
-        return isPOST(request) && this.isEndpoint(request, "/authentication/authenticate/standard");
+        return isPOST(request) && this.isEndpoint(request, "/authentication/login/standard");
     }
 
     @Override
     public boolean isAuthenticationAuthenticateMagicLinkEndpoint(HttpServletRequest request) {
-        return isPOST(request) && this.isEndpoint(request, "/authentication/authenticate/magic-link");
+        return isPOST(request) && this.isEndpoint(request, "/authentication/login/magic-link");
     }
 
     @Override

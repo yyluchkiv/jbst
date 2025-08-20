@@ -12,6 +12,7 @@ import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
+import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.iam.domain.exceptions.LoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
@@ -21,7 +22,6 @@ import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.AuthenticationService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
-import jbst.iam.services.UsersEmailsService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
@@ -33,8 +33,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -57,7 +55,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
-    private final UsersEmailsService usersEmailsService;
     // Repositories
     private final UsersRepository usersRepository;
     private final UsersTokensRepository usersTokensRepository;
@@ -112,42 +109,52 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public CurrentClientUser asMagicLink(RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
+    public CurrentClientUser asMagicLink(RequestMagicLinkToken token, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+        try {
+            // Find valid magic link token
+            var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
 
-        // Find valid magic link token
-        var userToken = this.usersTokensRepository.findByValueAsAny(request.token());
+            if (isNull(userToken) || !userToken.type().equals(UserTokenType.MAGIC_LINK) || userToken.used() || userToken.isExpired()) {
+                throw new LoginException("Invalid or expired magic link token");
+            }
 
-        if (isNull(userToken) || !userToken.type().equals(UserTokenType.MAGIC_LINK) || userToken.used() || userToken.isExpired()) {
-            throw new TokenUnauthorizedException("Invalid or expired magic link token");
+            // Mark token as used
+            this.usersTokensRepository.saveAs(userToken.withUsed(true));
+
+            // Find user by email
+            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+            if (user == null) {
+                throw new LoginException("User not found for magic link token");
+            }
+
+            // Generate JWT tokens
+            var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+            var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+
+            // Save session
+            this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
+
+            // Set cookies
+            this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
+            this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
+
+            // Register session
+            this.sessionRegistry.register(new Session(user.username(), accessToken, refreshToken));
+
+            LOGGER.debug("User authenticated via magic link: {}", user.username().value());
+
+            // Return current client user
+            return this.currentSessionAssistant.getCurrentClientUser();
+        } catch (BadCredentialsException ex) {
+            this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
+                    new EventAuthenticationMagicLinkFailure(
+                            token,
+                            getClientIpAddr(httpRequest),
+                            new UserAgentHeader(httpRequest)
+                    )
+            );
+            throw new LoginException(ex.getMessage());
         }
-
-        // Mark token as used
-        this.usersTokensRepository.saveAs(userToken.withUsed(true));
-
-        // Find user by email
-        var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
-        if (user == null) {
-            throw new TokenUnauthorizedException("User not found for magic link token");
-        }
-
-        // Generate JWT tokens
-        var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
-        var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
-
-        // Save session
-        this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
-
-        // Set cookies
-        this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
-        this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
-
-        // Register session
-        this.sessionRegistry.register(new Session(user.username(), accessToken, refreshToken));
-
-        LOGGER.debug("User authenticated via magic link: {}", user.username().value());
-
-        // Return current client user
-        return this.currentSessionAssistant.getCurrentClientUser();
     }
 
     @Override

@@ -30,20 +30,24 @@ public class BaseSecurityAuthenticationResource {
     // Services
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/authenticate/standard")
+    @PostMapping("/login/standard")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser login(@RequestBody @Valid RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser loginStandard(
+            @RequestBody @Valid RequestUserLogin request,
+            HttpServletRequest httpRequest,
+            HttpServletResponse httpResponse
+    ) throws LoginException {
         return this.authenticationService.asStandard(request, httpRequest, httpResponse);
     }
 
     // TODO [YYL, MagicLink]
-    @PostMapping("/authenticate/magic-link")
+    @PostMapping("/login/magic-link")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser authenticateWithMagicLink(
+    public CurrentClientUser loginMagicLink(
             @RequestBody @Valid RequestMagicLinkToken request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
-    ) throws TokenUnauthorizedException {
+    ) throws LoginException {
         return this.authenticationService.asMagicLink(request, httpRequest, httpResponse);
     }
 
