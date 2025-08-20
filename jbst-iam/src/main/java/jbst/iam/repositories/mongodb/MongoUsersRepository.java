@@ -98,7 +98,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return entity.userId();
     }
 
-    default JwtUser saveAsMagicLinkOrThrow(Username username, Password password, UserToken userToken, RequestMagicLinkToken request) throws UsernameAlreadyExistException {
+    default JwtUser saveAsMagicLinkOrThrow(Username username, Password password, Email email, RequestMagicLinkToken request) throws UsernameAlreadyExistException {
         var exist = this.existsByUsername(username);
         if (exist) {
             throw new UsernameAlreadyExistException(username);
@@ -107,7 +107,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
                     MongoDbUser.magicLink(
                             username,
                             password,
-                            userToken,
+                            email,
                             request
                     )
             ).asJwtUser();

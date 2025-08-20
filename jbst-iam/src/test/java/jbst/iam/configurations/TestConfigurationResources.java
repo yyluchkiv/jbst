@@ -51,12 +51,11 @@ public class TestConfigurationResources {
                 this.currentSessionAssistant(),
                 this.jwtUserDetailsAssistant(),
                 this.sessionRegistry(),
+                this.baseUsersService(),
                 this.baseUsersSessionsService(),
                 this.tokenService(),
-                this.usersRepository(),
                 this.usersTokensRepository(),
                 this.tokensProvider(),
-                this.bCryptPasswordEncoder(),
                 this.securityJwtTokenUtils(),
                 this.securityJwtEventsPublisher()
         );

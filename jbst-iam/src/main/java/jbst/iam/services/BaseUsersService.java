@@ -7,7 +7,7 @@ import jbst.iam.domain.jwt.JwtUser;
 
 public interface BaseUsersService {
     JwtUser findByEmail(Email email);
-    JwtUser safeCreateMagicLinkUser(UserToken userToken, RequestMagicLinkToken request);
+    JwtUser safeCreateMagicLinkUser(Email email, RequestMagicLinkToken request);
     void updateUser1(JwtUser user, RequestUserUpdate1 request);
     void updateUser2(JwtUser user, RequestUserUpdate2 request);
     void changePasswordRequired(JwtUser user, RequestUserChangePasswordBasic request);

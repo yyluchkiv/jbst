@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
@@ -20,9 +19,9 @@ import jbst.iam.domain.exceptions.LoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.AuthenticationService;
+import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
@@ -35,16 +34,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.getUserProcess;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 @Slf4j
 @Service
@@ -59,15 +55,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // Sessions
     private final SessionRegistry sessionRegistry;
     // Services
+    private final BaseUsersService baseUsersService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
-    private final UsersRepository usersRepository;
     private final UsersTokensRepository usersTokensRepository;
     // Tokens
     private final TokensProvider tokensProvider;
-    // Password
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
     // Publishers
@@ -96,30 +90,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
-    // WARNING: consider simplifying to extract into UserService.safeCreateMagicLinkUser()
     @Override
     public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
-            if (isNull(user)) {
-                var created = false;
-                var index = -1;
-                var password = Password.of(this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20)));
-                while (!created) {
-                    var username = (index == -1) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
-                    try {
-                        user = this.usersRepository.saveAsMagicLinkOrThrow(
-                                username,
-                                password,
-                                userToken,
-                                request
-                        );
-                        created = true;
-                    } catch (UsernameAlreadyExistException ex) {
-                        index++;
-                    }
-                }
-            }
+            var user = this.baseUsersService.safeCreateMagicLinkUser(userToken.email(), request);
             this.usersTokensRepository.saveAs(userToken.withUsed(true));
             return this.asAuthentication(
                     UserCreationOption.MAGICLINK,

@@ -33,19 +33,19 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     }
 
     @Override
-    public JwtUser safeCreateMagicLinkUser(UserToken userToken, RequestMagicLinkToken request) {
-        var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+    public JwtUser safeCreateMagicLinkUser(Email email, RequestMagicLinkToken request) {
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
         if (isNull(user)) {
             var created = false;
             var index = -1;
             var password = Password.of(this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20)));
             while (!created) {
-                var username = (index == -1) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
+                var username = (index == -1) ? email.getUsername() : new Username(email.getUsername().value() + index);
                 try {
                     user = this.usersRepository.saveAsMagicLinkOrThrow(
                             username,
                             password,
-                            userToken,
+                            email,
                             request
                     );
                     created = true;

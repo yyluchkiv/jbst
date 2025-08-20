@@ -99,14 +99,13 @@ class AbstractBaseUsersServiceTest {
     @Test
     void safeCreateMagicLinkUserAlreadyExistsTest() {
         // Arrange
-        var userToken = UserToken.hardcodedMagicLink();
         var request = RequestMagicLinkToken.hardcoded();
-        var email = userToken.email();
+        var email = Email.hardcoded();
         var user = JwtUser.hardcodedMagicLink();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(userToken, request);
+        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
@@ -116,45 +115,43 @@ class AbstractBaseUsersServiceTest {
     @Test
     void safeCreateMagicLinkUserFirstIterationTest() throws UsernameAlreadyExistException {
         // Arrange
-        var userToken = UserToken.hardcodedMagicLink();
         var request = RequestMagicLinkToken.hardcoded();
-        var email = userToken.email();
+        var email = Email.hardcoded();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var user = JwtUser.hardcodedMagicLink();
         var username = email.getUsername();
-        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(userToken), eq(request))).thenReturn(user);
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(email), eq(request))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(userToken, request);
+        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(userToken), eq(request));
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(email), eq(request));
     }
 
     @Test
     void safeCreateMagicLinkUserSecondIterationTest() throws UsernameAlreadyExistException {
         // Arrange
-        var userToken = UserToken.hardcodedMagicLink();
         var request = RequestMagicLinkToken.hardcoded();
-        var email = userToken.email();
+        var email = Email.hardcoded();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var user = JwtUser.hardcodedMagicLink();
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
 
-        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(userToken), eq(request))).thenThrow(new UsernameAlreadyExistException(baseUsername));
-        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(userToken), eq(request))).thenReturn(user);
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request))).thenThrow(new UsernameAlreadyExistException(baseUsername));
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(userToken, request);
+        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(userToken), eq(request));
-        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(userToken), eq(request));
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(email), eq(request));
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request));
     }
 
     @Test

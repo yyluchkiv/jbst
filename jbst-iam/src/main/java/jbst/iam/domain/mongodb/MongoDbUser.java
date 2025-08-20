@@ -125,14 +125,14 @@ public class MongoDbUser {
         this.attributes = user.attributes();
     }
 
-    public static MongoDbUser magicLink(Username username, Password password, UserToken userToken, RequestMagicLinkToken request) {
+    public static MongoDbUser magicLink(Username username, Password password, Email email, RequestMagicLinkToken request) {
         return new MongoDbUser(
                 UserCreationOption.MAGICLINK,
                 username,
                 password,
                 request.zoneId(),
                 new HashSet<>(),
-                userToken.email(),
+                email,
                 false,
                 UserEmailDetails.unnecessary()
         );
