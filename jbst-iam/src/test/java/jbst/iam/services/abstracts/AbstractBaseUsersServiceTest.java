@@ -97,7 +97,7 @@ class AbstractBaseUsersServiceTest {
     }
 
     @Test
-    void safeCreateMagicLinkUserAlreadyExistsTest() {
+    void safeSaveAlreadyExistsTest() {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
         var email = Email.hardcoded();
@@ -105,7 +105,7 @@ class AbstractBaseUsersServiceTest {
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
+        var actualUser = this.componentUnderTest.safeSave(email, request);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
@@ -113,7 +113,7 @@ class AbstractBaseUsersServiceTest {
     }
 
     @Test
-    void safeCreateMagicLinkUserFirstIterationTest() throws UsernameAlreadyExistException {
+    void safeSaveFirstIterationTest() throws UsernameAlreadyExistException {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
         var email = Email.hardcoded();
@@ -123,7 +123,7 @@ class AbstractBaseUsersServiceTest {
         when(this.usersRepository.saveAsOrThrow(eq(username), any(Password.class), eq(email), eq(request))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
+        var actualUser = this.componentUnderTest.safeSave(email, request);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);
@@ -132,7 +132,7 @@ class AbstractBaseUsersServiceTest {
     }
 
     @Test
-    void safeCreateMagicLinkUserSecondIterationTest() throws UsernameAlreadyExistException {
+    void safeSaveSecondIterationTest() throws UsernameAlreadyExistException {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
         var email = Email.hardcoded();
@@ -145,7 +145,7 @@ class AbstractBaseUsersServiceTest {
         when(this.usersRepository.saveAsOrThrow(eq(finalUsername), any(Password.class), eq(email), eq(request))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(email, request);
+        var actualUser = this.componentUnderTest.safeSave(email, request);
 
         // Assert
         assertThat(actualUser).isEqualTo(user);

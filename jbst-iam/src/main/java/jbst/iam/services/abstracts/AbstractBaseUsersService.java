@@ -4,7 +4,10 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
-import jbst.iam.domain.dto.requests.*;
+import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
+import jbst.iam.domain.dto.requests.RequestUserUpdate1;
+import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
@@ -14,6 +17,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.time.ZoneId;
 
 import static java.util.Objects.isNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
@@ -33,7 +38,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     }
 
     @Override
-    public JwtUser safeCreateMagicLinkUser(Email email, RequestMagicLinkToken request) {
+    public JwtUser safeSave(UserCreationOption creationOption, Email email, ZoneId zoneId) {
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
         if (isNull(user)) {
             var created = false;
@@ -43,11 +48,11 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 var username = (index == -1) ? email.getUsername() : new Username(email.getUsername().value() + index);
                 try {
                     user = this.usersRepository.saveAsOrThrow(
-                            UserCreationOption.MAGICLINK,
+                            creationOption,
                             username,
                             password,
                             email,
-                            request.zoneId()
+                            zoneId
                     );
                     created = true;
                 } catch (UsernameAlreadyExistException ex) {
