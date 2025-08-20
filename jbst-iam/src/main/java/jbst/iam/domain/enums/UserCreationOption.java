@@ -38,14 +38,6 @@ public enum UserCreationOption implements EnumValue<String> {
         return this.equals(option);
     }
 
-    public boolean isStandard() {
-        return STANDARD.equals(this);
-    }
-
-    public boolean isMagicLink() {
-        return MAGICLINK.equals(this);
-    }
-
     @Override
     public String toString() {
         return this.value;

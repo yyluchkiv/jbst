@@ -1,7 +1,6 @@
 package jbst.iam.postgres.repositories;
 
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.base.Username;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.UserToken;
@@ -53,8 +52,6 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstJbstConfigurationPostgres
 
         var notExistentTokenId = entity(TokenId.class);
         var notExistentToken = RandomUtility.randomString();
-
-        var notExistentUsername = entity(Username.class);
 
         var savedToken = saved.get(0);
         var existentTokenId = savedToken.tokenId();

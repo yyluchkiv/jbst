@@ -54,6 +54,8 @@ import static org.springframework.http.HttpMethod.*;
  * </a>
  */
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling
+@SuppressWarnings("deprecation")
+// TODO [YYL, deprecation] fixme
 @Configuration
 @ComponentScan({
         "jbst.iam.crons",
@@ -223,6 +225,8 @@ public class JbstConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketM
                 .withSockJS();
     }
 
+    // TODO [YYL, deprecation] fixme
+    @SuppressWarnings("deprecation")
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
         if (!this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().isEnabled()) {

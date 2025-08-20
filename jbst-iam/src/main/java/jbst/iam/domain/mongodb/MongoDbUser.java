@@ -15,7 +15,6 @@ import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
-import jbst.iam.domain.postgres.db.PostgresDbUser;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

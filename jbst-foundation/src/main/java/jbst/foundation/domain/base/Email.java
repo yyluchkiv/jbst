@@ -38,6 +38,7 @@ public record Email(@NotNull String value) {
         return of(JbstConstants.Strings.UNKNOWN + "@" + JbstConstants.Domains.HARDCODED);
     }
 
+    @NotNull
     @JsonValue
     @Override
     public String toString() {

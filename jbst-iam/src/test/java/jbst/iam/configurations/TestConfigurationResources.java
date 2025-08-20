@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.mockito.Mockito.mock;
@@ -55,6 +56,7 @@ public class TestConfigurationResources {
                 this.usersRepository(),
                 this.usersTokensRepository(),
                 this.tokensProvider(),
+                this.bCryptPasswordEncoder(),
                 this.securityJwtTokenUtils(),
                 this.securityJwtEventsPublisher()
         );
@@ -158,6 +160,14 @@ public class TestConfigurationResources {
     @Bean
     TokensProvider tokensProvider() {
         return mock(TokensProvider.class);
+    }
+
+    // =================================================================================================================
+    // Passwords
+    // =================================================================================================================
+    @Bean
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return mock(BCryptPasswordEncoder.class);
     }
 
     // =================================================================================================================

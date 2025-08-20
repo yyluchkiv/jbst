@@ -190,7 +190,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var authentication = this.authenticationManager.authenticate(authenticationToken);
 
         var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
-        if (!user.creationOption().isStandard()) {
+        if (!user.creationOption().is(userCreationOption)) {
             throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
         }
 
