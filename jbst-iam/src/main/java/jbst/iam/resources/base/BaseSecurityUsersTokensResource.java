@@ -53,7 +53,6 @@ public class BaseSecurityUsersTokensResource {
     // Properties
     private final JbstProperties jbstProperties;
 
-    // TODO [YYL, MagicLink]
     @PostMapping("/magic-link")
     @ResponseStatus(HttpStatus.OK)
     public void magicLink(@RequestBody @Valid RequestUserTokenMagicLink request) throws TooManyRequestsException {
