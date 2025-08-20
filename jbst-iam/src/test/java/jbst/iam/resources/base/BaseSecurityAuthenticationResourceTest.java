@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.exceptions.ExceptionEntityType;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
@@ -122,6 +123,10 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     void authenticateStandardTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
+        when(this.baseAuthenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
+                request.username(),
+                request.password()
+        ));
         var username = request.username();
         var password = request.password();
         var user = JwtUser.hardcoded();
@@ -148,6 +153,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
+        verify(this.baseAuthenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.value(), password.value()));
         verify(this.jwtUserDetailsService).loadUserByUsername(username.value());
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
@@ -164,6 +170,10 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     void authenticateStandardWithInvalidCredentialsTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
+        when(this.baseAuthenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
+                request.username(),
+                request.password()
+        ));
         var username = request.username();
         var password = request.password();
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
@@ -187,6 +197,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.timestamp", Matchers.greaterThan(exceptionEntity.getTimestamp())));
 
         // Assert
+        verify(this.baseAuthenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(authenticationToken);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(any(EventAuthenticationLoginFailure.class));
     }
