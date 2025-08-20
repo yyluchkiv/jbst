@@ -6,7 +6,6 @@ import jbst.iam.domain.dto.requests.RequestUserTokenMagicLink;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 
 public interface BaseUsersTokensService {
-    UserToken magicLink(RequestUserTokenMagicLink request);
     void confirmEmail(String token) throws UserEmailConfirmException;
     UserToken saveAs(RequestUserToken request);
     UserToken getOrCreate(RequestUserToken request);
