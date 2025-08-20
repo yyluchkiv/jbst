@@ -34,6 +34,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
@@ -70,7 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             var username = request.username();
             var password = request.password();
-            LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Login Attempt", STARTED));
+            LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Authentication as-'Standard' attempt", STARTED));
 
             var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
             var authentication = this.authenticationManager.authenticate(authenticationToken);
@@ -90,7 +93,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Login Attempt", COMPLETED));
+            LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Authentication as-'Standard' attempt", COMPLETED));
 
             this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
 
@@ -110,12 +113,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public CurrentClientUser asMagicLink(RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
-        var tokenValue = request.token();
 
         // Find valid magic link token
-        var userToken = this.usersTokensRepository.findByValueAsAny(tokenValue);
+        var userToken = this.usersTokensRepository.findByValueAsAny(request.token());
 
-        if (userToken == null || !userToken.type().equals(UserTokenType.MAGIC_LINK) || userToken.used() || userToken.isExpired()) {
+        if (isNull(userToken) || !userToken.type().equals(UserTokenType.MAGIC_LINK) || userToken.used() || userToken.isExpired()) {
             throw new TokenUnauthorizedException("Invalid or expired magic link token");
         }
 
