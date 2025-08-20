@@ -2,10 +2,10 @@ package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
-import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
-import jbst.iam.domain.dto.requests.RequestUserUpdate1;
-import jbst.iam.domain.dto.requests.RequestUserUpdate2;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.*;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -14,6 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static java.util.Objects.isNull;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 @AllArgsConstructor
 public abstract class AbstractBaseUsersService implements BaseUsersService {
@@ -27,6 +30,30 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     @Override
     public JwtUser findByEmail(Email email) {
         return this.usersRepository.findByEmailAsJwtUserOrNull(email);
+    }
+
+    @Override
+    public void safeCreateMagicLinkUser(UserToken userToken, RequestMagicLinkToken request) {
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+        if (isNull(user)) {
+            var created = false;
+            var index = -1;
+            var password = Password.of(this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20)));
+            while (!created) {
+                var username = (index == -1) ? userToken.email().getUsername() : new Username(userToken.email().getUsername().value() + index);
+                try {
+                    user = this.usersRepository.saveAsMagicLinkOrThrow(
+                            username,
+                            password,
+                            userToken,
+                            request
+                    );
+                    created = true;
+                } catch (UsernameAlreadyExistException ex) {
+                    index++;
+                }
+            }
+        }
     }
 
     @Override
