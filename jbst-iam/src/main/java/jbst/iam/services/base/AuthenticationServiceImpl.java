@@ -96,6 +96,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
             if (isNull(user)) {
+                boolean created = false;
+                while (!created) {
+                    created = true;
+                }
                 // TODO [YYL, MagicLink] create user, generate username based on email
                 user = JwtUser.hardcoded();
                 this.usersTokensRepository.saveAs(userToken.withUsed(true));

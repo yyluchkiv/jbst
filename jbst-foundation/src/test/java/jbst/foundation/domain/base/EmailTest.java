@@ -5,11 +5,23 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EmailTest extends AbstractSerializationDeserializationRunner {
     private static final Email EMAIL = Email.hardcoded();
+
+    private static Stream<Arguments> getUsernameTest() {
+        return Stream.of(
+                Arguments.of(Email.hardcoded(), new Username("tests")),
+                Arguments.of(Email.unknown(), new Username("Unknown"))
+        );
+    }
 
     @Override
     protected String getFileName() {
@@ -59,5 +71,12 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
         // Assert
         assertThat(actual.value()).hasSize(expected);
         assertThat(actual.value().substring(randomLength)).isEqualTo("@" + JbstConstants.Domains.HARDCODED);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getUsernameTest")
+    void getUsernameTest(Email email, Username expected) {
+        // Act + Assert
+        assertThat(email.getUsername()).isEqualTo(expected);
     }
 }

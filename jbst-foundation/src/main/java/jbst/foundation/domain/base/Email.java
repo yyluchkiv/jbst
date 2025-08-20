@@ -44,6 +44,14 @@ public record Email(@NotNull String value) {
         return this.value;
     }
 
+    public Username getUsername() {
+        int at = this.value.indexOf('@');
+        if (at <= 0) {
+            throw new IllegalArgumentException("Invalid email: " + this.value);
+        }
+        return new Username(this.value.substring(0, at));
+    }
+
     @Target({
             ElementType.FIELD,
             ElementType.METHOD
