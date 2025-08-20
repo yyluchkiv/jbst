@@ -2,11 +2,10 @@ package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
-import jbst.iam.domain.dto.requests.RequestUserUpdate1;
-import jbst.iam.domain.dto.requests.RequestUserUpdate2;
+import jbst.iam.domain.dto.requests.*;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -95,6 +94,67 @@ class AbstractBaseUsersServiceTest {
         // Assert
         assertThat(actual).isEqualTo(user);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+    }
+
+    @Test
+    void safeCreateMagicLinkUserAlreadyExistsTest() {
+        // Arrange
+        var userToken = UserToken.hardcodedMagicLink();
+        var request = RequestMagicLinkToken.hardcoded();
+        var email = userToken.email();
+        var user = JwtUser.hardcodedMagicLink();
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
+
+        // Act
+        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(userToken, request);
+
+        // Assert
+        assertThat(actualUser).isEqualTo(user);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+    }
+
+    @Test
+    void safeCreateMagicLinkUserFirstIterationTest() throws UsernameAlreadyExistException {
+        // Arrange
+        var userToken = UserToken.hardcodedMagicLink();
+        var request = RequestMagicLinkToken.hardcoded();
+        var email = userToken.email();
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
+        var user = JwtUser.hardcodedMagicLink();
+        var username = email.getUsername();
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(userToken), eq(request))).thenReturn(user);
+
+        // Act
+        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(userToken, request);
+
+        // Assert
+        assertThat(actualUser).isEqualTo(user);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(username), any(Password.class), eq(userToken), eq(request));
+    }
+
+    @Test
+    void safeCreateMagicLinkUserSecondIterationTest() throws UsernameAlreadyExistException {
+        // Arrange
+        var userToken = UserToken.hardcodedMagicLink();
+        var request = RequestMagicLinkToken.hardcoded();
+        var email = userToken.email();
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
+        var user = JwtUser.hardcodedMagicLink();
+        var baseUsername = email.getUsername();
+        var finalUsername = new Username(baseUsername.value() + "0");
+
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(userToken), eq(request))).thenThrow(new UsernameAlreadyExistException(baseUsername));
+        when(this.usersRepository.saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(userToken), eq(request))).thenReturn(user);
+
+        // Act
+        var actualUser = this.componentUnderTest.safeCreateMagicLinkUser(userToken, request);
+
+        // Assert
+        assertThat(actualUser).isEqualTo(user);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(baseUsername), any(Password.class), eq(userToken), eq(request));
+        verify(this.usersRepository).saveAsMagicLinkOrThrow(eq(finalUsername), any(Password.class), eq(userToken), eq(request));
     }
 
     @Test
