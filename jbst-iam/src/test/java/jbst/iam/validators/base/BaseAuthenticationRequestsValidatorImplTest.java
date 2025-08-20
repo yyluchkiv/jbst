@@ -1,6 +1,9 @@
 package jbst.iam.validators.base;
 
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
+import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,15 +16,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.Username;
 
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -31,8 +33,15 @@ class BaseAuthenticationRequestsValidatorImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
+        UsersTokensRepository usersTokensRepository() {
+            return mock(UsersTokensRepository.class);
+        }
+
+        @Bean
         public BaseAuthenticationRequestsValidator authenticationRequestsValidator() {
-            return new BaseBaseAuthenticationRequestsValidatorImpl();
+            return new BaseBaseAuthenticationRequestsValidatorImpl(
+                    this.usersTokensRepository()
+            );
         }
     }
 
@@ -54,6 +63,9 @@ class BaseAuthenticationRequestsValidatorImplTest {
                 )
         );
     }
+
+    // Repositories
+    private final UsersTokensRepository usersTokensRepository;
 
     private final BaseAuthenticationRequestsValidator componentUnderTest;
 

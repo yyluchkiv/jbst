@@ -50,8 +50,8 @@ public class BaseSecurityAuthenticationResource {
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws LoginException {
-        this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
-        return this.authenticationService.asMagicLink(request, httpRequest, httpResponse);
+        var userToken = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
+        return this.authenticationService.asMagicLink(userToken, httpRequest, httpResponse);
     }
 
     @PostMapping("/logout")

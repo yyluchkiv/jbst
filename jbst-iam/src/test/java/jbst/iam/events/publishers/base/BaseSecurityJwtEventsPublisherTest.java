@@ -17,8 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -57,6 +57,18 @@ class BaseSecurityJwtEventsPublisherTest {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher
         );
+    }
+
+    @Test
+    void publishAuthenticationLoginMagicLinkFailureTest() {
+        // Arrange
+        var event = entity(EventAuthenticationMagicLinkFailure.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLoginMagicLinkFailure(event);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test

@@ -231,6 +231,18 @@ class BaseSecurityJwtEventsSubscriberTest {
     }
 
     @Test
+    void onAuthenticationLoginMagicLinkFailureTest() {
+        // Arrange
+        var event = entity(EventAuthenticationMagicLinkFailure.class);
+
+        // Act
+        this.componentUnderTest.onAuthenticationLoginMagicLinkFailure(event);
+
+        // Assert
+        assertThat(event).isNotNull();
+    }
+
+    @Test
     void onAuthenticationLoginTest() {
         // Arrange
         var event = entity(EventAuthenticationLogin.class);

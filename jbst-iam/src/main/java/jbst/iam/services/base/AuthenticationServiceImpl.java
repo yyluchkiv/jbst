@@ -8,11 +8,10 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
+import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.enums.UserCreationOption;
-import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.iam.domain.exceptions.LoginException;
@@ -93,12 +92,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public CurrentClientUser asMagicLink(RequestMagicLinkToken token, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser asMagicLink(UserToken userToken, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
-            if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
-                throw new LoginException("Invalid magic link token: %s".formatted(token.value()));
-            }
             var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
             if (isNull(user)) {
                 // TODO [YYL, MagicLink] create user, generate username based on email
@@ -115,7 +110,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
                     new EventAuthenticationMagicLinkFailure(
-                            token,
+                            userToken,
                             getClientIpAddr(httpRequest),
                             new UserAgentHeader(httpRequest)
                     )
