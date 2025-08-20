@@ -14,7 +14,9 @@ import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
+import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.iam.domain.exceptions.LoginException;
+import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -70,7 +72,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asStandard(RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            return this.authenticate(
+            return this.asAuthentication(
                     request.username(),
                     request.password(),
                     UserCreationOption.STANDARD,
@@ -92,48 +94,33 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public CurrentClientUser asMagicLink(RequestMagicLinkToken token, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
-        var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
-        if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
-            throw new LoginException("Invalid magic link token: %s".formatted(token.value()));
-        }
-
-        var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
-        if (nonNull(user)) {
-            return this.authenticate(
+        try {
+            var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
+            if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
+                throw new LoginException("Invalid magic link token: %s".formatted(token.value()));
+            }
+            var user = this.usersRepository.findByEmailAsJwtUserOrNull(userToken.email());
+            if (isNull(user)) {
+                // TODO [YYL, MagicLink] create user, generate username based on email
+                user = JwtUser.hardcoded();
+                this.usersTokensRepository.saveAs(userToken.withUsed(true));
+            }
+            return this.asAuthentication(
                     user.username(),
                     user.password(),
                     UserCreationOption.MAGICLINK,
                     httpRequest,
                     httpResponse
             );
-        } else {
-            // Mark token as used
-            this.usersTokensRepository.saveAs(userToken.withUsed(true));
-
-            // Find user by email
-
-            if (user == null) {
-                throw new LoginException("User not found for magic link token");
-            }
-
-            // Generate JWT tokens
-            var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
-            var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
-
-            // Save session
-            this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
-
-            // Set cookies
-            this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
-            this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
-
-            // Register session
-            this.sessionRegistry.register(new Session(user.username(), accessToken, refreshToken));
-
-            LOGGER.debug("User authenticated via magic link: {}", user.username().value());
-
-            // Return current client user
-            return this.currentSessionAssistant.getCurrentClientUser();
+        } catch (BadCredentialsException ex) {
+            this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
+                    new EventAuthenticationMagicLinkFailure(
+                            token,
+                            getClientIpAddr(httpRequest),
+                            new UserAgentHeader(httpRequest)
+                    )
+            );
+            throw new LoginException(ex.getMessage());
         }
     }
 
@@ -175,7 +162,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    public CurrentClientUser authenticate(
+    public CurrentClientUser asAuthentication(
             Username username,
             Password password,
             UserCreationOption userCreationOption,
