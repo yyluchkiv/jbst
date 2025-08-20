@@ -1,5 +1,6 @@
 package jbst.iam.validators.base;
 
+import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,16 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.inv
 public class BaseBaseAuthenticationRequestsValidatorImpl implements BaseAuthenticationRequestsValidator {
 
     @Override
-    public void validateLoginStandard(RequestUserLogin requestUserLogin) {
-        var username = requestUserLogin.username();
-        var password = requestUserLogin.password();
+    public void validateLoginStandard(RequestUserLogin request) {
+        var username = request.username();
+        var password = request.password();
 
         assertNonNullOrThrow(username, invalidAttribute("username"));
         assertNonNullOrThrow(password, invalidAttribute("password"));
+    }
+
+    @Override
+    public void validateLoginMagicLink(RequestMagicLinkToken request) {
+
     }
 }
