@@ -96,6 +96,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
+    // WARNING: consider simplifying to extract into UserService.safeCreateMagicLinkUser()
     @Override
     public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
