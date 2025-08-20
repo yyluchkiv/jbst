@@ -71,9 +71,9 @@ class BaseAuthenticationRequestsValidatorImplTest {
 
     @ParameterizedTest
     @MethodSource("validateLoginStandardTest")
-    void validateLoginStandardTest(RequestUserLogin requestUserLogin, String exceptionMessage) {
+    void validateLoginStandardTest(RequestUserLogin request, String exceptionMessage) {
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateLoginStandard(requestUserLogin));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateLoginStandard(request));
 
         // Assert
         if (nonNull(exceptionMessage)) {
