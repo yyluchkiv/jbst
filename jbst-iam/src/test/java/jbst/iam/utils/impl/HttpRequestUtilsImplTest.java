@@ -47,6 +47,28 @@ class HttpRequestUtilsImplTest {
         );
     }
 
+    private static Stream<Arguments> authenticationAuthenticateStandardEndpointCases() {
+        return Stream.of(
+                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/standard", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/standard", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/standard", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/standard1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/standard1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/standard1", false)
+        );
+    }
+
+    private static Stream<Arguments> authenticationAuthenticateMagicLinkEndpointCases() {
+        return Stream.of(
+                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/magic-link", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/magic-link", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/magic-link", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/authenticate/magic-link1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/authenticate/magic-link1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/authenticate/magic-link1", false)
+        );
+    }
+
     private static Stream<Arguments> authenticationRefreshTokenEndpointCases() {
         return Stream.of(
                 Arguments.of("GET", "/api/jbst/security/authentication/refreshToken", false),
@@ -164,6 +186,36 @@ class HttpRequestUtilsImplTest {
 
         // Act
         var actual = this.componentUnderTest.isAuthenticationLoginEndpoint(cachedRequest);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("authenticationAuthenticateStandardEndpointCases")
+    void isAuthenticationAuthenticateStandardEndpointTest(String method, String requestURI, boolean expected) {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn(method);
+        when(cachedRequest.getRequestURI()).thenReturn(requestURI);
+
+        // Act
+        var actual = this.componentUnderTest.isAuthenticationAuthenticateStandardEndpoint(cachedRequest);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("authenticationAuthenticateMagicLinkEndpointCases")
+    void isAuthenticationAuthenticateMagicLinkEndpointTest(String method, String requestURI, boolean expected) {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn(method);
+        when(cachedRequest.getRequestURI()).thenReturn(requestURI);
+
+        // Act
+        var actual = this.componentUnderTest.isAuthenticationAuthenticateMagicLinkEndpoint(cachedRequest);
 
         // Assert
         assertThat(actual).isEqualTo(expected);
