@@ -111,10 +111,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public CurrentClientUser asMagicLink(RequestMagicLinkToken token, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
         try {
-            // Find valid magic link token
             var userToken = this.usersTokensRepository.findByValueAsAny(token.value());
-
-            if (isNull(userToken) || !userToken.type().equals(UserTokenType.MAGIC_LINK) || userToken.used() || userToken.isExpired()) {
+            if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
                 throw new LoginException("Invalid or expired magic link token");
             }
 
