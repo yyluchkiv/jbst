@@ -44,8 +44,8 @@ public class BaseSecurityUsersTokensResource {
     // Services
     private final RateLimitsService rateLimitsService;
     private final BaseUsersTokensService baseUsersTokensService;
-    private final UsersEmailsService usersEmailsService;
     private final BaseUsersService baseUsersService;
+    private final UsersEmailsService usersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     // Incidents

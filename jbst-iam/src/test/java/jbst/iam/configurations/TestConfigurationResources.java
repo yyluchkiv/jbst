@@ -12,6 +12,7 @@ import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.*;
 import jbst.iam.services.base.AuthenticationServiceImpl;
 import jbst.iam.services.base.BaseUsersEmailsService;
+import jbst.iam.services.base.RateLimitsServiceImpl;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
@@ -77,7 +78,7 @@ public class TestConfigurationResources {
     // =================================================================================================================
     @Bean
     RateLimitsService rateLimitsService() {
-        return mock(RateLimitsService.class);
+        return new RateLimitsServiceImpl();
     }
 
     @Bean

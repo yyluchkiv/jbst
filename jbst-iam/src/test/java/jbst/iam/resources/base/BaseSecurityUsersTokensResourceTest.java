@@ -13,7 +13,7 @@ import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
-import jbst.iam.services.base.BaseUsersEmailsService;
+import jbst.iam.services.UsersEmailsService;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -59,8 +59,8 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
-    private final BaseUsersEmailsService baseUsersEmailsService;
     private final BaseUsersService baseUsersService;
+    private final UsersEmailsService usersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     // Incidents
@@ -75,7 +75,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         reset(
                 this.currentSessionAssistant,
                 this.baseUsersTokensService,
-                this.baseUsersEmailsService,
+                this.usersEmailsService,
                 this.baseUsersService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
@@ -87,7 +87,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
                 this.baseUsersTokensService,
-                this.baseUsersEmailsService,
+                this.usersEmailsService,
                 this.baseUsersService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
@@ -101,7 +101,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsEmailConfirmation();
         var userToken = UserToken.hardcodedEmailConfirmation();
-        when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
+        when(this.baseUsersTokensService.getOrCreate(eq(requestUserToken))).thenReturn(userToken);
 
         // Act
         this.mvc.perform(
@@ -114,8 +114,8 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         // Arrange
         verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
         verify(this.baseUsersTokensRequestsValidator, times(2)).validateExecuteConfirmEmail(user);
-        verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executeEmailConfirmation(userToken);
+        verify(this.baseUsersTokensService).getOrCreate(eq(requestUserToken));
+        verify(this.usersEmailsService).executeEmailConfirmation(userToken);
     }
 
     @ParameterizedTest
@@ -173,7 +173,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verify(this.baseUsersService).findByEmail(request.email());
         verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executePasswordReset(userToken);
+        verify(this.usersEmailsService).executePasswordReset(userToken);
     }
 
     @Test
