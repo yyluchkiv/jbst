@@ -56,7 +56,8 @@ public class BaseSecurityUsersTokensResource {
     // TODO [YYL, MagicLink]
     @PostMapping("/magic-link")
     @ResponseStatus(HttpStatus.OK)
-    public void magicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) {
+    public void magicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws TooManyRequestsException {
+        this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         var userToken = this.baseUsersTokensService.magicLink(request);
         this.usersEmailsService.executeMagicLinkEmail(userToken);
     }

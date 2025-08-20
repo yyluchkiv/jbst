@@ -1,5 +1,6 @@
 package jbst.iam.services.base;
 
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.concurrent.RateLimiter;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
@@ -17,6 +18,12 @@ import java.time.Duration;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RateLimitsServiceImpl implements RateLimitsService {
     private final RateLimiter<Username> emailConfirmationRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofHours(1));
+    private final RateLimiter<Email> magicLinkRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofMinutes(15));
+
+    @Override
+    public void acquireMagicLinkOrThrow(Email email) throws TooManyRequestsException {
+        this.magicLinkRL.acquire(email);
+    }
 
     @Override
     public void acquireEmailConfirmationOrThrow(JwtUser user) throws TooManyRequestsException {
