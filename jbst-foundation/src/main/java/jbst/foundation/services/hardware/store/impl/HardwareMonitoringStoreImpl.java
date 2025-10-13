@@ -1,5 +1,6 @@
 package jbst.foundation.services.hardware.store.impl;
 
+import jbst.foundation.domain.annotations.DeletionScheduled;
 import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -20,14 +21,16 @@ public class HardwareMonitoringStoreImpl implements HardwareMonitoringStore {
 
     private final Deque<EventLastHardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 
+    @DeletionScheduled(version = "1.23")
     @Override
     public HardwareMonitoringWidget getHardwareMonitoringWidget() {
-        return HardwareMonitoringWidget.of(
-                this.getLastOrUnknownEvent(),
-                // TODO [YYL] fix hardware monitoring dependency
-                null
-                // this.jbstProperties.getHardwareMonitoringConfigs()
-        );
+//        return HardwareMonitoringWidget.of(
+//                this.getLastOrUnknownEvent(),
+//                // TODO [YYL] fix hardware monitoring dependency
+//                null
+//                // this.jbstProperties.getHardwareMonitoringConfigs()
+//        );
+        return null;
     }
 
     @Override

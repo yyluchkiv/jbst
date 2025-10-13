@@ -11,7 +11,7 @@ public class DevelopmentUtility {
     private static final String SEPARATOR = "===================================== {} =====================================";
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static void printJson(Object object, String keyword) {
+    public static void printJsonAsDebug(Object object, String keyword) {
         LOGGER.debug(SEPARATOR, keyword);
         try {
             LOGGER.debug("{}\n", MAPPER.writeValueAsString(object));
@@ -19,5 +19,15 @@ public class DevelopmentUtility {
             LOGGER.debug("Print json. Exception: {}", ex.getMessage());
         }
         LOGGER.debug(SEPARATOR, keyword);
+    }
+
+    public static void printJsonAsError(Object object, String keyword) {
+        LOGGER.error(SEPARATOR, keyword);
+        try {
+            LOGGER.error("{}\n", MAPPER.writeValueAsString(object));
+        } catch (JsonProcessingException ex) {
+            LOGGER.error("Print json. Exception: {}", ex.getMessage());
+        }
+        LOGGER.error(SEPARATOR, keyword);
     }
 }

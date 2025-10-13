@@ -10,14 +10,13 @@ import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
@@ -36,13 +35,10 @@ public class HardwareMonitoringDatapoint {
     private final long timestamp;
 
     public HardwareMonitoringDatapoint(
-            GlobalMemory global,
-            CpuMemory cpu,
-            HeapMemory heap
+            @NotNull GlobalMemory global,
+            @NotNull CpuMemory cpu,
+            @NotNull HeapMemory heap
     ) {
-        assertNonNullOrThrow(global, invalidAttribute("MonitoringDatapoint.global"));
-        assertNonNullOrThrow(cpu, invalidAttribute("MonitoringDatapoint.cpu"));
-        assertNonNullOrThrow(heap, invalidAttribute("MonitoringDatapoint.heap"));
         this.unit = ByteUnit.GIGABYTE;
 
         var server = TuplePercentage.of(

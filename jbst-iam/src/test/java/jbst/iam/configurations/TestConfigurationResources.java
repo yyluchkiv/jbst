@@ -14,6 +14,8 @@ import jbst.iam.services.base.AuthenticationServiceImpl;
 import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.services.base.RateLimitsServiceImpl;
 import jbst.iam.sessions.SessionRegistry;
+import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.iam.template.WssMessagingTemplate;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
 import jbst.iam.validators.*;
@@ -32,6 +34,14 @@ import static org.mockito.Mockito.mock;
 })
 @EnableWebMvc
 public class TestConfigurationResources {
+
+    // =================================================================================================================
+    // Settings
+    // =================================================================================================================
+    @Bean
+    AbstractJbstSettingsService jbstSettingsService() {
+        return mock(AbstractJbstSettingsService.class);
+    }
 
     // =================================================================================================================
     // Exceptions
@@ -234,5 +244,13 @@ public class TestConfigurationResources {
     @Bean
     UsersEmailsService usersEmailsService() {
         return mock(UsersEmailsService.class);
+    }
+
+    // =================================================================================================================
+    // Websockets
+    // =================================================================================================================
+    @Bean
+    WssMessagingTemplate wssMessagingTemplate() {
+        return mock(WssMessagingTemplate.class);
     }
 }

@@ -3,7 +3,6 @@ package jbst.foundation.configurations;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.hardware.publishers.HardwareMonitoringPublisher;
 import jbst.foundation.services.hardware.publishers.impl.HardwareMonitoringPublisherImpl;
-import jbst.foundation.services.hardware.resources.HardwareMonitoringResource;
 import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import jbst.foundation.services.hardware.store.impl.HardwareMonitoringStoreImpl;
 import lombok.RequiredArgsConstructor;
@@ -36,13 +35,6 @@ public class JbstConfigurationHardwareMonitoring {
     HardwareMonitoringPublisher hardwareMonitoringPublisher() {
         return new HardwareMonitoringPublisherImpl(
                 this.applicationEventPublisher
-        );
-    }
-
-    @Bean
-    HardwareMonitoringResource hardwareMonitoringResource() {
-        return new HardwareMonitoringResource(
-                this.hardwareMonitoringPublisher()
         );
     }
 }

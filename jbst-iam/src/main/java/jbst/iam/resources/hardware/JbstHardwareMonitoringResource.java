@@ -118,9 +118,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     private HardwareMonitoringWidget getWidget() {
         return HardwareMonitoringWidget.of(
                 this.getLastOrUnknownEvent(),
-                // TODO [YYL] fix hardware monitoring dependency
-                null
-                // this.jbstProperties.getHardwareMonitoringConfigs()
+                this.jbstSettingsService.getSettings().hardwareMonitoringThresholds().getValues()
         );
     }
 }
