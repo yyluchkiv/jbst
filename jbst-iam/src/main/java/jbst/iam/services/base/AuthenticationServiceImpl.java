@@ -15,7 +15,7 @@ import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.enums.UserCreationOption;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
-import jbst.iam.domain.exceptions.LoginException;
+import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -68,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final SecurityJwtEventsPublisher securityJwtPublisher;
 
     @Override
-    public CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
             return this.asAuthentication(
                     UserCreationOption.STANDARD,
@@ -86,12 +86,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             new UserAgentHeader(httpRequest)
                     )
             );
-            throw new LoginException(ex.getMessage());
+            throw new JbstLoginException(ex.getMessage());
         }
     }
 
     @Override
-    public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws LoginException {
+    public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
             var userCreationOption = UserCreationOption.MAGICLINK;
             var user = this.baseUsersService.safeSave(
@@ -115,7 +115,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             new UserAgentHeader(httpRequest)
                     )
             );
-            throw new LoginException(ex.getMessage());
+            throw new JbstLoginException(ex.getMessage());
         }
     }
 

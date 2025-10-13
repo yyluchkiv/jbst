@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
-import jbst.iam.domain.exceptions.LoginException;
+import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -142,7 +142,7 @@ class BaseAuthenticationRequestsValidatorImplTest {
         verify(this.usersTokensRepository).findByValueAsAny(request.value());
         if (nonNull(exceptionMessage)) {
             assertThat(throwable)
-                    .isInstanceOf(LoginException.class)
+                    .isInstanceOf(JbstLoginException.class)
                     .hasMessage(exceptionMessage);
         } else {
             assertThat(throwable).isNull();
