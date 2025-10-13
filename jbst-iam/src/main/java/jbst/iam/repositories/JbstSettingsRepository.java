@@ -5,6 +5,8 @@ import jbst.foundation.domain.properties.settings.JbstSettingsHardwareMonitoring
 import jbst.iam.domain.db.JbstSettings;
 
 public interface JbstSettingsRepository {
+    JbstSettings getSettings();
+    boolean isPresent();
     long count();
     JbstSettings saveAs(
             Username username,
