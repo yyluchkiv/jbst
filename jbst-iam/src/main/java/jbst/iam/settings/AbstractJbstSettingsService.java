@@ -48,6 +48,6 @@ public abstract class AbstractJbstSettingsService {
     // Hardware Monitoring Thresholds
     // ================================================================================================================
     public final boolean isHardwareMonitoringThresholdsEnabled() {
-        return this.jbstSettingsAR.get().hardwareMonitoringThresholds().isEnabled();
+        return this.jbstSettingsAR.get().hardwareMonitoringThresholds().enabled();
     }
 }

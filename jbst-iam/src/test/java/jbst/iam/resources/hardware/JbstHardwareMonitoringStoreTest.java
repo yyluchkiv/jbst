@@ -58,7 +58,7 @@ class JbstHardwareMonitoringStoreTest {
     void integrationTest() {
         // Arrange
         var thresholdsConfigs = new HardwareMonitoringThresholds(
-                JbstSettings.hardcoded().hardwareMonitoringThresholds().getValues()
+                JbstSettings.hardcoded().hardwareMonitoringThresholds().values()
         );
 
         // [0]

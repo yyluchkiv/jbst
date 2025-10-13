@@ -28,7 +28,7 @@ public class JbstHardwareMonitoringStore {
     public final HardwareMonitoringWidget getWidget() {
         return HardwareMonitoringWidget.of(
                 !this.datapoints.isEmpty() ? this.datapoints.peekLast() : EventLastHardwareMonitoringDatapoint.unknownVersionZeroUsage(),
-                this.jbstSettingsService.getSettings().hardwareMonitoringThresholds().getValues()
+                this.jbstSettingsService.getSettings().hardwareMonitoringThresholds().values()
         );
     }
 
