@@ -1,10 +1,9 @@
 package jbst.iam.resources.hardware;
 
-import jbst.foundation.domain.base.Version;
-import jbst.foundation.domain.hardware.memories.SystemMemories;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.settings.AbstractJbstSettingsService;
@@ -32,15 +31,19 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     private final AbstractJbstSettingsService jbstSettingsService;
     // Websockets
     private final WssMessagingTemplate wssMessagingTemplate;
+    // Incidents
+    private final IncidentPublisher incidentPublisher;
 
     private final JbstHardwareMonitoringResource resourceUnderTest;
 
     @BeforeEach
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.resourceUnderTest);
+        this.resourceUnderTest.datapoints.clear();
         reset(
                 this.jbstSettingsService,
-                this.wssMessagingTemplate
+                this.wssMessagingTemplate,
+                this.incidentPublisher
         );
     }
 
@@ -48,24 +51,40 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.jbstSettingsService,
-                this.wssMessagingTemplate
+                this.wssMessagingTemplate,
+                this.incidentPublisher
         );
+    }
+
+    @Test
+    void saveMetadataIncidentScenario() throws Exception {
+        // Arrange
+        var npe = new NullPointerException("jbst-settings-exception");
+        when(this.jbstSettingsService.getSettings()).thenThrow(npe);
+
+        // Act
+        mvc.perform(
+                        post("/hardware/monitoring/metadata")
+                                .content(this.getContent(HardwareMonitoringMetadata.hardcoded()))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.jbstSettingsService).getSettings();
+        verify(this.incidentPublisher).publishThrowable(npe);
     }
 
     @SuppressWarnings("unchecked")
     @Test
     void saveMetadata() throws Exception {
         // Arrange
-        var hardwareMonitoringMetadata = new HardwareMonitoringMetadata(
-                Version.unknown(),
-                SystemMemories.hardcoded()
-        );
         when(this.jbstSettingsService.getSettings()).thenReturn(JbstSettings.hardcoded());
 
         // Act
         mvc.perform(
                 post("/hardware/monitoring/metadata")
-                        .content(this.getContent(hardwareMonitoringMetadata))
+                        .content(this.getContent(HardwareMonitoringMetadata.hardcoded()))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());

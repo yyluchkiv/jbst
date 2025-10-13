@@ -37,11 +37,11 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     private final SessionRegistry sessionRegistry;
     // Websockets
     private final WssMessagingTemplate wssMessagingTemplate;
-    // Publishers
+    // Incidents
     private final IncidentPublisher incidentPublisher;
 
     // State
-    private final Deque<EventLastHardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
+    protected final Deque<EventLastHardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 
     // 60L seconds -> consider add to user settings but on 25.11.2022 no reason to add
     @Autowired
