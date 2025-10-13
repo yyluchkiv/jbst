@@ -32,13 +32,9 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     private final WssMessagingTemplate wssMessagingTemplate;
     // Incidents
     private final IncidentPublisher incidentPublisher;
-    // State
+    // Stores
     private final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 
-    // State
-//    protected final Deque<EventLastHardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
-
-    // 60L seconds -> consider add to user settings but on 25.11.2022 no reason to add
     @Autowired
     public JbstHardwareMonitoringResource(
             SessionRegistry sessionRegistry,

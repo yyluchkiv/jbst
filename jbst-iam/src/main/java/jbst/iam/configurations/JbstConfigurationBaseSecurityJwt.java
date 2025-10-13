@@ -78,7 +78,6 @@ import static org.springframework.http.HttpMethod.*;
         JbstConfigurationSettingsOnInit.class,
         JbstConfigurationProperties.class,
         JbstConfigurationJasypt.class,
-        JbstConfigurationHardwareMonitoring.class,
         JbstConfigurationUtils.class,
         JbstConfigurationSpringBootServer.class,
         JbstConfigurationBaseSecurityJwtWebMVC.class,

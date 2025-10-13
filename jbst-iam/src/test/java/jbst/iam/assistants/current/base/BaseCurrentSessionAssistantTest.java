@@ -5,7 +5,6 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
@@ -13,6 +12,7 @@ import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import jbst.iam.tokens.facade.TokensProvider;
@@ -58,8 +58,8 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        HardwareMonitoringStore hardwareMonitoringStore() {
-            return mock(HardwareMonitoringStore.class);
+        JbstHardwareMonitoringStore jbstHardwareMonitoringStore() {
+            return mock(JbstHardwareMonitoringStore.class);
         }
 
         @Bean
@@ -78,9 +78,9 @@ class BaseCurrentSessionAssistantTest {
                     this.jbstSettingsService(),
                     this.sessionRegistry(),
                     this.usersSessionsRepository(),
-                    this.hardwareMonitoringStore(),
                     this.cookieProvider(),
-                    this.securityPrincipalUtility()
+                    this.securityPrincipalUtility(),
+                    this.jbstHardwareMonitoringStore()
             );
         }
     }
@@ -88,9 +88,9 @@ class BaseCurrentSessionAssistantTest {
     private final AbstractJbstSettingsService jbstSettingsService;
     private final SessionRegistry sessionRegistry;
     private final UsersSessionsRepository usersSessionsRepository;
-    private final HardwareMonitoringStore hardwareMonitoringStore;
     private final TokensProvider tokensProvider;
     private final SecurityPrincipalUtils securityPrincipalUtils;
+    private final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 
     private final CurrentSessionAssistant componentUnderTest;
 
@@ -100,7 +100,7 @@ class BaseCurrentSessionAssistantTest {
                 this.jbstSettingsService,
                 this.sessionRegistry,
                 this.usersSessionsRepository,
-                this.hardwareMonitoringStore,
+                this.jbstHardwareMonitoringStore,
                 this.tokensProvider,
                 this.securityPrincipalUtils
         );
@@ -112,7 +112,7 @@ class BaseCurrentSessionAssistantTest {
                 this.jbstSettingsService,
                 this.sessionRegistry,
                 this.usersSessionsRepository,
-                this.hardwareMonitoringStore,
+                this.jbstHardwareMonitoringStore,
                 this.tokensProvider,
                 this.securityPrincipalUtils
         );
@@ -152,7 +152,7 @@ class BaseCurrentSessionAssistantTest {
         var user = JwtUser.hardcoded();
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
-        when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
+        when(this.jbstHardwareMonitoringStore.getWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.jbstSettingsService.isHardwareMonitoringThresholdsEnabled()).thenReturn(true);
 
         // Act
@@ -160,7 +160,7 @@ class BaseCurrentSessionAssistantTest {
 
         // Assert
         verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
-        verify(this.hardwareMonitoringStore).getHardwareMonitoringWidget();
+        verify(this.jbstHardwareMonitoringStore).getWidget();
         verify(this.jbstSettingsService).isHardwareMonitoringThresholdsEnabled();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(user.getUsername()));
         assertThat(currentClientUser.getEmail()).isEqualTo(user.email());
@@ -176,7 +176,7 @@ class BaseCurrentSessionAssistantTest {
         var user = entity(JwtUser.class);
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
-        when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
+        when(this.jbstHardwareMonitoringStore.getWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.jbstSettingsService.isHardwareMonitoringThresholdsEnabled()).thenReturn(false);
 
         // Act
