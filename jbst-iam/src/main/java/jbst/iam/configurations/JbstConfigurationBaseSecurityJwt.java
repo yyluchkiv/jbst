@@ -197,6 +197,7 @@ public class JbstConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketM
                     authorizeHttpRequests
                             .requestMatchers(basePathPrefix + "/test-data/**").authenticated()
                             .requestMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN)
+                            // TODO [YYL] add /settings configurations
                             .requestMatchers(basePathPrefix + "/**").authenticated();
 
                     authorizeHttpRequests.requestMatchers(GET, "/system/csrf").authenticated();

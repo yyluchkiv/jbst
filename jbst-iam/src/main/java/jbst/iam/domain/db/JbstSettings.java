@@ -29,6 +29,7 @@ public class JbstSettings {
             JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
     ) {
         this.createdBy = createdBy;
+        // TODO [YYL] change DTF format to include HH:mm
         this.createdAt = DTF13.format(convertTimestamp(createdAt, UTC));
         this.updatedBy = updatedBy;
         this.updatedAt = DTF13.format(convertTimestamp(updatedAt, UTC));
