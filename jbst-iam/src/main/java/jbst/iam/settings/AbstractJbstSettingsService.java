@@ -4,6 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
+import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.repositories.JbstSettingsRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,5 +62,9 @@ public abstract class AbstractJbstSettingsService {
     // ================================================================================================================
     public final boolean isHardwareMonitoringThresholdsEnabled() {
         return this.jbstSettingsAR.get().hardwareMonitoringThresholds().enabled();
+    }
+
+    public JbstSettingsHardwareMonitoringThresholds getHardwareMonitoringThresholds() {
+        return this.jbstSettingsAR.get().hardwareMonitoringThresholds();
     }
 }

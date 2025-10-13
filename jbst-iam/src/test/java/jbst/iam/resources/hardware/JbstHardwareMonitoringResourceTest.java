@@ -6,6 +6,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.domain.db.JbstSettings;
+import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     void saveMetadataIncidentScenario() throws Exception {
         // Arrange
         var npe = new NullPointerException("jbst-settings-exception");
-        when(this.jbstSettingsService.getSettings()).thenThrow(npe);
+        when(this.jbstSettingsService.getHardwareMonitoringThresholds()).thenThrow(npe);
 
         // Act
         mvc.perform(
@@ -73,7 +74,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.jbstSettingsService).getSettings();
+        verify(this.jbstSettingsService).getHardwareMonitoringThresholds();
         verify(this.incidentPublisher).publishThrowable(npe);
     }
 
@@ -81,7 +82,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     @Test
     void saveMetadata() throws Exception {
         // Arrange
-        when(this.jbstSettingsService.getSettings()).thenReturn(JbstSettings.hardcoded());
+        when(this.jbstSettingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.hardcoded());
 
         // Act
         mvc.perform(
@@ -94,7 +95,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         // Assert
         var usernameAC = ArgumentCaptor.forClass(Set.class);
         var datapointTableViewAC = ArgumentCaptor.forClass(HardwareMonitoringDatapointTableView.class);
-        verify(this.jbstSettingsService).getSettings();
+        verify(this.jbstSettingsService).getHardwareMonitoringThresholds();
         verify(this.wssMessagingTemplate).sendHardwareMonitoring(usernameAC.capture(), datapointTableViewAC.capture());
         var datapoint = datapointTableViewAC.getValue();
         assertThat(datapoint.isAnyPresent()).isTrue();
