@@ -1,8 +1,6 @@
 package jbst.iam.configurations;
 
-import jbst.foundation.configurations.JbstConfigurationSettingsOnInit;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.iam.essence.PostgresBaseEssenceConstructor;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -27,14 +25,11 @@ import org.springframework.context.annotation.Import;
         "jbst.iam.validators.postgres",
 })
 @Import({
-        JbstConfigurationSettingsOnInit.class,
         JbstConfigurationPostgresRepositories.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstConfigurationPostgres {
 
-    // Settings
-    private final JbstSettingsOnInit jbstSettingsOnInit;
     // Repositories
     private final PostgresJbstSettingsRepository postgresJbstSettingsRepository;
     private final PostgresInvitationsRepository postgresInvitationsRepository;

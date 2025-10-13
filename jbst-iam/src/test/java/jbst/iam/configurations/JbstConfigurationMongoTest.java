@@ -2,7 +2,6 @@ package jbst.iam.configurations;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoJbstSettingsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
@@ -41,7 +40,6 @@ class JbstConfigurationMongoTest {
         @Bean
         JbstConfigurationMongo jbstConfigurationMongo() {
             return new JbstConfigurationMongo(
-                    JbstSettingsOnInit.hardcoded(),
                     mock(MongoJbstSettingsRepository.class),
                     mock(MongoInvitationsRepository.class),
                     mock(MongoUsersRepository.class),

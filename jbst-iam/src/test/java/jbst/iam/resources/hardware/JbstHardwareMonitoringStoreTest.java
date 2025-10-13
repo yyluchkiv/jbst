@@ -9,7 +9,6 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
-import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +58,7 @@ class JbstHardwareMonitoringStoreTest {
     void integrationTest() {
         // Arrange
         var thresholdsConfigs = new HardwareMonitoringThresholds(
-                JbstSettingsOnInit.hardcoded().getHardwareMonitoringThresholds().getValues()
+                JbstSettings.hardcoded().hardwareMonitoringThresholds().getValues()
         );
 
         // [0]

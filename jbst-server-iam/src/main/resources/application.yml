@@ -23,17 +23,6 @@ springdoc:
   swagger-ui:
     tags-sorter: "alpha"
 
-# jbst settings on init
-jbst-settings-on-init:
-  hardware-monitoring-thresholds:
-    enabled: true
-    values:
-      CPU: 80
-      HEAP: 80
-      SERVER: 85
-      SWAP: 95
-      VIRTUAL: 85
-
 # jbst
 jbst:
   server-configs:

@@ -2,7 +2,6 @@ package jbst.iam.configurations;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresJbstSettingsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
@@ -41,7 +40,6 @@ class JbstConfigurationPostgresTest {
         @Bean
         JbstConfigurationPostgres jbstConfigurationPostgres() {
             return new JbstConfigurationPostgres(
-                    JbstSettingsOnInit.hardcoded(),
                     mock(PostgresJbstSettingsRepository.class),
                     mock(PostgresInvitationsRepository.class),
                     mock(PostgresUsersRepository.class),
