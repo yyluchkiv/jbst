@@ -9,6 +9,7 @@ import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
+import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.services.*;
 import jbst.iam.services.base.AuthenticationServiceImpl;
 import jbst.iam.services.base.BaseUsersEmailsService;
@@ -252,5 +253,15 @@ public class TestConfigurationResources {
     @Bean
     WssMessagingTemplate wssMessagingTemplate() {
         return mock(WssMessagingTemplate.class);
+    }
+
+    // =================================================================================================================
+    // Hardware
+    // =================================================================================================================
+    @Bean
+    JbstHardwareMonitoringStore jbstHardwareMonitoringStore() {
+        return new JbstHardwareMonitoringStore(
+                this.jbstSettingsService()
+        );
     }
 }

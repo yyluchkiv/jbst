@@ -33,13 +33,15 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     private final WssMessagingTemplate wssMessagingTemplate;
     // Incidents
     private final IncidentPublisher incidentPublisher;
+    // State
+    private final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 
     private final JbstHardwareMonitoringResource resourceUnderTest;
 
     @BeforeEach
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.resourceUnderTest);
-        this.resourceUnderTest.datapoints.clear();
+        this.jbstHardwareMonitoringStore.clear();
         reset(
                 this.jbstSettingsService,
                 this.wssMessagingTemplate,

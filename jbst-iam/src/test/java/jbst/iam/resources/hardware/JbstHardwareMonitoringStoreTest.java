@@ -1,6 +1,5 @@
-package jbst.foundation.services.hardware.store.impl;
+package jbst.iam.resources.hardware;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
@@ -10,15 +9,15 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
+import jbst.foundation.domain.properties.JbstSettingsOnInit;
+import jbst.iam.domain.db.JbstSettings;
+import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -27,44 +26,45 @@ import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class HardwareMonitoringStoreImplTest {
+class JbstHardwareMonitoringStoreTest {
 
     @Configuration
-    @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
-    })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final JbstProperties jbstProperties;
 
         @Bean
-        HardwareMonitoringStore hardwareMonitoringStore() {
-            return new HardwareMonitoringStoreImpl(
-                    this.jbstProperties
+        AbstractJbstSettingsService jbstSettingsService() {
+            var jbstSettingsService = mock(AbstractJbstSettingsService.class);
+            when(jbstSettingsService.getSettings()).thenReturn(JbstSettings.hardcoded());
+            return jbstSettingsService;
+        }
+
+        @Bean
+        JbstHardwareMonitoringStore hardwareMonitoringStore() {
+            return new JbstHardwareMonitoringStore(
+                    this.jbstSettingsService()
             );
         }
     }
 
-    private final JbstProperties jbstProperties;
-
-    private final HardwareMonitoringStore componentUnderTest;
+    private final JbstHardwareMonitoringStore componentUnderTest;
 
     @Test
     void integrationTest() {
         // Arrange
         var thresholdsConfigs = new HardwareMonitoringThresholds(
-                // TODO [YYL] fix hardware monitoring dependency
-                null
-                // this.jbstProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()
+                JbstSettingsOnInit.hardcoded().getHardwareMonitoringThresholds().getValues()
         );
 
         // [0]
         var containsOneElement1 = this.componentUnderTest.containsOneElement();
-        var widget1 = this.componentUnderTest.getHardwareMonitoringWidget();
+        var widget1 = this.componentUnderTest.getWidget();
 
         assertThat(containsOneElement1).isFalse();
         assertThat(widget1.version()).isEqualTo(Version.unknown());
@@ -95,7 +95,7 @@ class HardwareMonitoringStoreImplTest {
         var containsOneElement4 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement4).isFalse();
 
-        var widget2 = this.componentUnderTest.getHardwareMonitoringWidget();
+        var widget2 = this.componentUnderTest.getWidget();
 
         assertThat(widget2.version().value()).isEqualTo("jbst vTEST");
         assertThat(widget2.datapoint().isAnyProblem()).isFalse();
