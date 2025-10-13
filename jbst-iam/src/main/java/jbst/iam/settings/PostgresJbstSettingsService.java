@@ -3,9 +3,9 @@ package jbst.iam.settings;
 import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.repositories.postgres.PostgresJbstSettingsRepository;
 
-public class PostgresBaseJbstSettingsService extends AbstractJbstSettingsService {
+public class PostgresJbstSettingsService extends AbstractJbstSettingsService {
 
-    public PostgresBaseJbstSettingsService(
+    public PostgresJbstSettingsService(
             JbstSettingsOnInit jbstSettingsOnInit,
             PostgresJbstSettingsRepository settingsRepository
     ) {

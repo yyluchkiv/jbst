@@ -5,8 +5,6 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.repositories.JbstSettingsRepository;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -33,7 +31,7 @@ public abstract class AbstractJbstSettingsService {
         this.jbstSettingsAR = new AtomicReference<>();
     }
 
-    public final void saveOnInit() {
+    public final void saveOrSkipOnStartup() {
         LOGGER.info(INIT_LOG, STARTED.asANSI());
         if (this.jbstSettingsRepository.isPresent()) {
             this.jbstSettingsAR.set(
@@ -51,9 +49,5 @@ public abstract class AbstractJbstSettingsService {
             LOGGER.info(INIT_LOG, "settings saved");
         }
         LOGGER.info(INIT_LOG, COMPLETED.asANSI());
-
-        System.out.println("====");
-        System.out.println(this.jbstSettingsAR.get());
-        System.out.println("====");
     }
 }

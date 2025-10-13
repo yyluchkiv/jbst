@@ -15,19 +15,15 @@ import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
 import jbst.iam.sessions.MongoSessionRegistry;
-import jbst.iam.settings.MongoBaseJbstSettingsService;
+import jbst.iam.settings.MongoJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@EnableConfigurationProperties({
-        JbstProperties.class
-})
 @ComponentScan({
         "jbst.iam.services.mongodb",
         "jbst.iam.validators.mongodb",
@@ -43,6 +39,9 @@ public class JbstConfigurationMongo {
     private final JbstSettingsOnInit jbstSettingsOnInit;
     // Repositories
     private final MongoJbstSettingsRepository mongoJbstSettingsRepository;
+    private final MongoInvitationsRepository mongoInvitationsRepository;
+    private final MongoUsersRepository mongoUsersRepository;
+    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -52,32 +51,26 @@ public class JbstConfigurationMongo {
     }
 
     @Bean
-    MongoBaseJbstSettingsService mongoBaseJbstSettingsService() {
-        return new MongoBaseJbstSettingsService(
+    MongoJbstSettingsService mongoJbstSettingsService() {
+        return new MongoJbstSettingsService(
                 this.jbstSettingsOnInit,
                 this.mongoJbstSettingsRepository
         );
     }
 
     @Bean
-    MongoUserDetailsAssistant mongoUserDetailsAssistant(
-            MongoUsersRepository mongoUsersRepository
-    ) {
+    MongoUserDetailsAssistant mongoUserDetailsAssistant() {
         return new MongoUserDetailsAssistant(
-                mongoUsersRepository
+                this.mongoUsersRepository
         );
     }
 
     @Bean
-    MongoBaseEssenceConstructor mongoBaseEssenceConstructor(
-            MongoInvitationsRepository mongoInvitationsRepository,
-            MongoUsersRepository mongoUsersRepository,
-            JbstProperties jbstProperties
-    ) {
+    MongoBaseEssenceConstructor mongoBaseEssenceConstructor() {
         return new MongoBaseEssenceConstructor(
-                mongoInvitationsRepository,
-                mongoUsersRepository,
-                jbstProperties
+                this.mongoInvitationsRepository,
+                this.mongoUsersRepository,
+                this.jbstProperties
         );
     }
 
@@ -86,14 +79,13 @@ public class JbstConfigurationMongo {
     MongoSessionRegistry mongoSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
-            MongoBaseUsersSessionsService mongoBaseUsersSessionsService,
-            MongoUsersSessionsRepository mongoUsersSessionsRepository
+            MongoBaseUsersSessionsService mongoBaseUsersSessionsService
     ) {
         return new MongoSessionRegistry(
                 securityJwtEventsPublisher,
                 securityJwtIncidentsPublisher,
                 mongoBaseUsersSessionsService,
-                mongoUsersSessionsRepository
+                this.mongoUsersSessionsRepository
         );
     }
 }

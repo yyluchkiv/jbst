@@ -77,6 +77,7 @@ import static org.springframework.http.HttpMethod.*;
 })
 @Import({
         JbstConfigurationSettingsOnInit.class,
+        JbstConfigurationProperties.class,
         JbstConfigurationJasypt.class,
         JbstConfigurationHardwareMonitoring.class,
         JbstConfigurationUtils.class,

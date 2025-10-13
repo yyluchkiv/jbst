@@ -13,19 +13,15 @@ import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.postgres.PostgresBaseUsersSessionsService;
 import jbst.iam.sessions.PostgresSessionRegistry;
-import jbst.iam.settings.PostgresBaseJbstSettingsService;
+import jbst.iam.settings.PostgresJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@EnableConfigurationProperties({
-        JbstProperties.class
-})
 @ComponentScan({
         "jbst.iam.services.postgres",
         "jbst.iam.validators.postgres",
@@ -41,34 +37,33 @@ public class JbstConfigurationPostgres {
     private final JbstSettingsOnInit jbstSettingsOnInit;
     // Repositories
     private final PostgresJbstSettingsRepository postgresJbstSettingsRepository;
+    private final PostgresInvitationsRepository postgresInvitationsRepository;
+    private final PostgresUsersRepository postgresUsersRepository;
+    private final PostgresUsersSessionsRepository postgresUsersSessionsRepository;
+    // Properties
+    private final JbstProperties jbstProperties;
 
     @Bean
-    PostgresBaseJbstSettingsService postgresBaseJbstSettingsService() {
-        return new PostgresBaseJbstSettingsService(
+    PostgresJbstSettingsService postgresJbstSettingsService() {
+        return new PostgresJbstSettingsService(
                 this.jbstSettingsOnInit,
                 this.postgresJbstSettingsRepository
         );
     }
 
     @Bean
-    PostgresUserDetailsAssistant postgresUserDetailsAssistant(
-            PostgresUsersRepository postgresUsersRepository
-    ) {
+    PostgresUserDetailsAssistant postgresUserDetailsAssistant() {
         return new PostgresUserDetailsAssistant(
-                postgresUsersRepository
+                this.postgresUsersRepository
         );
     }
 
     @Bean
-    PostgresBaseEssenceConstructor postgresBaseEssenceConstructor(
-            PostgresInvitationsRepository postgresInvitationsRepository,
-            PostgresUsersRepository postgresUsersRepository,
-            JbstProperties jbstProperties
-    ) {
+    PostgresBaseEssenceConstructor postgresBaseEssenceConstructor() {
         return new PostgresBaseEssenceConstructor(
-                postgresInvitationsRepository,
-                postgresUsersRepository,
-                jbstProperties
+                this.postgresInvitationsRepository,
+                this.postgresUsersRepository,
+                this.jbstProperties
         );
     }
 
@@ -77,14 +72,13 @@ public class JbstConfigurationPostgres {
     PostgresSessionRegistry postgresSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
-            PostgresBaseUsersSessionsService postgresBaseUsersSessionsService,
-            PostgresUsersSessionsRepository postgresUsersSessionsRepository
+            PostgresBaseUsersSessionsService postgresBaseUsersSessionsService
     ) {
         return new PostgresSessionRegistry(
                 securityJwtEventsPublisher,
                 securityJwtIncidentsPublisher,
                 postgresBaseUsersSessionsService,
-                postgresUsersSessionsRepository
+                this.postgresUsersSessionsRepository
         );
     }
 }
