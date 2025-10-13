@@ -16,8 +16,8 @@ class HardwareMonitoringDatapointTableRowTest {
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
                 Arguments.of(Map.of(), false),
-                Arguments.of(Map.of(HardwareName.HEAP, HardwareMonitoringThreshold.random().value()), false),
-                Arguments.of(Map.of(HardwareName.CPU, HardwareMonitoringThreshold.random().value()), false),
+                Arguments.of(Map.of(HardwareName.HEAP, randomBigDecimalGreaterThanZeroByBounds(50L, 100L)), false),
+                Arguments.of(Map.of(HardwareName.CPU, randomBigDecimalGreaterThanZeroByBounds(50L, 100L)), false),
                 Arguments.of(Map.of(HardwareName.CPU, randomBigDecimalGreaterThanZeroByBounds(5L, 10L)), true)
         );
     }
@@ -31,7 +31,7 @@ class HardwareMonitoringDatapointTableRowTest {
                 randomLongGreaterThanZero(),
                 randomBigDecimalGreaterThanZeroByBounds(20L, 30L),
                 randomString(),
-                new HardwareMonitoringThresholds(thresholds)
+                thresholds
         );
 
         // Assert

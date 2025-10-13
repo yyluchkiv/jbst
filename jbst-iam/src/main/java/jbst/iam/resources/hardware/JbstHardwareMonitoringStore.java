@@ -26,10 +26,8 @@ public class JbstHardwareMonitoringStore {
     }
 
     public final HardwareMonitoringWidget getWidget() {
-        return HardwareMonitoringWidget.of(
-                !this.datapoints.isEmpty() ? this.datapoints.peekLast() : HardwareMonitoringDatapoint.zeroUsage(),
-                this.jbstSettingsService.getSettings().hardwareMonitoringThresholds().values()
-        );
+        var datapoint = !this.datapoints.isEmpty() ? this.datapoints.peekLast() : HardwareMonitoringDatapoint.zeroUsage();
+        return datapoint.getWidget(this.jbstSettingsService.getSettings().hardwareMonitoringThresholds().values());
     }
 
     public final boolean isAnyProblemOrFirstDatapoint() {

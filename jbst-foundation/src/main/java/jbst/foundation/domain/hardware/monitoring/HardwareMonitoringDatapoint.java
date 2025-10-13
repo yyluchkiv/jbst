@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -103,8 +104,15 @@ public class HardwareMonitoringDatapoint {
         );
     }
 
+    public HardwareMonitoringWidget getWidget(Map<HardwareName, BigDecimal> thresholds) {
+        return new HardwareMonitoringWidget(
+                this.version,
+                this.tableView(thresholds)
+        );
+    }
+
     public HardwareMonitoringDatapointTableView tableView(
-            HardwareMonitoringThresholds thresholds
+            Map<HardwareName, BigDecimal> thresholds
     ) {
         List<HardwareMonitoringDatapointTableRow> table = new ArrayList<>();
 

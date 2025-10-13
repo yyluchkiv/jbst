@@ -6,9 +6,7 @@ import jbst.foundation.domain.hardware.memories.HeapMemory;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import org.jetbrains.annotations.NotNull;
 
 // Lombok
 @Getter
@@ -21,11 +19,9 @@ public class HardwareMonitoringMaxValues {
     private final ByteSize heap;
 
     public HardwareMonitoringMaxValues(
-            GlobalMemory global,
-            HeapMemory heap
+            @NotNull GlobalMemory global,
+            @NotNull HeapMemory heap
     ) {
-        assertNonNullOrThrow(global, invalidAttribute("HardwareMonitoringMaxValues.global"));
-        assertNonNullOrThrow(heap, invalidAttribute("HardwareMonitoringMaxValues.heap"));
         this.server = global.getTotal();
         this.swap = global.getSwapTotal();
         this.virtual = global.getVirtualTotal();

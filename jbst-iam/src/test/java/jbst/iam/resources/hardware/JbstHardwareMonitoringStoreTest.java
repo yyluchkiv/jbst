@@ -6,7 +6,6 @@ import jbst.foundation.domain.hardware.memories.GlobalMemory;
 import jbst.foundation.domain.hardware.memories.HeapMemory;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.settings.AbstractJbstSettingsService;
@@ -55,18 +54,15 @@ class JbstHardwareMonitoringStoreTest {
 
     @Test
     void integrationTest() {
-        // Arrange
-        var thresholdsConfigs = new HardwareMonitoringThresholds(
-                JbstSettings.hardcoded().hardwareMonitoringThresholds().values()
-        );
-
         // [0]
         var containsOneElement1 = this.componentUnderTest.containsOneElement();
         var widget1 = this.componentUnderTest.getWidget();
 
         assertThat(containsOneElement1).isFalse();
         assertThat(widget1.version()).isEqualTo(Version.unknown());
-        assertThat(widget1.datapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(thresholdsConfigs));
+        assertThat(widget1.datapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(
+                JbstSettings.hardcoded().hardwareMonitoringThresholds().values()
+        ));
 
         // [1]
         var datapoint1 = HardwareMonitoringDatapoint.random();

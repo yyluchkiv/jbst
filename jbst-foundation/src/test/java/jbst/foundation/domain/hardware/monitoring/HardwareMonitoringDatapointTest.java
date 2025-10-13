@@ -45,7 +45,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
                         268435456L
                 )
         );
-        var thresholds = new HardwareMonitoringThresholds(
+        var tableView = datapoint.tableView(
                 Map.of(
                         HardwareName.CPU, threshold,
                         HardwareName.HEAP, threshold,
@@ -54,7 +54,6 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
                         HardwareName.VIRTUAL, threshold
                 )
         );
-        var tableView = datapoint.tableView(thresholds);
 
         // Act
         var datapointJson = this.writeValueAsString(datapoint);
@@ -110,7 +109,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
         // Arrange
         var threshold = new BigDecimal("50");
         var datapoint = HardwareMonitoringDatapoint.zeroUsage();
-        var thresholds = new HardwareMonitoringThresholds(
+        var tableView = datapoint.tableView(
                 Map.of(
                         HardwareName.CPU, threshold,
                         HardwareName.HEAP, threshold,
@@ -119,7 +118,6 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
                         HardwareName.VIRTUAL, threshold
                 )
         );
-        var tableView = datapoint.tableView(thresholds);
 
         // Act
         var datapointJson = this.writeValueAsString(datapoint);
