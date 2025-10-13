@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
@@ -30,13 +31,13 @@ public abstract class AbstractJbstSettingsService {
     // ================================================================================================================
     public final void initialize() {
         LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", STARTED.asANSI());
-        if (this.jbstSettingsRepository.isPresent()) {
-            this.jbstSettingsAR.set(
-                    this.jbstSettingsRepository.getSettings()
-            );
-        } else {
-            throw new IllegalArgumentException(contactDevelopmentTeam("jbst-setting initialization failure"));
-        }
+        assertTrueOrThrow(
+                this.jbstSettingsRepository.isPresent(),
+                contactDevelopmentTeam("jbst-setting initialization failure")
+        );
+        this.jbstSettingsAR.set(
+                this.jbstSettingsRepository.getSettings()
+        );
         LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", COMPLETED.asANSI());
     }
 

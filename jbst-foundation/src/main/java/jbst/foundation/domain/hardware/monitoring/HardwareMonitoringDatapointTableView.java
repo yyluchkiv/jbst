@@ -24,7 +24,7 @@ public class HardwareMonitoringDatapointTableView {
 
     public HardwareMonitoringDatapointTableView(@NotNull List<HardwareMonitoringDatapointTableRow> rows) {
         this.rows = rows;
-        this.anyPresent = !isEmpty(this.rows);
+        this.anyPresent = !isEmpty(rows);
         this.anyProblem = rows.stream().anyMatch(HardwareMonitoringDatapointTableRow::isThresholdReached);
     }
 

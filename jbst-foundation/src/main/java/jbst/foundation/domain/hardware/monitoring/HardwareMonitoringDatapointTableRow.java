@@ -11,10 +11,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Objects.nonNull;
 import static java.util.function.Function.identity;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 import static jbst.foundation.utilities.random.RandomUtility.*;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
 @Getter
@@ -42,8 +42,9 @@ public class HardwareMonitoringDatapointTableRow {
         this.timestamp = timestamp;
         this.usage = usage;
         this.value = value;
-        if (!isEmpty(thresholds) && thresholds.containsKey(hardwareName)) {
-            this.thresholdReached = is(usage, ">", thresholds.get(hardwareName));
+        var threshold = thresholds.get(hardwareName);
+        if (nonNull(threshold)) {
+            this.thresholdReached = is(usage, ">", threshold);
         } else {
             this.thresholdReached = false;
         }
@@ -57,7 +58,7 @@ public class HardwareMonitoringDatapointTableRow {
                 randomString(),
                 Stream.of(HardwareName.values()).collect(Collectors.toMap(
                         identity(),
-                        entry -> randomBigDecimal()
+                        entry -> randomBigDecimalGreaterThanZeroByBounds(50L, 100L)
                 ))
         );
     }
