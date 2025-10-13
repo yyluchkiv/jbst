@@ -1,2 +1,2 @@
 ### Changelog [v1.23]
-— TBD
+— Addition: add properties aka "jbst-settings-on-init"
