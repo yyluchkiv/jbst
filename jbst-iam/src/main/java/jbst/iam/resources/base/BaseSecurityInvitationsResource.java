@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jbst.iam.annotations.AbstractJbstResource;
+import jbst.foundation.domain.annotations.JbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitations;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "[jbst] Invitations API")
 // Spring
 @Slf4j
-@AbstractJbstResource
+@JbstResource
 @RestController
 @RequestMapping("/invitations")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

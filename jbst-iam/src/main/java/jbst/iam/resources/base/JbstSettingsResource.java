@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jbst.iam.annotations.AbstractJbstResource;
+import jbst.foundation.domain.annotations.JbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "[jbst] Settings API")
 // Spring
 @Slf4j
-@AbstractJbstResource
+@JbstResource
 @RestController
 @RequestMapping("/settings")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

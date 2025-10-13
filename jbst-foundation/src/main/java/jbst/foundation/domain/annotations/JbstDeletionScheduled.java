@@ -4,5 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.CLASS)
-public @interface DevelopmentOnly {
+public @interface JbstDeletionScheduled {
+    String reason() default "";
+    String version();
 }

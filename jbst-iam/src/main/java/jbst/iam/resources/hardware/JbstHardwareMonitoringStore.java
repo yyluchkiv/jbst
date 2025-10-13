@@ -1,6 +1,6 @@
 package jbst.iam.resources.hardware;
 
-import jbst.foundation.domain.annotations.DevelopmentOnly;
+import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import jbst.iam.settings.AbstractJbstSettingsService;
@@ -20,7 +20,7 @@ public class JbstHardwareMonitoringStore {
 
     private final Deque<HardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 
-    @DevelopmentOnly
+    @JbstDevelopmentOnly
     public final void clear() {
         this.datapoints.clear();
     }
