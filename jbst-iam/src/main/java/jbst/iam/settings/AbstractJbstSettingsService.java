@@ -1,8 +1,6 @@
 package jbst.iam.settings;
 
-import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.repositories.JbstSettingsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,22 +9,18 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
 public abstract class AbstractJbstSettingsService {
-    private static final String INIT_LOG = JbstConstants.Logs.PREFIX_SETTINGS + " yml ↔ database synchronization — {}";
-
-    // Properties
-    private final JbstSettingsOnInit jbstSettingsOnInit;
-    // Repositories Abstraction
+    // Repository
     private final JbstSettingsRepository jbstSettingsRepository;
 
-    // database abstraction ↔ memory
+    // Store
     private final AtomicReference<JbstSettings> jbstSettingsAR;
 
-    public AbstractJbstSettingsService(JbstSettingsOnInit jbstSettingsOnInit, JbstSettingsRepository jbstSettingsRepository) {
-        this.jbstSettingsOnInit = jbstSettingsOnInit;
+    public AbstractJbstSettingsService(JbstSettingsRepository jbstSettingsRepository) {
         this.jbstSettingsRepository = jbstSettingsRepository;
         this.jbstSettingsAR = new AtomicReference<>();
     }
@@ -34,24 +28,16 @@ public abstract class AbstractJbstSettingsService {
     // ================================================================================================================
     // ALL
     // ================================================================================================================
-    public final void saveOrSkipOnStartup() {
-        LOGGER.info(INIT_LOG, STARTED.asANSI());
+    public final void initialize() {
+        LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", STARTED.asANSI());
         if (this.jbstSettingsRepository.isPresent()) {
             this.jbstSettingsAR.set(
                     this.jbstSettingsRepository.getSettings()
             );
-            LOGGER.info(INIT_LOG, "data already present");
         } else {
-            LOGGER.info(INIT_LOG, "no data");
-            this.jbstSettingsAR.set(
-                    this.jbstSettingsRepository.saveAs(
-                            Username.ops(),
-                            this.jbstSettingsOnInit.getHardwareMonitoringThresholds()
-                    )
-            );
-            LOGGER.info(INIT_LOG, "data saved");
+            throw new IllegalArgumentException(contactDevelopmentTeam("jbst-setting initialization failure"));
         }
-        LOGGER.info(INIT_LOG, COMPLETED.asANSI());
+        LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", COMPLETED.asANSI());
     }
 
     public final JbstSettings getSettings() {

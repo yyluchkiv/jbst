@@ -63,14 +63,6 @@ jbst:
         - Cache-Control
         - Content-Type
       allow-credentials: true
-  hardware-monitoring-configs:
-    enabled: true
-    thresholds-configs:
-      CPU: 80
-      HEAP: 80
-      SERVER: 85
-      SWAP: 95
-      VIRTUAL: 85
   security-jwt-configs:
     authorities-configs:
       authorities:

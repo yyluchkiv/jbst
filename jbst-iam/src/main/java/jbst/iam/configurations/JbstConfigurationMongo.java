@@ -53,7 +53,6 @@ public class JbstConfigurationMongo {
     @Bean
     MongoJbstSettingsService mongoJbstSettingsService() {
         return new MongoJbstSettingsService(
-                this.jbstSettingsOnInit,
                 this.mongoJbstSettingsRepository
         );
     }

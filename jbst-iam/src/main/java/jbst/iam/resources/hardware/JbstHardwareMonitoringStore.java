@@ -6,10 +6,12 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstHardwareMonitoringStore {
 

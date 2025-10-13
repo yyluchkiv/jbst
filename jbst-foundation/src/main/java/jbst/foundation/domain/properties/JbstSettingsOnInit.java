@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties;
 
+import jbst.foundation.domain.annotations.DeletionScheduled;
 import jbst.foundation.domain.properties.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 
+@DeletionScheduled(version = "1.23")
 @Slf4j
 @ConfigurationProperties(
         prefix = "jbst-settings-on-init",
