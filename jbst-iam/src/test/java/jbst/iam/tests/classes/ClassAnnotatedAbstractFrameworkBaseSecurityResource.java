@@ -1,7 +1,7 @@
 package jbst.iam.tests.classes;
 
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstResource;
 
-@AbstractJbstBaseSecurityResource
+@AbstractJbstResource
 public class ClassAnnotatedAbstractFrameworkBaseSecurityResource {
 }

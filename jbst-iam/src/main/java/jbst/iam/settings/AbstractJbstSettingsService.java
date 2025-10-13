@@ -1,7 +1,9 @@
 package jbst.iam.settings;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.iam.domain.db.JbstSettings;
+import jbst.iam.domain.dto.requests.RequestJbstSettings;
 import jbst.iam.repositories.JbstSettingsRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,6 +45,15 @@ public abstract class AbstractJbstSettingsService {
 
     public final JbstSettings getSettings() {
         return this.jbstSettingsAR.get();
+    }
+
+    public final JbstSettings saveSettings(Username updatedBy, RequestJbstSettings request) {
+        var jbstSettings = this.jbstSettingsRepository.saveAs(
+                updatedBy,
+                request
+        );
+        this.jbstSettingsAR.set(jbstSettings);
+        return jbstSettings;
     }
 
     // ================================================================================================================

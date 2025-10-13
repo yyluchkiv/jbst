@@ -37,15 +37,12 @@ public class MongoDbJbstSettings {
     private boolean hmtEnabled;
     private Map<HardwareName, Decimal128> hmtValues;
 
-    public MongoDbJbstSettings(
-            Username username,
+    public void edit(
+            Username updatedBy,
             JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
     ) {
-        this.createdBy = username;
-        this.updatedBy = username;
-        var currentTimestamp = getCurrentTimestamp();
-        this.createdAt = currentTimestamp;
-        this.updatedAt = currentTimestamp;
+        this.updatedBy = updatedBy;
+        this.updatedAt = getCurrentTimestamp();
         this.hmtEnabled = hardwareMonitoringThresholds.enabled();
         this.hmtValues = hardwareMonitoringThresholds.values().entrySet().stream().collect(Collectors.toMap(
                 Map.Entry::getKey,

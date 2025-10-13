@@ -36,11 +36,11 @@ public class PostgresDbJbstSettings extends PostgresDbAbstractPersistableAuditab
         // ignored, JPA-required
     }
 
-    public PostgresDbJbstSettings(
-            Username username,
+    public void edit(
+            Username updatedBy,
             JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
     ) {
-        super(username);
+        this.update(updatedBy);
         this.hardwareMonitoringThresholds = hardwareMonitoringThresholds;
     }
 

@@ -2,8 +2,8 @@ package jbst.iam.repositories.mongodb;
 
 import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.db.JbstSettings;
+import jbst.iam.domain.dto.requests.RequestJbstSettings;
 import jbst.iam.domain.mongodb.MongoDbJbstSettings;
-import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.repositories.JbstSettingsRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -25,13 +25,16 @@ public interface MongoJbstSettingsRepository extends MongoRepository<MongoDbJbst
     }
 
     default JbstSettings saveAs(
-            Username username,
-            JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
+            Username updatedBy,
+            RequestJbstSettings request
     ) {
-        var entity = this.save(new MongoDbJbstSettings(
-                username,
-                hardwareMonitoringThresholds
-        ));
+        var entity = this.findAll().stream().findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));
+        entity.edit(
+                updatedBy,
+                request.hardwareMonitoringThresholds()
+        );
+        this.save(entity);
         return entity.jbstSettings();
     }
 }

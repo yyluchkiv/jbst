@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "[jbst] Users API")
 // Spring
 @Slf4j
-@AbstractJbstBaseSecurityResource
+@AbstractJbstResource
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

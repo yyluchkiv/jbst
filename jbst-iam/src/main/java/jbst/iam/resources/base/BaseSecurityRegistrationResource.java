@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import jbst.foundation.domain.exceptions.authentication.RegistrationException;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstResource;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.events.EventRegistration0;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "[jbst] Registration API")
 // Spring
 @Slf4j
-@AbstractJbstBaseSecurityResource
+@AbstractJbstResource
 @RestController
 @RequestMapping("/registration")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

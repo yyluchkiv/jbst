@@ -3,3 +3,4 @@
 — Deletion: "jbst.hardware-monitoring-configs" property
 — Modification: JbstConfigurationHardwareMonitoring is encapsulated in JbstHardwareMonitoringResource 
 — Addition: "jbst-settings" database initialization script
+— Addition: "jbst-settings" API

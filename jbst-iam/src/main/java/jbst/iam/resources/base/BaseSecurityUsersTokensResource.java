@@ -11,7 +11,7 @@ import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
@@ -33,7 +33,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Tag(name = "[jbst] Tokens API")
 // Spring
 @Slf4j
-@AbstractJbstBaseSecurityResource
+@AbstractJbstResource
 @RestController
 @RequestMapping("/tokens")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

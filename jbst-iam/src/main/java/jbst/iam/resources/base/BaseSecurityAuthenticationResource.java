@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.TokenUnauthorizedException;
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstResource;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 // Swagger
 @Tag(name = "[jbst] Authentication API")
 // Spring
-@AbstractJbstBaseSecurityResource
+@AbstractJbstResource
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

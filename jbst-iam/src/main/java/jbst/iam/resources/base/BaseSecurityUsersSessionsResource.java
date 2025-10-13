@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.domain.identifiers.UserSessionId;
@@ -20,7 +20,7 @@ import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 @Tag(name = "[jbst] Sessions API")
 // Spring
 @Slf4j
-@AbstractJbstBaseSecurityResource
+@AbstractJbstResource
 @RestController
 @RequestMapping("/sessions")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -2,8 +2,8 @@ package jbst.iam.repositories.postgres;
 
 import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.db.JbstSettings;
+import jbst.iam.domain.dto.requests.RequestJbstSettings;
 import jbst.iam.domain.postgres.db.PostgresDbJbstSettings;
-import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.repositories.JbstSettingsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -27,13 +27,16 @@ public interface PostgresJbstSettingsRepository extends JpaRepository<PostgresDb
     }
 
     default JbstSettings saveAs(
-            Username username,
-            JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
+            Username updatedBy,
+            RequestJbstSettings request
     ) {
-        var entity = this.save(new PostgresDbJbstSettings(
-                username,
-                hardwareMonitoringThresholds
-        ));
+        var entity = this.findAll().stream().findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));
+        entity.edit(
+                updatedBy,
+                request.hardwareMonitoringThresholds()
+        );
+        this.save(entity);
         return entity.jbstSettings();
     }
 }
