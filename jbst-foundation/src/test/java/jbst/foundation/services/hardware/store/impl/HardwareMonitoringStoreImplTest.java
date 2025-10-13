@@ -57,7 +57,9 @@ class HardwareMonitoringStoreImplTest {
     void integrationTest() {
         // Arrange
         var thresholdsConfigs = new HardwareMonitoringThresholds(
-                this.jbstProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()
+                // TODO [YYL] fix hardware monitoring dependency
+                null
+                // this.jbstProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()
         );
 
         // [0]

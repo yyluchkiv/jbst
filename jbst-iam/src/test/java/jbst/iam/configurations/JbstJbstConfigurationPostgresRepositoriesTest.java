@@ -1,9 +1,7 @@
 package jbst.iam.configurations;
 
-import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
-import jbst.iam.repositories.postgres.PostgresUsersTokensRepository;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
-import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.iam.repositories.postgres.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +12,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
@@ -34,6 +31,11 @@ class JbstJbstConfigurationPostgresRepositoriesTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+
+        @Bean
+        PostgresJbstSettingsRepository jbstSettingsRepository() {
+            return mock(PostgresJbstSettingsRepository.class);
+        }
 
         @Bean
         PostgresInvitationsRepository invitationsRepository() {
@@ -58,6 +60,7 @@ class JbstJbstConfigurationPostgresRepositoriesTest {
         @Bean
         JbstConfigurationPostgresRepositories applicationPostgresRepositories() {
             return new JbstConfigurationPostgresRepositories(
+                    this.jbstSettingsRepository(),
                     this.invitationsRepository(),
                     this.usersTokensRepository(),
                     this.usersRepository(),

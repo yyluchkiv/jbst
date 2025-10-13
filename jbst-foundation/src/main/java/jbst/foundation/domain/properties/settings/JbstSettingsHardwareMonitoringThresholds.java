@@ -44,6 +44,10 @@ public class JbstSettingsHardwareMonitoringThresholds extends AbstractToggleProp
         );
     }
 
+    public static JbstSettingsHardwareMonitoringThresholds disabled() {
+        return new JbstSettingsHardwareMonitoringThresholds(false, new EnumMap<>(HardwareName.class));
+    }
+
     @JsonIgnore
     @Override
     public boolean isParentPropertiesNode() {

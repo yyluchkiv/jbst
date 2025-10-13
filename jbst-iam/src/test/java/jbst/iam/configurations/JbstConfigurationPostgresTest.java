@@ -1,5 +1,12 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.JbstSettingsOnInit;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
+import jbst.iam.repositories.postgres.PostgresJbstSettingsRepository;
+import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,13 +17,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -29,10 +36,18 @@ class JbstConfigurationPostgresTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        private final JbstProperties jbstProperties;
 
         @Bean
-        JbstConfigurationPostgres applicationMongodb() {
-            return new JbstConfigurationPostgres();
+        JbstConfigurationPostgres jbstConfigurationPostgres() {
+            return new JbstConfigurationPostgres(
+                    JbstSettingsOnInit.hardcoded(),
+                    mock(PostgresJbstSettingsRepository.class),
+                    mock(PostgresInvitationsRepository.class),
+                    mock(PostgresUsersRepository.class),
+                    mock(PostgresUsersSessionsRepository.class),
+                    this.jbstProperties
+            );
         }
     }
 

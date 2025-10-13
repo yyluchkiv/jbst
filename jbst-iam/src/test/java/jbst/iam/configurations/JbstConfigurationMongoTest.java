@@ -1,5 +1,12 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.JbstSettingsOnInit;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
+import jbst.iam.repositories.mongodb.MongoJbstSettingsRepository;
+import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,14 +17,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -33,8 +39,13 @@ class JbstConfigurationMongoTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        JbstConfigurationMongo applicationMongodb() {
+        JbstConfigurationMongo jbstConfigurationMongo() {
             return new JbstConfigurationMongo(
+                    JbstSettingsOnInit.hardcoded(),
+                    mock(MongoJbstSettingsRepository.class),
+                    mock(MongoInvitationsRepository.class),
+                    mock(MongoUsersRepository.class),
+                    mock(MongoUsersSessionsRepository.class),
                     this.jbstProperties
             );
         }

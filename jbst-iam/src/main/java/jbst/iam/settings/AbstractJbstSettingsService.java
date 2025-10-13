@@ -31,23 +31,33 @@ public abstract class AbstractJbstSettingsService {
         this.jbstSettingsAR = new AtomicReference<>();
     }
 
+    // ================================================================================================================
+    // ALL
+    // ================================================================================================================
     public final void saveOrSkipOnStartup() {
         LOGGER.info(INIT_LOG, STARTED.asANSI());
         if (this.jbstSettingsRepository.isPresent()) {
             this.jbstSettingsAR.set(
                     this.jbstSettingsRepository.getSettings()
             );
-            LOGGER.info(INIT_LOG, "settings already present");
+            LOGGER.info(INIT_LOG, "data already present");
         } else {
-            LOGGER.info(INIT_LOG, "no settings");
+            LOGGER.info(INIT_LOG, "no data");
             this.jbstSettingsAR.set(
                     this.jbstSettingsRepository.saveAs(
                             Username.ops(),
                             this.jbstSettingsOnInit.getHardwareMonitoringThresholds()
                     )
             );
-            LOGGER.info(INIT_LOG, "settings saved");
+            LOGGER.info(INIT_LOG, "data saved");
         }
         LOGGER.info(INIT_LOG, COMPLETED.asANSI());
+    }
+
+    // ================================================================================================================
+    // Hardware Monitoring Thresholds
+    // ================================================================================================================
+    public final boolean isHardwareMonitoringThresholdsEnabled() {
+        return this.jbstSettingsAR.get().hardwareMonitoringThresholds().isEnabled();
     }
 }

@@ -24,7 +24,9 @@ public class HardwareMonitoringStoreImpl implements HardwareMonitoringStore {
     public HardwareMonitoringWidget getHardwareMonitoringWidget() {
         return HardwareMonitoringWidget.of(
                 this.getLastOrUnknownEvent(),
-                this.jbstProperties.getHardwareMonitoringConfigs()
+                // TODO [YYL] fix hardware monitoring dependency
+                null
+                // this.jbstProperties.getHardwareMonitoringConfigs()
         );
     }
 
