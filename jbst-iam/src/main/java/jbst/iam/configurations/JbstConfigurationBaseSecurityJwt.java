@@ -67,6 +67,7 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.iam.handlers.exceptions",
         "jbst.iam.handshakes",
         "jbst.iam.resources.base",
+        "jbst.iam.resources.hardware",
         "jbst.iam.resources.websockets",
         "jbst.iam.services.base",
         "jbst.iam.tasks.hardware",

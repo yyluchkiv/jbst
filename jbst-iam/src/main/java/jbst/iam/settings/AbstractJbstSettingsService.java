@@ -54,6 +54,10 @@ public abstract class AbstractJbstSettingsService {
         LOGGER.info(INIT_LOG, COMPLETED.asANSI());
     }
 
+    public final JbstSettings getSettings() {
+        return this.jbstSettingsAR.get();
+    }
+
     // ================================================================================================================
     // Hardware Monitoring Thresholds
     // ================================================================================================================
