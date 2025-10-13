@@ -2,10 +2,9 @@ package jbst.server.iam;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.essence.AbstractEssenceConstructor;
-import jbst.iam.settings.JbstSettingsService;
+import jbst.iam.settings.AbstractJbstSettingsService;
 import jbst.iam.startup.BaseStartupEventListener;
 import jbst.server.iam.configurations.ConfigurationServer;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +34,12 @@ public class Server extends BaseStartupEventListener {
 
     @Autowired
     public Server(
-            JbstSettingsService jbstSettingsService,
+            AbstractJbstSettingsService jbstSettingsService,
             AbstractEssenceConstructor essenceConstructor,
-            JbstSettingsOnInit jbstSettingsOnInit,
             JbstProperties jbstProperties,
             IncidentPublisher incidentPublisher
     ) {
-        super(jbstSettingsService, essenceConstructor, jbstSettingsOnInit, jbstProperties);
+        super(jbstSettingsService, essenceConstructor, jbstProperties);
         this.incidentPublisher = incidentPublisher;
     }
 

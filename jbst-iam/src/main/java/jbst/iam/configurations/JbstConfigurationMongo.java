@@ -1,8 +1,10 @@
 package jbst.iam.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.foundation.configurations.JbstConfigurationSettingsOnInit;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.iam.essence.MongoBaseEssenceConstructor;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -31,11 +33,16 @@ import org.springframework.context.annotation.Import;
         "jbst.iam.validators.mongodb",
 })
 @Import({
+        JbstConfigurationSettingsOnInit.class,
         JbstConfigurationMongoRepositories.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstConfigurationMongo {
 
+    // Settings
+    private final JbstSettingsOnInit jbstSettingsOnInit;
+    // Repositories
+    private final MongoJbstSettingsRepository mongoJbstSettingsRepository;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -45,10 +52,11 @@ public class JbstConfigurationMongo {
     }
 
     @Bean
-    MongoBaseJbstSettingsService mongoBaseJbstSettingsService(
-            MongoJbstSettingsRepository mongoJbstSettingsRepository
-    ) {
-        return new MongoBaseJbstSettingsService(mongoJbstSettingsRepository);
+    MongoBaseJbstSettingsService mongoBaseJbstSettingsService() {
+        return new MongoBaseJbstSettingsService(
+                this.jbstSettingsOnInit,
+                this.mongoJbstSettingsRepository
+        );
     }
 
     @Bean
