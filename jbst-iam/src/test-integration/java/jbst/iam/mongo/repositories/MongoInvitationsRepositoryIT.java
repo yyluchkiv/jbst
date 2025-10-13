@@ -6,7 +6,7 @@ import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
-import jbst.iam.mongo.configs.TestsJbstJbstConfigurationMongoRepositoriesRunner;
+import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterO
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoInvitationsRepositoryIT extends TestsJbstJbstConfigurationMongoRepositoriesRunner {
+class MongoInvitationsRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
     private final MongoInvitationsRepository invitationsRepository;
 

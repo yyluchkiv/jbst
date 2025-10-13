@@ -14,7 +14,7 @@ import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
-import jbst.iam.mongo.configs.TestsJbstJbstConfigurationMongoRepositoriesRunner;
+import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUsersRepositoryIT extends TestsJbstJbstConfigurationMongoRepositoriesRunner {
+class MongoUsersRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
     private final MongoUsersRepository usersRepository;
 

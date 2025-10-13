@@ -6,7 +6,7 @@ import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsJbstJbstConfigurationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterO
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresInvitationsRepositoryIT extends TestsJbstJbstConfigurationPostgresRepositoriesRunner {
+class PostgresInvitationsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
 
     private final PostgresInvitationsRepository invitationsRepository;
 

@@ -14,7 +14,7 @@ import jbst.iam.domain.dto.requests.RequestUsers;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsJbstJbstConfigurationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersRepositoryIT extends TestsJbstJbstConfigurationPostgresRepositoriesRunner {
+class PostgresUsersRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
 
     private final PostgresUsersRepository usersRepository;
 

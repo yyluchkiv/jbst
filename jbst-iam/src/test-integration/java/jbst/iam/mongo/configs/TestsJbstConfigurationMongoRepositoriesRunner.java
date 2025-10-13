@@ -20,7 +20,7 @@ import jbst.foundation.domain.properties.JbstProperties;
         JbstProperties.class
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class TestsJbstJbstConfigurationMongoRepositoriesRunner {
+public abstract class TestsJbstConfigurationMongoRepositoriesRunner {
 
     @AfterEach
     void afterEach() {

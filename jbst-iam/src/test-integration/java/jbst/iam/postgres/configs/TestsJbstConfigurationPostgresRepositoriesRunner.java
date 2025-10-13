@@ -6,7 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class TestsJbstJbstConfigurationPostgresRepositoriesRunner {
+public abstract class TestsJbstConfigurationPostgresRepositoriesRunner {
 
     @AfterEach
     void afterEach() {
