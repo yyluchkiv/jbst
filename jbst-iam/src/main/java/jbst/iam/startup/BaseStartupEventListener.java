@@ -5,6 +5,7 @@ import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.essence.AbstractEssenceConstructor;
+import jbst.iam.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import static jbst.foundation.domain.enums.Status.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseStartupEventListener implements AbstractServerStartupEventListener {
 
+    // Settings
+    protected final JbstSettingsService jbstSettingsService;
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
     // Properties
@@ -28,10 +31,7 @@ public class BaseStartupEventListener implements AbstractServerStartupEventListe
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
 
-        var thresholds = this.jbstSettingsOnInit.getHardwareMonitoringThresholds();
-        System.out.println("===================================================================================");
-        System.out.println(thresholds);
-        System.out.println("===================================================================================");
+        this.jbstSettingsService.saveOnInit(this.jbstSettingsOnInit);
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_33));
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();

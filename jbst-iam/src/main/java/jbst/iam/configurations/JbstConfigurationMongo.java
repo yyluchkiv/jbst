@@ -1,15 +1,19 @@
 package jbst.iam.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.iam.essence.MongoBaseEssenceConstructor;
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
+import jbst.iam.repositories.mongodb.MongoJbstSettingsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
 import jbst.iam.sessions.MongoSessionRegistry;
+import jbst.iam.settings.MongoBaseJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,8 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.JbstProperties;
 
 @Configuration
 @EnableConfigurationProperties({
@@ -40,6 +42,13 @@ public class JbstConfigurationMongo {
     @PostConstruct
     public void init() {
         this.jbstProperties.getMongodbSecurityJwtConfigs().assertProperties(new PropertyId("mongodbSecurityJwtConfigs"));
+    }
+
+    @Bean
+    MongoBaseJbstSettingsService mongoBaseJbstSettingsService(
+            MongoJbstSettingsRepository mongoJbstSettingsRepository
+    ) {
+        return new MongoBaseJbstSettingsService(mongoJbstSettingsRepository);
     }
 
     @Bean

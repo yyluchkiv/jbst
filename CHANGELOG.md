@@ -1,2 +1,3 @@
 ### Changelog [v1.23]
-— Addition: add properties aka "jbst-settings-on-init"
+— Addition: properties aka "jbst-settings-on-init"
+— Addition: "jbst-settings" table/collection in postgres/mongodb

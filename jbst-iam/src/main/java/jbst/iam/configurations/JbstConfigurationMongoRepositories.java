@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.repositories.mongodb.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import jbst.foundation.domain.properties.JbstProperties;
 
 @Configuration
 @EnableConfigurationProperties({
@@ -48,12 +48,14 @@ public class JbstConfigurationMongoRepositories {
 
     @Bean
     public JbstMongoRepositories jbstMongoRepositories(
+            MongoJbstSettingsRepository jbstSettingsRepository,
             MongoInvitationsRepository invitationsRepository,
             MongoUsersTokensRepository usersTokensRepository,
             MongoUsersRepository usersRepository,
             MongoUsersSessionsRepository userSessionRepository
     ) {
         return new JbstMongoRepositories(
+                jbstSettingsRepository,
                 invitationsRepository,
                 usersTokensRepository,
                 usersRepository,

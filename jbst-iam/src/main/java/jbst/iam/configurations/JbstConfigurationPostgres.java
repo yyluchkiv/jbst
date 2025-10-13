@@ -5,10 +5,12 @@ import jbst.iam.essence.PostgresBaseEssenceConstructor;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
+import jbst.iam.repositories.postgres.PostgresJbstSettingsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.postgres.PostgresBaseUsersSessionsService;
 import jbst.iam.sessions.PostgresSessionRegistry;
+import jbst.iam.settings.PostgresBaseJbstSettingsService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,6 +30,13 @@ import jbst.foundation.domain.properties.JbstProperties;
         JbstConfigurationPostgresRepositories.class
 })
 public class JbstConfigurationPostgres {
+
+    @Bean
+    PostgresBaseJbstSettingsService postgresBaseJbstSettingsService(
+            PostgresJbstSettingsRepository postgresJbstSettingsRepository
+    ) {
+        return new PostgresBaseJbstSettingsService(postgresJbstSettingsRepository);
+    }
 
     @Bean
     PostgresUserDetailsAssistant postgresUserDetailsAssistant(

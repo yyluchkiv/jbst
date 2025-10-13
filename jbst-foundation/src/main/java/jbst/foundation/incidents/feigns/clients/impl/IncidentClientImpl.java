@@ -25,6 +25,7 @@ public class IncidentClientImpl implements IncidentClient {
             this.incidentClientDefinition.registerIncident(incident);
         } catch (FeignException ex) {
             LOGGER.error(SERVER_OFFLINE, "incident-server", ex.getMessage());
+            incident.print();
         }
     }
 }

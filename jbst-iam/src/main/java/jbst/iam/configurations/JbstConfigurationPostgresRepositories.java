@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class JbstConfigurationPostgresRepositories {
 
     // Repositories
+    private final PostgresJbstSettingsRepository jbstSettingsRepository;
     private final PostgresInvitationsRepository invitationsRepository;
     private final PostgresUsersTokensRepository usersTokensRepository;
     private final PostgresUsersRepository userRepository;
@@ -36,6 +37,7 @@ public class JbstConfigurationPostgresRepositories {
     @Bean
     public JbstPostgresRepositories jbstPostgresRepositories() {
         return new JbstPostgresRepositories(
+                this.jbstSettingsRepository,
                 this.invitationsRepository,
                 this.usersTokensRepository,
                 this.userRepository,
