@@ -76,6 +76,7 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.iam.validators.base"
 })
 @Import({
+        JbstConfigurationSettingsOnInit.class,
         JbstConfigurationJasypt.class,
         JbstConfigurationHardwareMonitoring.class,
         JbstConfigurationUtils.class,

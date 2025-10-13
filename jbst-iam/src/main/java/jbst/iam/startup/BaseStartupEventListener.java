@@ -3,14 +3,14 @@ package jbst.iam.startup;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.iam.essence.AbstractEssenceConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static jbst.foundation.domain.enums.Status.COMPLETED;
-import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.domain.enums.Status.*;
 
 @Slf4j
 @Service
@@ -20,6 +20,7 @@ public class BaseStartupEventListener implements AbstractServerStartupEventListe
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
     // Properties
+    protected final JbstSettingsOnInit jbstSettingsOnInit;
     protected final JbstProperties jbstProperties;
 
     @Override
@@ -27,17 +28,25 @@ public class BaseStartupEventListener implements AbstractServerStartupEventListe
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
 
+        var thresholds = this.jbstSettingsOnInit.getHardwareMonitoringThresholds();
+        System.out.println("===================================================================================");
+        System.out.println(thresholds);
+        System.out.println("===================================================================================");
+        LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_33));
+
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
         LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(defaultUsers.isEnabled()).asANSI());
         if (defaultUsers.isEnabled()) {
             this.essenceConstructor.addDefaultUsers();
         }
+        LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_66));
 
         var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
         LOGGER.info("{} Essence 'invitations' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).asANSI());
         if (invitations.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitations();
         }
+        LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_99));
 
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);

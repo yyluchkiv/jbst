@@ -2,10 +2,11 @@ package jbst.server.iam;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.JbstSettingsOnInit;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.essence.AbstractEssenceConstructor;
-import jbst.server.iam.configurations.ConfigurationServer;
 import jbst.iam.startup.BaseStartupEventListener;
+import jbst.server.iam.configurations.ConfigurationServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -34,10 +35,11 @@ public class Server extends BaseStartupEventListener {
     @Autowired
     public Server(
             AbstractEssenceConstructor essenceConstructor,
+            JbstSettingsOnInit jbstSettingsOnInit,
             JbstProperties jbstProperties,
             IncidentPublisher incidentPublisher
     ) {
-        super(essenceConstructor, jbstProperties);
+        super(essenceConstructor, jbstSettingsOnInit, jbstProperties);
         this.incidentPublisher = incidentPublisher;
     }
 
