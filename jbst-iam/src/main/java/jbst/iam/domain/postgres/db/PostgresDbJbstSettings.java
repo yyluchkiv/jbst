@@ -47,7 +47,7 @@ public class PostgresDbJbstSettings extends PostgresDbAbstractPersistableAuditab
     @JsonIgnore
     @Transient
     public JbstSettings jbstSettings() {
-        return new JbstSettings(
+        return JbstSettings.of(
                 this.createdBy,
                 this.createdAt,
                 this.updatedBy,

@@ -13,8 +13,18 @@ public record JbstSettings(
         JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
 ) {
 
+    public static JbstSettings of(
+            Username createdBy,
+            long createdAt,
+            Username updatedBy,
+            long updatedAt,
+            JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
+    ) {
+        return new JbstSettings(createdBy, createdAt, updatedBy, updatedAt, hardwareMonitoringThresholds);
+    }
+
     public static JbstSettings hardcoded() {
-        return new JbstSettings(
+        return JbstSettings.of(
                 Username.ops(),
                 getCurrentTimestamp(),
                 Username.ops(),

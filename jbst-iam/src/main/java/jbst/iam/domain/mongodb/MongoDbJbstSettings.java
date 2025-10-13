@@ -60,7 +60,7 @@ public class MongoDbJbstSettings {
                         entry -> entry.getValue().bigDecimalValue()
                 ))
         );
-        return new JbstSettings(
+        return JbstSettings.of(
                 this.createdBy,
                 this.createdAt,
                 this.updatedBy,
