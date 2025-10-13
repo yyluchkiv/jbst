@@ -1,8 +1,8 @@
 package jbst.iam.repositories;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.domain.db.JbstSettings;
+import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 
 public interface JbstSettingsRepository {
     JbstSettings getSettings();

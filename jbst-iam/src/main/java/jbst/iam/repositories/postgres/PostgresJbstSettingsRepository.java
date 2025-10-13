@@ -1,9 +1,9 @@
 package jbst.iam.repositories.postgres;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.domain.postgres.db.PostgresDbJbstSettings;
+import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.repositories.JbstSettingsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 

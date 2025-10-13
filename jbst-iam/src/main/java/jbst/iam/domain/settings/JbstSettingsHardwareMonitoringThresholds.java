@@ -1,15 +1,9 @@
-package jbst.foundation.domain.properties.settings;
+package jbst.iam.domain.settings;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
-import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
-import jbst.foundation.domain.properties.configs.AbstractTogglePropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.math.BigDecimal;
@@ -21,12 +15,8 @@ import java.util.Map;
 // Properties
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class JbstSettingsHardwareMonitoringThresholds extends AbstractTogglePropertiesConfigs {
-    @MandatoryProperty
+public class JbstSettingsHardwareMonitoringThresholds {
     private final boolean enabled;
-    @MandatoryToggleProperty
-    @MandatoryMapProperty(propertyName = "values", keySetClass = HardwareName.class)
     private Map<HardwareName, BigDecimal> values;
 
     public static JbstSettingsHardwareMonitoringThresholds hardcoded() {
@@ -42,15 +32,5 @@ public class JbstSettingsHardwareMonitoringThresholds extends AbstractToggleProp
                         )
                 )
         );
-    }
-
-    public static JbstSettingsHardwareMonitoringThresholds disabled() {
-        return new JbstSettingsHardwareMonitoringThresholds(false, new EnumMap<>(HardwareName.class));
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isParentPropertiesNode() {
-        return true;
     }
 }

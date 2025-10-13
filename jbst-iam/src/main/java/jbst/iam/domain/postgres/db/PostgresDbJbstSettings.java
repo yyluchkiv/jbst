@@ -6,9 +6,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistableAuditableUUID;
+import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +17,7 @@ import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.Transient;
 
 // Lombok
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)

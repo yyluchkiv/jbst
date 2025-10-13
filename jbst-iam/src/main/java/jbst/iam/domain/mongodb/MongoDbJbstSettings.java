@@ -2,8 +2,8 @@ package jbst.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.domain.db.JbstSettings;
+import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
