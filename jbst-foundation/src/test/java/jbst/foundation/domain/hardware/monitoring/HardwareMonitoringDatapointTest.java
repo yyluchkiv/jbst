@@ -1,6 +1,7 @@
 package jbst.foundation.domain.hardware.monitoring;
 
 import com.jayway.jsonpath.JsonPath;
+import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
 import jbst.foundation.domain.hardware.memories.GlobalMemory;
 import jbst.foundation.domain.hardware.memories.HeapMemory;
@@ -27,6 +28,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
         // Arrange
         var threshold = new BigDecimal("50");
         var datapoint = new HardwareMonitoringDatapoint(
+                Version.hardcoded(),
                 new GlobalMemory(
                         5957144576L,
                         17179869184L,
@@ -43,7 +45,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
                         268435456L
                 )
         );
-        var thresholds = new HardwareMonitoringThresholds(
+        var tableView = datapoint.tableView(
                 Map.of(
                         HardwareName.CPU, threshold,
                         HardwareName.HEAP, threshold,
@@ -52,7 +54,6 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
                         HardwareName.VIRTUAL, threshold
                 )
         );
-        var tableView = datapoint.tableView(thresholds);
 
         // Act
         var datapointJson = this.writeValueAsString(datapoint);
@@ -108,7 +109,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
         // Arrange
         var threshold = new BigDecimal("50");
         var datapoint = HardwareMonitoringDatapoint.zeroUsage();
-        var thresholds = new HardwareMonitoringThresholds(
+        var tableView = datapoint.tableView(
                 Map.of(
                         HardwareName.CPU, threshold,
                         HardwareName.HEAP, threshold,
@@ -117,7 +118,6 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
                         HardwareName.VIRTUAL, threshold
                 )
         );
-        var tableView = datapoint.tableView(thresholds);
 
         // Act
         var datapointJson = this.writeValueAsString(datapoint);

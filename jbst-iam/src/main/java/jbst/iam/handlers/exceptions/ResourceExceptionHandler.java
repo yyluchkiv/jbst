@@ -7,7 +7,7 @@ import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.iam.domain.exceptions.LoginException;
+import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,10 @@ public class ResourceExceptionHandler {
     // DEDICATED EXCEPTIONS
     // =================================================================================================================
     @ExceptionHandler({
-            LoginException.class
+            JbstLoginException.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> handleLoginException(LoginException ex) {
+    public ResponseEntity<ExceptionEntity> handleLoginException(JbstLoginException ex) {
         var response = new ExceptionEntity(
                 ExceptionEntityType.ERROR,
                 ex.getMessage(),

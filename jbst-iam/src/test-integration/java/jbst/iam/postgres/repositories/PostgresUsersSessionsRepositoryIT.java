@@ -8,7 +8,7 @@ import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.postgres.db.PostgresDbUserSession;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsJbstJbstConfigurationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationPostgresRepositoriesRunner {
+class PostgresUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
 
     private final PostgresUsersSessionsRepository usersSessionsRepository;
 

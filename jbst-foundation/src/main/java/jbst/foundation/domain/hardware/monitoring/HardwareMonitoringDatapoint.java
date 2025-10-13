@@ -1,5 +1,6 @@
 package jbst.foundation.domain.hardware.monitoring;
 
+import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.hardware.bytes.ByteSize;
 import jbst.foundation.domain.hardware.bytes.ByteUnit;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
@@ -10,14 +11,14 @@ import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
@@ -25,6 +26,8 @@ import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestam
 @EqualsAndHashCode
 @ToString
 public class HardwareMonitoringDatapoint {
+    private final Version version;
+
     private final ByteUnit unit;
 
     private final Tuple3<TuplePercentage, TuplePercentage, TuplePercentage> global;
@@ -36,13 +39,12 @@ public class HardwareMonitoringDatapoint {
     private final long timestamp;
 
     public HardwareMonitoringDatapoint(
-            GlobalMemory global,
-            CpuMemory cpu,
-            HeapMemory heap
+            @NotNull Version version,
+            @NotNull GlobalMemory global,
+            @NotNull CpuMemory cpu,
+            @NotNull HeapMemory heap
     ) {
-        assertNonNullOrThrow(global, invalidAttribute("MonitoringDatapoint.global"));
-        assertNonNullOrThrow(cpu, invalidAttribute("MonitoringDatapoint.cpu"));
-        assertNonNullOrThrow(heap, invalidAttribute("MonitoringDatapoint.heap"));
+        this.version = version;
         this.unit = ByteUnit.GIGABYTE;
 
         var server = TuplePercentage.of(
@@ -86,6 +88,7 @@ public class HardwareMonitoringDatapoint {
 
     public static HardwareMonitoringDatapoint zeroUsage() {
         return new HardwareMonitoringDatapoint(
+                Version.unknown(),
                 GlobalMemory.zeroUsage(),
                 CpuMemory.zeroUsage(),
                 HeapMemory.zeroUsage()
@@ -94,14 +97,22 @@ public class HardwareMonitoringDatapoint {
 
     public static HardwareMonitoringDatapoint random() {
         return new HardwareMonitoringDatapoint(
+                Version.random(),
                 GlobalMemory.random(),
                 CpuMemory.random(),
                 HeapMemory.random()
         );
     }
 
+    public HardwareMonitoringWidget getWidget(Map<HardwareName, BigDecimal> thresholds) {
+        return new HardwareMonitoringWidget(
+                this.version,
+                this.tableView(thresholds)
+        );
+    }
+
     public HardwareMonitoringDatapointTableView tableView(
-            HardwareMonitoringThresholds thresholds
+            Map<HardwareName, BigDecimal> thresholds
     ) {
         List<HardwareMonitoringDatapointTableRow> table = new ArrayList<>();
 

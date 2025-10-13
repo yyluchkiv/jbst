@@ -1,12 +1,16 @@
 package jbst.foundation.domain.hardware.monitoring;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import static java.util.function.Function.identity;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
@@ -20,7 +24,12 @@ public class HardwareMonitoringDatapointTableView {
 
     public HardwareMonitoringDatapointTableView(@NotNull List<HardwareMonitoringDatapointTableRow> rows) {
         this.rows = rows;
-        this.anyPresent = !isEmpty(this.rows);
+        this.anyPresent = !isEmpty(rows);
         this.anyProblem = rows.stream().anyMatch(HardwareMonitoringDatapointTableRow::isThresholdReached);
+    }
+
+    @JsonIgnore
+    public Map<HardwareName, HardwareMonitoringDatapointTableRow> getMappedRows() {
+        return this.rows.stream().collect(Collectors.toMap(HardwareMonitoringDatapointTableRow::getHardwareName, identity()));
     }
 }

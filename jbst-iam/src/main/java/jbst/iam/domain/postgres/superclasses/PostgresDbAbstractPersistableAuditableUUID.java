@@ -21,20 +21,22 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
 
     @Basic
     @Convert(converter = PostgresUsernameConverter.class)
-    @Column(name = "created_by", nullable = false)
+    @Column(name = "created_by", nullable = false, updatable = false)
     protected Username createdBy;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     protected long createdAt;
+
+    @Basic
+    @Convert(converter = PostgresUsernameConverter.class)
+    @Column(name = "updated_by", nullable = false)
+    protected Username updatedBy;
 
     @Column(name = "updated_at", nullable = false)
     protected long updatedAt;
 
-    protected PostgresDbAbstractPersistableAuditableUUID(Username createdBy) {
-        this.createdBy = createdBy;
-        var currentTimestamp = getCurrentTimestamp();
-        this.createdAt = currentTimestamp;
-        this.updatedAt = currentTimestamp;
+    protected PostgresDbAbstractPersistableAuditableUUID() {
+        // ignored, JPA-required
     }
 
     @Nullable
@@ -51,7 +53,8 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     }
 
     @SuppressWarnings("unused")
-    protected void updated() {
+    protected void update(Username username) {
+        this.updatedBy = username;
         this.updatedAt = getCurrentTimestamp();
     }
 }

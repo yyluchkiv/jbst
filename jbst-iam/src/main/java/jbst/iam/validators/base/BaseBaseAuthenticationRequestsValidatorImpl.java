@@ -5,7 +5,7 @@ import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.enums.UserTokenType;
-import jbst.iam.domain.exceptions.LoginException;
+import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +33,10 @@ public class BaseBaseAuthenticationRequestsValidatorImpl implements BaseAuthenti
     }
 
     @Override
-    public UserToken validateLoginMagicLink(RequestMagicLinkToken request) throws LoginException {
+    public UserToken validateLoginMagicLink(RequestMagicLinkToken request) throws JbstLoginException {
         var userToken = this.usersTokensRepository.findByValueAsAny(request.value());
         if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGIC_LINK)) {
-            throw new LoginException("Invalid magic link token: %s".formatted(request.value()));
+            throw new JbstLoginException("Invalid magic link token: %s".formatted(request.value()));
         }
         return userToken;
     }

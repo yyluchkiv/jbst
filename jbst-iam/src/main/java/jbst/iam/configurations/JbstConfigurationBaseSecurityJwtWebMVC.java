@@ -1,6 +1,6 @@
 package jbst.iam.configurations;
 
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.configurations.JbstConfigurationWebMVC;
 import jbst.foundation.domain.properties.JbstProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,6 @@ public class JbstConfigurationBaseSecurityJwtWebMVC extends JbstConfigurationWeb
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
         var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
-        configurer.addPathPrefix(basePathPrefix, resource -> resource.isAnnotationPresent(AbstractJbstBaseSecurityResource.class));
+        configurer.addPathPrefix(basePathPrefix, resource -> resource.isAnnotationPresent(JbstResource.class));
     }
 }

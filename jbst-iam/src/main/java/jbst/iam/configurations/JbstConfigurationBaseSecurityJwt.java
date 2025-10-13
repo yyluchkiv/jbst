@@ -63,21 +63,20 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.iam.events.publishers.incidents",
         "jbst.iam.events.subscribers.events",
         "jbst.iam.events.subscribers.incidents",
-        "jbst.iam.events.subscribers.websockets",
         "jbst.iam.handlers.exceptions",
         "jbst.iam.handshakes",
         "jbst.iam.resources.base",
+        "jbst.iam.resources.hardware",
         "jbst.iam.resources.websockets",
         "jbst.iam.services.base",
-        "jbst.iam.tasks.hardware",
         "jbst.iam.template",
         "jbst.iam.tokens",
         "jbst.iam.utils",
         "jbst.iam.validators.base"
 })
 @Import({
+        JbstConfigurationProperties.class,
         JbstConfigurationJasypt.class,
-        JbstConfigurationHardwareMonitoring.class,
         JbstConfigurationUtils.class,
         JbstConfigurationSpringBootServer.class,
         JbstConfigurationBaseSecurityJwtWebMVC.class,

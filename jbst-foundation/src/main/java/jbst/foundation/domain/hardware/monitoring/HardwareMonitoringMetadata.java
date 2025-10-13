@@ -7,4 +7,11 @@ public record HardwareMonitoringMetadata(
         Version version,
         SystemMemories systemMemories
 ) {
+
+    public static HardwareMonitoringMetadata hardcoded() {
+        return new HardwareMonitoringMetadata(
+                Version.unknown(),
+                SystemMemories.hardcoded()
+        );
+    }
 }

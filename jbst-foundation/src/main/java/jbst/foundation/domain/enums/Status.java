@@ -33,7 +33,8 @@ public enum Status {
     PROGRESS_60("PROGRESS: 60%", getBoldHexAnsiFormat("#DAA520")),
     PROGRESS_66("PROGRESS: 66%", getBoldHexAnsiFormat("#DAA520")),
     PROGRESS_75("PROGRESS: 75%", getBoldHexAnsiFormat("#DAA520")),
-    PROGRESS_80("PROGRESS: 80%", getBoldHexAnsiFormat("#DAA520"));
+    PROGRESS_80("PROGRESS: 80%", getBoldHexAnsiFormat("#DAA520")),
+    PROGRESS_99("PROGRESS: 99%", getBoldHexAnsiFormat("#DAA520"));
 
     public static Status of(boolean toggle) {
         if (toggle) {

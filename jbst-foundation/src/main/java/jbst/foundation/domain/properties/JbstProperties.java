@@ -23,7 +23,6 @@ public class JbstProperties implements PriorityOrdered {
     private MvcConfigs mvcConfigs;
     private EmailConfigs emailConfigs;
     private IncidentsManagerConfigs incidentsManagerConfigs;
-    private HardwareMonitoringConfigs hardwareMonitoringConfigs;
     private HardwareServerConfigs hardwareServerConfigs;
     private SecurityJwtConfigs securityJwtConfigs;
     private MongodbSecurityJwtConfigs mongodbSecurityJwtConfigs;
@@ -37,7 +36,6 @@ public class JbstProperties implements PriorityOrdered {
         properties.setMvcConfigs(MvcConfigs.hardcoded());
         properties.setEmailConfigs(EmailConfigs.hardcoded());
         properties.setIncidentsManagerConfigs(IncidentsManagerConfigs.hardcoded());
-        properties.setHardwareMonitoringConfigs(HardwareMonitoringConfigs.hardcoded());
         properties.setHardwareServerConfigs(HardwareServerConfigs.hardcoded());
         properties.setSecurityJwtConfigs(SecurityJwtConfigs.hardcoded());
         properties.setMongodbSecurityJwtConfigs(MongodbSecurityJwtConfigs.hardcoded());

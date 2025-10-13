@@ -4,8 +4,6 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.geo.GeoLocation;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThreshold;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
@@ -58,9 +56,6 @@ public class EntityUtility {
         addConstructorRule(GeoLocation.class, clazz -> GeoLocation.random());
         addConstructorRule(UserAgentDetails.class, clazz -> UserAgentDetails.random());
         addConstructorRule(UserRequestMetadata.class, clazz -> UserRequestMetadata.random());
-
-        addConstructorRule(HardwareMonitoringThreshold.class, clazz -> HardwareMonitoringThreshold.random());
-        addConstructorRule(HardwareMonitoringThresholds.class, clazz -> HardwareMonitoringThresholds.random());
 
         addClassRule(parameterClass -> {
                     var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !RandomUtility.containsPrimitiveWrapper(parameterClass);
@@ -115,9 +110,6 @@ public class EntityUtility {
         addClassRule(GeoLocation.class::equals, parameterClass -> GeoLocation.random());
         addClassRule(UserAgentDetails.class::equals, parameterClass -> UserAgentDetails.random());
         addClassRule(UserRequestMetadata.class::equals, parameterClass -> UserRequestMetadata.random());
-
-        addClassRule(HardwareMonitoringThreshold.class::equals, parameterClass -> HardwareMonitoringThreshold.random());
-        addClassRule(HardwareMonitoringThresholds.class::equals, parameterClass -> HardwareMonitoringThresholds.random());
     }
 
     public static void addConstructorRule(Class<?> constructorClass, Function<Class<?>, Object> constructionFnc) {

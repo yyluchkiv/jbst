@@ -9,6 +9,7 @@ import jbst.foundation.domain.properties.configs.ServerConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 import jbst.iam.essence.AbstractEssenceConstructor;
+import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +49,11 @@ class BaseStartupEventListenerTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
+        AbstractJbstSettingsService jbstSettingsService() {
+            return mock(AbstractJbstSettingsService.class);
+        }
+
+        @Bean
         JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
@@ -62,6 +68,7 @@ class BaseStartupEventListenerTest {
         @Bean
         AbstractServerStartupEventListener baseStartupEventListener() {
             return new BaseStartupEventListener(
+                    this.jbstSettingsService(),
                     this.essenceConstructor(),
                     this.jbstProperties()
             );

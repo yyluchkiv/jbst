@@ -26,7 +26,7 @@ ops:
       password: "admin"
   slacks-configs:
     values:
-      - team: "TECH1" #TCSGEN
+      - team: "TECH1"
         main: true
         app-token: "<?>"
         bot-token: "<?>"
@@ -44,7 +44,7 @@ ops:
         main-communication-id: "<?>"
   servers-configs:
     mode: "RESOURCES"
-    rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys" #TCSGEN
+    rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
   recipients-configs:
     to:
       - "<?>"

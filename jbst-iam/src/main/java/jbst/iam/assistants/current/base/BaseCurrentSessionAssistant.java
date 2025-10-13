@@ -1,6 +1,8 @@
 package jbst.iam.assistants.current.base;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
@@ -9,16 +11,14 @@ import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.sessions.SessionRegistry;
+import jbst.iam.settings.AbstractJbstSettingsService;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -28,20 +28,18 @@ import static java.util.Objects.nonNull;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
-    private static final String HARDWARE = "hardware";
-
+    // Settings
+    protected final AbstractJbstSettingsService jbstSettingsService;
     // Sessions
     protected final SessionRegistry sessionRegistry;
     // Repositories
     protected final UsersSessionsRepository usersSessionsRepository;
-    // Stores
-    protected final HardwareMonitoringStore hardwareMonitoringStore;
     // Tokens
     protected final TokensProvider tokensProvider;
     // Utilities
     protected final SecurityPrincipalUtils securityPrincipalUtils;
-    // Properties
-    protected final JbstProperties jbstProperties;
+    // Stores
+    protected final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 
     @Override
     public Username getCurrentUsername() {
@@ -58,8 +56,9 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
         var user = this.getCurrentJwtUser();
 
         var attributes = nonNull(user.attributes()) ? user.attributes() : new HashMap<String, Object>();
-        if (this.jbstProperties.getHardwareMonitoringConfigs().isEnabled()) {
-            attributes.put(HARDWARE, this.hardwareMonitoringStore.getHardwareMonitoringWidget());
+
+        if (this.jbstSettingsService.isHardwareMonitoringThresholdsEnabled()) {
+            attributes.put("hardware", this.jbstHardwareMonitoringStore.getWidget());
         }
 
         return new CurrentClientUser(

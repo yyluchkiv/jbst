@@ -6,11 +6,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.TokenUnauthorizedException;
-import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.foundation.domain.annotations.JbstResource;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
-import jbst.iam.domain.exceptions.LoginException;
+import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.services.AuthenticationService;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 // Swagger
 @Tag(name = "[jbst] Authentication API")
 // Spring
-@AbstractJbstBaseSecurityResource
+@JbstResource
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -39,7 +39,7 @@ public class BaseSecurityAuthenticationResource {
             @RequestBody @Valid RequestUserLogin request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
-    ) throws LoginException {
+    ) throws JbstLoginException {
         var credentials = this.baseAuthenticationRequestsValidator.validateLoginStandard(request);
         return this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
     }
@@ -50,7 +50,7 @@ public class BaseSecurityAuthenticationResource {
             @RequestBody @Valid RequestMagicLinkToken request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
-    ) throws LoginException {
+    ) throws JbstLoginException {
         request = request.createReworkedUkraineZoneId();
         var userToken = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
         return this.authenticationService.asMagicLink(userToken, request, httpRequest, httpResponse);

@@ -8,7 +8,7 @@ import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.mongodb.MongoDbUserSession;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
-import jbst.iam.mongo.configs.TestsJbstJbstConfigurationMongoRepositoriesRunner;
+import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomElement;
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUsersSessionsRepositoryIT extends TestsJbstJbstConfigurationMongoRepositoriesRunner {
+class MongoUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
     private final MongoUsersSessionsRepository usersSessionsRepository;
 
