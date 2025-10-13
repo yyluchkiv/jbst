@@ -5,7 +5,6 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import jbst.iam.template.WssMessagingTemplate;

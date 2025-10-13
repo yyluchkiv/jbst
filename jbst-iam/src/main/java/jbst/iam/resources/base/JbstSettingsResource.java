@@ -38,10 +38,11 @@ public class JbstSettingsResource {
 
     @PostMapping
     public JbstSettings saveJbstSettings(@RequestBody @Valid RequestJbstSettings request) {
-        return this.settingsService.saveSettings(
+        this.settingsService.saveSettings(
                 this.currentSessionAssistant.getCurrentJwtUser().username(),
                 request
         );
+        return this.settingsService.getSettings();
     }
 }
 

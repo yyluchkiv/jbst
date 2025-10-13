@@ -7,4 +7,10 @@ import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 public record RequestJbstSettings(
         @NotNull JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
 ) {
+
+    public static RequestJbstSettings hardcoded() {
+        return new RequestJbstSettings(
+                JbstSettingsHardwareMonitoringThresholds.hardcoded()
+        );
+    }
 }

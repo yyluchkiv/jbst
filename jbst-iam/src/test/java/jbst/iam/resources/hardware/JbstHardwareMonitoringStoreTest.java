@@ -62,7 +62,7 @@ class JbstHardwareMonitoringStoreTest {
         assertThat(containsOneElement1).isFalse();
         assertThat(widget1.version()).isEqualTo(Version.unknown());
         assertThat(widget1.datapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(
-                JbstSettings.hardcoded().hardwareMonitoringThresholds().values()
+                JbstSettings.hardcoded().getHardwareMonitoringThresholds().values()
         ));
 
         // [1]

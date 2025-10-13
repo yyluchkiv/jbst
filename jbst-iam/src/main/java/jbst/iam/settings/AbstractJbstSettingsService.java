@@ -30,9 +30,9 @@ public abstract class AbstractJbstSettingsService {
     }
 
     // ================================================================================================================
-    // ALL
+    // Settings: [jbst_setting] table/collection
     // ================================================================================================================
-    public final void initialize() {
+    public final void initializeSettings() {
         LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", STARTED.asANSI());
         assertTrueOrThrow(
                 this.jbstSettingsRepository.isPresent(),
@@ -48,23 +48,22 @@ public abstract class AbstractJbstSettingsService {
         return this.jbstSettingsAR.get();
     }
 
-    public final JbstSettings saveSettings(Username updatedBy, RequestJbstSettings request) {
+    public final void saveSettings(Username updatedBy, RequestJbstSettings request) {
         var jbstSettings = this.jbstSettingsRepository.saveAs(
                 updatedBy,
                 request
         );
         this.jbstSettingsAR.set(jbstSettings);
-        return jbstSettings;
     }
 
     // ================================================================================================================
     // Hardware Monitoring Thresholds
     // ================================================================================================================
     public final boolean isHardwareMonitoringThresholdsEnabled() {
-        return this.jbstSettingsAR.get().hardwareMonitoringThresholds().enabled();
+        return this.jbstSettingsAR.get().getHardwareMonitoringThresholds().enabled();
     }
 
     public JbstSettingsHardwareMonitoringThresholds getHardwareMonitoringThresholds() {
-        return this.jbstSettingsAR.get().hardwareMonitoringThresholds();
+        return this.jbstSettingsAR.get().getHardwareMonitoringThresholds();
     }
 }

@@ -29,7 +29,7 @@ public class BaseStartupEventListener implements AbstractServerStartupEventListe
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
 
-        this.jbstSettingsService.initialize();
+        this.jbstSettingsService.initializeSettings();
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_33));
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
