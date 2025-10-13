@@ -1,7 +1,6 @@
 package jbst.iam.resources.hardware;
 
 import jbst.foundation.domain.base.Version;
-import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
 import jbst.foundation.domain.hardware.memories.GlobalMemory;
 import jbst.foundation.domain.hardware.memories.HeapMemory;
@@ -70,27 +69,25 @@ class JbstHardwareMonitoringStoreTest {
         assertThat(widget1.datapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(thresholdsConfigs));
 
         // [1]
-        var event1 = EventLastHardwareMonitoringDatapoint.random();
-        this.componentUnderTest.storeEvent(event1);
+        var datapoint1 = HardwareMonitoringDatapoint.random();
+        this.componentUnderTest.storeDatapoint(datapoint1);
         var containsOneElement2 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement2).isTrue();
 
         // [2]
-        var event2 = EventLastHardwareMonitoringDatapoint.random();
-        this.componentUnderTest.storeEvent(event2);
+        var datapoint2 = HardwareMonitoringDatapoint.random();
+        this.componentUnderTest.storeDatapoint(datapoint2);
         var containsOneElement3 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement3).isFalse();
 
         // [3]
-        var event3 = new EventLastHardwareMonitoringDatapoint(
+        var datapoint3 = new HardwareMonitoringDatapoint(
                 Version.of("jbst vTEST"),
-                new HardwareMonitoringDatapoint(
-                        GlobalMemory.hardcoded(),
-                        CpuMemory.hardcoded(),
-                        HeapMemory.hardcoded()
-                )
+                GlobalMemory.hardcoded(),
+                CpuMemory.hardcoded(),
+                HeapMemory.hardcoded()
         );
-        this.componentUnderTest.storeEvent(event3);
+        this.componentUnderTest.storeDatapoint(datapoint3);
         var containsOneElement4 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement4).isFalse();
 

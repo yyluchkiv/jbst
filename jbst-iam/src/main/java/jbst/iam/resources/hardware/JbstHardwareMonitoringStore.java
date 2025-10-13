@@ -1,7 +1,7 @@
 package jbst.iam.resources.hardware;
 
 import jbst.foundation.domain.annotations.DevelopmentOnly;
-import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class JbstHardwareMonitoringStore {
     // Settings
     private final AbstractJbstSettingsService jbstSettingsService;
 
-    private final Deque<EventLastHardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
+    private final Deque<HardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 
     @DevelopmentOnly
     public final void clear() {
@@ -27,7 +27,7 @@ public class JbstHardwareMonitoringStore {
 
     public final HardwareMonitoringWidget getWidget() {
         return HardwareMonitoringWidget.of(
-                !this.datapoints.isEmpty() ? this.datapoints.peekLast() : EventLastHardwareMonitoringDatapoint.unknownVersionZeroUsage(),
+                !this.datapoints.isEmpty() ? this.datapoints.peekLast() : HardwareMonitoringDatapoint.zeroUsage(),
                 this.jbstSettingsService.getSettings().hardwareMonitoringThresholds().values()
         );
     }
@@ -40,10 +40,10 @@ public class JbstHardwareMonitoringStore {
         return this.datapoints.size() == 1;
     }
 
-    public final void storeEvent(EventLastHardwareMonitoringDatapoint event) {
+    public final void storeDatapoint(HardwareMonitoringDatapoint datapoint) {
         if (this.datapoints.size() >= 120) {
             this.datapoints.pollFirst();
         }
-        this.datapoints.offerLast(event);
+        this.datapoints.offerLast(datapoint);
     }
 }

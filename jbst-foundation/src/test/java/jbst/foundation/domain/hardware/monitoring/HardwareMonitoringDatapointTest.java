@@ -1,6 +1,7 @@
 package jbst.foundation.domain.hardware.monitoring;
 
 import com.jayway.jsonpath.JsonPath;
+import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
 import jbst.foundation.domain.hardware.memories.GlobalMemory;
 import jbst.foundation.domain.hardware.memories.HeapMemory;
@@ -27,6 +28,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
         // Arrange
         var threshold = new BigDecimal("50");
         var datapoint = new HardwareMonitoringDatapoint(
+                Version.hardcoded(),
                 new GlobalMemory(
                         5957144576L,
                         17179869184L,

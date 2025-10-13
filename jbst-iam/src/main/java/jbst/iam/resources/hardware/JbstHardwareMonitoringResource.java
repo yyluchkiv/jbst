@@ -2,7 +2,6 @@ package jbst.iam.resources.hardware;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
-import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
@@ -64,14 +63,12 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     @ResponseStatus(HttpStatus.OK)
     public void saveMetadata(@RequestBody HardwareMonitoringMetadata hardwareMonitoringMetadata) {
         try {
-            this.jbstHardwareMonitoringStore.storeEvent(
-                    new EventLastHardwareMonitoringDatapoint(
+            this.jbstHardwareMonitoringStore.storeDatapoint(
+                    new HardwareMonitoringDatapoint(
                             hardwareMonitoringMetadata.version(),
-                            new HardwareMonitoringDatapoint(
-                                    hardwareMonitoringMetadata.systemMemories().global(),
-                                    hardwareMonitoringMetadata.systemMemories().cpu(),
-                                    getHeapMemory()
-                            )
+                            hardwareMonitoringMetadata.systemMemories().global(),
+                            hardwareMonitoringMetadata.systemMemories().cpu(),
+                            getHeapMemory()
                     )
             );
             if (this.jbstHardwareMonitoringStore.isAnyProblemOrFirstDatapoint()) {

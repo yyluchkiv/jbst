@@ -1,5 +1,6 @@
 package jbst.foundation.domain.hardware.monitoring;
 
+import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.hardware.bytes.ByteSize;
 import jbst.foundation.domain.hardware.bytes.ByteUnit;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
@@ -24,6 +25,8 @@ import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestam
 @EqualsAndHashCode
 @ToString
 public class HardwareMonitoringDatapoint {
+    private final Version version;
+
     private final ByteUnit unit;
 
     private final Tuple3<TuplePercentage, TuplePercentage, TuplePercentage> global;
@@ -35,10 +38,12 @@ public class HardwareMonitoringDatapoint {
     private final long timestamp;
 
     public HardwareMonitoringDatapoint(
+            @NotNull Version version,
             @NotNull GlobalMemory global,
             @NotNull CpuMemory cpu,
             @NotNull HeapMemory heap
     ) {
+        this.version = version;
         this.unit = ByteUnit.GIGABYTE;
 
         var server = TuplePercentage.of(
@@ -82,6 +87,7 @@ public class HardwareMonitoringDatapoint {
 
     public static HardwareMonitoringDatapoint zeroUsage() {
         return new HardwareMonitoringDatapoint(
+                Version.unknown(),
                 GlobalMemory.zeroUsage(),
                 CpuMemory.zeroUsage(),
                 HeapMemory.zeroUsage()
@@ -90,6 +96,7 @@ public class HardwareMonitoringDatapoint {
 
     public static HardwareMonitoringDatapoint random() {
         return new HardwareMonitoringDatapoint(
+                Version.random(),
                 GlobalMemory.random(),
                 CpuMemory.random(),
                 HeapMemory.random()
