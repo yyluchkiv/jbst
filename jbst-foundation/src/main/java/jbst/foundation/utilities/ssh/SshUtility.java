@@ -27,6 +27,7 @@ import static java.util.Objects.nonNull;
 @UtilityClass
 public class SshUtility {
 
+    @SuppressWarnings("DataFlowIssue")
     public static SshSession getSession(SshConnectionConfigs connectionConfigs) {
         try {
             if (nonNull(connectionConfigs.getPassword())) {
