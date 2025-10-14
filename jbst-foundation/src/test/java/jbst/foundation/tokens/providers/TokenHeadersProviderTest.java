@@ -1,4 +1,4 @@
-package jbst.iam.tokens.providers;
+package jbst.foundation.tokens.providers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -6,11 +6,11 @@ import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.security.jwt.JwtTokensConfigs;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

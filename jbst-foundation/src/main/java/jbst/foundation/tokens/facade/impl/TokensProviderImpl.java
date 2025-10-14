@@ -1,4 +1,4 @@
-package jbst.iam.tokens.facade.impl;
+package jbst.foundation.tokens.facade.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -6,9 +6,9 @@ import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.iam.tokens.facade.TokensProvider;
-import jbst.iam.tokens.providers.TokenCookiesProvider;
-import jbst.iam.tokens.providers.TokenHeadersProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.providers.TokenCookiesProvider;
+import jbst.foundation.tokens.providers.TokenHeadersProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

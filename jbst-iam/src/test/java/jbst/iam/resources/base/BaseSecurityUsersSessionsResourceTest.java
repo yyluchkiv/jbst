@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.iam.validators.BaseUsersSessionsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;

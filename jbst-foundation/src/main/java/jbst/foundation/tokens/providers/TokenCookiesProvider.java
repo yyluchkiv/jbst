@@ -1,16 +1,16 @@
-package jbst.iam.tokens.providers;
+package jbst.foundation.tokens.providers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -70,11 +70,10 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.iam.resources.system",
         "jbst.iam.services.base",
         "jbst.iam.template",
-        "jbst.iam.tokens",
-        "jbst.iam.utils",
         "jbst.iam.validators.base"
 })
 @Import({
+        JbstConfigurationSecurityJwt1.class,
         JbstConfigurationProperties.class,
         JbstConfigurationJasypt.class,
         JbstConfigurationUtils.class,

@@ -17,7 +17,7 @@ import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensContextThrowerService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

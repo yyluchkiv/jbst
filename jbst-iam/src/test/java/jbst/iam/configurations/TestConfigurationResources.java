@@ -18,7 +18,7 @@ import jbst.iam.services.base.RateLimitsServiceImpl;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.iam.template.WssMessagingTemplate;
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.iam.validators.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

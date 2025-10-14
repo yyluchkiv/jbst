@@ -1,6 +1,6 @@
 package jbst.iam.handshakes;
 
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

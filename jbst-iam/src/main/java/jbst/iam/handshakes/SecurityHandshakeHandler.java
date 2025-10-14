@@ -2,7 +2,7 @@ package jbst.iam.handshakes;
 
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.services.TokensService;
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.iam.services.BaseSuperadminService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

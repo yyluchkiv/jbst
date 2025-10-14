@@ -15,7 +15,7 @@ import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

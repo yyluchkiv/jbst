@@ -1,4 +1,4 @@
-package jbst.iam.tokens.facade;
+package jbst.foundation.tokens.facade;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,21 +1,21 @@
-package jbst.iam.tokens.facade.impl;
+package jbst.foundation.tokens.facade.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JwtToken;
 import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.tokens.facade.TokensProvider;
-import jbst.iam.tokens.providers.TokenCookiesProvider;
-import jbst.iam.tokens.providers.TokenHeadersProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.providers.TokenCookiesProvider;
+import jbst.foundation.tokens.providers.TokenHeadersProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

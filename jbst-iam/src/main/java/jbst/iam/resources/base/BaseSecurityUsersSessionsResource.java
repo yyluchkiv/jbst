@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.iam.services.BaseUsersSessionsService;
-import jbst.iam.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
