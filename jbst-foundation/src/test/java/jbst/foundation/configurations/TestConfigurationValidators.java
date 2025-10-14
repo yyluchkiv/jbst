@@ -1,0 +1,62 @@
+package jbst.foundation.configurations;
+
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.UsersTokensRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
+import static org.mockito.Mockito.mock;
+
+@Configuration
+@Import({
+        TestJbstConfigurationPropertiesHardcoded.class
+})
+public class TestConfigurationValidators {
+
+    // =================================================================================================================
+    // Publishers
+    // =================================================================================================================
+    @Bean
+    SecurityJwtEventsPublisher securityJwtPublisher() {
+        return mock(SecurityJwtEventsPublisher.class);
+    }
+
+    @Bean
+    SecurityJwtIncidentsPublisher securityJwtIncidentPublisher() {
+        return mock(SecurityJwtIncidentsPublisher.class);
+    }
+
+    @Bean
+    IncidentPublisher incidentPublisher() {
+        return mock(IncidentPublisher.class);
+    }
+
+    // =================================================================================================================
+    // Repositories
+    // =================================================================================================================
+    @Bean
+    InvitationsRepository invitationsRepository() {
+        return mock(InvitationsRepository.class);
+    }
+
+    @Bean
+    UsersRepository userRepository() {
+        return mock(UsersRepository.class);
+    }
+
+    @Bean
+    UsersSessionsRepository userSessionRepository() {
+        return mock(UsersSessionsRepository.class);
+    }
+
+    @Bean
+    UsersTokensRepository usersTokensRepository() {
+        return mock(UsersTokensRepository.class);
+    }
+}
