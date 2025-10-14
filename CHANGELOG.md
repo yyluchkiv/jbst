@@ -1,2 +1,2 @@
 ### Changelog [v1.24]
-— TBD
+— Modification: merge PostgresConverters

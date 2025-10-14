@@ -2,7 +2,7 @@ package jbst.iam.domain.postgres.superclasses;
 
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
+import jbst.foundation.domain.converters.PostgresConverters;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.domain.Persistable;
 import org.springframework.lang.Nullable;
@@ -20,7 +20,7 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     protected UUID id;
 
     @Basic
-    @Convert(converter = PostgresUsernameConverter.class)
+    @Convert(converter = PostgresConverters.UsernameConverter.class)
     @Column(name = "created_by", nullable = false, updatable = false)
     protected Username createdBy;
 
@@ -28,7 +28,7 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     protected long createdAt;
 
     @Basic
-    @Convert(converter = PostgresUsernameConverter.class)
+    @Convert(converter = PostgresConverters.UsernameConverter.class)
     @Column(name = "updated_by", nullable = false)
     protected Username updatedBy;
 

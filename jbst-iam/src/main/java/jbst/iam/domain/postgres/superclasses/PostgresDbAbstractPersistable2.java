@@ -3,11 +3,11 @@ package jbst.iam.domain.postgres.superclasses;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.MappedSuperclass;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.PostgresConverters;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestam
 @MappedSuperclass
 public abstract class PostgresDbAbstractPersistable2 extends PostgresDbAbstractPersistable0 {
 
-    @Convert(converter = PostgresUsernameConverter.class)
+    @Convert(converter = PostgresConverters.UsernameConverter.class)
     @Column(name = "created_by", nullable = false)
     protected Username createdBy;
 

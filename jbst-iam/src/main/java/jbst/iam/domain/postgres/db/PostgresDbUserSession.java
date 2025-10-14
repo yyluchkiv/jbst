@@ -3,7 +3,7 @@ package jbst.iam.domain.postgres.db;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
+import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.iam.converters.postgres.PostgresJwtAccessTokenConverter;
 import jbst.iam.converters.postgres.PostgresJwtRefreshTokenConverter;
@@ -36,7 +36,7 @@ import static jbst.iam.domain.db.UserSession.ofPersisted;
 public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     public static final String PG_TABLE_NAME = "jbst_users_sessions";
 
-    @Convert(converter = PostgresUsernameConverter.class)
+    @Convert(converter = PostgresConverters.UsernameConverter.class)
     @Column(nullable = false)
     private Username username;
 

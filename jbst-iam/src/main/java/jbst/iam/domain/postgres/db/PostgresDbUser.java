@@ -8,6 +8,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.converters.postgres.*;
 import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.converters.postgres.PostgresUserCreationOptionConverter;
@@ -52,7 +53,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     private UserCreationOption creationOption;
 
     @Basic
-    @Convert(converter = PostgresUsernameConverter.class)
+    @Convert(converter = PostgresConverters.UsernameConverter.class)
     @Column(nullable = false, updatable = false)
     private Username username;
 

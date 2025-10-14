@@ -2,6 +2,8 @@ package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
@@ -9,8 +11,6 @@ import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.postgres.PostgresUsernameConverter;
 
 import java.util.List;
 import java.util.Set;
@@ -32,7 +32,7 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_invitations";
 
-    @Convert(converter = PostgresUsernameConverter.class)
+    @Convert(converter = PostgresConverters.UsernameConverter.class)
     @Column(nullable = false, updatable = false)
     private Username owner;
 
@@ -43,7 +43,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     @Column(nullable = false)
     private String code;
 
-    @Convert(converter = PostgresUsernameConverter.class)
+    @Convert(converter = PostgresConverters.UsernameConverter.class)
     @Column
     private Username invited;
 
