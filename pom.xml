@@ -26,7 +26,6 @@
     <modules>
         <!-- JARs -->
         <module>jbst-foundation</module>
-        <module>jbst-iam</module>
         <!-- Servers -->
         <module>jbst-server-iam</module>
         <module>jbst-server-hardware-monitoring</module>

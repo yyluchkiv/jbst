@@ -1,8 +1,8 @@
 package jbst.server.iam.mongodb.services.impl;
 
-import jbst.iam.domain.jwt.JwtUser;
-import jbst.iam.domain.mongodb.MongoDbUser;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.foundation.domain.databases.mongo.MongoDbUser;
+import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

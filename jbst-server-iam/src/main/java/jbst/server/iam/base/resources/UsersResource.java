@@ -1,7 +1,7 @@
 package jbst.server.iam.base.resources;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

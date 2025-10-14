@@ -2,7 +2,7 @@ package jbst.server.iam.configurations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
+import jbst.foundation.handlers.ResourceExceptionHandler;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;

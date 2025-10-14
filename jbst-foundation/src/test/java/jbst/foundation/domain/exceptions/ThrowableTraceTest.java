@@ -12,12 +12,12 @@ class ThrowableTraceTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFolder() {
-        return "exceptions";
+        return "jsons";
     }
 
     @Override
     protected String getFileName() {
-        return "trace-1.json";
+        return "exception-trace.json";
     }
 
     @Test

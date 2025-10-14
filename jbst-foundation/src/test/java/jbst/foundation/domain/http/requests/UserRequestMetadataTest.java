@@ -41,7 +41,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "http/requests";
+        return "jsons";
     }
 
     @ParameterizedTest

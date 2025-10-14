@@ -1,6 +1,6 @@
 package jbst.server.iam.base.services;
 
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 
 import java.util.List;
 

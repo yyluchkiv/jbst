@@ -1,8 +1,8 @@
 package jbst.server.iam.configurations;
 
+import jbst.foundation.handlers.ResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.utils.EnvironmentUtils;
-import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
+import jbst.foundation.utils.JbstEnvUtils;
 import jbst.server.iam.base.services.UsersService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,7 +43,7 @@ public class TestConfigurationResources {
     // Utils
     // =================================================================================================================
     @Bean
-    EnvironmentUtils environmentUtils() {
-        return mock(EnvironmentUtils.class);
+    JbstEnvUtils envUtils() {
+        return mock(JbstEnvUtils.class);
     }
 }

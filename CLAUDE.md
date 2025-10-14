@@ -6,8 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 JBST is a Java 17 Spring Boot framework providing bootstrapping tools for enterprise applications. It's structured as a multi-module Maven project with the following key modules:
 
-- **jbst-foundation**: Core domain objects, utilities, configurations, and foundation services
-- **jbst-iam**: Identity and Access Management module with JWT-based security
+- **jbst-foundation**: Core domain objects, utilities, configurations, and foundation services, Identity and Access Management module with JWT-based security
 - **jbst-server-iam**: IAM server application supporting both MongoDB and PostgreSQL
 - **jbst-server-hardware-monitoring**: Hardware monitoring server application
 - **jbst-server-ops**: Operations server for incident management
@@ -32,7 +31,7 @@ mvn integration-test
 mvn clean verify
 
 # Quick build without tests
-./delivery-check-lite.sh  # or mvn clean install -Dmaven.test.skip -DskipTests -T 4
+./delivery-check-fast.sh  # or mvn clean install -Dmaven.test.skip -DskipTests -T 4
 ```
 
 ### Database Support
@@ -62,7 +61,6 @@ The IAM module supports both MongoDB and PostgreSQL. Use the appropriate profile
 
 ### Module Dependencies
 - `jbst-foundation`: Base module containing domain objects, utilities, and configurations
-- `jbst-iam`: Depends on foundation, provides security and user management
 - Server modules: Depend on their respective JAR modules for runtime execution
 
 ### Key Configuration

@@ -26,7 +26,7 @@ class VersionTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "base";
+        return "jsons";
     }
 
     @ParameterizedTest

@@ -27,12 +27,12 @@ class TimeAmountTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFolder() {
-        return "time";
+        return "jsons";
     }
 
     @Override
     protected String getFileName() {
-        return "time-amount-1.json";
+        return "time-amount.json";
     }
 
     @Test

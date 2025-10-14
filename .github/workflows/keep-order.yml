@@ -58,6 +58,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
 
+      # TODO [YYL] cleanup jbst-iam package
       # Delete releases and tags
 
       - name: "delete releases and tags"

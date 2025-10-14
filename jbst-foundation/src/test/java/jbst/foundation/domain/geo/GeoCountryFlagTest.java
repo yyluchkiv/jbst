@@ -21,7 +21,7 @@ class GeoCountryFlagTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "geo";
+        return "jsons";
     }
 
     @ParameterizedTest

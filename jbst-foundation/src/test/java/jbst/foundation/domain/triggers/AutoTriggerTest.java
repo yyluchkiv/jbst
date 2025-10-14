@@ -16,7 +16,7 @@ class AutoTriggerTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFolder() {
-        return "triggers";
+        return "jsons";
     }
 
     @Test

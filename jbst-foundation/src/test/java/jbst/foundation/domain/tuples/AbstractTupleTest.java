@@ -6,6 +6,6 @@ public abstract class AbstractTupleTest extends AbstractSerializationDeserializa
 
     @Override
     protected String getFolder() {
-        return "tuples";
+        return "jsons";
     }
 }

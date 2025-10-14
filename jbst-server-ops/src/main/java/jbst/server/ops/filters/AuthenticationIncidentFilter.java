@@ -10,6 +10,7 @@ import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.utils.UserMetadataUtils;
+import jbst.server.ops.properties.OpsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import jbst.server.ops.properties.OpsProperties;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

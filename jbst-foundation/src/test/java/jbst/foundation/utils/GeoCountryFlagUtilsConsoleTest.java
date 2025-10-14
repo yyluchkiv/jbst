@@ -22,12 +22,12 @@ class GeoCountryFlagUtilsConsoleTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "geo/flags";
+        return "tests-jsons";
     }
 
     @Test
     void readFileTest() throws JsonProcessingException {
-        var flagsFullsJSON = readFile(this.getFolder(), "test-geo-countries-flags.json");
+        var flagsFullsJSON = readFile(this.getFolder(), "tests-geo-countries-flags.json");
         var typeReference = new TypeReference<List<CountryFlagFull>>() {};
         var flagsFulls = OBJECT_MAPPER.readValue(flagsFullsJSON, typeReference);
         var flags = flagsFulls.stream()

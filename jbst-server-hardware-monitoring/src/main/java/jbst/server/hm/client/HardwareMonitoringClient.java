@@ -21,7 +21,6 @@ import static jbst.foundation.domain.tuples.TuplePercentage.progressTuplePercent
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class HardwareMonitoringClient {
 
-    private final AtomicLong iterations = new AtomicLong(0);
     private final AtomicLong successes = new AtomicLong(0);
     private final AtomicLong failures = new AtomicLong(0);
 
@@ -37,7 +36,6 @@ public class HardwareMonitoringClient {
 
     @Async
     public void sendHardwareMonitoringMetadata(HardwareMonitoringMetadata hardwareMonitoringMetadata) {
-        this.iterations.incrementAndGet();
         var status = Status.STARTED;
         try {
             this.hardwareMonitoringClientDefinition.sendHardwareMonitoringMetadata(hardwareMonitoringMetadata);
@@ -53,7 +51,7 @@ public class HardwareMonitoringClient {
         ).percentage();
         LOGGER.info(
                 "SEND HARDWARE METADATA #{} — {}. Success Rate: {}%",
-                this.iterations,
+                this.successes.get() + this.failures.get(),
                 status.asANSI(),
                 percentage
         );

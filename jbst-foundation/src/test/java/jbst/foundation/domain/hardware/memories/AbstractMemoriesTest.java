@@ -6,6 +6,6 @@ public abstract class AbstractMemoriesTest extends AbstractFolderSerializationRu
 
     @Override
     protected String getFolder() {
-        return "hardware/memories";
+        return "jsons";
     }
 }

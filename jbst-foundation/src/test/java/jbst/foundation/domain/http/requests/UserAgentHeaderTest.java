@@ -1,9 +1,8 @@
 package jbst.foundation.domain.http.requests;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.utilities.random.RandomUtility;
 import org.junit.jupiter.api.Test;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

@@ -1,0 +1,211 @@
+package jbst.foundation.utils;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.http.cache.CachedPayload;
+import jbst.foundation.domain.properties.JbstProperties;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.util.stream.Stream;
+
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utils.JbstHttpUtils.CACHED_PAYLOAD_ATTRIBUTE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+@ExtendWith({ SpringExtension.class })
+@TestPropertySource(properties = {
+        "server.servlet.contextPath=/api"
+})
+@ContextConfiguration(loader= AnnotationConfigContextLoader.class)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+class JbstHttpUtilsTest {
+    private static Stream<Arguments> authenticationAuthenticateStandardEndpointCases() {
+        return Stream.of(
+                Arguments.of("GET", "/api/jbst/security/authentication/login/standard", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/standard", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/standard", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/login/standard1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/standard1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/standard1", false)
+        );
+    }
+
+    private static Stream<Arguments> authenticationAuthenticateMagicLinkEndpointCases() {
+        return Stream.of(
+                Arguments.of("GET", "/api/jbst/security/authentication/login/magic-link", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/magic-link", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/magic-link", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/login/magic-link1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/magic-link1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/magic-link1", false)
+        );
+    }
+
+    private static Stream<Arguments> authenticationRefreshTokenEndpointCases() {
+        return Stream.of(
+                Arguments.of("GET", "/api/jbst/security/authentication/refreshToken", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/refreshToken", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/refreshToken", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/refreshToken1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/refreshToken1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/refreshToken1", false)
+        );
+    }
+
+    @Configuration
+    @Import({
+            TestJbstConfigurationPropertiesHardcoded.class
+    })
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+    static class ContextConfiguration {
+        // Properties
+        private final JbstProperties jbstProperties;
+
+        @Bean
+        JbstHttpUtils jbstHttpUtils() {
+            return new JbstHttpUtils(
+                    this.jbstProperties
+            );
+        }
+    }
+
+    private final JbstHttpUtils componentUnderTest;
+
+    @ParameterizedTest
+    @MethodSource({"authenticationAuthenticateStandardEndpointCases", "authenticationAuthenticateMagicLinkEndpointCases"})
+    void isCachedEndpointTest(String method, String requestURI, boolean expected) {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn(method);
+        when(cachedRequest.getRequestURI()).thenReturn(requestURI);
+
+        // Act
+        var actual = this.componentUnderTest.isCachedEndpoint(cachedRequest);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void cachePayloadNoCacheTest() {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+
+        // Act
+        this.componentUnderTest.cachePayload(cachedRequest);
+
+        // Assert
+        verify(cachedRequest, times(2)).getMethod();
+        verifyNoMoreInteractions(cachedRequest);
+    }
+
+    @Test
+    void cachePayloadTest() {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn("POST");
+        when(cachedRequest.getCachedPayload()).thenReturn(CachedPayload.hardcoded());
+        when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/login/standard");
+
+        // Act
+        this.componentUnderTest.cachePayload(cachedRequest);
+
+        // Assert
+        verify(cachedRequest).getMethod();
+        verify(cachedRequest).getRequestURI();
+        verify(cachedRequest).getCachedPayload();
+        verify(cachedRequest).setAttribute(CACHED_PAYLOAD_ATTRIBUTE, "{}");
+        verifyNoMoreInteractions(cachedRequest);
+    }
+
+    @Test
+    void getCachedPayloadMissingTest() {
+        // Arrange
+        var request = mock(HttpServletRequest.class);
+        var payload = randomString();
+        when(request.getAttribute(CACHED_PAYLOAD_ATTRIBUTE)).thenReturn(payload);
+
+        // Act
+        var cachedPayload = this.componentUnderTest.getCachedPayload(request);
+
+        // Assert
+        assertThat(cachedPayload).isEqualTo(payload);
+        verify(request).getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
+        verifyNoMoreInteractions(request);
+    }
+
+    @Test
+    void getCachedPayloadPresentTest() {
+        // Arrange
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        var cachedPayload = this.componentUnderTest.getCachedPayload(request);
+
+        // Assert
+        assertThat(cachedPayload).isNull();
+        verify(request).getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
+        verifyNoMoreInteractions(request);
+    }
+
+    @ParameterizedTest
+    @MethodSource("authenticationAuthenticateStandardEndpointCases")
+    void isAuthenticationAuthenticateStandardEndpointTest(String method, String requestURI, boolean expected) {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn(method);
+        when(cachedRequest.getRequestURI()).thenReturn(requestURI);
+
+        // Act
+        var actual = this.componentUnderTest.isAuthenticationAuthenticateStandardEndpoint(cachedRequest);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("authenticationAuthenticateMagicLinkEndpointCases")
+    void isAuthenticationAuthenticateMagicLinkEndpointTest(String method, String requestURI, boolean expected) {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn(method);
+        when(cachedRequest.getRequestURI()).thenReturn(requestURI);
+
+        // Act
+        var actual = this.componentUnderTest.isAuthenticationAuthenticateMagicLinkEndpoint(cachedRequest);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("authenticationRefreshTokenEndpointCases")
+    void isAuthenticationRefreshTokenEndpointTest(String method, String requestURI, boolean expected) {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn(method);
+        when(cachedRequest.getRequestURI()).thenReturn(requestURI);
+
+        // Act
+        var actual = this.componentUnderTest.isAuthenticationRefreshTokenEndpoint(cachedRequest);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+}

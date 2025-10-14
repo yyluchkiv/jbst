@@ -33,7 +33,7 @@ class ByteSizeTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "hardware/bytes";
+        return "jsons";
     }
 
     @ParameterizedTest

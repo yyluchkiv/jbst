@@ -87,7 +87,7 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "spring/actuator/info";
+        return "jsons";
     }
 
     // serialization ignored deliberately

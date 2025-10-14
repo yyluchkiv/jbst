@@ -1,7 +1,7 @@
 package jbst.server.iam.postgres.services.impl;
 
-import jbst.iam.domain.postgres.db.PostgresDbUser;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -15,9 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import static jbst.foundation.utilities.random.EntityUtility.list345;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static jbst.foundation.utilities.random.EntityUtility.list345;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class)

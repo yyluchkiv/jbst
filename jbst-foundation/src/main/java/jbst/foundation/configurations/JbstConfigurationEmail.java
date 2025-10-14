@@ -6,8 +6,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.services.emails.services.impl.EmailServiceSlf4j;
-import jbst.foundation.services.emails.utilities.EmailUtility;
-import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
+import jbst.foundation.services.emails.utils.JbstEmailsUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -80,8 +79,8 @@ public class JbstConfigurationEmail {
 
     @Bean
     @ConditionalOnProperty(value = "jbst.email-configs.enabled", havingValue = "true")
-    public EmailUtility emailUtility() {
-        return new EmailUtilityImpl(
+    public JbstEmailsUtils emailsUtils() {
+        return new JbstEmailsUtils(
                 this.javaMailSender()
         );
     }
@@ -92,7 +91,7 @@ public class JbstConfigurationEmail {
         return new EmailServiceImpl(
                 this.javaMailSender(),
                 this.springTemplateEngine(),
-                this.emailUtility(),
+                this.emailsUtils(),
                 this.jbstProperties
         );
     }
