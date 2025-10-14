@@ -1,4 +1,4 @@
-package jbst.iam.resources.hardware;
+package jbst.foundation.resources.hardware;
 
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;

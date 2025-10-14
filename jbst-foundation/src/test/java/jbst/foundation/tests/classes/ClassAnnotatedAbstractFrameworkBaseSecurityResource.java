@@ -1,4 +1,4 @@
-package jbst.iam.tests.classes;
+package jbst.foundation.tests.classes;
 
 import jbst.foundation.domain.annotations.JbstResource;
 

@@ -1,4 +1,4 @@
-package jbst.iam.resources.base;
+package jbst.foundation.resources.base;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;

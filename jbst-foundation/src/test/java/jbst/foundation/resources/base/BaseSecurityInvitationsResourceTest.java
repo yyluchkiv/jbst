@@ -1,5 +1,5 @@
 
-package jbst.iam.resources.base;
+package jbst.foundation.resources.base;
 
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;

@@ -1,4 +1,4 @@
-package jbst.iam.tests.stubbers;
+package jbst.foundation.tests.stubbers;
 
 public interface AbstractMockService {
     void executeInheritedMethod();

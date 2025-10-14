@@ -1,4 +1,4 @@
-package jbst.iam.resources.base;
+package jbst.foundation.resources.base;
 
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;

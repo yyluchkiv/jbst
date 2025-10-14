@@ -1,4 +1,4 @@
-package jbst.iam.startup;
+package jbst.foundation.startup;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;

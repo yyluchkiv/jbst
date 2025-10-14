@@ -1,4 +1,4 @@
-package jbst.iam.tests.classes;
+package jbst.foundation.tests.classes;
 
 public class ClassNotAnnotatedAbstractFrameworkBaseSecurityResource {
 }

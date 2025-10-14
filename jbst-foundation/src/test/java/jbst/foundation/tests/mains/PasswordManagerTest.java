@@ -1,4 +1,4 @@
-package jbst.iam.tests.mains;
+package jbst.foundation.tests.mains;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

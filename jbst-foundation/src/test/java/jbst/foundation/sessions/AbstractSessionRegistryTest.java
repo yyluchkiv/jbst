@@ -1,4 +1,4 @@
-package jbst.iam.sessions;
+package jbst.foundation.sessions;
 
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
