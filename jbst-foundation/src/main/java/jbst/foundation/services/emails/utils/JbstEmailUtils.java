@@ -12,7 +12,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstEmailsUtils {
+public class JbstEmailUtils {
 
     // JavaMail
     private final JavaMailSender javaMailSender;

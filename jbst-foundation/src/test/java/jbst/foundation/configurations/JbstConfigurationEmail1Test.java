@@ -61,7 +61,7 @@ class JbstConfigurationEmail1Test {
                 .contains("javaMailSender")
                 .contains("springTemplateEngine")
                 .contains("htmlTemplateResolver")
-                .contains("emailUtility")
+                .contains("emailUtils")
                 .contains("emailService")
                 .contains("emailServiceSlf4j")
                 .hasSize(20);

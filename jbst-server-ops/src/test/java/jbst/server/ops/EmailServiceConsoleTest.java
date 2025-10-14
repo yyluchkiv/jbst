@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.configs.UtilsConfigs;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
-import jbst.foundation.services.emails.utils.JbstEmailsUtils;
+import jbst.foundation.services.emails.utils.JbstEmailUtils;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.utils.GeoCountryFlagUtils;
 import lombok.RequiredArgsConstructor;
@@ -99,8 +99,8 @@ class EmailServiceConsoleTest {
         }
 
         @Bean
-        JbstEmailsUtils emailsUtils() {
-            return new JbstEmailsUtils(
+        JbstEmailUtils emailUtils() {
+            return new JbstEmailUtils(
                     this.javaMailSender()
             );
         }
@@ -110,7 +110,7 @@ class EmailServiceConsoleTest {
             return new EmailServiceImpl(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
-                    this.emailsUtils(),
+                    this.emailUtils(),
                     this.jbstProperties()
             );
         }

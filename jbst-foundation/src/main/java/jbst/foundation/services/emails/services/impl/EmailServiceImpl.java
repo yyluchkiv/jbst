@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.foundation.services.emails.utils.JbstEmailsUtils;
+import jbst.foundation.services.emails.utils.JbstEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,7 +31,7 @@ public class EmailServiceImpl implements EmailService {
     // HTML Engine
     private final SpringTemplateEngine springTemplateEngine;
     // Utils
-    private final JbstEmailsUtils emailsUtils;
+    private final JbstEmailUtils emailUtils;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -95,7 +95,7 @@ public class EmailServiceImpl implements EmailService {
         var emailConfigs = this.jbstProperties.getEmailConfigs();
         if (emailConfigs.isEnabled()) {
             try {
-                var tuple2 = this.emailsUtils.getMimeMessageTuple2();
+                var tuple2 = this.emailUtils.getMimeMessageTuple2();
                 var message = tuple2.a();
                 var mmHelper = tuple2.b();
                 mmHelper.setFrom(emailConfigs.getFrom());
