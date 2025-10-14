@@ -32,6 +32,6 @@ class NotificationTest extends AbstractObjectMapperRunner {
         var json = this.writeValueAsString(fnc.apply(message));
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile("notifications", fileName));
+        assertThat(json).isEqualTo(TestsIOUtils.readFile("jsons", fileName));
     }
 }

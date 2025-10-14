@@ -13,7 +13,7 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "system";
+        return "jsons";
     }
 
     @Test

@@ -42,7 +42,7 @@ class TupleReadableAmountTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "tuples";
+        return "jsons";
     }
 
     @ParameterizedTest

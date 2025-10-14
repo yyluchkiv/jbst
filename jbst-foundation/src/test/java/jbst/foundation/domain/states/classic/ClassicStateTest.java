@@ -33,12 +33,12 @@ class ClassicStateTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFileName() {
-        return "classic-state-1.json";
+        return "classic-state.json";
     }
 
     @Override
     protected String getFolder() {
-        return "states";
+        return "jsons";
     }
 
     @Test
