@@ -21,7 +21,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.utils.SecurityJwtTokenUtils;

@@ -7,7 +7,7 @@ import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.iam.services.BaseSuperadminService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.configurations.TestRunnerResources1;

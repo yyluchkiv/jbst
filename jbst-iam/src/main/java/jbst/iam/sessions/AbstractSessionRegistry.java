@@ -11,7 +11,7 @@ import jbst.iam.domain.events.EventSessionExpired;
 import jbst.iam.domain.events.EventSessionRefreshed;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;

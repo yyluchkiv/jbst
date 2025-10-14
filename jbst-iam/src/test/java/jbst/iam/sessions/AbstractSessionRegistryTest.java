@@ -9,7 +9,7 @@ import jbst.iam.domain.events.EventSessionRefreshed;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.domain.sessions.SessionsExpiredTable;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
