@@ -13,7 +13,7 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.iam.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;

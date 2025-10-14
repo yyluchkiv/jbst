@@ -1,13 +1,13 @@
 package jbst.iam.mongo.repositories;
 
-import jbst.iam.configurations.JbstConfigurationMongoRepositories;
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

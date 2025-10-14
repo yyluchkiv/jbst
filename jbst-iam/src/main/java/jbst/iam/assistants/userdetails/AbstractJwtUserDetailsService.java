@@ -1,7 +1,7 @@
 package jbst.iam.assistants.userdetails;
 
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.iam.repositories.UsersRepository;
+import jbst.foundation.repositories.UsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

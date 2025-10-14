@@ -1,7 +1,7 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

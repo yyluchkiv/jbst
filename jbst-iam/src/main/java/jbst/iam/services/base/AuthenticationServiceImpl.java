@@ -20,7 +20,7 @@ import jbst.foundation.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.iam.services.AuthenticationService;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersSessionsService;

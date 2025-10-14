@@ -2,10 +2,10 @@ package jbst.iam.configurations;
 
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.repositories.InvitationsRepository;
-import jbst.iam.repositories.UsersTokensRepository;
-import jbst.iam.repositories.UsersRepository;
-import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.UsersSessionsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

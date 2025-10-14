@@ -1,6 +1,6 @@
 package jbst.iam.settings;
 
-import jbst.iam.repositories.postgres.PostgresJbstSettingsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
 
 public class PostgresJbstSettingsService extends AbstractJbstSettingsService {
 

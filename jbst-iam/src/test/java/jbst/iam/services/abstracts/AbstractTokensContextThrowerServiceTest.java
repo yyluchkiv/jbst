@@ -9,7 +9,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.UsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

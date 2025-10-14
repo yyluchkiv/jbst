@@ -24,7 +24,7 @@ import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.UsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,7 +2,7 @@ package jbst.iam.validators.abtracts;
 
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
-import jbst.iam.repositories.InvitationsRepository;
+import jbst.foundation.repositories.InvitationsRepository;
 import jbst.iam.validators.BaseInvitationsRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

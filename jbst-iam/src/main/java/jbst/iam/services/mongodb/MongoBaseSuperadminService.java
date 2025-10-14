@@ -1,7 +1,7 @@
 package jbst.iam.services.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
-import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
 import jbst.iam.services.abstracts.AbstractBaseSuperadminService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;

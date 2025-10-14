@@ -2,14 +2,14 @@ package jbst.iam.mongo.repositories;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.configurations.JbstConfigurationMongoRepositories;
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
-import jbst.iam.repositories.mongodb.MongoUsersTokensRepository;
+import jbst.foundation.repositories.mongo.MongoUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

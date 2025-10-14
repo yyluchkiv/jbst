@@ -5,7 +5,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
-import jbst.iam.repositories.JbstSettingsRepository;
+import jbst.foundation.repositories.JbstSettingsRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicReference;

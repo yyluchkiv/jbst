@@ -1,7 +1,7 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
-import jbst.iam.repositories.postgres.PostgresUsersTokensRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersTokensRepository;
 import jbst.iam.services.abstracts.AbstractBaseUsersTokensService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

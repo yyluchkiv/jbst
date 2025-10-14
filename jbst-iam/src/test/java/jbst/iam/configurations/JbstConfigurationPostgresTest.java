@@ -2,10 +2,10 @@ package jbst.iam.configurations;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
-import jbst.iam.repositories.postgres.PostgresJbstSettingsRepository;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
-import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

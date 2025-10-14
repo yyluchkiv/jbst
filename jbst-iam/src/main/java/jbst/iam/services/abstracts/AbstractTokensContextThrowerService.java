@@ -9,7 +9,7 @@ import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.iam.services.TokensContextThrowerService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

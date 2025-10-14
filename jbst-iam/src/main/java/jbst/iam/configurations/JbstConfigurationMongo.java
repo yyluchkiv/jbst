@@ -1,16 +1,17 @@
 package jbst.iam.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.iam.essence.MongoBaseEssenceConstructor;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
-import jbst.iam.repositories.mongodb.MongoJbstSettingsRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
-import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
+import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
 import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
 import jbst.iam.sessions.MongoSessionRegistry;
 import jbst.iam.settings.MongoJbstSettingsService;

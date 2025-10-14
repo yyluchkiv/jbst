@@ -1,6 +1,6 @@
 package jbst.iam.validators.postgres;
 
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.validators.abtracts.AbstractBaseUsersValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

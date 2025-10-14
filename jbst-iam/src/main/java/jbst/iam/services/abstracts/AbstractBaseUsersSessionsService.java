@@ -19,7 +19,7 @@ import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.iam.services.BaseUsersSessionsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

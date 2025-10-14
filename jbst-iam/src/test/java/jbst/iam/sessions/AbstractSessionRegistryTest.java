@@ -14,7 +14,7 @@ import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.iam.services.BaseUsersSessionsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -1,6 +1,6 @@
 package jbst.iam.validators.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
 import jbst.iam.validators.abtracts.AbstractBaseInvitationsRequestsValidator;
 import org.springframework.stereotype.Component;
 import jbst.foundation.domain.properties.JbstProperties;

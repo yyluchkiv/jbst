@@ -2,7 +2,7 @@ package jbst.iam.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.iam.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.UsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

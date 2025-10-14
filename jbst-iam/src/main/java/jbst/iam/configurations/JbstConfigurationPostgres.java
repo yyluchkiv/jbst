@@ -1,14 +1,15 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.iam.essence.PostgresBaseEssenceConstructor;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
-import jbst.iam.repositories.postgres.PostgresJbstSettingsRepository;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
-import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.postgres.PostgresBaseUsersSessionsService;
 import jbst.iam.sessions.PostgresSessionRegistry;
 import jbst.iam.settings.PostgresJbstSettingsService;

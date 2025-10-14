@@ -1,6 +1,6 @@
 package jbst.iam.validators.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import jbst.iam.validators.abtracts.AbstractBaseUsersValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

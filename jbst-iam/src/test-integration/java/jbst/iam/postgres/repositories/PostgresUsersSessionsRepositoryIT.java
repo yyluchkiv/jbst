@@ -1,6 +1,6 @@
 package jbst.iam.postgres.repositories;
 
-import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
+import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
 import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
-import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

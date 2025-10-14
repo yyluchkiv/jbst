@@ -2,8 +2,8 @@ package jbst.iam.essence;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.repositories.InvitationsRepository;
-import jbst.iam.repositories.UsersRepository;
+import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.UsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

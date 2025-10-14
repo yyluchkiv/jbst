@@ -1,6 +1,6 @@
 package jbst.iam.assistants.userdetails;
 
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 
 public class PostgresUserDetailsAssistant extends AbstractJwtUserDetailsService {
 

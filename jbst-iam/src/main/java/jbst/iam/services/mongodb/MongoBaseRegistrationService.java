@@ -1,7 +1,7 @@
 package jbst.iam.services.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import jbst.iam.services.abstracts.AbstractBaseRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

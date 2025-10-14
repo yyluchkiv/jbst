@@ -1,7 +1,7 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
-import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.abstracts.AbstractBaseSuperadminService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;

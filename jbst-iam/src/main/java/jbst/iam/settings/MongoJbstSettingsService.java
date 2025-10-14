@@ -1,6 +1,6 @@
 package jbst.iam.settings;
 
-import jbst.iam.repositories.mongodb.MongoJbstSettingsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 
 public class MongoJbstSettingsService extends AbstractJbstSettingsService {
 

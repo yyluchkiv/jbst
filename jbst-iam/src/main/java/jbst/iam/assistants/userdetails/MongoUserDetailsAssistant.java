@@ -1,6 +1,6 @@
 package jbst.iam.assistants.userdetails;
 
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoUsersRepository;
 
 public class MongoUserDetailsAssistant extends AbstractJwtUserDetailsService {
 

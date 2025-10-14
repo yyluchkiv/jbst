@@ -1,5 +1,6 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;

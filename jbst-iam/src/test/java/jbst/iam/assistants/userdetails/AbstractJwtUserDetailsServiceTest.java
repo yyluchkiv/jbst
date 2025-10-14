@@ -1,6 +1,6 @@
 package jbst.iam.assistants.userdetails;
 
-import jbst.iam.repositories.UsersRepository;
+import jbst.foundation.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

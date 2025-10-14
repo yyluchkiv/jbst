@@ -2,10 +2,10 @@ package jbst.iam.configurations;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
-import jbst.iam.repositories.mongodb.MongoJbstSettingsRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
-import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
+import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

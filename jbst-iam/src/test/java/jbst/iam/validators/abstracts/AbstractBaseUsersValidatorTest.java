@@ -3,7 +3,7 @@ package jbst.iam.validators.abstracts;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.iam.repositories.UsersRepository;
+import jbst.foundation.repositories.UsersRepository;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.validators.BaseUsersValidator;
 import jbst.iam.validators.abtracts.AbstractBaseUsersValidator;

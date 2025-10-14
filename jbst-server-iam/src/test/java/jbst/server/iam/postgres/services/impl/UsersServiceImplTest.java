@@ -1,7 +1,7 @@
 package jbst.server.iam.postgres.services.impl;
 
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -1,7 +1,8 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.iam.repositories.postgres.*;
+import jbst.foundation.repositories.postgres.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package jbst.iam.mongo.repositories;
 
-import jbst.iam.configurations.JbstConfigurationMongoRepositories;
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
-import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

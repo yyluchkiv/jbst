@@ -6,8 +6,8 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;

@@ -2,14 +2,14 @@ package jbst.iam.postgres.repositories;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
+import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
 import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
-import jbst.iam.repositories.postgres.PostgresUsersTokensRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
