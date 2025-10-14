@@ -2,6 +2,7 @@ package jbst.iam.converters.postgres;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.persistence.Converter;
+import jbst.foundation.domain.converters.JbstAbstractAttributeConverter;
 import lombok.SneakyThrows;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoLocation;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Converter
-public class PostgresUserRequestMetadataConverter extends AbstractAttributeConverter<UserRequestMetadata, String> {
+public class PostgresUserRequestMetadataConverter extends JbstAbstractAttributeConverter<UserRequestMetadata, String> {
 
     @SneakyThrows
     @Override
@@ -31,14 +32,14 @@ public class PostgresUserRequestMetadataConverter extends AbstractAttributeConve
         json.put("platform", userAgentDetails.getPlatform());
         json.put("deviceType", userAgentDetails.getDeviceType());
         json.put("userAgentDetailsExceptionDetails", userAgentDetails.getExceptionDetails());
-        return objectMapper.writeValueAsString(json);
+        return MAPPER.writeValueAsString(json);
     }
 
     @SneakyThrows
     @Override
     public UserRequestMetadata convertToEntityAttribute(String value) {
         var typeReference = new TypeReference<Map<String, String>>() {};
-        var json = objectMapper.readValue(value, typeReference);
+        var json = MAPPER.readValue(value, typeReference);
         return new UserRequestMetadata(
                 Status.valueOf(json.get("status")),
                 new GeoLocation(
