@@ -2,9 +2,9 @@ package jbst.iam.resources.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.iam.domain.dto.responses.ResponseUserSession2;
+import jbst.foundation.domain.dto.responses.ResponseInvitation;
+import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;

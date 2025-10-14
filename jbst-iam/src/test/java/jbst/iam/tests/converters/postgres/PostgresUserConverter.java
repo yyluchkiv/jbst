@@ -1,7 +1,7 @@
 package jbst.iam.tests.converters.postgres;
 
-import jbst.iam.domain.postgres.db.PostgresDbUser;
-import jbst.iam.domain.postgres.db.PostgresDbUserSession;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
 import lombok.experimental.UtilityClass;
 import jbst.foundation.domain.base.Username;
 

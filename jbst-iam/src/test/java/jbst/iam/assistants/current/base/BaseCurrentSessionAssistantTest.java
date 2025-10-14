@@ -11,7 +11,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.sessions.SessionRegistry;

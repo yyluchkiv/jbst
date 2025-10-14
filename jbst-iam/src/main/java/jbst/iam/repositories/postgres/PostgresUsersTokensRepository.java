@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.iam.domain.postgres.db.PostgresDbUserToken;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.iam.repositories.UsersTokensRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;

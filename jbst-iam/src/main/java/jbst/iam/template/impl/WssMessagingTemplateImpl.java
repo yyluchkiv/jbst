@@ -5,7 +5,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTab
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.iam.domain.events.WebsocketEvent;
+import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-import static jbst.iam.domain.events.WebsocketEvent.hardwareMonitoring;
-import static jbst.iam.domain.events.WebsocketEvent.resetServerProgress;
+import static jbst.foundation.domain.events.WebsocketEvent.hardwareMonitoring;
+import static jbst.foundation.domain.events.WebsocketEvent.resetServerProgress;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

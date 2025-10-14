@@ -1,6 +1,6 @@
 package jbst.iam.tests.converters.mongodb;
 
-import jbst.iam.domain.mongodb.MongoDbUserSession;
+import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;

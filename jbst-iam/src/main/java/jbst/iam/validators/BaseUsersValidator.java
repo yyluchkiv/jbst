@@ -1,7 +1,7 @@
 package jbst.iam.validators;
 
-import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.iam.domain.dto.requests.RequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.base.Username;
 
 public interface BaseUsersValidator {

@@ -2,7 +2,7 @@ package jbst.iam.validators;
 
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
-import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.jwt.JwtUser;
 
 public interface BaseUsersTokensRequestsValidator {

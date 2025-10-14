@@ -1,10 +1,10 @@
 package jbst.iam.services;
 
 import jbst.foundation.domain.base.Email;
-import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
-import jbst.iam.domain.dto.requests.RequestUserUpdate1;
-import jbst.iam.domain.dto.requests.RequestUserUpdate2;
+import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.jwt.JwtUser;
 

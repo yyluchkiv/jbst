@@ -6,7 +6,7 @@ import jbst.iam.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.iam.domain.mongodb.MongoDbUserToken;
+import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoUsersTokensRepository;

@@ -2,10 +2,10 @@ package jbst.iam.validators.abstracts;
 
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.iam.domain.dto.requests.RequestUserRegistration0;
-import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.domain.events.EventRegistration0Failure;
-import jbst.iam.domain.events.EventRegistration1Failure;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.events.EventRegistration0Failure;
+import jbst.foundation.domain.events.EventRegistration1Failure;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;

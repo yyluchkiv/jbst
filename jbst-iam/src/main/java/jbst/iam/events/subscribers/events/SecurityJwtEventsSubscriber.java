@@ -1,6 +1,6 @@
 package jbst.iam.events.subscribers.events;
 
-import jbst.iam.domain.events.*;
+import jbst.foundation.domain.events.*;
 import org.springframework.context.event.EventListener;
 
 public interface SecurityJwtEventsSubscriber {

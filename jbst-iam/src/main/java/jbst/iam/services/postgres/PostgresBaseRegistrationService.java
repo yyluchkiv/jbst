@@ -1,7 +1,7 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.domain.dto.requests.RequestUserRegistration0;
-import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.services.abstracts.AbstractBaseRegistrationService;

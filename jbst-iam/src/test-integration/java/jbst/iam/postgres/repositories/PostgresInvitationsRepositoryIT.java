@@ -2,9 +2,9 @@ package jbst.iam.postgres.repositories;
 
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
-import jbst.iam.domain.postgres.db.PostgresDbInvitation;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
 import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;

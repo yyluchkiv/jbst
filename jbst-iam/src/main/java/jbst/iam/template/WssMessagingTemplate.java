@@ -1,6 +1,6 @@
 package jbst.iam.template;
 
-import jbst.iam.domain.events.WebsocketEvent;
+import jbst.foundation.domain.events.WebsocketEvent;
 import org.springframework.scheduling.annotation.Async;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;

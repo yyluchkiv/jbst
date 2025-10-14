@@ -1,14 +1,14 @@
 package jbst.iam.repositories.mongodb;
 
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.iam.domain.dto.responses.ResponseUserSession2;
+import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.repositories.UsersSessionsRepository;
-import jbst.iam.domain.mongodb.MongoDbUserSession;
+import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.tuples.TuplePresence.present;
-import static jbst.iam.domain.dto.responses.ResponseUserSession2.*;
+import static jbst.foundation.domain.dto.responses.ResponseUserSession2.*;
 
 public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, UsersSessionsRepository {
     // ================================================================================================================

@@ -1,7 +1,7 @@
 package jbst.iam.services;
 
-import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.responses.ResponseInvitation;
+import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import org.springframework.scheduling.annotation.Async;

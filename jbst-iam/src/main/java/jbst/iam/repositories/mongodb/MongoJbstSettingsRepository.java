@@ -2,8 +2,8 @@ package jbst.iam.repositories.mongodb;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
-import jbst.iam.domain.dto.requests.RequestJbstSettings;
-import jbst.iam.domain.mongodb.MongoDbJbstSettings;
+import jbst.foundation.domain.dto.requests.RequestJbstSettings;
+import jbst.foundation.domain.databases.mongo.MongoDbJbstSettings;
 import jbst.iam.repositories.JbstSettingsRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

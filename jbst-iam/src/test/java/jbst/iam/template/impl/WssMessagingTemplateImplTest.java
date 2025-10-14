@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.configs.security.jwt.websockets.Message
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.iam.domain.events.WebsocketEvent;
+import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

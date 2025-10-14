@@ -9,7 +9,7 @@ import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;

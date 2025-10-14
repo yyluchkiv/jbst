@@ -6,7 +6,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.iam.domain.postgres.db.PostgresDbUserSession;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
 import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;

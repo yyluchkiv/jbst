@@ -7,7 +7,7 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.iam.domain.sessions.Session;
+import jbst.foundation.domain.sessions.Session;
 import jbst.iam.filters.jwt_extension.JwtTokensFilterExtension;
 import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import jbst.iam.services.TokensService;

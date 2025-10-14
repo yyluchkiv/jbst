@@ -1,7 +1,7 @@
 package jbst.iam.services;
 
-import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
-import jbst.iam.domain.dto.responses.ResponseInvitations;
+import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.base.Username;
 

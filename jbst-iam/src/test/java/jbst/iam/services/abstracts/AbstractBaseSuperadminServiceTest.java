@@ -1,7 +1,7 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.responses.ResponseInvitation;
+import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;

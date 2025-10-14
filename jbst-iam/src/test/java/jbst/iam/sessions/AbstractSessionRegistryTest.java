@@ -1,17 +1,17 @@
 package jbst.iam.sessions;
 
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.iam.domain.dto.responses.ResponseUserSession2;
-import jbst.iam.domain.events.EventAuthenticationLogin;
-import jbst.iam.domain.events.EventAuthenticationLogout;
-import jbst.iam.domain.events.EventSessionExpired;
-import jbst.iam.domain.events.EventSessionRefreshed;
+import jbst.foundation.domain.dto.responses.ResponseUserSession2;
+import jbst.foundation.domain.events.EventAuthenticationLogin;
+import jbst.foundation.domain.events.EventAuthenticationLogout;
+import jbst.foundation.domain.events.EventSessionExpired;
+import jbst.foundation.domain.events.EventSessionRefreshed;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.iam.domain.sessions.Session;
-import jbst.iam.domain.sessions.SessionsExpiredTable;
+import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;

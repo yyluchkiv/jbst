@@ -3,7 +3,7 @@ package jbst.iam.services;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
+import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;

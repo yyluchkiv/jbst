@@ -1,7 +1,7 @@
 package jbst.iam.tests.converters.mongodb;
 
-import jbst.iam.domain.mongodb.MongoDbUser;
-import jbst.iam.domain.mongodb.MongoDbUserSession;
+import jbst.foundation.domain.databases.mongo.MongoDbUser;
+import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
 import lombok.experimental.UtilityClass;
 import jbst.foundation.domain.base.Username;
 

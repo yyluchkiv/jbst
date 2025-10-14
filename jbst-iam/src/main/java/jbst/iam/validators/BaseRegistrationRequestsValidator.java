@@ -1,7 +1,7 @@
 package jbst.iam.validators;
 
-import jbst.iam.domain.dto.requests.RequestUserRegistration0;
-import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.exceptions.authentication.RegistrationException;
 
 public interface BaseRegistrationRequestsValidator {

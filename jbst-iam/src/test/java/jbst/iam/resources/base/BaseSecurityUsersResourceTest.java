@@ -1,9 +1,9 @@
 package jbst.iam.resources.base;
 
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.iam.domain.dto.requests.RequestUserUpdate1;
-import jbst.iam.domain.dto.requests.RequestUserUpdate2;
+import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.configurations.TestRunnerResources1;

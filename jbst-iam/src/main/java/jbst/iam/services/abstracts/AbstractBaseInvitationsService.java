@@ -1,8 +1,8 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
-import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.dto.responses.ResponseInvitations;
+import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.ResponseInvitation;
+import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.services.BaseInvitationsService;

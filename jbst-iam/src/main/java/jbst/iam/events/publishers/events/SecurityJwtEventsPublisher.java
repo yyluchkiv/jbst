@@ -1,6 +1,6 @@
 package jbst.iam.events.publishers.events;
 
-import jbst.iam.domain.events.*;
+import jbst.foundation.domain.events.*;
 
 public interface SecurityJwtEventsPublisher {
     void publishAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event);

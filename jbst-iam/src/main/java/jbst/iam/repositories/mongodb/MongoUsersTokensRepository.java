@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.iam.domain.mongodb.MongoDbUserToken;
+import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.iam.repositories.UsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

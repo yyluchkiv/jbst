@@ -1,6 +1,6 @@
 package jbst.iam.validators;
 
-import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.base.Username;
 

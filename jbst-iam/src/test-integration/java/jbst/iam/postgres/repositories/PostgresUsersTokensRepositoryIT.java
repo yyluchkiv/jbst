@@ -6,7 +6,7 @@ import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.iam.domain.postgres.db.PostgresDbUserToken;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
 import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersTokensRepository;

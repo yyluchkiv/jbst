@@ -2,8 +2,8 @@ package jbst.iam.validators;
 
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
-import jbst.iam.domain.dto.requests.RequestUserLogin;
+import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
+import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 
 public interface BaseAuthenticationRequestsValidator {

@@ -1,6 +1,6 @@
 package jbst.iam.events.publishers.base;
 
-import jbst.iam.domain.events.*;
+import jbst.foundation.domain.events.*;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.events.publishers.events.base.BaseSecurityJwtEventsPublisher;
 import lombok.RequiredArgsConstructor;

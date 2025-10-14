@@ -2,8 +2,8 @@ package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.iam.domain.dto.requests.RequestUserRegistration0;
-import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.services.BaseRegistrationService;
