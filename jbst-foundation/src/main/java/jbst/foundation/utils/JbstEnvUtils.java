@@ -14,7 +14,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public final class EnvironmentUtils {
+public final class JbstEnvUtils {
 
     private final Environment environment;
 

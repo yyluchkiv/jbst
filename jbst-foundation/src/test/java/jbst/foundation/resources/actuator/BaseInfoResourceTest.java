@@ -2,7 +2,7 @@ package jbst.foundation.resources.actuator;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utils.EnvironmentUtils;
+import jbst.foundation.utils.JbstEnvUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,21 +38,21 @@ class BaseInfoResourceTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        EnvironmentUtils environmentUtils() {
-            return mock(EnvironmentUtils.class);
+        JbstEnvUtils envUtils() {
+            return mock(JbstEnvUtils.class);
         }
 
         @Bean
         BaseInfoResource baseInfoResource() {
             return new BaseInfoResource(
-                    this.environmentUtils(),
+                    this.envUtils(),
                     this.jbstProperties
             );
         }
     }
 
     // Utilities
-    private final EnvironmentUtils environmentUtils;
+    private final JbstEnvUtils envUtils;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -61,14 +61,14 @@ class BaseInfoResourceTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.environmentUtils
+                this.envUtils
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.environmentUtils
+                this.envUtils
         );
     }
 
@@ -78,13 +78,13 @@ class BaseInfoResourceTest {
         // Arrange
         var activeProfile = randomString();
         var builder = mock(Info.Builder.class);
-        when(this.environmentUtils.getOneActiveProfileOrDash()).thenReturn(activeProfile);
+        when(this.envUtils.getOneActiveProfileOrDash()).thenReturn(activeProfile);
 
         // Act
         this.componentUnderTest.contribute(builder);
 
         // Assert
-        verify(this.environmentUtils).getOneActiveProfileOrDash();
+        verify(this.envUtils).getOneActiveProfileOrDash();
         var builderDetailsAC = ArgumentCaptor.forClass(Map.class);
         verify(builder).withDetails(builderDetailsAC.capture());
         var details = builderDetailsAC.getValue();

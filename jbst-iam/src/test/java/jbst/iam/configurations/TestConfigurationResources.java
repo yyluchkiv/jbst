@@ -1,7 +1,7 @@
 package jbst.iam.configurations;
 
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.utils.EnvironmentUtils;
+import jbst.foundation.utils.JbstEnvUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -189,8 +189,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    EnvironmentUtils environmentUtils() {
-        return mock(EnvironmentUtils.class);
+    JbstEnvUtils envUtils() {
+        return mock(JbstEnvUtils.class);
     }
 
     // =================================================================================================================

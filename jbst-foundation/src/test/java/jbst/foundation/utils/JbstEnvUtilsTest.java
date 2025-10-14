@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class EnvironmentUtilsTest {
+class JbstEnvUtilsTest {
 
     private static Stream<Arguments> isProfilesTest() {
         return Stream.of(
@@ -50,8 +50,8 @@ class EnvironmentUtilsTest {
         }
 
         @Bean
-        EnvironmentUtils environmentUtils() {
-            return new EnvironmentUtils(
+        JbstEnvUtils envUtils() {
+            return new JbstEnvUtils(
                     this.environment()
             );
         }
@@ -59,7 +59,7 @@ class EnvironmentUtilsTest {
 
     private final Environment environment;
 
-    private final EnvironmentUtils componentUnderTest;
+    private final JbstEnvUtils componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
