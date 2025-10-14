@@ -39,7 +39,7 @@ class GeoLocationIPAPIUtilsTest {
         }
 
         @Bean
-        GeoLocationIPAPIUtils ipapiGeoLocationUtils() {
+        GeoLocationIPAPIUtils geoLocationIPAPIUtils() {
             return new GeoLocationIPAPIUtils(
                     this.definition(),
                     this.geoCountryFlagUtils()

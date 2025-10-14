@@ -1,10 +1,10 @@
 package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.filters.jwt.JwtTokensFilter;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
@@ -57,17 +57,17 @@ import static org.springframework.http.HttpMethod.*;
 // TODO [YYL, deprecation] fixme
 @Configuration
 @ComponentScan({
-        "jbst.iam.crons",
-        "jbst.iam.events.publishers.events",
-        "jbst.iam.events.publishers.incidents",
-        "jbst.iam.events.subscribers.events",
-        "jbst.iam.events.subscribers.incidents",
-        "jbst.iam.handlers.exceptions",
-        "jbst.iam.handshakes",
-        "jbst.iam.resources.base",
-        "jbst.iam.resources.hardware",
-        "jbst.iam.resources.system",
-        "jbst.iam.services.base",
+        "jbst.foundation.crons",
+        "jbst.foundation.events.publishers.events",
+        "jbst.foundation.events.publishers.incidents",
+        "jbst.foundation.events.subscribers.events",
+        "jbst.foundation.events.subscribers.incidents",
+        "jbst.foundation.handlers",
+        "jbst.foundation.handshakes",
+        "jbst.foundation.resources.base",
+        "jbst.foundation.resources.hardware",
+        "jbst.foundation.resources.system",
+        "jbst.foundation.services.base",
         "jbst.foundation.tokens",
         "jbst.foundation.validators.base",
         "jbst.foundation.websockets"

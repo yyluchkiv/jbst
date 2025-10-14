@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "jbst.iam.assistants.current.base",
-        "jbst.iam.filters.jwt_extension",
-        "jbst.iam.tasks.superadmin"
+        "jbst.foundation.assistants.current.base",
+        "jbst.foundation.filters.jwt_extension",
+        "jbst.foundation.tasks"
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableConfigurationProperties({

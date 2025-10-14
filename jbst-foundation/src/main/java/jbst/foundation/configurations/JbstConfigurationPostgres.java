@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.essense.PostgresBaseEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan({
-        "jbst.iam.services.postgres",
+        "jbst.foundation.services.postgres",
         "jbst.foundation.validators.postgres",
 })
 @Import({

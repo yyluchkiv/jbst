@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan({
-        "jbst.iam.services.mongodb",
+        "jbst.foundation.services.mongodb",
         "jbst.foundation.validators.mongodb",
 })
 @Import({
