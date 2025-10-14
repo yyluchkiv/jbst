@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.tests.domain.enums.TestAuthority;
+import jbst.foundation.tests.enums.TestAuthority;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;

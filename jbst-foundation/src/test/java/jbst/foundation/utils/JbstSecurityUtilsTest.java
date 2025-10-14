@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenCreationParams;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.TimeAmount;
-import jbst.foundation.domain.tests.domain.enums.TestAuthority;
+import jbst.foundation.tests.enums.TestAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;

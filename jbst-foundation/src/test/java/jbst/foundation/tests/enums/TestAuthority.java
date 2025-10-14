@@ -1,4 +1,4 @@
-package jbst.foundation.domain.tests.domain.enums;
+package jbst.foundation.tests.enums;
 
 import jbst.foundation.domain.base.AbstractAuthority;
 

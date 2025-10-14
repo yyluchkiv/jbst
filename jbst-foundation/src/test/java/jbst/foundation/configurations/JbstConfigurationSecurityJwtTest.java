@@ -69,7 +69,7 @@ class JbstConfigurationSecurityJwtTest {
             properties.setSecurityJwtConfigs(
                     new SecurityJwtConfigs(
                             new AuthoritiesConfigs(
-                                    "jbst.iam.tests.domain.enums",
+                                    "jbst.foundation.tests.enums",
                                     Set.of(
                                             new Authority(AbstractAuthority.SUPERADMIN),
                                             new Authority(AbstractAuthority.INVITATIONS_READ),
