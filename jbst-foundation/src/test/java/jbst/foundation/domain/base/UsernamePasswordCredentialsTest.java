@@ -19,7 +19,7 @@ class UsernamePasswordCredentialsTest extends AbstractSerializationDeserializati
 
     @Override
     protected String getFolder() {
-        return "base";
+        return "jsons";
     }
 
     @Test

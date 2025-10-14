@@ -19,7 +19,7 @@ class PropertyIdTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFolder() {
-        return "base";
+        return "jsons";
     }
 
     @Test

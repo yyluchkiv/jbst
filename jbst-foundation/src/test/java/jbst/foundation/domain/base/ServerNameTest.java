@@ -19,7 +19,7 @@ class ServerNameTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFolder() {
-        return "base";
+        return "jsons";
     }
 
     @Test
