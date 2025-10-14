@@ -1,13 +1,13 @@
 package jbst.iam.services.base;
 
+import jbst.foundation.domain.databases.JbstUserToken;
+import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.utils.JbstUserEmailUtils;
 import jbst.iam.services.UsersEmailsService;
-import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +38,8 @@ class BaseUsersEmailsServiceTest {
         }
 
         @Bean
-        UserEmailUtils userEmailUtility() {
-            return mock(UserEmailUtils.class);
+        JbstUserEmailUtils userEmailUtils() {
+            return mock(JbstUserEmailUtils.class);
         }
 
         @Bean
@@ -51,7 +51,7 @@ class BaseUsersEmailsServiceTest {
         public UsersEmailsService userEmailService() {
             return new BaseUsersEmailsService(
                     this.emailService(),
-                    this.userEmailUtility(),
+                    this.userEmailUtils(),
                     this.jbstProperties()
             );
         }
@@ -60,7 +60,7 @@ class BaseUsersEmailsServiceTest {
     // Services
     private final EmailService emailService;
     // Utilities
-    private final UserEmailUtils userEmailUtils;
+    private final JbstUserEmailUtils userEmailUtils;
     // Properties
     private final JbstProperties jbstProperties;
 

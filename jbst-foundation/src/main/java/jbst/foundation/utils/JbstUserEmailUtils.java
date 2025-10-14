@@ -1,11 +1,11 @@
-package jbst.iam.utils.impl;
+package jbst.foundation.utils;
 
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
-import jbst.iam.utils.UserEmailUtils;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.services.emails.domain.EmailHTML;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -17,13 +17,14 @@ import java.util.Map;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.utilities.time.LocalDateUtility.now;
 import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
 import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
+import static jbst.foundation.utilities.time.LocalDateUtility.now;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserEmailUtilsImpl implements UserEmailUtils {
+public class JbstUserEmailUtils {
 
     // Resources
     private final ResourceLoader resourceLoader;
@@ -31,15 +32,13 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     private final JbstProperties jbstProperties;
     private final ServerProperties serverProperties;
 
-    @Override
-    public String getSubject(@NotNull String eventName) {
+    public final String getSubject(@NotNull String eventName) {
         var prefix = this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
         var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
         return prefix + " " + eventName + " at " + time;
     }
 
-    @Override
-    public EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
+    public final EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
         var templateName = "jbst-account-accessed";
         if (USERNAME_PASSWORD.equals(function.accountAccessMethod())) {
             templateName = this.getServerOrFallbackJbstTemplateName(
@@ -69,8 +68,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         );
     }
 
-    @Override
-    public EmailHTML getMagicLinkHTML(@NotNull JbstUserToken userToken) {
+    public final EmailHTML getMagicLinkHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Magic Link"),
@@ -87,8 +85,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         );
     }
 
-    @Override
-    public EmailHTML getEmailConfirmationHTML(@NotNull JbstUserToken userToken) {
+    public final EmailHTML getEmailConfirmationHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Email Confirmation"),
@@ -105,8 +102,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         );
     }
 
-    @Override
-    public EmailHTML getPasswordResetHTML(@NotNull JbstUserToken userToken) {
+    public final EmailHTML getPasswordResetHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Password Reset"),

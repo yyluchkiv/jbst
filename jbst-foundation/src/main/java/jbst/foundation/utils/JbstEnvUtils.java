@@ -2,6 +2,7 @@ package jbst.foundation.utils;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.List;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public final class JbstEnvUtils {

@@ -2,6 +2,9 @@ package jbst.iam.services.base;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUserToken;
+import jbst.foundation.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
@@ -12,12 +15,8 @@ import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.services.emails.utilities.EmailUtility;
 import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import jbst.foundation.utilities.concurrent.SleepUtility;
-import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.enums.AccountAccessMethod;
-import jbst.foundation.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.utils.JbstUserEmailUtils;
 import jbst.iam.services.UsersEmailsService;
-import jbst.iam.utils.UserEmailUtils;
-import jbst.iam.utils.impl.UserEmailUtilsImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -126,12 +125,12 @@ class BaseUsersEmailsServiceConsoleTest {
         }
 
         @Bean
-        UserEmailUtils userEmailUtility() {
+        JbstUserEmailUtils userEmailUtils() {
             var serverProperties = mock(ServerProperties.class);
             var servlet = mock(ServerProperties.Servlet.class);
             when(servlet.getContextPath()).thenReturn("/api");
             when(serverProperties.getServlet()).thenReturn(servlet);
-            return new UserEmailUtilsImpl(
+            return new JbstUserEmailUtils(
                     this.resourceLoader,
                     this.jbstProperties(),
                     serverProperties
@@ -142,7 +141,7 @@ class BaseUsersEmailsServiceConsoleTest {
         public UsersEmailsService userEmailService() {
             return new BaseUsersEmailsService(
                     this.emailService(),
-                    this.userEmailUtility(),
+                    this.userEmailUtils(),
                     this.jbstProperties()
             );
         }

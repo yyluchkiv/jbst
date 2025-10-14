@@ -1,14 +1,13 @@
-package jbst.iam.utils.impl;
+package jbst.foundation.utils;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
-import jbst.iam.utils.UserEmailUtils;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -37,8 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UserEmailUtilsImplTest {
-
+class JbstUserEmailUtilsTest {
     @Configuration
     @Import({
             TestJbstConfigurationPropertiesHardcoded.class
@@ -56,8 +54,8 @@ class UserEmailUtilsImplTest {
         }
 
         @Bean
-        UserEmailUtils userEmailUtility() {
-            return new UserEmailUtilsImpl(
+        JbstUserEmailUtils userEmailUtils() {
+            return new JbstUserEmailUtils(
                     this.resourceLoader,
                     this.jbstProperties,
                     this.serverProperties()
@@ -65,7 +63,7 @@ class UserEmailUtilsImplTest {
         }
     }
 
-    private final UserEmailUtils componentUnderTest;
+    private final JbstUserEmailUtils componentUnderTest;
 
     private final JbstProperties jbstProperties;
 

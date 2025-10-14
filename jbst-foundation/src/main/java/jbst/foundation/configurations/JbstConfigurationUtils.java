@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 
@@ -20,11 +21,13 @@ import org.springframework.core.io.ResourceLoader;
 @EnableConfigurationProperties({
         JbstProperties.class
 })
+@ComponentScan({
+        "jbst.foundation.utils"
+})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstConfigurationUtils {
 
     // Resources
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final ResourceLoader resourceLoader;
     // Properties
     private final JbstProperties jbstProperties;
@@ -85,15 +88,5 @@ public class JbstConfigurationUtils {
                 this.geoLocationUtils(),
                 this.userAgentDetailsUtils()
         );
-    }
-
-    @Bean
-    JbstHttpUtils httpUtils() {
-        return new JbstHttpUtils(this.jbstProperties);
-    }
-
-    @Bean
-    JbstSecurityUtils securityUtils() {
-        return new JbstSecurityUtils(this.jbstProperties);
     }
 }
