@@ -1,5 +1,6 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.JbstConfigurationSecurityJwtWebMVC;
 import jbst.iam.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
 import jbst.iam.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstConfigurationBaseSecurityJwtWebMVCTest {
+class JbstConfigurationSecurityJwtWebMVCTest {
 
     @Configuration
     @Import(
@@ -40,14 +41,14 @@ class JbstConfigurationBaseSecurityJwtWebMVCTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        JbstConfigurationBaseSecurityJwtWebMVC applicationMVC() {
-            return new JbstConfigurationBaseSecurityJwtWebMVC(
+        JbstConfigurationSecurityJwtWebMVC applicationMVC() {
+            return new JbstConfigurationSecurityJwtWebMVC(
                     this.jbstProperties
             );
         }
     }
 
-    private final JbstConfigurationBaseSecurityJwtWebMVC componentUnderTest;
+    private final JbstConfigurationSecurityJwtWebMVC componentUnderTest;
 
     @Test
     void beansTests() {

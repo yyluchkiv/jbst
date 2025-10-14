@@ -1,5 +1,6 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.JbstConfigurationPostgres;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;

@@ -1,7 +1,6 @@
-package jbst.iam.configurations;
+package jbst.foundation.configurations;
 
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.foundation.configurations.JbstConfigurationWebMVC;
 import jbst.foundation.domain.properties.JbstProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,10 +11,10 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 @EnableConfigurationProperties({
         JbstProperties.class
 })
-public class JbstConfigurationBaseSecurityJwtWebMVC extends JbstConfigurationWebMVC {
+public class JbstConfigurationSecurityJwtWebMVC extends JbstConfigurationWebMVC {
 
     @Autowired
-    public JbstConfigurationBaseSecurityJwtWebMVC(JbstProperties jbstProperties) {
+    public JbstConfigurationSecurityJwtWebMVC(JbstProperties jbstProperties) {
         super(jbstProperties);
     }
 

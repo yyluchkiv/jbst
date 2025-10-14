@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jbst.foundation.configurations.JbstConfigurationSecurityJwtWebMVC;
 import jbst.foundation.handlers.ResourceExceptionHandler;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
-        JbstConfigurationBaseSecurityJwtWebMVC.class,
+        JbstConfigurationSecurityJwtWebMVC.class,
         TestConfigurationResources.class
 })
 public abstract class AbstractTestRunnerResources {

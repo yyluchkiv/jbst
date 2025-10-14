@@ -1,7 +1,6 @@
-package jbst.iam.configurations;
+package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;

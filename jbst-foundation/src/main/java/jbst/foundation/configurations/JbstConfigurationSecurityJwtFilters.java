@@ -1,4 +1,4 @@
-package jbst.iam.configurations;
+package jbst.foundation.configurations;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Configuration;
         "jbst.iam.filters.logging"
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstConfigurationBaseSecurityJwtFilters {
+public class JbstConfigurationSecurityJwtFilters {
 
 }

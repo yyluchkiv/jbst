@@ -1,4 +1,4 @@
-package jbst.iam.configurations;
+package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,6 @@ import org.springframework.context.annotation.Configuration;
         JbstProperties.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstConfigurationBaseSecurityJwtFallbackBases {
+public class JbstConfigurationSecurityJwtFallbackBases {
 
 }

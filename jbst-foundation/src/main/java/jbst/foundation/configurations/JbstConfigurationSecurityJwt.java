@@ -1,7 +1,6 @@
-package jbst.iam.configurations;
+package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.configurations.*;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -69,16 +68,17 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.iam.resources.hardware",
         "jbst.iam.resources.system",
         "jbst.iam.services.base",
-        "jbst.foundation.validators.base"
+        "jbst.foundation.tokens",
+        "jbst.foundation.validators.base",
+        "jbst.foundation.websockets"
 })
 @Import({
-        JbstConfigurationSecurityJwt1.class,
         JbstConfigurationProperties.class,
         JbstConfigurationJasypt.class,
         JbstConfigurationUtils.class,
         JbstConfigurationSpringBootServer.class,
-        JbstConfigurationBaseSecurityJwtWebMVC.class,
-        JbstConfigurationBaseSecurityJwtFilters.class,
+        JbstConfigurationSecurityJwtWebMVC.class,
+        JbstConfigurationSecurityJwtFilters.class,
         JbstConfigurationSecurityJwtPasswords.class,
         JbstConfigurationIncidents.class,
         JbstConfigurationEmail.class
@@ -86,7 +86,7 @@ import static org.springframework.http.HttpMethod.*;
 @EnableWebSecurity
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstConfigurationBaseSecurityJwt extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
     // Assistants
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

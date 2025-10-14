@@ -1,6 +1,5 @@
-package jbst.iam.configurations;
+package jbst.foundation.configurations;
 
-import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.foundation.essense.PostgresBaseEssenceConstructor;

@@ -1,5 +1,7 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.AbstractJbstSecurityJwtConfigurer;
+import jbst.foundation.configurations.JbstConfigurationSecurityJwt;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
@@ -43,7 +45,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstConfigurationBaseSecurityJwtTest {
+class JbstConfigurationSecurityJwtTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -122,8 +124,8 @@ class JbstConfigurationBaseSecurityJwtTest {
         }
 
         @Bean
-        JbstConfigurationBaseSecurityJwt configurationBaseSecurityJwt() {
-            return new JbstConfigurationBaseSecurityJwt(
+        JbstConfigurationSecurityJwt configurationBaseSecurityJwt() {
+            return new JbstConfigurationSecurityJwt(
                     mock(JwtUserDetailsService.class),
                     mock(BCryptPasswordEncoder.class),
                     mock(JwtTokensFilter.class),
@@ -147,7 +149,7 @@ class JbstConfigurationBaseSecurityJwtTest {
     private final CsrfInterceptorHandshake csrfInterceptorHandshake;
     private final SecurityHandshakeHandler securityHandshakeHandler;
 
-    private final JbstConfigurationBaseSecurityJwt componentUnderTest;
+    private final JbstConfigurationSecurityJwt componentUnderTest;
 
     @Test
     void beansTests() {
