@@ -1,9 +1,8 @@
-package jbst.iam.utils.impl;
+package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.utils.HttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HttpRequestUtilsImpl implements HttpRequestUtils {
+public class JbstHttpUtils {
     protected static final String CACHED_PAYLOAD_ATTRIBUTE = "jbst-security-jwt-cached-payload-attribute";
 
     // Properties
@@ -24,35 +23,29 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
-    @Override
-    public boolean isCachedEndpoint(HttpServletRequest request) {
+    public final boolean isCachedEndpoint(HttpServletRequest request) {
         return this.isAuthenticationAuthenticateStandardEndpoint(request) || this.isAuthenticationAuthenticateMagicLinkEndpoint(request);
     }
 
-    @Override
-    public void cachePayload(CachedBodyHttpServletRequest cachedRequest) {
+    public final void cachePayload(CachedBodyHttpServletRequest cachedRequest) {
         if (this.isCachedEndpoint(cachedRequest)) {
             cachedRequest.setAttribute(CACHED_PAYLOAD_ATTRIBUTE, cachedRequest.getCachedPayload().value());
         }
     }
 
-    @Override
-    public String getCachedPayload(HttpServletRequest request) {
+    public final String getCachedPayload(HttpServletRequest request) {
         return (String) request.getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
     }
 
-    @Override
-    public boolean isAuthenticationAuthenticateStandardEndpoint(HttpServletRequest request) {
+    public final boolean isAuthenticationAuthenticateStandardEndpoint(HttpServletRequest request) {
         return isPOST(request) && this.isEndpoint(request, "/authentication/login/standard");
     }
 
-    @Override
-    public boolean isAuthenticationAuthenticateMagicLinkEndpoint(HttpServletRequest request) {
+    public final boolean isAuthenticationAuthenticateMagicLinkEndpoint(HttpServletRequest request) {
         return isPOST(request) && this.isEndpoint(request, "/authentication/login/magic-link");
     }
 
-    @Override
-    public boolean isAuthenticationRefreshTokenEndpoint(HttpServletRequest request) {
+    public final boolean isAuthenticationRefreshTokenEndpoint(HttpServletRequest request) {
         return isPOST(request) && this.isEndpoint(request, "/authentication/refreshToken");
     }
 

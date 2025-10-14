@@ -1,11 +1,10 @@
-package jbst.iam.utils.impl;
+package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.http.cache.CachedPayload;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.utils.HttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Stream;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
-import static jbst.iam.utils.impl.HttpRequestUtilsImpl.CACHED_PAYLOAD_ATTRIBUTE;
+import static jbst.foundation.utils.JbstHttpUtils.CACHED_PAYLOAD_ATTRIBUTE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -34,8 +33,7 @@ import static org.mockito.Mockito.*;
 })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class HttpRequestUtilsImplTest {
-
+class JbstHttpUtilsTest {
     private static Stream<Arguments> authenticationAuthenticateStandardEndpointCases() {
         return Stream.of(
                 Arguments.of("GET", "/api/jbst/security/authentication/login/standard", false),
@@ -79,14 +77,14 @@ class HttpRequestUtilsImplTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        HttpRequestUtils httpRequestUtility() {
-            return new HttpRequestUtilsImpl(
+        JbstHttpUtils jbstHttpUtils() {
+            return new JbstHttpUtils(
                     this.jbstProperties
             );
         }
     }
 
-    private final HttpRequestUtils componentUnderTest;
+    private final JbstHttpUtils componentUnderTest;
 
     @ParameterizedTest
     @MethodSource({"authenticationAuthenticateStandardEndpointCases", "authenticationAuthenticateMagicLinkEndpointCases"})
@@ -209,4 +207,5 @@ class HttpRequestUtilsImplTest {
         // Assert
         assertThat(actual).isEqualTo(expected);
     }
+
 }

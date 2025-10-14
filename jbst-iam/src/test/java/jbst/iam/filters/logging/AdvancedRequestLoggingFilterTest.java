@@ -9,7 +9,7 @@ import jbst.foundation.domain.http.cache.CachedBodyServletInputStream;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
-import jbst.iam.utils.HttpRequestUtils;
+import jbst.foundation.utils.JbstHttpUtils;
 import jbst.iam.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -41,8 +41,8 @@ class AdvancedRequestLoggingFilterTest {
         }
 
         @Bean
-        HttpRequestUtils httpRequestUtility() {
-            return mock(HttpRequestUtils.class);
+        JbstHttpUtils httpUtils() {
+            return mock(JbstHttpUtils.class);
         }
 
         @Bean
@@ -53,14 +53,14 @@ class AdvancedRequestLoggingFilterTest {
         @Bean
         AdvancedRequestLoggingFilter advancedRequestLoggingFilter() {
             return new AdvancedRequestLoggingFilter(
-                    this.httpRequestUtility(),
+                    this.httpUtils(),
                     this.securityPrincipalUtility(),
                     this.jbstProperties()
             );
         }
     }
 
-    private final HttpRequestUtils httpRequestUtils;
+    private final JbstHttpUtils httpUtils;
     private final SecurityPrincipalUtils securityPrincipalUtils;
     private final JbstProperties jbstProperties;
 
@@ -69,7 +69,7 @@ class AdvancedRequestLoggingFilterTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.httpRequestUtils,
+                this.httpUtils,
                 this.securityPrincipalUtils
         );
     }
@@ -77,7 +77,7 @@ class AdvancedRequestLoggingFilterTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.httpRequestUtils,
+                this.httpUtils,
                 this.securityPrincipalUtils
         );
     }
@@ -118,7 +118,7 @@ class AdvancedRequestLoggingFilterTest {
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.httpRequestUtils).cachePayload(any());
+        verify(this.httpUtils).cachePayload(any());
         verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(response));
         verify(request).getContentType();
         verify(request).getInputStream();
@@ -142,7 +142,7 @@ class AdvancedRequestLoggingFilterTest {
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.httpRequestUtils).cachePayload(any());
+        verify(this.httpUtils).cachePayload(any());
         verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
         verify(request).getContentType();
         verify(request).getInputStream();
@@ -169,7 +169,7 @@ class AdvancedRequestLoggingFilterTest {
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.httpRequestUtils).cachePayload(any());
+        verify(this.httpUtils).cachePayload(any());
         verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
         verify(request).getContentType();
         verify(request).getInputStream();

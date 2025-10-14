@@ -4,7 +4,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.iam.utils.HttpRequestUtils;
+import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.utils.JbstHttpUtils;
 import jbst.iam.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import jbst.foundation.domain.properties.JbstProperties;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.isMultipa
 public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
 
     // Utilities
-    private final HttpRequestUtils httpRequestUtils;
+    private final JbstHttpUtils httpUtils;
     private final SecurityPrincipalUtils securityPrincipalUtils;
     // Properties
     private final JbstProperties jbstProperties;
@@ -41,7 +41,7 @@ public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
             var cachedRequest = new CachedBodyHttpServletRequest(request);
-            this.httpRequestUtils.cachePayload(cachedRequest);
+            this.httpUtils.cachePayload(cachedRequest);
 
             if (this.jbstProperties.getSecurityJwtConfigs().getLoggingConfigs().isAdvancedRequestLoggingEnabled()) {
                 LOGGER.info("============================================================================================");

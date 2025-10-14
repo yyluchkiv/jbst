@@ -3,10 +3,12 @@ package jbst.iam.handlers.exceptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.exceptions.ExceptionEntity;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.utils.JbstHttpUtils;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.utils.HttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import jbst.foundation.domain.exceptions.ExceptionEntity;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
     // Publishers
     private final SecurityJwtEventsPublisher securityJwtPublisher;
     // Utilities
-    private final HttpRequestUtils httpRequestUtils;
+    private final JbstHttpUtils httpUtils;
     // JSONs
     private final ObjectMapper objectMapper;
 
@@ -40,9 +40,9 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
         response.getWriter().write(this.objectMapper.writeValueAsString(new ExceptionEntity(exception)));
 
         // in case of another endpoint to cache - extract methods like: isLoginEndpoint or isLogoutEndpoint
-        if (exception instanceof BadCredentialsException && this.httpRequestUtils.isCachedEndpoint(request)) {
+        if (exception instanceof BadCredentialsException && this.httpUtils.isCachedEndpoint(request)) {
             var requestUserLogin = this.objectMapper.readValue(
-                    this.httpRequestUtils.getCachedPayload(request),
+                    this.httpUtils.getCachedPayload(request),
                     RequestUserLogin.class
             );
 

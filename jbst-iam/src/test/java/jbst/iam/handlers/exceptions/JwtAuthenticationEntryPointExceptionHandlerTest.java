@@ -4,10 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.utils.JbstHttpUtils;
+import jbst.iam.configurations.TestConfigurationHandlers;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.configurations.TestConfigurationHandlers;
-import jbst.iam.utils.HttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,19 +25,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.IPAddress;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 import static jbst.foundation.domain.exceptions.ExceptionEntityType.ERROR;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -50,7 +50,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     private final SecurityJwtEventsPublisher securityJwtPublisher;
-    private final HttpRequestUtils httpRequestUtils;
+    private final JbstHttpUtils httpUtils;
     private final ObjectMapper objectMapper;
 
     private final JwtAuthenticationEntryPointExceptionHandler componentUnderTest;
@@ -59,7 +59,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
     void beforeEach() {
         reset(
                 this.securityJwtPublisher,
-                this.httpRequestUtils
+                this.httpUtils
         );
     }
 
@@ -67,7 +67,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
-                this.httpRequestUtils
+                this.httpUtils
         );
     }
 
@@ -102,7 +102,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         var request = mock(HttpServletRequest.class);
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpRequestUtils.isCachedEndpoint(request)).thenReturn(false);
+        when(this.httpUtils.isCachedEndpoint(request)).thenReturn(false);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
@@ -114,7 +114,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpRequestUtils).isCachedEndpoint(request);
+        verify(this.httpUtils).isCachedEndpoint(request);
     }
 
     @Test
@@ -127,14 +127,14 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         when(request.getHeader("X-Forwarded-For")).thenReturn(IPAddress.localhost().value());
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpRequestUtils.isCachedEndpoint(request)).thenReturn(true);
+        when(this.httpUtils.isCachedEndpoint(request)).thenReturn(true);
         var payload = objectMapper.writeValueAsString(
                 Map.of(
                         "username", Username.hardcoded().value(),
                         "password", Password.hardcoded().value()
                 )
         );
-        when(this.httpRequestUtils.getCachedPayload(request)).thenReturn(payload);
+        when(this.httpUtils.getCachedPayload(request)).thenReturn(payload);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
@@ -148,8 +148,8 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpRequestUtils).isCachedEndpoint(request);
-        verify(this.httpRequestUtils).getCachedPayload(request);
+        verify(this.httpUtils).isCachedEndpoint(request);
+        verify(this.httpUtils).getCachedPayload(request);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLoginFailure.class);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eventAC.capture());
         assertThat(eventAC.getValue().username()).isEqualTo(Username.hardcoded());
