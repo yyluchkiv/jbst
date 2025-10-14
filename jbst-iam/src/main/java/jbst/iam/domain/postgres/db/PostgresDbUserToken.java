@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.postgres.PostgresEmailConverter;
+import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
@@ -36,7 +36,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_users_tokens";
 
-    @Convert(converter = PostgresEmailConverter.class)
+    @Convert(converter = PostgresConverters.EmailConverter.class)
     @Column(nullable = false, updatable = false)
     private Email email;
 

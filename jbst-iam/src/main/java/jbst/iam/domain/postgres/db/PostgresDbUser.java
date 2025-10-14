@@ -9,7 +9,6 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.PostgresConverters;
-import jbst.foundation.domain.converters.postgres.*;
 import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.converters.postgres.PostgresUserCreationOptionConverter;
 import jbst.iam.domain.db.Invitation;
@@ -57,12 +56,12 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(nullable = false, updatable = false)
     private Username username;
 
-    @Convert(converter = PostgresPasswordConverter.class)
+    @Convert(converter = PostgresConverters.PasswordConverter.class)
     @Column(nullable = false)
     private Password password;
 
     @Schema(type = "string")
-    @Convert(converter = PostgresZoneIdConverter.class)
+    @Convert(converter = PostgresConverters.ZoneIdConverter.class)
     @Column(name = "zone_id", nullable = false)
     private ZoneId zoneId;
 
@@ -71,7 +70,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     private Set<SimpleGrantedAuthority> authorities;
 
     @Basic
-    @Convert(converter = PostgresEmailConverter.class)
+    @Convert(converter = PostgresConverters.EmailConverter.class)
     @Column
     private Email email;
 
@@ -85,7 +84,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(name = "email_details", nullable = false)
     private UserEmailDetails emailDetails;
 
-    @Convert(converter = PostgresMapStringsObjectsConverter.class)
+    @Convert(converter = PostgresConverters.MapStringsObjectsConverter.class)
     @Column(length = 65535)
     private Map<String, Object> attributes;
 
