@@ -1,19 +1,19 @@
 package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.domain.db.UserSession;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.tuples.Tuple2;
+import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.iam.domain.db.UserSession;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.TokensContextThrowerService;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import jbst.foundation.domain.tuples.Tuple2;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTokensContextThrowerService implements TokensContextThrowerService {
@@ -23,11 +23,11 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     // Repositories
     protected final UsersSessionsRepository usersSessionsRepository;
     // Utilities
-    protected final SecurityJwtTokenUtils securityJwtTokenUtils;
+    protected final JbstSecurityUtils securityUtils;
 
     @Override
     public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws AccessTokenInvalidException {
-        var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
+        var validatedClaims = this.securityUtils.validate(accessToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
             throw new AccessTokenInvalidException();
@@ -37,7 +37,7 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
 
     @Override
     public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws RefreshTokenInvalidException {
-        var validatedClaims = this.securityJwtTokenUtils.validate(refreshToken);
+        var validatedClaims = this.securityUtils.validate(refreshToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
             throw new RefreshTokenInvalidException();

@@ -2,18 +2,18 @@ package jbst.iam.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
-import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensContextThrowerService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class BaseTokensService implements TokensService {
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
-    private final SecurityJwtTokenUtils securityJwtTokenUtils;
+    private final JbstSecurityUtils securityUtils;
 
     @Override
     public JwtUser getJwtUserByAccessTokenOrThrow(
@@ -67,8 +67,8 @@ public class BaseTokensService implements TokensService {
         var user = refreshTokenValidatedTuple.a();
         var session = refreshTokenValidatedTuple.b();
 
-        var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
-        var newRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+        var accessToken = this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var newRefreshToken = this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
         this.baseUsersSessionsService.refresh(user, session, accessToken, newRefreshToken, request);
 

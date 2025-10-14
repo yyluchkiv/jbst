@@ -1,9 +1,9 @@
 package jbst.iam.services.mongodb;
 
+import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import jbst.iam.services.abstracts.AbstractTokensContextThrowerService;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ public class MongoTokensContextThrowerService extends AbstractTokensContextThrow
     public MongoTokensContextThrowerService(
             MongoUserDetailsAssistant userDetailsAssistant,
             MongoUsersSessionsRepository usersSessionsRepository,
-            SecurityJwtTokenUtils securityJwtTokenUtils
+            JbstSecurityUtils securityUtils
     ) {
         super(
                 userDetailsAssistant,
                 usersSessionsRepository,
-                securityJwtTokenUtils
+                securityUtils
         );
     }
 }

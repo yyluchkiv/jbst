@@ -1,14 +1,15 @@
 package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.domain.db.UserSession;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.iam.domain.db.UserSession;
 import jbst.iam.repositories.UsersSessionsRepository;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,18 +24,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.stream.Stream;
 
 import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.invalid;
 import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.valid;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.expiredClaims;
 import static jbst.foundation.utilities.random.RandomUtility.validClaims;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -73,8 +73,8 @@ class AbstractTokensContextThrowerServiceTest {
         }
 
         @Bean
-        SecurityJwtTokenUtils securityJwtTokenUtils() {
-            return mock(SecurityJwtTokenUtils.class);
+        JbstSecurityUtils securityUtils() {
+            return mock(JbstSecurityUtils.class);
         }
 
         @Bean
@@ -82,7 +82,7 @@ class AbstractTokensContextThrowerServiceTest {
             return new AbstractTokensContextThrowerService(
                     this.jwtUserDetailsService(),
                     this.usersSessionsRepository(),
-                    this.securityJwtTokenUtils()
+                    this.securityUtils()
             ) {};
         }
     }
@@ -92,21 +92,21 @@ class AbstractTokensContextThrowerServiceTest {
     // Repositories
     private final UsersSessionsRepository usersSessionsRepository;
     // Utilities
-    private final SecurityJwtTokenUtils securityJwtTokenUtils;
+    private final JbstSecurityUtils securityUtils;
 
     private final AbstractTokensContextThrowerService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.securityJwtTokenUtils
+                this.securityUtils
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.securityJwtTokenUtils
+                this.securityUtils
         );
     }
 
@@ -115,13 +115,13 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var accessToken = JwtAccessToken.random();
         var validatedClaims = valid(accessToken, validClaims());
-        when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(validatedClaims);
+        when(this.securityUtils.validate(accessToken)).thenReturn(validatedClaims);
 
         // Act
         this.componentUnderTest.verifyValidityOrThrow(accessToken);
 
         // Assert
-        verify(this.securityJwtTokenUtils).validate(accessToken);
+        verify(this.securityUtils).validate(accessToken);
     }
 
     @Test
@@ -129,13 +129,13 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var jwtAccessToken = JwtAccessToken.random();
         var validatedClaims = invalid(jwtAccessToken);
-        when(this.securityJwtTokenUtils.validate(jwtAccessToken)).thenReturn(validatedClaims);
+        when(this.securityUtils.validate(jwtAccessToken)).thenReturn(validatedClaims);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyValidityOrThrow(jwtAccessToken));
 
         // Assert
-        verify(this.securityJwtTokenUtils).validate(jwtAccessToken);
+        verify(this.securityUtils).validate(jwtAccessToken);
         assertThat(throwable)
                 .isInstanceOf(AccessTokenInvalidException.class)
                 .hasMessageContaining("JWT access token is invalid");
@@ -146,13 +146,13 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var refreshToken = JwtRefreshToken.random();
         var validatedClaims = valid(refreshToken, validClaims());
-        when(this.securityJwtTokenUtils.validate(refreshToken)).thenReturn(validatedClaims);
+        when(this.securityUtils.validate(refreshToken)).thenReturn(validatedClaims);
 
         // Act
         this.componentUnderTest.verifyValidityOrThrow(refreshToken);
 
         // Assert
-        verify(this.securityJwtTokenUtils).validate(refreshToken);
+        verify(this.securityUtils).validate(refreshToken);
     }
 
     @Test
@@ -160,13 +160,13 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var refreshToken = JwtRefreshToken.random();
         var validatedClaims = invalid(refreshToken);
-        when(this.securityJwtTokenUtils.validate(refreshToken)).thenReturn(validatedClaims);
+        when(this.securityUtils.validate(refreshToken)).thenReturn(validatedClaims);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyValidityOrThrow(refreshToken));
 
         // Assert
-        verify(this.securityJwtTokenUtils).validate(refreshToken);
+        verify(this.securityUtils).validate(refreshToken);
         assertThat(throwable)
                 .isInstanceOf(RefreshTokenInvalidException.class)
                 .hasMessageContaining("JWT refresh token is invalid");

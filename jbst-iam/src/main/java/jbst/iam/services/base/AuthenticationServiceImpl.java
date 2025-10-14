@@ -5,17 +5,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
+import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
-import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
-import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -26,7 +27,6 @@ import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
-    private final SecurityJwtTokenUtils securityJwtTokenUtils;
+    private final JbstSecurityUtils securityUtils;
     // Publishers
     private final SecurityJwtEventsPublisher securityJwtPublisher;
 
@@ -124,7 +124,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         if (nonNull(cookie.value())) {
             var accessToken = cookie.getJwtAccessToken();
-            var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
+            var validatedClaims = this.securityUtils.validate(accessToken);
             if (validatedClaims.valid()) {
                 var username = validatedClaims.username();
                 this.sessionRegistry.logout(username, accessToken);
@@ -174,8 +174,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
         }
 
-        var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
-        var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+        var accessToken = this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var refreshToken = this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
         this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
 

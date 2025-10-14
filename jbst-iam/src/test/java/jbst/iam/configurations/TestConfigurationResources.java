@@ -2,6 +2,7 @@ package jbst.iam.configurations;
 
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.JbstEnvUtils;
+import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
@@ -18,7 +19,6 @@ import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import jbst.iam.template.WssMessagingTemplate;
 import jbst.iam.tokens.facade.TokensProvider;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import jbst.iam.validators.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -67,7 +67,7 @@ public class TestConfigurationResources {
                 this.tokenService(),
                 this.usersTokensRepository(),
                 this.tokensProvider(),
-                this.securityJwtTokenUtils(),
+                this.securityUtils(),
                 this.securityJwtEventsPublisher()
         );
     }
@@ -184,8 +184,8 @@ public class TestConfigurationResources {
     // Utils
     // =================================================================================================================
     @Bean
-    SecurityJwtTokenUtils securityJwtTokenUtils() {
-        return mock(SecurityJwtTokenUtils.class);
+    JbstSecurityUtils securityUtils() {
+        return mock(JbstSecurityUtils.class);
     }
 
     @Bean

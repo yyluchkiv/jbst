@@ -1,13 +1,13 @@
 package jbst.iam.services.postgres;
 
+import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.utils.UserMetadataUtils;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.abstracts.AbstractBaseUsersSessionsService;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jbst.foundation.utils.UserMetadataUtils;
 
 @Slf4j
 @Service
@@ -18,13 +18,13 @@ public class PostgresBaseUsersSessionsService extends AbstractBaseUsersSessionsS
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             PostgresUsersSessionsRepository usersSessionsRepository,
             UserMetadataUtils userMetadataUtils,
-            SecurityJwtTokenUtils securityJwtTokenUtils
+            JbstSecurityUtils securityUtils
     ) {
         super(
                 securityJwtEventsPublisher,
                 usersSessionsRepository,
                 userMetadataUtils,
-                securityJwtTokenUtils
+                securityUtils
         );
     }
 }

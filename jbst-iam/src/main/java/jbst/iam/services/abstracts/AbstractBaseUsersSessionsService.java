@@ -1,41 +1,41 @@
 package jbst.iam.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.iam.domain.db.UserSession;
-import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
-import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
-import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.tuples.Tuple3;
+import jbst.foundation.domain.tuples.TupleToggle;
+import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.utils.UserMetadataUtils;
+import jbst.iam.domain.db.UserSession;
+import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
+import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
+import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.iam.domain.sessions.SessionsExpiredTable;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.BaseUsersSessionsService;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.tuples.Tuple3;
-import jbst.foundation.domain.tuples.TupleToggle;
-import jbst.foundation.utils.UserMetadataUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static jbst.iam.domain.db.UserSession.ofNotPersisted;
-import static jbst.iam.domain.db.UserSession.ofPersisted;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
+import static jbst.iam.domain.db.UserSession.ofNotPersisted;
+import static jbst.iam.domain.db.UserSession.ofPersisted;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {
@@ -47,7 +47,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     // Utils
     protected final UserMetadataUtils userMetadataUtils;
     // Utilities
-    protected final SecurityJwtTokenUtils securityJwtTokenUtils;
+    protected final JbstSecurityUtils securityUtils;
 
     @Override
     public void assertAccess(Username username, UserSessionId sessionId) {
@@ -146,7 +146,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
 
         usersSessions.forEach(userSession -> {
             var sessionId = userSession.id();
-            var validatedClaims = this.securityJwtTokenUtils.validate(userSession.refreshToken());
+            var validatedClaims = this.securityUtils.validate(userSession.refreshToken());
             var isValid = validatedClaims.valid();
             if (isValid) {
                 var isExpired = isPast(validatedClaims.getExpirationTimestamp());

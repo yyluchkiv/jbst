@@ -4,28 +4,27 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
+import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
-import jbst.foundation.domain.ids.UserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;
-import jbst.iam.utils.SecurityJwtTokenUtils;
-import jbst.iam.utils.impl.SecurityJwtTokenUtilsImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,8 +107,8 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        public SecurityJwtTokenUtils securityJwtTokenUtils() {
-            return new SecurityJwtTokenUtilsImpl(
+        public JbstSecurityUtils securityUtils() {
+            return new JbstSecurityUtils(
                     this.jbstProperties
             );
         }
@@ -125,7 +124,7 @@ class AbstractBaseUsersSessionsServiceTest {
                     this.securityJwtPublisher(),
                     this.usersSessionsRepository(),
                     this.userMetadataUtils(),
-                    this.securityJwtTokenUtils()
+                    this.securityUtils()
             ) {};
         }
     }

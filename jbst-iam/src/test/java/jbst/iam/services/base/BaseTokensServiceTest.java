@@ -5,7 +5,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.foundation.domain.jwt.*;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
+import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.tuples.Tuple2;
+import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.services.BaseUsersSessionsService;
@@ -13,7 +18,6 @@ import jbst.iam.services.TokensContextThrowerService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,14 +29,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.tuples.Tuple2;
 
-import static jbst.iam.domain.db.UserSession.randomPersistedSession;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static jbst.foundation.utilities.random.RandomUtility.validClaims;
+import static jbst.iam.domain.db.UserSession.randomPersistedSession;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -68,8 +71,8 @@ class BaseTokensServiceTest {
         }
 
         @Bean
-        SecurityJwtTokenUtils securityJwtTokenUtility() {
-            return mock(SecurityJwtTokenUtils.class);
+        JbstSecurityUtils securityUtils() {
+            return mock(JbstSecurityUtils.class);
         }
 
         @Bean
@@ -80,7 +83,7 @@ class BaseTokensServiceTest {
                     this.tokenContextThrowerService(),
                     this.baseUsersSessionsService(),
                     this.cookieProvider(),
-                    this.securityJwtTokenUtility()
+                    this.securityUtils()
             );
         }
     }
@@ -95,7 +98,7 @@ class BaseTokensServiceTest {
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
-    private final SecurityJwtTokenUtils securityJwtTokenUtils;
+    private final JbstSecurityUtils securityUtils;
 
     private final TokensService componentUnderTest;
 

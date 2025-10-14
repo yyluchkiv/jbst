@@ -1,15 +1,14 @@
-package jbst.iam.utils.impl;
+package jbst.foundation.utils;
 
 import io.jsonwebtoken.Jwts;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenCreationParams;
-import jbst.iam.tests.domain.enums.TestAuthority;
-import jbst.iam.utils.SecurityJwtTokenUtils;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.tests.domain.enums.TestAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -49,8 +48,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class SecurityJwtTokenUtilsImplTest {
-
+class JbstSecurityUtilsTest {
     private static Stream<Arguments> createJwtTokenTest() {
         return Stream.of(
                 Arguments.of(new TimeAmount(1L, HOURS)),
@@ -124,8 +122,8 @@ class SecurityJwtTokenUtilsImplTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        SecurityJwtTokenUtils securityJwtTokenUtility() {
-            return new SecurityJwtTokenUtilsImpl(
+        JbstSecurityUtils securityUtils() {
+            return new JbstSecurityUtils(
                     this.jbstProperties
             );
         }
@@ -133,7 +131,7 @@ class SecurityJwtTokenUtilsImplTest {
 
     private final JbstProperties jbstProperties;
 
-    private final SecurityJwtTokenUtils componentUnderTest;
+    private final JbstSecurityUtils componentUnderTest;
 
     @Disabled("Only for debugging purposes")
     @Test
@@ -266,5 +264,4 @@ class SecurityJwtTokenUtilsImplTest {
         assertThat(validatedClaims.expirationDate()).isEqualTo(sdf.parse(expectedExpiration));
         assertThat(validatedClaims.authorities()).isEqualTo(authorities);
     }
-
 }
