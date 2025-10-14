@@ -1,7 +1,7 @@
 package jbst.server.ops.domain.slack.messages;
 
-import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
 import jbst.server.ops.domain.servers.Server;
+import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

@@ -1,7 +1,7 @@
 package jbst.server.iam.postgres.services.impl;
 
-import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;

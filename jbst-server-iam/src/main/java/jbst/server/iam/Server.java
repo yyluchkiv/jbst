@@ -2,8 +2,8 @@ package jbst.server.iam;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.essense.AbstractEssenceConstructor;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.startup.BaseStartupEventListener;
 import jbst.server.iam.configurations.ConfigurationServer;

@@ -1,7 +1,7 @@
 package jbst.server.iam.mongodb.services.impl;
 
-import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
