@@ -72,7 +72,8 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.iam.template",
         "jbst.iam.tokens",
         "jbst.iam.utils",
-        "jbst.iam.validators.base"
+        "jbst.iam.validators.base",
+        "jbst.foundation.utils"
 })
 @Import({
         JbstConfigurationProperties.class,

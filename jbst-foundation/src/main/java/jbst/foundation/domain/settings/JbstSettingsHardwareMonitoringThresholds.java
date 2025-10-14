@@ -1,4 +1,4 @@
-package jbst.iam.domain.settings;
+package jbst.foundation.domain.settings;
 
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 

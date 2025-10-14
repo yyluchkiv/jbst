@@ -1,7 +1,7 @@
 package jbst.iam.domain.db;
 
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
+import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

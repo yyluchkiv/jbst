@@ -8,7 +8,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.iam.domain.db.JbstSettings;
-import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
+import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

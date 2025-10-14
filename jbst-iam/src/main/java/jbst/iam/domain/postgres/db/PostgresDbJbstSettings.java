@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistableAuditableUUID;
-import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
+import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

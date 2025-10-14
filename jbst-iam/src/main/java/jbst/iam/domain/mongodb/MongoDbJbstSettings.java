@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.iam.domain.db.JbstSettings;
-import jbst.iam.domain.settings.JbstSettingsHardwareMonitoringThresholds;
+import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.*;
 import org.bson.types.Decimal128;
 import org.springframework.data.annotation.Id;
