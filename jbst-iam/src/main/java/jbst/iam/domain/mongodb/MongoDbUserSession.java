@@ -6,7 +6,7 @@ import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.jwt.RequestAccessToken;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;

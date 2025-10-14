@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.JwtTokenCreationParams;
+import jbst.foundation.domain.jwt.JwtTokenCreationParams;
 import jbst.iam.domain.jwt.JwtTokenValidatedClaims;
 import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;

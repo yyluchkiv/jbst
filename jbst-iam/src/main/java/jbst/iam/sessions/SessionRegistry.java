@@ -3,7 +3,7 @@ package jbst.iam.sessions;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.sessions.Session;
 import org.springframework.scheduling.annotation.Async;
 import jbst.foundation.domain.base.Username;

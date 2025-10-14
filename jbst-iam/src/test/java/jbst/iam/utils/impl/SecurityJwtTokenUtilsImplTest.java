@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.JwtTokenCreationParams;
+import jbst.foundation.domain.jwt.JwtTokenCreationParams;
 import jbst.iam.tests.domain.enums.TestAuthority;
 import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.RequiredArgsConstructor;

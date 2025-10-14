@@ -5,7 +5,7 @@ import jbst.iam.domain.db.UserSession;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.mongodb.MongoDbUserSession;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;

@@ -1,4 +1,4 @@
-package jbst.iam.domain.jwt;
+package jbst.foundation.domain.jwt;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.base.Username;

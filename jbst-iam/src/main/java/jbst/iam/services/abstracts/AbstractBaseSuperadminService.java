@@ -3,7 +3,7 @@ package jbst.iam.services.abstracts;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.jwt.JwtUser;
-import jbst.iam.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.BaseSuperadminService;

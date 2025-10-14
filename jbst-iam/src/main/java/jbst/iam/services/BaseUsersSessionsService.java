@@ -9,7 +9,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.JwtUser;
-import jbst.iam.domain.jwt.RequestAccessToken;
+import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.sessions.SessionsExpiredTable;
 import jbst.foundation.domain.base.Username;
 

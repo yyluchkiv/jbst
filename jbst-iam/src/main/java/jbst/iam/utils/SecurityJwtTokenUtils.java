@@ -2,7 +2,7 @@ package jbst.iam.utils;
 
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.JwtTokenCreationParams;
+import jbst.foundation.domain.jwt.JwtTokenCreationParams;
 import jbst.iam.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.properties.base.TimeAmount;
 
