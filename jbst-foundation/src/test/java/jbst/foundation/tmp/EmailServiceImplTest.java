@@ -12,7 +12,7 @@ import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
-import jbst.foundation.services.emails.utils.JbstEmailsUtils;
+import jbst.foundation.services.emails.utils.JbstEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,8 +79,8 @@ class EmailServiceImplTest {
         }
 
         @Bean
-        JbstEmailsUtils emailsUtils() {
-            return mock(JbstEmailsUtils.class);
+        JbstEmailUtils emailUtils() {
+            return mock(JbstEmailUtils.class);
         }
 
         @Bean
@@ -88,7 +88,7 @@ class EmailServiceImplTest {
             return new EmailServiceImpl(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
-                    this.emailsUtils(),
+                    this.emailUtils(),
                     this.jbstProperties()
             );
         }
@@ -97,7 +97,7 @@ class EmailServiceImplTest {
     // Services
     private final JavaMailSender javaMailSender;
     // Utils
-    private final JbstEmailsUtils emailsUtils;
+    private final JbstEmailUtils emailUtils;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -107,7 +107,7 @@ class EmailServiceImplTest {
     void beforeEach() {
         reset(
                 this.javaMailSender,
-                this.emailsUtils,
+                this.emailUtils,
                 this.jbstProperties
         );
     }
@@ -116,7 +116,7 @@ class EmailServiceImplTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.javaMailSender,
-                this.emailsUtils,
+                this.emailUtils,
                 this.jbstProperties
         );
     }
@@ -305,14 +305,14 @@ class EmailServiceImplTest {
         var emailHTML = entity(EmailHTML.class);
         var emailConfigs = EmailConfigs.enabled(from);
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
-        when(this.emailsUtils.getMimeMessageTuple2()).thenThrow(new MessagingException());
+        when(this.emailUtils.getMimeMessageTuple2()).thenThrow(new MessagingException());
 
         // Act
         this.componentUnderTest.sendHTML(emailHTML);
 
         // Assert
         verify(this.jbstProperties).getEmailConfigs();
-        verify(this.emailsUtils).getMimeMessageTuple2();
+        verify(this.emailUtils).getMimeMessageTuple2();
     }
 
     @Test
@@ -335,7 +335,7 @@ class EmailServiceImplTest {
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
         var message = mock(MimeMessage.class);
         var mimeMessageHelper = mock(MimeMessageHelper.class);
-        when(this.emailsUtils.getMimeMessageTuple2()).thenReturn(new Tuple2<>(message, mimeMessageHelper));
+        when(this.emailUtils.getMimeMessageTuple2()).thenReturn(new Tuple2<>(message, mimeMessageHelper));
 
         // Act
         this.componentUnderTest.sendHTML(emailHTML);
@@ -362,7 +362,7 @@ class EmailServiceImplTest {
                 """;
         verify(mimeMessageHelper).setText(html, true);
         verify(this.jbstProperties).getEmailConfigs();
-        verify(this.emailsUtils).getMimeMessageTuple2();
+        verify(this.emailUtils).getMimeMessageTuple2();
         verify(this.javaMailSender).send(any(MimeMessage.class));
         verifyNoMoreInteractions(
                 message,

@@ -13,7 +13,7 @@ import jbst.foundation.domain.properties.configs.ServerConfigs;
 import jbst.foundation.services.UsersEmailsService;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
-import jbst.foundation.services.emails.utils.JbstEmailsUtils;
+import jbst.foundation.services.emails.utils.JbstEmailUtils;
 import jbst.foundation.utilities.concurrent.SleepUtility;
 import jbst.foundation.utils.JbstUserEmailUtils;
 import lombok.RequiredArgsConstructor;
@@ -90,8 +90,8 @@ class BaseUsersEmailsServiceConsoleTest {
         }
 
         @Bean
-        JbstEmailsUtils emailsUtils() {
-            return new JbstEmailsUtils(
+        JbstEmailUtils emailUtils() {
+            return new JbstEmailUtils(
                     this.javaMailSender()
             );
         }
@@ -118,7 +118,7 @@ class BaseUsersEmailsServiceConsoleTest {
             return new EmailServiceImpl(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
-                    this.emailsUtils(),
+                    this.emailUtils(),
                     this.jbstProperties()
             );
         }
