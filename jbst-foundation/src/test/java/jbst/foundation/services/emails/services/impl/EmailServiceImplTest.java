@@ -70,7 +70,7 @@ class EmailServiceImplTest {
         @Bean
         SpringResourceTemplateResolver htmlTemplateResolver() {
             var emailTemplateResolver = new SpringResourceTemplateResolver();
-            emailTemplateResolver.setPrefix("classpath:/test-email-templates/");
+            emailTemplateResolver.setPrefix("classpath:/tests-email-templates/");
             emailTemplateResolver.setSuffix(".html");
             emailTemplateResolver.setTemplateMode(TemplateMode.HTML);
             emailTemplateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());

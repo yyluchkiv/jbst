@@ -26,7 +26,7 @@ class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "spring/actuator/health";
+        return "jsons";
     }
 
     // serialization ignored deliberately

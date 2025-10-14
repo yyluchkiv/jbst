@@ -26,7 +26,7 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
-        return "properties";
+        return "jsons";
     }
 
     @ParameterizedTest
