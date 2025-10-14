@@ -80,7 +80,7 @@ import static org.springframework.http.HttpMethod.*;
         JbstConfigurationSpringBootServer.class,
         JbstConfigurationBaseSecurityJwtWebMVC.class,
         JbstConfigurationBaseSecurityJwtFilters.class,
-        JbstConfigurationBaseSecurityJwtPasswords.class,
+        JbstConfigurationSecurityJwtPasswords.class,
         JbstConfigurationIncidents.class,
         JbstConfigurationEmail.class
 })
