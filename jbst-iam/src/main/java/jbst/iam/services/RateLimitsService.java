@@ -2,7 +2,7 @@ package jbst.iam.services;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 
 public interface RateLimitsService {
     void acquireMagicLinkOrThrow(Email email) throws TooManyRequestsException;

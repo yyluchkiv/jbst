@@ -1,4 +1,4 @@
-package jbst.iam.domain.dto.requests;
+package jbst.foundation.domain.dto.requests;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.enums.UserTokenType;

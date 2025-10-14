@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 
 import java.time.ZoneId;

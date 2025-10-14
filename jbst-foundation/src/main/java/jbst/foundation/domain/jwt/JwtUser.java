@@ -1,12 +1,11 @@
-package jbst.iam.domain.jwt;
+package jbst.foundation.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.jwt.JwtTokenCreationParams;
-import jbst.iam.domain.db.UserEmailDetails;
-import jbst.iam.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.databases.UserEmailDetails;
+import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.UserId;

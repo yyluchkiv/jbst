@@ -2,7 +2,7 @@ package jbst.iam.essence;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.iam.domain.db.UserEmailDetails;
+import jbst.foundation.domain.databases.UserEmailDetails;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.domain.postgres.db.PostgresDbUser;

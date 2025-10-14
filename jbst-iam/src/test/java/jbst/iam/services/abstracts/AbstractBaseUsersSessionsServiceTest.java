@@ -20,7 +20,7 @@ import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;

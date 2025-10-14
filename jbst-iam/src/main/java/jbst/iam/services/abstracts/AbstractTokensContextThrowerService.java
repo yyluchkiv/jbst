@@ -6,7 +6,7 @@ import jbst.iam.domain.db.UserSession;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.TokensContextThrowerService;
 import jbst.iam.utils.SecurityJwtTokenUtils;

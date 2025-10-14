@@ -4,7 +4,7 @@ import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.validators.BaseUsersValidator;

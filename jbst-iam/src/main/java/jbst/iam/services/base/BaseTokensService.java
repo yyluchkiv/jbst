@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.foundation.domain.jwt.RequestRefreshToken;
 import jbst.iam.services.BaseUsersSessionsService;

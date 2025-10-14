@@ -3,7 +3,7 @@ package jbst.iam.tasks.superadmin;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

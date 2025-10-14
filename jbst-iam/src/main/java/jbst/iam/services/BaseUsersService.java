@@ -6,7 +6,7 @@ import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 
 import java.time.ZoneId;
 

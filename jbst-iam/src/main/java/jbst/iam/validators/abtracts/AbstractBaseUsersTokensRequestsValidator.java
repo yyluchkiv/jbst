@@ -4,7 +4,7 @@ import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetExcepti
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import lombok.AccessLevel;

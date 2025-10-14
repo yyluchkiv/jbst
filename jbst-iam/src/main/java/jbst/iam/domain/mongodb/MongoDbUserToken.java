@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import lombok.*;

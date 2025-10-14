@@ -2,7 +2,7 @@ package jbst.iam.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.foundation.domain.jwt.RequestRefreshToken;
 import jbst.iam.services.TokensService;

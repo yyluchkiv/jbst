@@ -1,4 +1,4 @@
-package jbst.iam.domain.db;
+package jbst.foundation.domain.databases;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

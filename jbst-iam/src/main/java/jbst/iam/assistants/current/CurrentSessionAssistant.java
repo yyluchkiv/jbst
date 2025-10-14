@@ -3,7 +3,7 @@ package jbst.iam.assistants.current;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.foundation.domain.base.Username;

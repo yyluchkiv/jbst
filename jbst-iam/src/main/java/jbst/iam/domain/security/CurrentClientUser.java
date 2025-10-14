@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.db.UserEmailDetails;
+import jbst.foundation.domain.databases.UserEmailDetails;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

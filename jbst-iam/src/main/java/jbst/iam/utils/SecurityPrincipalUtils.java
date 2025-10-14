@@ -1,6 +1,6 @@
 package jbst.iam.utils;
 
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 
 public interface SecurityPrincipalUtils {
     JwtUser getAuthenticatedJwtUser();

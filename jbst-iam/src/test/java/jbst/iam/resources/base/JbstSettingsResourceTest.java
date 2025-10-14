@@ -5,7 +5,7 @@ import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.domain.db.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

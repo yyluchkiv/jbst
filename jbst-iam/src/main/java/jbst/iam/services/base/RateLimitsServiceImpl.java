@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.concurrent.RateLimiter;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.services.RateLimitsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

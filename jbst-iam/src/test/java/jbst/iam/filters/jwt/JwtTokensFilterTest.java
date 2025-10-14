@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.foundation.domain.jwt.RequestRefreshToken;
 import jbst.iam.domain.sessions.Session;

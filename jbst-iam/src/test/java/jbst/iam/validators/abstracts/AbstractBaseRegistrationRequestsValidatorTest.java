@@ -6,7 +6,7 @@ import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.events.EventRegistration0Failure;
 import jbst.iam.domain.events.EventRegistration1Failure;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.InvitationsRepository;

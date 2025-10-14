@@ -6,7 +6,7 @@ import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.services.BaseSuperadminService;
 import jbst.iam.services.BaseUsersSessionsService;

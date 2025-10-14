@@ -1,7 +1,7 @@
 package jbst.iam.repositories;
 
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
 
 public interface UsersTokensRepository {

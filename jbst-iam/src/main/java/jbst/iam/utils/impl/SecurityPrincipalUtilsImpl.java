@@ -1,6 +1,6 @@
 package jbst.iam.utils.impl;
 
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

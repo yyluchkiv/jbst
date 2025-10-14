@@ -10,7 +10,7 @@ import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.ids.UserId;
-import jbst.iam.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JwtUser;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.ZoneId;

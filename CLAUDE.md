@@ -32,7 +32,7 @@ mvn integration-test
 mvn clean verify
 
 # Quick build without tests
-./delivery-check-lite.sh  # or mvn clean install -Dmaven.test.skip -DskipTests -T 4
+./delivery-check-fast.sh  # or mvn clean install -Dmaven.test.skip -DskipTests -T 4
 ```
 
 ### Database Support
