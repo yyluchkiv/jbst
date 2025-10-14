@@ -1,8 +1,9 @@
 package jbst.foundation.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.handshakes.CsrfInterceptorHandshake;
+import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.utilities.random.EntityUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +22,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.socket.WebSocketHandler;
-import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import jbst.foundation.utilities.random.EntityUtility;
 
 import java.util.HashMap;
 import java.util.Map;

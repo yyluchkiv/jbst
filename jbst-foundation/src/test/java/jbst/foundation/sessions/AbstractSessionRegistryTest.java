@@ -1,21 +1,28 @@
 package jbst.foundation.sessions;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.events.EventAuthenticationLogin;
 import jbst.foundation.domain.events.EventAuthenticationLogout;
 import jbst.foundation.domain.events.EventSessionExpired;
 import jbst.foundation.domain.events.EventSessionRefreshed;
+import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.http.requests.UserAgentDetails;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
-import jbst.foundation.sessions.AbstractSessionRegistry;
-import jbst.foundation.sessions.SessionRegistry;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.domain.tuples.Tuple2;
+import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.foundation.services.BaseUsersSessionsService;
 import lombok.RequiredArgsConstructor;
@@ -30,15 +37,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.geo.GeoLocation;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.domain.tuples.Tuple3;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +44,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 import static jbst.foundation.domain.http.requests.UserRequestMetadata.processed;
 import static jbst.foundation.domain.tuples.TuplePresence.absent;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
@@ -55,6 +51,8 @@ import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static jbst.foundation.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

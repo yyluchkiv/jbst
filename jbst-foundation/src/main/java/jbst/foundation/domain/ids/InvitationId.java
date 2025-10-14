@@ -27,6 +27,7 @@ public record InvitationId(@NotNull String value) {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 
+    @SuppressWarnings("NullableProblems")
     @JsonValue
     @Override
     public String toString() {

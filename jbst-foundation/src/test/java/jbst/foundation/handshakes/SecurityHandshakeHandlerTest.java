@@ -1,11 +1,12 @@
 package jbst.foundation.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.foundation.handshakes.SecurityHandshakeHandler;
+import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.TokensService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -26,17 +27,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.socket.WebSocketHandler;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

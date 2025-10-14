@@ -31,6 +31,7 @@ public record UserSessionId(@NotNull String value) {
         return of("8DE052C55BD26A1A6F0E");
     }
 
+    @SuppressWarnings("NullableProblems")
     @JsonValue
     @Override
     public String toString() {

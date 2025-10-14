@@ -36,6 +36,7 @@ public record JwtRefreshToken(@NotNull String value) {
         return Stream.of(tokens).map(JwtRefreshToken::new).collect(Collectors.toSet());
     }
 
+    @SuppressWarnings("NullableProblems")
     @JsonValue
     @Override
     public String toString() {

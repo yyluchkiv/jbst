@@ -24,6 +24,7 @@ public abstract class PostgresDbAbstractPersistable2 extends PostgresDbAbstractP
     @Column(name = "created_at", nullable = false)
     protected long createdAt;
 
+    @SuppressWarnings("unused")
     protected PostgresDbAbstractPersistable2(Username createdBy) {
         this.createdBy = createdBy;
         this.createdAt = getCurrentTimestamp();

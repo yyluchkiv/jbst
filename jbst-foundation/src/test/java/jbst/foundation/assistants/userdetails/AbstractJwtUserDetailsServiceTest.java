@@ -1,6 +1,6 @@
 package jbst.foundation.assistants.userdetails;
 
-import jbst.foundation.assistants.userdetails.AbstractJwtUserDetailsService;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
 
 import static org.mockito.Mockito.*;
 

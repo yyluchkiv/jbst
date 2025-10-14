@@ -1,6 +1,5 @@
 package jbst.foundation.crons;
 
-import jbst.foundation.crons.SessionsCron;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Cron;

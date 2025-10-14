@@ -35,6 +35,7 @@ public record JwtAccessToken(@NotNull String value) {
         return Stream.of(tokens).map(JwtAccessToken::new).collect(Collectors.toSet());
     }
 
+    @SuppressWarnings("NullableProblems")
     @JsonValue
     @Override
     public String toString() {

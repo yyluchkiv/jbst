@@ -1,15 +1,14 @@
 package jbst.foundation.resources.hardware;
 
 import jbst.foundation.domain.base.Version;
+import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
 import jbst.foundation.domain.hardware.memories.GlobalMemory;
 import jbst.foundation.domain.hardware.memories.HeapMemory;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
-import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
-import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

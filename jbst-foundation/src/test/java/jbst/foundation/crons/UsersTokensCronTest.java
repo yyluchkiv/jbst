@@ -1,6 +1,5 @@
 package jbst.foundation.crons;
 
-import jbst.foundation.crons.UsersTokensCron;
 import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.UsersTokensRepository;
