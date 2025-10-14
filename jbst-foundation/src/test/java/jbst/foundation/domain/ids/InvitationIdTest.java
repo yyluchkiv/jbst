@@ -17,7 +17,7 @@ class InvitationIdTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFolder() {
-        return "ids";
+        return "jsons";
     }
 
     @Test
