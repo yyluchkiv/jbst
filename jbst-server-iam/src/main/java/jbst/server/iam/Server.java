@@ -4,7 +4,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.essence.AbstractEssenceConstructor;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import jbst.iam.startup.BaseStartupEventListener;
 import jbst.server.iam.configurations.ConfigurationServer;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class Server extends BaseStartupEventListener {
 
     @Autowired
     public Server(
-            AbstractJbstSettingsService jbstSettingsService,
+            JbstSettingsService jbstSettingsService,
             AbstractEssenceConstructor essenceConstructor,
             JbstProperties jbstProperties,
             IncidentPublisher incidentPublisher

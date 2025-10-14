@@ -6,7 +6,7 @@ import jbst.foundation.domain.annotations.JbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class JbstSettingsResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final AbstractJbstSettingsService settingsService;
+    private final JbstSettingsService settingsService;
 
     // =================================================================================================================
     // Server

@@ -14,7 +14,7 @@ import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
 import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
 import jbst.iam.sessions.MongoSessionRegistry;
-import jbst.iam.settings.MongoJbstSettingsService;
+import jbst.foundation.settings.MongoJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -4,7 +4,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.essence.AbstractEssenceConstructor;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import static jbst.foundation.domain.enums.Status.*;
 public class BaseStartupEventListener implements AbstractServerStartupEventListener {
 
     // Settings
-    protected final AbstractJbstSettingsService jbstSettingsService;
+    protected final JbstSettingsService jbstSettingsService;
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
     // Properties

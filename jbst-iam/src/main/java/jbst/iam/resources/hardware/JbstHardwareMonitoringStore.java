@@ -3,7 +3,7 @@ package jbst.iam.resources.hardware;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class JbstHardwareMonitoringStore {
 
     // Settings
-    private final AbstractJbstSettingsService jbstSettingsService;
+    private final JbstSettingsService jbstSettingsService;
 
     private final Deque<HardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 

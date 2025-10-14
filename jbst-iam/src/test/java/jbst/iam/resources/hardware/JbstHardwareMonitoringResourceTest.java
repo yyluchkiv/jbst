@@ -6,7 +6,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
 
     // Settings
-    private final AbstractJbstSettingsService jbstSettingsService;
+    private final JbstSettingsService jbstSettingsService;
     // Websockets
     private final WssMessagingTemplate wssMessagingTemplate;
     // Incidents

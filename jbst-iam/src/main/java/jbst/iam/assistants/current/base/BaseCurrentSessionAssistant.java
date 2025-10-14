@@ -14,7 +14,7 @@ import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.sessions.SessionRegistry;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import jbst.iam.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     // Settings
-    protected final AbstractJbstSettingsService jbstSettingsService;
+    protected final JbstSettingsService jbstSettingsService;
     // Sessions
     protected final SessionRegistry sessionRegistry;
     // Repositories

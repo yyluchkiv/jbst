@@ -1,4 +1,4 @@
-package jbst.iam.settings;
+package jbst.foundation.settings;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
@@ -17,14 +17,14 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.con
 
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
-public abstract class AbstractJbstSettingsService {
+public abstract class JbstSettingsService {
     // Repository
     private final JbstSettingsRepository jbstSettingsRepository;
 
     // Store
     private final AtomicReference<JbstSettings> jbstSettingsAR;
 
-    public AbstractJbstSettingsService(JbstSettingsRepository jbstSettingsRepository) {
+    public JbstSettingsService(JbstSettingsRepository jbstSettingsRepository) {
         this.jbstSettingsRepository = jbstSettingsRepository;
         this.jbstSettingsAR = new AtomicReference<>();
     }

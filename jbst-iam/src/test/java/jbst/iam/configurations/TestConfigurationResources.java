@@ -16,7 +16,7 @@ import jbst.iam.services.base.AuthenticationServiceImpl;
 import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.services.base.RateLimitsServiceImpl;
 import jbst.iam.sessions.SessionRegistry;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import jbst.iam.template.WssMessagingTemplate;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.validators.*;
@@ -40,8 +40,8 @@ public class TestConfigurationResources {
     // Settings
     // =================================================================================================================
     @Bean
-    AbstractJbstSettingsService jbstSettingsService() {
-        return mock(AbstractJbstSettingsService.class);
+    JbstSettingsService jbstSettingsService() {
+        return mock(JbstSettingsService.class);
     }
 
     // =================================================================================================================

@@ -6,7 +6,7 @@ import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final AbstractJbstSettingsService settingsService;
+    private final JbstSettingsService settingsService;
 
     // Resource
     private final JbstSettingsResource componentUnderTest;

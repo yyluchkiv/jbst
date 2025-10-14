@@ -9,7 +9,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTab
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
-import jbst.iam.settings.AbstractJbstSettingsService;
+import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,8 +37,8 @@ class JbstHardwareMonitoringStoreTest {
     static class ContextConfiguration {
 
         @Bean
-        AbstractJbstSettingsService jbstSettingsService() {
-            var jbstSettingsService = mock(AbstractJbstSettingsService.class);
+        JbstSettingsService jbstSettingsService() {
+            var jbstSettingsService = mock(JbstSettingsService.class);
             when(jbstSettingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.hardcoded());
             return jbstSettingsService;
         }
