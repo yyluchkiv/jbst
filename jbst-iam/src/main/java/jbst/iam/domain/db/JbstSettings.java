@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import static java.time.ZoneOffset.UTC;
-import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF13;
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF12;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
@@ -29,10 +29,9 @@ public class JbstSettings {
             JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
     ) {
         this.createdBy = createdBy;
-        // TODO [YYL] change DTF format to include HH:mm
-        this.createdAt = DTF13.format(convertTimestamp(createdAt, UTC));
+        this.createdAt = DTF12.format(convertTimestamp(createdAt, UTC));
         this.updatedBy = updatedBy;
-        this.updatedAt = DTF13.format(convertTimestamp(updatedAt, UTC));
+        this.updatedAt = DTF12.format(convertTimestamp(updatedAt, UTC));
         this.hardwareMonitoringThresholds = hardwareMonitoringThresholds;
     }
 
