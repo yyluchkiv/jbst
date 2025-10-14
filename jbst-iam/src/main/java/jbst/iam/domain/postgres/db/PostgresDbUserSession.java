@@ -7,7 +7,6 @@ import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.iam.converters.postgres.PostgresJwtAccessTokenConverter;
 import jbst.iam.converters.postgres.PostgresJwtRefreshTokenConverter;
-import jbst.iam.converters.postgres.PostgresUserRequestMetadataConverter;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.iam.domain.identifiers.UserSessionId;
@@ -48,7 +47,7 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     @Column(name = "refresh_token", length = 4096, nullable = false)
     private JwtRefreshToken refreshToken;
 
-    @Convert(converter = PostgresUserRequestMetadataConverter.class)
+    @Convert(converter = PostgresConverters.UserRequestMetadataConverter.class)
     @Column(length = 65535, nullable = false)
     private UserRequestMetadata metadata;
 
