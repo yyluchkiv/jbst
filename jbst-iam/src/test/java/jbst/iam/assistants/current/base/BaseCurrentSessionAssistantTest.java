@@ -8,7 +8,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.iam.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.repositories.UsersSessionsRepository;

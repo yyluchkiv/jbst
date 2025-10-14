@@ -5,13 +5,11 @@ import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.iam.converters.postgres.PostgresJwtAccessTokenConverter;
-import jbst.iam.converters.postgres.PostgresJwtRefreshTokenConverter;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.iam.domain.identifiers.UserSessionId;
-import jbst.iam.domain.jwt.JwtAccessToken;
-import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable1;
 import lombok.*;
@@ -39,11 +37,11 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     @Column(nullable = false)
     private Username username;
 
-    @Convert(converter = PostgresJwtAccessTokenConverter.class)
+    @Convert(converter = PostgresConverters.JwtAccessTokenConverter.class)
     @Column(name = "access_token", length = 4096, nullable = false)
     private JwtAccessToken accessToken;
 
-    @Convert(converter = PostgresJwtRefreshTokenConverter.class)
+    @Convert(converter = PostgresConverters.JwtRefreshTokenConverter.class)
     @Column(name = "refresh_token", length = 4096, nullable = false)
     private JwtRefreshToken refreshToken;
 

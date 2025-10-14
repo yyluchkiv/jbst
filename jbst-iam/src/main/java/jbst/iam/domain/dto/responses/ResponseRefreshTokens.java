@@ -1,7 +1,7 @@
 package jbst.iam.domain.dto.responses;
 
-import jbst.iam.domain.jwt.JwtAccessToken;
-import jbst.iam.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 
 public record ResponseRefreshTokens(
         JwtAccessToken accessToken,

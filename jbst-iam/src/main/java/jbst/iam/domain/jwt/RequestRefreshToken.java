@@ -1,6 +1,7 @@
 package jbst.iam.domain.jwt;
 
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 

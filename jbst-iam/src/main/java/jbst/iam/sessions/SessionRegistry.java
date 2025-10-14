@@ -1,8 +1,8 @@
 package jbst.iam.sessions;
 
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.iam.domain.jwt.JwtAccessToken;
-import jbst.iam.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.sessions.Session;
 import org.springframework.scheduling.annotation.Async;

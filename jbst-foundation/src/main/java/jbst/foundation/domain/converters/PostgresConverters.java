@@ -14,6 +14,8 @@ import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.Nullable;
@@ -44,6 +46,34 @@ public class PostgresConverters {
         @Override
         public Email convertToEntityAttribute(@Nullable String value) {
             return nonNull(value) ? Email.of(value) : null;
+        }
+    }
+
+    @Converter
+    public class JwtAccessTokenConverter implements AttributeConverter<JwtAccessToken, String> {
+
+        @Override
+        public String convertToDatabaseColumn(JwtAccessToken accessToken) {
+            return nonNull(accessToken) ? accessToken.value() : null;
+        }
+
+        @Override
+        public JwtAccessToken convertToEntityAttribute(String value) {
+            return nonNull(value) ? JwtAccessToken.of(value) : null;
+        }
+    }
+
+    @Converter
+    public class JwtRefreshTokenConverter implements AttributeConverter<JwtRefreshToken, String> {
+
+        @Override
+        public String convertToDatabaseColumn(JwtRefreshToken accessToken) {
+            return nonNull(accessToken) ? accessToken.value() : null;
+        }
+
+        @Override
+        public JwtRefreshToken convertToEntityAttribute(String value) {
+            return nonNull(value) ? JwtRefreshToken.of(value) : null;
         }
     }
 

@@ -1,5 +1,7 @@
 package jbst.iam.domain.jwt;
 
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import jbst.foundation.domain.base.Username;

@@ -1,4 +1,4 @@
-package jbst.iam.domain.jwt;
+package jbst.foundation.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

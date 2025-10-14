@@ -1,7 +1,7 @@
 package jbst.iam.domain.dto.responses;
 
 import jbst.iam.domain.identifiers.UserSessionId;
-import jbst.iam.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;

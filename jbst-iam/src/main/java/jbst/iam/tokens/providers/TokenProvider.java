@@ -2,8 +2,8 @@ package jbst.iam.tokens.providers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.iam.domain.jwt.JwtAccessToken;
-import jbst.iam.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.jwt.RequestRefreshToken;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
