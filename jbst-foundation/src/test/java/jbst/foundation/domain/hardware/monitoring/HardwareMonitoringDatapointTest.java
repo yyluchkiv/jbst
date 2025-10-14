@@ -19,7 +19,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
 
     @Override
     protected String getFolder() {
-        return "hardware/monitoring";
+        return "jsons";
     }
 
     @SneakyThrows
