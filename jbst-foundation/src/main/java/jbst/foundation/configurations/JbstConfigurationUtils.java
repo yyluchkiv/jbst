@@ -86,4 +86,14 @@ public class JbstConfigurationUtils {
                 this.userAgentDetailsUtils()
         );
     }
+
+    @Bean
+    JbstHttpUtils httpUtils() {
+        return new JbstHttpUtils(this.jbstProperties);
+    }
+
+    @Bean
+    JbstSecurityUtils securityUtils() {
+        return new JbstSecurityUtils(this.jbstProperties);
+    }
 }
