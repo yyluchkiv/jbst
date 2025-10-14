@@ -4,6 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.essense.AbstractEssenceConstructor;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.iam.tests.stubbers.AbstractMockService;

@@ -1,4 +1,4 @@
-package jbst.iam.crons;
+package jbst.foundation.crons;
 
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.sessions.SessionRegistry;

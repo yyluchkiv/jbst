@@ -1,8 +1,8 @@
-package jbst.iam.events.publishers.events.base;
+package jbst.foundation.events.publishers.events.base;
 
 import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.pubsub.AbstractEventPublisher;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

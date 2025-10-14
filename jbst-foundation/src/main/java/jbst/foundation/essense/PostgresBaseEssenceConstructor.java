@@ -1,13 +1,13 @@
-package jbst.iam.essence;
+package jbst.foundation.essense;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.enums.UserCreationOption;
-import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
-import jbst.foundation.domain.databases.mongo.MongoDbUser;
-import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
+import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
@@ -16,15 +16,15 @@ import java.util.stream.IntStream;
 
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
+public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     // Repositories
-    protected final MongoInvitationsRepository mongoInvitationsRepository;
-    protected final MongoUsersRepository mongoUsersRepository;
+    protected final PostgresInvitationsRepository postgresInvitationsRepository;
+    protected final PostgresUsersRepository postgresUsersRepository;
 
-    public MongoBaseEssenceConstructor(
-            MongoInvitationsRepository invitationsRepository,
-            MongoUsersRepository usersRepository,
+    public PostgresBaseEssenceConstructor(
+            PostgresInvitationsRepository invitationsRepository,
+            PostgresUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
         super(
@@ -32,8 +32,8 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                 usersRepository,
                 jbstProperties
         );
-        this.mongoInvitationsRepository = invitationsRepository;
-        this.mongoUsersRepository = usersRepository;
+        this.postgresInvitationsRepository = invitationsRepository;
+        this.postgresUsersRepository = usersRepository;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
         var dbUsers = defaultUsers.stream().
                 map(defaultUser -> {
                     var username = defaultUser.getUsername();
-                    var user = new MongoDbUser(
+                    var user = new PostgresDbUser(
                             UserCreationOption.STANDARD,
                             username,
                             defaultUser.getPassword(),
@@ -55,7 +55,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                     return user;
                 })
                 .toList();
-        this.mongoUsersRepository.saveAll(dbUsers);
+        this.postgresUsersRepository.saveAll(dbUsers);
         return dbUsers.size();
     }
 
@@ -63,12 +63,12 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
     public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
         var invitations = IntStream.range(0, 10)
                 .mapToObj(i ->
-                        new MongoDbInvitation(
+                        new PostgresDbInvitation(
                                 defaultUser.getUsername(),
                                 authorities
                         )
                 )
                 .toList();
-        this.mongoInvitationsRepository.saveAll(invitations);
+        this.postgresInvitationsRepository.saveAll(invitations);
     }
 }

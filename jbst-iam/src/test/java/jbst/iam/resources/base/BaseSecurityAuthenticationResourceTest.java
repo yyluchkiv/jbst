@@ -29,7 +29,7 @@ import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.sessions.Session;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.foundation.services.BaseUsersService;

@@ -1,4 +1,4 @@
-package jbst.iam.essence;
+package jbst.foundation.essense;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.properties.base.DefaultUser;

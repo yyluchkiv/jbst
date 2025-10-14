@@ -1,4 +1,4 @@
-package jbst.iam.events.publishers.events;
+package jbst.foundation.events.publishers.events;
 
 import jbst.foundation.domain.events.*;
 

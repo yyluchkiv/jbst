@@ -3,6 +3,8 @@ package jbst.iam.essence;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.essense.EssenceConstructor;
+import jbst.foundation.essense.MongoBaseEssenceConstructor;
 import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import lombok.RequiredArgsConstructor;

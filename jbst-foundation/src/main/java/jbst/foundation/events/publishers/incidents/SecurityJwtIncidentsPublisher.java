@@ -1,4 +1,4 @@
-package jbst.iam.events.publishers.incidents;
+package jbst.foundation.events.publishers.incidents;
 
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;

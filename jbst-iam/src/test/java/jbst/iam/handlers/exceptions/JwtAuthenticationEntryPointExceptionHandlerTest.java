@@ -11,7 +11,7 @@ import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
 import jbst.foundation.utils.JbstHttpUtils;
 import jbst.iam.configurations.TestConfigurationHandlers;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

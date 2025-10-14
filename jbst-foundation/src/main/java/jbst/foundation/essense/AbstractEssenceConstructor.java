@@ -1,4 +1,4 @@
-package jbst.iam.essence;
+package jbst.foundation.essense;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;

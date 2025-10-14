@@ -1,4 +1,4 @@
-package jbst.iam.events.subscribers.events;
+package jbst.foundation.events.subscribers.events;
 
 import jbst.foundation.domain.events.*;
 import org.springframework.context.event.EventListener;

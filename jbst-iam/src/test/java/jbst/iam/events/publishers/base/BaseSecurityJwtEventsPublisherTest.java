@@ -1,8 +1,8 @@
 package jbst.iam.events.publishers.base;
 
 import jbst.foundation.domain.events.*;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.iam.events.publishers.events.base.BaseSecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.base.BaseSecurityJwtEventsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

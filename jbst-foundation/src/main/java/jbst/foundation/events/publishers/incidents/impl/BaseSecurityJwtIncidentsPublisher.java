@@ -1,4 +1,4 @@
-package jbst.iam.events.publishers.incidents.impl;
+package jbst.foundation.events.publishers.incidents.impl;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.pubsub.AbstractEventPublisher;
@@ -9,7 +9,7 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

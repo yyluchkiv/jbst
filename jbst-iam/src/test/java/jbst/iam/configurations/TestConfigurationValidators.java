@@ -1,7 +1,7 @@
 package jbst.iam.configurations;
 
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.foundation.repositories.UsersRepository;

@@ -1,4 +1,4 @@
-package jbst.iam.crons;
+package jbst.foundation.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;

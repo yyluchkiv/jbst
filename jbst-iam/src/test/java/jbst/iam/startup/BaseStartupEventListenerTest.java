@@ -10,7 +10,7 @@ import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs
 import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 import jbst.foundation.startup.AbstractServerStartupEventListener;
 import jbst.foundation.startup.BaseStartupEventListener;
-import jbst.iam.essence.AbstractEssenceConstructor;
+import jbst.foundation.essense.AbstractEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -1,4 +1,4 @@
-package jbst.iam.events.subscribers.events.base;
+package jbst.foundation.events.subscribers.events.base;
 
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.events.*;
@@ -12,8 +12,8 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.UserMetadataUtils;
 import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.iam.events.subscribers.events.SecurityJwtEventsSubscriber;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.subscribers.events.SecurityJwtEventsSubscriber;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.UsersEmailsService;

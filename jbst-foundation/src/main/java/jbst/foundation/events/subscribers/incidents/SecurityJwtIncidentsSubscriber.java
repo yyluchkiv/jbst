@@ -1,4 +1,4 @@
-package jbst.iam.events.subscribers.incidents;
+package jbst.foundation.events.subscribers.incidents;
 
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
