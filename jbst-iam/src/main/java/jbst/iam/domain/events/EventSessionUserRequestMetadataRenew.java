@@ -1,7 +1,7 @@
 package jbst.iam.domain.events;
 
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
+import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import org.jetbrains.annotations.NotNull;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.IPAddress;

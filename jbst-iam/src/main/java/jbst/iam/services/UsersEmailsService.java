@@ -1,7 +1,7 @@
 package jbst.iam.services;
 
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.iam.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import org.springframework.scheduling.annotation.Async;
 
 public interface UsersEmailsService {

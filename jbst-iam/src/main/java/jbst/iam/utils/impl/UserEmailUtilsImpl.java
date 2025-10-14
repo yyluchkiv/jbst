@@ -3,7 +3,7 @@ package jbst.iam.utils.impl;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.iam.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
-import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
+import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;

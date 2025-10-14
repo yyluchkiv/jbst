@@ -16,7 +16,7 @@ import jbst.foundation.utils.UserMetadataUtils;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
-import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
+import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.iam.domain.sessions.SessionsExpiredTable;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;

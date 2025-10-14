@@ -1,4 +1,4 @@
-package jbst.iam.domain.functions;
+package jbst.foundation.domain.functions;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;

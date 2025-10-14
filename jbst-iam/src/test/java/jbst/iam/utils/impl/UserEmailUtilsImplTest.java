@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.enums.AccountAccessMethod;
-import jbst.iam.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.RepeatedTest;

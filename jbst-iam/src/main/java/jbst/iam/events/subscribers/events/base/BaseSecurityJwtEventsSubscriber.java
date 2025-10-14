@@ -11,7 +11,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.UserMetadataUtils;
 import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.events.*;
-import jbst.iam.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.subscribers.events.SecurityJwtEventsSubscriber;
 import jbst.iam.services.BaseUsersSessionsService;
