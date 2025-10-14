@@ -25,7 +25,7 @@ import jbst.iam.services.AuthenticationService;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
-import jbst.iam.sessions.SessionRegistry;
+import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

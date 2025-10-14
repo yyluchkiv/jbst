@@ -11,7 +11,7 @@ import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.tokens.facade.TokensProvider;
-import jbst.iam.validators.BaseUsersSessionsRequestsValidator;
+import jbst.foundation.validators.BaseUsersSessionsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;

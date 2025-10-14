@@ -12,6 +12,8 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
+import jbst.foundation.sessions.AbstractSessionRegistry;
+import jbst.foundation.sessions.SessionRegistry;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.UsersSessionsRepository;

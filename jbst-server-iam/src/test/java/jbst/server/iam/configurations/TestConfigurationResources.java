@@ -2,7 +2,7 @@ package jbst.server.iam.configurations;
 
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.JbstEnvUtils;
-import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
+import jbst.foundation.handlers.ResourceExceptionHandler;
 import jbst.server.iam.base.services.UsersService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

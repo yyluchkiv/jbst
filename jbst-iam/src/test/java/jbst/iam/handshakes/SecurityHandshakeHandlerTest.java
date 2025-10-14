@@ -5,6 +5,7 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.handshakes.SecurityHandshakeHandler;
 import jbst.iam.services.TokensService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;

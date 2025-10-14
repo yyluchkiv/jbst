@@ -13,7 +13,7 @@ import jbst.foundation.domain.events.EventRegistration1;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.services.BaseRegistrationService;
-import jbst.iam.validators.BaseRegistrationRequestsValidator;
+import jbst.foundation.validators.BaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

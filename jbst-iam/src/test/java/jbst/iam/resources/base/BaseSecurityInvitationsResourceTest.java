@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.services.BaseInvitationsService;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.validators.BaseInvitationsRequestsValidator;
+import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
 import jbst.foundation.utils.JbstHttpUtils;
 import jbst.iam.configurations.TestConfigurationHandlers;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;

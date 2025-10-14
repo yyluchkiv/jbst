@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.iam.configurations.TestConfigurationHandlers;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

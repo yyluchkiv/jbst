@@ -11,7 +11,7 @@ import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.postgres.PostgresBaseUsersSessionsService;
-import jbst.iam.sessions.PostgresSessionRegistry;
+import jbst.foundation.sessions.PostgresSessionRegistry;
 import jbst.foundation.settings.PostgresJbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @ComponentScan({
         "jbst.iam.services.postgres",
-        "jbst.iam.validators.postgres",
+        "jbst.foundation.validators.postgres",
 })
 @Import({
         JbstConfigurationPostgresRepositories.class

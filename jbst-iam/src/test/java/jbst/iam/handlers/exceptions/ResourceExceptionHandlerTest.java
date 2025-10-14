@@ -1,6 +1,7 @@
 package jbst.iam.handlers.exceptions;
 
 import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.handlers.ResourceExceptionHandler;
 import jbst.iam.configurations.TestConfigurationHandlers;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
-        "jbst.iam.validators.postgres"
+        "jbst.foundation.validators.postgres"
 })
 @Import({
         TestJbstConfigurationPropertiesHardcoded.class

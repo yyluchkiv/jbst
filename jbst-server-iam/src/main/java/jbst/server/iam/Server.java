@@ -5,7 +5,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.essence.AbstractEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.iam.startup.BaseStartupEventListener;
+import jbst.foundation.startup.BaseStartupEventListener;
 import jbst.server.iam.configurations.ConfigurationServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

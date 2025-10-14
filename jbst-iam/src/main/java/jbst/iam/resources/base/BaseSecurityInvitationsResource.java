@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.services.BaseInvitationsService;
-import jbst.iam.validators.BaseInvitationsRequestsValidator;
+import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

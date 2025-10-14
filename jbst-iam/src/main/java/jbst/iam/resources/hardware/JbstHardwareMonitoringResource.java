@@ -7,7 +7,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.websockets.WebsocketsService;
-import jbst.iam.sessions.SessionRegistry;
+import jbst.foundation.sessions.SessionRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

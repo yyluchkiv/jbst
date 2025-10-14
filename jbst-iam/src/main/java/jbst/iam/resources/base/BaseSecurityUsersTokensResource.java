@@ -20,7 +20,7 @@ import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
 import jbst.iam.services.RateLimitsService;
 import jbst.iam.services.UsersEmailsService;
-import jbst.iam.validators.BaseUsersTokensRequestsValidator;
+import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

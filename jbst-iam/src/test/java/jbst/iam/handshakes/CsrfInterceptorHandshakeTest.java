@@ -1,6 +1,7 @@
 package jbst.iam.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.handshakes.CsrfInterceptorHandshake;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

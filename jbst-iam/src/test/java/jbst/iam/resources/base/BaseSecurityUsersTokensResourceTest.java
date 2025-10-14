@@ -14,7 +14,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
 import jbst.iam.services.UsersEmailsService;
-import jbst.iam.validators.BaseUsersTokensRequestsValidator;
+import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

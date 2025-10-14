@@ -14,7 +14,7 @@ import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
-import jbst.iam.sessions.SessionRegistry;
+import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;

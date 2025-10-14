@@ -6,11 +6,11 @@ import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.filters.jwt.JwtTokensFilter;
-import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
-import jbst.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
-import jbst.iam.handshakes.CsrfInterceptorHandshake;
-import jbst.iam.handshakes.SecurityHandshakeHandler;
+import jbst.foundation.filters.jwt.JwtTokensFilter;
+import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
+import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
+import jbst.foundation.handshakes.CsrfInterceptorHandshake;
+import jbst.foundation.handshakes.SecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.iam.resources.hardware",
         "jbst.iam.resources.system",
         "jbst.iam.services.base",
-        "jbst.iam.validators.base"
+        "jbst.foundation.validators.base"
 })
 @Import({
         JbstConfigurationSecurityJwt1.class,
