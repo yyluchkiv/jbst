@@ -2,7 +2,7 @@ package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -40,7 +40,7 @@ class AbstractBaseUsersTokensServiceTest {
                         UserEmailConfirmException.tokenNotFound()
                 ),
                 Arguments.of(
-                        UserToken.random(),
+                        JbstUserToken.random(),
                         null
                 )
         );
@@ -52,7 +52,7 @@ class AbstractBaseUsersTokensServiceTest {
                         (Object) null
                 ),
                 Arguments.of(
-                        UserToken.random()
+                        JbstUserToken.random()
                 )
         );
     }
@@ -105,7 +105,7 @@ class AbstractBaseUsersTokensServiceTest {
     @ParameterizedTest
     @MethodSource("confirmEmailTest")
     void confirmEmailTest(
-            UserToken userToken,
+            JbstUserToken userToken,
             UserEmailConfirmException exception
     ) {
         // Arrange
@@ -132,7 +132,7 @@ class AbstractBaseUsersTokensServiceTest {
     void saveAsTest() {
         // Arrange
         var request = RequestUserToken.hardcoded();
-        var userToken = UserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.hardcodedEmailConfirmation();
         when(this.usersTokensRepository.saveAs(request)).thenReturn(userToken);
 
         // Act
@@ -145,11 +145,11 @@ class AbstractBaseUsersTokensServiceTest {
 
     @ParameterizedTest
     @MethodSource("getOrCreateTest")
-    void getOrCreateTest(UserToken foundUserToken) {
+    void getOrCreateTest(JbstUserToken foundUserToken) {
         // Arrange
         var request = RequestUserToken.hardcoded();
         when(this.usersTokensRepository.findByUserTokenValidOrNull(request)).thenReturn(foundUserToken);
-        var savedUserToken = UserToken.random();
+        var savedUserToken = JbstUserToken.random();
         when(this.usersTokensRepository.saveAs(request)).thenReturn(savedUserToken);
 
         // Arrange

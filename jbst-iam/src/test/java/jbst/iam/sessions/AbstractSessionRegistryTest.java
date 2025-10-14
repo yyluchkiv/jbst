@@ -1,6 +1,6 @@
 package jbst.iam.sessions;
 
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.iam.domain.events.EventAuthenticationLogin;
 import jbst.iam.domain.events.EventAuthenticationLogout;
@@ -140,11 +140,11 @@ class AbstractSessionRegistryTest {
         var session3 = new Session(Username.of("username3"), JwtAccessToken.random(), JwtRefreshToken.random());
         var session4 = new Session(Username.of("username4"), JwtAccessToken.random(), JwtRefreshToken.random());
         var rndSession = new Session(Username.random(), JwtAccessToken.random(), JwtRefreshToken.random());
-        var dbUserSession1 = entity(UserSession.class);
-        var dbUserSession2 = entity(UserSession.class);
-        var dbUserSession3 = entity(UserSession.class);
-        var dbUserSession4 = entity(UserSession.class);
-        var rndDbUserSession = entity(UserSession.class);
+        var dbUserSession1 = entity(JbstUserSession.class);
+        var dbUserSession2 = entity(JbstUserSession.class);
+        var dbUserSession3 = entity(JbstUserSession.class);
+        var dbUserSession4 = entity(JbstUserSession.class);
+        var rndDbUserSession = entity(JbstUserSession.class);
         when(this.usersSessionsRepository.isPresent(session1.accessToken())).thenReturn(present(dbUserSession1));
         when(this.usersSessionsRepository.isPresent(session2.accessToken())).thenReturn(present(dbUserSession2));
         when(this.usersSessionsRepository.isPresent(session3.accessToken())).thenReturn(present(dbUserSession3));
@@ -251,7 +251,7 @@ class AbstractSessionRegistryTest {
         // Arrange
         var accessToken = JwtAccessToken.random();
         this.authenticateHardcoded(accessToken);
-        var dbUserSession = entity(UserSession.class);
+        var dbUserSession = entity(JbstUserSession.class);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(dbUserSession));
 
         // Act
@@ -304,9 +304,9 @@ class AbstractSessionRegistryTest {
         sessions.add(session2);
         sessions.add(session3);
         setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", sessions, 1);
-        var dbUserSession1 = entity(UserSession.class);
-        var dbUserSession2 = entity(UserSession.class);
-        var dbUserSession3 = entity(UserSession.class);
+        var dbUserSession1 = entity(JbstUserSession.class);
+        var dbUserSession2 = entity(JbstUserSession.class);
+        var dbUserSession3 = entity(JbstUserSession.class);
         var sessionsExpiredTable = new SessionsExpiredTable(
                 List.of(
                         new Tuple3<>(Username.hardcoded(), JwtRefreshToken.random(), UserRequestMetadata.random()),

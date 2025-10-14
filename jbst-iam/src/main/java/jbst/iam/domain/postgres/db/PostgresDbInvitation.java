@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.PostgresConverters;
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
@@ -49,10 +49,10 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     public PostgresDbInvitation(Username owner, Set<SimpleGrantedAuthority> authorities) {
         this.owner = owner;
         this.authorities = authorities;
-        this.code = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
+        this.code = randomStringLetterOrNumbersOnly(JbstInvitation.DEFAULT_INVITATION_CODE_LENGTH);
     }
 
-    public PostgresDbInvitation(Invitation invitation) {
+    public PostgresDbInvitation(JbstInvitation invitation) {
         this.id = nonNull(invitation.id()) ? invitation.id().value() : null;
         this.owner = invitation.owner();
         this.authorities = invitation.authorities();
@@ -123,8 +123,8 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
 
     @JsonIgnore
     @Transient
-    public Invitation invitation() {
-        return new Invitation(
+    public JbstInvitation invitation() {
+        return new JbstInvitation(
                 this.invitationId(),
                 this.owner,
                 this.authorities,

@@ -1,7 +1,7 @@
 package jbst.iam.repositories.postgres;
 
 import jbst.foundation.domain.base.Email;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
@@ -18,12 +18,12 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default UserToken findByValueAsAny(String value) {
+    default JbstUserToken findByValueAsAny(String value) {
         var entity = this.findByValue(value);
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
-    default UserToken findByUserTokenValidOrNull(RequestUserToken request) {
+    default JbstUserToken findByUserTokenValidOrNull(RequestUserToken request) {
         var entity = this.findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
                 request.email(),
                 request.type(),
@@ -42,12 +42,12 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
         this.deleteAllByUsedIsTrue();
     }
 
-    default TokenId saveAs(UserToken token) {
+    default TokenId saveAs(JbstUserToken token) {
         var entity = this.save(new PostgresDbUserToken(token));
         return entity.tokenId();
     }
 
-    default UserToken saveAs(RequestUserToken request) {
+    default JbstUserToken saveAs(RequestUserToken request) {
         var entity = this.save(
                 new PostgresDbUserToken(
                         request

@@ -2,7 +2,7 @@ package jbst.iam.settings;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.iam.domain.db.JbstSettings;
+import jbst.foundation.domain.databases.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.iam.repositories.JbstSettingsRepository;

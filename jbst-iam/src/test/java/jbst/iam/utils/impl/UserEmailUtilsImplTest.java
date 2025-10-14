@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.utils.UserEmailUtils;
@@ -108,7 +108,7 @@ class UserEmailUtilsImplTest {
     @Test
     void getMagicLinkHTML() {
         // Arrange
-        var userToken = UserToken.hardcodedMagicLink();
+        var userToken = JbstUserToken.hardcodedMagicLink();
 
         // Act
         var emailHTML = this.componentUnderTest.getMagicLinkHTML(userToken);
@@ -128,7 +128,7 @@ class UserEmailUtilsImplTest {
     @Test
     void getEmailConfirmationHTML() {
         // Arrange
-        var userToken = UserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.hardcodedEmailConfirmation();
 
         // Act
         var emailHTML = this.componentUnderTest.getEmailConfirmationHTML(userToken);
@@ -148,7 +148,7 @@ class UserEmailUtilsImplTest {
     @Test
     void getPasswordResetHTML() {
         // Arrange
-        var userToken = UserToken.hardcodedPasswordReset();
+        var userToken = JbstUserToken.hardcodedPasswordReset();
 
         // Act
         var emailHTML = this.componentUnderTest.getPasswordResetHTML(userToken);

@@ -1,7 +1,7 @@
 package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -33,12 +33,12 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
     }
 
     @Override
-    public UserToken saveAs(RequestUserToken request) {
+    public JbstUserToken saveAs(RequestUserToken request) {
         return this.usersTokensRepository.saveAs(request);
     }
 
     @Override
-    public UserToken getOrCreate(RequestUserToken request) {
+    public JbstUserToken getOrCreate(RequestUserToken request) {
         var token = this.usersTokensRepository.findByUserTokenValidOrNull(request);
         if (nonNull(token)) {
             return token;

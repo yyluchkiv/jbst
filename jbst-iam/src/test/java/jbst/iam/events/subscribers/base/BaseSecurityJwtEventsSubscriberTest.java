@@ -12,8 +12,8 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.UserMetadataUtils;
-import jbst.iam.domain.db.UserSession;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.events.*;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
@@ -65,7 +65,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                         new EventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 Email.random(),
-                                entity(UserSession.class),
+                                entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
                                 true,
@@ -77,7 +77,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                         new EventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
-                                entity(UserSession.class),
+                                entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
                                 true,
@@ -89,7 +89,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                         new EventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
-                                entity(UserSession.class),
+                                entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
                                 true,
@@ -106,7 +106,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                         new EventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 Email.random(),
-                                entity(UserSession.class),
+                                entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
                                 false,
@@ -118,7 +118,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                         new EventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
-                                entity(UserSession.class),
+                                entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
                                 false,
@@ -130,7 +130,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                         new EventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
-                                entity(UserSession.class),
+                                entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
                                 false,
@@ -308,7 +308,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Arrange
         var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
         var event = new EventRegistration0(requestUserRegistration0);
-        var userToken = UserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.hardcodedEmailConfirmation();
         when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
         if (nonNull(ex)) {
             doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(userToken);
@@ -390,7 +390,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         var event = new EventSessionUserRequestMetadataAdd(
                 Username.random(),
                 Email.random(),
-                entity(UserSession.class),
+                entity(JbstUserSession.class),
                 IPAddress.random(),
                 mock(UserAgentHeader.class),
                 false,

@@ -9,11 +9,11 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreate
 
 // WARNING: used in postgre as jsonb → use @Transient + @JsonIgnore
 @Data
-public class UserEmailDetails {
+public class JbstUserEmailDetails {
     private final boolean required;
     private final boolean confirmed;
 
-    private UserEmailDetails(
+    private JbstUserEmailDetails(
             boolean required,
             boolean confirmed
     ) {
@@ -21,24 +21,24 @@ public class UserEmailDetails {
         this.confirmed = confirmed;
     }
 
-    public static UserEmailDetails unnecessary() {
-        return new UserEmailDetails(false, false);
+    public static JbstUserEmailDetails unnecessary() {
+        return new JbstUserEmailDetails(false, false);
     }
 
-    public static UserEmailDetails required() {
-        return new UserEmailDetails(true, false);
+    public static JbstUserEmailDetails required() {
+        return new JbstUserEmailDetails(true, false);
     }
 
-    public static UserEmailDetails confirmed() {
-        return new UserEmailDetails(true, true);
+    public static JbstUserEmailDetails confirmed() {
+        return new JbstUserEmailDetails(true, true);
     }
 
-    public static UserEmailDetails random() {
+    public static JbstUserEmailDetails random() {
         var i = randomIntegerGreaterThanZeroByBounds(1, 2);
         return switch (i) {
-            case 1 -> UserEmailDetails.unnecessary();
-            case 2 -> UserEmailDetails.required();
-            default -> UserEmailDetails.confirmed();
+            case 1 -> JbstUserEmailDetails.unnecessary();
+            case 2 -> JbstUserEmailDetails.required();
+            default -> JbstUserEmailDetails.confirmed();
         };
     }
 

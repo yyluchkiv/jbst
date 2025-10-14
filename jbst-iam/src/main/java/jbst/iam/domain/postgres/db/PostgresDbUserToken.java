@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
@@ -77,7 +77,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
         );
     }
 
-    public PostgresDbUserToken(UserToken token) {
+    public PostgresDbUserToken(JbstUserToken token) {
         this(
                 token.email(),
                 token.value(),
@@ -158,8 +158,8 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     @JsonIgnore
     @Transient
-    public UserToken asUserToken() {
-        return new UserToken(
+    public JbstUserToken asUserToken() {
+        return new JbstUserToken(
                 new TokenId(this.id),
                 this.email,
                 this.value,

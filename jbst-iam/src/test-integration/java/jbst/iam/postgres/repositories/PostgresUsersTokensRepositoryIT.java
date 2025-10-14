@@ -3,7 +3,7 @@ package jbst.iam.postgres.repositories;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.iam.domain.postgres.db.PostgresDbUserToken;
@@ -127,7 +127,7 @@ class PostgresUsersTokensRepositoryIT extends TestsJbstConfigurationPostgresRepo
         assertThat(this.usersTokensRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentTokenId = this.usersTokensRepository.saveAs(UserToken.randomNotPersisted());
+        var existentTokenId = this.usersTokensRepository.saveAs(JbstUserToken.randomNotPersisted());
         assertThat(this.usersTokensRepository.count()).isEqualTo(7);
         var notExistentTokenId = entity(TokenId.class);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();

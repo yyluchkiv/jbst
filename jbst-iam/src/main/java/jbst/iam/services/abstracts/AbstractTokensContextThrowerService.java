@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.TokensContextThrowerService;
 import lombok.AccessLevel;
@@ -72,7 +72,7 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     }
 
     @Override
-    public Tuple2<JwtUser, UserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws RefreshTokenDbNotFoundException {
+    public Tuple2<JwtUser, JbstUserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws RefreshTokenDbNotFoundException {
         var username = validatedClaims.username();
         var databasePresence = this.usersSessionsRepository.isPresent(refreshToken);
         if (!databasePresence.present()) {

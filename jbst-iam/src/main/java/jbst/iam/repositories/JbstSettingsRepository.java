@@ -1,7 +1,7 @@
 package jbst.iam.repositories;
 
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.db.JbstSettings;
+import jbst.foundation.domain.databases.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
 
 public interface JbstSettingsRepository {

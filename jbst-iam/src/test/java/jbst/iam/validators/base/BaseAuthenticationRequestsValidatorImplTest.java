@@ -2,7 +2,7 @@ package jbst.iam.validators.base;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
@@ -78,17 +78,17 @@ class BaseAuthenticationRequestsValidatorImplTest {
                 ),
                 Arguments.of(
                         RequestMagicLinkToken.hardcoded(),
-                        UserToken.hardcodedEmailConfirmation(),
+                        JbstUserToken.hardcodedEmailConfirmation(),
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
                         RequestMagicLinkToken.hardcoded(),
-                        UserToken.hardcodedPasswordReset(),
+                        JbstUserToken.hardcodedPasswordReset(),
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
                         RequestMagicLinkToken.hardcoded(),
-                        UserToken.hardcodedMagicLink(),
+                        JbstUserToken.hardcodedMagicLink(),
                         null
                 )
         );
@@ -131,7 +131,7 @@ class BaseAuthenticationRequestsValidatorImplTest {
 
     @ParameterizedTest
     @MethodSource("validateLoginMagicLinkTest")
-    void validateLoginMagicLinkTest(RequestMagicLinkToken request, UserToken userToken, String exceptionMessage) {
+    void validateLoginMagicLinkTest(RequestMagicLinkToken request, JbstUserToken userToken, String exceptionMessage) {
         // Arrange
         when(this.usersTokensRepository.findByValueAsAny(request.value())).thenReturn(userToken);
 

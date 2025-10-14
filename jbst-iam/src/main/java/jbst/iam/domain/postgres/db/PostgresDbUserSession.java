@@ -7,7 +7,7 @@ import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
@@ -17,8 +17,8 @@ import lombok.*;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-import static jbst.iam.domain.db.UserSession.ofNotPersisted;
-import static jbst.iam.domain.db.UserSession.ofPersisted;
+import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
+import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok
@@ -55,7 +55,7 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     @Column(name = "metadata_renew_manually", nullable = false)
     private boolean metadataRenewManually;
 
-    public PostgresDbUserSession(UserSession session) {
+    public PostgresDbUserSession(JbstUserSession session) {
         if (session.persisted()) {
             this.id = session.id().value();
         }
@@ -68,15 +68,15 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     }
 
     public static PostgresDbUserSession random(String owner) {
-        return new PostgresDbUserSession(UserSession.random(owner));
+        return new PostgresDbUserSession(JbstUserSession.random(owner));
     }
 
     public static PostgresDbUserSession random(Username owner, String accessToken) {
-        return new PostgresDbUserSession(UserSession.random(owner, accessToken));
+        return new PostgresDbUserSession(JbstUserSession.random(owner, accessToken));
     }
 
     public static PostgresDbUserSession random(String owner, String accessToken, String refreshToken) {
-        return new PostgresDbUserSession(UserSession.random(owner, accessToken, refreshToken));
+        return new PostgresDbUserSession(JbstUserSession.random(owner, accessToken, refreshToken));
     }
 
     public static List<PostgresDbUserSession> dummies1() {
@@ -127,7 +127,7 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     @JsonIgnore
     @Transient
-    public UserSession userSession() {
+    public JbstUserSession userSession() {
         if (this.isNew()) {
             return ofNotPersisted(this.username, this.accessToken, this.refreshToken, this.metadata);
         } else {

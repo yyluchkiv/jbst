@@ -33,7 +33,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static jbst.foundation.utilities.random.RandomUtility.validClaims;
-import static jbst.iam.domain.db.UserSession.randomPersistedSession;
+import static jbst.foundation.domain.databases.JbstUserSession.randomPersistedSession;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

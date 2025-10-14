@@ -1,7 +1,7 @@
 package jbst.iam.repositories.mongodb;
 
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.db.JbstSettings;
+import jbst.foundation.domain.databases.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
 import jbst.iam.domain.mongodb.MongoDbJbstSettings;
 import jbst.iam.repositories.JbstSettingsRepository;

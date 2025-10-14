@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.UserCreationOption;
@@ -27,6 +27,6 @@ public interface UsersRepository {
     void resetPassword(Email email, Password password);
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
-    UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation);
+    UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation);
     JwtUser saveAsOrThrow(UserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws UsernameAlreadyExistException;
 }

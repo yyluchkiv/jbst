@@ -2,13 +2,13 @@ package jbst.iam.validators.abstracts;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.configurations.TestConfigurationValidators;
-import jbst.foundation.domain.databases.UserEmailDetails;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
@@ -48,27 +48,27 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     private static Stream<Arguments> validateExecuteConfirmEmailTest() {
         return Stream.of(
                 Arguments.of(
-                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.required()),
+                        JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.required()),
                         null
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(null, UserEmailDetails.unnecessary()),
+                        JwtUser.hardcoded(null, JbstUserEmailDetails.unnecessary()),
                         new IllegalArgumentException("User email already confirmed")
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(null, UserEmailDetails.confirmed()),
+                        JwtUser.hardcoded(null, JbstUserEmailDetails.confirmed()),
                         new IllegalArgumentException("User email already confirmed")
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(null, UserEmailDetails.required()),
+                        JwtUser.hardcoded(null, JbstUserEmailDetails.required()),
                         new IllegalArgumentException("User email is missing")
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.unnecessary()),
+                        JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.unnecessary()),
                         new IllegalArgumentException("User email already confirmed")
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.confirmed()),
+                        JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.confirmed()),
                         new IllegalArgumentException("User email already confirmed")
                 )
         );
@@ -84,7 +84,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.notFound()
                 ),
                 Arguments.of(
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -95,7 +95,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.used()
                 ),
                 Arguments.of(
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -106,7 +106,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.expired()
                 ),
                 Arguments.of(
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -117,7 +117,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.invalidType()
                 ),
                 Arguments.of(
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -137,27 +137,27 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         JbstPasswordResetException.userNotFound()
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.unnecessary()),
+                        JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.unnecessary()),
                         null
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.required()),
+                        JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.required()),
                         JbstPasswordResetException.emailNotConfirmed()
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.confirmed()),
+                        JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.confirmed()),
                         null
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(null, UserEmailDetails.unnecessary()),
+                        JwtUser.hardcoded(null, JbstUserEmailDetails.unnecessary()),
                         JbstPasswordResetException.emailMissing()
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(null, UserEmailDetails.required()),
+                        JwtUser.hardcoded(null, JbstUserEmailDetails.required()),
                         JbstPasswordResetException.emailMissing()
                 ),
                 Arguments.of(
-                        JwtUser.hardcoded(null, UserEmailDetails.confirmed()),
+                        JwtUser.hardcoded(null, JbstUserEmailDetails.confirmed()),
                         JbstPasswordResetException.emailMissing()
                 )
         );
@@ -180,12 +180,12 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 Password.of("e4f937b04d9f44519ed58346b9aa67ff")
 
                         ),
-                        UserToken.hardcodedPasswordReset(),
+                        JbstUserToken.hardcodedPasswordReset(),
                         new IllegalArgumentException("Passwords must be same")
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -197,7 +197,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -209,7 +209,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -221,7 +221,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
-                        new UserToken(
+                        new JbstUserToken(
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
@@ -287,7 +287,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     @ParameterizedTest
     @MethodSource("validateEmailConfirmationTokenTest")
     void validateEmailConfirmationTokenTest(
-            UserToken userToken,
+            JbstUserToken userToken,
             UserTokenValidationException expected
     ) {
         // Arrange
@@ -327,7 +327,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     @MethodSource("validatePasswordResetTest")
     void validatePasswordResetTest(
             RequestUserPasswordReset request,
-            UserToken userToken,
+            JbstUserToken userToken,
             Exception expected
     ) {
         // Arrange

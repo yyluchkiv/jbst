@@ -12,7 +12,7 @@ import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.services.emails.utilities.EmailUtility;
 import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import jbst.foundation.utilities.concurrent.SleepUtility;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.services.UsersEmailsService;
@@ -155,7 +155,7 @@ class BaseUsersEmailsServiceConsoleTest {
     void executeMagicLink() {
         // Act
         this.componentUnderTest.executeMagicLink(
-                UserToken.hardcodedMagicLink()
+                JbstUserToken.hardcodedMagicLink()
         );
 
         // Assert
@@ -167,7 +167,7 @@ class BaseUsersEmailsServiceConsoleTest {
     void executeEmailConfirmation() {
         // Act
         this.componentUnderTest.executeEmailConfirmation(
-                UserToken.hardcodedEmailConfirmation()
+                JbstUserToken.hardcodedEmailConfirmation()
         );
 
         // Assert
@@ -179,7 +179,7 @@ class BaseUsersEmailsServiceConsoleTest {
     void executePasswordReset() {
         // Act
         this.componentUnderTest.executePasswordReset(
-                UserToken.hardcodedPasswordReset()
+                JbstUserToken.hardcodedPasswordReset()
         );
 
         // Assert

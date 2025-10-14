@@ -1,4 +1,4 @@
-package jbst.iam.domain.db;
+package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.enums.UserTokenType;
@@ -9,11 +9,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.foundation.domain.enums.UserTokenType.*;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserTokenTest {
+class JbstUserTokenTest {
 
     private static Stream<Arguments> isExpiredCases() {
         var currentTimestamp = getCurrentTimestamp();
@@ -52,7 +52,7 @@ class UserTokenTest {
     @MethodSource("isExpiredCases")
     void isExpiredTest(long expiryTimestamp, boolean expected) {
         // Arrange
-        var userToken = new UserToken(
+        var userToken = new JbstUserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "test-token-value",
@@ -69,7 +69,7 @@ class UserTokenTest {
     @MethodSource("isInvalidCases")
     void isInvalidTest(UserTokenType tokenType, UserTokenType expectedType, boolean used, long expiryTimestamp, boolean expected) {
         // Arrange
-        var userToken = new UserToken(
+        var userToken = new JbstUserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "test-token-value",

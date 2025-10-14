@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
@@ -64,7 +64,7 @@ public class MongoDbUserToken {
         );
     }
 
-    public MongoDbUserToken(UserToken token) {
+    public MongoDbUserToken(JbstUserToken token) {
         this(
                 token.email(),
                 token.value(),
@@ -145,8 +145,8 @@ public class MongoDbUserToken {
 
     @JsonIgnore
     @Transient
-    public UserToken asUserToken() {
-        return new UserToken(
+    public JbstUserToken asUserToken() {
+        return new JbstUserToken(
                 new TokenId(this.id),
                 this.email,
                 this.value,

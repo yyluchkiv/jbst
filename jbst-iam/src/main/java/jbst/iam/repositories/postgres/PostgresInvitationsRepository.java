@@ -2,7 +2,7 @@ package jbst.iam.repositories.postgres;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
+import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, InvitationsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<Invitation> isPresent(InvitationId invitationId) {
+    default TuplePresence<JbstInvitation> isPresent(InvitationId invitationId) {
         return this.findById(invitationId.value())
                 .map(entity -> present(entity.invitation()))
                 .orElseGet(TuplePresence::absent);
@@ -37,7 +37,7 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
                 .collect(Collectors.toList());
     }
 
-    default Invitation findByCodeAsAny(String code) {
+    default JbstInvitation findByCodeAsAny(String code) {
         var invitation = this.findByCode(code);
         return nonNull(invitation) ? invitation.invitation() : null;
     }
@@ -57,7 +57,7 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
         }
     }
 
-    default InvitationId saveAs(Invitation invitation) {
+    default InvitationId saveAs(JbstInvitation invitation) {
         var entity = this.save(new PostgresDbInvitation(invitation));
         return entity.invitationId();
     }

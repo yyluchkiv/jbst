@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.db.JbstSettings;
+import jbst.foundation.domain.databases.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import lombok.RequiredArgsConstructor;

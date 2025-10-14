@@ -4,7 +4,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
@@ -88,7 +88,7 @@ class BaseUsersEmailsServiceTest {
     void executeMagicLink() {
         // Arrange
         var emailHTML = EmailHTML.random();
-        var userToken = UserToken.hardcodedMagicLink();
+        var userToken = JbstUserToken.hardcodedMagicLink();
         when(this.userEmailUtils.getMagicLinkHTML(userToken)).thenReturn(emailHTML);
 
         // Act
@@ -102,7 +102,7 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executeEmailConfirmation() {
         // Arrange
-        var userToken = UserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.hardcodedEmailConfirmation();
         when(this.userEmailUtils.getEmailConfirmationHTML(userToken)).thenReturn(EmailHTML.hardcoded());
 
         // Act
@@ -116,7 +116,7 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executePasswordReset() {
         // Arrange
-        var userToken = UserToken.hardcodedPasswordReset();
+        var userToken = JbstUserToken.hardcodedPasswordReset();
         when(this.userEmailUtils.getPasswordResetHTML(userToken)).thenReturn(EmailHTML.hardcoded());
 
         // Act

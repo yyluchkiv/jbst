@@ -3,10 +3,10 @@ package jbst.iam.repositories.mongodb;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.iam.domain.db.Invitation;
-import jbst.foundation.domain.databases.UserEmailDetails;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.UserCreationOption;
@@ -62,7 +62,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
     default void confirmEmail(Email email) {
         var user = this.findByEmail(email);
         if (nonNull(user)) {
-            user.setEmailDetails(UserEmailDetails.confirmed());
+            user.setEmailDetails(JbstUserEmailDetails.confirmed());
             this.save(user);
         }
     }
@@ -89,7 +89,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return entity.userId();
     }
 
-    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation) {
+    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation) {
         var user = new MongoDbUser(
                 requestUserRegistration1,
                 password,
@@ -113,7 +113,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
                             new HashSet<>(),
                             email,
                             false,
-                            UserEmailDetails.unnecessary()
+                            JbstUserEmailDetails.unnecessary()
                     )
             ).asJwtUser();
         }

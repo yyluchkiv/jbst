@@ -2,7 +2,7 @@ package jbst.iam.utils.impl;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +70,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public EmailHTML getMagicLinkHTML(@NotNull UserToken userToken) {
+    public EmailHTML getMagicLinkHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Magic Link"),
@@ -88,7 +88,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public EmailHTML getEmailConfirmationHTML(@NotNull UserToken userToken) {
+    public EmailHTML getEmailConfirmationHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Email Confirmation"),
@@ -106,7 +106,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public EmailHTML getPasswordResetHTML(@NotNull UserToken userToken) {
+    public EmailHTML getPasswordResetHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Password Reset"),

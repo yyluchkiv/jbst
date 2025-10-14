@@ -1,6 +1,6 @@
 package jbst.iam.repositories.mongodb;
 
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
@@ -28,25 +28,25 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<UserSession> isPresent(UserSessionId sessionId, Username username) {
+    default TuplePresence<JbstUserSession> isPresent(UserSessionId sessionId, Username username) {
         return this.findByIdAndUsername(sessionId.value(), username)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<UserSession> isPresent(UserSessionId sessionId) {
+    default TuplePresence<JbstUserSession> isPresent(UserSessionId sessionId) {
         return this.findById(sessionId.value())
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<UserSession> isPresent(JwtAccessToken accessToken) {
+    default TuplePresence<JbstUserSession> isPresent(JwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<UserSession> isPresent(JwtRefreshToken refreshToken) {
+    default TuplePresence<JbstUserSession> isPresent(JwtRefreshToken refreshToken) {
         return this.findByRefreshToken(refreshToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
@@ -80,7 +80,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return new ResponseSuperadminSessionsTable(activeSessions, inactiveSessions);
     }
 
-    default List<UserSession> findByUsernameInAsAny(Set<Username> usernames) {
+    default List<JbstUserSession> findByUsernameInAsAny(Set<Username> usernames) {
         return this.findByUsernameIn(usernames).stream()
                 .map(MongoDbUserSession::userSession)
                 .collect(Collectors.toList());
@@ -90,7 +90,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.setMetadataRenewCron(true);
     }
 
-    default UserSession enableMetadataRenewManually(UserSessionId sessionId) {
+    default JbstUserSession enableMetadataRenewManually(UserSessionId sessionId) {
         this.setMetadataRenewManually(sessionId.value(), true);
         return this.isPresent(sessionId).value();
     }
@@ -111,7 +111,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.deleteExceptToken(requestAccessToken.getJwtAccessToken());
     }
 
-    default UserSession saveAs(UserSession userSession) {
+    default JbstUserSession saveAs(JbstUserSession userSession) {
         var entity = this.save(new MongoDbUserSession(userSession));
         return entity.userSession();
     }

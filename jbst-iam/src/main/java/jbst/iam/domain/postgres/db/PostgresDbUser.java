@@ -9,9 +9,9 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.PostgresConverters;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.enums.UserCreationOption;
-import jbst.iam.domain.db.Invitation;
-import jbst.foundation.domain.databases.UserEmailDetails;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.ids.UserId;
@@ -80,7 +80,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     @Type(JsonBinaryType.class)
     @Column(name = "email_details", nullable = false)
-    private UserEmailDetails emailDetails;
+    private JbstUserEmailDetails emailDetails;
 
     @Convert(converter = PostgresConverters.MapStringsObjectsConverter.class)
     @Column(length = 65535)
@@ -94,7 +94,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull Set<SimpleGrantedAuthority> authorities,
             @Nullable Email email,
             boolean passwordChangeRequired,
-            @NotNull UserEmailDetails emailDetails
+            @NotNull JbstUserEmailDetails emailDetails
     ) {
         this.creationOption = creationOption;
         this.username = username;
@@ -119,14 +119,14 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 new HashSet<>(),
                 requestUserRegistration0.email(),
                 false,
-                UserEmailDetails.required()
+                JbstUserEmailDetails.required()
         );
     }
 
     public PostgresDbUser(
             @NotNull RequestUserRegistration1 requestUserRegistration1,
             @NotNull Password password,
-            @NotNull Invitation invitation
+            @NotNull JbstInvitation invitation
     ) {
         this(
                 UserCreationOption.STANDARD,
@@ -136,7 +136,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 invitation.authorities(),
                 null,
                 false,
-                UserEmailDetails.unnecessary()
+                JbstUserEmailDetails.unnecessary()
         );
     }
 
@@ -163,7 +163,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 getSimpleGrantedAuthorities(authorities),
                 Email.of(username + "@" + JbstConstants.Domains.HARDCODED),
                 randomBoolean(),
-                UserEmailDetails.random()
+                JbstUserEmailDetails.random()
         );
         user.setName(capitalize(username) + " " + capitalize(username));
         user.setAttributes(

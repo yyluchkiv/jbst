@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.repositories.UsersSessionsRepository;
@@ -74,7 +74,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     }
 
     @Override
-    public UserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+    public JbstUserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         return this.usersSessionsRepository.isPresent(JwtAccessToken.of(cookie.value())).value();
     }

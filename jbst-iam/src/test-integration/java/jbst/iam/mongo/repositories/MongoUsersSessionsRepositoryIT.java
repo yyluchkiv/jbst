@@ -1,7 +1,7 @@
 package jbst.iam.mongo.repositories;
 
 import jbst.iam.configurations.JbstConfigurationMongoRepositories;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
@@ -226,7 +226,7 @@ class MongoUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoReposito
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
 
         // Act-Assert-2
-        var existentSessionId = this.usersSessionsRepository.saveAs(entity(UserSession.class)).id();
+        var existentSessionId = this.usersSessionsRepository.saveAs(entity(JbstUserSession.class)).id();
         assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
         var notExistentSessionId = entity(UserSessionId.class);
         assertThat(this.usersSessionsRepository.isPresent(existentSessionId).present()).isTrue();

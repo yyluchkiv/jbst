@@ -1,7 +1,7 @@
 package jbst.iam.assistants.current;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
@@ -13,6 +13,6 @@ public interface CurrentSessionAssistant {
     Username getCurrentUsername();
     JwtUser getCurrentJwtUser();
     CurrentClientUser getCurrentClientUser();
-    UserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException;
+    JbstUserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException;
     ResponseUserSessionsTable getCurrentUserDbSessionsTable(RequestAccessToken requestAccessToken);
 }

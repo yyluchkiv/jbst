@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.repositories.UsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -205,7 +205,7 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var accessToken = JwtAccessToken.random();
         var validatedClaims = valid(accessToken, validClaims());
-        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(entity(UserSession.class)));
+        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(entity(JbstUserSession.class)));
 
         // Act
         this.componentUnderTest.verifyDbPresenceOrThrow(accessToken, validatedClaims);
@@ -237,7 +237,7 @@ class AbstractTokensContextThrowerServiceTest {
         var refreshToken = JwtRefreshToken.random();
         var validatedClaims = valid(refreshToken, validClaims());
         var user = entity(JwtUser.class);
-        var session = entity(UserSession.class);
+        var session = entity(JbstUserSession.class);
         when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.username().value())).thenReturn(user);
         when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.present(session));
 

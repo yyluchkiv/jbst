@@ -1,7 +1,7 @@
 package jbst.iam.validators.abstracts;
 
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.events.EventRegistration0Failure;
@@ -202,7 +202,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     void validateRegistrationRequest1InvitationAlreadyUsedTest() {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
-        var invitation = Invitation.random();
+        var invitation = JbstInvitation.random();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
         when(this.invitationsRepository.findByCodeAsAny(request.code())).thenReturn(invitation);
 
@@ -274,7 +274,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
-        when(this.invitationsRepository.findByCodeAsAny(request.code())).thenReturn(Invitation.randomNoInvited());
+        when(this.invitationsRepository.findByCodeAsAny(request.code())).thenReturn(JbstInvitation.randomNoInvited());
 
         // Act
         this.componentUnderTest.validateRegistrationRequest1(request);

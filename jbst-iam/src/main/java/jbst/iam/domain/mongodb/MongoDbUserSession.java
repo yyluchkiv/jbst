@@ -1,7 +1,7 @@
 package jbst.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -17,8 +17,8 @@ import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import java.util.List;
 
 import static java.util.Objects.isNull;
-import static jbst.iam.domain.db.UserSession.ofNotPersisted;
-import static jbst.iam.domain.db.UserSession.ofPersisted;
+import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
+import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
@@ -43,7 +43,7 @@ public class MongoDbUserSession {
     private boolean metadataRenewCron;
     private boolean metadataRenewManually;
 
-    public MongoDbUserSession(UserSession session) {
+    public MongoDbUserSession(JbstUserSession session) {
         if (session.persisted()) {
             this.id = session.id().value();
         }
@@ -59,15 +59,15 @@ public class MongoDbUserSession {
     }
 
     public static MongoDbUserSession random(String owner) {
-        return new MongoDbUserSession(UserSession.random(owner));
+        return new MongoDbUserSession(JbstUserSession.random(owner));
     }
 
     public static MongoDbUserSession random(Username owner, String accessToken) {
-        return new MongoDbUserSession(UserSession.random(owner, accessToken));
+        return new MongoDbUserSession(JbstUserSession.random(owner, accessToken));
     }
 
     public static MongoDbUserSession random(String owner, String accessToken, String refreshToken) {
-        return new MongoDbUserSession(UserSession.random(owner, accessToken, refreshToken));
+        return new MongoDbUserSession(JbstUserSession.random(owner, accessToken, refreshToken));
     }
 
     public static List<MongoDbUserSession> dummies1() {
@@ -105,7 +105,7 @@ public class MongoDbUserSession {
 
     @JsonIgnore
     @Transient
-    public UserSession userSession() {
+    public JbstUserSession userSession() {
         if (isNull(this.id)) {
             return ofNotPersisted(this.username, this.accessToken, this.refreshToken, this.metadata);
         } else {

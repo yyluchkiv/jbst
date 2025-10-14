@@ -1,4 +1,4 @@
-package jbst.iam.domain.db;
+package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.ids.InvitationId;
 import org.springframework.data.domain.Sort;
@@ -11,7 +11,7 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 import static jbst.foundation.domain.base.AbstractAuthority.SUPERADMIN;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
-public record Invitation(
+public record JbstInvitation(
         InvitationId id,
         Username owner,
         Set<SimpleGrantedAuthority> authorities,
@@ -24,8 +24,8 @@ public record Invitation(
 
     public static final int DEFAULT_INVITATION_CODE_LENGTH = 40;
 
-    public static Invitation random() {
-        return new Invitation(
+    public static JbstInvitation random() {
+        return new JbstInvitation(
                 InvitationId.random(),
                 Username.random(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
@@ -34,8 +34,8 @@ public record Invitation(
         );
     }
 
-    public static Invitation randomNotPersisted() {
-        return new Invitation(
+    public static JbstInvitation randomNotPersisted() {
+        return new JbstInvitation(
                 null,
                 Username.random(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
@@ -44,8 +44,8 @@ public record Invitation(
         );
     }
 
-    public static Invitation randomNoInvited() {
-        return new Invitation(
+    public static JbstInvitation randomNoInvited() {
+        return new JbstInvitation(
                 InvitationId.random(),
                 Username.random(),
                 getSimpleGrantedAuthorities(SUPERADMIN),

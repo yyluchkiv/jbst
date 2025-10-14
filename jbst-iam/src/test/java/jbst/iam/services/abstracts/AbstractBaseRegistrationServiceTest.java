@@ -1,7 +1,7 @@
 package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.base.Email;
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.repositories.InvitationsRepository;
@@ -115,12 +115,12 @@ class AbstractBaseRegistrationServiceTest {
                 randomZoneId(),
                 randomString()
         );
-        var invitation = entity(Invitation.class);
+        var invitation = entity(JbstInvitation.class);
         when(this.invitationsRepository.findByCodeAsAny(requestUserRegistration1.code())).thenReturn(invitation);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
-        var invitationAC1 = ArgumentCaptor.forClass(Invitation.class);
-        var invitationAC2 = ArgumentCaptor.forClass(Invitation.class);
+        var invitationAC1 = ArgumentCaptor.forClass(JbstInvitation.class);
+        var invitationAC2 = ArgumentCaptor.forClass(JbstInvitation.class);
 
         // Act
         this.componentUnderTest.register1(requestUserRegistration1);

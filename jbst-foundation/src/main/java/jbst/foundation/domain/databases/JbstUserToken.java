@@ -1,4 +1,4 @@
-package jbst.iam.domain.db;
+package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -8,7 +8,7 @@ import jbst.foundation.domain.ids.TokenId;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 import static jbst.foundation.domain.enums.UserTokenType.*;
 
-public record UserToken(
+public record JbstUserToken(
         TokenId id,
         Email email,
         String value,
@@ -17,8 +17,8 @@ public record UserToken(
         boolean used
 ) {
 
-    public static UserToken hardcodedEmailConfirmation() {
-        return new UserToken(
+    public static JbstUserToken hardcodedEmailConfirmation() {
+        return new JbstUserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
@@ -28,8 +28,8 @@ public record UserToken(
         );
     }
 
-    public static UserToken hardcodedPasswordReset() {
-        return new UserToken(
+    public static JbstUserToken hardcodedPasswordReset() {
+        return new JbstUserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "0BF9F5865172B5C7DDE5C84048E8BE8150CFCC4C",
@@ -39,8 +39,8 @@ public record UserToken(
         );
     }
 
-    public static UserToken hardcodedMagicLink() {
-        return new UserToken(
+    public static JbstUserToken hardcodedMagicLink() {
+        return new JbstUserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "B3A85D887DB47A307330C93DC06787EF54A0F46F",
@@ -50,8 +50,8 @@ public record UserToken(
         );
     }
 
-    public static UserToken random() {
-        return new UserToken(
+    public static JbstUserToken random() {
+        return new JbstUserToken(
                 TokenId.random(),
                 Email.random(),
                 RandomUtility.randomString(),
@@ -61,8 +61,8 @@ public record UserToken(
         );
     }
 
-    public static UserToken randomNotPersisted() {
-        return new UserToken(
+    public static JbstUserToken randomNotPersisted() {
+        return new JbstUserToken(
                 null,
                 Email.random(),
                 RandomUtility.randomString(),
@@ -72,8 +72,8 @@ public record UserToken(
         );
     }
 
-    public UserToken withUsed(boolean used) {
-        return new UserToken(
+    public JbstUserToken withUsed(boolean used) {
+        return new JbstUserToken(
                 this.id,
                 this.email,
                 this.value,

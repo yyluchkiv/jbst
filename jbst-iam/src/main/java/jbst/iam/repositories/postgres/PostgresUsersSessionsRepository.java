@@ -2,7 +2,7 @@ package jbst.iam.repositories.postgres;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
@@ -31,25 +31,25 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<UserSession> isPresent(UserSessionId sessionId, Username username) {
+    default TuplePresence<JbstUserSession> isPresent(UserSessionId sessionId, Username username) {
         return this.findByIdAndUsername(sessionId.value(), username)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<UserSession> isPresent(UserSessionId sessionId) {
+    default TuplePresence<JbstUserSession> isPresent(UserSessionId sessionId) {
         return this.findById(sessionId.value())
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<UserSession> isPresent(JwtAccessToken accessToken) {
+    default TuplePresence<JbstUserSession> isPresent(JwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<UserSession> isPresent(JwtRefreshToken refreshToken) {
+    default TuplePresence<JbstUserSession> isPresent(JwtRefreshToken refreshToken) {
         return this.findByRefreshToken(refreshToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
@@ -83,7 +83,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         return new ResponseSuperadminSessionsTable(activeSessions, inactiveSessions);
     }
 
-    default List<UserSession> findByUsernameInAsAny(Set<Username> usernames) {
+    default List<JbstUserSession> findByUsernameInAsAny(Set<Username> usernames) {
         return this.findByUsernameIn(usernames).stream()
                 .map(PostgresDbUserSession::userSession)
                 .collect(Collectors.toList());
@@ -95,7 +95,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     }
 
     @Transactional
-    default UserSession enableMetadataRenewManually(UserSessionId sessionId) {
+    default JbstUserSession enableMetadataRenewManually(UserSessionId sessionId) {
         this.setMetadataRenewManually(sessionId.value(), true);
         return this.isPresent(sessionId).value();
     }
@@ -119,7 +119,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         this.deleteExceptToken(requestAccessToken.getJwtAccessToken());
     }
 
-    default UserSession saveAs(UserSession userSession) {
+    default JbstUserSession saveAs(JbstUserSession userSession) {
         var entity = this.save(new PostgresDbUserSession(userSession));
         return entity.userSession();
     }

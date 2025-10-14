@@ -1,7 +1,7 @@
 package jbst.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
 import lombok.*;
@@ -39,10 +39,10 @@ public class MongoDbInvitation {
     public MongoDbInvitation(Username owner, Set<SimpleGrantedAuthority> authorities) {
         this.owner = owner;
         this.authorities = authorities;
-        this.code = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
+        this.code = randomStringLetterOrNumbersOnly(JbstInvitation.DEFAULT_INVITATION_CODE_LENGTH);
     }
 
-    public MongoDbInvitation(Invitation invitation) {
+    public MongoDbInvitation(JbstInvitation invitation) {
         this.id = invitation.id().value();
         this.owner = invitation.owner();
         this.authorities = invitation.authorities();
@@ -113,8 +113,8 @@ public class MongoDbInvitation {
 
     @JsonIgnore
     @Transient
-    public Invitation invitation() {
-        return new Invitation(
+    public JbstInvitation invitation() {
+        return new JbstInvitation(
                 this.invitationId(),
                 this.owner,
                 this.authorities,

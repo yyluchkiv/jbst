@@ -6,8 +6,8 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.iam.domain.db.Invitation;
-import jbst.foundation.domain.databases.UserEmailDetails;
+import jbst.foundation.domain.databases.JbstInvitation;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.UserCreationOption;
@@ -52,7 +52,7 @@ public class MongoDbUser {
     private Email email;
     private String name;
     private boolean passwordChangeRequired;
-    private UserEmailDetails emailDetails;
+    private JbstUserEmailDetails emailDetails;
     private Map<String, Object> attributes;
 
     public MongoDbUser(
@@ -63,7 +63,7 @@ public class MongoDbUser {
             @NotNull Set<SimpleGrantedAuthority> authorities,
             @Nullable Email email,
             boolean passwordChangeRequired,
-            @NotNull UserEmailDetails emailDetails
+            @NotNull JbstUserEmailDetails emailDetails
     ) {
         this.creationOption = creationOption;
         this.username = username;
@@ -88,14 +88,14 @@ public class MongoDbUser {
                 new HashSet<>(),
                 requestUserRegistration0.email(),
                 false,
-                UserEmailDetails.required()
+                JbstUserEmailDetails.required()
         );
     }
 
     public MongoDbUser(
             @NotNull RequestUserRegistration1 requestUserRegistration1,
             @NotNull Password password,
-            @NotNull Invitation invitation
+            @NotNull JbstInvitation invitation
     ) {
         this(
                 UserCreationOption.STANDARD,
@@ -105,7 +105,7 @@ public class MongoDbUser {
                 invitation.authorities(),
                 null,
                 false,
-                UserEmailDetails.unnecessary()
+                JbstUserEmailDetails.unnecessary()
         );
     }
 
@@ -136,7 +136,7 @@ public class MongoDbUser {
                 getSimpleGrantedAuthorities(authorities),
                 Email.of(username + "@" + JbstConstants.Domains.HARDCODED),
                 randomBoolean(),
-                UserEmailDetails.random()
+                JbstUserEmailDetails.random()
         );
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
         user.setAttributes(

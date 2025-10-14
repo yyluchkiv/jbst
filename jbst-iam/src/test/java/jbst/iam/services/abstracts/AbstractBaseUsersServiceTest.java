@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
@@ -250,7 +250,7 @@ class AbstractBaseUsersServiceTest {
     void resetPasswordTest() {
         // Arrange
         var request = RequestUserPasswordReset.hardcoded();
-        var userToken = UserToken.hardcodedPasswordReset();
+        var userToken = JbstUserToken.hardcodedPasswordReset();
         when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
         var passwordAC = ArgumentCaptor.forClass(Password.class);
 

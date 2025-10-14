@@ -2,7 +2,7 @@ package jbst.iam.services.base;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
@@ -22,19 +22,19 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private final JbstProperties jbstProperties;
 
     @Override
-    public void executeMagicLink(UserToken userToken) {
+    public void executeMagicLink(JbstUserToken userToken) {
         var emailHTML = this.userEmailUtils.getMagicLinkHTML(userToken);
         this.emailService.sendHTML(emailHTML);
     }
 
     @Override
-    public void executeEmailConfirmation(UserToken userToken) {
+    public void executeEmailConfirmation(JbstUserToken userToken) {
         var emailHTML = this.userEmailUtils.getEmailConfirmationHTML(userToken);
         this.emailService.sendHTML(emailHTML);
     }
 
     @Override
-    public void executePasswordReset(UserToken userToken) {
+    public void executePasswordReset(JbstUserToken userToken) {
         var emailHTML = this.userEmailUtils.getPasswordResetHTML(userToken);
         this.emailService.sendHTML(emailHTML);
     }

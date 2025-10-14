@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
@@ -91,7 +91,7 @@ class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
     void getCurrentClientUserCronEnabledTest() throws Exception {
         // Arrange
         var currentClientUser = CurrentClientUser.random();
-        var session = UserSession.randomPersistedSession();
+        var session = JbstUserSession.randomPersistedSession();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
         when(this.currentSessionAssistant.getCurrentUserSession(any(HttpServletRequest.class))).thenReturn(session);
 

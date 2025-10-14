@@ -22,7 +22,7 @@ import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
@@ -190,7 +190,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     void loginMagicLinkTest() throws Exception {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
-        var userToken = UserToken.hardcodedMagicLink();
+        var userToken = JbstUserToken.hardcodedMagicLink();
         when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(userToken);
 
         var user = JwtUser.hardcodedMagicLink();

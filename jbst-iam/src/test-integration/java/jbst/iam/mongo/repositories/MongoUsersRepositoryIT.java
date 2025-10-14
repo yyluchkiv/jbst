@@ -4,10 +4,10 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.JbstConfigurationMongoRepositories;
-import jbst.iam.domain.db.Invitation;
-import jbst.foundation.domain.databases.UserEmailDetails;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.ids.UserId;
@@ -177,7 +177,7 @@ class MongoUsersRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunn
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
         // Act-Assert-3
-        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), Invitation.random());
+        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), JbstInvitation.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
 
@@ -186,11 +186,11 @@ class MongoUsersRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunn
         assertThat(this.usersRepository.count()).isEqualTo(9);
         var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
-        assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.required());
+        assertThat(user3.getEmailDetails()).isEqualTo(JbstUserEmailDetails.required());
         this.usersRepository.confirmEmail(user3.getEmail());
         user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
-        assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.confirmed());
+        assertThat(user3.getEmailDetails()).isEqualTo(JbstUserEmailDetails.confirmed());
         assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Email.random()));
 
         // Act-Assert-5

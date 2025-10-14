@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.db.JbstSettings;
+import jbst.foundation.domain.databases.JbstSettings;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistableAuditableUUID;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.EqualsAndHashCode;

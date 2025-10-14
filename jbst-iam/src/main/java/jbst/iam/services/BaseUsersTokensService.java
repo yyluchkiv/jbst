@@ -1,11 +1,11 @@
 package jbst.iam.services;
 
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 
 public interface BaseUsersTokensService {
     void confirmEmail(String token) throws UserEmailConfirmException;
-    UserToken saveAs(RequestUserToken request);
-    UserToken getOrCreate(RequestUserToken request);
+    JbstUserToken saveAs(RequestUserToken request);
+    JbstUserToken getOrCreate(RequestUserToken request);
 }

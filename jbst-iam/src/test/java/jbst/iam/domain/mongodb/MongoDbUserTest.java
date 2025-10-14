@@ -3,7 +3,7 @@ package jbst.iam.domain.mongodb;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.databases.UserEmailDetails;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.enums.UserCreationOption;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +30,7 @@ class MongoDbUserTest {
                 ),
                 Email.random(),
                 randomBoolean(),
-                UserEmailDetails.random()
+                JbstUserEmailDetails.random()
         );
 
         // Act
@@ -53,7 +53,7 @@ class MongoDbUserTest {
                 ),
                 Email.random(),
                 randomBoolean(),
-                UserEmailDetails.random()
+                JbstUserEmailDetails.random()
         );
         setPrivateField(user, "attributes", null);
 

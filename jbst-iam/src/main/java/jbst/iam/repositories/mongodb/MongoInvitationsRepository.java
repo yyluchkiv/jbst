@@ -1,6 +1,6 @@
 package jbst.iam.repositories.mongodb;
 
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
+import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
@@ -23,7 +23,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<Invitation> isPresent(InvitationId invitationId) {
+    default TuplePresence<JbstInvitation> isPresent(InvitationId invitationId) {
         return this.findById(invitationId.value())
                 .map(entity -> present(entity.invitation()))
                 .orElseGet(TuplePresence::absent);
@@ -35,7 +35,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
                 .collect(Collectors.toList());
     }
 
-    default Invitation findByCodeAsAny(String code) {
+    default JbstInvitation findByCodeAsAny(String code) {
         var invitation = this.findByCode(code);
         return nonNull(invitation) ? invitation.invitation() : null;
     }
@@ -52,7 +52,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
         this.deleteById(invitationId.value());
     }
 
-    default InvitationId saveAs(Invitation invitation) {
+    default InvitationId saveAs(JbstInvitation invitation) {
         var entity = this.save(new MongoDbInvitation(invitation));
         return entity.invitationId();
     }

@@ -1,13 +1,13 @@
 package jbst.iam.resources.base;
 
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.foundation.domain.databases.UserEmailDetails;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -100,7 +100,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         var user = JwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsEmailConfirmation();
-        var userToken = UserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.hardcodedEmailConfirmation();
         when(this.baseUsersTokensService.getOrCreate(eq(requestUserToken))).thenReturn(userToken);
 
         // Act
@@ -156,10 +156,10 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     void executeResetPasswordTest() throws Exception {
         // Arrange
         var request = RequestUserEmail.hardcoded();
-        var user = JwtUser.hardcoded(request.email(), UserEmailDetails.confirmed());
+        var user = JwtUser.hardcoded(request.email(), JbstUserEmailDetails.confirmed());
         when(this.baseUsersService.findByEmail(request.email())).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsPasswordReset();
-        var userToken = UserToken.hardcodedPasswordReset();
+        var userToken = JbstUserToken.hardcodedPasswordReset();
         when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
 
         // Act

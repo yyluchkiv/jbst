@@ -1,4 +1,4 @@
-package jbst.iam.domain.db;
+package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;

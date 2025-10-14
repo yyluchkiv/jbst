@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.TestConfigurationValidators;
-import jbst.iam.domain.db.Invitation;
+import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.repositories.InvitationsRepository;
@@ -111,7 +111,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         // Arrange
         var username = Username.random();
         var invitationId = InvitationId.random();
-        var invitation = Invitation.random();
+        var invitation = JbstInvitation.random();
         when(this.invitationsRepository.isPresent(invitationId)).thenReturn(TuplePresence.present(invitation));
 
         // Act
@@ -128,7 +128,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
     void validateDeleteByIdOkTest() {
         // Arrange
         var invitationId = InvitationId.random();
-        var invitation = Invitation.random();
+        var invitation = JbstInvitation.random();
         when(this.invitationsRepository.isPresent(invitationId)).thenReturn(TuplePresence.present(invitation));
 
         // Act

@@ -1,4 +1,4 @@
-package jbst.iam.domain.db;
+package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -10,7 +10,7 @@ import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
-public record UserSession(
+public record JbstUserSession(
         boolean persisted,
         UserSessionId id,
         long createdAt,
@@ -23,8 +23,8 @@ public record UserSession(
         boolean metadataRenewManually
 ) {
 
-    public static UserSession randomPersistedSession() {
-        return UserSession.ofPersisted(
+    public static JbstUserSession randomPersistedSession() {
+        return JbstUserSession.ofPersisted(
                 UserSessionId.random(),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
@@ -37,8 +37,8 @@ public record UserSession(
         );
     }
 
-    public static UserSession randomNotPersistedSession() {
-        return UserSession.ofNotPersisted(
+    public static JbstUserSession randomNotPersistedSession() {
+        return JbstUserSession.ofNotPersisted(
                 Username.random(),
                 JwtAccessToken.random(),
                 JwtRefreshToken.random(),
@@ -46,7 +46,7 @@ public record UserSession(
         );
     }
 
-    public static UserSession ofPersisted(
+    public static JbstUserSession ofPersisted(
             UserSessionId id,
             long createdAt,
             long updatedAt,
@@ -57,7 +57,7 @@ public record UserSession(
             boolean metadataRenewCron,
             boolean metadataRenewManually
     ) {
-        return new UserSession(
+        return new JbstUserSession(
                 true,
                 id,
                 createdAt,
@@ -71,14 +71,14 @@ public record UserSession(
         );
     }
 
-    public static UserSession ofNotPersisted(
+    public static JbstUserSession ofNotPersisted(
             Username username,
             JwtAccessToken accessToken,
             JwtRefreshToken refreshToken,
             UserRequestMetadata metadata
     ) {
         var currentTimestamp = getCurrentTimestamp();
-        return new UserSession(
+        return new JbstUserSession(
                 false,
                 UserSessionId.undefined(),
                 currentTimestamp,
@@ -92,8 +92,8 @@ public record UserSession(
         );
     }
 
-    public static UserSession random(Username owner, JwtAccessToken accessToken, JwtRefreshToken refreshToken) {
-        return UserSession.ofPersisted(
+    public static JbstUserSession random(Username owner, JwtAccessToken accessToken, JwtRefreshToken refreshToken) {
+        return JbstUserSession.ofPersisted(
                 UserSessionId.random(),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
@@ -106,7 +106,7 @@ public record UserSession(
         );
     }
 
-    public static UserSession random(String owner, String accessToken, String refreshToken) {
+    public static JbstUserSession random(String owner, String accessToken, String refreshToken) {
         return random(
                 Username.of(owner),
                 JwtAccessToken.of(accessToken),
@@ -114,11 +114,11 @@ public record UserSession(
         );
     }
 
-    public static UserSession random(Username owner, String accessToken) {
+    public static JbstUserSession random(Username owner, String accessToken) {
         return random(owner.value(), accessToken, entity(JwtRefreshToken.class).value());
     }
 
-    public static UserSession random(String owner) {
+    public static JbstUserSession random(String owner) {
         return random(Username.of(owner), entity(JwtAccessToken.class).value());
     }
 

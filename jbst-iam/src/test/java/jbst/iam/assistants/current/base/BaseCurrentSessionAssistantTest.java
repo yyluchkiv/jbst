@@ -10,7 +10,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
@@ -195,7 +195,7 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentUserSessionTest() throws AccessTokenNotFoundException {
         // Arrange
-        var session = entity(UserSession.class);
+        var session = entity(JbstUserSession.class);
         var request = mock(HttpServletRequest.class);
         var requestAccessToken = RequestAccessToken.random();
         var accessToken = JwtAccessToken.of(requestAccessToken.value());

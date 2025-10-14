@@ -12,7 +12,7 @@ import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
@@ -91,7 +91,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public CurrentClientUser asMagicLink(UserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+    public CurrentClientUser asMagicLink(JbstUserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
             var userCreationOption = UserCreationOption.MAGICLINK;
             var user = this.baseUsersService.safeSave(

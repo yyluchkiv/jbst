@@ -3,7 +3,7 @@ package jbst.iam.mongo.repositories;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.configurations.JbstConfigurationMongoRepositories;
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.iam.domain.mongodb.MongoDbUserToken;
@@ -125,7 +125,7 @@ class MongoUsersTokensRepositoryIT extends TestsJbstConfigurationMongoRepositori
         assertThat(this.usersTokensRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentTokenId = this.usersTokensRepository.saveAs(UserToken.random());
+        var existentTokenId = this.usersTokensRepository.saveAs(JbstUserToken.random());
         assertThat(this.usersTokensRepository.count()).isEqualTo(7);
         var notExistentTokenId = entity(TokenId.class);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();

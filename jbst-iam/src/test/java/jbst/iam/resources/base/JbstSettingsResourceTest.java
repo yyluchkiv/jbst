@@ -3,7 +3,7 @@ package jbst.iam.resources.base;
 import jbst.foundation.domain.base.Username;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.domain.db.JbstSettings;
+import jbst.foundation.domain.databases.JbstSettings;
 import jbst.iam.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.iam.settings.AbstractJbstSettingsService;

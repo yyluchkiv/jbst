@@ -13,7 +13,7 @@ import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -34,8 +34,8 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
-import static jbst.iam.domain.db.UserSession.ofNotPersisted;
-import static jbst.iam.domain.db.UserSession.ofPersisted;
+import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
+import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {
@@ -94,7 +94,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void refresh(JwtUser user, UserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
+    public void refresh(JwtUser user, JbstUserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
         var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
@@ -112,7 +112,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public UserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
+    public JbstUserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
         return this.saveUserRequestMetadata(event.getSaveFunction());
     }
 
@@ -122,7 +122,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public UserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
+    public JbstUserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
         var session = saveFunction.session();
         var sessionProcessedMetadata = ofPersisted(
                 session.id(),
@@ -182,7 +182,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void renewUserRequestMetadata(UserSession session, HttpServletRequest httpServletRequest) {
+    public void renewUserRequestMetadata(JbstUserSession session, HttpServletRequest httpServletRequest) {
         if (session.isRenewRequired()) {
             this.securityJwtPublisher.publishSessionUserRequestMetadataRenew(
                     new EventSessionUserRequestMetadataRenew(

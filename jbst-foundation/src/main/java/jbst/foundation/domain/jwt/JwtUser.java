@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.databases.UserEmailDetails;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.enums.UserTokenType;
@@ -31,7 +31,7 @@ public record JwtUser(
         Email email,
         String name,
         boolean passwordChangeRequired,
-        UserEmailDetails emailDetails,
+        JbstUserEmailDetails emailDetails,
         Map<String, Object> attributes
 ) implements UserDetails {
 
@@ -81,7 +81,7 @@ public record JwtUser(
                 Email.hardcoded(),
                 "",
                 false,
-                UserEmailDetails.unnecessary(),
+                JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
     }
@@ -103,14 +103,14 @@ public record JwtUser(
                 Email.hardcoded(),
                 "",
                 false,
-                UserEmailDetails.confirmed(),
+                JbstUserEmailDetails.confirmed(),
                 new HashMap<>()
         );
     }
 
     public static JwtUser hardcoded(
             Email email,
-            UserEmailDetails emailDetails
+            JbstUserEmailDetails emailDetails
     ) {
         return new JwtUser(
                 UserId.hardcoded(),
@@ -146,7 +146,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 randomBoolean(),
-                UserEmailDetails.random(),
+                JbstUserEmailDetails.random(),
                 new HashMap<>(
                         Map.of(
                             randomString(), randomString(),
@@ -167,7 +167,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 false,
-                UserEmailDetails.unnecessary(),
+                JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
     }
@@ -183,7 +183,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 false,
-                UserEmailDetails.unnecessary(),
+                JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
     }

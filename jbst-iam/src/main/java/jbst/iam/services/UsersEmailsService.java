@@ -1,16 +1,16 @@
 package jbst.iam.services;
 
-import jbst.iam.domain.db.UserToken;
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import org.springframework.scheduling.annotation.Async;
 
 public interface UsersEmailsService {
     @Async
-    void executeMagicLink(UserToken userToken);
+    void executeMagicLink(JbstUserToken userToken);
     @Async
-    void executeEmailConfirmation(UserToken userToken);
+    void executeEmailConfirmation(JbstUserToken userToken);
     @Async
-    void executePasswordReset(UserToken userToken);
+    void executePasswordReset(JbstUserToken userToken);
     @Async
     void executeAuthenticationLogin(FunctionAccountAccessed function);
     @Async

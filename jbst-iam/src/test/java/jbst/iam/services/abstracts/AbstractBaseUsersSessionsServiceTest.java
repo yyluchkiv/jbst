@@ -19,7 +19,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -55,7 +55,7 @@ import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static jbst.iam.domain.db.UserSession.randomPersistedSession;
+import static jbst.foundation.domain.databases.JbstUserSession.randomPersistedSession;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -158,7 +158,7 @@ class AbstractBaseUsersSessionsServiceTest {
 
     @Test
     void assertAccess() {
-        when(this.usersSessionsRepository.isPresent(UserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(UserSession.randomPersistedSession()));
+        when(this.usersSessionsRepository.isPresent(UserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(JbstUserSession.randomPersistedSession()));
 
         // Act
         this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
@@ -192,16 +192,16 @@ class AbstractBaseUsersSessionsServiceTest {
         var username = user.username();
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
-        var userSession = UserSession.random(username, accessToken, refreshToken);
+        var userSession = JbstUserSession.random(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
-        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
+        when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.save(user, accessToken, refreshToken, httpServletRequest);
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(accessToken);
-        var dbUserSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        var dbUserSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(dbUserSessionAC.capture());
         var actualDbUserSession = dbUserSessionAC.getValue();
         assertThat(actualDbUserSession.username()).isEqualTo(username);
@@ -239,15 +239,15 @@ class AbstractBaseUsersSessionsServiceTest {
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
-        var userSession = UserSession.random(username, accessToken, refreshToken);
-        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
+        var userSession = JbstUserSession.random(username, accessToken, refreshToken);
+        when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.save(user, accessToken, refreshToken, httpServletRequest);
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(accessToken);
-        var dbUserSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        var dbUserSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(dbUserSessionAC.capture());
         var actualDbUserSession = dbUserSessionAC.getValue();
         assertThat(actualDbUserSession.username()).isEqualTo(username);
@@ -283,13 +283,13 @@ class AbstractBaseUsersSessionsServiceTest {
         var newAccessToken = JwtAccessToken.random();
         var newRefreshToken = JwtRefreshToken.random();
         var oldSession = randomPersistedSession();
-        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(randomPersistedSession());
+        when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(randomPersistedSession());
 
         // Act
         this.componentUnderTest.refresh(user, oldSession, newAccessToken, newRefreshToken, httpServletRequest);
 
         // Assert
-        var saveCaptor = ArgumentCaptor.forClass(UserSession.class);
+        var saveCaptor = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(saveCaptor.capture());
         var newUserSession = saveCaptor.getValue();
         assertThat(newUserSession.username()).isEqualTo(username);
@@ -310,14 +310,14 @@ class AbstractBaseUsersSessionsServiceTest {
     void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
         var event = entity(EventSessionUserRequestMetadataAdd.class);
         when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
-        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
+        when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
         verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
-        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
     }
@@ -326,21 +326,21 @@ class AbstractBaseUsersSessionsServiceTest {
     void saveUserRequestMetadataEventSessionUserRequestMetadataRenewTest() {
         var event = new EventSessionUserRequestMetadataRenew(
                 Username.random(),
-                entity(UserSession.class),
+                entity(JbstUserSession.class),
                 IPAddress.random(),
                 entity(UserAgentHeader.class),
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
         when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
-        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
+        when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
         verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
-        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
     }
@@ -355,7 +355,7 @@ class AbstractBaseUsersSessionsServiceTest {
     ) {
         // Arrange
         var username = Username.random();
-        var session = UserSession.ofPersisted(
+        var session = JbstUserSession.ofPersisted(
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
@@ -375,14 +375,14 @@ class AbstractBaseUsersSessionsServiceTest {
                 metadataRenewManually
         );
         when(this.userMetadataUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
-        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(saveFunction.session());
+        when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(saveFunction.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(saveFunction);
 
         // Assert
         verify(this.userMetadataUtils).getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader());
-        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         var sessionProcessedMetadata = userSessionAC.getValue();
         assertThat(sessionProcessedMetadata.metadataRenewCron()).isEqualTo(expectedMetadataRenewCron);
@@ -394,17 +394,17 @@ class AbstractBaseUsersSessionsServiceTest {
     void getExpiredSessionsTest() {
         // Arrange
         var usernames = new HashSet<>(Set.of(Username.hardcoded()));
-        var sessionInvalidUserSession = UserSession.random(
+        var sessionInvalidUserSession = JbstUserSession.random(
                 Username.random(),
                 JwtAccessToken.random(),
                 new JwtRefreshToken("<invalid>")
         );
-        var sessionExpiredUserSession = UserSession.random(
+        var sessionExpiredUserSession = JbstUserSession.random(
                 Username.random(),
                 JwtAccessToken.random(),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.KUkURlpCWsh0VJFC4xrCOxr_dXNusRRjdjFb88Wb4Rw")
         );
-        var sessionAliveUserSession = UserSession.random(
+        var sessionAliveUserSession = JbstUserSession.random(
                 Username.random(),
                 JwtAccessToken.random(),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9.06Ep_ri727dkMEVA3zptDb8tmFn1VJ1FIhjjbE-mxpw")
@@ -460,7 +460,7 @@ class AbstractBaseUsersSessionsServiceTest {
     ) {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
-        var session = UserSession.ofPersisted(
+        var session = JbstUserSession.ofPersisted(
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),

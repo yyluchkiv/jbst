@@ -1,6 +1,6 @@
 package jbst.iam.domain.events;
 
-import jbst.iam.domain.db.UserSession;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
 import org.jetbrains.annotations.NotNull;
 import jbst.foundation.domain.base.Username;
@@ -10,7 +10,7 @@ import jbst.foundation.domain.tuples.TupleToggle;
 
 public record EventSessionUserRequestMetadataRenew(
         @NotNull Username username,
-        @NotNull UserSession session,
+        @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,
         @NotNull UserAgentHeader userAgentHeader,
         @NotNull TupleToggle<Boolean> metadataRenewCron,
