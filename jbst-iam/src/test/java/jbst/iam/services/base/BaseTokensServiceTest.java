@@ -110,7 +110,7 @@ class BaseTokensServiceTest {
                 this.tokensContextThrowerService,
                 this.baseUsersSessionsService,
                 this.tokensProvider,
-                this.securityJwtTokenUtils
+                this.securityUtils
         );
     }
 
@@ -122,7 +122,7 @@ class BaseTokensServiceTest {
                 this.tokensContextThrowerService,
                 this.baseUsersSessionsService,
                 this.tokensProvider,
-                this.securityJwtTokenUtils
+                this.securityUtils
         );
     }
 
@@ -168,8 +168,8 @@ class BaseTokensServiceTest {
         when(this.tokensProvider.readRequestRefreshToken(request)).thenReturn(oldRequestRefreshToken);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken)).thenReturn(validatedClaims);
         when(this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims)).thenReturn(new Tuple2<>(user, session));
-        when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(newAccessToken);
-        when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newRefreshToken);
+        when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(newAccessToken);
+        when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newRefreshToken);
 
         // Act
         var responseUserSession1 = this.componentUnderTest.refreshSessionOrThrow(request, response);
@@ -179,8 +179,8 @@ class BaseTokensServiceTest {
         verify(this.tokensContextThrowerService).verifyValidityOrThrow(oldRefreshToken);
         verify(this.tokensContextThrowerService).verifyRefreshTokenExpirationOrThrow(validatedClaims);
         verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims);
-        verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
-        verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
+        verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
+        verify(this.securityUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
         verify(this.baseUsersSessionsService).refresh(user, session, newAccessToken, newRefreshToken, request);
         verify(this.tokensProvider).createResponseAccessToken(newAccessToken, response);
         verify(this.tokensProvider).createResponseRefreshToken(newRefreshToken, response);
