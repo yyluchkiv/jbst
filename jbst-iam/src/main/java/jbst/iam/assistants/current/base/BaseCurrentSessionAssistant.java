@@ -2,20 +2,20 @@ package jbst.iam.assistants.current.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.settings.AbstractJbstSettingsService;
 import jbst.iam.tokens.facade.TokensProvider;
-import jbst.iam.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,18 +37,18 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     // Tokens
     protected final TokensProvider tokensProvider;
     // Utilities
-    protected final SecurityPrincipalUtils securityPrincipalUtils;
+    protected final JbstSecurityUtils securityUtils;
     // Stores
     protected final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 
     @Override
     public Username getCurrentUsername() {
-        return Username.of(this.securityPrincipalUtils.getAuthenticatedUsername());
+        return Username.of(this.securityUtils.getAuthenticatedUsername());
     }
 
     @Override
     public JwtUser getCurrentJwtUser() {
-        return this.securityPrincipalUtils.getAuthenticatedJwtUser();
+        return this.securityUtils.getAuthenticatedJwtUser();
     }
 
     @Override

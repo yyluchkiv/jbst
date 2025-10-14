@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.JbstHttpUtils;
-import jbst.iam.utils.SecurityPrincipalUtils;
+import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -24,9 +24,9 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.isMultipa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
 
-    // Utilities
+    // Utils
     private final JbstHttpUtils httpUtils;
-    private final SecurityPrincipalUtils securityPrincipalUtils;
+    private final JbstSecurityUtils securityUtils;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -46,7 +46,7 @@ public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
             if (this.jbstProperties.getSecurityJwtConfigs().getLoggingConfigs().isAdvancedRequestLoggingEnabled()) {
                 LOGGER.info("============================================================================================");
                 LOGGER.info("Method: (@" + cachedRequest.getMethod() + ", " + cachedRequest.getServletPath() + ")");
-                LOGGER.info("Current User: " + this.securityPrincipalUtils.getAuthenticatedUsernameOrUnexpected());
+                LOGGER.info("Current User: " + this.securityUtils.getAuthenticatedUsernameOrUnexpected());
                 var payload = cachedRequest.getCachedPayload();
                 if (!payload.value().isBlank()) {
                     LOGGER.info("Payload: \n" + payload);

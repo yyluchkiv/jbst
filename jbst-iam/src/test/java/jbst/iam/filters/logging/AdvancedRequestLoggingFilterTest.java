@@ -10,7 +10,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
 import jbst.foundation.utils.JbstHttpUtils;
-import jbst.iam.utils.SecurityPrincipalUtils;
+import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,22 +46,22 @@ class AdvancedRequestLoggingFilterTest {
         }
 
         @Bean
-        SecurityPrincipalUtils securityPrincipalUtility() {
-            return mock(SecurityPrincipalUtils.class);
+        JbstSecurityUtils securityUtils() {
+            return mock(JbstSecurityUtils.class);
         }
 
         @Bean
         AdvancedRequestLoggingFilter advancedRequestLoggingFilter() {
             return new AdvancedRequestLoggingFilter(
                     this.httpUtils(),
-                    this.securityPrincipalUtility(),
+                    this.securityUtils(),
                     this.jbstProperties()
             );
         }
     }
 
     private final JbstHttpUtils httpUtils;
-    private final SecurityPrincipalUtils securityPrincipalUtils;
+    private final JbstSecurityUtils securityUtils;
     private final JbstProperties jbstProperties;
 
     private final AdvancedRequestLoggingFilter componentUnderTest;
@@ -70,7 +70,7 @@ class AdvancedRequestLoggingFilterTest {
     void beforeEach() {
         reset(
                 this.httpUtils,
-                this.securityPrincipalUtils
+                this.securityUtils
         );
     }
 
@@ -78,7 +78,7 @@ class AdvancedRequestLoggingFilterTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.httpUtils,
-                this.securityPrincipalUtils
+                this.securityUtils
         );
     }
 
@@ -143,7 +143,7 @@ class AdvancedRequestLoggingFilterTest {
 
         // Assert
         verify(this.httpUtils).cachePayload(any());
-        verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
+        verify(this.securityUtils).getAuthenticatedUsernameOrUnexpected();
         verify(request).getContentType();
         verify(request).getInputStream();
         verify(request).getMethod();
@@ -170,7 +170,7 @@ class AdvancedRequestLoggingFilterTest {
 
         // Assert
         verify(this.httpUtils).cachePayload(any());
-        verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
+        verify(this.securityUtils).getAuthenticatedUsernameOrUnexpected();
         verify(request).getContentType();
         verify(request).getInputStream();
         verify(request).getMethod();
