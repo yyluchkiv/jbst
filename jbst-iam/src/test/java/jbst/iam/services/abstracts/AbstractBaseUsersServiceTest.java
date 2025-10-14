@@ -13,6 +13,7 @@ import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.services.abstracts.AbstractBaseUsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

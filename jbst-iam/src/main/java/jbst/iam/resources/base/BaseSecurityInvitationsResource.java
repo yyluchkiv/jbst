@@ -7,7 +7,7 @@ import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
-import jbst.iam.services.BaseInvitationsService;
+import jbst.foundation.services.BaseInvitationsService;
 import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

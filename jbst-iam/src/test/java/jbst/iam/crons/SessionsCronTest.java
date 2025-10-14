@@ -6,7 +6,7 @@ import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.iam.services.BaseUsersSessionsService;
+import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -6,7 +6,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
-import jbst.iam.services.BaseInvitationsService;
+import jbst.foundation.services.BaseInvitationsService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;

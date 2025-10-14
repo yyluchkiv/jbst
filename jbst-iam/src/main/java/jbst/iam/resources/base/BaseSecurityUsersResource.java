@@ -7,7 +7,7 @@ import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
-import jbst.iam.services.BaseUsersService;
+import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

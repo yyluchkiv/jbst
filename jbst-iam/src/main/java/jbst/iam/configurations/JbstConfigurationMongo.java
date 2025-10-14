@@ -12,7 +12,7 @@ import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
-import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
+import jbst.foundation.services.mongodb.MongoBaseUsersSessionsService;
 import jbst.foundation.sessions.MongoSessionRegistry;
 import jbst.foundation.settings.MongoJbstSettingsService;
 import lombok.RequiredArgsConstructor;

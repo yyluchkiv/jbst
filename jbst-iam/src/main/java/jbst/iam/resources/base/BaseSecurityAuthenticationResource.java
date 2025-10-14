@@ -12,7 +12,7 @@ import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.iam.services.AuthenticationService;
+import jbst.foundation.services.AuthenticationService;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

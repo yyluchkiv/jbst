@@ -17,6 +17,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
+import jbst.foundation.services.abstracts.AbstractBaseUsersSessionsService;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
 import jbst.foundation.domain.databases.JbstUserSession;

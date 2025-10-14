@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.iam.services.BaseUsersSessionsService;
+import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.validators.BaseUsersSessionsRequestsValidator;

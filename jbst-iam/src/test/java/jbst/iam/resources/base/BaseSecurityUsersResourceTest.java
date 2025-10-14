@@ -5,7 +5,7 @@ import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.iam.services.BaseUsersService;
+import jbst.foundation.services.BaseUsersService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;

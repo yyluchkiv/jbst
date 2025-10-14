@@ -1,6 +1,7 @@
 package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
+import jbst.foundation.services.abstracts.AbstractBaseUsersTokensService;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;

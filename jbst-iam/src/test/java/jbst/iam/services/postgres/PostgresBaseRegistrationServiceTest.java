@@ -2,6 +2,7 @@ package jbst.iam.services.postgres;
 
 import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.services.postgres.PostgresBaseRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

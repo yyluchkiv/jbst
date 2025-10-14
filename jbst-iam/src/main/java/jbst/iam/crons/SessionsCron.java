@@ -1,6 +1,6 @@
 package jbst.iam.crons;
 
-import jbst.iam.services.BaseUsersSessionsService;
+import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

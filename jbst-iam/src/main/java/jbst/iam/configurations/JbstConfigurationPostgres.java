@@ -10,7 +10,7 @@ import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
-import jbst.iam.services.postgres.PostgresBaseUsersSessionsService;
+import jbst.foundation.services.postgres.PostgresBaseUsersSessionsService;
 import jbst.foundation.sessions.PostgresSessionRegistry;
 import jbst.foundation.settings.PostgresJbstSettingsService;
 import lombok.RequiredArgsConstructor;
