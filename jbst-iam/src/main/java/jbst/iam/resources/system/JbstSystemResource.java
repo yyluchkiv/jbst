@@ -1,4 +1,4 @@
-package jbst.iam.resources.websockets;
+package jbst.iam.resources.system;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 // Spring
 @RestController
 @RequestMapping("/system")
-public class SystemResource {
+public class JbstSystemResource {
 
     @GetMapping("/csrf")
     public String getCsrfToken(HttpServletRequest request) {
