@@ -6,8 +6,8 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.websockets.WebsocketsService;
 import jbst.iam.sessions.SessionRegistry;
-import jbst.iam.template.WssMessagingTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     // Sessions
     private final SessionRegistry sessionRegistry;
     // Websockets
-    private final WssMessagingTemplate wssMessagingTemplate;
+    private final WebsocketsService websocketsService;
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Stores
@@ -37,7 +37,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     @Autowired
     public JbstHardwareMonitoringResource(
             SessionRegistry sessionRegistry,
-            WssMessagingTemplate wssMessagingTemplate,
+            WebsocketsService websocketsService,
             IncidentPublisher incidentPublisher,
             JbstHardwareMonitoringStore jbstHardwareMonitoringStore
     ) {
@@ -45,7 +45,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
                 new SchedulerConfiguration(60L, 60L, TimeUnit.SECONDS)
         );
         this.sessionRegistry = sessionRegistry;
-        this.wssMessagingTemplate = wssMessagingTemplate;
+        this.websocketsService = websocketsService;
         this.incidentPublisher = incidentPublisher;
         this.jbstHardwareMonitoringStore = jbstHardwareMonitoringStore;
     }
@@ -83,7 +83,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     // PRIVATE METHODS
     // =================================================================================================================
     private void send() {
-        this.wssMessagingTemplate.sendHardwareMonitoring(
+        this.websocketsService.sendHardwareMonitoring(
                 this.sessionRegistry.getActiveSessionsUsernames(),
                 this.jbstHardwareMonitoringStore.getWidget().datapoint()
         );

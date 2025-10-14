@@ -4,10 +4,10 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTab
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.websockets.WebsocketsService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     // Settings
     private final JbstSettingsService jbstSettingsService;
     // Websockets
-    private final WssMessagingTemplate wssMessagingTemplate;
+    private final WebsocketsService websocketsService;
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // State
@@ -44,7 +44,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         this.jbstHardwareMonitoringStore.clear();
         reset(
                 this.jbstSettingsService,
-                this.wssMessagingTemplate,
+                this.websocketsService,
                 this.incidentPublisher
         );
     }
@@ -53,7 +53,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.jbstSettingsService,
-                this.wssMessagingTemplate,
+                this.websocketsService,
                 this.incidentPublisher
         );
     }
@@ -95,7 +95,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         var usernameAC = ArgumentCaptor.forClass(Set.class);
         var datapointTableViewAC = ArgumentCaptor.forClass(HardwareMonitoringDatapointTableView.class);
         verify(this.jbstSettingsService).getHardwareMonitoringThresholds();
-        verify(this.wssMessagingTemplate).sendHardwareMonitoring(usernameAC.capture(), datapointTableViewAC.capture());
+        verify(this.websocketsService).sendHardwareMonitoring(usernameAC.capture(), datapointTableViewAC.capture());
         var datapoint = datapointTableViewAC.getValue();
         assertThat(datapoint.isAnyPresent()).isTrue();
         assertThat(datapoint.isAnyProblem()).isFalse();

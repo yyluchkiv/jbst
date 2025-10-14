@@ -1,12 +1,11 @@
-package jbst.iam.template.impl;
+package jbst.foundation.websockets;
 
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.domain.events.WebsocketEvent;
-import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
@@ -20,14 +19,13 @@ import static jbst.foundation.domain.events.WebsocketEvent.resetServerProgress;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class WssMessagingTemplateImpl implements WssMessagingTemplate {
+public class WebsocketsService {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final IncidentPublisher incidentPublisher;
     private final JbstProperties jbstProperties;
 
-    @Override
-    public void sendEventToUser(Username username, String destination, WebsocketEvent event) {
+    public final void sendEventToUser(Username username, String destination, WebsocketEvent event) {
         this.sendObjectToUser(
                 username,
                 destination,
@@ -35,8 +33,7 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
         );
     }
 
-    @Override
-    public void sendHardwareMonitoring(Set<Username> usernames, HardwareMonitoringDatapointTableView tableView) {
+    public final void sendHardwareMonitoring(Set<Username> usernames, HardwareMonitoringDatapointTableView tableView) {
         var hardwareConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
         if (!hardwareConfigs.isEnabled()) {
             return;
@@ -44,8 +41,7 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
         usernames.forEach(username -> this.sendObjectToUser(username, hardwareConfigs.getUserDestination(), hardwareMonitoring(tableView)));
     }
 
-    @Override
-    public void sendResetServerStatus(Set<Username> usernames, ResetServerStatus status) {
+    public final void sendResetServerStatus(Set<Username> usernames, ResetServerStatus status) {
         var resetServerConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getFeaturesConfigs().getResetServerConfigs();
         if (!resetServerConfigs.isEnabled()) {
             return;

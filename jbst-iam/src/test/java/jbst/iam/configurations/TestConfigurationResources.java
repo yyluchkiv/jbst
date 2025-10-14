@@ -1,24 +1,24 @@
 package jbst.iam.configurations;
 
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.settings.JbstSettingsService;
+import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.websockets.WebsocketsService;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.iam.services.*;
 import jbst.iam.services.base.AuthenticationServiceImpl;
 import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.services.base.RateLimitsServiceImpl;
 import jbst.iam.sessions.SessionRegistry;
-import jbst.foundation.settings.JbstSettingsService;
-import jbst.iam.template.WssMessagingTemplate;
-import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.iam.validators.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -251,8 +251,8 @@ public class TestConfigurationResources {
     // Websockets
     // =================================================================================================================
     @Bean
-    WssMessagingTemplate wssMessagingTemplate() {
-        return mock(WssMessagingTemplate.class);
+    WebsocketsService websocketsService() {
+        return mock(WebsocketsService.class);
     }
 
     // =================================================================================================================

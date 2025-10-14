@@ -1,6 +1,7 @@
-package jbst.iam.template.impl;
+package jbst.foundation.websockets;
 
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.WebsocketsConfigs;
@@ -9,8 +10,6 @@ import jbst.foundation.domain.properties.configs.security.jwt.websockets.Message
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.domain.events.WebsocketEvent;
-import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class WssMessagingTemplateImplTest {
+class WebsocketsServiceTest {
 
     private static Stream<Arguments> convertAndSendToUserTestArgs() {
         return Stream.of(
@@ -65,8 +64,8 @@ class WssMessagingTemplateImplTest {
         }
 
         @Bean
-        WssMessagingTemplate wssMessagingTemplate() {
-            return new WssMessagingTemplateImpl(
+        WebsocketsService websocketsService() {
+            return new WebsocketsService(
                     this.simpMessagingTemplate(),
                     this.serverIncidentPublisher(),
                     this.jbstProperties()
@@ -78,7 +77,7 @@ class WssMessagingTemplateImplTest {
     private final IncidentPublisher incidentPublisher;
     private final JbstProperties jbstProperties;
 
-    private final WssMessagingTemplate componentUnderTest;
+    private final WebsocketsService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

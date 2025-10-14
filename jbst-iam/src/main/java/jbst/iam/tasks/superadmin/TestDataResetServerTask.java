@@ -2,10 +2,10 @@ package jbst.iam.tasks.superadmin;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.domain.jwt.JwtUser;
-import jbst.iam.template.WssMessagingTemplate;
+import jbst.foundation.websockets.WebsocketsService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +22,19 @@ import static jbst.foundation.utilities.concurrent.SleepUtility.sleepMillisecond
 public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
 
     // Wss
-    private final WssMessagingTemplate wssMessagingTemplate;
+    private final WebsocketsService websocketsService;
 
     private final ResetServerStatus status = new ResetServerStatus(6);
 
     @Autowired
     public TestDataResetServerTask(
             IncidentPublisher incidentPublisher,
-            WssMessagingTemplate wssMessagingTemplate
+            WebsocketsService websocketsService
     ) {
         super(
                 incidentPublisher
         );
-        this.wssMessagingTemplate = wssMessagingTemplate;
+        this.websocketsService = websocketsService;
     }
 
     @Override
@@ -52,11 +52,11 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
             this.computeAndSendResetServerProgress(usernames, "[Server] Test Data Stage #6");
 
             this.status.complete(initiator.zoneId());
-            this.wssMessagingTemplate.sendResetServerStatus(usernames, this.status);
+            this.websocketsService.sendResetServerStatus(usernames, this.status);
         } catch (RuntimeException ex) {
             // WARNING: any exceptions should NOT be expected behaviour, method required ASAP fix
             this.status.setFailureDescription(ex);
-            this.wssMessagingTemplate.sendResetServerStatus(usernames, this.status);
+            this.websocketsService.sendResetServerStatus(usernames, this.status);
             LOGGER.info(JbstConstants.Logs.getUserProcess(initiator.username(), "Reset Server", FAILURE));
             this.incidentPublisher.publishThrowable(ex);
         }
@@ -64,7 +64,7 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
 
     private void computeAndSendResetServerProgress(Set<Username> usernames, String description) {
         this.status.nextStage(description);
-        this.wssMessagingTemplate.sendResetServerStatus(usernames, this.status);
+        this.websocketsService.sendResetServerStatus(usernames, this.status);
         sleepMilliseconds(1000);
     }
 }
