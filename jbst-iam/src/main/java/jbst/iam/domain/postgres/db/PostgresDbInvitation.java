@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.PostgresConverters;
-import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
@@ -36,7 +35,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     @Column(nullable = false, updatable = false)
     private Username owner;
 
-    @Convert(converter = PostgresSetOfSimpleGrantedAuthoritiesConverter.class)
+    @Convert(converter = PostgresConverters.SimpleGrantedAuthoritiesSetConverter.class)
     @Column(length = 1024, nullable = false)
     private Set<SimpleGrantedAuthority> authorities;
 

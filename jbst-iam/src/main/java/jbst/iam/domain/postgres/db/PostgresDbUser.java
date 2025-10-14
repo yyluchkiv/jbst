@@ -10,7 +10,6 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.enums.UserCreationOption;
-import jbst.iam.converters.postgres.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
@@ -64,7 +63,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(name = "zone_id", nullable = false)
     private ZoneId zoneId;
 
-    @Convert(converter = PostgresSetOfSimpleGrantedAuthoritiesConverter.class)
+    @Convert(converter = PostgresConverters.SimpleGrantedAuthoritiesSetConverter.class)
     @Column(length = 1024, nullable = false)
     private Set<SimpleGrantedAuthority> authorities;
 

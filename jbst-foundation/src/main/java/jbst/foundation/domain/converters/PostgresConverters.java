@@ -8,6 +8,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.Version;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.geo.GeoLocation;
@@ -16,12 +17,20 @@ import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.joining;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static org.springframework.util.CollectionUtils.isEmpty;
+import static org.springframework.util.StringUtils.hasLength;
 
 @UtilityClass
 public class PostgresConverters {
@@ -66,6 +75,20 @@ public class PostgresConverters {
         @Override
         public Password convertToEntityAttribute(String value) {
             return Password.of(value);
+        }
+    }
+
+    @Converter
+    public class SimpleGrantedAuthoritiesSetConverter implements AttributeConverter<Set<SimpleGrantedAuthority>, String> {
+
+        @Override
+        public String convertToDatabaseColumn(Set<SimpleGrantedAuthority> authorities) {
+            return !isEmpty(authorities) ? authorities.stream().map(SimpleGrantedAuthority::getAuthority).sorted().collect(joining(JbstConstants.Symbols.SEMICOLON)) : "";
+        }
+
+        @Override
+        public Set<SimpleGrantedAuthority> convertToEntityAttribute(String value) {
+            return hasLength(value) ? getSimpleGrantedAuthorities(Stream.of(value.split(JbstConstants.Symbols.SEMICOLON))) : new HashSet<>();
         }
     }
 

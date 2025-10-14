@@ -1,4 +1,4 @@
-package jbst.iam.converters.postgres;
+package jbst.foundation.domain.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresSetOfSimpleGrantedAuthoritiesConverterTest {
+class PostgresConvertersTest {
 
     private static Stream<Arguments> convertToDatabaseColumnArgs() {
         return Stream.of(
@@ -47,18 +47,18 @@ class PostgresSetOfSimpleGrantedAuthoritiesConverterTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        PostgresSetOfSimpleGrantedAuthoritiesConverter postgresSetOfSimpleGrantedAuthoritiesConverter() {
-            return new PostgresSetOfSimpleGrantedAuthoritiesConverter();
+        PostgresConverters.SimpleGrantedAuthoritiesSetConverter simpleGrantedAuthoritiesSetConverter() {
+            return new PostgresConverters.SimpleGrantedAuthoritiesSetConverter();
         }
     }
 
-    private final PostgresSetOfSimpleGrantedAuthoritiesConverter componentUnderTest;
+    private final PostgresConverters.SimpleGrantedAuthoritiesSetConverter simpleGrantedAuthoritiesSetConverter;
 
     @ParameterizedTest
     @MethodSource("convertToDatabaseColumnArgs")
     void convertToDatabaseColumn(Set<SimpleGrantedAuthority> authorities, String expected) {
         // Act
-        var actual = this.componentUnderTest.convertToDatabaseColumn(authorities);
+        var actual = this.simpleGrantedAuthoritiesSetConverter.convertToDatabaseColumn(authorities);
 
         // Assert
         assertThat(actual).isEqualTo(expected);
@@ -68,7 +68,7 @@ class PostgresSetOfSimpleGrantedAuthoritiesConverterTest {
     @MethodSource("convertToEntityAttributeArgs")
     void convertToEntityAttribute(String authorities, Set<SimpleGrantedAuthority> expected) {
         // Act
-        var actual = this.componentUnderTest.convertToEntityAttribute(authorities);
+        var actual = this.simpleGrantedAuthoritiesSetConverter.convertToEntityAttribute(authorities);
 
         // Assert
         assertThat(actual).isEqualTo(expected);
