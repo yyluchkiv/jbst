@@ -253,7 +253,7 @@ public class RandomUtility {
         var minSeconds = 0;
         var maxSeconds = 24 * ChronoUnit.HOURS.getDuration().getSeconds();
         var randomSeconds = randomLongGreaterThanZeroByBounds(minSeconds, maxSeconds);
-        return LocalDateTime.from(randomLocalDateByBounds(lowerYear, upperYear).atStartOfDay()).plusSeconds(randomSeconds);
+        return randomLocalDateByBounds(lowerYear, upperYear).atStartOfDay().plusSeconds(randomSeconds);
     }
 
     public static Date randomDate() {
