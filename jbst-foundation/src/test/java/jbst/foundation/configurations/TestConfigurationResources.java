@@ -31,7 +31,7 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
-        "jbst.iam.resources",
+        "jbst.foundation.resources",
 })
 @EnableWebMvc
 public class TestConfigurationResources {

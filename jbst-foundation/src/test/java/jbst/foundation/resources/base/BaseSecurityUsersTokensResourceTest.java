@@ -1,20 +1,19 @@
 package jbst.foundation.resources.base;
 
-import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.resources.base.BaseSecurityUsersTokensResource;
-import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.iam.configurations.TestRunnerResources1;
+import jbst.foundation.configurations.TestRunnerResources1;
+import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
+import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.UsersEmailsService;
+import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

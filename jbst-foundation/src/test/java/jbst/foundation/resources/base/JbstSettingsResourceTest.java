@@ -1,9 +1,8 @@
 package jbst.foundation.resources.base;
 
-import jbst.foundation.domain.base.Username;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.foundation.resources.base.JbstSettingsResource;
-import jbst.iam.configurations.TestRunnerResources1;
+import jbst.foundation.configurations.TestRunnerResources1;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.jwt.JwtUser;

@@ -13,7 +13,7 @@ import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
-import jbst.iam.tests.stubbers.AbstractMockService;
+import jbst.foundation.tests.stubbers.AbstractMockService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

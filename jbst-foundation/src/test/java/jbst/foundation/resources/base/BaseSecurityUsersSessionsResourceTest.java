@@ -2,15 +2,15 @@ package jbst.foundation.resources.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.configurations.TestRunnerResources1;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.foundation.resources.base.BaseSecurityUsersSessionsResource;
 import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.validators.BaseUsersSessionsRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +20,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import jbst.foundation.domain.base.Username;
 
 import java.time.ZoneId;
 
+import static jbst.foundation.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static jbst.foundation.utilities.random.EntityUtility.list345;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {

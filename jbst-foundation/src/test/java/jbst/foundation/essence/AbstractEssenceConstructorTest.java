@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.essense.AbstractEssenceConstructor;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersRepository;
-import jbst.iam.tests.stubbers.AbstractMockService;
+import jbst.foundation.tests.stubbers.AbstractMockService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

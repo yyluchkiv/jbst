@@ -1,8 +1,8 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
-import jbst.iam.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
+import jbst.foundation.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
+import jbst.foundation.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,10 +1,10 @@
 package jbst.foundation.handlers;
 
+import jbst.foundation.configurations.TestConfigurationHandlers;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.authentication.RegistrationException;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.iam.configurations.TestConfigurationHandlers;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

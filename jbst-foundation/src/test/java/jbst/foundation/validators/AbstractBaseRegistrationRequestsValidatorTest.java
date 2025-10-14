@@ -1,5 +1,6 @@
 package jbst.foundation.validators;
 
+import jbst.foundation.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
@@ -15,7 +16,6 @@ import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import jbst.foundation.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
-import jbst.iam.configurations.TestConfigurationValidators;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

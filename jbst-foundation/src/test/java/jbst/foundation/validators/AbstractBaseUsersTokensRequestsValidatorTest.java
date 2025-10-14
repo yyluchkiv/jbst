@@ -1,5 +1,6 @@
 package jbst.foundation.validators;
 
+import jbst.foundation.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
@@ -14,7 +15,6 @@ import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.validators.abtracts.AbstractBaseUsersTokensRequestsValidator;
-import jbst.iam.configurations.TestConfigurationValidators;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

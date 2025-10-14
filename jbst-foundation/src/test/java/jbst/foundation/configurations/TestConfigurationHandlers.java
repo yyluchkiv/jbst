@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
-        "jbst.iam.handlers"
+        "jbst.foundation.handlers"
 })
 public class TestConfigurationHandlers {
 
