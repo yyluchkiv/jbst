@@ -16,7 +16,7 @@
         <!-- jbst -->
         <dependency>
             <groupId>jbst</groupId>
-            <artifactId>jbst-iam</artifactId>
+            <artifactId>jbst-foundation</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>

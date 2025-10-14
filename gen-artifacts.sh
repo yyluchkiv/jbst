@@ -15,11 +15,6 @@ cd jbst-foundation || { print "${RED}" "[ERROR]: Folder jbst-foundation not foun
 mvn clean install -DskipTests
 cd - || { print "${RED}" "[ERROR]: Parent folder not found"; exit 1; }
 
-# jbst-iam
-cd jbst-iam || { print "${RED}" "[ERROR]: Folder jbst-iam not found"; exit 1; }
-mvn clean install -DskipTests
-cd - || { print "${RED}" "[ERROR]: Parent folder not found"; exit 1; }
-
 # jbst-parent-pom.xml
 POM_FILE="pom.xml"
 if [ ! -f "$POM_FILE" ]; then
@@ -33,7 +28,6 @@ VERSION=$(grep -m 1 "<version>" "$POM_FILE" | sed -E 's/.*<version>([^<]+)<\/ver
 if [ -n "$VERSION" ]; then
   mkdir -p "artifacts"
   cp "jbst-foundation/target/jbst-foundation-${VERSION}.jar" "artifacts/"
-  cp "jbst-iam/target/jbst-iam-${VERSION}.jar" "artifacts/"
   cp "pom.xml" "artifacts/jbst-parent-pom.xml"
   print "${GREEN}" "------------------------------------------------------------------------"
   print "${GREEN}" "[SUCCESS] jbst artifacts completed"
