@@ -14,6 +14,7 @@ import jbst.foundation.domain.exceptions.tokens.RefreshTokenInvalidException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.RequestAccessToken;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;

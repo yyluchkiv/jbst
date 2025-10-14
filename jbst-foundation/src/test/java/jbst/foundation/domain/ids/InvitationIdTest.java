@@ -1,7 +1,6 @@
-package jbst.iam.domain.identifiers;
+package jbst.foundation.domain.ids;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -13,12 +12,12 @@ class InvitationIdTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFileName() {
-        return "invitation-id-1.json";
+        return "invitation-id.json";
     }
 
     @Override
     protected String getFolder() {
-        return "dto/identifiers";
+        return "ids";
     }
 
     @Test

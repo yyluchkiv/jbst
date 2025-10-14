@@ -1,8 +1,6 @@
-package jbst.iam.domain.jwt;
+package jbst.foundation.domain.jwt;
 
 import io.jsonwebtoken.Claims;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.utilities.strings.StringUtility;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.base.Username;

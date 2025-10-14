@@ -7,7 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenCreationParams;
-import jbst.iam.domain.jwt.JwtTokenValidatedClaims;
+import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
+import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j

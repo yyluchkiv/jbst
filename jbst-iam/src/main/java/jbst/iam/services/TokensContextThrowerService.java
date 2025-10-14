@@ -4,7 +4,7 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.domain.db.UserSession;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.JwtTokenValidatedClaims;
+import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 

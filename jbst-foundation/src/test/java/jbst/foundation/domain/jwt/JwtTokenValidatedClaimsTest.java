@@ -1,17 +1,15 @@
-package jbst.iam.domain.jwt;
+package jbst.foundation.domain.jwt;
 
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.base.Username;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import jbst.foundation.domain.base.Username;
 
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.utilities.random.RandomUtility.validClaims;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class JwtTokenValidatedClaimsTest {
     private static final Username INVALID = Username.of("invalid");

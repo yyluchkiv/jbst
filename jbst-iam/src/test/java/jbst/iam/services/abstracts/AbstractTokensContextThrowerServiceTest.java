@@ -5,7 +5,7 @@ import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.db.UserSession;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.iam.domain.jwt.JwtTokenValidatedClaims;
+import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.utils.SecurityJwtTokenUtils;
@@ -27,8 +27,8 @@ import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.stream.Stream;
 
-import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.invalid;
-import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.valid;
+import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.invalid;
+import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.valid;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
