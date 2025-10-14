@@ -30,7 +30,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
         JbstConfigurationProperties.class
 })
 @EntityScan({
-        "jbst.iam.domain.mongo"
+        "jbst.foundation.domain.databases.mongo"
 })
 @EnableMongoRepositories(
         basePackages = "jbst.iam.repositories",

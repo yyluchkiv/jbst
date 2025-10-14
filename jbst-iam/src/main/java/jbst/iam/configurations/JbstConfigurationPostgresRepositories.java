@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         JbstConfigurationProperties.class
 })
 @EntityScan({
-        "jbst.iam.domain.postgres"
+        "jbst.foundation.domain.databases.postgres"
 })
 @EnableJpaRepositories({
         "jbst.iam.repositories.postgres"
