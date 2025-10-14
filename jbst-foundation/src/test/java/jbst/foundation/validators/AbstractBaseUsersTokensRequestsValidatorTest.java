@@ -1,21 +1,20 @@
-package jbst.iam.validators.abstracts;
+package jbst.foundation.validators;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
-import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
-import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.utilities.time.TimestampUtility;
-import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
+import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.repositories.UsersTokensRepository;
-import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
+import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.validators.abtracts.AbstractBaseUsersTokensRequestsValidator;
+import jbst.iam.configurations.TestConfigurationValidators;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
