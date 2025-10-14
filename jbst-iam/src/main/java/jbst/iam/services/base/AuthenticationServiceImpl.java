@@ -12,7 +12,7 @@ import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
-import jbst.iam.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;

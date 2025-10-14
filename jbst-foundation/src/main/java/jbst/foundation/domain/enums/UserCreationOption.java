@@ -1,8 +1,7 @@
-package jbst.iam.domain.enums;
+package jbst.foundation.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import jbst.foundation.domain.enums.EnumValue;
 import lombok.AllArgsConstructor;
 
 import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;

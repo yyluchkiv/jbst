@@ -1,7 +1,7 @@
 package jbst.iam.domain.dto.requests;
 
 import jbst.foundation.domain.base.Email;
-import jbst.iam.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.UserTokenType;
 
 public record RequestUserTokenMagicLink(
         @Email.ValidEmail Email email

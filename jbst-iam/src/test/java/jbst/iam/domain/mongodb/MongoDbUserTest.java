@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.iam.domain.db.UserEmailDetails;
-import jbst.iam.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.UserCreationOption;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

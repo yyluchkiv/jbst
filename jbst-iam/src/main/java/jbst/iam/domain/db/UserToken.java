@@ -2,11 +2,11 @@ package jbst.iam.domain.db;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
-import static jbst.iam.domain.enums.UserTokenType.*;
+import static jbst.foundation.domain.enums.UserTokenType.*;
 
 public record UserToken(
         TokenId id,

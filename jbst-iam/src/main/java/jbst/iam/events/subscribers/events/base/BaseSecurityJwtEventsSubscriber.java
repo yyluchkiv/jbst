@@ -9,7 +9,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.UserMetadataUtils;
-import jbst.iam.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.events.*;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;

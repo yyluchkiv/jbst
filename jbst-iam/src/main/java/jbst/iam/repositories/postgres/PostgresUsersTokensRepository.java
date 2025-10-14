@@ -3,7 +3,7 @@ package jbst.iam.repositories.postgres;
 import jbst.foundation.domain.base.Email;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
-import jbst.iam.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.postgres.db.PostgresDbUserToken;
 import jbst.iam.repositories.UsersTokensRepository;

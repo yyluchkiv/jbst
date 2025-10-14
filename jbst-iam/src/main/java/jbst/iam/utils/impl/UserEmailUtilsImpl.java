@@ -18,8 +18,8 @@ import java.util.Map;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
-import static jbst.iam.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
-import static jbst.iam.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
+import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

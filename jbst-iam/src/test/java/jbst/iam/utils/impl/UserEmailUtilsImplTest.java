@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;

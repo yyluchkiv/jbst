@@ -20,8 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static jbst.iam.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
-import static jbst.iam.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
+import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

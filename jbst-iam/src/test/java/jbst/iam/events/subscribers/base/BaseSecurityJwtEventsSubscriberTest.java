@@ -42,8 +42,8 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.iam.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
-import static jbst.iam.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
+import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

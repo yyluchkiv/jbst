@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestMagicLinkToken;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
-import jbst.iam.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;

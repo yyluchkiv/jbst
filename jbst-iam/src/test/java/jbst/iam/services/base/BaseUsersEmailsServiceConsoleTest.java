@@ -13,7 +13,7 @@ import jbst.foundation.services.emails.utilities.EmailUtility;
 import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import jbst.foundation.utilities.concurrent.SleepUtility;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;

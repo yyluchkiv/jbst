@@ -8,7 +8,7 @@ import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
-import jbst.iam.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;

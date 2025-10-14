@@ -2,7 +2,7 @@ package jbst.iam.converters.postgres;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import jbst.iam.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.UserCreationOption;
 
 import static java.util.Objects.nonNull;
 

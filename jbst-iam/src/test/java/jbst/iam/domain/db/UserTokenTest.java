@@ -1,7 +1,7 @@
 package jbst.iam.domain.db;
 
 import jbst.foundation.domain.base.Email;
-import jbst.iam.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static jbst.iam.domain.enums.UserTokenType.*;
+import static jbst.foundation.domain.enums.UserTokenType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserTokenTest {

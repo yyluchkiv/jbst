@@ -1,4 +1,4 @@
-package jbst.iam.domain.enums;
+package jbst.foundation.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
