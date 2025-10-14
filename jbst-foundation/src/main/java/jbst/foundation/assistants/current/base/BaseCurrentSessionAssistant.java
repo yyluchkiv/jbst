@@ -1,21 +1,21 @@
 package jbst.foundation.assistants.current.base;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.repositories.UsersSessionsRepository;
-import jbst.iam.resources.hardware.JbstHardwareMonitoringStore;
+import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package jbst.foundation.validators.postgres;
 
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import jbst.foundation.validators.abtracts.AbstractBaseRegistrationRequestsValidator;

@@ -1,4 +1,4 @@
-package jbst.foundation.validators.base;
+package jbst.foundation.validators;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.repositories.UsersTokensRepository;
-import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
+import jbst.foundation.validators.base.BaseBaseAuthenticationRequestsValidatorImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

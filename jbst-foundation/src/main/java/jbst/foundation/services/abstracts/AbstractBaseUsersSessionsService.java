@@ -2,25 +2,25 @@ package jbst.foundation.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
+import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
+import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
-import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.foundation.utils.UserMetadataUtils;
-import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
-import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
-import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
-import jbst.foundation.domain.sessions.SessionsExpiredTable;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.UsersSessionsRepository;
 import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.utils.UserMetadataUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -30,12 +30,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
+import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
-import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
-import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {

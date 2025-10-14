@@ -3,7 +3,7 @@ package jbst.foundation.startup;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.essence.AbstractEssenceConstructor;
+import jbst.foundation.essense.AbstractEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package jbst.foundation.validators.mongodb;
 
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import jbst.foundation.validators.abtracts.AbstractBaseRegistrationRequestsValidator;

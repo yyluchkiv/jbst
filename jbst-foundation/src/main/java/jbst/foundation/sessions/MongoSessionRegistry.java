@@ -1,9 +1,9 @@
 package jbst.foundation.sessions;
 
-import jbst.iam.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.iam.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
-import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
+import jbst.foundation.services.mongodb.MongoBaseUsersSessionsService;
 
 public class MongoSessionRegistry extends AbstractSessionRegistry {
 

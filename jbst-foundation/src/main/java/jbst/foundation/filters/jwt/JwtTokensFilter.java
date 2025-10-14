@@ -8,7 +8,7 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
-import jbst.iam.services.TokensService;
+import jbst.foundation.services.TokensService;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
