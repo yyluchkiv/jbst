@@ -2,6 +2,7 @@ package jbst.foundation.resources.actuator;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.resources.system.JbstActuatorResource;
 import jbst.foundation.utils.JbstEnvUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +28,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseInfoResourceTest {
+class JbstActuatorResourceTest {
 
     @Configuration
     @Import({
@@ -43,8 +44,8 @@ class BaseInfoResourceTest {
         }
 
         @Bean
-        BaseInfoResource baseInfoResource() {
-            return new BaseInfoResource(
+        JbstActuatorResource baseInfoResource() {
+            return new JbstActuatorResource(
                     this.envUtils(),
                     this.jbstProperties
             );
@@ -56,7 +57,7 @@ class BaseInfoResourceTest {
     // Properties
     private final JbstProperties jbstProperties;
 
-    private final BaseInfoResource componentUnderTest;
+    private final JbstActuatorResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

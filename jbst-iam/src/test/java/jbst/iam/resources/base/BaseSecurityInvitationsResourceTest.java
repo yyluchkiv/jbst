@@ -1,11 +1,12 @@
 
 package jbst.iam.resources.base;
 
-import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.resources.base.BaseSecurityInvitationsResource;
 import jbst.foundation.services.BaseInvitationsService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.validators.BaseInvitationsRequestsValidator;

@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
-import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.filters.jwt.JwtTokensFilter;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;

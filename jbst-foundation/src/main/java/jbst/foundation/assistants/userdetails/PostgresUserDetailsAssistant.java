@@ -1,4 +1,4 @@
-package jbst.iam.assistants.userdetails;
+package jbst.foundation.assistants.userdetails;
 
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 

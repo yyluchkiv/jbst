@@ -1,4 +1,4 @@
-package jbst.foundation.resources.actuator;
+package jbst.foundation.resources.system;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.JbstEnvUtils;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseInfoResource implements InfoContributor {
+public class JbstActuatorResource implements InfoContributor {
 
     // Utils
     private final JbstEnvUtils envUtils;

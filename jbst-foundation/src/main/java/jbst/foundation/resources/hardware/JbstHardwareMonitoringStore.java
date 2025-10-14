@@ -1,4 +1,4 @@
-package jbst.iam.resources.hardware;
+package jbst.foundation.resources.hardware;
 
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;

@@ -1,13 +1,14 @@
 package jbst.iam.resources.base;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.resources.base.BaseSecurityUsersSessionsResource;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.tokens.facade.TokensProvider;

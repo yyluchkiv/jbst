@@ -1,4 +1,4 @@
-package jbst.iam.assistants.current;
+package jbst.foundation.assistants.current;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.databases.JbstUserSession;

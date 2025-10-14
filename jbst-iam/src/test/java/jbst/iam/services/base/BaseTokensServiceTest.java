@@ -12,7 +12,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.base.BaseTokensService;
 import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;

@@ -1,4 +1,4 @@
-package jbst.iam.resources.hardware;
+package jbst.foundation.resources.hardware;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;

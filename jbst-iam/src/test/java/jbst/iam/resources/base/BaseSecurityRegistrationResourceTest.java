@@ -2,6 +2,7 @@ package jbst.iam.resources.base;
 
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
+import jbst.foundation.resources.base.BaseSecurityRegistrationResource;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;

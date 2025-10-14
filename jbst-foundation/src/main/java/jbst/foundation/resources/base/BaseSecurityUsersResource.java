@@ -1,9 +1,9 @@
-package jbst.iam.resources.base;
+package jbst.foundation.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;

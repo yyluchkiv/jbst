@@ -1,4 +1,4 @@
-package jbst.iam.assistants.userdetails;
+package jbst.foundation.assistants.userdetails;
 
 import jbst.foundation.domain.jwt.JwtUser;
 import org.springframework.security.core.userdetails.UserDetailsService;

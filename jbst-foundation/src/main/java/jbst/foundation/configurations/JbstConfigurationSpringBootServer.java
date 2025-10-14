@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.resources.actuator.BaseInfoResource;
+import jbst.foundation.resources.system.JbstActuatorResource;
 import jbst.foundation.utils.JbstEnvUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +47,8 @@ public class JbstConfigurationSpringBootServer {
     }
 
     @Bean
-    public BaseInfoResource baseInfoResource() {
-        return new BaseInfoResource(
+    public JbstActuatorResource baseInfoResource() {
+        return new JbstActuatorResource(
                 this.envUtils(),
                 this.jbstProperties
         );

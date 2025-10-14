@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.assistants.userdetails.MongoUserDetailsAssistant;
+import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.essense.MongoBaseEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;

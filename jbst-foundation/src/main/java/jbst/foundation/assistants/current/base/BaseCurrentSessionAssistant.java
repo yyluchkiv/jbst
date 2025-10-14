@@ -1,4 +1,4 @@
-package jbst.iam.assistants.current.base;
+package jbst.foundation.assistants.current.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.base.Username;
@@ -7,7 +7,7 @@ import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.security.CurrentClientUser;

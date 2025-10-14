@@ -5,7 +5,7 @@ import jbst.foundation.configurations.*;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.filters.jwt.JwtTokensFilter;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;

@@ -2,7 +2,7 @@ package jbst.iam.configurations;
 
 import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.assistants.userdetails.PostgresUserDetailsAssistant;
+import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.foundation.essense.PostgresBaseEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;

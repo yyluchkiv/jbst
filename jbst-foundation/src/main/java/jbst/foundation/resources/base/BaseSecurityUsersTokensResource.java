@@ -1,4 +1,4 @@
-package jbst.iam.resources.base;
+package jbst.foundation.resources.base;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +12,7 @@ import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserTokenMagicLink;

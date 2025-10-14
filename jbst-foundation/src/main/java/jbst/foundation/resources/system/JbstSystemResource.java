@@ -1,4 +1,4 @@
-package jbst.iam.resources.system;
+package jbst.foundation.resources.system;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;

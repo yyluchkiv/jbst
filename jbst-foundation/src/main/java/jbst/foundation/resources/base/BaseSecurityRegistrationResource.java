@@ -1,4 +1,4 @@
-package jbst.iam.resources.base;
+package jbst.foundation.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

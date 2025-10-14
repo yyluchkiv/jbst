@@ -1,9 +1,9 @@
-package jbst.iam.resources.base;
+package jbst.foundation.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
