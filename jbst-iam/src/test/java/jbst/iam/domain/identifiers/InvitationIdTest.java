@@ -1,6 +1,7 @@
 package jbst.iam.domain.identifiers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;

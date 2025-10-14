@@ -1,7 +1,7 @@
 package jbst.iam.domain.dto.responses;
 
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 
 import java.util.Comparator;
 

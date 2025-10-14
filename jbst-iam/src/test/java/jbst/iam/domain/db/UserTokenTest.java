@@ -2,7 +2,7 @@ package jbst.iam.domain.db;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.enums.UserTokenType;
-import jbst.iam.domain.identifiers.TokenId;
+import jbst.foundation.domain.ids.TokenId;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

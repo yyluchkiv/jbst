@@ -2,7 +2,7 @@ package jbst.iam.mongo.repositories;
 
 import jbst.iam.configurations.JbstConfigurationMongoRepositories;
 import jbst.iam.domain.db.UserSession;
-import jbst.iam.domain.identifiers.UserSessionId;
+import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;

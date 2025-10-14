@@ -3,7 +3,7 @@ package jbst.iam.domain.db;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.domain.enums.UserTokenType;
-import jbst.iam.domain.identifiers.TokenId;
+import jbst.foundation.domain.ids.TokenId;
 
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 import static jbst.foundation.domain.enums.UserTokenType.*;

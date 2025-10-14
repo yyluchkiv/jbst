@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
-import jbst.iam.domain.identifiers.TokenId;
+import jbst.foundation.domain.ids.TokenId;
 import jbst.iam.domain.postgres.db.PostgresDbUserToken;
 import jbst.iam.repositories.UsersTokensRepository;
 import org.springframework.data.jpa.repository.JpaRepository;

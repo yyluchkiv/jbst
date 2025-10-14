@@ -8,7 +8,7 @@ import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.enums.UserTokenType;
-import jbst.iam.domain.identifiers.UserId;
+import jbst.foundation.domain.ids.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

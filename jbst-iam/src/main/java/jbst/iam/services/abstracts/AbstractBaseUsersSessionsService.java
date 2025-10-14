@@ -5,7 +5,7 @@ import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.iam.domain.functions.FunctionSessionUserRequestMetadataSave;
-import jbst.iam.domain.identifiers.UserSessionId;
+import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.JwtUser;

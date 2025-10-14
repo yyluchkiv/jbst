@@ -6,7 +6,7 @@ import jbst.iam.domain.events.EventAuthenticationLogin;
 import jbst.iam.domain.events.EventAuthenticationLogout;
 import jbst.iam.domain.events.EventSessionExpired;
 import jbst.iam.domain.events.EventSessionRefreshed;
-import jbst.iam.domain.identifiers.UserSessionId;
+import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;

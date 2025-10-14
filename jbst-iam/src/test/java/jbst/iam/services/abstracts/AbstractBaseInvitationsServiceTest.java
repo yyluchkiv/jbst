@@ -2,7 +2,7 @@ package jbst.iam.services.abstracts;
 
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.repositories.InvitationsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

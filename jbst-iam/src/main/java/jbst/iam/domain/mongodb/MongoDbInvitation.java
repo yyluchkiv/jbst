@@ -3,7 +3,7 @@ package jbst.iam.domain.mongodb;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;

@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.iam.domain.identifiers.UserSessionId;
+import jbst.foundation.domain.ids.UserSessionId;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.tokens.facade.TokensProvider;

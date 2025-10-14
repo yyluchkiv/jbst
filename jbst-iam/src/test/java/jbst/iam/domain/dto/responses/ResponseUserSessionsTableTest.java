@@ -1,6 +1,6 @@
 package jbst.iam.domain.dto.responses;
 
-import jbst.iam.domain.identifiers.UserSessionId;
+import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import org.junit.jupiter.api.Test;

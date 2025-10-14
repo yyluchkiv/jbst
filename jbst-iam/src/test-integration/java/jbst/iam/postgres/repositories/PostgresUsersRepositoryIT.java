@@ -11,7 +11,7 @@ import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.dto.requests.RequestUsers;
-import jbst.iam.domain.identifiers.UserId;
+import jbst.foundation.domain.ids.UserId;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
 import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;

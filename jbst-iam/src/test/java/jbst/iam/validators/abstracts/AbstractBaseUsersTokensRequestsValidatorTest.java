@@ -11,7 +11,7 @@ import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
-import jbst.iam.domain.identifiers.TokenId;
+import jbst.foundation.domain.ids.TokenId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;

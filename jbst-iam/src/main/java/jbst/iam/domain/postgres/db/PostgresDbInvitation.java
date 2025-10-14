@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

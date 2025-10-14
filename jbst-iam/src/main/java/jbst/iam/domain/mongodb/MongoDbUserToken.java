@@ -7,7 +7,7 @@ import jbst.foundation.domain.time.TimeAmount;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
-import jbst.iam.domain.identifiers.TokenId;
+import jbst.foundation.domain.ids.TokenId;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.Id;

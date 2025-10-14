@@ -3,7 +3,7 @@ package jbst.iam.postgres.repositories;
 import jbst.iam.configurations.JbstConfigurationPostgresRepositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
 import jbst.iam.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;

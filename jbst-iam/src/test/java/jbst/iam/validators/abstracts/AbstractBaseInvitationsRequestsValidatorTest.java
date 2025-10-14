@@ -6,7 +6,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.validators.BaseInvitationsRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseInvitationsRequestsValidator;

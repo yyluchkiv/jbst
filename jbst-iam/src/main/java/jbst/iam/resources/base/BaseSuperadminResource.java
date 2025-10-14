@@ -6,7 +6,7 @@ import jbst.foundation.domain.annotations.JbstResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.iam.domain.identifiers.UserSessionId;
+import jbst.foundation.domain.ids.UserSessionId;
 import jbst.iam.services.BaseSuperadminService;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.tokens.facade.TokensProvider;

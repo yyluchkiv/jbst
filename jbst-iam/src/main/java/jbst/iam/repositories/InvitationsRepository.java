@@ -3,7 +3,7 @@ package jbst.iam.repositories;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
 

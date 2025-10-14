@@ -3,7 +3,7 @@ package jbst.iam.repositories.mongodb;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.foundation.domain.base.Username;

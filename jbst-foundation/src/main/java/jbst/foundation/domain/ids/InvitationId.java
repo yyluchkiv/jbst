@@ -1,4 +1,4 @@
-package jbst.iam.domain.identifiers;
+package jbst.foundation.domain.ids;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

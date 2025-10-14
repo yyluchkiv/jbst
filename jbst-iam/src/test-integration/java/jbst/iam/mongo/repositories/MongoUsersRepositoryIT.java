@@ -10,7 +10,7 @@ import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.domain.identifiers.UserId;
+import jbst.foundation.domain.ids.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;

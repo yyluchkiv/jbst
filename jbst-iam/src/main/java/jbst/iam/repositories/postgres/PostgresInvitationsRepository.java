@@ -5,7 +5,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.identifiers.InvitationId;
+import jbst.foundation.domain.ids.InvitationId;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.repositories.InvitationsRepository;
 import org.springframework.data.domain.Sort;
