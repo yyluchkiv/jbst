@@ -5,3 +5,4 @@
 — Modification: iam.SecurityPrincipalUtils to foundation.JbstSecurityUtils
 — Modification: iam.SecurityJwtTokenUtils to foundation.JbstSecurityUtils
 — Modification: foundation.EnvironmentUtils to foundation.JbstEnvUtils
+— Migration: major merge foundation + iam modules
