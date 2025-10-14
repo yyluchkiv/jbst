@@ -1,14 +1,13 @@
-package jbst.iam.services.base;
+package jbst.foundation.services.base;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.services.base.BaseUsersEmailsService;
+import jbst.foundation.services.UsersEmailsService;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.utils.JbstUserEmailUtils;
-import jbst.foundation.services.UsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

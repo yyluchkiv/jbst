@@ -1,24 +1,23 @@
-package jbst.iam.services.base;
+package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.services.base.BaseTokensService;
-import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
-import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.services.TokensService;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,10 +30,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import static jbst.foundation.domain.databases.JbstUserSession.randomPersistedSession;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static jbst.foundation.utilities.random.RandomUtility.validClaims;
-import static jbst.foundation.domain.databases.JbstUserSession.randomPersistedSession;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

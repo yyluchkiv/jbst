@@ -1,16 +1,15 @@
-package jbst.iam.services.abstracts;
+package jbst.foundation.services.abstracts;
 
+import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.services.abstracts.AbstractTokensContextThrowerService;
-import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
-import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,13 +1,16 @@
-package jbst.iam.services.abstracts;
+package jbst.foundation.services.abstracts;
 
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersSessionsRepository;
-import jbst.foundation.services.abstracts.AbstractBaseSuperadminService;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
 import jbst.iam.tests.stubbers.AbstractMockService;
@@ -22,17 +25,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.EntityUtility.list345;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

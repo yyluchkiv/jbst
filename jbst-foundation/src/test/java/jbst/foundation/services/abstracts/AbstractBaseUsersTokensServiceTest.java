@@ -1,12 +1,11 @@
-package jbst.iam.services.abstracts;
+package jbst.foundation.services.abstracts;
 
-import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.foundation.services.abstracts.AbstractBaseUsersTokensService;
-import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.utilities.random.RandomUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,19 +1,18 @@
-package jbst.iam.services.abstracts;
+package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
-import jbst.foundation.services.abstracts.AbstractBaseUsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

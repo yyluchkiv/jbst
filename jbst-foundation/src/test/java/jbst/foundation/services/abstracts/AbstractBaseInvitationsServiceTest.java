@@ -1,10 +1,12 @@
-package jbst.iam.services.abstracts;
+package jbst.foundation.services.abstracts;
 
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.services.abstracts.AbstractBaseInvitationsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +19,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 
 import java.util.stream.Collectors;
 
