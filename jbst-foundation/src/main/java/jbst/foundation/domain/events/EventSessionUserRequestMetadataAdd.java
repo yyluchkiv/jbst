@@ -1,13 +1,13 @@
 package jbst.foundation.domain.events;
 
-import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
-import org.jetbrains.annotations.NotNull;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.tuples.TupleToggle;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public record EventSessionUserRequestMetadataAdd(

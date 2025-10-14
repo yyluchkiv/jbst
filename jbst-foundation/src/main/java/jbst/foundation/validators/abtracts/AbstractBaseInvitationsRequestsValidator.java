@@ -1,14 +1,14 @@
 package jbst.foundation.validators.abtracts;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;

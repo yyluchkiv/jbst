@@ -2,10 +2,10 @@ package jbst.foundation.repositories.mongo;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
+import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.foundation.repositories.UsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

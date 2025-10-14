@@ -1,12 +1,12 @@
 package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.utilities.random.RandomUtility;
 
-import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 import static jbst.foundation.domain.enums.UserTokenType.*;
+import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 
 public record JbstUserToken(
         TokenId id,

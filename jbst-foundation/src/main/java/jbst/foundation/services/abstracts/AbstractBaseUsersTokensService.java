@@ -1,8 +1,8 @@
 package jbst.foundation.services.abstracts;
 
-import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.foundation.services.BaseUsersTokensService;

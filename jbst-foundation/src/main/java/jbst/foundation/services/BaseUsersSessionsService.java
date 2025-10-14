@@ -1,7 +1,9 @@
 package jbst.foundation.services;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -9,9 +11,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
-import jbst.foundation.domain.base.Username;
 
 import java.util.Set;
 

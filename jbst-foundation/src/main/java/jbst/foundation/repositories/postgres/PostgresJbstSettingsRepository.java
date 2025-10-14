@@ -2,8 +2,8 @@ package jbst.foundation.repositories.postgres;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
-import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbJbstSettings;
+import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.repositories.JbstSettingsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 

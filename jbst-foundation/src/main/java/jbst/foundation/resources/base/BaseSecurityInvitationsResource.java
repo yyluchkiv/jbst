@@ -2,8 +2,8 @@ package jbst.foundation.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;

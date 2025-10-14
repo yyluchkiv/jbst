@@ -1,10 +1,15 @@
 package jbst.foundation.events.subscribers.impl;
 
+import jbst.foundation.events.subscribers.incidents.SecurityJwtIncidentsSubscriber;
+import jbst.foundation.events.subscribers.incidents.base.BaseSecurityJwtIncidentsSubscriber;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.foundation.events.subscribers.incidents.SecurityJwtIncidentsSubscriber;
-import jbst.foundation.events.subscribers.incidents.base.BaseSecurityJwtIncidentsSubscriber;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
+import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.feigns.clients.IncidentClient;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,14 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
-import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.foundation.incidents.feigns.clients.IncidentClient;
 
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

@@ -1,11 +1,11 @@
 package jbst.foundation.assistants.userdetails;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.UsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import jbst.foundation.domain.base.Username;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJwtUserDetailsService implements JwtUserDetailsService {

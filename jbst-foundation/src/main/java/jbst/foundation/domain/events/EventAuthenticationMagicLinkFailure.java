@@ -1,8 +1,8 @@
 package jbst.foundation.domain.events;
 
+import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.databases.JbstUserToken;
 
 public record EventAuthenticationMagicLinkFailure(
         JbstUserToken token,

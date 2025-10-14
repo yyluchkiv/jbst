@@ -1,11 +1,11 @@
 package jbst.foundation.domain.events;
 
+import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 
 import java.util.HashMap;
 import java.util.Map;

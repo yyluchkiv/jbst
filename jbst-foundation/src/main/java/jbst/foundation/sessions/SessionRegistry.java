@@ -1,12 +1,12 @@
 package jbst.foundation.sessions;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.sessions.Session;
 import org.springframework.scheduling.annotation.Async;
-import jbst.foundation.domain.base.Username;
 
 import java.util.Set;
 

@@ -1,12 +1,12 @@
 package jbst.foundation.repositories.postgres;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.databases.JbstInvitation;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
+import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.InvitationsRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, InvitationsRepository {

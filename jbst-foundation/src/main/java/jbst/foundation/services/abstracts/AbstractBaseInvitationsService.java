@@ -1,15 +1,15 @@
 package jbst.foundation.services.abstracts;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.services.BaseInvitationsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationsService implements BaseInvitationsService {

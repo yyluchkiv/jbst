@@ -1,9 +1,9 @@
 package jbst.foundation.validators.abtracts;
 
-import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
-import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
+import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
@@ -11,7 +11,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.asserts.Asserts.*;
+import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
+import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUsersTokensRequestsValidator {

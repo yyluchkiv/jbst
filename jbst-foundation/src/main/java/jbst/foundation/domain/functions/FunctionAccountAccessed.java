@@ -2,8 +2,8 @@ package jbst.foundation.domain.functions;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import org.jetbrains.annotations.NotNull;
 
 public record FunctionAccountAccessed(

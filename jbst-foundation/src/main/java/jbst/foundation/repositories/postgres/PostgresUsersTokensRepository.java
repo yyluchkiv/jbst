@@ -2,10 +2,10 @@ package jbst.foundation.repositories.postgres;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.foundation.repositories.UsersTokensRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,8 +2,8 @@ package jbst.foundation.domain.databases.mongo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.domain.databases.JbstSettings;
+import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.*;
 import org.bson.types.Decimal128;

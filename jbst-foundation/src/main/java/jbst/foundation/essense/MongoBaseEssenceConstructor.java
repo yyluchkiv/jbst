@@ -1,11 +1,11 @@
 package jbst.foundation.essense;
 
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
+import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

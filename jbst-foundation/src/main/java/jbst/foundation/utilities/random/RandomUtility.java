@@ -5,7 +5,6 @@ import feign.Request;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.random.IllegalEnumException;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;

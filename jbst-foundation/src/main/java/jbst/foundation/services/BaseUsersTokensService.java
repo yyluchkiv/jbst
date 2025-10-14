@@ -1,8 +1,8 @@
 package jbst.foundation.services;
 
-import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 
 public interface BaseUsersTokensService {
     void confirmEmail(String token) throws UserEmailConfirmException;

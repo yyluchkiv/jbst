@@ -1,7 +1,7 @@
 package jbst.foundation.domain.jwt;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.base.Username;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
 import java.util.Set;

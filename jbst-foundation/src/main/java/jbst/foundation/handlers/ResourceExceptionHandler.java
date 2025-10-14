@@ -2,12 +2,12 @@ package jbst.foundation.handlers;
 
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.exceptions.ExceptionEntityType;
+import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.exceptions.authentication.RegistrationException;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

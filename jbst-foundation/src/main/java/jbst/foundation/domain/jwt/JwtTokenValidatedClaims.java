@@ -1,9 +1,9 @@
 package jbst.foundation.domain.jwt;
 
 import io.jsonwebtoken.Claims;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.utilities.strings.StringUtility;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import jbst.foundation.domain.base.Username;
 
 import java.util.*;
 import java.util.stream.Collectors;

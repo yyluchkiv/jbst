@@ -1,12 +1,12 @@
 package jbst.foundation.domain.events;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
-import org.jetbrains.annotations.NotNull;
-import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.tuples.TupleToggle;
+import org.jetbrains.annotations.NotNull;
 
 public record EventSessionUserRequestMetadataRenew(
         @NotNull Username username,

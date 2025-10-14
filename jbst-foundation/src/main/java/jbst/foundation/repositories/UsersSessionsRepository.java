@@ -1,13 +1,13 @@
 package jbst.foundation.repositories;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;

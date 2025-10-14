@@ -1,6 +1,7 @@
 package jbst.foundation.events.subscribers.incidents.base;
 
 import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
+import jbst.foundation.events.subscribers.incidents.SecurityJwtIncidentsSubscriber;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
@@ -9,13 +10,12 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failur
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
-import jbst.foundation.events.subscribers.incidents.SecurityJwtIncidentsSubscriber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static jbst.foundation.domain.constants.JbstConstants.Logs.*;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j

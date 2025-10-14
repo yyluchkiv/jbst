@@ -1,15 +1,15 @@
 package jbst.foundation.repositories.postgres;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
+import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.UsersSessionsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,8 +23,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.domain.dto.responses.ResponseUserSession2.*;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, UsersSessionsRepository {

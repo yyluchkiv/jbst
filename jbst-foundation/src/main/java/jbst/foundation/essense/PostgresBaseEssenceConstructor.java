@@ -1,11 +1,11 @@
 package jbst.foundation.essense;
 
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
+import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

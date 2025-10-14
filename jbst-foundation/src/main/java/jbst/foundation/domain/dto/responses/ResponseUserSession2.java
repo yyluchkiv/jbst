@@ -1,10 +1,10 @@
 package jbst.foundation.domain.dto.responses;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.time.TimeAgo;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.domain.tuples.TupleExceptionDetails;

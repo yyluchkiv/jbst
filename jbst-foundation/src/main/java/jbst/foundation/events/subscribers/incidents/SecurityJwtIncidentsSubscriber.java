@@ -3,11 +3,11 @@ package jbst.foundation.events.subscribers.incidents;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import org.springframework.context.event.EventListener;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import org.springframework.context.event.EventListener;
 
 public interface SecurityJwtIncidentsSubscriber {
     @EventListener
