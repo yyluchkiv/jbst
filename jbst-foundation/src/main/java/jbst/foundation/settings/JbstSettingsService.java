@@ -19,14 +19,14 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.con
 @Slf4j
 public abstract class JbstSettingsService {
     // Repository
-    private final JbstSettingsRepository jbstSettingsRepository;
+    private final JbstSettingsRepository settingsRepository;
 
     // Store
-    private final AtomicReference<JbstSettings> jbstSettingsAR;
+    private final AtomicReference<JbstSettings> settingsAR;
 
-    public JbstSettingsService(JbstSettingsRepository jbstSettingsRepository) {
-        this.jbstSettingsRepository = jbstSettingsRepository;
-        this.jbstSettingsAR = new AtomicReference<>();
+    public JbstSettingsService(JbstSettingsRepository settingsRepository) {
+        this.settingsRepository = settingsRepository;
+        this.settingsAR = new AtomicReference<>();
     }
 
     // ================================================================================================================
@@ -35,35 +35,35 @@ public abstract class JbstSettingsService {
     public final void initializeSettings() {
         LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", STARTED.asANSI());
         assertTrueOrThrow(
-                this.jbstSettingsRepository.isPresent(),
+                this.settingsRepository.isPresent(),
                 contactDevelopmentTeam("jbst-setting initialization failure")
         );
-        this.jbstSettingsAR.set(
-                this.jbstSettingsRepository.getSettings()
+        this.settingsAR.set(
+                this.settingsRepository.getSettings()
         );
         LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", COMPLETED.asANSI());
     }
 
     public final JbstSettings getSettings() {
-        return this.jbstSettingsAR.get();
+        return this.settingsAR.get();
     }
 
     public final void saveSettings(Username updatedBy, RequestJbstSettings request) {
-        var jbstSettings = this.jbstSettingsRepository.saveAs(
+        var jbstSettings = this.settingsRepository.saveAs(
                 updatedBy,
                 request
         );
-        this.jbstSettingsAR.set(jbstSettings);
+        this.settingsAR.set(jbstSettings);
     }
 
     // ================================================================================================================
     // Hardware Monitoring Thresholds
     // ================================================================================================================
     public final boolean isHardwareMonitoringThresholdsEnabled() {
-        return this.jbstSettingsAR.get().getHardwareMonitoringThresholds().enabled();
+        return this.settingsAR.get().getHardwareMonitoringThresholds().enabled();
     }
 
     public JbstSettingsHardwareMonitoringThresholds getHardwareMonitoringThresholds() {
-        return this.jbstSettingsAR.get().getHardwareMonitoringThresholds();
+        return this.settingsAR.get().getHardwareMonitoringThresholds();
     }
 }

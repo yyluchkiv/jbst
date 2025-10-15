@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
 
     // Settings
-    private final JbstSettingsService jbstSettingsService;
+    private final JbstSettingsService settingsService;
     // Websockets
     private final WebsocketsService websocketsService;
     // Incidents
@@ -43,7 +43,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         this.standaloneSetupByResourceUnderTest(this.resourceUnderTest);
         this.jbstHardwareMonitoringStore.clear();
         reset(
-                this.jbstSettingsService,
+                this.settingsService,
                 this.websocketsService,
                 this.incidentPublisher
         );
@@ -52,7 +52,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.jbstSettingsService,
+                this.settingsService,
                 this.websocketsService,
                 this.incidentPublisher
         );
@@ -62,7 +62,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     void saveMetadataIncidentScenario() throws Exception {
         // Arrange
         var npe = new NullPointerException("jbst-settings-exception");
-        when(this.jbstSettingsService.getHardwareMonitoringThresholds()).thenThrow(npe);
+        when(this.settingsService.getHardwareMonitoringThresholds()).thenThrow(npe);
 
         // Act
         mvc.perform(
@@ -73,7 +73,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.jbstSettingsService).getHardwareMonitoringThresholds();
+        verify(this.settingsService).getHardwareMonitoringThresholds();
         verify(this.incidentPublisher).publishThrowable(npe);
     }
 
@@ -81,7 +81,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     @Test
     void saveMetadata() throws Exception {
         // Arrange
-        when(this.jbstSettingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.hardcoded());
+        when(this.settingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.hardcoded());
 
         // Act
         mvc.perform(
@@ -94,7 +94,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         // Assert
         var usernameAC = ArgumentCaptor.forClass(Set.class);
         var datapointTableViewAC = ArgumentCaptor.forClass(HardwareMonitoringDatapointTableView.class);
-        verify(this.jbstSettingsService).getHardwareMonitoringThresholds();
+        verify(this.settingsService).getHardwareMonitoringThresholds();
         verify(this.websocketsService).sendHardwareMonitoring(usernameAC.capture(), datapointTableViewAC.capture());
         var datapoint = datapointTableViewAC.getValue();
         assertThat(datapoint.isAnyPresent()).isTrue();
