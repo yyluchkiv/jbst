@@ -1,4 +1,4 @@
-package jbst.foundation.repositories.mongo.configs;
+package jbst.foundation.integration.mongo.configs;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.AccessLevel;

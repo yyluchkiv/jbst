@@ -1,36 +1,33 @@
-package jbst.foundation.repositories.postgres.repos;
+package jbst.foundation.integration.mongo.repos;
 
-import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
+import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.dto.requests.RequestUsers;
 import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
-import jbst.foundation.repositories.postgres.configs.PostgresBeforeAllCallback;
-import jbst.foundation.repositories.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
+import jbst.foundation.integration.mongo.configs.MongoBeforeAllCallback;
+import jbst.foundation.integration.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Set;
 
-import static jbst.foundation.domain.jwt.JwtUser.randomSuperadminNotPersisted;
-import static jbst.foundation.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
+import static jbst.foundation.tests.converters.MongoUserConverter.toUsernamesAsStrings1;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
@@ -40,29 +37,28 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
-        PostgresBeforeAllCallback.class
+        MongoBeforeAllCallback.class
 })
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                JbstConfigurationPostgresRepositories.class
+                JbstConfigurationMongoRepositories.class
         }
 )
-@AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
+class MongoJbstUsersRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
-    private final PostgresJbstUsersRepository usersRepository;
+    private final MongoJbstUsersRepository usersRepository;
 
     @Override
-    public JpaRepository<PostgresDbUser, String> getJpaRepository() {
+    public MongoRepository<MongoDbUser, String> getMongoRepository() {
         return this.usersRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersRepository.saveAll(PostgresDbUser.dummies1());
+        var saved = this.usersRepository.saveAll(MongoDbUser.dummies1());
 
         var notExistentUserId = entity(UserId.class);
 
@@ -143,32 +139,9 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
     }
 
     @Test
-    void usersSpecificationTest() {
-        // Arrange
-        this.usersRepository.saveAll(PostgresDbUser.dummies1());
-
-        // Act-Assert
-        var pageRequest = PageRequest.of(0, 5);
-        var username = Username.of("user1");
-        var email = Email.of("user2@" + JbstConstants.Domains.HARDCODED);
-        var name = "Sa3 Sa3";
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, name).toSpecification(), pageRequest)).hasSize(3);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(null, email, name).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, null, name).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, null, null).toSpecification(), pageRequest)).hasSize(1);
-        assertThat(this.usersRepository.findAll(new RequestUsers(null, email, null).toSpecification(), pageRequest)).hasSize(1);
-        assertThat(this.usersRepository.findAll(new RequestUsers(null, null, name).toSpecification(), pageRequest)).hasSize(1);
-        var users = this.usersRepository.findAll(new RequestUsers(null, null, null).toSpecification(), pageRequest);
-        assertThat(users).hasSize(5);
-        assertThat(users.hasNext()).isTrue();
-    }
-
-    @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.usersRepository.saveAll(PostgresDbUser.dummies1());
+        this.usersRepository.saveAll(MongoDbUser.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersRepository.count()).isEqualTo(6);
@@ -187,7 +160,7 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.usersRepository.saveAll(PostgresDbUser.dummies1());
+        var saved = this.usersRepository.saveAll(MongoDbUser.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersRepository.count()).isEqualTo(6);
@@ -197,7 +170,7 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
         assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var userId1 = this.usersRepository.saveAs(randomSuperadminNotPersisted());
+        var userId1 = this.usersRepository.saveAs(JwtUser.randomSuperadmin());
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();

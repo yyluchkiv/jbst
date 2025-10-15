@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.essense.MongoBaseEssenceConstructor;
+import jbst.foundation.essense.MongoJbstEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
@@ -12,6 +12,7 @@ import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.mongodb.MongoBaseUsersSessionsService;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.sessions.MongoSessionRegistry;
 import jbst.foundation.settings.MongoJbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,8 @@ public class JbstConfigurationMongo {
     }
 
     @Bean
-    MongoBaseEssenceConstructor mongoBaseEssenceConstructor() {
-        return new MongoBaseEssenceConstructor(
+    MongoJbstEssenceConstructor mongoBaseEssenceConstructor() {
+        return new MongoJbstEssenceConstructor(
                 this.mongoJbstInvitationsRepository,
                 this.mongoUsersRepository,
                 this.jbstProperties
@@ -70,7 +71,7 @@ public class JbstConfigurationMongo {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
-    MongoSessionRegistry mongoSessionRegistry(
+    JbstSessionRegistry mongoSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             MongoBaseUsersSessionsService mongoBaseUsersSessionsService

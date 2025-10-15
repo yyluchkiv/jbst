@@ -1,4 +1,4 @@
-package jbst.foundation.repositories.postgres.configs;
+package jbst.foundation.integration.postgres.configs;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

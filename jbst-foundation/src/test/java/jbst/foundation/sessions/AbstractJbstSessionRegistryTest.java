@@ -57,7 +57,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstSessionRegistryTest {
+class AbstractJbstSessionRegistryTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -83,7 +83,7 @@ class JbstSessionRegistryTest {
 
         @Bean
         JbstSessionRegistry sessionRegistry() {
-            return new JbstSessionRegistry(
+            return new AbstractJbstSessionRegistry(
                     this.securityJwtPublisher(),
                     this.securityJwtIncidentPublisher(),
                     this.userSessionService(),

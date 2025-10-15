@@ -1,22 +1,21 @@
-package jbst.foundation.repositories.postgres.repos;
+package jbst.foundation.integration.mongo.repos;
 
-import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
+import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
-import jbst.foundation.repositories.postgres.configs.PostgresBeforeAllCallback;
-import jbst.foundation.repositories.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
+import jbst.foundation.repositories.mongo.MongoJbstUsersTokensRepository;
+import jbst.foundation.integration.mongo.configs.MongoBeforeAllCallback;
+import jbst.foundation.integration.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import static jbst.foundation.domain.enums.UserTokenType.EMAIL_CONFIRMATION;
 import static jbst.foundation.domain.enums.UserTokenType.PASSWORD_RESET;
@@ -26,29 +25,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
-        PostgresBeforeAllCallback.class
+        MongoBeforeAllCallback.class
 })
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                JbstConfigurationPostgresRepositories.class
+                JbstConfigurationMongoRepositories.class
         }
 )
-@AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
+class MongoJbstUsersTokensRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
-    private final PostgresJbstUsersTokensRepository usersTokensRepository;
+    private final MongoJbstUsersTokensRepository usersTokensRepository;
 
     @Override
-    public JpaRepository<?, String> getJpaRepository() {
+    public MongoRepository<?, String> getMongoRepository() {
         return this.usersTokensRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersTokensRepository.saveAll(PostgresDbUserToken.dummies1());
+        var saved = this.usersTokensRepository.saveAll(MongoDbUserToken.dummies1());
 
         var notExistentTokenId = entity(TokenId.class);
         var notExistentToken = RandomUtility.randomString();
@@ -90,7 +88,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.usersTokensRepository.saveAll(PostgresDbUserToken.dummies1());
+        var saved = this.usersTokensRepository.saveAll(MongoDbUserToken.dummies1());
         var savedExpiredToken = saved.get(3);
         var expiredTokenId = savedExpiredToken.tokenId();
         var expiredToken = savedExpiredToken.getValue();
@@ -117,7 +115,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.usersTokensRepository.saveAll(PostgresDbUserToken.dummies1());
+        var saved = this.usersTokensRepository.saveAll(MongoDbUserToken.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersTokensRepository.count()).isEqualTo(6);
@@ -127,7 +125,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         assertThat(this.usersTokensRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentTokenId = this.usersTokensRepository.saveAs(JbstUserToken.randomNotPersisted());
+        var existentTokenId = this.usersTokensRepository.saveAs(JbstUserToken.random());
         assertThat(this.usersTokensRepository.count()).isEqualTo(7);
         var notExistentTokenId = entity(TokenId.class);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();

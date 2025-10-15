@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.essense.PostgresBaseEssenceConstructor;
+import jbst.foundation.essense.PostgresJbstEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
@@ -10,6 +10,7 @@ import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.postgres.PostgresBaseUsersSessionsService;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.sessions.PostgresSessionRegistry;
 import jbst.foundation.settings.PostgresJbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -53,8 +54,8 @@ public class JbstConfigurationPostgres {
     }
 
     @Bean
-    PostgresBaseEssenceConstructor postgresBaseEssenceConstructor() {
-        return new PostgresBaseEssenceConstructor(
+    PostgresJbstEssenceConstructor postgresBaseEssenceConstructor() {
+        return new PostgresJbstEssenceConstructor(
                 this.postgresJbstInvitationsRepository,
                 this.postgresUsersRepository,
                 this.jbstProperties
@@ -63,7 +64,7 @@ public class JbstConfigurationPostgres {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
-    PostgresSessionRegistry postgresSessionRegistry(
+    JbstSessionRegistry postgresSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             PostgresBaseUsersSessionsService postgresBaseUsersSessionsService
