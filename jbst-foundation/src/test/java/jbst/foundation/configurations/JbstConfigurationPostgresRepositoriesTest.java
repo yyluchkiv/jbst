@@ -1,7 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.repositories.mongo.*;
+import jbst.foundation.repositories.postgres.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.mock;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstJbstConfigurationMongoRepositoriesTest {
+class JbstConfigurationPostgresRepositoriesTest {
 
     @Configuration
     @Import({
@@ -31,47 +30,45 @@ class JbstJbstConfigurationMongoRepositoriesTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final JbstProperties jbstProperties;
 
         @Bean
-        MongoJbstSettingsRepository settingsRepository() {
-            return mock(MongoJbstSettingsRepository.class);
+        PostgresJbstSettingsRepository settingsRepository() {
+            return mock(PostgresJbstSettingsRepository.class);
         }
 
         @Bean
-        MongoJbstInvitationsRepository invitationsRepository() {
-            return mock(MongoJbstInvitationsRepository.class);
+        PostgresJbstInvitationsRepository invitationsRepository() {
+            return mock(PostgresJbstInvitationsRepository.class);
         }
 
         @Bean
-        MongoJbstUsersTokensRepository usersTokensRepository() {
-            return mock(MongoJbstUsersTokensRepository.class);
+        PostgresJbstUsersTokensRepository usersTokensRepository() {
+            return mock(PostgresJbstUsersTokensRepository.class);
         }
 
         @Bean
-        MongoJbstUsersRepository usersRepository() {
-            return mock(MongoJbstUsersRepository.class);
+        PostgresJbstUsersRepository usersRepository() {
+            return mock(PostgresJbstUsersRepository.class);
         }
 
         @Bean
-        MongoJbstUsersSessionsRepository usersSessionsRepository() {
-            return mock(MongoJbstUsersSessionsRepository.class);
+        PostgresJbstUsersSessionsRepository usersSessionsRepository() {
+            return mock(PostgresJbstUsersSessionsRepository.class);
         }
 
         @Bean
-        JbstConfigurationMongoRepositories applicationMongoRepositories() {
-            return new JbstConfigurationMongoRepositories(
+        JbstConfigurationPostgresRepositories applicationPostgresRepositories() {
+            return new JbstConfigurationPostgresRepositories(
                     this.settingsRepository(),
                     this.invitationsRepository(),
                     this.usersTokensRepository(),
                     this.usersRepository(),
-                    this.usersSessionsRepository(),
-                    this.jbstProperties
+                    this.usersSessionsRepository()
             );
         }
     }
 
-    private final JbstConfigurationMongoRepositories componentUnderTest;
+    private final JbstConfigurationPostgresRepositories componentUnderTest;
 
     @Test
     void beansTests() {
@@ -82,13 +79,7 @@ class JbstJbstConfigurationMongoRepositoriesTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(13)
-                .contains("jbstMongoRepositories")
-                .contains("jbstMongoClient")
-                .contains("jbstMongoDatabaseFactory")
-                .contains("jbstMongoTemplate");
-        assertThat(this.componentUnderTest.jbstMongoClient()).isNotNull();
-        assertThat(this.componentUnderTest.jbstMongoDatabaseFactory()).isNotNull();
-        assertThat(this.componentUnderTest.jbstMongoTemplate()).isNotNull();
+                .hasSize(10)
+                .contains("jbstPostgresRepositories");
     }
 }
