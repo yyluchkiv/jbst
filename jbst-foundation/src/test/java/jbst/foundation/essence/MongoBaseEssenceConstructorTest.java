@@ -3,10 +3,10 @@ package jbst.foundation.essence;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.essense.EssenceConstructor;
+import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.essense.MongoBaseEssenceConstructor;
-import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,17 +42,17 @@ class MongoBaseEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        MongoInvitationsRepository invitationsRepository() {
-            return mock(MongoInvitationsRepository.class);
+        MongoJbstInvitationsRepository invitationsRepository() {
+            return mock(MongoJbstInvitationsRepository.class);
         }
 
         @Bean
-        MongoUsersRepository userRepository() {
-            return mock(MongoUsersRepository.class);
+        MongoJbstUsersRepository userRepository() {
+            return mock(MongoJbstUsersRepository.class);
         }
 
         @Bean
-        EssenceConstructor essenceConstructor() {
+        JbstEssenceConstructor essenceConstructor() {
             return new MongoBaseEssenceConstructor(
                     this.invitationsRepository(),
                     this.userRepository(),
@@ -61,10 +61,10 @@ class MongoBaseEssenceConstructorTest {
         }
     }
 
-    private final MongoInvitationsRepository invitationsRepository;
-    private final MongoUsersRepository usersRepository;
+    private final MongoJbstInvitationsRepository invitationsRepository;
+    private final MongoJbstUsersRepository usersRepository;
 
-    private final EssenceConstructor componentUnderTest;
+    private final JbstEssenceConstructor componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

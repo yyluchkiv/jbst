@@ -1,6 +1,6 @@
 package jbst.foundation.validators.postgres;
 
-import jbst.foundation.repositories.postgres.PostgresUsersTokensRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
 import jbst.foundation.validators.abtracts.AbstractBaseUsersTokensRequestsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ public class PostgresBaseUsersTokensRequestsValidator extends AbstractBaseUsersT
 
     @Autowired
     public PostgresBaseUsersTokensRequestsValidator(
-            PostgresUsersTokensRepository usersTokensRepository
+            PostgresJbstUsersTokensRepository usersTokensRepository
     ) {
         super(
                 usersTokensRepository

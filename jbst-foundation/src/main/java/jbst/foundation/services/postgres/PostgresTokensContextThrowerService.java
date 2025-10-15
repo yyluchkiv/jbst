@@ -1,7 +1,7 @@
 package jbst.foundation.services.postgres;
 
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
-import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractTokensContextThrowerService;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ public class PostgresTokensContextThrowerService extends AbstractTokensContextTh
     @Autowired
     public PostgresTokensContextThrowerService(
             PostgresUserDetailsAssistant userDetailsAssistant,
-            PostgresUsersSessionsRepository usersSessionsRepository,
+            PostgresJbstUsersSessionsRepository usersSessionsRepository,
             JbstSecurityUtils securityUtils
     ) {
         super(

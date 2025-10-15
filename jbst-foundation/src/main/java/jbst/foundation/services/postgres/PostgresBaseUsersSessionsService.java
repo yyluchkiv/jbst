@@ -1,7 +1,7 @@
 package jbst.foundation.services.postgres;
 
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractBaseUsersSessionsService;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
@@ -16,7 +16,7 @@ public class PostgresBaseUsersSessionsService extends AbstractBaseUsersSessionsS
     @Autowired
     public PostgresBaseUsersSessionsService(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
-            PostgresUsersSessionsRepository usersSessionsRepository,
+            PostgresJbstUsersSessionsRepository usersSessionsRepository,
             UserMetadataUtils userMetadataUtils,
             JbstSecurityUtils securityUtils
     ) {

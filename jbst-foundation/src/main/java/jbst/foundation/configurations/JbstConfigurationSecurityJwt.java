@@ -1,15 +1,15 @@
 package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.filters.jwt.JwtTokensFilter;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
-import jbst.foundation.handshakes.CsrfInterceptorHandshake;
-import jbst.foundation.handshakes.SecurityHandshakeHandler;
+import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
+import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +90,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     // Assistants
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Passwords
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Filters
@@ -99,8 +99,8 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     private final JwtAuthenticationEntryPointExceptionHandler jwtAuthenticationEntryPointExceptionHandler;
     private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
     // Handshakes
-    private final CsrfInterceptorHandshake csrfInterceptorHandshake;
-    private final SecurityHandshakeHandler securityHandshakeHandler;
+    private final JbstCsrfInterceptorHandshake csrfInterceptorHandshake;
+    private final JbstSecurityHandshakeHandler securityHandshakeHandler;
     // Configurer
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final AbstractJbstSecurityJwtConfigurer abstractJbstSecurityJwtConfigurer;

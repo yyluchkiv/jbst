@@ -7,7 +7,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.abtracts.AbstractBaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -57,7 +57,7 @@ class AbstractBaseUsersValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final UsersRepository usersRepository;
+        private final JbstUsersRepository usersRepository;
 
         @Bean
         BaseUsersValidator baseUsersValidator() {
@@ -67,7 +67,7 @@ class AbstractBaseUsersValidatorTest {
         }
     }
 
-    private final UsersRepository usersRepository;
+    private final JbstUsersRepository usersRepository;
 
     private final BaseUsersValidator componentUnderTest;
 

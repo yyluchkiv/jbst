@@ -9,12 +9,12 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 
 public interface TokensContextThrowerService {
-    JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws AccessTokenInvalidException;
-    JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws RefreshTokenInvalidException;
+    JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws JbstAccessTokenInvalidException;
+    JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws JbstRefreshTokenInvalidException;
 
-    void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws AccessTokenExpiredException;
-    void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws RefreshTokenExpiredException;
+    void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstAccessTokenExpiredException;
+    void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstRefreshTokenExpiredException;
 
-    void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws AccessTokenDbNotFoundException;
-    Tuple2<JwtUser, JbstUserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws RefreshTokenDbNotFoundException;
+    void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws JbstAccessTokenDbNotFoundException;
+    Tuple2<JwtUser, JbstUserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws JbstRefreshTokenDbNotFoundException;
 }

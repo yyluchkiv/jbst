@@ -1,7 +1,7 @@
 package jbst.foundation.services.mongodb;
 
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractBaseUsersSessionsService;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
@@ -14,7 +14,7 @@ public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsServ
     @Autowired
     public MongoBaseUsersSessionsService(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
-            MongoUsersSessionsRepository usersSessionsRepository,
+            MongoJbstUsersSessionsRepository usersSessionsRepository,
             UserMetadataUtils userMetadataUtils,
             JbstSecurityUtils securityUtils
     ) {

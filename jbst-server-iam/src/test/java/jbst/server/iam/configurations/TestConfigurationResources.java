@@ -1,6 +1,6 @@
 package jbst.server.iam.configurations;
 
-import jbst.foundation.handlers.ResourceExceptionHandler;
+import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.server.iam.base.services.UsersService;
@@ -22,8 +22,8 @@ public class TestConfigurationResources {
     // Exceptions
     // =================================================================================================================
     @Bean
-    ResourceExceptionHandler resourceExceptionHandler() {
-        return new ResourceExceptionHandler(this.incidentPublisher());
+    JbstResourceExceptionHandler resourceExceptionHandler() {
+        return new JbstResourceExceptionHandler(this.incidentPublisher());
     }
 
     @Bean

@@ -3,7 +3,7 @@ package jbst.foundation.services.base;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
@@ -19,12 +19,12 @@ import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.AuthenticationService;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -51,15 +51,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Sessions
-    private final SessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     // Services
     private final BaseUsersService baseUsersService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
@@ -120,7 +120,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws AccessTokenNotFoundException {
+    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         if (nonNull(cookie.value())) {
             var accessToken = cookie.getJwtAccessToken();
@@ -140,17 +140,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
+    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException {
         try {
             return this.tokensService.refreshSessionOrThrow(httpRequest, httpResponse);
         } catch (
-                RefreshTokenNotFoundException |
-                RefreshTokenInvalidException |
-                RefreshTokenExpiredException |
-                RefreshTokenDbNotFoundException ex
+                JbstRefreshTokenNotFoundException |
+                JbstRefreshTokenInvalidException |
+                JbstRefreshTokenExpiredException |
+                JbstRefreshTokenDbNotFoundException ex
         ) {
             this.tokensProvider.clearTokens(httpResponse);
-            throw new TokenUnauthorizedException(ex.getMessage());
+            throw new JbstTokenUnauthorizedException(ex.getMessage());
         }
     }
 

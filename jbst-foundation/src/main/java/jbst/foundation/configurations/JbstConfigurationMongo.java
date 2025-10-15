@@ -7,10 +7,10 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.essense.MongoBaseEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
-import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.mongodb.MongoBaseUsersSessionsService;
 import jbst.foundation.sessions.MongoSessionRegistry;
 import jbst.foundation.settings.MongoJbstSettingsService;
@@ -34,9 +34,9 @@ public class JbstConfigurationMongo {
 
     // Repositories
     private final MongoJbstSettingsRepository mongoJbstSettingsRepository;
-    private final MongoInvitationsRepository mongoInvitationsRepository;
-    private final MongoUsersRepository mongoUsersRepository;
-    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
+    private final MongoJbstInvitationsRepository mongoJbstInvitationsRepository;
+    private final MongoJbstUsersRepository mongoUsersRepository;
+    private final MongoJbstUsersSessionsRepository mongoUsersSessionsRepository;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -62,7 +62,7 @@ public class JbstConfigurationMongo {
     @Bean
     MongoBaseEssenceConstructor mongoBaseEssenceConstructor() {
         return new MongoBaseEssenceConstructor(
-                this.mongoInvitationsRepository,
+                this.mongoJbstInvitationsRepository,
                 this.mongoUsersRepository,
                 this.jbstProperties
         );

@@ -1,7 +1,7 @@
 package jbst.server.iam.mongodb.services.impl;
 
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -28,8 +28,8 @@ class UsersServiceImplTest {
     static class ContextConfiguration {
 
         @Bean
-        MongoUsersRepository usersRepository() {
-            return mock(MongoUsersRepository.class);
+        MongoJbstUsersRepository usersRepository() {
+            return mock(MongoJbstUsersRepository.class);
         }
 
         @Bean
@@ -40,7 +40,7 @@ class UsersServiceImplTest {
         }
     }
 
-    private final MongoUsersRepository usersRepository;
+    private final MongoJbstUsersRepository usersRepository;
 
     private final UsersService componentUnderTest;
 

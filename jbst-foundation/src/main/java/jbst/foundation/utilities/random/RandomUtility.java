@@ -5,7 +5,7 @@ import feign.Request;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.exceptions.random.IllegalEnumException;
+import jbst.foundation.domain.exceptions.random.JbstIllegalEnumException;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
 
@@ -280,7 +280,7 @@ public class RandomUtility {
         return Stream.of(values)
                 .filter(item -> !item.equals(enumValue))
                 .findAny()
-                .orElseThrow(() -> new IllegalEnumException(enumClazz));
+                .orElseThrow(() -> new JbstIllegalEnumException(enumClazz));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -289,7 +289,7 @@ public class RandomUtility {
         return (T) Stream.of(values)
                 .filter(item -> !item.equals(enumValue))
                 .findAny()
-                .orElseThrow(() -> new IllegalEnumException(enumClazz));
+                .orElseThrow(() -> new JbstIllegalEnumException(enumClazz));
     }
 
     public static <T extends Enum<T>> T randomEnumExcept(Class<T> enumClazz, List<T> enumValues) {
@@ -298,7 +298,7 @@ public class RandomUtility {
                 .filter(item -> !enumValues.contains(item))
                 .toList();
         if (collect.isEmpty()) {
-            throw new IllegalEnumException(enumClazz);
+            throw new JbstIllegalEnumException(enumClazz);
         } else {
             return randomElement(collect);
         }
@@ -311,7 +311,7 @@ public class RandomUtility {
                 .filter(item -> !enumValues.contains(item))
                 .toList();
         if (collect.isEmpty()) {
-            throw new IllegalEnumException(enumClazz);
+            throw new JbstIllegalEnumException(enumClazz);
         } else {
             return (T) randomElement(collect);
         }

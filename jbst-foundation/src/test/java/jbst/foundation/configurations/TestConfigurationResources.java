@@ -1,19 +1,19 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.foundation.handlers.ResourceExceptionHandler;
+import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.services.*;
 import jbst.foundation.services.base.AuthenticationServiceImpl;
 import jbst.foundation.services.base.BaseUsersEmailsService;
 import jbst.foundation.services.base.RateLimitsServiceImpl;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
@@ -48,8 +48,8 @@ public class TestConfigurationResources {
     // Exceptions
     // =================================================================================================================
     @Bean
-    ResourceExceptionHandler resourceExceptionHandler() {
-        return new ResourceExceptionHandler(this.incidentPublisher());
+    JbstResourceExceptionHandler resourceExceptionHandler() {
+        return new JbstResourceExceptionHandler(this.incidentPublisher());
     }
 
     // =================================================================================================================
@@ -60,7 +60,7 @@ public class TestConfigurationResources {
         return new AuthenticationServiceImpl(
                 this.authenticationManager(),
                 this.currentSessionAssistant(),
-                this.jwtUserDetailsAssistant(),
+                this.jwtUserDetailsService(),
                 this.sessionRegistry(),
                 this.baseUsersService(),
                 this.baseUsersSessionsService(),
@@ -81,8 +81,8 @@ public class TestConfigurationResources {
     // Sessions
     // =================================================================================================================
     @Bean
-    SessionRegistry sessionRegistry() {
-        return mock(SessionRegistry.class);
+    JbstSessionRegistry sessionRegistry() {
+        return mock(JbstSessionRegistry.class);
     }
 
     // =================================================================================================================
@@ -142,8 +142,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    JwtUserDetailsService jwtUserDetailsAssistant() {
-        return mock(JwtUserDetailsService.class);
+    JbstJwtUserDetailsService jwtUserDetailsService() {
+        return mock(JbstJwtUserDetailsService.class);
     }
 
     // =================================================================================================================
@@ -230,13 +230,13 @@ public class TestConfigurationResources {
     // Repositories
     // =================================================================================================================
     @Bean
-    UsersRepository usersRepository() {
-        return mock(UsersRepository.class);
+    JbstUsersRepository usersRepository() {
+        return mock(JbstUsersRepository.class);
     }
 
     @Bean
-    UsersTokensRepository usersTokensRepository() {
-        return mock(UsersTokensRepository.class);
+    JbstUsersTokensRepository usersTokensRepository() {
+        return mock(JbstUsersTokensRepository.class);
     }
 
     // =================================================================================================================

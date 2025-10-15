@@ -9,10 +9,10 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
-import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
+import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,13 +41,13 @@ class AbstractBaseUsersServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        UsersTokensRepository usersTokensRepository() {
-            return mock(UsersTokensRepository.class);
+        JbstUsersTokensRepository usersTokensRepository() {
+            return mock(JbstUsersTokensRepository.class);
         }
 
         @Bean
-        UsersRepository userRepository() {
-            return mock(UsersRepository.class);
+        JbstUsersRepository userRepository() {
+            return mock(JbstUsersRepository.class);
         }
 
         @Bean
@@ -65,8 +65,8 @@ class AbstractBaseUsersServiceTest {
         }
     }
 
-    private final UsersTokensRepository usersTokensRepository;
-    private final UsersRepository usersRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
+    private final JbstUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final AbstractBaseUsersService componentUnderTest;
@@ -120,7 +120,7 @@ class AbstractBaseUsersServiceTest {
     }
 
     @Test
-    void safeSaveFirstIterationTest() throws UsernameAlreadyExistException {
+    void safeSaveFirstIterationTest() throws JbstUsernameAlreadyExistException {
         // Arrange
         var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
@@ -140,7 +140,7 @@ class AbstractBaseUsersServiceTest {
     }
 
     @Test
-    void safeSaveSecondIterationTest() throws UsernameAlreadyExistException {
+    void safeSaveSecondIterationTest() throws JbstUsernameAlreadyExistException {
         // Arrange
         var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
@@ -150,7 +150,7 @@ class AbstractBaseUsersServiceTest {
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
 
-        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(zoneId))).thenThrow(new UsernameAlreadyExistException(baseUsername));
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(zoneId))).thenThrow(new JbstUsernameAlreadyExistException(baseUsername));
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(zoneId))).thenReturn(user);
 
         // Act

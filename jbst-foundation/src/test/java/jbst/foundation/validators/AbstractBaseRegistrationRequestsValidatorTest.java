@@ -6,14 +6,14 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.events.EventRegistration0Failure;
 import jbst.foundation.domain.events.EventRegistration1Failure;
-import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import jbst.foundation.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +44,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final InvitationsRepository invitationsRepository;
-        private final UsersRepository usersRepository;
+        private final JbstInvitationsRepository invitationsRepository;
+        private final JbstUsersRepository usersRepository;
         private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
         private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
 
@@ -62,8 +62,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
 
     private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
-    private final InvitationsRepository invitationsRepository;
-    private final UsersRepository usersRepository;
+    private final JbstInvitationsRepository invitationsRepository;
+    private final JbstUsersRepository usersRepository;
 
     private final BaseRegistrationRequestsValidator componentUnderTest;
 
@@ -99,7 +99,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Assert
         var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Username", request.username().value());
         assertThat(throwable)
-                .isInstanceOf(RegistrationException.class)
+                .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
         verify(this.usersRepository).existsByUsername(request.username());
         verify(this.securityJwtEventsPublisher).publishRegistration0Failure(
@@ -131,7 +131,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Assert
         var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Email", request.email().value());
         assertThat(throwable)
-                .isInstanceOf(RegistrationException.class)
+                .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
         verify(this.usersRepository).existsByUsername(request.username());
         verify(this.usersRepository).existsByEmail(request.email());
@@ -152,7 +152,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     }
 
     @Test
-    void validateRegistrationRequest0UsernameEmailFreeTest() throws RegistrationException {
+    void validateRegistrationRequest0UsernameEmailFreeTest() throws JbstRegistrationException {
         // Arrange
         var request = RequestUserRegistration0.hardcoded();
         when(this.usersRepository.existsByUsername(request.username())).thenReturn(false);
@@ -178,7 +178,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Assert
         var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Username", request.username().value());
         assertThat(throwable)
-                .isInstanceOf(RegistrationException.class)
+                .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(request.username());
         verify(this.securityJwtEventsPublisher).publishRegistration1Failure(
@@ -211,7 +211,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Assert
         var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Code", invitation.code());
         assertThat(throwable)
-                .isInstanceOf(RegistrationException.class)
+                .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(request.username());
         verify(this.invitationsRepository).findByCodeAsAny(request.code());
@@ -248,7 +248,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Assert
         var exception = ExceptionsMessagesUtility.entityNotFound("Code", invitation);
         assertThat(throwable)
-                .isInstanceOf(RegistrationException.class)
+                .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(username);
         verify(this.invitationsRepository).findByCodeAsAny(invitation);
@@ -269,7 +269,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     }
 
     @Test
-    void validateRegistrationRequest1InvitationPresentTest() throws RegistrationException {
+    void validateRegistrationRequest1InvitationPresentTest() throws JbstRegistrationException {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);

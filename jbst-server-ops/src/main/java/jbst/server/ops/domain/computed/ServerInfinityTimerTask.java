@@ -2,7 +2,7 @@ package jbst.server.ops.domain.computed;
 
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.exceptions.ssh.SshSessionException;
+import jbst.foundation.domain.exceptions.ssh.JbstSshSessionException;
 import jbst.foundation.domain.ssh.SshConnectionConfigs;
 import jbst.foundation.domain.states.classic.AbstractClassicStateManager;
 import jbst.foundation.domain.states.classic.ClassicState;
@@ -333,12 +333,12 @@ public class ServerInfinityTimerTask {
             if (this.sshRequired) {
                 this.ssh();
             }
-        } catch (SshSessionException | RuntimeException ex) {
+        } catch (JbstSshSessionException | RuntimeException ex) {
             this.fileSystemMetadata = ServerFileSystemMetadata.failure(ex);
         }
     }
 
-    private void ssh() throws SshSessionException {
+    private void ssh() throws JbstSshSessionException {
         LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.asANSI());
         var sshSession = SshUtility.getSession(this.sshConnectionConfigs);
         if (sshSession.getSession().present()) {

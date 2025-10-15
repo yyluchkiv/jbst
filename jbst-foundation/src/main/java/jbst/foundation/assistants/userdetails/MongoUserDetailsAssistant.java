@@ -1,14 +1,10 @@
 package jbst.foundation.assistants.userdetails;
 
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 
-public class MongoUserDetailsAssistant extends AbstractJwtUserDetailsService {
+public class MongoUserDetailsAssistant extends JbstJwtUserDetailsService {
 
-    public MongoUserDetailsAssistant(
-            MongoUsersRepository usersRepository
-    ) {
-        super(
-                usersRepository
-        );
+    public MongoUserDetailsAssistant(MongoJbstUsersRepository usersRepository) {
+        super(usersRepository);
     }
 }

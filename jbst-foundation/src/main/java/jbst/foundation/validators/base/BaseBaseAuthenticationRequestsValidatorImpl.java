@@ -6,7 +6,7 @@ import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.inv
 public class BaseBaseAuthenticationRequestsValidatorImpl implements BaseAuthenticationRequestsValidator {
 
     // Repositories
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
 
     @Override
     public UsernamePasswordCredentials validateLoginStandard(RequestUserLogin request) {

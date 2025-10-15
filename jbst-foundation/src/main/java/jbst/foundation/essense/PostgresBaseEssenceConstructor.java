@@ -6,8 +6,8 @@ import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
@@ -16,15 +16,15 @@ import java.util.stream.IntStream;
 
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
+public class PostgresBaseEssenceConstructor extends JbstEssenceConstructor {
 
     // Repositories
-    protected final PostgresInvitationsRepository postgresInvitationsRepository;
-    protected final PostgresUsersRepository postgresUsersRepository;
+    protected final PostgresJbstInvitationsRepository postgresJbstInvitationsRepository;
+    protected final PostgresJbstUsersRepository postgresUsersRepository;
 
     public PostgresBaseEssenceConstructor(
-            PostgresInvitationsRepository invitationsRepository,
-            PostgresUsersRepository usersRepository,
+            PostgresJbstInvitationsRepository invitationsRepository,
+            PostgresJbstUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
         super(
@@ -32,7 +32,7 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                 usersRepository,
                 jbstProperties
         );
-        this.postgresInvitationsRepository = invitationsRepository;
+        this.postgresJbstInvitationsRepository = invitationsRepository;
         this.postgresUsersRepository = usersRepository;
     }
 
@@ -69,6 +69,6 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                         )
                 )
                 .toList();
-        this.postgresInvitationsRepository.saveAll(invitations);
+        this.postgresJbstInvitationsRepository.saveAll(invitations);
     }
 }

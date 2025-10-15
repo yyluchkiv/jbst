@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class JbstHardwareMonitoringStore {
 
     // Settings
-    private final JbstSettingsService jbstSettingsService;
+    private final JbstSettingsService settingsService;
 
     private final Deque<HardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 
@@ -27,7 +27,7 @@ public class JbstHardwareMonitoringStore {
 
     public final HardwareMonitoringWidget getWidget() {
         var datapoint = !this.datapoints.isEmpty() ? this.datapoints.peekLast() : HardwareMonitoringDatapoint.zeroUsage();
-        return datapoint.getWidget(this.jbstSettingsService.getHardwareMonitoringThresholds().values());
+        return datapoint.getWidget(this.settingsService.getHardwareMonitoringThresholds().values());
     }
 
     public final boolean isAnyProblemOrFirstDatapoint() {

@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
@@ -11,7 +11,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
 public class BaseTokensService implements TokensService {
 
     // Assistants
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Session
-    private final SessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     // Services
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;
@@ -40,7 +40,7 @@ public class BaseTokensService implements TokensService {
     public JwtUser getJwtUserByAccessTokenOrThrow(
             RequestAccessToken requestAccessToken,
             RequestRefreshToken requestRefreshToken
-    ) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
+    ) throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenDbNotFoundException {
         var accessToken = requestAccessToken.getJwtAccessToken();
         var refreshToken = requestRefreshToken.getJwtRefreshToken();
 
@@ -58,7 +58,7 @@ public class BaseTokensService implements TokensService {
     public ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
+    ) throws JbstRefreshTokenNotFoundException, JbstRefreshTokenInvalidException, JbstRefreshTokenExpiredException, JbstRefreshTokenDbNotFoundException {
         var oldRefreshToken = this.tokensProvider.readRequestRefreshToken(request).getJwtRefreshToken();
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);

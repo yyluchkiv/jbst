@@ -1,6 +1,6 @@
 package jbst.foundation.validators.postgres;
 
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.validators.abtracts.AbstractBaseUsersValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ public class PostgresBaseUsersValidator extends AbstractBaseUsersValidator {
 
     @Autowired
     public PostgresBaseUsersValidator(
-            PostgresUsersRepository usersRepository
+            PostgresJbstUsersRepository usersRepository
     ) {
         super(
                 usersRepository

@@ -2,9 +2,9 @@ package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -37,7 +37,7 @@ class AbstractBaseUsersTokensServiceTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        UserEmailConfirmException.tokenNotFound()
+                        JbstUserEmailConfirmException.tokenNotFound()
                 ),
                 Arguments.of(
                         JbstUserToken.random(),
@@ -62,13 +62,13 @@ class AbstractBaseUsersTokensServiceTest {
     static class ContextConfiguration {
 
         @Bean
-        UsersTokensRepository usersTokensRepository() {
-            return mock(UsersTokensRepository.class);
+        JbstUsersTokensRepository usersTokensRepository() {
+            return mock(JbstUsersTokensRepository.class);
         }
 
         @Bean
-        UsersRepository usersRepository() {
-            return mock(UsersRepository.class);
+        JbstUsersRepository usersRepository() {
+            return mock(JbstUsersRepository.class);
         }
 
         @Bean
@@ -80,8 +80,8 @@ class AbstractBaseUsersTokensServiceTest {
         }
     }
 
-    private final UsersTokensRepository usersTokensRepository;
-    private final UsersRepository usersRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
+    private final JbstUsersRepository usersRepository;
 
     private final AbstractBaseUsersTokensService componentUnderTest;
 
@@ -106,7 +106,7 @@ class AbstractBaseUsersTokensServiceTest {
     @MethodSource("confirmEmailTest")
     void confirmEmailTest(
             JbstUserToken userToken,
-            UserEmailConfirmException exception
+            JbstUserEmailConfirmException exception
     ) {
         // Arrange
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
@@ -120,7 +120,7 @@ class AbstractBaseUsersTokensServiceTest {
         verify(this.usersTokensRepository).findByValueAsAny(token);
         if (nonNull(exception)) {
             assertThat(actual)
-                    .isInstanceOf(UserEmailConfirmException.class)
+                    .isInstanceOf(JbstUserEmailConfirmException.class)
                     .hasMessage(exception.getMessage());
         } else {
             verify(this.usersRepository).confirmEmail(email);

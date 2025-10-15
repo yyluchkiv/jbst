@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
@@ -11,8 +11,8 @@ import jbst.foundation.domain.properties.configs.security.jwt.*;
 import jbst.foundation.filters.jwt.JwtTokensFilter;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
-import jbst.foundation.handshakes.CsrfInterceptorHandshake;
-import jbst.foundation.handshakes.SecurityHandshakeHandler;
+import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
+import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -112,19 +112,19 @@ class JbstConfigurationSecurityJwtTest {
         }
 
         @Bean
-        CsrfInterceptorHandshake csrfInterceptorHandshake() {
-            return mock(CsrfInterceptorHandshake.class);
+        JbstCsrfInterceptorHandshake csrfInterceptorHandshake() {
+            return mock(JbstCsrfInterceptorHandshake.class);
         }
 
         @Bean
-        SecurityHandshakeHandler securityHandshakeHandler() {
-            return mock(SecurityHandshakeHandler.class);
+        JbstSecurityHandshakeHandler securityHandshakeHandler() {
+            return mock(JbstSecurityHandshakeHandler.class);
         }
 
         @Bean
         JbstConfigurationSecurityJwt configurationBaseSecurityJwt() {
             return new JbstConfigurationSecurityJwt(
-                    mock(JwtUserDetailsService.class),
+                    mock(JbstJwtUserDetailsService.class),
                     mock(BCryptPasswordEncoder.class),
                     mock(JwtTokensFilter.class),
                     mock(JwtAuthenticationEntryPointExceptionHandler.class),
@@ -144,8 +144,8 @@ class JbstConfigurationSecurityJwtTest {
     }
 
     // Handshakes
-    private final CsrfInterceptorHandshake csrfInterceptorHandshake;
-    private final SecurityHandshakeHandler securityHandshakeHandler;
+    private final JbstCsrfInterceptorHandshake csrfInterceptorHandshake;
+    private final JbstSecurityHandshakeHandler securityHandshakeHandler;
 
     private final JbstConfigurationSecurityJwt componentUnderTest;
 

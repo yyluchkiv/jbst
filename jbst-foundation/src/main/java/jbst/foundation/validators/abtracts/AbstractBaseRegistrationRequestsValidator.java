@@ -4,13 +4,13 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.events.EventRegistration0Failure;
 import jbst.foundation.domain.events.EventRegistration1Failure;
-import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.BaseRegistrationRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,11 +26,11 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     protected final SecurityJwtEventsPublisher securityJwtPublisher;
     protected final SecurityJwtIncidentsPublisher securityJwtIncidentPublisher;
     // Repositories
-    protected final InvitationsRepository invitationsRepository;
-    protected final UsersRepository usersRepository;
+    protected final JbstInvitationsRepository invitationsRepository;
+    protected final JbstUsersRepository usersRepository;
 
     @Override
-    public void validateRegistrationRequest0(RequestUserRegistration0 request) throws RegistrationException {
+    public void validateRegistrationRequest0(RequestUserRegistration0 request) throws JbstRegistrationException {
         request.assertPasswordsOrThrow();
         var existsByUsername = this.usersRepository.existsByUsername(request.username());
         if (existsByUsername) {
@@ -49,7 +49,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                             message
                     )
             );
-            throw new RegistrationException(message);
+            throw new JbstRegistrationException(message);
         }
         var existsByEmail = this.usersRepository.existsByEmail(request.email());
         if (existsByEmail) {
@@ -68,12 +68,12 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                             message
                     )
             );
-            throw new RegistrationException(message);
+            throw new JbstRegistrationException(message);
         }
     }
 
     @Override
-    public void validateRegistrationRequest1(RequestUserRegistration1 request) throws RegistrationException {
+    public void validateRegistrationRequest1(RequestUserRegistration1 request) throws JbstRegistrationException {
         request.assertPasswordsOrThrow();
         var user = this.usersRepository.findByUsernameAsJwtUserOrNull(request.username());
         if (nonNull(user)) {
@@ -92,7 +92,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                             message
                     )
             );
-            throw new RegistrationException(message);
+            throw new JbstRegistrationException(message);
         }
 
         var invitation = this.invitationsRepository.findByCodeAsAny(request.code());
@@ -115,7 +115,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                                 message
                         )
                 );
-                throw new RegistrationException(message);
+                throw new JbstRegistrationException(message);
             }
         } else {
             var exception = entityNotFound("Code", request.code());
@@ -133,7 +133,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                             exception
                     )
             );
-            throw new RegistrationException(exception);
+            throw new JbstRegistrationException(exception);
         }
     }
 }

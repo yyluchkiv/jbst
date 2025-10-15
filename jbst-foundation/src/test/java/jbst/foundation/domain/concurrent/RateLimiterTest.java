@@ -1,6 +1,6 @@
 package jbst.foundation.domain.concurrent;
 
-import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
+import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.utilities.concurrent.SleepUtility;
 import jbst.foundation.utilities.random.RandomUtility;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -94,7 +94,7 @@ class RateLimiterTest {
 
         // Assert
         if (exceptionally) {
-            assertThat(actual).isInstanceOf(TooManyRequestsException.class).isNotNull();
+            assertThat(actual).isInstanceOf(JbstTooManyRequestsException.class).isNotNull();
         } else {
             assertThat(actual).isNull();
         }

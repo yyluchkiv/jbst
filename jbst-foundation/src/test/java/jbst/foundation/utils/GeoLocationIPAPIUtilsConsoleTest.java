@@ -2,7 +2,7 @@ package jbst.foundation.utils;
 
 import jbst.foundation.configurations.JbstConfigurationUtils;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
 import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ class GeoLocationIPAPIUtilsConsoleTest {
 
     @Disabled
     @Test
-    void australiaTest() throws GeoLocationNotFoundException {
+    void australiaTest() throws JbstGeoLocationNotFoundException {
         // Act
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("1.1.1.1"));
 
@@ -46,7 +46,7 @@ class GeoLocationIPAPIUtilsConsoleTest {
 
     @Disabled
     @Test
-    void localhostTest() throws GeoLocationNotFoundException {
+    void localhostTest() throws JbstGeoLocationNotFoundException {
         // Act
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("127.0.0.1"));
 

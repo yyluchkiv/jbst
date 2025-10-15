@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
@@ -15,7 +15,7 @@ import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -46,13 +46,13 @@ class BaseTokensServiceTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        JwtUserDetailsService jwtUserDetailsAssistant() {
-            return mock(JwtUserDetailsService.class);
+        JbstJwtUserDetailsService jwtUserDetailsService() {
+            return mock(JbstJwtUserDetailsService.class);
         }
 
         @Bean
-        SessionRegistry sessionRegistry() {
-            return mock(SessionRegistry.class);
+        JbstSessionRegistry sessionRegistry() {
+            return mock(JbstSessionRegistry.class);
         }
 
         @Bean
@@ -66,7 +66,7 @@ class BaseTokensServiceTest {
         }
 
         @Bean
-        TokensProvider cookieProvider() {
+        TokensProvider tokensProvider() {
             return mock(TokensProvider.class);
         }
 
@@ -78,20 +78,20 @@ class BaseTokensServiceTest {
         @Bean
         TokensService tokenService() {
             return new BaseTokensService(
-                    this.jwtUserDetailsAssistant(),
+                    this.jwtUserDetailsService(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),
                     this.baseUsersSessionsService(),
-                    this.cookieProvider(),
+                    this.tokensProvider(),
                     this.securityUtils()
             );
         }
     }
 
     // Assistants
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Session
-    private final SessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     // Services
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;
@@ -127,7 +127,7 @@ class BaseTokensServiceTest {
     }
 
     @Test
-    void getJwtUserByAccessTokenOrThrowTest() throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
+    void getJwtUserByAccessTokenOrThrowTest() throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenDbNotFoundException {
         // Arrange
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
@@ -153,7 +153,7 @@ class BaseTokensServiceTest {
     }
 
     @Test
-    void refreshSessionOrThrowTest() throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
+    void refreshSessionOrThrowTest() throws JbstRefreshTokenNotFoundException, JbstRefreshTokenInvalidException, JbstRefreshTokenExpiredException, JbstRefreshTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);

@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.validators.abtracts.AbstractBaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -56,7 +56,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final InvitationsRepository invitationsRepository;
+        private final JbstInvitationsRepository invitationsRepository;
         private final JbstProperties jbstProperties;
 
         @Bean
@@ -68,7 +68,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         }
     }
 
-    private final InvitationsRepository invitationsRepository;
+    private final JbstInvitationsRepository invitationsRepository;
 
     private final BaseInvitationsRequestsValidator componentUnderTest;
 

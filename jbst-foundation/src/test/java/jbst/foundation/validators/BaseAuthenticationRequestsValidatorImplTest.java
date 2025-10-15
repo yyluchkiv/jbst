@@ -6,7 +6,7 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.validators.base.BaseBaseAuthenticationRequestsValidatorImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -38,8 +38,8 @@ class BaseAuthenticationRequestsValidatorImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        UsersTokensRepository usersTokensRepository() {
-            return mock(UsersTokensRepository.class);
+        JbstUsersTokensRepository usersTokensRepository() {
+            return mock(JbstUsersTokensRepository.class);
         }
 
         @Bean
@@ -95,7 +95,7 @@ class BaseAuthenticationRequestsValidatorImplTest {
     }
 
     // Repositories
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
 
     private final BaseAuthenticationRequestsValidator componentUnderTest;
 

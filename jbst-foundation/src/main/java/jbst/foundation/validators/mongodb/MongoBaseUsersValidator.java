@@ -1,6 +1,6 @@
 package jbst.foundation.validators.mongodb;
 
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.validators.abtracts.AbstractBaseUsersValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ public class MongoBaseUsersValidator extends AbstractBaseUsersValidator {
 
     @Autowired
     public MongoBaseUsersValidator(
-            MongoUsersRepository usersRepository
+            MongoJbstUsersRepository usersRepository
     ) {
         super(
                 usersRepository

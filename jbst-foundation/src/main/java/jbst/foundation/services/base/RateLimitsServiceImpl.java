@@ -3,7 +3,7 @@ package jbst.foundation.services.base;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.concurrent.RateLimiter;
-import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
+import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.RateLimitsService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ public class RateLimitsServiceImpl implements RateLimitsService {
     private final RateLimiter<Email> magicLinkRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofMinutes(15));
 
     @Override
-    public void acquireMagicLinkOrThrow(Email email) throws TooManyRequestsException {
+    public void acquireMagicLinkOrThrow(Email email) throws JbstTooManyRequestsException {
         this.magicLinkRL.acquire(email);
     }
 
     @Override
-    public void acquireEmailConfirmationOrThrow(JwtUser user) throws TooManyRequestsException {
+    public void acquireEmailConfirmationOrThrow(JwtUser user) throws JbstTooManyRequestsException {
         this.emailConfirmationRL.acquire(user.username());
     }
 }

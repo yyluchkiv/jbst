@@ -9,7 +9,7 @@ import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ import java.io.IOException;
 public class JwtTokensFilter extends OncePerRequestFilter {
 
     // Session
-    private final SessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     // Services
     private final TokensService tokensService;
     // Tokens
@@ -56,22 +56,22 @@ public class JwtTokensFilter extends OncePerRequestFilter {
 
             chain.doFilter(req, res);
         } catch (
-                AccessTokenNotFoundException |
-                AccessTokenExpiredException ex
+                JbstAccessTokenNotFoundException |
+                JbstAccessTokenExpiredException ex
         ) {
             // distinguish authenticated vs. anonymous/permitAll endpoints
             chain.doFilter(req, res);
         } catch (
-                RefreshTokenNotFoundException |
-                AccessTokenInvalidException |
-                RefreshTokenInvalidException |
-                AccessTokenDbNotFoundException |
-                TokenExtensionUnauthorizedException ex
+                JbstRefreshTokenNotFoundException |
+                JbstAccessTokenInvalidException |
+                JbstRefreshTokenInvalidException |
+                JbstAccessTokenDbNotFoundException |
+                JbstTokenExtensionUnauthorizedException ex
         ) {
             LOGGER.debug("JWT unauthorized request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
             res.sendError(HttpStatus.UNAUTHORIZED.value());
-        } catch (TokenExtensionAccessDeniedException ex) {
+        } catch (JbstTokenExtensionAccessDeniedException ex) {
             LOGGER.debug("JWT forbidden request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
             this.jwtAccessDeniedExceptionHandler.handle(req, res, new AccessDeniedException(ex.getMessage()));

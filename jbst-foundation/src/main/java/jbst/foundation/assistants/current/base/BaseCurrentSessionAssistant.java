@@ -6,13 +6,13 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
@@ -31,9 +31,9 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     // Settings
     protected final JbstSettingsService jbstSettingsService;
     // Sessions
-    protected final SessionRegistry sessionRegistry;
+    protected final JbstSessionRegistry sessionRegistry;
     // Repositories
-    protected final UsersSessionsRepository usersSessionsRepository;
+    protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Tokens
     protected final TokensProvider tokensProvider;
     // Utilities
@@ -74,7 +74,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     }
 
     @Override
-    public JbstUserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+    public JbstUserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         return this.usersSessionsRepository.isPresent(JwtAccessToken.of(cookie.value())).value();
     }
