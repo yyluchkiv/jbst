@@ -8,6 +8,8 @@ import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import static jbst.foundation.domain.enums.Status.*;
@@ -15,7 +17,7 @@ import static jbst.foundation.domain.enums.Status.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseStartupEventListener implements AbstractServerStartupEventListener {
+public class JbstStartupEventListener {
 
     // Settings
     protected final JbstSettingsService jbstSettingsService;
@@ -24,7 +26,7 @@ public class BaseStartupEventListener implements AbstractServerStartupEventListe
     // Properties
     protected final JbstProperties jbstProperties;
 
-    @Override
+    @EventListener(ApplicationStartedEvent.class)
     public void onStartup() {
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));

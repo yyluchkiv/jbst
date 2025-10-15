@@ -31,11 +31,10 @@ import java.util.stream.Stream;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseStartupEventListenerTest {
+class JbstStartupEventListenerTest {
 
     private static Stream<Arguments> onStartupTest() {
         return Stream.of(
@@ -66,8 +65,8 @@ class BaseStartupEventListenerTest {
         }
 
         @Bean
-        AbstractServerStartupEventListener baseStartupEventListener() {
-            return new BaseStartupEventListener(
+        JbstStartupEventListener baseStartupEventListener() {
+            return new JbstStartupEventListener(
                     this.jbstSettingsService(),
                     this.essenceConstructor(),
                     this.jbstProperties()
@@ -78,7 +77,7 @@ class BaseStartupEventListenerTest {
     private final JbstEssenceConstructor essenceConstructor;
     private final JbstProperties jbstProperties;
 
-    private final BaseStartupEventListener componentUnderTest;
+    private final JbstStartupEventListener componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
