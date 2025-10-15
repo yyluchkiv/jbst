@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 // TODO [YYL] support vs. orchestrators
 @RequiredArgsConstructor
-public final class GeoLocationUtils{
+public final class GeoLocationUtils {
 
     private final GeoLocationIPAPIUtils geoLocationIPAPIUtils;
     private final GeoLocationMindMaxUtils geoLocationMindMaxUtils;
