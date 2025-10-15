@@ -4,7 +4,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractBaseSuperadminService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class PostgresBaseSuperadminService extends AbstractBaseSuperadminService
     @Autowired
     public PostgresBaseSuperadminService(
             IncidentPublisher incidentPublisher,
-            SessionRegistry sessionRegistry,
+            JbstSessionRegistry sessionRegistry,
             PostgresJbstInvitationsRepository invitationsRepository,
             PostgresJbstUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask

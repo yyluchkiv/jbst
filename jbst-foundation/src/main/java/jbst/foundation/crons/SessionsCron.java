@@ -4,7 +4,7 @@ import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class SessionsCron extends AbstractBaseCron {
 
     // Sessions
-    private final SessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Incidents

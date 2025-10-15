@@ -42,24 +42,23 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstConfigurationMongoRepositories {
-
-    // Repositories
-    private final MongoJbstSettingsRepository settingsRepository;
-    private final MongoJbstInvitationsRepository invitationsRepository;
-    private final MongoJbstUsersTokensRepository usersTokensRepository;
-    private final MongoJbstUsersRepository usersRepository;
-    private final MongoJbstUsersSessionsRepository userSessionRepository;
     // Properties
     private final JbstProperties jbstProperties;
 
     @Bean
-    public JbstMongoRepositories jbstMongoRepositories() {
+    public JbstMongoRepositories jbstMongoRepositories(
+            MongoJbstSettingsRepository settingsRepository,
+            MongoJbstInvitationsRepository invitationsRepository,
+            MongoJbstUsersTokensRepository usersTokensRepository,
+            MongoJbstUsersRepository usersRepository,
+            MongoJbstUsersSessionsRepository userSessionRepository
+    ) {
         return new JbstMongoRepositories(
-                this.settingsRepository,
-                this.invitationsRepository,
-                this.usersTokensRepository,
-                this.usersRepository,
-                this.userSessionRepository
+                settingsRepository,
+                invitationsRepository,
+                usersTokensRepository,
+                usersRepository,
+                userSessionRepository
         );
     }
 

@@ -57,7 +57,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractSessionRegistryTest {
+class JbstSessionRegistryTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -82,8 +82,8 @@ class AbstractSessionRegistryTest {
         }
 
         @Bean
-        AbstractSessionRegistry sessionRegistry() {
-            return new AbstractSessionRegistry(
+        JbstSessionRegistry sessionRegistry() {
+            return new JbstSessionRegistry(
                     this.securityJwtPublisher(),
                     this.securityJwtIncidentPublisher(),
                     this.userSessionService(),
@@ -100,7 +100,7 @@ class AbstractSessionRegistryTest {
     // Repositories
     private final JbstUsersSessionsRepository usersSessionsRepository;
 
-    private final SessionRegistry componentUnderTest;
+    private final JbstSessionRegistry componentUnderTest;
 
     @BeforeEach
     void beforeEach() throws Exception {

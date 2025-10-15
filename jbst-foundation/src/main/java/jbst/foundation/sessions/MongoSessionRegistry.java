@@ -5,7 +5,7 @@ import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.mongodb.MongoBaseUsersSessionsService;
 
-public class MongoSessionRegistry extends AbstractSessionRegistry {
+public class MongoSessionRegistry extends JbstSessionRegistry {
 
     public MongoSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,

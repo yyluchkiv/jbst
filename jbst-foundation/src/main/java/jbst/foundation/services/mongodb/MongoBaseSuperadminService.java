@@ -4,7 +4,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractBaseSuperadminService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class MongoBaseSuperadminService extends AbstractBaseSuperadminService {
     @Autowired
     public MongoBaseSuperadminService(
             IncidentPublisher incidentPublisher,
-            SessionRegistry sessionRegistry,
+            JbstSessionRegistry sessionRegistry,
             MongoJbstInvitationsRepository invitationsRepository,
             MongoJbstUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask

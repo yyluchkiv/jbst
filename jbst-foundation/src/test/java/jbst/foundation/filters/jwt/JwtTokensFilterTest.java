@@ -12,7 +12,7 @@ import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -55,8 +55,8 @@ class JwtTokensFilterTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        SessionRegistry sessionRegistry() {
-            return mock(SessionRegistry.class);
+        JbstSessionRegistry sessionRegistry() {
+            return mock(JbstSessionRegistry.class);
         }
 
         @Bean
@@ -92,7 +92,7 @@ class JwtTokensFilterTest {
     }
 
     // Session
-    private final SessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     // Services
     private final TokensService tokensService;
     // Tokens

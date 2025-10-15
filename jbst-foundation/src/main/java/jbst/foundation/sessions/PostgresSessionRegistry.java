@@ -5,7 +5,7 @@ import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.postgres.PostgresBaseUsersSessionsService;
 
-public class PostgresSessionRegistry extends AbstractSessionRegistry {
+public class PostgresSessionRegistry extends JbstSessionRegistry {
 
     public PostgresSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,

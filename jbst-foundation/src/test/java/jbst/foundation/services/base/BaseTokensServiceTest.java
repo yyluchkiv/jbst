@@ -15,7 +15,7 @@ import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.SessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +51,8 @@ class BaseTokensServiceTest {
         }
 
         @Bean
-        SessionRegistry sessionRegistry() {
-            return mock(SessionRegistry.class);
+        JbstSessionRegistry sessionRegistry() {
+            return mock(JbstSessionRegistry.class);
         }
 
         @Bean
@@ -91,7 +91,7 @@ class BaseTokensServiceTest {
     // Assistants
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Session
-    private final SessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     // Services
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;

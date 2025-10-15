@@ -20,6 +20,7 @@ import jbst.foundation.services.BaseUsersSessionsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,7 +31,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractSessionRegistry implements SessionRegistry {
+public abstract class JbstSessionRegistry {
     protected final ConcurrentHashMap.KeySetView<Session, Boolean> sessions = ConcurrentHashMap.newKeySet();
 
     // Publishers
@@ -41,28 +42,25 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     // Repositories
     protected final JbstUsersSessionsRepository usersSessionsRepository;
 
-    @Override
-    public Set<String> getActiveSessionsUsernamesIdentifiers() {
+    public final Set<String> getActiveSessionsUsernamesIdentifiers() {
         return this.sessions.stream()
                 .map(session -> session.username().value())
                 .collect(Collectors.toSet());
     }
 
-    @Override
-    public Set<Username> getActiveSessionsUsernames() {
+    public final Set<Username> getActiveSessionsUsernames() {
         return this.sessions.stream()
                 .map(Session::username)
                 .collect(Collectors.toSet());
     }
 
-    @Override
-    public Set<JwtAccessToken> getActiveSessionsAccessTokens() {
+    public final Set<JwtAccessToken> getActiveSessionsAccessTokens() {
         return this.sessions.stream()
                 .map(Session::accessToken)
                 .collect(Collectors.toSet());
     }
 
-    @Override
+    @Async
     public void register(Session session) {
         var username = session.username();
         boolean added = this.sessions.add(session);
@@ -72,7 +70,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         }
     }
 
-    @Override
+    @Async
     public void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken) {
         this.sessions.removeIf(session -> session.refreshToken().equals(oldRefreshToken));
         var newSession = new Session(username, newAccessToken, newRefreshToken);
@@ -83,7 +81,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         }
     }
 
-    @Override
+    @Async
     public void logout(Username username, JwtAccessToken accessToken) {
         LOGGER.debug(USER_ACTION, username, "Session Deletion");
         var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
@@ -103,8 +101,8 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
 
     }
 
-    @Override
-    public void cleanByExpiredRefreshTokens(Set<Username> usernames) {
+    // think about migrating to separate service/registry
+    public final void cleanByExpiredRefreshTokens(Set<Username> usernames) {
         var sessionsValidatedTuple2 = this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames);
 
         sessionsValidatedTuple2.expiredSessions().forEach(tuple -> {
@@ -129,8 +127,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: {}", deleted);
     }
 
-    @Override
-    public ResponseUserSessionsTable getSessionsTable(Username username, RequestAccessToken requestAccessToken) {
+    public final ResponseUserSessionsTable getSessionsTable(Username username, RequestAccessToken requestAccessToken) {
         return ResponseUserSessionsTable.of(this.usersSessionsRepository.getUsersSessionsTable(username, requestAccessToken));
     }
 }
