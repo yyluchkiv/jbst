@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ResourceExceptionHandlerTest {
+class JbstResourceExceptionHandlerTest {
 
     @Configuration
     @Import({
@@ -40,7 +40,7 @@ class ResourceExceptionHandlerTest {
 
     }
 
-    private final ResourceExceptionHandler componentUnderTest;
+    private final JbstResourceExceptionHandler componentUnderTest;
 
     private static Stream<Arguments> unauthorizedResponseErrorMessageTest() {
         return Stream.of(

@@ -4,7 +4,7 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.foundation.handlers.ResourceExceptionHandler;
+import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
@@ -48,8 +48,8 @@ public class TestConfigurationResources {
     // Exceptions
     // =================================================================================================================
     @Bean
-    ResourceExceptionHandler resourceExceptionHandler() {
-        return new ResourceExceptionHandler(this.incidentPublisher());
+    JbstResourceExceptionHandler resourceExceptionHandler() {
+        return new JbstResourceExceptionHandler(this.incidentPublisher());
     }
 
     // =================================================================================================================

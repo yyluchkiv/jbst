@@ -2,7 +2,7 @@ package jbst.server.iam.configurations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jbst.foundation.handlers.ResourceExceptionHandler;
+import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public abstract class TestRunnerResources {
     protected MockMvc mvc;
 
     @Autowired
-    protected ResourceExceptionHandler resourceExceptionHandler;
+    protected JbstResourceExceptionHandler resourceExceptionHandler;
 
     public void beforeByResource(Object object) {
         this.mvc = MockMvcBuilders

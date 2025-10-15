@@ -30,7 +30,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.une
 @Order
 @ControllerAdvice
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ResourceExceptionHandler {
+public class JbstResourceExceptionHandler {
 
     private final IncidentPublisher incidentPublisher;
 
