@@ -15,7 +15,7 @@ import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.BaseUsersSessionsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     // Services
     protected final BaseUsersSessionsService baseUsersSessionsService;
     // Repositories
-    protected final UsersSessionsRepository usersSessionsRepository;
+    protected final JbstUsersSessionsRepository usersSessionsRepository;
 
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {

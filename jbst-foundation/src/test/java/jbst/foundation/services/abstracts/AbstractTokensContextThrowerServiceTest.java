@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -68,8 +68,8 @@ class AbstractTokensContextThrowerServiceTest {
         }
 
         @Bean
-        UsersSessionsRepository usersSessionsRepository() {
-            return mock(UsersSessionsRepository.class);
+        JbstUsersSessionsRepository usersSessionsRepository() {
+            return mock(JbstUsersSessionsRepository.class);
         }
 
         @Bean
@@ -90,7 +90,7 @@ class AbstractTokensContextThrowerServiceTest {
     // Assistants
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Repositories
-    private final UsersSessionsRepository usersSessionsRepository;
+    private final JbstUsersSessionsRepository usersSessionsRepository;
     // Utilities
     private final JbstSecurityUtils securityUtils;
 

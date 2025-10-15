@@ -13,7 +13,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.dto.requests.RequestUsers;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.configs.PostgresBeforeAllCallback;
 import jbst.foundation.repositories.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +50,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
+class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
 
-    private final PostgresUsersRepository usersRepository;
+    private final PostgresJbstUsersRepository usersRepository;
 
     @Override
     public JpaRepository<PostgresDbUser, String> getJpaRepository() {

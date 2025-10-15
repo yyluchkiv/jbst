@@ -11,8 +11,8 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,13 +41,13 @@ class AbstractBaseUsersServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        UsersTokensRepository usersTokensRepository() {
-            return mock(UsersTokensRepository.class);
+        JbstUsersTokensRepository usersTokensRepository() {
+            return mock(JbstUsersTokensRepository.class);
         }
 
         @Bean
-        UsersRepository userRepository() {
-            return mock(UsersRepository.class);
+        JbstUsersRepository userRepository() {
+            return mock(JbstUsersRepository.class);
         }
 
         @Bean
@@ -65,8 +65,8 @@ class AbstractBaseUsersServiceTest {
         }
     }
 
-    private final UsersTokensRepository usersTokensRepository;
-    private final UsersRepository usersRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
+    private final JbstUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final AbstractBaseUsersService componentUnderTest;

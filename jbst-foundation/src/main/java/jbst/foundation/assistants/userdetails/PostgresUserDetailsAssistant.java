@@ -1,11 +1,11 @@
 package jbst.foundation.assistants.userdetails;
 
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 
 public class PostgresUserDetailsAssistant extends JbstJwtUserDetailsService {
 
     public PostgresUserDetailsAssistant(
-            PostgresUsersRepository usersRepository
+            PostgresJbstUsersRepository usersRepository
     ) {
         super(
                 usersRepository

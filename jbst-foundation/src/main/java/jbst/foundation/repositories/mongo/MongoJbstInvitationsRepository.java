@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -19,7 +19,7 @@ import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_U
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvitation, String>, InvitationsRepository {
+public interface MongoJbstInvitationsRepository extends MongoRepository<MongoDbInvitation, String>, JbstInvitationsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================

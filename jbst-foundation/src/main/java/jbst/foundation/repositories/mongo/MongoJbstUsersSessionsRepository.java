@@ -1,8 +1,8 @@
-package jbst.foundation.repositories.postgres;
+package jbst.foundation.repositories.mongo;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
+import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
@@ -10,12 +10,10 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.UsersSessionsRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.mongodb.repository.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +24,7 @@ import java.util.stream.Collectors;
 import static jbst.foundation.domain.dto.responses.ResponseUserSession2.*;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 
-@SuppressWarnings("JpaQlInspection")
-public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, UsersSessionsRepository {
+public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, JbstUsersSessionsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
@@ -85,16 +82,14 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default List<JbstUserSession> findByUsernameInAsAny(Set<Username> usernames) {
         return this.findByUsernameIn(usernames).stream()
-                .map(PostgresDbUserSession::userSession)
+                .map(MongoDbUserSession::userSession)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     default void enableMetadataRenewCron() {
         this.setMetadataRenewCron(true);
     }
 
-    @Transactional
     default JbstUserSession enableMetadataRenewManually(UserSessionId sessionId) {
         this.setMetadataRenewManually(sessionId.value(), true);
         return this.isPresent(sessionId).value();
@@ -104,63 +99,51 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         this.deleteById(sessionId.value());
     }
 
-    @Transactional
     default long delete(Set<UserSessionId> sessionsIds) {
         return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
     }
 
-    @Transactional
     default void deleteByUsernameExceptAccessToken(Username username, RequestAccessToken requestAccessToken) {
         this.deleteByUsernameExceptAccessToken(username, requestAccessToken.getJwtAccessToken());
     }
 
-    @Transactional
     default void deleteExceptAccessToken(RequestAccessToken requestAccessToken) {
         this.deleteExceptToken(requestAccessToken.getJwtAccessToken());
     }
 
     default JbstUserSession saveAs(JbstUserSession userSession) {
-        var entity = this.save(new PostgresDbUserSession(userSession));
+        var entity = this.save(new MongoDbUserSession(userSession));
         return entity.userSession();
     }
 
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    Optional<PostgresDbUserSession> findByIdAndUsername(String sessionId, Username username);
-    Optional<PostgresDbUserSession> findByAccessToken(JwtAccessToken accessToken);
-    Optional<PostgresDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
-    List<PostgresDbUserSession> findByUsername(Username username);
-    List<PostgresDbUserSession> findByUsernameIn(Set<Username> usernames);
+    Optional<MongoDbUserSession> findByIdAndUsername(String sessionId, Username username);
+    Optional<MongoDbUserSession> findByAccessToken(JwtAccessToken accessToken);
+    Optional<MongoDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
+    List<MongoDbUserSession> findByUsername(Username username);
+    List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
 
-    @Transactional
     long deleteByIdIn(List<String> ids);
 
     // ================================================================================================================
     // Queries
     // ================================================================================================================
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE PostgresDbUserSession s SET s.metadataRenewCron = :flag")
-    void setMetadataRenewCron(@Param("flag") boolean flag);
+    @Query("{}")
+    @Update("{ '$set': { 'metadataRenewCron': ?0 } }")
+    void setMetadataRenewCron(boolean flag);
 
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE PostgresDbUserSession s SET s.metadataRenewManually = :flag WHERE s.id = :sessionId")
-    void setMetadataRenewManually(@Param("sessionId") String sessionId, @Param("flag") boolean flag);
+    @Query("{ 'id' : ?0}")
+    @Update("{ '$set': { 'metadataRenewManually': ?1 } }")
+    void setMetadataRenewManually(String sessionId, boolean flag);
 
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.username IN :usernames")
-    void deleteByUsernames(@Param("usernames") Set<Username> usernames);
+    @Query(value = "{ 'username': { '$in': ?0}}", delete = true)
+    void deleteByUsernames(Set<Username> usernames);
 
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.username = :username AND s.accessToken != :accessToken")
-    void deleteByUsernameExceptAccessToken(@Param("username") Username username, @Param("accessToken") JwtAccessToken accessToken);
+    @Query(value = "{ 'username': ?0, 'accessToken': { $ne: ?1 } }", delete = true)
+    void deleteByUsernameExceptAccessToken(Username username, JwtAccessToken accessToken);
 
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.accessToken != :accessToken")
-    void deleteExceptToken(@Param("accessToken") JwtAccessToken accessToken);
+    @Query(value = "{ 'accessToken': { $ne: ?0 } }", delete = true)
+    void deleteExceptToken(JwtAccessToken accessToken);
 }

@@ -6,7 +6,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,8 +40,8 @@ class AbstractBaseInvitationsServiceTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        InvitationsRepository invitationsRepository() {
-            return mock(InvitationsRepository.class);
+        JbstInvitationsRepository invitationsRepository() {
+            return mock(JbstInvitationsRepository.class);
         }
 
         @Bean
@@ -53,7 +53,7 @@ class AbstractBaseInvitationsServiceTest {
         }
     }
 
-    private final InvitationsRepository invitationsRepository;
+    private final JbstInvitationsRepository invitationsRepository;
     private final JbstProperties jbstProperties;
 
     private final AbstractBaseInvitationsService componentUnderTest;

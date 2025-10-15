@@ -1,7 +1,7 @@
 package jbst.foundation.services.postgres;
 
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
-import jbst.foundation.repositories.postgres.PostgresUsersTokensRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
 import jbst.foundation.services.abstracts.AbstractBaseUsersTokensService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +11,8 @@ public class PostgresBaseUsersTokensService extends AbstractBaseUsersTokensServi
 
     @Autowired
     public PostgresBaseUsersTokensService(
-            PostgresUsersTokensRepository usersTokensRepository,
-            PostgresUsersRepository usersRepository
+            PostgresJbstUsersTokensRepository usersTokensRepository,
+            PostgresJbstUsersRepository usersRepository
     ) {
         super(
                 usersTokensRepository,

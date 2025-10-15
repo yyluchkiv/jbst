@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.ZoneId;
 
-public interface UsersRepository {
+public interface JbstUsersRepository {
     TuplePresence<JwtUser> isPresent(UserId userId);
     JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException;
     JwtUser findByUsernameAsJwtUserOrNull(Username username);

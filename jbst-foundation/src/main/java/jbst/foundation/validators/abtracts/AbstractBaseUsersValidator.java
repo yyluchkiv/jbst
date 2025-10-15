@@ -3,7 +3,7 @@ package jbst.foundation.validators.abtracts;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.BaseUsersValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
     // Repositories
-    protected final UsersRepository usersRepository;
+    protected final JbstUsersRepository usersRepository;
 
     @Override
     public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 request) {

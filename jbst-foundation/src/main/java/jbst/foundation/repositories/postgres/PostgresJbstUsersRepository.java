@@ -14,7 +14,7 @@ import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,7 +35,7 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings({"JpaQlInspection", "SqlNoDataSourceInspection"})
-public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, JpaSpecificationExecutor<PostgresDbUser>, UsersRepository {
+public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUser, String>, JpaSpecificationExecutor<PostgresDbUser>, JbstUsersRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================

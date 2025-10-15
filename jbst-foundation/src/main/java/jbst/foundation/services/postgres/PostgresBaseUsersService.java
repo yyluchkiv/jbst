@@ -1,7 +1,7 @@
 package jbst.foundation.services.postgres;
 
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
-import jbst.foundation.repositories.postgres.PostgresUsersTokensRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
 import jbst.foundation.services.abstracts.AbstractBaseUsersService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ public class PostgresBaseUsersService extends AbstractBaseUsersService {
 
     @Autowired
     public PostgresBaseUsersService(
-            PostgresUsersTokensRepository usersTokensRepository,
-            PostgresUsersRepository usersRepository,
+            PostgresJbstUsersTokensRepository usersTokensRepository,
+            PostgresJbstUsersRepository usersRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
         super(

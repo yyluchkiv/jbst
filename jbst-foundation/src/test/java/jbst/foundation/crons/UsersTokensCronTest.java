@@ -2,7 +2,7 @@ package jbst.foundation.crons;
 
 import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,8 +37,8 @@ public class UsersTokensCronTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        UsersTokensRepository usersTokensRepository() {
-            return mock(UsersTokensRepository.class);
+        JbstUsersTokensRepository usersTokensRepository() {
+            return mock(JbstUsersTokensRepository.class);
         }
 
         @Bean
@@ -56,7 +56,7 @@ public class UsersTokensCronTest {
     }
 
     // Repository
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
     // Incidents
     private final IncidentPublisher incidentPublisher;
 

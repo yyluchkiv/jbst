@@ -2,7 +2,7 @@ package jbst.foundation.assistants.userdetails;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public abstract class JbstJwtUserDetailsService implements UserDetailsService {
 
     // Repository
-    protected final UsersRepository usersRepository;
+    protected final JbstUsersRepository usersRepository;
 
     @Override
     public JwtUser loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,7 +1,7 @@
 package jbst.foundation.assistants.userdetails;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +24,8 @@ class JbstJwtUserDetailsServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        UsersRepository usersRepository() {
-            return mock(UsersRepository.class);
+        JbstUsersRepository usersRepository() {
+            return mock(JbstUsersRepository.class);
         }
 
         @Bean
@@ -36,7 +36,7 @@ class JbstJwtUserDetailsServiceTest {
         }
     }
 
-    private final UsersRepository usersRepository;
+    private final JbstUsersRepository usersRepository;
 
     private final JbstJwtUserDetailsService jwtUserDetailsService;
 

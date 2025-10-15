@@ -29,8 +29,8 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensService;
@@ -83,8 +83,8 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
-    private final UsersRepository usersRepository;
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersRepository usersRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     private final JbstJwtUserDetailsService jwtUserDetailsService;

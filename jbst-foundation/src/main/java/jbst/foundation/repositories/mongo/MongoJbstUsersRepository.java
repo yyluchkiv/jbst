@@ -13,7 +13,7 @@ import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +30,7 @@ import static jbst.foundation.domain.constants.JbstConstants.SpringAuthorities.S
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
-public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, UsersRepository {
+public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, String>, JbstUsersRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================

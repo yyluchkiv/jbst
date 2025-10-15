@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 public abstract class AbstractBaseInvitationsRequestsValidator implements BaseInvitationsRequestsValidator {
 
     // Repositories
-    protected final InvitationsRepository invitationsRepository;
+    protected final JbstInvitationsRepository invitationsRepository;
     // Properties
     protected final JbstProperties jbstProperties;
 

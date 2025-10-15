@@ -10,8 +10,8 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.BaseUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,8 +27,8 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterO
 public abstract class AbstractBaseUsersService implements BaseUsersService {
 
     // Repository
-    private final UsersTokensRepository usersTokensRepository;
-    private final UsersRepository usersRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
+    private final JbstUsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 

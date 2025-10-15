@@ -9,7 +9,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.repositories.postgres.configs.PostgresBeforeAllCallback;
 import jbst.foundation.repositories.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
@@ -43,9 +43,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
+class PostgresJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
 
-    private final PostgresUsersSessionsRepository usersSessionsRepository;
+    private final PostgresJbstUsersSessionsRepository usersSessionsRepository;
 
     @Override
     public JpaRepository<PostgresDbUserSession, String> getJpaRepository() {

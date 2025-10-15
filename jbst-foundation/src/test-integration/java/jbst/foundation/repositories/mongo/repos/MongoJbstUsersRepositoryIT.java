@@ -13,7 +13,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.repositories.mongo.configs.MongoBeforeAllCallback;
 import jbst.foundation.repositories.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +46,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUsersRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
+class MongoJbstUsersRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
-    private final MongoUsersRepository usersRepository;
+    private final MongoJbstUsersRepository usersRepository;
 
     @Override
     public MongoRepository<MongoDbUser, String> getMongoRepository() {

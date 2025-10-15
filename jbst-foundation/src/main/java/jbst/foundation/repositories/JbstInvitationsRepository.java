@@ -9,7 +9,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 
-public interface InvitationsRepository {
+public interface JbstInvitationsRepository {
     TuplePresence<JbstInvitation> isPresent(InvitationId invitationId);
     List<ResponseInvitation> findResponseCodesByOwner(Username owner);
     JbstInvitation findByCodeAsAny(String value);

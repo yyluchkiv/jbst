@@ -6,8 +6,8 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.services.BaseRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -36,13 +36,13 @@ class AbstractBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        InvitationsRepository invitationsRepository() {
-            return mock(InvitationsRepository.class);
+        JbstInvitationsRepository invitationsRepository() {
+            return mock(JbstInvitationsRepository.class);
         }
 
         @Bean
-        UsersRepository userRepository() {
-            return mock(UsersRepository.class);
+        JbstUsersRepository userRepository() {
+            return mock(JbstUsersRepository.class);
         }
 
         @Bean
@@ -60,8 +60,8 @@ class AbstractBaseRegistrationServiceTest {
         }
     }
 
-    private final InvitationsRepository invitationsRepository;
-    private final UsersRepository usersRepository;
+    private final JbstInvitationsRepository invitationsRepository;
+    private final JbstUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final BaseRegistrationService componentUnderTest;

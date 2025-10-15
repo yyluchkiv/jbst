@@ -7,7 +7,7 @@ import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.configs.MongoBeforeAllCallback;
 import jbst.foundation.repositories.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +36,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoInvitationsRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
+class MongoJbstInvitationsRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
-    private final MongoInvitationsRepository invitationsRepository;
+    private final MongoJbstInvitationsRepository invitationsRepository;
 
     @Override
     public MongoRepository<MongoDbInvitation, String> getMongoRepository() {

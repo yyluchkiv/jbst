@@ -4,8 +4,8 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.services.BaseRegistrationService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public abstract class AbstractBaseRegistrationService implements BaseRegistrationService {
 
     // Repositories
-    private final InvitationsRepository invitationsRepository;
-    private final UsersRepository usersRepository;
+    private final JbstInvitationsRepository invitationsRepository;
+    private final JbstUsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 

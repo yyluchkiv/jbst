@@ -1,6 +1,7 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.repositories.mongo.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -29,12 +31,41 @@ class JbstJbstConfigurationMongoRepositoriesTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-
         private final JbstProperties jbstProperties;
+
+        @Bean
+        MongoJbstSettingsRepository settingsRepository() {
+            return mock(MongoJbstSettingsRepository.class);
+        }
+
+        @Bean
+        MongoJbstInvitationsRepository invitationsRepository() {
+            return mock(MongoJbstInvitationsRepository.class);
+        }
+
+        @Bean
+        MongoJbstUsersTokensRepository usersTokensRepository() {
+            return mock(MongoJbstUsersTokensRepository.class);
+        }
+
+        @Bean
+        MongoJbstUsersRepository usersRepository() {
+            return mock(MongoJbstUsersRepository.class);
+        }
+
+        @Bean
+        MongoJbstUsersSessionsRepository usersSessionsRepository() {
+            return mock(MongoJbstUsersSessionsRepository.class);
+        }
 
         @Bean
         JbstConfigurationMongoRepositories applicationMongoRepositories() {
             return new JbstConfigurationMongoRepositories(
+                    this.settingsRepository(),
+                    this.invitationsRepository(),
+                    this.usersTokensRepository(),
+                    this.usersRepository(),
+                    this.usersSessionsRepository(),
                     this.jbstProperties
             );
         }

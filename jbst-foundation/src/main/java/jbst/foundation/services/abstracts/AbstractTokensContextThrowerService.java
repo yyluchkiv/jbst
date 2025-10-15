@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     // Assistants
     protected final JbstJwtUserDetailsService jwtUserDetailsService;
     // Repositories
-    protected final UsersSessionsRepository usersSessionsRepository;
+    protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Utilities
     protected final JbstSecurityUtils securityUtils;
 

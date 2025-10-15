@@ -1,19 +1,18 @@
-package jbst.foundation.repositories.postgres;
+package jbst.foundation.repositories.mongo;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
+import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.foundation.repositories.UsersTokensRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
-public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbUserToken, String>, UsersTokensRepository {
+public interface MongoJbstUsersTokensRepository extends MongoRepository<MongoDbUserToken, String>, JbstUsersTokensRepository {
 
     // ================================================================================================================
     // Any
@@ -32,24 +31,22 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
-    @Transactional
     default void cleanupExpired() {
         this.deleteAllByExpiryTimestampBefore(getCurrentTimestamp());
     }
 
-    @Transactional
     default void cleanupUsed() {
         this.deleteAllByUsedIsTrue();
     }
 
     default TokenId saveAs(JbstUserToken token) {
-        var entity = this.save(new PostgresDbUserToken(token));
+        var entity = this.save(new MongoDbUserToken(token));
         return entity.tokenId();
     }
 
     default JbstUserToken saveAs(RequestUserToken request) {
         var entity = this.save(
-                new PostgresDbUserToken(
+                new MongoDbUserToken(
                         request
                 )
         );
@@ -59,14 +56,12 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    PostgresDbUserToken findByValue(String value);
-    PostgresDbUserToken findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
+    MongoDbUserToken findByValue(String value);
+    MongoDbUserToken findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
             Email email,
             UserTokenType type,
             long timestamp
     );
-    @Transactional
     void deleteAllByExpiryTimestampBefore(long timestamp);
-    @Transactional
     void deleteAllByUsedIsTrue();
 }

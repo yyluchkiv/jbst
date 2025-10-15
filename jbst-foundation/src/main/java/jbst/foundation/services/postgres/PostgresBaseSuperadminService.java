@@ -1,8 +1,8 @@
 package jbst.foundation.services.postgres;
 
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractBaseSuperadminService;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
@@ -18,8 +18,8 @@ public class PostgresBaseSuperadminService extends AbstractBaseSuperadminService
     public PostgresBaseSuperadminService(
             IncidentPublisher incidentPublisher,
             SessionRegistry sessionRegistry,
-            PostgresInvitationsRepository invitationsRepository,
-            PostgresUsersSessionsRepository usersSessionsRepository,
+            PostgresJbstInvitationsRepository invitationsRepository,
+            PostgresJbstUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {
         super(

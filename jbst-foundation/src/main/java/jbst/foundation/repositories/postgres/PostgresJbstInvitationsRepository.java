@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.InvitationsRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, InvitationsRepository {
+public interface PostgresJbstInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, JbstInvitationsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================

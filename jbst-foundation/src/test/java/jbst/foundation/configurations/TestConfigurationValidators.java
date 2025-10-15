@@ -3,10 +3,10 @@ package jbst.foundation.configurations;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersSessionsRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -41,22 +41,22 @@ public class TestConfigurationValidators {
     // Repositories
     // =================================================================================================================
     @Bean
-    InvitationsRepository invitationsRepository() {
-        return mock(InvitationsRepository.class);
+    JbstInvitationsRepository invitationsRepository() {
+        return mock(JbstInvitationsRepository.class);
     }
 
     @Bean
-    UsersRepository userRepository() {
-        return mock(UsersRepository.class);
+    JbstUsersRepository userRepository() {
+        return mock(JbstUsersRepository.class);
     }
 
     @Bean
-    UsersSessionsRepository userSessionRepository() {
-        return mock(UsersSessionsRepository.class);
+    JbstUsersSessionsRepository userSessionRepository() {
+        return mock(JbstUsersSessionsRepository.class);
     }
 
     @Bean
-    UsersTokensRepository usersTokensRepository() {
-        return mock(UsersTokensRepository.class);
+    JbstUsersTokensRepository usersTokensRepository() {
+        return mock(JbstUsersTokensRepository.class);
     }
 }

@@ -13,7 +13,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import java.util.List;
 import java.util.Set;
 
-public interface UsersSessionsRepository {
+public interface JbstUsersSessionsRepository {
     TuplePresence<JbstUserSession> isPresent(UserSessionId userSessionId, Username username);
     TuplePresence<JbstUserSession> isPresent(UserSessionId userSessionId);
     TuplePresence<JbstUserSession> isPresent(JwtAccessToken accessToken);

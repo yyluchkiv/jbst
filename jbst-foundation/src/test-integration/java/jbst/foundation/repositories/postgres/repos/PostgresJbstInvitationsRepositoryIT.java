@@ -7,7 +7,7 @@ import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.configs.PostgresBeforeAllCallback;
 import jbst.foundation.repositories.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +38,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresInvitationsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
+class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
 
-    private final PostgresInvitationsRepository invitationsRepository;
+    private final PostgresJbstInvitationsRepository invitationsRepository;
 
     @Override
     public JpaRepository<PostgresDbInvitation, String> getJpaRepository() {

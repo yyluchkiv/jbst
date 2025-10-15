@@ -17,7 +17,7 @@ import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
@@ -43,7 +43,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     // Publishers
     protected final SecurityJwtEventsPublisher securityJwtPublisher;
     // Repositories
-    protected final UsersSessionsRepository usersSessionsRepository;
+    protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Utils
     protected final UserMetadataUtils userMetadataUtils;
     // Utilities

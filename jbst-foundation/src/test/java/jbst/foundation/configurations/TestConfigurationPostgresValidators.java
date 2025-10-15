@@ -3,9 +3,9 @@ package jbst.foundation.configurations;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
-import jbst.foundation.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -44,17 +44,17 @@ public class TestConfigurationPostgresValidators {
     // Repositories
     // =================================================================================================================
     @Bean
-    PostgresInvitationsRepository invitationsRepository() {
-        return mock(PostgresInvitationsRepository.class);
+    PostgresJbstInvitationsRepository invitationsRepository() {
+        return mock(PostgresJbstInvitationsRepository.class);
     }
 
     @Bean
-    PostgresUsersRepository userRepository() {
-        return mock(PostgresUsersRepository.class);
+    PostgresJbstUsersRepository userRepository() {
+        return mock(PostgresJbstUsersRepository.class);
     }
 
     @Bean
-    PostgresUsersSessionsRepository userSessionRepository() {
-        return mock(PostgresUsersSessionsRepository.class);
+    PostgresJbstUsersSessionsRepository userSessionRepository() {
+        return mock(PostgresJbstUsersSessionsRepository.class);
     }
 }

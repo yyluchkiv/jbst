@@ -12,8 +12,8 @@ import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import jbst.foundation.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +44,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final InvitationsRepository invitationsRepository;
-        private final UsersRepository usersRepository;
+        private final JbstInvitationsRepository invitationsRepository;
+        private final JbstUsersRepository usersRepository;
         private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
         private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
 
@@ -62,8 +62,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
 
     private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
-    private final InvitationsRepository invitationsRepository;
-    private final UsersRepository usersRepository;
+    private final JbstInvitationsRepository invitationsRepository;
+    private final JbstUsersRepository usersRepository;
 
     private final BaseRegistrationRequestsValidator componentUnderTest;
 

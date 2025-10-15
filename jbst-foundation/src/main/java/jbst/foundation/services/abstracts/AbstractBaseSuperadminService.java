@@ -8,8 +8,8 @@ import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.BaseSuperadminService;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
@@ -26,8 +26,8 @@ public abstract class AbstractBaseSuperadminService implements BaseSuperadminSer
     // Sessions
     protected final SessionRegistry sessionRegistry;
     // Repositories
-    protected final InvitationsRepository invitationsRepository;
-    protected final UsersSessionsRepository usersSessionsRepository;
+    protected final JbstInvitationsRepository invitationsRepository;
+    protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Tasks
     protected final AbstractSuperAdminResetServerTask resetServerTask;
 

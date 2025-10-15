@@ -5,8 +5,8 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.essense.PostgresBaseEssenceConstructor;
-import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,13 +42,13 @@ class PostgresBaseEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        PostgresInvitationsRepository invitationsRepository() {
-            return mock(PostgresInvitationsRepository.class);
+        PostgresJbstInvitationsRepository invitationsRepository() {
+            return mock(PostgresJbstInvitationsRepository.class);
         }
 
         @Bean
-        PostgresUsersRepository userRepository() {
-            return mock(PostgresUsersRepository.class);
+        PostgresJbstUsersRepository userRepository() {
+            return mock(PostgresJbstUsersRepository.class);
         }
 
         @Bean
@@ -61,8 +61,8 @@ class PostgresBaseEssenceConstructorTest {
         }
     }
 
-    private final PostgresInvitationsRepository invitationsRepository;
-    private final PostgresUsersRepository usersRepository;
+    private final PostgresJbstInvitationsRepository invitationsRepository;
+    private final PostgresJbstUsersRepository usersRepository;
 
     private final JbstEssenceConstructor componentUnderTest;
 

@@ -1,8 +1,8 @@
 package jbst.foundation.services.mongodb;
 
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractBaseSuperadminService;
 import jbst.foundation.sessions.SessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
@@ -18,8 +18,8 @@ public class MongoBaseSuperadminService extends AbstractBaseSuperadminService {
     public MongoBaseSuperadminService(
             IncidentPublisher incidentPublisher,
             SessionRegistry sessionRegistry,
-            MongoInvitationsRepository invitationsRepository,
-            MongoUsersSessionsRepository usersSessionsRepository,
+            MongoJbstInvitationsRepository invitationsRepository,
+            MongoJbstUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {
         super(

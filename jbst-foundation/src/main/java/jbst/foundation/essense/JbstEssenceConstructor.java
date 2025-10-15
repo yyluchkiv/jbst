@@ -3,8 +3,8 @@ package jbst.foundation.essense;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +24,8 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 public abstract class JbstEssenceConstructor {
 
     // Repositories
-    protected final InvitationsRepository invitationsRepository;
-    protected final UsersRepository usersRepository;
+    protected final JbstInvitationsRepository invitationsRepository;
+    protected final JbstUsersRepository usersRepository;
     // Properties
     protected final JbstProperties jbstProperties;
 

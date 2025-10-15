@@ -6,8 +6,8 @@ import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
@@ -19,12 +19,12 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 public class MongoBaseEssenceConstructor extends JbstEssenceConstructor {
 
     // Repositories
-    protected final MongoInvitationsRepository mongoInvitationsRepository;
-    protected final MongoUsersRepository mongoUsersRepository;
+    protected final MongoJbstInvitationsRepository mongoJbstInvitationsRepository;
+    protected final MongoJbstUsersRepository mongoUsersRepository;
 
     public MongoBaseEssenceConstructor(
-            MongoInvitationsRepository invitationsRepository,
-            MongoUsersRepository usersRepository,
+            MongoJbstInvitationsRepository invitationsRepository,
+            MongoJbstUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
         super(
@@ -32,7 +32,7 @@ public class MongoBaseEssenceConstructor extends JbstEssenceConstructor {
                 usersRepository,
                 jbstProperties
         );
-        this.mongoInvitationsRepository = invitationsRepository;
+        this.mongoJbstInvitationsRepository = invitationsRepository;
         this.mongoUsersRepository = usersRepository;
     }
 
@@ -69,6 +69,6 @@ public class MongoBaseEssenceConstructor extends JbstEssenceConstructor {
                         )
                 )
                 .toList();
-        this.mongoInvitationsRepository.saveAll(invitations);
+        this.mongoJbstInvitationsRepository.saveAll(invitations);
     }
 }

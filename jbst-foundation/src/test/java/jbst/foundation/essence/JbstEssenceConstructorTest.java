@@ -5,8 +5,8 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.essense.JbstEssenceConstructor;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.tests.stubbers.AbstractMockService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,13 +58,13 @@ class JbstEssenceConstructorTest {
         }
 
         @Bean
-        InvitationsRepository invitationsRepository() {
-            return mock(InvitationsRepository.class);
+        JbstInvitationsRepository invitationsRepository() {
+            return mock(JbstInvitationsRepository.class);
         }
 
         @Bean
-        UsersRepository usersRepository() {
-            return mock(UsersRepository.class);
+        JbstUsersRepository usersRepository() {
+            return mock(JbstUsersRepository.class);
         }
 
         @Bean
@@ -94,8 +94,8 @@ class JbstEssenceConstructorTest {
     }
 
     // Repositories
-    private final InvitationsRepository invitationsRepository;
-    private final UsersRepository usersRepository;
+    private final JbstInvitationsRepository invitationsRepository;
+    private final JbstUsersRepository usersRepository;
     // Properties
     private final JbstProperties jbstProperties;
     // Mock
@@ -105,8 +105,8 @@ class JbstEssenceConstructorTest {
 
     @Autowired
     JbstEssenceConstructorTest(
-            InvitationsRepository invitationsRepository,
-            UsersRepository usersRepository,
+            JbstInvitationsRepository invitationsRepository,
+            JbstUsersRepository usersRepository,
             JbstProperties jbstProperties,
             AbstractMockService abstractMockService,
             @Qualifier("abstractEssenceConstructor") JbstEssenceConstructor componentUnderTest

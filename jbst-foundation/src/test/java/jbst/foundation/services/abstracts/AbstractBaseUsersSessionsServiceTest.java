@@ -22,7 +22,7 @@ import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
@@ -102,8 +102,8 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        UsersSessionsRepository usersSessionsRepository() {
-            return mock(UsersSessionsRepository.class);
+        JbstUsersSessionsRepository usersSessionsRepository() {
+            return mock(JbstUsersSessionsRepository.class);
         }
 
         @Bean
@@ -132,7 +132,7 @@ class AbstractBaseUsersSessionsServiceTest {
     // Publishers
     private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
     // Repositories
-    private final UsersSessionsRepository usersSessionsRepository;
+    private final JbstUsersSessionsRepository usersSessionsRepository;
     // Utils
     private final UserMetadataUtils userMetadataUtils;
 

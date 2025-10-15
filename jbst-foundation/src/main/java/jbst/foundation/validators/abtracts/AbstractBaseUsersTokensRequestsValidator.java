@@ -5,7 +5,7 @@ import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUsersTokensRequestsValidator {
 
     // Repositories
-    protected final UsersTokensRepository usersTokensRepository;
+    protected final JbstUsersTokensRepository usersTokensRepository;
 
     @Override
     public void validateExecuteConfirmEmail(JwtUser user) {

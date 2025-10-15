@@ -9,8 +9,8 @@ import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import jbst.foundation.repositories.InvitationsRepository;
-import jbst.foundation.repositories.UsersRepository;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.BaseRegistrationRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,8 +26,8 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     protected final SecurityJwtEventsPublisher securityJwtPublisher;
     protected final SecurityJwtIncidentsPublisher securityJwtIncidentPublisher;
     // Repositories
-    protected final InvitationsRepository invitationsRepository;
-    protected final UsersRepository usersRepository;
+    protected final JbstInvitationsRepository invitationsRepository;
+    protected final JbstUsersRepository usersRepository;
 
     @Override
     public void validateRegistrationRequest0(RequestUserRegistration0 request) throws JbstRegistrationException {

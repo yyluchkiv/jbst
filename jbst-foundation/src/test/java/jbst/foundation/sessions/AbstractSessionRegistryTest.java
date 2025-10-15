@@ -23,7 +23,7 @@ import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
-import jbst.foundation.repositories.UsersSessionsRepository;
+import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.BaseUsersSessionsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -77,8 +77,8 @@ class AbstractSessionRegistryTest {
         }
 
         @Bean
-        UsersSessionsRepository usersSessionsRepository() {
-            return mock(UsersSessionsRepository.class);
+        JbstUsersSessionsRepository usersSessionsRepository() {
+            return mock(JbstUsersSessionsRepository.class);
         }
 
         @Bean
@@ -98,7 +98,7 @@ class AbstractSessionRegistryTest {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Repositories
-    private final UsersSessionsRepository usersSessionsRepository;
+    private final JbstUsersSessionsRepository usersSessionsRepository;
 
     private final SessionRegistry componentUnderTest;
 

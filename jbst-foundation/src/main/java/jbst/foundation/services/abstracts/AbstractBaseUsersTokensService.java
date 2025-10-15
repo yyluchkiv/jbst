@@ -3,8 +3,8 @@ package jbst.foundation.services.abstracts;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.BaseUsersTokensService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,8 +18,8 @@ import static java.util.Objects.nonNull;
 public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensService {
 
     // Repositories
-    private final UsersTokensRepository usersTokensRepository;
-    private final UsersRepository usersRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
+    private final JbstUsersRepository usersRepository;
 
     @Override
     public void confirmEmail(String token) throws JbstUserEmailConfirmException {

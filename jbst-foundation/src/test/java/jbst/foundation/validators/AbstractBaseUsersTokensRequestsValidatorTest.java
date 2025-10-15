@@ -12,7 +12,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.validators.abtracts.AbstractBaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -239,7 +239,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final UsersTokensRepository usersTokensRepository;
+        private final JbstUsersTokensRepository usersTokensRepository;
 
         @Bean
         BaseUsersTokensRequestsValidator baseUsersEmailsTokensRequestsValidator() {
@@ -250,7 +250,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
 
     }
 
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
 
     private final BaseUsersTokensRequestsValidator componentUnderTest;
 

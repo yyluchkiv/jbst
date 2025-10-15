@@ -1,7 +1,7 @@
 package jbst.foundation.services.mongodb;
 
-import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.services.abstracts.AbstractBaseRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,8 +12,8 @@ public class MongoBaseRegistrationService extends AbstractBaseRegistrationServic
 
     @Autowired
     public MongoBaseRegistrationService(
-            MongoInvitationsRepository invitationsRepository,
-            MongoUsersRepository usersRepository,
+            MongoJbstInvitationsRepository invitationsRepository,
+            MongoJbstUsersRepository usersRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
         super(

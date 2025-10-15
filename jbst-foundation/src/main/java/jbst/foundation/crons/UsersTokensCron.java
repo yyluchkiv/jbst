@@ -2,7 +2,7 @@ package jbst.foundation.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class UsersTokensCron extends AbstractBaseCron {
 
     // Repository
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
     // Incidents
     private final IncidentPublisher incidentPublisher;
 

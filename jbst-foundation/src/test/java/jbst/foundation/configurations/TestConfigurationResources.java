@@ -6,8 +6,8 @@ import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.UsersRepository;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.services.*;
 import jbst.foundation.services.base.AuthenticationServiceImpl;
@@ -230,13 +230,13 @@ public class TestConfigurationResources {
     // Repositories
     // =================================================================================================================
     @Bean
-    UsersRepository usersRepository() {
-        return mock(UsersRepository.class);
+    JbstUsersRepository usersRepository() {
+        return mock(JbstUsersRepository.class);
     }
 
     @Bean
-    UsersTokensRepository usersTokensRepository() {
-        return mock(UsersTokensRepository.class);
+    JbstUsersTokensRepository usersTokensRepository() {
+        return mock(JbstUsersTokensRepository.class);
     }
 
     // =================================================================================================================

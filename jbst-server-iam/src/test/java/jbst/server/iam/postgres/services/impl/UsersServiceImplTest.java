@@ -1,7 +1,7 @@
 package jbst.server.iam.postgres.services.impl;
 
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
-import jbst.foundation.repositories.postgres.PostgresUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -28,8 +28,8 @@ class UsersServiceImplTest {
     static class ContextConfiguration {
 
         @Bean
-        PostgresUsersRepository usersRepository() {
-            return mock(PostgresUsersRepository.class);
+        PostgresJbstUsersRepository usersRepository() {
+            return mock(PostgresJbstUsersRepository.class);
         }
 
         @Bean
@@ -40,7 +40,7 @@ class UsersServiceImplTest {
         }
     }
 
-    private final PostgresUsersRepository postgresUsersRepository;
+    private final PostgresJbstUsersRepository postgresUsersRepository;
 
     private final UsersService componentUnderTest;
 

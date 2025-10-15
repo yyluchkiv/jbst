@@ -19,7 +19,7 @@ import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.repositories.UsersTokensRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.AuthenticationService;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
@@ -59,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
-    private final UsersTokensRepository usersTokensRepository;
+    private final JbstUsersTokensRepository usersTokensRepository;
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
