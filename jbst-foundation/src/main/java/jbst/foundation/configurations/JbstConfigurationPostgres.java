@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.essense.PostgresBaseEssenceConstructor;
+import jbst.foundation.essense.PostgresJbstEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
@@ -54,8 +54,8 @@ public class JbstConfigurationPostgres {
     }
 
     @Bean
-    PostgresBaseEssenceConstructor postgresBaseEssenceConstructor() {
-        return new PostgresBaseEssenceConstructor(
+    PostgresJbstEssenceConstructor postgresBaseEssenceConstructor() {
+        return new PostgresJbstEssenceConstructor(
                 this.postgresJbstInvitationsRepository,
                 this.postgresUsersRepository,
                 this.jbstProperties

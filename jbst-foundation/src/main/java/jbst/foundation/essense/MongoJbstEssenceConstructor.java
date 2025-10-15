@@ -1,13 +1,13 @@
 package jbst.foundation.essense;
 
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
+import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
+import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
@@ -16,15 +16,16 @@ import java.util.stream.IntStream;
 
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-public class PostgresBaseEssenceConstructor extends JbstEssenceConstructor {
+// TODO [YYL] fixme
+public class MongoJbstEssenceConstructor extends JbstEssenceConstructor {
 
     // Repositories
-    protected final PostgresJbstInvitationsRepository postgresJbstInvitationsRepository;
-    protected final PostgresJbstUsersRepository postgresUsersRepository;
+    protected final MongoJbstInvitationsRepository mongoJbstInvitationsRepository;
+    protected final MongoJbstUsersRepository mongoUsersRepository;
 
-    public PostgresBaseEssenceConstructor(
-            PostgresJbstInvitationsRepository invitationsRepository,
-            PostgresJbstUsersRepository usersRepository,
+    public MongoJbstEssenceConstructor(
+            MongoJbstInvitationsRepository invitationsRepository,
+            MongoJbstUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
         super(
@@ -32,8 +33,8 @@ public class PostgresBaseEssenceConstructor extends JbstEssenceConstructor {
                 usersRepository,
                 jbstProperties
         );
-        this.postgresJbstInvitationsRepository = invitationsRepository;
-        this.postgresUsersRepository = usersRepository;
+        this.mongoJbstInvitationsRepository = invitationsRepository;
+        this.mongoUsersRepository = usersRepository;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class PostgresBaseEssenceConstructor extends JbstEssenceConstructor {
         var dbUsers = defaultUsers.stream().
                 map(defaultUser -> {
                     var username = defaultUser.getUsername();
-                    var user = new PostgresDbUser(
+                    var user = new MongoDbUser(
                             UserCreationOption.STANDARD,
                             username,
                             defaultUser.getPassword(),
@@ -55,7 +56,7 @@ public class PostgresBaseEssenceConstructor extends JbstEssenceConstructor {
                     return user;
                 })
                 .toList();
-        this.postgresUsersRepository.saveAll(dbUsers);
+        this.mongoUsersRepository.saveAll(dbUsers);
         return dbUsers.size();
     }
 
@@ -63,12 +64,12 @@ public class PostgresBaseEssenceConstructor extends JbstEssenceConstructor {
     public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
         var invitations = IntStream.range(0, 10)
                 .mapToObj(i ->
-                        new PostgresDbInvitation(
+                        new MongoDbInvitation(
                                 defaultUser.getUsername(),
                                 authorities
                         )
                 )
                 .toList();
-        this.postgresJbstInvitationsRepository.saveAll(invitations);
+        this.mongoJbstInvitationsRepository.saveAll(invitations);
     }
 }

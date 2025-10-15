@@ -4,9 +4,9 @@ import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.essense.JbstEssenceConstructor;
-import jbst.foundation.essense.MongoBaseEssenceConstructor;
-import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
+import jbst.foundation.essense.PostgresJbstEssenceConstructor;
+import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoBaseEssenceConstructorTest {
+class PostgresJbstEssenceConstructorTest {
 
     @Configuration
     @Import({
@@ -42,18 +42,18 @@ class MongoBaseEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        MongoJbstInvitationsRepository invitationsRepository() {
-            return mock(MongoJbstInvitationsRepository.class);
+        PostgresJbstInvitationsRepository invitationsRepository() {
+            return mock(PostgresJbstInvitationsRepository.class);
         }
 
         @Bean
-        MongoJbstUsersRepository userRepository() {
-            return mock(MongoJbstUsersRepository.class);
+        PostgresJbstUsersRepository userRepository() {
+            return mock(PostgresJbstUsersRepository.class);
         }
 
         @Bean
         JbstEssenceConstructor essenceConstructor() {
-            return new MongoBaseEssenceConstructor(
+            return new PostgresJbstEssenceConstructor(
                     this.invitationsRepository(),
                     this.userRepository(),
                     this.jbstProperties
@@ -61,8 +61,8 @@ class MongoBaseEssenceConstructorTest {
         }
     }
 
-    private final MongoJbstInvitationsRepository invitationsRepository;
-    private final MongoJbstUsersRepository usersRepository;
+    private final PostgresJbstInvitationsRepository invitationsRepository;
+    private final PostgresJbstUsersRepository usersRepository;
 
     private final JbstEssenceConstructor componentUnderTest;
 
