@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.sessions.JbstSessionRegistry;
+import jbst.foundation.sessions.AbstractJbstSessionRegistry;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,8 +43,8 @@ class SessionsCronTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        JbstSessionRegistry sessionRegistry() {
-            return mock(JbstSessionRegistry.class);
+        AbstractJbstSessionRegistry sessionRegistry() {
+            return mock(AbstractJbstSessionRegistry.class);
         }
 
         @Bean
@@ -73,7 +73,7 @@ class SessionsCronTest {
         }
     }
 
-    private final JbstSessionRegistry sessionRegistry;
+    private final AbstractJbstSessionRegistry sessionRegistry;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final IncidentPublisher incidentPublisher;
     private final JbstProperties jbstProperties;

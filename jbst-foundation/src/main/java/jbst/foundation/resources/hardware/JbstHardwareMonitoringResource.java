@@ -6,7 +6,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.sessions.JbstSessionRegistry;
+import jbst.foundation.sessions.AbstractJbstSessionRegistry;
 import jbst.foundation.websockets.WebsocketsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import static jbst.foundation.utilities.hardware.HardwareUtility.getHeapMemory;
 public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
 
     // Sessions
-    private final JbstSessionRegistry sessionRegistry;
+    private final AbstractJbstSessionRegistry sessionRegistry;
     // Websockets
     private final WebsocketsService websocketsService;
     // Incidents
@@ -36,7 +36,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
 
     @Autowired
     public JbstHardwareMonitoringResource(
-            JbstSessionRegistry sessionRegistry,
+            AbstractJbstSessionRegistry sessionRegistry,
             WebsocketsService websocketsService,
             IncidentPublisher incidentPublisher,
             JbstHardwareMonitoringStore jbstHardwareMonitoringStore

@@ -11,7 +11,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.JbstSessionRegistry;
+import jbst.foundation.sessions.AbstractJbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class BaseTokensService implements TokensService {
     // Assistants
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Session
-    private final JbstSessionRegistry sessionRegistry;
+    private final AbstractJbstSessionRegistry sessionRegistry;
     // Services
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;

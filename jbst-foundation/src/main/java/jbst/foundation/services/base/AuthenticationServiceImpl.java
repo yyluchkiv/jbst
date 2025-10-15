@@ -24,7 +24,7 @@ import jbst.foundation.services.AuthenticationService;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensService;
-import jbst.foundation.sessions.JbstSessionRegistry;
+import jbst.foundation.sessions.AbstractJbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final CurrentSessionAssistant currentSessionAssistant;
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Sessions
-    private final JbstSessionRegistry sessionRegistry;
+    private final AbstractJbstSessionRegistry sessionRegistry;
     // Services
     private final BaseUsersService baseUsersService;
     private final BaseUsersSessionsService baseUsersSessionsService;

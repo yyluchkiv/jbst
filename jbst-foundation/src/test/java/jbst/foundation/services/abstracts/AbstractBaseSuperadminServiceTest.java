@@ -11,7 +11,7 @@ import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.sessions.JbstSessionRegistry;
+import jbst.foundation.sessions.AbstractJbstSessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
 import jbst.foundation.tests.stubbers.AbstractMockService;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +48,8 @@ class AbstractBaseSuperadminServiceTest {
         }
 
         @Bean
-        JbstSessionRegistry sessionRegistry() {
-            return mock(JbstSessionRegistry.class);
+        AbstractJbstSessionRegistry sessionRegistry() {
+            return mock(AbstractJbstSessionRegistry.class);
         }
 
         @Bean
@@ -99,7 +99,7 @@ class AbstractBaseSuperadminServiceTest {
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Sessions
-    private final JbstSessionRegistry sessionRegistry;
+    private final AbstractJbstSessionRegistry sessionRegistry;
     // Repositories
     private final JbstInvitationsRepository invitationsRepository;
     private final JbstUsersSessionsRepository usersSessionsRepository;

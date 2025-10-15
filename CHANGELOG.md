@@ -1,2 +1,2 @@
 ### Changelog [v1.25]
-— TBD
+— Modification: Spring + @Async + CGLIB fix

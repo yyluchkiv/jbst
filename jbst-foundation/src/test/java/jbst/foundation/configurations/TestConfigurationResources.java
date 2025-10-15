@@ -13,7 +13,7 @@ import jbst.foundation.services.*;
 import jbst.foundation.services.base.AuthenticationServiceImpl;
 import jbst.foundation.services.base.BaseUsersEmailsService;
 import jbst.foundation.services.base.RateLimitsServiceImpl;
-import jbst.foundation.sessions.JbstSessionRegistry;
+import jbst.foundation.sessions.AbstractJbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
@@ -81,8 +81,8 @@ public class TestConfigurationResources {
     // Sessions
     // =================================================================================================================
     @Bean
-    JbstSessionRegistry sessionRegistry() {
-        return mock(JbstSessionRegistry.class);
+    AbstractJbstSessionRegistry sessionRegistry() {
+        return mock(AbstractJbstSessionRegistry.class);
     }
 
     // =================================================================================================================
