@@ -66,7 +66,7 @@ class BaseTokensServiceTest {
         }
 
         @Bean
-        TokensProvider cookieProvider() {
+        TokensProvider tokensProvider() {
             return mock(TokensProvider.class);
         }
 
@@ -82,7 +82,7 @@ class BaseTokensServiceTest {
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),
                     this.baseUsersSessionsService(),
-                    this.cookieProvider(),
+                    this.tokensProvider(),
                     this.securityUtils()
             );
         }

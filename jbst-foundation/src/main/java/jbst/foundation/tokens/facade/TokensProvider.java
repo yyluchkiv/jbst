@@ -9,15 +9,104 @@ import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.tokens.providers.TokenCookiesProvider;
+import jbst.foundation.tokens.providers.TokenHeadersProvider;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
+import org.springframework.stereotype.Service;
 
-public interface TokensProvider {
-    void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
-    void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
-    DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws JbstCsrfTokenNotFoundException;
-    RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException;
-    RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException;
-    RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException;
-    RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException;
-    void clearTokens(HttpServletResponse httpResponse);
+@Slf4j
+@Service
+public class TokensProvider {
+
+    // Providers
+    private final TokenCookiesProvider tokensCookiesProvider;
+    private final TokenHeadersProvider tokensHeadersProvider;
+    // Properties
+    private final JbstProperties jbstProperties;
+
+    @Autowired
+    public TokensProvider(
+            @Qualifier("tokenCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
+            @Qualifier("tokenHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
+            JbstProperties jbstProperties
+    ) {
+        this.tokensCookiesProvider = tokensCookiesProvider;
+        this.tokensHeadersProvider = tokensHeadersProvider;
+        this.jbstProperties = jbstProperties;
+    }
+
+    public final void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
+        if (this.isCookiesProviderEnabled()) {
+            this.tokensCookiesProvider.createResponseAccessToken(jwtAccessToken, response);
+        } else {
+            this.tokensHeadersProvider.createResponseAccessToken(jwtAccessToken, response);
+        }
+    }
+
+    public final void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
+        if (this.isCookiesProviderEnabled()) {
+            this.tokensCookiesProvider.createResponseRefreshToken(jwtRefreshToken, response);
+        } else {
+            this.tokensHeadersProvider.createResponseRefreshToken(jwtRefreshToken, response);
+        }
+    }
+
+    public final DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws JbstCsrfTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readCsrfToken(httpRequest);
+        } else {
+            return this.tokensHeadersProvider.readCsrfToken(httpRequest);
+        }
+    }
+
+    public final RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestAccessToken(httpRequest);
+        } else {
+            return this.tokensHeadersProvider.readRequestAccessToken(httpRequest);
+        }
+    }
+
+    public final RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestAccessTokenOnWebsocketHandshake(httpRequest);
+        } else {
+            return this.tokensHeadersProvider.readRequestAccessTokenOnWebsocketHandshake(httpRequest);
+        }
+    }
+
+    public final RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestRefreshToken(httpRequest);
+        } else {
+            return this.tokensHeadersProvider.readRequestRefreshToken(httpRequest);
+        }
+    }
+
+    public final RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestRefreshTokenOnWebsocketHandshake(httpRequest);
+        } else {
+            return this.tokensHeadersProvider.readRequestRefreshTokenOnWebsocketHandshake(httpRequest);
+        }
+    }
+
+    public final void clearTokens(HttpServletResponse httpResponse) {
+        if (this.isCookiesProviderEnabled()) {
+            this.tokensCookiesProvider.clearTokens(httpResponse);
+        } else {
+            this.tokensHeadersProvider.clearTokens(httpResponse);
+        }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    public boolean isCookiesProviderEnabled() {
+        return this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getStorageMethod().isCookies();
+    }
 }

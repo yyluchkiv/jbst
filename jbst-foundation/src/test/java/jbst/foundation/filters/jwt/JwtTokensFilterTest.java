@@ -65,7 +65,7 @@ class JwtTokensFilterTest {
         }
 
         @Bean
-        TokensProvider cookieProvider() {
+        TokensProvider tokensProvider() {
             return mock(TokensProvider.class);
         }
 
@@ -84,7 +84,7 @@ class JwtTokensFilterTest {
             return new JwtTokensFilter(
                     this.sessionRegistry(),
                     this.tokenService(),
-                    this.cookieProvider(),
+                    this.tokensProvider(),
                     this.jwtTokenFilterExtension(),
                     this.jwtAccessDeniedExceptionHandler()
             );

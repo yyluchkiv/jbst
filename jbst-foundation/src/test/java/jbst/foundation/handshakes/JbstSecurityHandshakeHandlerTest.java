@@ -63,7 +63,7 @@ class JbstSecurityHandshakeHandlerTest {
         }
 
         @Bean
-        TokensProvider cookieProvider() {
+        TokensProvider tokensProvider() {
             return mock(TokensProvider.class);
         }
 
@@ -71,7 +71,7 @@ class JbstSecurityHandshakeHandlerTest {
         JbstSecurityHandshakeHandler securityHandshakeHandler() {
             return new JbstSecurityHandshakeHandler(
                     this.tokenService(),
-                    this.cookieProvider()
+                    this.tokensProvider()
             );
         }
     }

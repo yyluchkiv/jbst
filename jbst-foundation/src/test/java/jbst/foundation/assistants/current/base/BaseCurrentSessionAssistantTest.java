@@ -63,7 +63,7 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        TokensProvider cookieProvider() {
+        TokensProvider tokensProvider() {
             return mock(TokensProvider.class);
         }
 
@@ -78,7 +78,7 @@ class BaseCurrentSessionAssistantTest {
                     this.jbstSettingsService(),
                     this.sessionRegistry(),
                     this.usersSessionsRepository(),
-                    this.cookieProvider(),
+                    this.tokensProvider(),
                     this.securityUtils(),
                     this.jbstHardwareMonitoringStore()
             );

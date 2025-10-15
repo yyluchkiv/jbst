@@ -1,4 +1,4 @@
-package jbst.foundation.tokens.facade.impl;
+package jbst.foundation.tokens.facade;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,7 +13,6 @@ import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
-import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.tokens.providers.TokenCookiesProvider;
 import jbst.foundation.tokens.providers.TokenHeadersProvider;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
-class TokensProviderImplTest {
+class TokensProviderTest {
 
     private static Stream<Arguments> jwtTokenStoragesArgs() {
         return Stream.of(
@@ -69,7 +68,7 @@ class TokensProviderImplTest {
 
         @Bean
         TokensProvider tokensProvider() {
-            return new TokensProviderImpl(
+            return new TokensProvider(
                     this.tokensCookiesProvider(),
                     this.tokensHeadersProvider(),
                     this.jbstProperties()
@@ -84,7 +83,7 @@ class TokensProviderImplTest {
     private final TokensProvider componentUnderTest;
 
     @Autowired
-    public TokensProviderImplTest(
+    public TokensProviderTest(
             @Qualifier("tokensCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
             @Qualifier("tokensHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
             JbstProperties jbstProperties,
