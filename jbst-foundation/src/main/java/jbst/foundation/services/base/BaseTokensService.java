@@ -40,7 +40,7 @@ public class BaseTokensService implements TokensService {
     public JwtUser getJwtUserByAccessTokenOrThrow(
             RequestAccessToken requestAccessToken,
             RequestRefreshToken requestRefreshToken
-    ) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
+    ) throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenDbNotFoundException {
         var accessToken = requestAccessToken.getJwtAccessToken();
         var refreshToken = requestRefreshToken.getJwtRefreshToken();
 
@@ -58,7 +58,7 @@ public class BaseTokensService implements TokensService {
     public ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
+    ) throws JbstRefreshTokenNotFoundException, JbstRefreshTokenInvalidException, JbstRefreshTokenExpiredException, JbstRefreshTokenDbNotFoundException {
         var oldRefreshToken = this.tokensProvider.readRequestRefreshToken(request).getJwtRefreshToken();
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);

@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -193,7 +193,7 @@ class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    void getCurrentUserSessionTest() throws AccessTokenNotFoundException {
+    void getCurrentUserSessionTest() throws JbstAccessTokenNotFoundException {
         // Arrange
         var session = entity(JbstUserSession.class);
         var request = mock(HttpServletRequest.class);

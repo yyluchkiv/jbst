@@ -12,10 +12,10 @@ public interface TokensService {
     JwtUser getJwtUserByAccessTokenOrThrow(
             RequestAccessToken requestAccessToken,
             RequestRefreshToken requestRefreshToken
-    ) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException;
+    ) throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenDbNotFoundException;
 
     ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException;
+    ) throws JbstRefreshTokenNotFoundException, JbstRefreshTokenInvalidException, JbstRefreshTokenExpiredException, JbstRefreshTokenDbNotFoundException;
 }

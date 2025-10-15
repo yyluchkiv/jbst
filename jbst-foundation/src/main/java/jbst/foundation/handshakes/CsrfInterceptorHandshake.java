@@ -1,6 +1,6 @@
 package jbst.foundation.handshakes;
 
-import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class CsrfInterceptorHandshake implements HandshakeInterceptor {
             var csrfToken = this.tokensProvider.readCsrfToken(httpRequest);
             attributes.put(CsrfToken.class.getName(), csrfToken);
             return true;
-        } catch (CsrfTokenNotFoundException ex1) {
+        } catch (JbstCsrfTokenNotFoundException ex1) {
             return false;
         } catch (RuntimeException ex2) {
             LOGGER.error("Please check websocket handshake configuration. Exception: {}", ex2.getMessage(), ex2);

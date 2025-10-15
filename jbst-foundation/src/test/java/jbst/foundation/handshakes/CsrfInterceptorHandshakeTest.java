@@ -1,7 +1,7 @@
 package jbst.foundation.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utilities.random.EntityUtility;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +70,7 @@ class CsrfInterceptorHandshakeTest {
     }
 
     @Test
-    void beforeHandshakeRuntimeExceptionTest() throws CsrfTokenNotFoundException {
+    void beforeHandshakeRuntimeExceptionTest() throws JbstCsrfTokenNotFoundException {
         // Arrange
         var request = mock(ServletServerHttpRequest.class);
         var httpRequest = mock(HttpServletRequest.class);
@@ -96,7 +96,7 @@ class CsrfInterceptorHandshakeTest {
     }
 
     @Test
-    void beforeHandshakeNoTokenExceptionTest() throws CsrfTokenNotFoundException {
+    void beforeHandshakeNoTokenExceptionTest() throws JbstCsrfTokenNotFoundException {
         // Arrange
         var request = mock(ServletServerHttpRequest.class);
         var httpRequest = mock(HttpServletRequest.class);
@@ -104,7 +104,7 @@ class CsrfInterceptorHandshakeTest {
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
         when(request.getServletRequest()).thenReturn(httpRequest);
-        when(this.tokensProvider.readCsrfToken(httpRequest)).thenThrow(new CsrfTokenNotFoundException());
+        when(this.tokensProvider.readCsrfToken(httpRequest)).thenThrow(new JbstCsrfTokenNotFoundException());
 
         // Act
         var actual = this.componentUnderTest.beforeHandshake(request, response, wsHandler, attributes);
@@ -122,7 +122,7 @@ class CsrfInterceptorHandshakeTest {
     }
 
     @Test
-    void beforeHandshakeTest() throws CsrfTokenNotFoundException {
+    void beforeHandshakeTest() throws JbstCsrfTokenNotFoundException {
         // Arrange
         var request = mock(ServletServerHttpRequest.class);
         var httpRequest = mock(HttpServletRequest.class);

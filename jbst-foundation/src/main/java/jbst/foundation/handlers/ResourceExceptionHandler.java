@@ -3,9 +3,9 @@ package jbst.foundation.handlers;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.exceptions.ExceptionEntityType;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.domain.exceptions.authentication.RegistrationException;
-import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
-import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
+import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
+import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
+import jbst.foundation.domain.exceptions.cookies.JbstCookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
@@ -51,10 +51,10 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler({
-            RegistrationException.class
+            JbstRegistrationException.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> registerException(RegistrationException ex) {
+    public ResponseEntity<ExceptionEntity> registerException(JbstRegistrationException ex) {
         var response = new ExceptionEntity(
                 ExceptionEntityType.ERROR,
                 contactDevelopmentTeam("Registration Failure"),
@@ -64,10 +64,10 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler({
-            UserTokenValidationException.class
+            JbstUserTokenValidationException.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> userEmailTokenValidationException(UserTokenValidationException ex) {
+    public ResponseEntity<ExceptionEntity> userEmailTokenValidationException(JbstUserTokenValidationException ex) {
         var response = new ExceptionEntity(
                 ExceptionEntityType.ERROR,
                 contactDevelopmentTeam("Token Validation Failure"),
@@ -85,10 +85,10 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler({
-            TooManyRequestsException.class
+            JbstTooManyRequestsException.class
     })
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
-    public ResponseEntity<ExceptionEntity> tooManyRequestsException(TooManyRequestsException ignoredEx) {
+    public ResponseEntity<ExceptionEntity> tooManyRequestsException(JbstTooManyRequestsException ignoredEx) {
         var response = new ExceptionEntity(
                 ExceptionEntityType.ERROR,
                 "Too many requests, please wait",
@@ -102,16 +102,16 @@ public class ResourceExceptionHandler {
     // =================================================================================================================
 
     @ExceptionHandler({
-            CookieNotFoundException.class,
-            AccessTokenNotFoundException.class,
-            AccessTokenInvalidException.class,
-            AccessTokenExpiredException.class,
-            AccessTokenDbNotFoundException.class,
-            RefreshTokenNotFoundException.class,
-            RefreshTokenInvalidException.class,
-            RefreshTokenExpiredException.class,
-            RefreshTokenDbNotFoundException.class,
-            TokenUnauthorizedException.class
+            JbstCookieNotFoundException.class,
+            JbstAccessTokenNotFoundException.class,
+            JbstAccessTokenInvalidException.class,
+            JbstAccessTokenExpiredException.class,
+            JbstAccessTokenDbNotFoundException.class,
+            JbstRefreshTokenNotFoundException.class,
+            JbstRefreshTokenInvalidException.class,
+            JbstRefreshTokenExpiredException.class,
+            JbstRefreshTokenDbNotFoundException.class,
+            JbstTokenUnauthorizedException.class
     })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ExceptionEntity> unauthorizedExceptions(Exception ex) {

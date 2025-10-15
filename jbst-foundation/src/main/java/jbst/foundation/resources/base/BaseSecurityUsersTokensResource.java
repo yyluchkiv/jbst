@@ -11,9 +11,9 @@ import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserTokenMagicLink;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
-import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
-import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
+import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
+import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
+import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersService;
@@ -55,7 +55,7 @@ public class BaseSecurityUsersTokensResource {
 
     @PostMapping("/magic-link")
     @ResponseStatus(HttpStatus.OK)
-    public void magicLink(@RequestBody @Valid RequestUserTokenMagicLink request) throws TooManyRequestsException {
+    public void magicLink(@RequestBody @Valid RequestUserTokenMagicLink request) throws JbstTooManyRequestsException {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         var userToken = this.baseUsersTokensService.getOrCreate(request.asRequestUserToken());
         this.usersEmailsService.executeMagicLink(userToken);
@@ -63,7 +63,7 @@ public class BaseSecurityUsersTokensResource {
 
     @PostMapping("/email/confirm")
     @ResponseStatus(HttpStatus.OK)
-    public void executeConfirmEmail() throws TooManyRequestsException {
+    public void executeConfirmEmail() throws JbstTooManyRequestsException {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         this.rateLimitsService.acquireEmailConfirmationOrThrow(user);
@@ -83,7 +83,7 @@ public class BaseSecurityUsersTokensResource {
             this.baseUsersTokensService.confirmEmail(token);
             redirectAttributes.addAttribute("code", 1);
             return redirectView;
-        } catch (UserTokenValidationException | UserEmailConfirmException ex) {
+        } catch (JbstUserTokenValidationException | JbstUserEmailConfirmException ex) {
             redirectAttributes.addAttribute("code", 0);
             return redirectView;
         } catch (RuntimeException ex) {
@@ -108,7 +108,7 @@ public class BaseSecurityUsersTokensResource {
 
     @PatchMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
-    public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws UserTokenValidationException {
+    public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws JbstUserTokenValidationException {
         this.baseUsersTokensRequestsValidator.validatePasswordReset(request);
         this.baseUsersService.resetPassword(request);
     }

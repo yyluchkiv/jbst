@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import feign.Param;
 import feign.RequestLine;
-import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public final class GeoLocationIPAPIUtils {
     // Utils
     private final GeoCountryFlagUtils geoCountryFlagUtils;
 
-    public GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
+    public GeoLocation getGeoLocation(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
         try {
             var queryResponse = this.definition.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {
@@ -53,10 +53,10 @@ public final class GeoLocationIPAPIUtils {
                         queryResponse.city()
                 );
             } else {
-                throw new GeoLocationNotFoundException(queryResponse.message());
+                throw new JbstGeoLocationNotFoundException(queryResponse.message());
             }
         } catch (RuntimeException throwable) {
-            throw new GeoLocationNotFoundException(throwable.getMessage());
+            throw new JbstGeoLocationNotFoundException(throwable.getMessage());
         }
     }
 }

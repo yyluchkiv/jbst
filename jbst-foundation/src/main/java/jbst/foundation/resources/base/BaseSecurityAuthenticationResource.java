@@ -9,8 +9,8 @@ import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.TokenUnauthorizedException;
+import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.services.AuthenticationService;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
@@ -58,13 +58,13 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
-    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws AccessTokenNotFoundException {
+    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException {
         this.authenticationService.logout(httpRequest, httpResponse);
     }
 
     @PostMapping("/refreshToken")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
+    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException {
         return this.authenticationService.refreshToken(httpRequest, httpResponse);
     }
 }

@@ -5,12 +5,12 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import org.jetbrains.annotations.NotNull;
 
 public interface JwtTokensFilterExtension {
-    void doFilter(@NotNull HttpServletRequest request) throws AccessTokenNotFoundException,
-            AccessTokenExpiredException,
-            RefreshTokenNotFoundException,
-            AccessTokenInvalidException,
-            RefreshTokenInvalidException,
-            AccessTokenDbNotFoundException,
-            TokenExtensionUnauthorizedException,
-            TokenExtensionAccessDeniedException;
+    void doFilter(@NotNull HttpServletRequest request) throws JbstAccessTokenNotFoundException,
+            JbstAccessTokenExpiredException,
+            JbstRefreshTokenNotFoundException,
+            JbstAccessTokenInvalidException,
+            JbstRefreshTokenInvalidException,
+            JbstAccessTokenDbNotFoundException,
+            JbstTokenExtensionUnauthorizedException,
+            JbstTokenExtensionAccessDeniedException;
 }

@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
-import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
@@ -40,7 +40,7 @@ public class BaseSecurityRegistrationResource {
 
     @PostMapping("/register0")
     @ResponseStatus(HttpStatus.OK)
-    public void register0(@RequestBody @Valid RequestUserRegistration0 request) throws RegistrationException {
+    public void register0(@RequestBody @Valid RequestUserRegistration0 request) throws JbstRegistrationException {
         request = request.createReworkedUkraineZoneId();
         this.baseRegistrationRequestsValidator.validateRegistrationRequest0(request);
         this.baseRegistrationService.register0(request);
@@ -50,7 +50,7 @@ public class BaseSecurityRegistrationResource {
 
     @PostMapping("/register1")
     @ResponseStatus(HttpStatus.OK)
-    public void register1(@RequestBody @Valid RequestUserRegistration1 request) throws RegistrationException {
+    public void register1(@RequestBody @Valid RequestUserRegistration1 request) throws JbstRegistrationException {
         request = request.createReworkedUkraineZoneId();
         this.baseRegistrationRequestsValidator.validateRegistrationRequest1(request);
         this.baseRegistrationService.register1(request);

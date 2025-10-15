@@ -1,6 +1,6 @@
 package jbst.foundation.utils;
 
-import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
 import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -80,7 +80,7 @@ class GeoLocationIPAPIUtilsTest {
 
         // Assert
         verify(this.definition).getIPAPIResponse(ipAddress.value());
-        assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
+        assertThat(throwable.getClass()).isEqualTo(JbstGeoLocationNotFoundException.class);
         assertThat(throwable.getMessage()).isEqualTo("Geo location not found: " + feignException.getMessage());
     }
 
@@ -96,12 +96,12 @@ class GeoLocationIPAPIUtilsTest {
 
         // Assert
         verify(this.definition).getIPAPIResponse(ipAddress.value());
-        assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
+        assertThat(throwable.getClass()).isEqualTo(JbstGeoLocationNotFoundException.class);
         assertThat(throwable.getMessage()).isEqualTo("Geo location not found: reserved range");
     }
 
     @Test
-    void getGeoLocationTest() throws GeoLocationNotFoundException {
+    void getGeoLocationTest() throws JbstGeoLocationNotFoundException {
         // Arrange
         var ipAddress = IPAddress.random();
         var ipapiResponse = new GeoLocationIPAPIUtils.IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);

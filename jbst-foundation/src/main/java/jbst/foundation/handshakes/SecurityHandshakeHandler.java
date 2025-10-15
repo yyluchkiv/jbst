@@ -37,10 +37,10 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
             var cookieRefreshToken = this.tokensProvider.readRequestRefreshTokenOnWebsocketHandshake(request);
             var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
             return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        } catch (AccessTokenNotFoundException | RefreshTokenNotFoundException |
-                 AccessTokenInvalidException |
-                 RefreshTokenInvalidException | AccessTokenExpiredException |
-                 AccessTokenDbNotFoundException ex) {
+        } catch (JbstAccessTokenNotFoundException | JbstRefreshTokenNotFoundException |
+                 JbstAccessTokenInvalidException |
+                 JbstRefreshTokenInvalidException | JbstAccessTokenExpiredException |
+                 JbstAccessTokenDbNotFoundException ex) {
             throw new IllegalArgumentException("WebSocket user not determined. Exception: " + ex.getMessage());
         }
     }

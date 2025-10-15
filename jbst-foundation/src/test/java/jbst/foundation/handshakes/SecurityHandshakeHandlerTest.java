@@ -44,9 +44,9 @@ class SecurityHandshakeHandlerTest {
 
     private static Stream<Arguments> determineUserExceptionTest() {
         return Stream.of(
-                Arguments.of(new AccessTokenInvalidException()),
-                Arguments.of(new RefreshTokenInvalidException()),
-                Arguments.of(new AccessTokenExpiredException(Username.random()))
+                Arguments.of(new JbstAccessTokenInvalidException()),
+                Arguments.of(new JbstRefreshTokenInvalidException()),
+                Arguments.of(new JbstAccessTokenExpiredException(Username.random()))
         );
     }
 
@@ -101,7 +101,7 @@ class SecurityHandshakeHandlerTest {
 
     @ParameterizedTest
     @MethodSource("determineUserExceptionTest")
-    void determineUserExceptionTest(Exception exception) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenNotFoundException, RefreshTokenNotFoundException, AccessTokenDbNotFoundException {
+    void determineUserExceptionTest(Exception exception) throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenNotFoundException, JbstRefreshTokenNotFoundException, JbstAccessTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);
@@ -127,7 +127,7 @@ class SecurityHandshakeHandlerTest {
     }
 
     @Test
-    void determineUserTest() throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenNotFoundException, RefreshTokenNotFoundException, AccessTokenDbNotFoundException {
+    void determineUserTest() throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenNotFoundException, JbstRefreshTokenNotFoundException, JbstAccessTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);

@@ -3,9 +3,9 @@ package jbst.foundation.tokens.providers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -81,7 +81,7 @@ class TokenHeadersProviderTest {
     }
 
     @Test
-    void readCsrfToken() throws CsrfTokenNotFoundException {
+    void readCsrfToken() throws JbstCsrfTokenNotFoundException {
         // Arrange
         var csrfConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getCsrfConfigs();
         var header = randomString();
@@ -108,12 +108,12 @@ class TokenHeadersProviderTest {
 
         // Assert
         assertThat(throwable)
-                .isInstanceOf(CsrfTokenNotFoundException.class)
+                .isInstanceOf(JbstCsrfTokenNotFoundException.class)
                 .hasMessageContaining("Csrf token not found");
     }
 
     @Test
-    void readRequestAccessToken() throws AccessTokenNotFoundException {
+    void readRequestAccessToken() throws JbstAccessTokenNotFoundException {
         // Arrange
         var headerKey = this.jwtTokensConfigs().getAccessToken().getHeaderKey();
         var header = RandomUtility.randomString();
@@ -140,12 +140,12 @@ class TokenHeadersProviderTest {
         // Assert
         verify(request).getHeader(headerKey);
         assertThat(throwable)
-                .isInstanceOf(AccessTokenNotFoundException.class)
+                .isInstanceOf(JbstAccessTokenNotFoundException.class)
                 .hasMessageContaining("JWT access token not found");
     }
 
     @Test
-    void readRequestAccessTokenOnWebsocketHandshake() throws AccessTokenNotFoundException {
+    void readRequestAccessTokenOnWebsocketHandshake() throws JbstAccessTokenNotFoundException {
         // Arrange
         var headerKey = this.jwtTokensConfigs().getAccessToken().getHeaderKey();
         var header = RandomUtility.randomString();
@@ -172,12 +172,12 @@ class TokenHeadersProviderTest {
         // Assert
         verify(request).getParameter(headerKey);
         assertThat(throwable)
-                .isInstanceOf(AccessTokenNotFoundException.class)
+                .isInstanceOf(JbstAccessTokenNotFoundException.class)
                 .hasMessageContaining("JWT access token not found");
     }
 
     @Test
-    void readRequestRefreshToken() throws RefreshTokenNotFoundException {
+    void readRequestRefreshToken() throws JbstRefreshTokenNotFoundException {
         // Arrange
         var headerKey = this.jwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = RandomUtility.randomString();
@@ -204,12 +204,12 @@ class TokenHeadersProviderTest {
         // Assert
         verify(request).getHeader(headerKey);
         assertThat(throwable)
-                .isInstanceOf(RefreshTokenNotFoundException.class)
+                .isInstanceOf(JbstRefreshTokenNotFoundException.class)
                 .hasMessageContaining("JWT refresh token not found");
     }
 
     @Test
-    void readRequestRefreshTokenOnWebsocketHandshake() throws RefreshTokenNotFoundException {
+    void readRequestRefreshTokenOnWebsocketHandshake() throws JbstRefreshTokenNotFoundException {
         // Arrange
         var headerKey = this.jwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = RandomUtility.randomString();
@@ -236,7 +236,7 @@ class TokenHeadersProviderTest {
         // Assert
         verify(request).getParameter(headerKey);
         assertThat(throwable)
-                .isInstanceOf(RefreshTokenNotFoundException.class)
+                .isInstanceOf(JbstRefreshTokenNotFoundException.class)
                 .hasMessageContaining("JWT refresh token not found");
     }
 

@@ -127,7 +127,7 @@ class BaseTokensServiceTest {
     }
 
     @Test
-    void getJwtUserByAccessTokenOrThrowTest() throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
+    void getJwtUserByAccessTokenOrThrowTest() throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenDbNotFoundException {
         // Arrange
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
@@ -153,7 +153,7 @@ class BaseTokensServiceTest {
     }
 
     @Test
-    void refreshSessionOrThrowTest() throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
+    void refreshSessionOrThrowTest() throws JbstRefreshTokenNotFoundException, JbstRefreshTokenInvalidException, JbstRefreshTokenExpiredException, JbstRefreshTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);

@@ -3,7 +3,7 @@ package jbst.foundation.validators.abtracts;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
-import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
+import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.UsersTokensRepository;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
@@ -27,7 +27,7 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     }
 
     @Override
-    public void validateEmailConfirmationToken(String token) throws UserTokenValidationException {
+    public void validateEmailConfirmationToken(String token) throws JbstUserTokenValidationException {
         this.validateToken(token, UserTokenType.EMAIL_CONFIRMATION);
     }
 
@@ -45,7 +45,7 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     }
 
     @Override
-    public void validatePasswordReset(RequestUserPasswordReset request) throws UserTokenValidationException {
+    public void validatePasswordReset(RequestUserPasswordReset request) throws JbstUserTokenValidationException {
         request.assertPasswordsOrThrow();
         this.validateToken(request.token(), UserTokenType.PASSWORD_RESET);
     }
@@ -53,19 +53,19 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     // =================================================================================================================
     // PROTECTED METHODS
     // =================================================================================================================
-    protected void validateToken(String token, UserTokenType type) throws UserTokenValidationException {
+    protected void validateToken(String token, UserTokenType type) throws JbstUserTokenValidationException {
         var userToken = this.usersTokensRepository.findByValueAsAny(token);
         if (isNull(userToken)) {
-            throw UserTokenValidationException.notFound();
+            throw JbstUserTokenValidationException.notFound();
         }
         if (userToken.used()) {
-            throw UserTokenValidationException.used();
+            throw JbstUserTokenValidationException.used();
         }
         if (userToken.isExpired()) {
-            throw UserTokenValidationException.expired();
+            throw JbstUserTokenValidationException.expired();
         }
         if (!userToken.type().equals(type)) {
-            throw UserTokenValidationException.invalidType();
+            throw JbstUserTokenValidationException.invalidType();
         }
     }
 }

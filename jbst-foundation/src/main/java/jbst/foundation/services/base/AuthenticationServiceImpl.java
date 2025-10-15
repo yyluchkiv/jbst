@@ -120,7 +120,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws AccessTokenNotFoundException {
+    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         if (nonNull(cookie.value())) {
             var accessToken = cookie.getJwtAccessToken();
@@ -140,17 +140,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
+    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException {
         try {
             return this.tokensService.refreshSessionOrThrow(httpRequest, httpResponse);
         } catch (
-                RefreshTokenNotFoundException |
-                RefreshTokenInvalidException |
-                RefreshTokenExpiredException |
-                RefreshTokenDbNotFoundException ex
+                JbstRefreshTokenNotFoundException |
+                JbstRefreshTokenInvalidException |
+                JbstRefreshTokenExpiredException |
+                JbstRefreshTokenDbNotFoundException ex
         ) {
             this.tokensProvider.clearTokens(httpResponse);
-            throw new TokenUnauthorizedException(ex.getMessage());
+            throw new JbstTokenUnauthorizedException(ex.getMessage());
         }
     }
 

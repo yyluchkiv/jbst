@@ -6,8 +6,8 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
-import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
+import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
+import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersService;
@@ -41,10 +41,10 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     private static Stream<Arguments> confirmEmailTest() {
         return Stream.of(
                 Arguments.of(
-                        UserTokenValidationException.expired(), null, null, 0
+                        JbstUserTokenValidationException.expired(), null, null, 0
                 ),
                 Arguments.of(
-                        null, UserEmailConfirmException.tokenNotFound(), null, 0
+                        null, JbstUserEmailConfirmException.tokenNotFound(), null, 0
                 ),
                 Arguments.of(
                         null, null, new IllegalArgumentException(), 0
@@ -121,8 +121,8 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     @ParameterizedTest
     @MethodSource("confirmEmailTest")
     void confirmEmailTest(
-            UserTokenValidationException validationException,
-            UserEmailConfirmException confirmException,
+            JbstUserTokenValidationException validationException,
+            JbstUserEmailConfirmException confirmException,
             RuntimeException runtimeException,
             int code
     ) throws Exception {

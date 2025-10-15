@@ -6,7 +6,7 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.services.BaseSuperadminService;
@@ -67,7 +67,7 @@ public class BaseSuperadminResource {
     // =================================================================================================================
 
     @GetMapping("/sessions")
-    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
+    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         return this.baseSuperadminService.getSessions(cookie);
     }
@@ -85,7 +85,7 @@ public class BaseSuperadminResource {
 
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
+    public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
     }

@@ -4,9 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -59,7 +59,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws CsrfTokenNotFoundException {
+    public DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws JbstCsrfTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readCsrfToken(httpRequest);
         } else {
@@ -68,7 +68,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
+    public RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestAccessToken(httpRequest);
         } else {
@@ -77,7 +77,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
+    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestAccessTokenOnWebsocketHandshake(httpRequest);
         } else {
@@ -86,7 +86,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws RefreshTokenNotFoundException {
+    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestRefreshToken(httpRequest);
         } else {
@@ -95,7 +95,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws RefreshTokenNotFoundException {
+    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestRefreshTokenOnWebsocketHandshake(httpRequest);
         } else {

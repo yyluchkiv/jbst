@@ -56,22 +56,22 @@ public class JwtTokensFilter extends OncePerRequestFilter {
 
             chain.doFilter(req, res);
         } catch (
-                AccessTokenNotFoundException |
-                AccessTokenExpiredException ex
+                JbstAccessTokenNotFoundException |
+                JbstAccessTokenExpiredException ex
         ) {
             // distinguish authenticated vs. anonymous/permitAll endpoints
             chain.doFilter(req, res);
         } catch (
-                RefreshTokenNotFoundException |
-                AccessTokenInvalidException |
-                RefreshTokenInvalidException |
-                AccessTokenDbNotFoundException |
-                TokenExtensionUnauthorizedException ex
+                JbstRefreshTokenNotFoundException |
+                JbstAccessTokenInvalidException |
+                JbstRefreshTokenInvalidException |
+                JbstAccessTokenDbNotFoundException |
+                JbstTokenExtensionUnauthorizedException ex
         ) {
             LOGGER.debug("JWT unauthorized request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
             res.sendError(HttpStatus.UNAUTHORIZED.value());
-        } catch (TokenExtensionAccessDeniedException ex) {
+        } catch (JbstTokenExtensionAccessDeniedException ex) {
             LOGGER.debug("JWT forbidden request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
             this.jwtAccessDeniedExceptionHandler.handle(req, res, new AccessDeniedException(ex.getMessage()));

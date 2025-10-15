@@ -2,8 +2,8 @@ package jbst.foundation.handlers;
 
 import jbst.foundation.configurations.TestConfigurationHandlers;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.exceptions.authentication.RegistrationException;
-import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
+import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
+import jbst.foundation.domain.exceptions.cookies.JbstCookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -44,16 +44,16 @@ class ResourceExceptionHandlerTest {
 
     private static Stream<Arguments> unauthorizedResponseErrorMessageTest() {
         return Stream.of(
-                Arguments.of(new CookieNotFoundException(randomString())),
-                Arguments.of(new AccessTokenNotFoundException()),
-                Arguments.of(new AccessTokenInvalidException()),
-                Arguments.of(new AccessTokenExpiredException(Username.random())),
-                Arguments.of(new AccessTokenDbNotFoundException(Username.random())),
-                Arguments.of(new RefreshTokenNotFoundException()),
-                Arguments.of(new RefreshTokenInvalidException()),
-                Arguments.of(new RefreshTokenExpiredException(Username.random())),
-                Arguments.of(new RefreshTokenDbNotFoundException(Username.random())),
-                Arguments.of(new TokenUnauthorizedException(randomString()))
+                Arguments.of(new JbstCookieNotFoundException(randomString())),
+                Arguments.of(new JbstAccessTokenNotFoundException()),
+                Arguments.of(new JbstAccessTokenInvalidException()),
+                Arguments.of(new JbstAccessTokenExpiredException(Username.random())),
+                Arguments.of(new JbstAccessTokenDbNotFoundException(Username.random())),
+                Arguments.of(new JbstRefreshTokenNotFoundException()),
+                Arguments.of(new JbstRefreshTokenInvalidException()),
+                Arguments.of(new JbstRefreshTokenExpiredException(Username.random())),
+                Arguments.of(new JbstRefreshTokenDbNotFoundException(Username.random())),
+                Arguments.of(new JbstTokenUnauthorizedException(randomString()))
         );
     }
 
@@ -97,7 +97,7 @@ class ResourceExceptionHandlerTest {
     void registrationExceptionTest() {
         // Arrange
         var message = randomString();
-        var exception = new RegistrationException(message);
+        var exception = new JbstRegistrationException(message);
 
         // Act
         var response = this.componentUnderTest.registerException(exception);

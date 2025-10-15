@@ -3,7 +3,7 @@ package jbst.foundation.utilities.http;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
+import jbst.foundation.domain.exceptions.cookies.JbstCookieNotFoundException;
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class HttpCookieUtility {
         );
     }
 
-    public static String readCookie(HttpServletRequest request, String cookieKey) throws CookieNotFoundException {
+    public static String readCookie(HttpServletRequest request, String cookieKey) throws JbstCookieNotFoundException {
         var cookies = request.getCookies();
         if (nonNull(cookies)) {
             var cookieOpt = Arrays.stream(cookies)
@@ -49,6 +49,6 @@ public class HttpCookieUtility {
                 return cookieOpt.get().getValue();
             }
         }
-        throw new CookieNotFoundException(entityNotFound("Cookie", cookieKey));
+        throw new JbstCookieNotFoundException(entityNotFound("Cookie", cookieKey));
     }
 }

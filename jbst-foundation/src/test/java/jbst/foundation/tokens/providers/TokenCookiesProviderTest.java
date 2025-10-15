@@ -4,9 +4,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -122,7 +122,7 @@ class TokenCookiesProviderTest {
     }
 
     @Test
-    void readCsrfToken() throws CsrfTokenNotFoundException {
+    void readCsrfToken() throws JbstCsrfTokenNotFoundException {
         // Arrange
         var csrfConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getCsrfConfigs();
         var cookie = mock(Cookie.class);
@@ -156,13 +156,13 @@ class TokenCookiesProviderTest {
         verify(request).getCookies();
         assertThat(request.getCookies()).isEmpty();
         assertThat(throwable)
-                .isInstanceOf(CsrfTokenNotFoundException.class)
+                .isInstanceOf(JbstCsrfTokenNotFoundException.class)
                 .hasMessageContaining("Csrf token not found");
     }
 
     @ParameterizedTest
     @MethodSource("readRequestAccessTokenArgs")
-    void readRequestAccessToken(boolean rest, boolean websocket) throws AccessTokenNotFoundException {
+    void readRequestAccessToken(boolean rest, boolean websocket) throws JbstAccessTokenNotFoundException {
         // Arrange
         var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var cookie = mock(Cookie.class);
@@ -197,13 +197,13 @@ class TokenCookiesProviderTest {
         verify(request).getCookies();
         assertThat(request.getCookies()).isEmpty();
         assertThat(throwable)
-                .isInstanceOf(AccessTokenNotFoundException.class)
+                .isInstanceOf(JbstAccessTokenNotFoundException.class)
                 .hasMessageContaining("JWT access token not found");
     }
 
     @ParameterizedTest
     @MethodSource("readRequestRefreshTokenArgs")
-    void readRequestRefreshToken(boolean rest, boolean websocket) throws RefreshTokenNotFoundException {
+    void readRequestRefreshToken(boolean rest, boolean websocket) throws JbstRefreshTokenNotFoundException {
         // Arrange
         var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var cookie = mock(Cookie.class);
@@ -237,7 +237,7 @@ class TokenCookiesProviderTest {
         verify(request).getCookies();
         assertThat(request.getCookies()).isEmpty();
         assertThat(throwable)
-                .isInstanceOf(RefreshTokenNotFoundException.class)
+                .isInstanceOf(JbstRefreshTokenNotFoundException.class)
                 .hasMessageContaining("JWT refresh token not found");
     }
 

@@ -18,10 +18,10 @@ import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.exceptions.ExceptionEntityType;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenExpiredException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenInvalidException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenDbNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenExpiredException;
+import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenInvalidException;
+import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
@@ -67,10 +67,10 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
 
     private static Stream<Arguments> refreshTokenThrowCookieUnauthorizedExceptionsTest() {
         return Stream.of(
-                Arguments.of(new RefreshTokenNotFoundException()),
-                Arguments.of(new RefreshTokenInvalidException()),
-                Arguments.of(new RefreshTokenExpiredException(Username.random())),
-                Arguments.of(new RefreshTokenDbNotFoundException(Username.random()))
+                Arguments.of(new JbstRefreshTokenNotFoundException()),
+                Arguments.of(new JbstRefreshTokenInvalidException()),
+                Arguments.of(new JbstRefreshTokenExpiredException(Username.random())),
+                Arguments.of(new JbstRefreshTokenDbNotFoundException(Username.random()))
         );
     }
 

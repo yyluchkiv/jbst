@@ -8,7 +8,7 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
-import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
+import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.time.TimeAmount;
@@ -80,7 +80,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        UserTokenValidationException.notFound()
+                        JbstUserTokenValidationException.notFound()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -91,7 +91,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 validTimestamp,
                                 true
                         ),
-                        UserTokenValidationException.used()
+                        JbstUserTokenValidationException.used()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -102,7 +102,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 expiredTimestamp,
                                 false
                         ),
-                        UserTokenValidationException.expired()
+                        JbstUserTokenValidationException.expired()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -113,7 +113,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 validTimestamp,
                                 false
                         ),
-                        UserTokenValidationException.invalidType()
+                        JbstUserTokenValidationException.invalidType()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -170,7 +170,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
                         null,
-                        UserTokenValidationException.notFound()
+                        JbstUserTokenValidationException.notFound()
                 ),
                 Arguments.of(
                         new RequestUserPasswordReset(
@@ -192,7 +192,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 validTimestamp,
                                 true
                         ),
-                        UserTokenValidationException.used()
+                        JbstUserTokenValidationException.used()
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
@@ -204,7 +204,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 expiredTimestamp,
                                 false
                         ),
-                        UserTokenValidationException.expired()
+                        JbstUserTokenValidationException.expired()
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
@@ -216,7 +216,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                                 validTimestamp,
                                 false
                         ),
-                        UserTokenValidationException.invalidType()
+                        JbstUserTokenValidationException.invalidType()
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
@@ -287,7 +287,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     @MethodSource("validateEmailConfirmationTokenTest")
     void validateEmailConfirmationTokenTest(
             JbstUserToken userToken,
-            UserTokenValidationException expected
+            JbstUserTokenValidationException expected
     ) {
         // Arrange
         var token = randomStringLetterOrNumbersOnly(255);
@@ -300,7 +300,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         verify(this.usersTokensRepository).findByValueAsAny(token);
         if (nonNull(expected)) {
             assertThat(actual)
-                    .isInstanceOf(UserTokenValidationException.class)
+                    .isInstanceOf(JbstUserTokenValidationException.class)
                     .hasMessage(expected.getMessage());
         } else {
             assertThat(actual).isNull();
@@ -337,7 +337,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         var actual = catchThrowable(() -> this.componentUnderTest.validatePasswordReset(request));
 
         // Assert
-        if (expected instanceof UserTokenValidationException) {
+        if (expected instanceof JbstUserTokenValidationException) {
             verify(this.usersTokensRepository).findByValueAsAny(token);
             assertThat(actual).hasMessage(expected.getMessage());
         } else if (expected instanceof IllegalArgumentException) {

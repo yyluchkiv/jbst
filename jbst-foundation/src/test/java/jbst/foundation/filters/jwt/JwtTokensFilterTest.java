@@ -46,9 +46,9 @@ class JwtTokensFilterTest {
 
     private static Stream<Arguments> clearCookieTest() {
         return Stream.of(
-                Arguments.of(new AccessTokenInvalidException()),
-                Arguments.of(new RefreshTokenInvalidException()),
-                Arguments.of(new AccessTokenDbNotFoundException(Username.hardcoded()))
+                Arguments.of(new JbstAccessTokenInvalidException()),
+                Arguments.of(new JbstRefreshTokenInvalidException()),
+                Arguments.of(new JbstAccessTokenDbNotFoundException(Username.hardcoded()))
         );
     }
 
@@ -132,7 +132,7 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenThrow(new AccessTokenNotFoundException());
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenThrow(new JbstAccessTokenNotFoundException());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -157,7 +157,7 @@ class JwtTokensFilterTest {
         var requestRefreshToken = RequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new AccessTokenExpiredException(Username.hardcoded()));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new JbstAccessTokenExpiredException(Username.hardcoded()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -182,7 +182,7 @@ class JwtTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var requestAccessToken = RequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenThrow(new RefreshTokenNotFoundException());
+        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenThrow(new JbstRefreshTokenNotFoundException());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -271,7 +271,7 @@ class JwtTokensFilterTest {
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
-        doThrow(new TokenExtensionUnauthorizedException(randomString())).when(this.jwtTokensFilterExtension).doFilter(request);
+        doThrow(new JbstTokenExtensionUnauthorizedException(randomString())).when(this.jwtTokensFilterExtension).doFilter(request);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -304,7 +304,7 @@ class JwtTokensFilterTest {
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
-        var exception = new TokenExtensionAccessDeniedException(randomString());
+        var exception = new JbstTokenExtensionAccessDeniedException(randomString());
         doThrow(exception).when(this.jwtTokensFilterExtension).doFilter(request);
 
         // Act

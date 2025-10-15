@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
-import jbst.foundation.domain.exceptions.base.UsernameAlreadyExistException;
+import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.repositories.UsersTokensRepository;
@@ -55,7 +55,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                             zoneId
                     );
                     created = true;
-                } catch (UsernameAlreadyExistException ex) {
+                } catch (JbstUsernameAlreadyExistException ex) {
                     index++;
                 }
             }

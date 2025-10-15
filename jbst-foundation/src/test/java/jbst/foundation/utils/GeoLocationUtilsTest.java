@@ -1,6 +1,6 @@
 package jbst.foundation.utils;
 
-import jbst.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
@@ -67,11 +67,11 @@ class GeoLocationUtilsTest {
     }
 
     @Test
-    void getGeoLocationThrowExceptionTest() throws GeoLocationNotFoundException {
+    void getGeoLocationThrowExceptionTest() throws JbstGeoLocationNotFoundException {
         // Arrange
         var ipAddress = IPAddress.random();
         var geoLocation = GeoLocation.random();
-        when(this.geoLocationIPAPIUtils.getGeoLocation(ipAddress)).thenThrow(new GeoLocationNotFoundException(randomString()));
+        when(this.geoLocationIPAPIUtils.getGeoLocation(ipAddress)).thenThrow(new JbstGeoLocationNotFoundException(randomString()));
         when(this.geoLocationMindMaxUtils.getGeoLocation(ipAddress)).thenReturn(geoLocation);
 
         // Act
@@ -84,7 +84,7 @@ class GeoLocationUtilsTest {
     }
 
     @Test
-    void getGeoLocationTest() throws GeoLocationNotFoundException {
+    void getGeoLocationTest() throws JbstGeoLocationNotFoundException {
         // Arrange
         var ipAddress = IPAddress.random();
         var geoLocation = GeoLocation.random();
