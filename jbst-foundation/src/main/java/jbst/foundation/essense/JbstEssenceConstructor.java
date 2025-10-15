@@ -2,26 +2,35 @@ package jbst.foundation.essense;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.List;
+import java.util.Set;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
+// TODO [YYL] merge Essense Constructor <-> Settings Service
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractEssenceConstructor implements EssenceConstructor {
+public abstract class JbstEssenceConstructor {
 
     // Repositories
     protected final InvitationsRepository invitationsRepository;
     protected final UsersRepository usersRepository;
     // Properties
     protected final JbstProperties jbstProperties;
+
+    abstract public long saveDefaultUsers(List<DefaultUser> defaultUsers);
+    abstract public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities);
 
     @SuppressWarnings("LoggingSimilarMessage")
     public void addDefaultUsers() {

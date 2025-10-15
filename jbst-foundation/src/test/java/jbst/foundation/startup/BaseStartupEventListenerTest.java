@@ -8,7 +8,7 @@ import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
-import jbst.foundation.essense.AbstractEssenceConstructor;
+import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -59,8 +59,8 @@ class BaseStartupEventListenerTest {
         }
 
         @Bean
-        AbstractEssenceConstructor essenceConstructor() {
-            var essenceConstructor = mock(AbstractEssenceConstructor.class);
+        JbstEssenceConstructor essenceConstructor() {
+            var essenceConstructor = mock(JbstEssenceConstructor.class);
             setField(essenceConstructor, "jbstProperties", this.jbstProperties());
             return essenceConstructor;
         }
@@ -75,7 +75,7 @@ class BaseStartupEventListenerTest {
         }
     }
 
-    private final AbstractEssenceConstructor essenceConstructor;
+    private final JbstEssenceConstructor essenceConstructor;
     private final JbstProperties jbstProperties;
 
     private final BaseStartupEventListener componentUnderTest;

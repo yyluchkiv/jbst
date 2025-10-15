@@ -3,7 +3,7 @@ package jbst.foundation.essence;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.essense.EssenceConstructor;
+import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.essense.PostgresBaseEssenceConstructor;
 import jbst.foundation.repositories.postgres.PostgresInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresUsersRepository;
@@ -52,7 +52,7 @@ class PostgresBaseEssenceConstructorTest {
         }
 
         @Bean
-        EssenceConstructor essenceConstructor() {
+        JbstEssenceConstructor essenceConstructor() {
             return new PostgresBaseEssenceConstructor(
                     this.invitationsRepository(),
                     this.userRepository(),
@@ -64,7 +64,7 @@ class PostgresBaseEssenceConstructorTest {
     private final PostgresInvitationsRepository invitationsRepository;
     private final PostgresUsersRepository usersRepository;
 
-    private final EssenceConstructor componentUnderTest;
+    private final JbstEssenceConstructor componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

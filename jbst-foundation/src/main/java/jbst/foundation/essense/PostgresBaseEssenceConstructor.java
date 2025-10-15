@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
+public class PostgresBaseEssenceConstructor extends JbstEssenceConstructor {
 
     // Repositories
     protected final PostgresInvitationsRepository postgresInvitationsRepository;

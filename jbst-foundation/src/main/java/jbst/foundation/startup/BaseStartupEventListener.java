@@ -3,7 +3,7 @@ package jbst.foundation.startup;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.essense.AbstractEssenceConstructor;
+import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class BaseStartupEventListener implements AbstractServerStartupEventListe
     // Settings
     protected final JbstSettingsService jbstSettingsService;
     // Essence
-    protected final AbstractEssenceConstructor essenceConstructor;
+    protected final JbstEssenceConstructor essenceConstructor;
     // Properties
     protected final JbstProperties jbstProperties;
 

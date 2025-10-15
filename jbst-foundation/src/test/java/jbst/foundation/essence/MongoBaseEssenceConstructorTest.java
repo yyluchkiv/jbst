@@ -3,7 +3,7 @@ package jbst.foundation.essence;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.essense.EssenceConstructor;
+import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.essense.MongoBaseEssenceConstructor;
 import jbst.foundation.repositories.mongo.MongoInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoUsersRepository;
@@ -52,7 +52,7 @@ class MongoBaseEssenceConstructorTest {
         }
 
         @Bean
-        EssenceConstructor essenceConstructor() {
+        JbstEssenceConstructor essenceConstructor() {
             return new MongoBaseEssenceConstructor(
                     this.invitationsRepository(),
                     this.userRepository(),
@@ -64,7 +64,7 @@ class MongoBaseEssenceConstructorTest {
     private final MongoInvitationsRepository invitationsRepository;
     private final MongoUsersRepository usersRepository;
 
-    private final EssenceConstructor componentUnderTest;
+    private final JbstEssenceConstructor componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

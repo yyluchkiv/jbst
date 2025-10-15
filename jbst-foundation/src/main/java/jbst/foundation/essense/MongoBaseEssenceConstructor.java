@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
+public class MongoBaseEssenceConstructor extends JbstEssenceConstructor {
 
     // Repositories
     protected final MongoInvitationsRepository mongoInvitationsRepository;

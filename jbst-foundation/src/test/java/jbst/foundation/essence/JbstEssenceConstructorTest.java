@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.essense.AbstractEssenceConstructor;
+import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.repositories.InvitationsRepository;
 import jbst.foundation.repositories.UsersRepository;
 import jbst.foundation.tests.stubbers.AbstractMockService;
@@ -33,7 +33,7 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
-class AbstractEssenceConstructorTest {
+class JbstEssenceConstructorTest {
 
     private static Stream<Arguments> addDefaultUsersPresentTest() {
         return Stream.of(
@@ -51,8 +51,8 @@ class AbstractEssenceConstructorTest {
         }
 
         @Bean
-        AbstractEssenceConstructor essenceConstructor() {
-            var essenceConstructor = mock(AbstractEssenceConstructor.class);
+        JbstEssenceConstructor essenceConstructor() {
+            var essenceConstructor = mock(JbstEssenceConstructor.class);
             setField(essenceConstructor, "jbstProperties", this.jbstProperties());
             return essenceConstructor;
         }
@@ -73,8 +73,8 @@ class AbstractEssenceConstructorTest {
         }
 
         @Bean("abstractEssenceConstructor")
-        AbstractEssenceConstructor abstractEssenceConstructor() {
-            return new AbstractEssenceConstructor(
+        JbstEssenceConstructor abstractEssenceConstructor() {
+            return new JbstEssenceConstructor(
                     this.invitationsRepository(),
                     this.usersRepository(),
                     this.jbstProperties()
@@ -101,15 +101,15 @@ class AbstractEssenceConstructorTest {
     // Mock
     private final AbstractMockService abstractMockService;
 
-    private final AbstractEssenceConstructor componentUnderTest;
+    private final JbstEssenceConstructor componentUnderTest;
 
     @Autowired
-    AbstractEssenceConstructorTest(
+    JbstEssenceConstructorTest(
             InvitationsRepository invitationsRepository,
             UsersRepository usersRepository,
             JbstProperties jbstProperties,
             AbstractMockService abstractMockService,
-            @Qualifier("abstractEssenceConstructor") AbstractEssenceConstructor componentUnderTest
+            @Qualifier("abstractEssenceConstructor") JbstEssenceConstructor componentUnderTest
     ) {
         this.invitationsRepository = invitationsRepository;
         this.usersRepository = usersRepository;
