@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityUsersResource {
+public class JbstUsersResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

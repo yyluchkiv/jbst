@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/superadmin")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSuperadminResource {
+public class JbstSuperadminResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

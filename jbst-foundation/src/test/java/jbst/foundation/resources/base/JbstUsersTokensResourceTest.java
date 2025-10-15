@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
+class JbstUsersTokensResourceTest extends TestRunnerResources1 {
 
     private static Stream<Arguments> confirmEmailTest() {
         return Stream.of(
@@ -67,7 +67,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     private final IncidentPublisher incidentPublisher;
 
     // Resource
-    private final BaseSecurityUsersTokensResource componentUnderTest;
+    private final JbstUsersTokensResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

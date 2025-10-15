@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/sessions")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityUsersSessionsResource {
+public class JbstUsersSessionsResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

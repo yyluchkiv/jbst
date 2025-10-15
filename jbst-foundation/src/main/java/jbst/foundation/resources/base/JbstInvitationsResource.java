@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/invitations")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityInvitationsResource {
+public class JbstInvitationsResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

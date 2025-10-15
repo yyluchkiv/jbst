@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/registration")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityRegistrationResource {
+public class JbstRegistrationResource {
 
     // Services
     private final BaseRegistrationService baseRegistrationService;

@@ -63,7 +63,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
+class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
     private static Stream<Arguments> refreshTokenThrowCookieUnauthorizedExceptionsTest() {
         return Stream.of(
@@ -98,7 +98,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     private final SecurityJwtEventsPublisher securityJwtPublisher;
 
     // Resource
-    private final BaseSecurityAuthenticationResource componentUnderTest;
+    private final JbstAuthenticationResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

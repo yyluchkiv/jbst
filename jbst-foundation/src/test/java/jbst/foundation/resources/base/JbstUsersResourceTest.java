@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
+class JbstUsersResourceTest extends TestRunnerResources1 {
 
     // Services
     private final BaseUsersService baseUsersService;
@@ -30,7 +30,7 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
     private final BaseUsersValidator baseUsersValidator;
 
     // Resource
-    private final BaseSecurityUsersResource componentUnderTest;
+    private final JbstUsersResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
+class JbstInvitationsResourceTest extends TestRunnerResources1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -39,7 +39,7 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
     private final JbstProperties jbstProperties;
 
     // Resource
-    private final BaseSecurityInvitationsResource componentUnderTest;
+    private final JbstInvitationsResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

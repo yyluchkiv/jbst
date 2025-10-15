@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
+class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -44,7 +44,7 @@ class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 
     // Resource
-    private final BaseSecurityUsersSessionsResource componentUnderTest;
+    private final JbstUsersSessionsResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityAuthenticationResource {
+public class JbstAuthenticationResource {
 
     // Services
     private final AuthenticationService authenticationService;

@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSuperadminResourceTest extends TestRunnerResources1 {
+class JbstSuperadminResourceTest extends TestRunnerResources1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -40,7 +40,7 @@ class BaseSuperadminResourceTest extends TestRunnerResources1 {
     private final TokensProvider tokensProvider;
 
     // Resource
-    private final BaseSuperadminResource componentUnderTest;
+    private final JbstSuperadminResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

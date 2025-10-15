@@ -37,7 +37,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 @RequestMapping("/tokens")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityUsersTokensResource {
+public class JbstUsersTokensResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
