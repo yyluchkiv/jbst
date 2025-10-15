@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class SecurityHandshakeHandlerTest {
+class JbstSecurityHandshakeHandlerTest {
 
     private static Stream<Arguments> determineUserExceptionTest() {
         return Stream.of(
@@ -68,8 +68,8 @@ class SecurityHandshakeHandlerTest {
         }
 
         @Bean
-        SecurityHandshakeHandler securityHandshakeHandler() {
-            return new SecurityHandshakeHandler(
+        JbstSecurityHandshakeHandler securityHandshakeHandler() {
+            return new JbstSecurityHandshakeHandler(
                     this.tokenService(),
                     this.cookieProvider()
             );
@@ -81,7 +81,7 @@ class SecurityHandshakeHandlerTest {
     // Tokens
     private final TokensProvider tokensProvider;
 
-    private final SecurityHandshakeHandler componentUnderTest;
+    private final JbstSecurityHandshakeHandler componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

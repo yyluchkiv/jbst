@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
+public class JbstSecurityHandshakeHandler extends DefaultHandshakeHandler {
 
     // Services
     private final TokensService tokensService;

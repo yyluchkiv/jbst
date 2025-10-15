@@ -19,7 +19,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CsrfInterceptorHandshake implements HandshakeInterceptor {
+public class JbstCsrfInterceptorHandshake implements HandshakeInterceptor {
 
     // Tokens
     private final TokensProvider tokensProvider;

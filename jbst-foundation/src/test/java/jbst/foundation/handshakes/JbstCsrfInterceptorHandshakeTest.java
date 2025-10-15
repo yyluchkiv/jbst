@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class CsrfInterceptorHandshakeTest {
+class JbstCsrfInterceptorHandshakeTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -43,8 +43,8 @@ class CsrfInterceptorHandshakeTest {
         }
 
         @Bean
-        CsrfInterceptorHandshake csrfInterceptorHandshake() {
-            return new CsrfInterceptorHandshake(
+        JbstCsrfInterceptorHandshake csrfInterceptorHandshake() {
+            return new JbstCsrfInterceptorHandshake(
                     this.tokensProvider()
             );
         }
@@ -53,7 +53,7 @@ class CsrfInterceptorHandshakeTest {
     // Tokens
     private final TokensProvider tokensProvider;
 
-    private final CsrfInterceptorHandshake componentUnderTest;
+    private final JbstCsrfInterceptorHandshake componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
