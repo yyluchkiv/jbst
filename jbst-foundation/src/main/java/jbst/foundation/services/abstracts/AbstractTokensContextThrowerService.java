@@ -1,6 +1,6 @@
 package jbst.foundation.services.abstracts;
 
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -19,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public abstract class AbstractTokensContextThrowerService implements TokensContextThrowerService {
 
     // Assistants
-    protected final JwtUserDetailsService jwtUserDetailsService;
+    protected final JbstJwtUserDetailsService jwtUserDetailsService;
     // Repositories
     protected final UsersSessionsRepository usersSessionsRepository;
     // Utilities

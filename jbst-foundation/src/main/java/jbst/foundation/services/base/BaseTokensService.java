@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 public class BaseTokensService implements TokensService {
 
     // Assistants
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Session
     private final SessionRegistry sessionRegistry;
     // Services

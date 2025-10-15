@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -90,7 +90,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     // Assistants
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Passwords
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Filters

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractJwtUserDetailsServiceTest {
+class JbstJwtUserDetailsServiceTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -29,8 +29,8 @@ class AbstractJwtUserDetailsServiceTest {
         }
 
         @Bean
-        AbstractJwtUserDetailsService jwtUserDetailsService() {
-            return new AbstractJwtUserDetailsService(
+        JbstJwtUserDetailsService jwtUserDetailsService() {
+            return new JbstJwtUserDetailsService(
                     this.usersRepository()
             ) {};
         }
@@ -38,7 +38,7 @@ class AbstractJwtUserDetailsServiceTest {
 
     private final UsersRepository usersRepository;
 
-    private final AbstractJwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
 
     @BeforeEach
     void beforeEach() {

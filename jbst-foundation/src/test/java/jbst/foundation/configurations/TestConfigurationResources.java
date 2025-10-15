@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.handlers.ResourceExceptionHandler;
@@ -60,7 +60,7 @@ public class TestConfigurationResources {
         return new AuthenticationServiceImpl(
                 this.authenticationManager(),
                 this.currentSessionAssistant(),
-                this.jwtUserDetailsAssistant(),
+                this.jwtUserDetailsService(),
                 this.sessionRegistry(),
                 this.baseUsersService(),
                 this.baseUsersSessionsService(),
@@ -142,8 +142,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    JwtUserDetailsService jwtUserDetailsAssistant() {
-        return mock(JwtUserDetailsService.class);
+    JbstJwtUserDetailsService jwtUserDetailsService() {
+        return mock(JbstJwtUserDetailsService.class);
     }
 
     // =================================================================================================================

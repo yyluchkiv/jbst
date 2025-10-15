@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
@@ -46,8 +46,8 @@ class BaseTokensServiceTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        JwtUserDetailsService jwtUserDetailsAssistant() {
-            return mock(JwtUserDetailsService.class);
+        JbstJwtUserDetailsService jwtUserDetailsService() {
+            return mock(JbstJwtUserDetailsService.class);
         }
 
         @Bean
@@ -78,7 +78,7 @@ class BaseTokensServiceTest {
         @Bean
         TokensService tokenService() {
             return new BaseTokensService(
-                    this.jwtUserDetailsAssistant(),
+                    this.jwtUserDetailsService(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),
                     this.baseUsersSessionsService(),
@@ -89,7 +89,7 @@ class BaseTokensServiceTest {
     }
 
     // Assistants
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Session
     private final SessionRegistry sessionRegistry;
     // Services

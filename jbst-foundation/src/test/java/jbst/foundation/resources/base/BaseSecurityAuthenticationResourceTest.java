@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
@@ -87,7 +87,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     private final UsersTokensRepository usersTokensRepository;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Tokens
     private final TokensProvider tokensProvider;
     // Validators

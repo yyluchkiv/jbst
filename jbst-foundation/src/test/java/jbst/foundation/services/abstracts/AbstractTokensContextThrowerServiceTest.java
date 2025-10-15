@@ -1,6 +1,6 @@
 package jbst.foundation.services.abstracts;
 
-import jbst.foundation.assistants.userdetails.JwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -63,8 +63,8 @@ class AbstractTokensContextThrowerServiceTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        JwtUserDetailsService jwtUserDetailsService() {
-            return mock(JwtUserDetailsService.class);
+        JbstJwtUserDetailsService jwtUserDetailsService() {
+            return mock(JbstJwtUserDetailsService.class);
         }
 
         @Bean
@@ -88,7 +88,7 @@ class AbstractTokensContextThrowerServiceTest {
     }
 
     // Assistants
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Repositories
     private final UsersSessionsRepository usersSessionsRepository;
     // Utilities
