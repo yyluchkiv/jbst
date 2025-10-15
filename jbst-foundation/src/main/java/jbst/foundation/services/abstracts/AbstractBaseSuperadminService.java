@@ -11,7 +11,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.BaseSuperadminService;
-import jbst.foundation.sessions.AbstractJbstSessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public abstract class AbstractBaseSuperadminService implements BaseSuperadminSer
     // Incidents
     protected final IncidentPublisher incidentPublisher;
     // Sessions
-    protected final AbstractJbstSessionRegistry sessionRegistry;
+    protected final JbstSessionRegistry sessionRegistry;
     // Repositories
     protected final JbstInvitationsRepository invitationsRepository;
     protected final JbstUsersSessionsRepository usersSessionsRepository;

@@ -12,7 +12,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
-import jbst.foundation.sessions.AbstractJbstSessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
@@ -31,7 +31,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     // Settings
     protected final JbstSettingsService jbstSettingsService;
     // Sessions
-    protected final AbstractJbstSessionRegistry sessionRegistry;
+    protected final JbstSessionRegistry sessionRegistry;
     // Repositories
     protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Tokens

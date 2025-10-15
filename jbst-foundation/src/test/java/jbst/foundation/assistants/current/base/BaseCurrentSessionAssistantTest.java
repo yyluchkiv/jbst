@@ -13,7 +13,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
-import jbst.foundation.sessions.AbstractJbstSessionRegistry;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstSecurityUtils;
@@ -48,8 +48,8 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        AbstractJbstSessionRegistry sessionRegistry() {
-            return mock(AbstractJbstSessionRegistry.class);
+        JbstSessionRegistry sessionRegistry() {
+            return mock(JbstSessionRegistry.class);
         }
 
         @Bean
@@ -86,7 +86,7 @@ class BaseCurrentSessionAssistantTest {
     }
 
     private final JbstSettingsService settingsService;
-    private final AbstractJbstSessionRegistry sessionRegistry;
+    private final JbstSessionRegistry sessionRegistry;
     private final JbstUsersSessionsRepository usersSessionsRepository;
     private final TokensProvider tokensProvider;
     private final JbstSecurityUtils securityUtils;

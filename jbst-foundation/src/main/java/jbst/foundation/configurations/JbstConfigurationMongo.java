@@ -12,6 +12,7 @@ import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.mongodb.MongoBaseUsersSessionsService;
+import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.sessions.MongoSessionRegistry;
 import jbst.foundation.settings.MongoJbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +71,7 @@ public class JbstConfigurationMongo {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
-    MongoSessionRegistry mongoSessionRegistry(
+    JbstSessionRegistry mongoSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             MongoBaseUsersSessionsService mongoBaseUsersSessionsService

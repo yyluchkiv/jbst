@@ -82,7 +82,7 @@ class AbstractJbstSessionRegistryTest {
         }
 
         @Bean
-        AbstractJbstSessionRegistry sessionRegistry() {
+        JbstSessionRegistry sessionRegistry() {
             return new AbstractJbstSessionRegistry(
                     this.securityJwtPublisher(),
                     this.securityJwtIncidentPublisher(),
@@ -100,7 +100,7 @@ class AbstractJbstSessionRegistryTest {
     // Repositories
     private final JbstUsersSessionsRepository usersSessionsRepository;
 
-    private final AbstractJbstSessionRegistry componentUnderTest;
+    private final JbstSessionRegistry componentUnderTest;
 
     @BeforeEach
     void beforeEach() throws Exception {
