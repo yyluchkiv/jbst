@@ -1,23 +1,22 @@
-package jbst.foundation.repositories.postgres.repos;
+package jbst.foundation.integration.mongo.repos;
 
-import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
+import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
+import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
-import jbst.foundation.repositories.postgres.configs.PostgresBeforeAllCallback;
-import jbst.foundation.repositories.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.integration.mongo.configs.MongoBeforeAllCallback;
+import jbst.foundation.integration.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
@@ -28,22 +27,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
-        PostgresBeforeAllCallback.class
+        MongoBeforeAllCallback.class
 })
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                JbstConfigurationPostgresRepositories.class
+                JbstConfigurationMongoRepositories.class
         }
 )
-@AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
+class MongoJbstInvitationsRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
 
-    private final PostgresJbstInvitationsRepository invitationsRepository;
+    private final MongoJbstInvitationsRepository invitationsRepository;
 
     @Override
-    public JpaRepository<PostgresDbInvitation, String> getJpaRepository() {
+    public MongoRepository<MongoDbInvitation, String> getMongoRepository() {
         return this.invitationsRepository;
     }
 
@@ -56,7 +54,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
+        var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
 
         var notExistentInvitationId = entity(InvitationId.class);
         var notExistentInvitation = randomStringLetterOrNumbersOnly(JbstInvitation.DEFAULT_INVITATION_CODE_LENGTH);
@@ -89,7 +87,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
     @Test
     void findUnusedAndSortingTests() {
         // Arrange
-        this.invitationsRepository.saveAll(PostgresDbInvitation.dummies2());
+        this.invitationsRepository.saveAll(MongoDbInvitation.dummies2());
 
         // Act
         var count = this.invitationsRepository.count();
@@ -112,7 +110,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
+        var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
         var notExistentInvitationId = entity(InvitationId.class);
         var existentInvitationId = saved.get(0).invitationId();
 
@@ -139,7 +137,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
+        var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
         var request = RequestNewInvitationParams.random();
 
         // Act-Assert-0
@@ -150,7 +148,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
         assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentInvitationId = this.invitationsRepository.saveAs(JbstInvitation.randomNotPersisted());
+        var existentInvitationId = this.invitationsRepository.saveAs(JbstInvitation.random());
         assertThat(this.invitationsRepository.count()).isEqualTo(7);
         var notExistentInvitationId = entity(InvitationId.class);
         assertThat(this.invitationsRepository.isPresent(existentInvitationId).present()).isTrue();

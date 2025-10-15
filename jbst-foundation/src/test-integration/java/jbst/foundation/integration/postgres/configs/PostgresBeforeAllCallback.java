@@ -1,4 +1,4 @@
-package jbst.foundation.repositories.postgres.configs;
+package jbst.foundation.integration.postgres.configs;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;

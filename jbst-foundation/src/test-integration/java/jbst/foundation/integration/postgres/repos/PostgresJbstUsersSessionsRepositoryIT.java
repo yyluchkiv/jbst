@@ -1,61 +1,63 @@
-package jbst.foundation.repositories.mongo.repos;
+package jbst.foundation.integration.postgres.repos;
 
-import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
+import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
+import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
-import jbst.foundation.repositories.mongo.configs.MongoBeforeAllCallback;
-import jbst.foundation.repositories.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
+import jbst.foundation.integration.postgres.configs.PostgresBeforeAllCallback;
+import jbst.foundation.integration.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Set;
 
 import static jbst.foundation.domain.jwt.JwtAccessToken.accessTokens;
-import static jbst.foundation.tests.converters.MongoUserConverter.toAccessTokensAsStrings2;
-import static jbst.foundation.tests.converters.MongoUserConverter.toUsernamesAsStrings2;
-import static jbst.foundation.tests.converters.MongoUserSessionConverter.toMetadataRenewCron;
+import static jbst.foundation.tests.converters.PostgresUserConverter.toAccessTokensAsStrings2;
+import static jbst.foundation.tests.converters.PostgresUserConverter.toUsernamesAsStrings2;
+import static jbst.foundation.tests.converters.PostgresUserSessionConverter.toMetadataRenewCron;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
-        MongoBeforeAllCallback.class
+        PostgresBeforeAllCallback.class
 })
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                JbstConfigurationMongoRepositories.class
+                JbstConfigurationPostgresRepositories.class
         }
 )
+@AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepositoriesRunner {
+class PostgresJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgresRepositoriesRunner {
 
-    private final MongoJbstUsersSessionsRepository usersSessionsRepository;
+    private final PostgresJbstUsersSessionsRepository usersSessionsRepository;
 
     @Override
-    public MongoRepository<MongoDbUserSession, String> getMongoRepository() {
+    public JpaRepository<PostgresDbUserSession, String> getJpaRepository() {
         return this.usersSessionsRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
+        var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
-        var notExistentSessionId = UserSessionId.random();
+        var notExistentSessionId = entity(UserSessionId.class);
 
         var savedSession = saved.get(0);
         var existentSessionId = savedSession.userSessionId();
@@ -108,7 +110,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
     @Test
     void enableMetadataRenewCronTest() {
         // Arrange
-        var saved1 = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
+        var saved1 = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         // Assert-0
         assertThat(toMetadataRenewCron(saved1))
@@ -127,7 +129,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
     @Test
     void enableMetadataRenewManuallyTest() {
         // Arrange
-        var saved1 = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
+        var saved1 = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         // Assert-0
         assertThat(toMetadataRenewCron(saved1))
@@ -157,7 +159,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
+        var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         var existentSessionId = saved.get(0).userSessionId();
         var existentSessionsIds = Set.of(saved.get(1).userSessionId(), saved.get(5).userSessionId());
@@ -182,7 +184,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
     @Test
     void deleteByUsernameExceptAccessTokenTest() {
         // Arrange
-        this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies2());
+        this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies2());
 
         // Act
         var count1 = this.usersSessionsRepository.count();
@@ -198,7 +200,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
     @Test
     void deleteExceptAccessTokenTest() {
         // Arrange
-        this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies2());
+        this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies2());
 
         // Act
         var count1 = this.usersSessionsRepository.count();
@@ -216,7 +218,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
+        var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
@@ -226,7 +228,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
 
         // Act-Assert-2
-        var existentSessionId = this.usersSessionsRepository.saveAs(entity(JbstUserSession.class)).id();
+        var existentSessionId = this.usersSessionsRepository.saveAs(JbstUserSession.randomNotPersistedSession()).id();
         assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
         var notExistentSessionId = entity(UserSessionId.class);
         assertThat(this.usersSessionsRepository.isPresent(existentSessionId).present()).isTrue();

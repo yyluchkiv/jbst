@@ -1,4 +1,4 @@
-package jbst.foundation.repositories.mongo.configs;
+package jbst.foundation.integration.mongo.configs;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
