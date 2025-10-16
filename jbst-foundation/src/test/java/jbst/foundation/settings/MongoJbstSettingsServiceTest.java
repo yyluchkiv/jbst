@@ -1,12 +1,11 @@
-package jbst.foundation.essence;
+package jbst.foundation.settings;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.UserOnInit;
-import jbst.foundation.essense.JbstEssenceConstructor;
-import jbst.foundation.essense.PostgresJbstEssenceConstructor;
-import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresJbstEssenceConstructorTest {
+class MongoJbstSettingsServiceTest {
 
     @Configuration
     @Import({
@@ -42,18 +41,24 @@ class PostgresJbstEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        PostgresJbstInvitationsRepository invitationsRepository() {
-            return mock(PostgresJbstInvitationsRepository.class);
+        MongoJbstSettingsRepository settingsRepository() {
+            return mock(MongoJbstSettingsRepository.class);
         }
 
         @Bean
-        PostgresJbstUsersRepository userRepository() {
-            return mock(PostgresJbstUsersRepository.class);
+        MongoJbstInvitationsRepository invitationsRepository() {
+            return mock(MongoJbstInvitationsRepository.class);
         }
 
         @Bean
-        JbstEssenceConstructor essenceConstructor() {
-            return new PostgresJbstEssenceConstructor(
+        MongoJbstUsersRepository userRepository() {
+            return mock(MongoJbstUsersRepository.class);
+        }
+
+        @Bean
+        MongoJbstSettingsService settingsService() {
+            return new MongoJbstSettingsService(
+                    this.settingsRepository(),
                     this.invitationsRepository(),
                     this.userRepository(),
                     this.jbstProperties
@@ -61,14 +66,16 @@ class PostgresJbstEssenceConstructorTest {
         }
     }
 
-    private final PostgresJbstInvitationsRepository invitationsRepository;
-    private final PostgresJbstUsersRepository usersRepository;
+    private final MongoJbstSettingsRepository settingsRepository;
+    private final MongoJbstInvitationsRepository invitationsRepository;
+    private final MongoJbstUsersRepository usersRepository;
 
-    private final JbstEssenceConstructor componentUnderTest;
+    private final MongoJbstSettingsService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
+                this.settingsRepository,
                 this.invitationsRepository,
                 this.usersRepository
         );
@@ -77,6 +84,7 @@ class PostgresJbstEssenceConstructorTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
+                this.settingsRepository,
                 this.invitationsRepository,
                 this.usersRepository
         );
@@ -84,12 +92,12 @@ class PostgresJbstEssenceConstructorTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    void saveDefaultUsersTest() {
+    void initUsers() {
         // Arrange
         var users = list345(UserOnInit.class);
 
         // Act
-        var actual = this.componentUnderTest.saveDefaultUsers(users);
+        var actual = this.componentUnderTest.initUsers(users);
 
         // Assert
         var userAC = ArgumentCaptor.forClass(List.class);
@@ -101,13 +109,13 @@ class PostgresJbstEssenceConstructorTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    void saveInvitationsTest() {
+    void initInvitations() {
         // Arrange
         var user = entity(UserOnInit.class);
         var authorities = set345(SimpleGrantedAuthority.class);
 
         // Act
-        this.componentUnderTest.saveInvitations(user, authorities);
+        this.componentUnderTest.initInvitations(user, authorities);
 
         // Assert
         var userAC = ArgumentCaptor.forClass(List.class);
