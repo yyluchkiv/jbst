@@ -49,7 +49,10 @@ public class JbstConfigurationMongo {
     @Bean
     MongoJbstSettingsService mongoJbstSettingsService() {
         return new MongoJbstSettingsService(
-                this.mongoJbstSettingsRepository
+                this.mongoJbstSettingsRepository,
+                this.mongoJbstInvitationsRepository,
+                this.mongoUsersRepository,
+                this.jbstProperties
         );
     }
 

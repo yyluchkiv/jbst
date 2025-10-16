@@ -44,7 +44,8 @@ public class JbstConfigurationPostgres {
         return new PostgresJbstSettingsService(
                 this.postgresJbstSettingsRepository,
                 this.postgresJbstInvitationsRepository,
-                this.postgresUsersRepository
+                this.postgresUsersRepository,
+                this.jbstProperties
         );
     }
 

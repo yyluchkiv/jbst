@@ -4,6 +4,7 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
@@ -24,9 +25,10 @@ public class PostgresJbstSettingsService extends JbstSettingsService {
     public PostgresJbstSettingsService(
             PostgresJbstSettingsRepository settingsRepository,
             PostgresJbstInvitationsRepository invitationsRepository,
-            PostgresJbstUsersRepository usersRepository
+            PostgresJbstUsersRepository usersRepository,
+            JbstProperties jbstProperties
     ) {
-        super(settingsRepository, invitationsRepository, usersRepository);
+        super(settingsRepository, invitationsRepository, usersRepository, jbstProperties);
         this.invitationsRepository = invitationsRepository;
         this.usersRepository = usersRepository;
     }

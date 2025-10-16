@@ -4,6 +4,7 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
@@ -24,9 +25,10 @@ public class MongoJbstSettingsService extends JbstSettingsService {
     public MongoJbstSettingsService(
             MongoJbstSettingsRepository settingsRepository,
             MongoJbstInvitationsRepository invitationsRepository,
-            MongoJbstUsersRepository usersRepository
+            MongoJbstUsersRepository usersRepository,
+            JbstProperties jbstProperties
     ) {
-        super(settingsRepository, invitationsRepository, usersRepository);
+        super(settingsRepository, invitationsRepository, usersRepository, jbstProperties);
         this.invitationsRepository = invitationsRepository;
         this.usersRepository = usersRepository;
     }
