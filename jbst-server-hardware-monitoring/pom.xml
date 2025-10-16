@@ -20,11 +20,6 @@
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
-        <!-- OSHI -->
-        <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-core-java11</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

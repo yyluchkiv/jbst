@@ -8,6 +8,7 @@ import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.utilities.hardware.HardwareUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,7 +18,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static jbst.foundation.domain.tuples.TuplePercentage.progressTuplePercentage;
-import static jbst.server.hm.utilities.HardwareMonitoringUtility.getSystemMemories;
 
 @Slf4j
 @Component
@@ -56,7 +56,7 @@ public class HardwareMonitoringClient extends AbstractInfiniteTimerTask {
         try {
             var metadata = new HardwareMonitoringMetadata(
                     this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion(),
-                    getSystemMemories()
+                    HardwareUtility.getSystemMemories()
             );
             var status = Status.STARTED;
             try {
