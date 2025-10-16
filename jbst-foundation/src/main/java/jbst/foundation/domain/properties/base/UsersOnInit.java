@@ -20,17 +20,17 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DefaultUsers extends AbstractTogglePropertyConfigs {
+public class UsersOnInit extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty
-    private List<DefaultUser> users;
+    private List<UserOnInit> users;
 
-    public static DefaultUsers hardcoded() {
-        return new DefaultUsers(
+    public static UsersOnInit hardcoded() {
+        return new UsersOnInit(
                 true,
                 List.of(
-                        new DefaultUser(
+                        new UserOnInit(
                                 Username.of("admin12"),
                                 Password.of("password12"),
                                 ZoneId.systemDefault(),
@@ -42,21 +42,21 @@ public class DefaultUsers extends AbstractTogglePropertyConfigs {
         );
     }
 
-    public static DefaultUsers random() {
+    public static UsersOnInit random() {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static DefaultUsers enabled() {
+    public static UsersOnInit enabled() {
         return hardcoded();
     }
 
-    public static DefaultUsers disabled() {
-        return new DefaultUsers(false, new ArrayList<>());
+    public static UsersOnInit disabled() {
+        return new UsersOnInit(false, new ArrayList<>());
     }
 
-    public final Set<String> getDefaultUsersAuthorities() {
+    public final Set<String> getAuthorities() {
         if (nonNull(this.users)) {
-            return this.users.stream().map(DefaultUser::getAuthorities)
+            return this.users.stream().map(UserOnInit::getAuthorities)
                     .filter(Objects::nonNull)
                     .flatMap(Set::stream)
                     .collect(Collectors.toSet());

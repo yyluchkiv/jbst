@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,7 +37,7 @@ public class PostgresJbstEssenceConstructor extends JbstEssenceConstructor {
     }
 
     @Override
-    public long saveDefaultUsers(List<DefaultUser> defaultUsers) {
+    public long saveDefaultUsers(List<UserOnInit> defaultUsers) {
         var dbUsers = defaultUsers.stream().
                 map(defaultUser -> {
                     var username = defaultUser.getUsername();
@@ -60,11 +60,11 @@ public class PostgresJbstEssenceConstructor extends JbstEssenceConstructor {
     }
 
     @Override
-    public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
+    public void saveInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
         var invitations = IntStream.range(0, 10)
                 .mapToObj(i ->
                         new PostgresDbInvitation(
-                                defaultUser.getUsername(),
+                                userOnInit.getUsername(),
                                 authorities
                         )
                 )

@@ -14,6 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.time.ZoneId;
 import java.util.Set;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
@@ -23,7 +24,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DefaultUser extends AbstractPropertyConfigs {
+public class UserOnInit extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Username username;
     @MandatoryProperty
@@ -37,8 +38,8 @@ public class DefaultUser extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Set<String> authorities;
 
-    public static DefaultUser hardcoded() {
-        return new DefaultUser(
+    public static UserOnInit hardcoded() {
+        return new UserOnInit(
                 Username.hardcoded(),
                 Password.hardcoded(),
                 UKRAINE,
@@ -48,8 +49,8 @@ public class DefaultUser extends AbstractPropertyConfigs {
         );
     }
 
-    public static DefaultUser random() {
-        return new DefaultUser(
+    public static UserOnInit random() {
+        return new UserOnInit(
                 Username.random(),
                 Password.random(),
                 RandomUtility.randomZoneId(),
@@ -64,6 +65,6 @@ public class DefaultUser extends AbstractPropertyConfigs {
     }
 
     public boolean isPasswordChangeRequired() {
-        return Boolean.TRUE.equals(this.passwordChangeRequired);
+        return TRUE.equals(this.passwordChangeRequired);
     }
 }

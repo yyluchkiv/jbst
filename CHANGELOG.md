@@ -4,3 +4,5 @@
 — Modification: modify jbst-server naming in yml files
 — Modification: EventSessionUserRequestMetadataAdd.accountAccessMethod
 — Modification: property users-emails-configs: account-accessed + {magiclink, username-password, session-token}
+— Modification: merge EssenseConstructor and SettingsService
+— Modification: TODO [YYL] properties

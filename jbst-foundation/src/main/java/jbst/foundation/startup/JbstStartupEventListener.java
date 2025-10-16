@@ -34,9 +34,9 @@ public class JbstStartupEventListener {
         this.jbstSettingsService.initializeSettings();
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_33));
 
-        var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
-        LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(defaultUsers.isEnabled()).asANSI());
-        if (defaultUsers.isEnabled()) {
+        var users = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getUsersOnInit();
+        LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(users.isEnabled()).asANSI());
+        if (users.isEnabled()) {
             this.essenceConstructor.addDefaultUsers();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_66));

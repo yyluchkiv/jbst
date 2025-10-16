@@ -14,21 +14,21 @@ import static java.time.ZoneId.systemDefault;
 import static java.util.Collections.emptySet;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultUsersTest {
+class UsersOnInitTest {
 
-    private static Stream<Arguments> getDefaultUsersAuthoritiesTest() {
+    private static Stream<Arguments> getAuthoritiesTest() {
         return Stream.of(
                 Arguments.of(null, emptySet()),
                 Arguments.of(
                         List.of(
-                                new DefaultUser(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, null)
+                                new UserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, null)
                         ),
                         emptySet()
                 ),
                 Arguments.of(
                         List.of(
-                                new DefaultUser(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, Set.of("user")),
-                                new DefaultUser(Username.of("user2"), Password.of("pass2"), systemDefault(), null, false, Set.of("admin", "user"))
+                                new UserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, Set.of("user")),
+                                new UserOnInit(Username.of("user2"), Password.of("pass2"), systemDefault(), null, false, Set.of("admin", "user"))
                         ),
                         Set.of("user", "admin")
                 )
@@ -36,13 +36,10 @@ class DefaultUsersTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getDefaultUsersAuthoritiesTest")
-    void getDefaultUsersAuthoritiesTest(List<DefaultUser> users, Set<String> expected) {
-        // Arrange
-        var defaultUsers = new DefaultUsers(true, users);
-
+    @MethodSource("getAuthoritiesTest")
+    void getAuthoritiesTest(List<UserOnInit> users, Set<String> expected) {
         // Act
-       var actual = defaultUsers.getDefaultUsersAuthorities();
+       var actual = new UsersOnInit(true, users).getAuthorities();
 
         // Assert
         assertThat(actual).isEqualTo(expected);

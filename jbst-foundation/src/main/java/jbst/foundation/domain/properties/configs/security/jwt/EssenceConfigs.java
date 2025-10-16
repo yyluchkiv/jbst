@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.DefaultUsers;
+import jbst.foundation.domain.properties.base.UsersOnInit;
 import jbst.foundation.domain.properties.base.Invitations;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
@@ -15,20 +15,20 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class EssenceConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private final DefaultUsers defaultUsers;
+    private final UsersOnInit usersOnInit;
     @MandatoryProperty
     private final Invitations invitations;
 
     public static EssenceConfigs hardcoded() {
         return new EssenceConfigs(
-                DefaultUsers.hardcoded(),
+                UsersOnInit.hardcoded(),
                 Invitations.hardcoded()
         );
     }
 
     public static EssenceConfigs random() {
         return new EssenceConfigs(
-                DefaultUsers.random(),
+                UsersOnInit.random(),
                 Invitations.random()
         );
     }

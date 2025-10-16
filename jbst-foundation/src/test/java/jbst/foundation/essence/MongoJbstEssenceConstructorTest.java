@@ -2,7 +2,7 @@ package jbst.foundation.essence;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.essense.MongoJbstEssenceConstructor;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
@@ -86,16 +86,16 @@ class MongoJbstEssenceConstructorTest {
     @Test
     void saveDefaultUsersTest() {
         // Arrange
-        var defaultUsers = list345(DefaultUser.class);
+        var users = list345(UserOnInit.class);
 
         // Act
-        var actual = this.componentUnderTest.saveDefaultUsers(defaultUsers);
+        var actual = this.componentUnderTest.saveDefaultUsers(users);
 
         // Assert
         var userAC = ArgumentCaptor.forClass(List.class);
         verify(this.usersRepository).saveAll(userAC.capture());
         assertThat(actual)
-                .isEqualTo(defaultUsers.size())
+                .isEqualTo(users.size())
                 .isEqualTo(userAC.getValue().size());
     }
 
@@ -103,11 +103,11 @@ class MongoJbstEssenceConstructorTest {
     @Test
     void saveInvitationsTest() {
         // Arrange
-        var defaultUser = entity(DefaultUser.class);
+        var user = entity(UserOnInit.class);
         var authorities = set345(SimpleGrantedAuthority.class);
 
         // Act
-        this.componentUnderTest.saveInvitations(defaultUser, authorities);
+        this.componentUnderTest.saveInvitations(user, authorities);
 
         // Assert
         var userAC = ArgumentCaptor.forClass(List.class);

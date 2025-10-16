@@ -2,7 +2,7 @@ package jbst.foundation.essence;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.repositories.JbstInvitationsRepository;
@@ -80,13 +80,13 @@ class JbstEssenceConstructorTest {
                     this.jbstProperties()
             ) {
                 @Override
-                public long saveDefaultUsers(List<DefaultUser> defaultUsers) {
+                public long saveDefaultUsers(List<UserOnInit> defaultUsers) {
                     abstractMockService().executeInheritedMethod();
                     return 0;
                 }
 
                 @Override
-                public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
+                public void saveInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
                     abstractMockService().executeInheritedMethod();
                 }
             };

@@ -124,11 +124,11 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     public void assertProperties(PropertyId propertyId) {
         super.assertProperties(propertyId);
 
-        // Requirements: availableAuthorities vs. defaultUsersAuthorities
+        // Requirements: availableAuthorities vs. configuredAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();
-        var defaultUsersAuthorities = this.essenceConfigs.getDefaultUsers().getDefaultUsersAuthorities();
-        var containsAll = expectedAuthorities.containsAll(defaultUsersAuthorities);
-        assertTrueOrThrow(containsAll, "Please verify `defaultUsers.users.authorities`. Configuration provide unauthorized authority");
+        var configuredAuthorities = this.essenceConfigs.getUsersOnInit().getAuthorities();
+        var containsAll = expectedAuthorities.containsAll(configuredAuthorities);
+        assertTrueOrThrow(containsAll, "Please verify `users-on-init.users.authorities`. Configuration provide unauthorized authority");
 
         // Requirements: availableAuthorities vs. required enum values
         var authorityClasses = this.getAbstractAuthorityClasses(this.authoritiesConfigs.getPackageName());

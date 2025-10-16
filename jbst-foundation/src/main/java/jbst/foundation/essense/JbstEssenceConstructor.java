@@ -2,7 +2,7 @@ package jbst.foundation.essense;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import lombok.AccessLevel;
@@ -29,19 +29,19 @@ public abstract class JbstEssenceConstructor {
     // Properties
     protected final JbstProperties jbstProperties;
 
-    abstract public long saveDefaultUsers(List<DefaultUser> defaultUsers);
-    abstract public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities);
+    abstract public long saveDefaultUsers(List<UserOnInit> defaultUsers);
+    abstract public void saveInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities);
 
     @SuppressWarnings("LoggingSimilarMessage")
     public void addDefaultUsers() {
         var essenceConfigs = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs();
         assertTrueOrThrow(
-                essenceConfigs.getDefaultUsers().isEnabled(),
+                essenceConfigs.getUsersOnInit().isEnabled(),
                 invalidAttribute("essenceConfigs.defaultUsers.enabled == true")
         );
         if (this.usersRepository.count() == 0L) {
             LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — adding users to database");
-            var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
+            var usersCount = this.saveDefaultUsers(essenceConfigs.getUsersOnInit().getUsers());
             LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — saved users: {}", usersCount);
         }
         LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — {}", COMPLETED.asANSI());
@@ -55,7 +55,7 @@ public abstract class JbstEssenceConstructor {
                 invalidAttribute("essenceConfigs.invitations.enabled == true")
         );
         var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());
-        essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
+        essenceConfigs.getUsersOnInit().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {
                 LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations — add invitations, username: {}", username);
