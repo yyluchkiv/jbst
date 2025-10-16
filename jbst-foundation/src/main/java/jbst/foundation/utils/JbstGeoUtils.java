@@ -1,7 +1,11 @@
 package jbst.foundation.utils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.Param;
+import feign.RequestLine;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoCountryFlag;
@@ -27,8 +31,11 @@ import static jbst.foundation.domain.enums.Status.SUCCESS;
 @Slf4j
 @Component
 public class JbstGeoUtils {
-    private static final String CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";
+    private static final String FLAGS_CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";
 
+    // ================================================================================================================
+    // FLAGS: CLASSES
+    // ================================================================================================================
     private record GeoFlags(
             GeoCountryFlagsConfigs configs,
             Map<String, GeoCountryFlag> names,
@@ -55,6 +62,22 @@ public class JbstGeoUtils {
         }
     }
 
+    // ================================================================================================================
+    // IPAPI: CLASSES
+    // ================================================================================================================
+    public interface IPAPIDefinition {
+        @RequestLine("GET /json/{ipAddress}")
+        IPAPIResponse getIPAPIResponse(@Param("ipAddress") String ipAddress);
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public record IPAPIResponse(String status, String country, String countryCode, String city, String message) {
+        @JsonIgnore
+        public boolean isSuccess() {
+            return "success".equals(this.status);
+        }
+    }
+
     // Properties
     private final JbstProperties jbstProperties;
     // State
@@ -69,7 +92,7 @@ public class JbstGeoUtils {
     }
 
     // ================================================================================================================
-    // FLAGS
+    // FLAGS: METHODS
     // ================================================================================================================
     public String getFlagEmojiByCountryName(String countryName) {
         return this.geoFlags.getEmojiByName(countryName);
@@ -80,25 +103,25 @@ public class JbstGeoUtils {
     }
 
     // ================================================================================================================
-    // PRIVATE METHODS
+    // INITIALIZERS: FLAGS
     // ================================================================================================================
     private GeoFlags initFlags(ResourceLoader resourceLoader) {
         var geoCountryFlagsConfigs = this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs();
-        LOGGER.info(CONFIGURATION_LOG, Status.of(geoCountryFlagsConfigs.isEnabled()).asANSI());
+        LOGGER.info(FLAGS_CONFIGURATION_LOG, Status.of(geoCountryFlagsConfigs.isEnabled()).asANSI());
         if (geoCountryFlagsConfigs.isEnabled()) {
             try {
                 var resource = resourceLoader.getResource("classpath:geo-countries-flags.json");
                 var typeReference = new TypeReference<List<GeoCountryFlag>>() {};
                 var objectMapper = new ObjectMapper();
                 var geoCountryFlags = objectMapper.readValue(resource.getInputStream(), typeReference);
-                LOGGER.info(CONFIGURATION_LOG, SUCCESS.asANSI());
+                LOGGER.info(FLAGS_CONFIGURATION_LOG, SUCCESS.asANSI());
                 return new GeoFlags(
                         this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs(),
                         geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.name().toLowerCase(), identity())),
                         geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.code().toLowerCase(), identity()))
                 );
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error(CONFIGURATION_LOG, FAILURE.asANSI());
+                LOGGER.error(FLAGS_CONFIGURATION_LOG, FAILURE.asANSI());
                 LOGGER.error("Please make sure geo-countries-flags.json is in classpath");
                 throw new IllegalArgumentException(ex.getMessage());
             }
