@@ -1,12 +1,15 @@
 package jbst.foundation.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -23,8 +26,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -114,8 +116,8 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        UserMetadataUtils userMetadataUtils() {
-            return mock(UserMetadataUtils.class);
+        JbstGeoUtils geoUtils() {
+            return mock(JbstGeoUtils.class);
         }
 
         @Bean
@@ -123,7 +125,7 @@ class AbstractBaseUsersSessionsServiceTest {
             return new AbstractBaseUsersSessionsService(
                     this.securityJwtPublisher(),
                     this.usersSessionsRepository(),
-                    this.userMetadataUtils(),
+                    this.geoUtils(),
                     this.securityUtils()
             ) {};
         }
@@ -134,7 +136,7 @@ class AbstractBaseUsersSessionsServiceTest {
     // Repositories
     private final JbstUsersSessionsRepository usersSessionsRepository;
     // Utils
-    private final UserMetadataUtils userMetadataUtils;
+    private final JbstGeoUtils geoUtils;
 
     private final AbstractBaseUsersSessionsService componentUnderTest;
 
@@ -143,7 +145,7 @@ class AbstractBaseUsersSessionsServiceTest {
         reset(
                 this.securityJwtEventsPublisher,
                 this.usersSessionsRepository,
-                this.userMetadataUtils
+                this.geoUtils
         );
     }
 
@@ -152,7 +154,7 @@ class AbstractBaseUsersSessionsServiceTest {
         verifyNoMoreInteractions(
                 this.securityJwtEventsPublisher,
                 this.usersSessionsRepository,
-                this.userMetadataUtils
+                this.geoUtils
         );
     }
 
@@ -181,14 +183,21 @@ class AbstractBaseUsersSessionsServiceTest {
                 .hasMessage(entityAccessDenied("Session", UserSessionId.hardcoded().value()));
     }
 
-    @Test
-    void saveUserSessionNotNullTest() {
+    private static Stream<Arguments> saveUserSessionTest() {
+        return Stream.of(
+                Arguments.of(JwtUser.hardcoded(UserCreationOption.STANDARD), AccountAccessMethod.USERNAME_PASSWORD),
+                Arguments.of(JwtUser.hardcoded(UserCreationOption.MAGICLINK), AccountAccessMethod.MAGICLINK)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("saveUserSessionTest")
+    void saveUserSessionNotNullTest(JwtUser user, AccountAccessMethod accountAccessMethod) {
         // Arrange
         var ipAddr = randomIPv4();
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
-        var user = entity(JwtUser.class);
         var username = user.username();
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
@@ -223,8 +232,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.session().id()).isEqualTo(actualDbUserSession.id());
         assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
-        assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
-        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
+        assertThat(event.accountAccessMethod()).isEqualTo(accountAccessMethod);
     }
 
     @Test
@@ -234,7 +242,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
-        var user = entity(JwtUser.class);
+        var user = JwtUser.hardcoded();
         var username = user.username();
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
@@ -269,8 +277,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.session().id()).isNotEqualTo(actualDbUserSession.id());
         assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
-        assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
-        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
+        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.USERNAME_PASSWORD);
     }
 
     @Test
@@ -302,21 +309,20 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.email()).isEqualTo(user.email());
         assertThat(event.session().id()).isNotEqualTo(newUserSession.id());
-        assertThat(event.isAuthenticationLoginEndpoint()).isFalse();
-        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isTrue();
+        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.SESSION_TOKEN);
     }
 
     @Test
     void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
         var event = entity(EventSessionUserRequestMetadataAdd.class);
-        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
-        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
+        verify(this.geoUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
@@ -332,14 +338,14 @@ class AbstractBaseUsersSessionsServiceTest {
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
-        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
-        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
+        verify(this.geoUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
@@ -374,14 +380,14 @@ class AbstractBaseUsersSessionsServiceTest {
                 metadataRenewCron,
                 metadataRenewManually
         );
-        when(this.userMetadataUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(saveFunction.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(saveFunction);
 
         // Assert
-        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader());
+        verify(this.geoUtils).getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         var sessionProcessedMetadata = userSessionAC.getValue();

@@ -133,6 +133,11 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+        <!-- OSHI -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core-java11</artifactId>
+        </dependency>
         <!-- Collections: CircularFifoQueue -->
         <dependency>
             <groupId>org.apache.commons</groupId>

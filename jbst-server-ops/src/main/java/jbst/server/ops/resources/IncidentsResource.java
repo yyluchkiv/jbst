@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/incidents")
+@RequestMapping("/incidents")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IncidentsResource {
 

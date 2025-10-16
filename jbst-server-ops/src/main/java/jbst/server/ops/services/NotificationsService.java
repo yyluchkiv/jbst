@@ -2,7 +2,7 @@ package jbst.server.ops.services;
 
 import jbst.server.ops.domain.incidents.OpsIncident;
 import jbst.server.ops.domain.servers.Servers;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import jbst.server.ops.slack.SlackBotsService;
 import jbst.server.ops.utilities.MessagesUtility;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class NotificationsService {
     // Services
     private final SlackBotsService slackBotsService;
     // Properties
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     public final void notifyStatus(Servers servers) {
         this.slackBotsService.sendMainBotMainCommunication(servers.getStatus());
@@ -34,7 +34,7 @@ public class NotificationsService {
 
     public final void notifyStatusOnTeams(Servers servers) {
         var mappedServers = servers.getMappedValues();
-        var sc = this.opsProperties.getSlacksConfigs().getMainSlackConfig();
+        var sc = this.serverProperties.getSlacksConfigs().getMainSlackConfig();
         sc.getTeamsCommunications().forEach(tc -> {
             if (tc.isOperationalMode()) {
                 var teamServers = mappedServers.get(tc.getTeam());
@@ -60,7 +60,7 @@ public class NotificationsService {
     }
 
     public final void notifyIncident(OpsIncident opsIncident) {
-        if (opsIncident.getTeam().equals(this.opsProperties.getSlacksConfigs().getMainTeam())) {
+        if (opsIncident.getTeam().equals(this.serverProperties.getSlacksConfigs().getMainTeam())) {
             this.slackBotsService.sendMainTeamIncident(opsIncident);
         } else {
             this.slackBotsService.sendIncident(opsIncident);

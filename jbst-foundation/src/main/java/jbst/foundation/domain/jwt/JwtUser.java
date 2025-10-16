@@ -70,10 +70,10 @@ public record JwtUser(
         return true;
     }
 
-    public static JwtUser hardcodedMagicLink() {
+    public static JwtUser hardcoded(UserCreationOption userCreationOption) {
         return new JwtUser(
                 UserId.hardcoded(),
-                UserCreationOption.MAGICLINK,
+                userCreationOption,
                 Username.hardcoded(),
                 Password.hardcoded(),
                 UKRAINE,

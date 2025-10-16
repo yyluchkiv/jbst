@@ -3,7 +3,7 @@ package jbst.server.ops.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.*;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
@@ -17,6 +17,7 @@ import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -25,6 +26,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
+@EnableConfigurationProperties({
+        ServerProperties.class
+})
 @Import({
         JbstConfigurationJasypt.class,
         JbstConfigurationAsync.class,
@@ -38,16 +42,17 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationBeans {
 
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     @PostConstruct
     public void init() {
-        this.opsProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
-        this.opsProperties.getServersConfigs().assertProperties(new PropertyId("serversConfigs"));
-        this.opsProperties.getSlacksConfigs().assertProperties(new PropertyId("slacksConfigs"));
-        this.opsProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipientsConfigs"));
+        this.serverProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.serverProperties.getServersConfigs().assertProperties(new PropertyId("serversConfigs"));
+        this.serverProperties.getSlacksConfigs().assertProperties(new PropertyId("slacksConfigs"));
+        this.serverProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipientsConfigs"));
     }
 
+    @SuppressWarnings("deprecation")
     @Bean
     public RestTemplate restTemplate() {
         var connectionManager = PoolingHttpClientConnectionManagerBuilder.create()

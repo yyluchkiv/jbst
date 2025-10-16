@@ -3,7 +3,6 @@ package jbst.server.ops;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.server.ops.jobs.ServersJob;
-import jbst.server.ops.properties.OpsProperties;
 import jbst.server.ops.services.IncidentsService;
 import jbst.server.ops.services.MonitoringService;
 import jbst.server.ops.slack.SlackBotsService;
@@ -12,19 +11,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
 
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 
 @Slf4j
-@EnableConfigurationProperties({
-        JbstProperties.class,
-        OpsProperties.class
+@SpringBootApplication(exclude = {
+        // mongo
+        MongoAutoConfiguration.class,
+        MongoDataAutoConfiguration.class,
+        // postgres
+        DataSourceAutoConfiguration.class,
+        HibernateJpaAutoConfiguration.class
 })
-@SpringBootApplication
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class Server {
 

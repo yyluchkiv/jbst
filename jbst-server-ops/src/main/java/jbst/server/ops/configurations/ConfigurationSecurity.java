@@ -4,9 +4,10 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.server.ops.filters.AuthenticationIncidentFilter;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -28,7 +29,10 @@ public class ConfigurationSecurity {
     private final AuthenticationIncidentFilter authenticationIncidentFilter;
     // Properties
     private final JbstProperties jbstProperties;
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,7 +43,7 @@ public class ConfigurationSecurity {
 
         http.authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests
-                    .requestMatchers("/api/incidents/**").permitAll()
+                    .requestMatchers(this.contextPath + "/incidents/**").permitAll()
                     .requestMatchers("/actuator/**").hasRole(Username.ops().value());
             if (this.jbstProperties.getServerConfigs().isSpringdocEnabled()) {
                 authorizeHttpRequests.requestMatchers(JbstConstants.Swagger.ENDPOINTS.toArray(new String[0])).permitAll();
@@ -57,7 +61,7 @@ public class ConfigurationSecurity {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsManager(BCryptPasswordEncoder passwordEncoder) {
-        var remoteServer = this.opsProperties.getServerConfigs();
+        var remoteServer = this.serverProperties.getServerConfigs();
         var credentials = remoteServer.getCredentials();
         return new InMemoryUserDetailsManager(
                 User.withUsername(credentials.username().value())

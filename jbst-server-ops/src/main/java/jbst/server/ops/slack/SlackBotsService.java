@@ -4,7 +4,7 @@ import com.slack.api.Slack;
 import jbst.server.ops.domain.incidents.OpsIncident;
 import jbst.server.ops.domain.servers.Team;
 import jbst.server.ops.domain.slack.bots.SlackBot;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,14 @@ public class SlackBotsService {
     // Services
     private final SlackCommandsService slackCommandsService;
     // Properties
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     // Services
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final Map<Team, SlackBot> bots = new ConcurrentHashMap<>();
 
     public final void initialize() {
-        var slacksConfigs = this.opsProperties.getSlacksConfigs().getValues();
+        var slacksConfigs = this.serverProperties.getSlacksConfigs().getValues();
         slacksConfigs.forEach(sc -> {
             var bot = new SlackBot(sc, this.slackCommandsService, Slack.getInstance().methods(sc.getBotToken()));
             bot.initialize();
@@ -70,6 +70,7 @@ public class SlackBotsService {
         }
     }
 
+    @SuppressWarnings("unused")
     public final void sendMainCommunication(Map<Team, List<String>> teamsMessages) {
         teamsMessages.forEach((team, messages) -> {
             var bot = this.bots.get(team);

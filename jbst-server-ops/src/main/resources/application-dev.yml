@@ -17,8 +17,8 @@ jbst:
     user-agent-configs:
       enabled: false
 
-# ops
-ops:
+# server
+jbst-server-ops:
   server-configs:
     base-url: "http://localhost:8973"
     credentials:

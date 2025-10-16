@@ -1,2 +1,8 @@
 ### Changelog [v1.26]
-— TBD
+— Deletion: JbstEmailUtils bean
+— Modification: migrate "jbst-server-hardware-monitoring" property to server
+— Modification: modify jbst-server naming in yml files
+— Modification: EventSessionUserRequestMetadataAdd.accountAccessMethod
+— Modification: property users-emails-configs: account-accessed + {magiclink, username-password, session-token}
+— Modification: merge EssenseConstructor and SettingsService
+— Modification: essence-configs: {users-on-init, invitations-on-init}

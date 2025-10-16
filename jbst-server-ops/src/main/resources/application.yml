@@ -1,5 +1,10 @@
 #file: noinspection SpringBootApplicationYaml
 
+# Server
+server:
+  servlet:
+    context-path: /api
+
 # Spring Security: actuator endpoints
 management:
   endpoints:
@@ -37,8 +42,8 @@ jbst:
     host: "smtp.gmail.com"
     port: 587
 
-# ops
-ops:
+# server
+jbst-server-ops:
   servers-configs:
     monitoring-configs:
       zone-id: "Europe/Kyiv"

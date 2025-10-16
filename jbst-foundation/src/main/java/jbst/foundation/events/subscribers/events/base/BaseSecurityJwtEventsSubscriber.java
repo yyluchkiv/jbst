@@ -1,7 +1,6 @@
 package jbst.foundation.events.subscribers.events.base;
 
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
@@ -16,7 +15,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.UsersEmailsService;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Utils
-    private final UserMetadataUtils userMetadataUtils;
+    private final JbstGeoUtils geoUtils;
     // Incidents
     private final IncidentPublisher incidentPublisher;
 
@@ -54,7 +53,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
         try {
             LOGGER.debug(USER_ACTION, event.username(), "[sub, events] login failure");
-            var userRequestMetadata = this.userMetadataUtils.getUserRequestMetadataProcessed(
+            var userRequestMetadata = this.geoUtils.getUserRequestMetadataProcessed(
                     event.ipAddress(),
                     event.userAgentHeader()
             );
@@ -155,33 +154,21 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
         if (isNull(event.email())) {
             return;
         }
-        if (event.isAuthenticationLoginEndpoint()) {
-            this.usersEmailsService.executeAuthenticationLogin(
-                    new FunctionAccountAccessed(
-                            event.username(),
-                            event.email(),
-                            metadata,
-                            AccountAccessMethod.USERNAME_PASSWORD
-                    )
-            );
-        }
-        if (event.isAuthenticationRefreshTokenEndpoint()) {
-            this.usersEmailsService.executeSessionRefreshed(
-                    new FunctionAccountAccessed(
-                            event.username(),
-                            event.email(),
-                            metadata,
-                            AccountAccessMethod.SECURITY_TOKEN
-                    )
-            );
-        }
+        this.usersEmailsService.executeAccountAccessed(
+                new FunctionAccountAccessed(
+                        event.username(),
+                        event.email(),
+                        metadata,
+                        event.accountAccessMethod()
+                )
+        );
     }
 
     private void processSessionUserRequestMetadataAddIncidents(
             EventSessionUserRequestMetadataAdd event,
             UserRequestMetadata metadata
     ) {
-        if (event.isAuthenticationLoginEndpoint()) {
+        if (event.isUsernamePassword()) {
             this.securityJwtIncidentsPublisher.publishAuthenticationLogin(
                     new IncidentAuthenticationLogin(
                             event.username(),
@@ -189,7 +176,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
                     )
             );
         }
-        if (event.isAuthenticationRefreshTokenEndpoint()) {
+        if (event.isSessionToken()) {
             this.securityJwtIncidentsPublisher.publishSessionRefreshed(
                     new IncidentSessionRefreshed(
                             event.username(),

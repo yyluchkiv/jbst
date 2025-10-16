@@ -1,9 +1,11 @@
 package jbst.foundation.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -19,8 +21,7 @@ import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.utils.JbstSecurityUtils;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -45,7 +46,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     // Repositories
     protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Utils
-    protected final UserMetadataUtils userMetadataUtils;
+    protected final JbstGeoUtils geoUtils;
     // Utilities
     protected final JbstSecurityUtils securityUtils;
 
@@ -87,8 +88,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                         session,
                         clientIpAddr,
                         new UserAgentHeader(httpServletRequest),
-                        true,
-                        false
+                        AccountAccessMethod.getMethod(user.creationOption())
                 )
         );
     }
@@ -105,8 +105,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                         newSession,
                         getClientIpAddr(httpServletRequest),
                         new UserAgentHeader(httpServletRequest),
-                        false,
-                        true
+                        AccountAccessMethod.SESSION_TOKEN
                 )
         );
     }
@@ -131,7 +130,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 session.username(),
                 session.accessToken(),
                 session.refreshToken(),
-                this.userMetadataUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader()),
+                this.geoUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader()),
                 saveFunction.metadataRenewCron().enabled() ? saveFunction.metadataRenewCron().value() : session.metadataRenewCron(),
                 saveFunction.metadataRenewManually().enabled() ? saveFunction.metadataRenewManually().value() : session.metadataRenewManually()
         );

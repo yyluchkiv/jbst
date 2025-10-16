@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
@@ -36,7 +37,6 @@ import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
-import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
@@ -193,7 +193,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var userToken = JbstUserToken.hardcodedMagicLink();
         when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(userToken);
 
-        var user = JwtUser.hardcodedMagicLink();
+        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var userCreationOption = UserCreationOption.MAGICLINK;
         when(this.baseUsersService.safeSave(userCreationOption, userToken.email(), request.zoneId())).thenReturn(user);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);

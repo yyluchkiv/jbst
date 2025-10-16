@@ -2,6 +2,7 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
@@ -17,7 +18,6 @@ import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
-import jbst.foundation.utils.JbstSecurityUtils;
 import jbst.foundation.validators.*;
 import jbst.foundation.websockets.WebsocketsService;
 import org.springframework.context.annotation.Bean;

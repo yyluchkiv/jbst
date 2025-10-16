@@ -3,6 +3,7 @@ package jbst.foundation.domain.events;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
@@ -15,9 +16,8 @@ public record EventSessionUserRequestMetadataAdd(
         @Nullable Email email,
         @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,
-        UserAgentHeader userAgentHeader,
-        boolean isAuthenticationLoginEndpoint,
-        boolean isAuthenticationRefreshTokenEndpoint
+        @NotNull UserAgentHeader userAgentHeader,
+        @NotNull AccountAccessMethod accountAccessMethod
 ) {
     public FunctionSessionUserRequestMetadataSave getSaveFunction() {
         return new FunctionSessionUserRequestMetadataSave(
@@ -28,5 +28,13 @@ public record EventSessionUserRequestMetadataAdd(
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
+    }
+
+    public boolean isUsernamePassword() {
+        return this.accountAccessMethod.isUsernamePassword();
+    }
+
+    public boolean isSessionToken() {
+        return this.accountAccessMethod.isSessionToken();
     }
 }

@@ -1,13 +1,12 @@
 package jbst.server.iam.base.properties;
 
-import jbst.server.iam.base.properties.server.ServerConfigs;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 
 @ConfigurationProperties(
-        prefix = "jbst-server",
+        prefix = "jbst-server-iam",
         ignoreUnknownFields = false
 )
 @Data

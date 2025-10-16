@@ -108,7 +108,7 @@ class AbstractBaseUsersServiceTest {
         var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
         var zoneId = ZoneId.systemDefault();
-        var user = JwtUser.hardcodedMagicLink();
+        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
@@ -126,7 +126,7 @@ class AbstractBaseUsersServiceTest {
         var email = Email.hardcoded();
         var zoneId = ZoneId.systemDefault();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
-        var user = JwtUser.hardcodedMagicLink();
+        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var username = email.getUsername();
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(zoneId))).thenReturn(user);
 
@@ -146,7 +146,7 @@ class AbstractBaseUsersServiceTest {
         var email = Email.hardcoded();
         var zoneId = ZoneId.systemDefault();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
-        var user = JwtUser.hardcodedMagicLink();
+        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
 

@@ -3,7 +3,6 @@ package jbst.foundation.startup;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +19,7 @@ import static jbst.foundation.domain.enums.Status.*;
 public class JbstStartupEventListener {
 
     // Settings
-    protected final JbstSettingsService jbstSettingsService;
-    // Essence
-    protected final JbstEssenceConstructor essenceConstructor;
+    protected final JbstSettingsService settingsService;
     // Properties
     protected final JbstProperties jbstProperties;
 
@@ -31,20 +28,20 @@ public class JbstStartupEventListener {
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
 
-        this.jbstSettingsService.initializeSettings();
+        this.settingsService.initSettings();
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_33));
 
-        var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
-        LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(defaultUsers.isEnabled()).asANSI());
-        if (defaultUsers.isEnabled()) {
-            this.essenceConstructor.addDefaultUsers();
+        var users = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getUsersOnInit();
+        LOGGER.info("{} Essence 'users-on-init' — {}", JbstConstants.Logs.PREFIX, Status.of(users.isEnabled()).asANSI());
+        if (users.isEnabled()) {
+            this.settingsService.initUsers();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_66));
 
-        var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
-        LOGGER.info("{} Essence 'invitations' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).asANSI());
+        var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationsOnInit();
+        LOGGER.info("{} Essence 'invitations-on-init' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).asANSI());
         if (invitations.isEnabled()) {
-            this.essenceConstructor.addDefaultUsersInvitations();
+            this.settingsService.initInvitations();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_99));
 

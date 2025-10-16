@@ -91,17 +91,19 @@ jbst:
           enabled: true
           user-destination: "/accounts"
     users-emails-configs:
-      authentication-login:
+      account-accessed-magiclink:
         enabled: true
-      session-refreshed:
+      account-accessed-username-password:
+        enabled: true
+      account-accessed-session-token:
         enabled: true
     users-tokens-configs:
       webclient-magic-link-path: "/magic-link"
       webclient-email-confirmation-redirect-path: "/email-confirmation"
       webclient-password-reset-path: "/password-reset"
 
-# jbst server
-jbst-server:
+# server
+jbst-server-iam:
   server-configs:
     target-attribute1: "value1"
     target-attribute2: 10

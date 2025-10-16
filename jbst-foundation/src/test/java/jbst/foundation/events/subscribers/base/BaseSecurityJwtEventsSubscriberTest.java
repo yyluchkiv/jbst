@@ -22,7 +22,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.UsersEmailsService;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +41,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.foundation.domain.enums.AccountAccessMethod.SESSION_TOKEN;
 import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,8 +68,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                true,
-                                false
+                                USERNAME_PASSWORD
                         ),
                         null
                 ),
@@ -80,8 +79,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                true,
-                                false
+                                USERNAME_PASSWORD
                         ),
                         null
                 ),
@@ -92,8 +90,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                true,
-                                false
+                                USERNAME_PASSWORD
                         ),
                         new RuntimeException("Unexpected error occurred")
                 )
@@ -109,8 +106,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                false,
-                                true
+                                SESSION_TOKEN
                         ),
                         null
                 ),
@@ -121,8 +117,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                false,
-                                true
+                                SESSION_TOKEN
                         ),
                         null
                 ),
@@ -133,8 +128,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                false,
-                                true
+                                SESSION_TOKEN
                         ),
                         new RuntimeException("Unexpected error occurred")
                 )
@@ -171,8 +165,8 @@ class BaseSecurityJwtEventsSubscriberTest {
         }
 
         @Bean
-        UserMetadataUtils userMetadataUtils() {
-            return mock(UserMetadataUtils.class);
+        JbstGeoUtils geoUtils() {
+            return mock(JbstGeoUtils.class);
         }
 
         @Bean
@@ -187,7 +181,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                     this.baseUsersTokensService(),
                     this.userEmailService(),
                     this.baseUsersSessionsService(),
-                    this.userMetadataUtils(),
+                    this.geoUtils(),
                     this.incidentPublisher()
             );
         }
@@ -200,7 +194,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Utils
-    private final UserMetadataUtils userMetadataUtils;
+    private final JbstGeoUtils geoUtils;
     // Incidents
     private final IncidentPublisher incidentPublisher;
 
@@ -213,7 +207,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                 this.baseUsersTokensService,
                 this.usersEmailsService,
                 this.baseUsersSessionsService,
-                this.userMetadataUtils,
+                this.geoUtils,
                 this.incidentPublisher
         );
     }
@@ -225,7 +219,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                 this.baseUsersTokensService,
                 this.usersEmailsService,
                 this.baseUsersSessionsService,
-                this.userMetadataUtils,
+                this.geoUtils,
                 this.incidentPublisher
         );
     }
@@ -259,7 +253,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     void onAuthenticationLoginFailureTest(RuntimeException ex) {
         // Arrange
         var event = EventAuthenticationLoginFailure.hardcoded();
-        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         if (nonNull(ex)) {
             doThrow(ex).when(this.securityJwtIncidentsPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(any());
         }
@@ -268,7 +262,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         this.componentUnderTest.onAuthenticationLoginFailure(event);
 
         // Assert
-        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader());
+        verify(this.geoUtils).getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader());
         verify(this.securityJwtIncidentsPublisher).publishAuthenticationLoginFailureUsernamePassword(
                 new IncidentAuthenticationLoginFailureUsernamePassword(
                         new UsernamePasswordCredentials(
@@ -384,27 +378,6 @@ class BaseSecurityJwtEventsSubscriberTest {
         assertThat(event).isNotNull();
     }
 
-    @Test
-    void onSessionUserRequestMetadataAddNotAuthenticationEndpointTest() {
-        // Arrange
-        var event = new EventSessionUserRequestMetadataAdd(
-                Username.random(),
-                Email.random(),
-                entity(JbstUserSession.class),
-                IPAddress.random(),
-                mock(UserAgentHeader.class),
-                false,
-                false
-        );
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
-
-        // Act
-        this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
-
-        // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-    }
-
     @ParameterizedTest
     @MethodSource("eventSessionUserRequestMetadataAddLoginTest")
     void onSessionUserRequestMetadataAddIsAuthenticationLoginEndpointTest(
@@ -423,7 +396,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
-            verify(this.usersEmailsService).executeAuthenticationLogin(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
+            verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }
@@ -449,7 +422,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
-            verify(this.usersEmailsService).executeSessionRefreshed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SECURITY_TOKEN));
+            verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }

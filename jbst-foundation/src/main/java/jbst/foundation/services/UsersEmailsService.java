@@ -12,7 +12,5 @@ public interface UsersEmailsService {
     @Async
     void executePasswordReset(JbstUserToken userToken);
     @Async
-    void executeAuthenticationLogin(FunctionAccountAccessed function);
-    @Async
-    void executeSessionRefreshed(FunctionAccountAccessed function);
+    void executeAccountAccessed(FunctionAccountAccessed function);
 }
