@@ -25,17 +25,17 @@ public final class GeoLocationMindMaxUtils {
     // Database
     private final DatabaseReader databaseReader;
     // Utilities
-    private final GeoCountryFlagUtils geoCountryFlagUtils;
+    private final JbstGeoUtils geoUtils;
     // Properties
     private final JbstProperties jbstProperties;
 
     public GeoLocationMindMaxUtils(
             ResourceLoader resourceLoader,
-            GeoCountryFlagUtils geoCountryFlagUtils,
+            JbstGeoUtils geoUtils,
             JbstProperties jbstProperties
     ) {
-        this.geoCountryFlagUtils = geoCountryFlagUtils;
         this.jbstProperties = jbstProperties;
+        this.geoUtils = geoUtils;
         var enabled = jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled();
         LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).asANSI());
         if (enabled) {
@@ -62,7 +62,7 @@ public final class GeoLocationMindMaxUtils {
             var inetAddress = InetAddress.getByName(ipAddress.value());
             var response = this.databaseReader.city(inetAddress);
             var countryCode = response.getCountry().getIsoCode();
-            var countryFlag = this.geoCountryFlagUtils.getFlagEmojiByCountryCode(countryCode);
+            var countryFlag = this.geoUtils.getFlagEmojiByCountryCode(countryCode);
             return GeoLocation.processed(
                     ipAddress,
                     response.getCountry().getName(),

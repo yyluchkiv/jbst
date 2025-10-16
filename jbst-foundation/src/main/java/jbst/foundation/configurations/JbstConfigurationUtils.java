@@ -38,8 +38,8 @@ public class JbstConfigurationUtils {
     }
 
     @Bean
-    GeoCountryFlagUtils geoCountryFlagUtils() {
-        return new GeoCountryFlagUtils(
+    JbstGeoUtils geoUtils() {
+        return new JbstGeoUtils(
                 this.resourceLoader,
                 this.jbstProperties
         );
@@ -54,7 +54,7 @@ public class JbstConfigurationUtils {
                         .decoder(new JacksonDecoder())
                         .retryer(Retryer.NEVER_RETRY)
                         .target(GeoLocationIPAPIUtils.IPAPIDefinition.class, "http://ip-api.com"),
-                this.geoCountryFlagUtils()
+                this.geoUtils()
         );
     }
 
@@ -62,7 +62,7 @@ public class JbstConfigurationUtils {
     GeoLocationMindMaxUtils geoLocationMindMaxUtils() {
         return new GeoLocationMindMaxUtils(
                 this.resourceLoader,
-                this.geoCountryFlagUtils(),
+                this.geoUtils(),
                 this.jbstProperties
         );
     }

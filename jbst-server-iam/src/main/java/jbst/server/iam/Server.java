@@ -54,6 +54,8 @@ public class Server extends JbstStartupEventListener {
     public void onStartup() {
         try {
             super.onStartup();
+            incidentPublisher.publishThrowable(new NullPointerException("IAM1"));
+            incidentPublisher.publishThrowable(new NullPointerException("IAM2"));
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);

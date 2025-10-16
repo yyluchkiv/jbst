@@ -34,21 +34,21 @@ class GeoLocationIPAPIUtilsTest {
         }
 
         @Bean
-        GeoCountryFlagUtils geoCountryFlagUtils() {
-            return mock(GeoCountryFlagUtils.class);
+        JbstGeoUtils geoUtils() {
+            return mock(JbstGeoUtils.class);
         }
 
         @Bean
         GeoLocationIPAPIUtils geoLocationIPAPIUtils() {
             return new GeoLocationIPAPIUtils(
                     this.definition(),
-                    this.geoCountryFlagUtils()
+                    this.geoUtils()
             );
         }
     }
 
     private final GeoLocationIPAPIUtils.IPAPIDefinition definition;
-    private final GeoCountryFlagUtils geoCountryFlagUtils;
+    private final JbstGeoUtils geoUtils;
 
     private final GeoLocationIPAPIUtils componentUnderTest;
 
@@ -56,7 +56,7 @@ class GeoLocationIPAPIUtilsTest {
     void beforeEach() {
         reset(
                 this.definition,
-                this.geoCountryFlagUtils
+                this.geoUtils
         );
     }
 
@@ -64,7 +64,7 @@ class GeoLocationIPAPIUtilsTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.definition,
-                this.geoCountryFlagUtils
+                this.geoUtils
         );
     }
 
@@ -106,14 +106,14 @@ class GeoLocationIPAPIUtilsTest {
         var ipAddress = IPAddress.random();
         var ipapiResponse = new GeoLocationIPAPIUtils.IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
         when(this.definition.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
-        when(this.geoCountryFlagUtils.getFlagEmojiByCountryCode("UA")).thenReturn(UKRAINE);
+        when(this.geoUtils.getFlagEmojiByCountryCode("UA")).thenReturn(UKRAINE);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
         verify(this.definition).getIPAPIResponse(ipAddress.value());
-        verify(this.geoCountryFlagUtils).getFlagEmojiByCountryCode("UA");
+        verify(this.geoUtils).getFlagEmojiByCountryCode("UA");
         assertThat(actual.getIpAddr()).isEqualTo(ipAddress.value());
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getCountryCode()).isEqualTo("UA");

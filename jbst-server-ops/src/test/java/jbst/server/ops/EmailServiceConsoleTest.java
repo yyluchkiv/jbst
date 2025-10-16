@@ -10,7 +10,7 @@ import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.utilities.time.TimestampUtility;
-import jbst.foundation.utils.GeoCountryFlagUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -107,15 +107,15 @@ class EmailServiceConsoleTest {
         }
 
         @Bean
-        GeoCountryFlagUtils geoCountryFlagUtils() {
-            return new GeoCountryFlagUtils(
+        JbstGeoUtils geoUtils() {
+            return new JbstGeoUtils(
                     this.resourceLoader,
                     this.jbstProperties()
             );
         }
     }
 
-    private final GeoCountryFlagUtils geoCountryFlagUtils;
+    private final JbstGeoUtils geoUtils;
 
     private final EmailService componentUnderTest;
 
@@ -142,7 +142,7 @@ class EmailServiceConsoleTest {
     @Disabled
     void sendOpsAnyIncident() {
         // Arrange
-        var ukraineFlag = this.geoCountryFlagUtils.getFlagEmojiByCountryCode("UA");
+        var ukraineFlag = this.geoUtils.getFlagEmojiByCountryCode("UA");
         var emailHTML = new EmailHTML(
                 this.getTo(),
                 "[OpsIncidents] Authentication Login on [server-prod@prod] — " + TimestampUtility.getCurrentTimestamp() + " — [AnyIncident]",

@@ -37,14 +37,14 @@ public final class GeoLocationIPAPIUtils {
     // Definitions
     private final IPAPIDefinition definition;
     // Utils
-    private final GeoCountryFlagUtils geoCountryFlagUtils;
+    private final JbstGeoUtils geoUtils;
 
     public GeoLocation getGeoLocation(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
         try {
             var queryResponse = this.definition.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {
                 var countryCode = queryResponse.countryCode();
-                var countryFlag = this.geoCountryFlagUtils.getFlagEmojiByCountryCode(countryCode);
+                var countryFlag = this.geoUtils.getFlagEmojiByCountryCode(countryCode);
                 return GeoLocation.processed(
                         ipAddress,
                         queryResponse.country(),

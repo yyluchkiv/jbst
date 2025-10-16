@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class GeoCountryFlagUtilsTest {
+class JbstGeoUtilsTest {
 
     private static Stream<Arguments> getFlagEmojiTest() {
         return Stream.of(
@@ -48,21 +48,21 @@ class GeoCountryFlagUtilsTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        GeoCountryFlagUtils geoCountryFlagUtils() {
-            return new GeoCountryFlagUtils(
+        JbstGeoUtils geoUtils() {
+            return new JbstGeoUtils(
                     this.resourceLoader,
                     this.jbstProperties
             );
         }
     }
 
-    private final GeoCountryFlagUtils componentUnderTest;
+    private final JbstGeoUtils componentUnderTest;
 
     @ParameterizedTest
     @MethodSource("getFlagEmojiTest")
-    void getFlagEmojiTest(String country, String countryCode, String expected) {
+    void getFlagEmojiTest(String countryName, String countryCode, String expected) {
         // Act
-        var actual1 = this.componentUnderTest.getFlagEmojiByCountry(country);
+        var actual1 = this.componentUnderTest.getFlagEmojiByCountryName(countryName);
         var actual2 = this.componentUnderTest.getFlagEmojiByCountryCode(countryCode);
 
         // Assert
