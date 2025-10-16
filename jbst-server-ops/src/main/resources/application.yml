@@ -37,8 +37,8 @@ jbst:
     host: "smtp.gmail.com"
     port: 587
 
-# ops
-ops:
+# server
+jbst-server-ops:
   servers-configs:
     monitoring-configs:
       zone-id: "Europe/Kyiv"

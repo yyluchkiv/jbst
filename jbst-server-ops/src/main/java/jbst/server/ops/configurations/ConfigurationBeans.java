@@ -3,7 +3,7 @@ package jbst.server.ops.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.*;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
@@ -38,14 +38,14 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationBeans {
 
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     @PostConstruct
     public void init() {
-        this.opsProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
-        this.opsProperties.getServersConfigs().assertProperties(new PropertyId("serversConfigs"));
-        this.opsProperties.getSlacksConfigs().assertProperties(new PropertyId("slacksConfigs"));
-        this.opsProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipientsConfigs"));
+        this.serverProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.serverProperties.getServersConfigs().assertProperties(new PropertyId("serversConfigs"));
+        this.serverProperties.getSlacksConfigs().assertProperties(new PropertyId("slacksConfigs"));
+        this.serverProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipientsConfigs"));
     }
 
     @Bean

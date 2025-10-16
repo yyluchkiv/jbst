@@ -11,7 +11,7 @@ import jbst.foundation.services.emails.services.EmailService;
 import jbst.server.ops.domain.incidents.OpsConcurrentIncidentStats;
 import jbst.server.ops.domain.incidents.OpsIncidentEnv;
 import jbst.server.ops.domain.incidents.OpsIncidentHTML;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class IncidentsService {
     private final MonitoringService monitoringService;
     private final EmailService emailService;
     // Properties
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     // IncidentType <-> HTML template name
     private static final Map<String, OpsIncidentHTML> TEMPLATES_MAPPINGS = Arrays.stream(JbstIamIncidentType.values())
@@ -80,7 +80,7 @@ public class IncidentsService {
 
     @EventListener
     public void onEvent(Incident incident) {
-        this.registerIncident(incident, this.opsProperties.getOpsIncidentEnv());
+        this.registerIncident(incident, this.serverProperties.getOpsIncidentEnv());
     }
 
     // WARNING #1: every 15 seconds check on incident "times" == 10 -> register incident + NO cleanup

@@ -9,8 +9,8 @@ import jbst.foundation.configurations.JbstConfigurationAsync;
 import jbst.foundation.configurations.JbstConfigurationEvents;
 import jbst.foundation.configurations.JbstConfigurationSpringBootServer;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.JbstProperties;
 import jbst.server.hm.client.HardwareMonitoringClient;
+import jbst.server.hm.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({
-        JbstProperties.class
+        ServerProperties.class
 })
 @Import({
         JbstConfigurationAsync.class,
@@ -36,11 +36,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ConfigurationServer {
 
     // Properties
-    private final JbstProperties jbstProperties;
+    private final ServerProperties serverProperties;
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getHardwareServerConfigs().printProperties(new PropertyId("hardwareServerConfigs"));
+        this.serverProperties.getServerConfigs().printProperties(new PropertyId("serverConfigs"));
     }
 
     @Bean
@@ -55,11 +55,11 @@ public class ConfigurationServer {
 
     @Bean
     public HardwareMonitoringClient.HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition() {
-        var hardwareServerConfigs = this.jbstProperties.getHardwareServerConfigs();
+        var serverConfigs = this.serverProperties.getServerConfigs();
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(HardwareMonitoringClient.HardwareMonitoringClientDefinition.class, hardwareServerConfigs.getBaseURL());
+                .target(HardwareMonitoringClient.HardwareMonitoringClientDefinition.class, serverConfigs.getTargetURL());
     }
 }

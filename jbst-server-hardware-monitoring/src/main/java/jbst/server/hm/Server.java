@@ -2,6 +2,7 @@ package jbst.server.hm;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.server.hm.properties.ServerProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,8 @@ public class Server {
         var springApplication = new SpringApplication(Server.class);
         var applicationContext = springApplication.run(args);
         var jbstProperties = applicationContext.getBean(JbstProperties.class);
+        var serverProperties = applicationContext.getBean(ServerProperties.class);
         LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getServerConfigs(), COMPLETED));
-        LOGGER.info(PREFIX + " TargetURL: {}", jbstProperties.getHardwareServerConfigs().getBaseURL());
+        LOGGER.info(PREFIX + " TargetURL: {}", serverProperties.getServerConfigs().getTargetURL());
     }
 }

@@ -131,16 +131,6 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void hardwareServerConfigsTest() {
-        // Act
-        HardwareServerConfigs.hardcoded().assertProperties(new PropertyId("hardwareServerConfigs"));
-        HardwareServerConfigs.hardcoded().printProperties(new PropertyId("hardwareServerConfigs"));
-
-        // Assert
-        // no asserts
-    }
-
-    @Test
     void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
         // Act
         var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();

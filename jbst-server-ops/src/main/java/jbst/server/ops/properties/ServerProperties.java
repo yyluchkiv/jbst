@@ -11,9 +11,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 
-@ConfigurationProperties(prefix = "ops")
+@ConfigurationProperties(
+        prefix = "jbst-server-ops",
+        ignoreUnknownFields = false
+)
 @Data
-public class OpsProperties implements PriorityOrdered {
+public class ServerProperties implements PriorityOrdered {
     private SpringLogging logging;
     private RemoteServer serverConfigs;
     private SlacksConfigs slacksConfigs;

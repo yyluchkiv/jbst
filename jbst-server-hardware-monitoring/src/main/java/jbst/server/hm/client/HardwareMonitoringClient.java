@@ -45,15 +45,14 @@ public class HardwareMonitoringClient {
             this.failures.incrementAndGet();
             status = Status.FAILURE;
         }
-        var percentage = progressTuplePercentage(
-                this.successes.get(),
-                this.successes.get() + this.failures.get()
-        ).percentage();
         LOGGER.info(
                 "SEND HARDWARE METADATA #{} — {}. Success Rate: {}%",
                 this.successes.get() + this.failures.get(),
                 status.asANSI(),
-                percentage
+                progressTuplePercentage(
+                        this.successes.get(),
+                        this.successes.get() + this.failures.get()
+                ).percentage()
         );
     }
 }

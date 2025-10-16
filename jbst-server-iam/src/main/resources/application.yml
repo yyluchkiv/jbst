@@ -100,8 +100,8 @@ jbst:
       webclient-email-confirmation-redirect-path: "/email-confirmation"
       webclient-password-reset-path: "/password-reset"
 
-# jbst server
-jbst-server:
+# server
+jbst-server-iam:
   server-configs:
     target-attribute1: "value1"
     target-attribute2: 10

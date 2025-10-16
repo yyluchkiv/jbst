@@ -8,5 +8,8 @@ logging:
 jbst:
   server-configs:
     name: jbstshm-dev
-  hardware-server-configs:
-    base-url: http://localhost:3002
+
+# server
+jbst-server-hardware-monitoring:
+  server-configs:
+    target-url: http://localhost:3002

@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.server.ops.filters.AuthenticationIncidentFilter;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ public class ConfigurationSecurity {
     private final AuthenticationIncidentFilter authenticationIncidentFilter;
     // Properties
     private final JbstProperties jbstProperties;
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -57,7 +57,7 @@ public class ConfigurationSecurity {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsManager(BCryptPasswordEncoder passwordEncoder) {
-        var remoteServer = this.opsProperties.getServerConfigs();
+        var remoteServer = this.serverProperties.getServerConfigs();
         var credentials = remoteServer.getCredentials();
         return new InMemoryUserDetailsManager(
                 User.withUsername(credentials.username().value())

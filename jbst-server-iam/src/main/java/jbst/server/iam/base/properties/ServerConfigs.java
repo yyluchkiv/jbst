@@ -1,4 +1,4 @@
-package jbst.server.iam.base.properties.server;
+package jbst.server.iam.base.properties;
 
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;

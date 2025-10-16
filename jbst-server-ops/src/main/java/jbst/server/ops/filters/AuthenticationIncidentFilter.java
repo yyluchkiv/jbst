@@ -10,7 +10,7 @@ import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.utils.UserMetadataUtils;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -35,7 +35,7 @@ public class AuthenticationIncidentFilter extends OncePerRequestFilter {
     // Utils
     private final UserMetadataUtils userMetadataUtils;
     // Properties
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     @SuppressWarnings("NullableProblems")
     @Override
@@ -49,7 +49,7 @@ public class AuthenticationIncidentFilter extends OncePerRequestFilter {
                     Username.of(values[0]),
                     Password.of(values[1])
             );
-            var server = this.opsProperties.getServerConfigs();
+            var server = this.serverProperties.getServerConfigs();
             if (!server.containsCredentials(credentials)) {
                 var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
                         credentials,

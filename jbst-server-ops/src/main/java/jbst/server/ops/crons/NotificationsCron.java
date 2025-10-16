@@ -2,7 +2,7 @@ package jbst.server.ops.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import jbst.server.ops.services.IncidentsService;
 import jbst.server.ops.services.MonitoringService;
 import jbst.server.ops.services.NotificationsService;
@@ -22,12 +22,12 @@ public class NotificationsCron extends AbstractBaseCron {
     private final MonitoringService monitoringService;
     private final NotificationsService notificationsService;
     // Properties
-    private final OpsProperties opsProperties;
+    private final ServerProperties serverProperties;
 
     @Override
     public void processException(Exception ex) {
         var incident = new Incident(ex);
-        this.incidentsService.registerIncident(incident, this.opsProperties.getOpsIncidentEnv());
+        this.incidentsService.registerIncident(incident, this.serverProperties.getOpsIncidentEnv());
     }
 
     @Scheduled(

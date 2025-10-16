@@ -3,7 +3,7 @@ package jbst.server.ops;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.server.ops.jobs.ServersJob;
-import jbst.server.ops.properties.OpsProperties;
+import jbst.server.ops.properties.ServerProperties;
 import jbst.server.ops.services.IncidentsService;
 import jbst.server.ops.services.MonitoringService;
 import jbst.server.ops.slack.SlackBotsService;
@@ -22,7 +22,7 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 @Slf4j
 @EnableConfigurationProperties({
         JbstProperties.class,
-        OpsProperties.class
+        ServerProperties.class
 })
 @SpringBootApplication
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
