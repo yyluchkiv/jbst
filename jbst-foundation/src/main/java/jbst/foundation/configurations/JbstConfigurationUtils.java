@@ -3,7 +3,9 @@ package jbst.foundation.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utils.*;
+import jbst.foundation.utils.JbstGeoUtils;
+import jbst.foundation.utils.UserAgentDetailsUtils;
+import jbst.foundation.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -41,23 +43,6 @@ public class JbstConfigurationUtils {
     }
 
     @Bean
-    GeoLocationMindMaxUtils geoLocationMindMaxUtils() {
-        return new GeoLocationMindMaxUtils(
-                this.resourceLoader,
-                this.geoUtils(),
-                this.jbstProperties
-        );
-    }
-
-    @Bean
-    GeoLocationUtils geoLocationUtils() {
-        return new GeoLocationUtils(
-                this.geoUtils(),
-                this.geoLocationMindMaxUtils()
-        );
-    }
-
-    @Bean
     UserAgentDetailsUtils userAgentDetailsUtils() {
         return new UserAgentDetailsUtils(
                 this.jbstProperties
@@ -67,7 +52,7 @@ public class JbstConfigurationUtils {
     @Bean
     UserMetadataUtils userMetadataUtils() {
         return new UserMetadataUtils(
-                this.geoLocationUtils(),
+                this.geoUtils(),
                 this.userAgentDetailsUtils()
         );
     }

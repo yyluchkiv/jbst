@@ -26,8 +26,8 @@ class UserMetadataUtilsTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        GeoLocationUtils geoLocationUtils() {
-            return mock(GeoLocationUtils.class);
+        JbstGeoUtils geoUtils() {
+            return mock(JbstGeoUtils.class);
         }
 
         @Bean
@@ -38,13 +38,13 @@ class UserMetadataUtilsTest {
         @Bean
         UserMetadataUtils userMetadataUtils() {
             return new UserMetadataUtils(
-                    this.geoLocationUtils(),
+                    this.geoUtils(),
                     this.userAgentDetailsUtils()
             );
         }
     }
 
-    private final GeoLocationUtils geoLocationUtils;
+    private final JbstGeoUtils geoUtils;
     private final UserAgentDetailsUtils userAgentDetailsUtils;
 
     private final UserMetadataUtils componentUnderTest;
@@ -52,7 +52,7 @@ class UserMetadataUtilsTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.geoLocationUtils,
+                this.geoUtils,
                 this.userAgentDetailsUtils
         );
     }
@@ -60,7 +60,7 @@ class UserMetadataUtilsTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.geoLocationUtils,
+                this.geoUtils,
                 this.userAgentDetailsUtils
         );
     }
@@ -75,7 +75,7 @@ class UserMetadataUtilsTest {
 
         // Assert
         assertThat(metadata.getStatus()).isEqualTo(Status.COMPLETED);
-        verify(this.geoLocationUtils).getGeoLocation(IPAddress.localhost());
+        verify(this.geoUtils).getGeoLocation(IPAddress.localhost());
         verify(this.userAgentDetailsUtils).getUserAgentDetails(UserAgentHeader.hardcoded());
     }
 }

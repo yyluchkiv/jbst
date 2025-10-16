@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import feign.Feign;
 import feign.Param;
 import feign.RequestLine;
@@ -19,11 +21,14 @@ import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.utilities.GeoCountryFlagsConfigs;
+import jbst.foundation.domain.properties.configs.utilities.GeoLocationsConfigs;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +40,7 @@ import static java.util.stream.Collectors.toUnmodifiableMap;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
 @Component
@@ -87,6 +93,11 @@ public class JbstGeoUtils {
         }
     }
 
+    // ================================================================================================================
+    // MINDMAX: CLASSES
+    // ================================================================================================================
+    private record GeoMindMax(GeoLocationsConfigs configs, DatabaseReader databaseReader) {}
+
     // Definitions
     private final IPAPIDefinition ipapi = Feign.builder()
             .client(new OkHttpClient())
@@ -98,17 +109,32 @@ public class JbstGeoUtils {
     private final JbstProperties jbstProperties;
     // State
     private final GeoFlags geoFlags;
+    private final GeoMindMax geoMindMax;
 
-    public JbstGeoUtils(
-            ResourceLoader resourceLoader,
-            JbstProperties jbstProperties
-    ) {
+    @Autowired
+    public JbstGeoUtils(ResourceLoader resourceLoader, JbstProperties jbstProperties) {
         this.jbstProperties = jbstProperties;
         this.geoFlags = this.initFlags(resourceLoader);
+        this.geoMindMax = this.initMindMax(resourceLoader);
     }
 
     // ================================================================================================================
-    // FLAGS: METHODS
+    // METHODS: FACADE
+    // ================================================================================================================
+    public final GeoLocation getGeoLocation(IPAddress ipAddress) {
+        try {
+            return this.getGeoLocationIPAPI(ipAddress);
+        } catch (JbstGeoLocationNotFoundException ex1) {
+            try {
+                return this.getGeoLocationMindMax(ipAddress);
+            } catch (JbstGeoLocationNotFoundException ex2) {
+                return GeoLocation.unknown(ipAddress, ex2.getMessage());
+            }
+        }
+    }
+
+    // ================================================================================================================
+    // METHODS (atomic): FLAGS
     // ================================================================================================================
     public final String getFlagEmojiByCountryName(String countryName) {
         return this.geoFlags.getEmojiByName(countryName);
@@ -119,7 +145,7 @@ public class JbstGeoUtils {
     }
 
     // ================================================================================================================
-    // IPAPI: METHODS
+    // METHODS (atomic): IPAPI
     // ================================================================================================================
     protected final GeoLocation getGeoLocationIPAPI(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
         try {
@@ -139,6 +165,28 @@ public class JbstGeoUtils {
             }
         } catch (RuntimeException throwable) {
             throw new JbstGeoLocationNotFoundException(throwable.getMessage());
+        }
+    }
+
+    // ================================================================================================================
+    // METHODS (atomic): MINDMAX
+    // ================================================================================================================
+    protected final GeoLocation getGeoLocationMindMax(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
+        if (!this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled()) {
+            return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
+        }
+        try {
+            var response = this.geoMindMax.databaseReader().city(InetAddress.getByName(ipAddress.value()));
+            var countryCode = response.getCountry().getIsoCode();
+            return GeoLocation.processed(
+                    ipAddress,
+                    response.getCountry().getName(),
+                    countryCode,
+                    this.getFlagEmojiByCountryCode(countryCode),
+                    response.getCity().getName()
+            );
+        } catch (IOException | GeoIp2Exception ex) {
+            throw new JbstGeoLocationNotFoundException(ex.getMessage());
         }
     }
 
@@ -170,6 +218,34 @@ public class JbstGeoUtils {
                     this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs(),
                     unmodifiableMap(new HashMap<>()),
                     unmodifiableMap(new HashMap<>())
+            );
+        }
+    }
+
+    // ================================================================================================================
+    // INITIALIZERS: MINDMAX
+    // ================================================================================================================
+    private GeoMindMax initMindMax(ResourceLoader resourceLoader) {
+        var enabled = this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled();
+        LOGGER.info(MINDMAX_CONFIGURATION_LOG, Status.of(enabled).asANSI());
+        if (enabled) {
+            try {
+                var resource = resourceLoader.getResource("classpath:GeoLite2-City.mmdb");
+                var inputStream = resource.getInputStream();
+                LOGGER.info(MINDMAX_CONFIGURATION_LOG, SUCCESS.asANSI());
+                return new GeoMindMax(
+                        this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs(),
+                        new DatabaseReader.Builder(inputStream).build()
+                );
+            } catch (IOException | RuntimeException ex) {
+                LOGGER.error(MINDMAX_CONFIGURATION_LOG, FAILURE.asANSI());
+                LOGGER.error("Please make sure GeoLite2-City.mmdb is in classpath");
+                throw new IllegalArgumentException(ex.getMessage());
+            }
+        } else {
+            return new GeoMindMax(
+                    this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs(),
+                    null
             );
         }
     }
