@@ -32,8 +32,8 @@ public class Server extends JbstStartupEventListener {
     private final IncidentPublisher incidentPublisher;
 
     @Autowired
-    public Server(JbstSettingsService jbstSettingsService, JbstProperties jbstProperties, IncidentPublisher incidentPublisher) {
-        super(jbstSettingsService, jbstProperties);
+    public Server(JbstSettingsService settingsService, JbstProperties jbstProperties, IncidentPublisher incidentPublisher) {
+        super(settingsService, jbstProperties);
         this.incidentPublisher = incidentPublisher;
     }
 

@@ -17,7 +17,7 @@ public record EventSessionUserRequestMetadataAdd(
         @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,
         @NotNull UserAgentHeader userAgentHeader,
-        @NotNull  AccountAccessMethod accountAccessMethod
+        @NotNull AccountAccessMethod accountAccessMethod
 ) {
     public FunctionSessionUserRequestMetadataSave getSaveFunction() {
         return new FunctionSessionUserRequestMetadataSave(

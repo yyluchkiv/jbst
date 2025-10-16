@@ -82,10 +82,10 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Magic Link"),
-                this.getServerOrFallbackJbstTemplateName(
+                this.getTemplateNameFNC().apply(new Tuple2<>(
                         "server-magic-link",
                         "jbst-magic-link"
-                ),
+                )),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
@@ -99,10 +99,10 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Email Confirmation"),
-                this.getServerOrFallbackJbstTemplateName(
+                this.getTemplateNameFNC().apply(new Tuple2<>(
                         "server-email-confirmation",
                         "jbst-email-confirmation"
-                ),
+                )),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
@@ -116,10 +116,10 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         return EmailHTML.of(
                 userToken.email(),
                 this.getSubject("Password Reset"),
-                this.getServerOrFallbackJbstTemplateName(
+                this.getTemplateNameFNC().apply(new Tuple2<>(
                         "server-password-reset",
                         "jbst-password-reset"
-                ),
+                )),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
@@ -141,11 +141,6 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     // =================================================================================================================
     // PRIVATE METHODS: Spring
     // =================================================================================================================
-    private String getServerOrFallbackJbstTemplateName(String serverTemplateName, String jbstTemplateName) {
-        var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
-        return resource.exists() ? serverTemplateName : jbstTemplateName;
-    }
-
     private Function<Tuple2<String, String>, String> getTemplateNameFNC() {
         return tuple2 -> {
             var serverTemplateName = tuple2.a();
