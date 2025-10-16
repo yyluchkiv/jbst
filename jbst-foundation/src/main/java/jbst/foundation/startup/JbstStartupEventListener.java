@@ -3,7 +3,6 @@ package jbst.foundation.startup;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +20,6 @@ public class JbstStartupEventListener {
 
     // Settings
     protected final JbstSettingsService jbstSettingsService;
-    // Essence
-    protected final JbstEssenceConstructor essenceConstructor;
     // Properties
     protected final JbstProperties jbstProperties;
 
@@ -35,16 +32,16 @@ public class JbstStartupEventListener {
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_33));
 
         var users = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getUsersOnInit();
-        LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(users.isEnabled()).asANSI());
+        LOGGER.info("{} Essence 'users-on-init' — {}", JbstConstants.Logs.PREFIX, Status.of(users.isEnabled()).asANSI());
         if (users.isEnabled()) {
-            this.essenceConstructor.addDefaultUsers();
+            this.jbstSettingsService.initUsers();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_66));
 
-        var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
-        LOGGER.info("{} Essence 'invitations' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).asANSI());
+        var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationsOnInit();
+        LOGGER.info("{} Essence 'invitations-on-init' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).asANSI());
         if (invitations.isEnabled()) {
-            this.essenceConstructor.addDefaultUsersInvitations();
+            this.jbstSettingsService.initInvitations();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), PROGRESS_99));
 

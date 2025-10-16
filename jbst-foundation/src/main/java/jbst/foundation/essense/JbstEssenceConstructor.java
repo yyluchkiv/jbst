@@ -51,7 +51,7 @@ public abstract class JbstEssenceConstructor {
         var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
         var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
         assertTrueOrThrow(
-                essenceConfigs.getInvitations().isEnabled(),
+                essenceConfigs.getInvitationsOnInit().isEnabled(),
                 invalidAttribute("essenceConfigs.invitations.enabled == true")
         );
         var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());

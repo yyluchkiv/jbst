@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.essense.MongoJbstEssenceConstructor;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
@@ -60,15 +59,6 @@ public class JbstConfigurationMongo {
     MongoUserDetailsAssistant mongoUserDetailsAssistant() {
         return new MongoUserDetailsAssistant(
                 this.mongoUsersRepository
-        );
-    }
-
-    @Bean
-    MongoJbstEssenceConstructor mongoBaseEssenceConstructor() {
-        return new MongoJbstEssenceConstructor(
-                this.mongoJbstInvitationsRepository,
-                this.mongoUsersRepository,
-                this.jbstProperties
         );
     }
 

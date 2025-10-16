@@ -3,7 +3,7 @@ package jbst.foundation.startup;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
 import jbst.foundation.domain.properties.base.UsersOnInit;
-import jbst.foundation.domain.properties.base.Invitations;
+import jbst.foundation.domain.properties.base.InvitationsOnInit;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
@@ -113,7 +113,7 @@ class JbstStartupEventListenerTest {
                                 isDefaultUsersEnabled,
                                 new ArrayList<>()
                         ),
-                        new Invitations(
+                        new InvitationsOnInit(
                                 invitationsEnabled
                         )
                 ),

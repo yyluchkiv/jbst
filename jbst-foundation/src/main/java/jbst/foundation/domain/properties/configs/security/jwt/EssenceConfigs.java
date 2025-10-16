@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.UsersOnInit;
-import jbst.foundation.domain.properties.base.Invitations;
+import jbst.foundation.domain.properties.base.InvitationsOnInit;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,19 +17,19 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final UsersOnInit usersOnInit;
     @MandatoryProperty
-    private final Invitations invitations;
+    private final InvitationsOnInit invitationsOnInit;
 
     public static EssenceConfigs hardcoded() {
         return new EssenceConfigs(
                 UsersOnInit.hardcoded(),
-                Invitations.hardcoded()
+                InvitationsOnInit.hardcoded()
         );
     }
 
     public static EssenceConfigs random() {
         return new EssenceConfigs(
                 UsersOnInit.random(),
-                Invitations.random()
+                InvitationsOnInit.random()
         );
     }
 

@@ -12,23 +12,23 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Invitations extends AbstractTogglePropertyConfigs {
+public class InvitationsOnInit extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
 
-    public static Invitations hardcoded() {
-        return new Invitations(true);
+    public static InvitationsOnInit hardcoded() {
+        return new InvitationsOnInit(true);
     }
 
-    public static Invitations random() {
+    public static InvitationsOnInit random() {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static Invitations enabled() {
+    public static InvitationsOnInit enabled() {
         return hardcoded();
     }
 
-    public static Invitations disabled() {
-        return new Invitations(false);
+    public static InvitationsOnInit disabled() {
+        return new InvitationsOnInit(false);
     }
 }
