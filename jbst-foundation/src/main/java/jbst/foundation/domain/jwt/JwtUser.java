@@ -70,14 +70,6 @@ public record JwtUser(
         return true;
     }
 
-    public static JwtUser hardcodedMagicLink() {
-        return hardcoded(UserCreationOption.MAGICLINK);
-    }
-
-    public static JwtUser hardcodedStandard() {
-        return hardcoded(UserCreationOption.STANDARD);
-    }
-
     public static JwtUser hardcoded(UserCreationOption userCreationOption) {
         return new JwtUser(
                 UserId.hardcoded(),
