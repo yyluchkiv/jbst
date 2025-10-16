@@ -1,4 +1,4 @@
-package jbst.foundation.tmp;
+package jbst.foundation.services.emails.services.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -10,7 +10,6 @@ import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

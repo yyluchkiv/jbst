@@ -77,13 +77,6 @@ jbst.foundation/
 ├── utilities/         # Utility classes
 ├── services/          # Foundation services
 └── incidents/         # Incident management
-
-jbst.iam/
-├── configurations/    # Security configurations  
-├── domain/           # IAM-specific entities
-├── services/         # Authentication/authorization services
-├── repositories/     # Data access layer
-└── resources/        # REST endpoints
 ```
 
 ## Testing Strategy
