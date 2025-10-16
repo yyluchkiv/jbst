@@ -3,3 +3,4 @@
 — Modification: migrate "jbst-server-hardware-monitoring" property to server
 — Modification: modify jbst-server naming in yml files
 — Modification: EventSessionUserRequestMetadataAdd.accountAccessMethod
+— Modification: UsersEmailsConfigs: {usernamePassword, sessionToken, magicLink }

@@ -22,13 +22,16 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String subjectPrefix;
     @MandatoryProperty
-    private final Checkbox authenticationLogin;
+    private final Checkbox magicLink;
     @MandatoryProperty
-    private final Checkbox sessionRefreshed;
+    private final Checkbox usernamePassword;
+    @MandatoryProperty
+    private final Checkbox sessionToken;
 
     public static UsersEmailsConfigs hardcoded() {
         return new UsersEmailsConfigs(
                 "[jbst.com]",
+                Checkbox.enabled(),
                 Checkbox.enabled(),
                 Checkbox.enabled()
         );
@@ -37,6 +40,7 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
     public static UsersEmailsConfigs random() {
         return new UsersEmailsConfigs(
                 randomString(),
+                Checkbox.enabled(),
                 Checkbox.enabled(),
                 Checkbox.enabled()
         );
@@ -48,10 +52,11 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
             LOGGER.error("AccountAccessMethod method in UsersEmailsConfigs in null");
             return false;
         }
-        if (method.isUsernamePassword() && this.authenticationLogin.isEnabled()) {
+        // TODO [YYL] process MagicLink
+        if (method.isUsernamePassword() && this.usernamePassword.isEnabled()) {
             return true;
         }
-        if (method.isSessionToken() && this.sessionRefreshed.isEnabled()) {
+        if (method.isSessionToken() && this.sessionToken.isEnabled()) {
             return true;
         }
         LOGGER.error("AccountAccessMethod method in UsersEmailsConfigs in unexpected");
