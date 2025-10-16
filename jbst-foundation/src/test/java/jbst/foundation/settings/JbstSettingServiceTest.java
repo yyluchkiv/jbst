@@ -1,11 +1,11 @@
-package jbst.foundation.essence;
+package jbst.foundation.settings;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstSettingsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.tests.stubbers.AbstractMockService;
 import org.junit.jupiter.api.AfterEach;
@@ -33,9 +33,9 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
-class JbstEssenceConstructorTest {
+class JbstSettingServiceTest {
 
-    private static Stream<Arguments> addDefaultUsersPresentTest() {
+    private static Stream<Arguments> usersPresenceTest() {
         return Stream.of(
                 Arguments.of(0),
                 Arguments.of(randomLongGreaterThanZero())
@@ -51,10 +51,15 @@ class JbstEssenceConstructorTest {
         }
 
         @Bean
-        JbstEssenceConstructor essenceConstructor() {
-            var essenceConstructor = mock(JbstEssenceConstructor.class);
-            setField(essenceConstructor, "jbstProperties", this.jbstProperties());
-            return essenceConstructor;
+        JbstSettingsService settingsService() {
+            var settingsService = mock(JbstSettingsService.class);
+            setField(settingsService, "jbstProperties", this.jbstProperties());
+            return settingsService;
+        }
+
+        @Bean
+        JbstSettingsRepository settingsRepository() {
+            return mock(JbstSettingsRepository.class);
         }
 
         @Bean
@@ -72,21 +77,22 @@ class JbstEssenceConstructorTest {
             return mock(AbstractMockService.class);
         }
 
-        @Bean("abstractEssenceConstructor")
-        JbstEssenceConstructor abstractEssenceConstructor() {
-            return new JbstEssenceConstructor(
+        @Bean("abstractSettingsService")
+        JbstSettingsService abstractSettingsService() {
+            return new JbstSettingsService(
+                    this.settingsRepository(),
                     this.invitationsRepository(),
                     this.usersRepository(),
                     this.jbstProperties()
             ) {
                 @Override
-                public long saveDefaultUsers(List<UserOnInit> defaultUsers) {
+                public long initUsers(List<UserOnInit> usersOnInit) {
                     abstractMockService().executeInheritedMethod();
                     return 0;
                 }
 
                 @Override
-                public void saveInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
+                public void initInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
                     abstractMockService().executeInheritedMethod();
                 }
             };
@@ -101,15 +107,15 @@ class JbstEssenceConstructorTest {
     // Mock
     private final AbstractMockService abstractMockService;
 
-    private final JbstEssenceConstructor componentUnderTest;
+    private final JbstSettingsService componentUnderTest;
 
     @Autowired
-    JbstEssenceConstructorTest(
+    JbstSettingServiceTest(
             JbstInvitationsRepository invitationsRepository,
             JbstUsersRepository usersRepository,
             JbstProperties jbstProperties,
             AbstractMockService abstractMockService,
-            @Qualifier("abstractEssenceConstructor") JbstEssenceConstructor componentUnderTest
+            @Qualifier("abstractSettingsService") JbstSettingsService componentUnderTest
     ) {
         this.invitationsRepository = invitationsRepository;
         this.usersRepository = usersRepository;
@@ -139,14 +145,14 @@ class JbstEssenceConstructorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("addDefaultUsersPresentTest")
-    void addDefaultUsersPresentTest(long count) {
+    @MethodSource("usersPresenceTest")
+    void initUsers(long count) {
         // Arrange
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         when(this.usersRepository.count()).thenReturn(count);
 
         // Act
-        this.componentUnderTest.addDefaultUsers();
+        this.componentUnderTest.initUsers();
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
@@ -157,15 +163,15 @@ class JbstEssenceConstructorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("addDefaultUsersPresentTest")
-    void addDefaultUsersInvitations(long count) {
+    @MethodSource("usersPresenceTest")
+    void initInvitations(long count) {
         // Arrange
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         var username = Username.of("admin12");
         when(this.invitationsRepository.countByOwner(username)).thenReturn(count);
 
         // Act
-        this.componentUnderTest.addDefaultUsersInvitations();
+        this.componentUnderTest.initInvitations();
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
