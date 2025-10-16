@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
 
 @Slf4j
-class GeoCountryFlagUtilsConsoleTest extends AbstractFolderSerializationRunner {
+class JbstGeoUtilsFlagsConsoleTest extends AbstractFolderSerializationRunner {
 
     record CountryFlagFull(String name, String code, String emoji, String unicode) {
     }

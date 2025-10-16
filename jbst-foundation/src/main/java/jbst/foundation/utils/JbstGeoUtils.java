@@ -4,11 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.Feign;
 import feign.Param;
 import feign.RequestLine;
+import feign.Retryer;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
 import jbst.foundation.domain.geo.GeoCountryFlag;
+import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.utilities.GeoCountryFlagsConfigs;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +40,7 @@ import static jbst.foundation.domain.enums.Status.SUCCESS;
 @Component
 public class JbstGeoUtils {
     private static final String FLAGS_CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";
+    private static final String MINDMAX_CONFIGURATION_LOG = PREFIX + " Geo location database GeoLite2-City.mmdb — {}";
 
     // ================================================================================================================
     // FLAGS: CLASSES
@@ -78,6 +87,13 @@ public class JbstGeoUtils {
         }
     }
 
+    // Definitions
+    private final IPAPIDefinition ipapi = Feign.builder()
+            .client(new OkHttpClient())
+            .encoder(new JacksonEncoder())
+            .decoder(new JacksonDecoder())
+            .retryer(Retryer.NEVER_RETRY)
+            .target(IPAPIDefinition.class, "http://ip-api.com");
     // Properties
     private final JbstProperties jbstProperties;
     // State
@@ -94,12 +110,36 @@ public class JbstGeoUtils {
     // ================================================================================================================
     // FLAGS: METHODS
     // ================================================================================================================
-    public String getFlagEmojiByCountryName(String countryName) {
+    public final String getFlagEmojiByCountryName(String countryName) {
         return this.geoFlags.getEmojiByName(countryName);
     }
 
-    public String getFlagEmojiByCountryCode(String countryCode) {
+    public final String getFlagEmojiByCountryCode(String countryCode) {
         return this.geoFlags.getEmojiByCode(countryCode);
+    }
+
+    // ================================================================================================================
+    // IPAPI: METHODS
+    // ================================================================================================================
+    protected final GeoLocation getGeoLocationIPAPI(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
+        try {
+            var queryResponse = this.ipapi.getIPAPIResponse(ipAddress.value());
+            if (queryResponse.isSuccess()) {
+                var countryCode = queryResponse.countryCode();
+                var countryFlag = this.getFlagEmojiByCountryCode(countryCode);
+                return GeoLocation.processed(
+                        ipAddress,
+                        queryResponse.country(),
+                        countryCode,
+                        countryFlag,
+                        queryResponse.city()
+                );
+            } else {
+                throw new JbstGeoLocationNotFoundException(queryResponse.message());
+            }
+        } catch (RuntimeException throwable) {
+            throw new JbstGeoLocationNotFoundException(throwable.getMessage());
+        }
     }
 
     // ================================================================================================================

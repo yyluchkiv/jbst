@@ -9,12 +9,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class GeoLocationUtils {
 
-    private final GeoLocationIPAPIUtils geoLocationIPAPIUtils;
+    private final JbstGeoUtils geoUtils;
     private final GeoLocationMindMaxUtils geoLocationMindMaxUtils;
 
     public GeoLocation getGeoLocation(IPAddress ipAddress) {
         try {
-            return this.geoLocationIPAPIUtils.getGeoLocation(ipAddress);
+            return this.geoUtils.getGeoLocationIPAPI(ipAddress);
         } catch (JbstGeoLocationNotFoundException ex1) {
             try {
                 return this.geoLocationMindMaxUtils.getGeoLocation(ipAddress);

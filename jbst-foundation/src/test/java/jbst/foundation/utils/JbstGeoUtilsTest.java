@@ -2,9 +2,14 @@ package jbst.foundation.utils;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
+import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,6 +27,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Slf4j
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -68,5 +74,25 @@ class JbstGeoUtilsTest {
         // Assert
         assertThat(actual1).isEqualTo(expected);
         assertThat(actual2).isEqualTo(expected);
+    }
+
+    @Disabled
+    @Test
+    void australiaTest() throws JbstGeoLocationNotFoundException {
+        // Act
+        var geoLocation = this.componentUnderTest.getGeoLocationIPAPI(new IPAddress("1.1.1.1"));
+
+        // Assert
+        LOGGER.info("Australia: {}", geoLocation);
+    }
+
+    @Disabled
+    @Test
+    void localhostTest() throws JbstGeoLocationNotFoundException {
+        // Act
+        var geoLocation = this.componentUnderTest.getGeoLocationIPAPI(new IPAddress("127.0.0.1"));
+
+        // Assert
+        LOGGER.debug("localhost: {}", geoLocation);
     }
 }
