@@ -23,14 +23,12 @@ import static jbst.foundation.domain.tuples.TuplePercentage.progressTuplePercent
 @Component
 public class HardwareMonitoringClient extends AbstractInfiniteTimerTask {
 
+    // State
     private final AtomicLong successes = new AtomicLong(0);
     private final AtomicLong failures = new AtomicLong(0);
 
     @Autowired
-    public HardwareMonitoringClient(
-            HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition,
-            JbstProperties jbstProperties
-    ) {
+    public HardwareMonitoringClient(HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition, JbstProperties jbstProperties) {
         super(
                 new SchedulerConfiguration(0L, 30L, SECONDS)
         );
@@ -68,7 +66,7 @@ public class HardwareMonitoringClient extends AbstractInfiniteTimerTask {
                 status = Status.FAILURE;
             }
             LOGGER.info(
-                    "SEND HARDWARE METADATA #{} — {}. Success Rate: {}%",
+                    "Hardware monitoring client iteration #{}, status: {}. Success rate: {}%",
                     this.successes.get() + this.failures.get(),
                     status.asANSI(),
                     progressTuplePercentage(
