@@ -2,13 +2,12 @@ package jbst.foundation.startup;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
-import jbst.foundation.domain.properties.base.UsersOnInit;
 import jbst.foundation.domain.properties.base.InvitationsOnInit;
+import jbst.foundation.domain.properties.base.UsersOnInit;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
-import jbst.foundation.essense.JbstEssenceConstructor;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +28,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -58,23 +56,15 @@ class JbstStartupEventListenerTest {
         }
 
         @Bean
-        JbstEssenceConstructor essenceConstructor() {
-            var essenceConstructor = mock(JbstEssenceConstructor.class);
-            setField(essenceConstructor, "jbstProperties", this.jbstProperties());
-            return essenceConstructor;
-        }
-
-        @Bean
         JbstStartupEventListener baseStartupEventListener() {
             return new JbstStartupEventListener(
                     this.jbstSettingsService(),
-                    this.essenceConstructor(),
                     this.jbstProperties()
             );
         }
     }
 
-    private final JbstEssenceConstructor essenceConstructor;
+    private final JbstSettingsService settingsService;
     private final JbstProperties jbstProperties;
 
     private final JbstStartupEventListener componentUnderTest;
@@ -82,7 +72,7 @@ class JbstStartupEventListenerTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.essenceConstructor,
+                this.settingsService,
                 this.jbstProperties
         );
     }
@@ -90,14 +80,14 @@ class JbstStartupEventListenerTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.essenceConstructor,
+                this.settingsService,
                 this.jbstProperties
         );
     }
 
     @ParameterizedTest
     @MethodSource("onStartupTest")
-    void onStartupTest(boolean isDefaultUsersEnabled, boolean invitationsEnabled) {
+    void onStartupTest(boolean isUsersEnabled, boolean isInvitationsEnabled) {
         // Arrange
         var securityJwtConfigs = new SecurityJwtConfigs(
                 new AuthoritiesConfigs(
@@ -110,11 +100,11 @@ class JbstStartupEventListenerTest {
                 null,
                 new EssenceConfigs(
                         new UsersOnInit(
-                                isDefaultUsersEnabled,
+                                isUsersEnabled,
                                 new ArrayList<>()
                         ),
                         new InvitationsOnInit(
-                                invitationsEnabled
+                                isInvitationsEnabled
                         )
                 ),
                 null,
@@ -133,14 +123,14 @@ class JbstStartupEventListenerTest {
 
         // Assert
         verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
-        if (isDefaultUsersEnabled) {
-            verify(this.essenceConstructor).addDefaultUsers();
+        if (isUsersEnabled) {
+            verify(this.settingsService).initUsers();
         }
-        if (invitationsEnabled) {
-            verify(this.essenceConstructor).addDefaultUsersInvitations();
+        if (isInvitationsEnabled) {
+            verify(this.settingsService).initInvitations();
         }
         reset(
-                this.essenceConstructor,
+                this.settingsService,
                 this.jbstProperties
         );
     }

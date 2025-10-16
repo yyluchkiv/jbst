@@ -67,7 +67,7 @@ jbst:
         expression: "*/30 * * * * *"
         zone-id: "Europe/Kyiv"
     essence-configs:
-      default-users:
+      users-on-init:
         enabled: true
         users:
           - username: admin11
@@ -80,7 +80,7 @@ jbst:
             zone-id: "Europe/Kyiv"
             password-change-required: false
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
-      invitations:
+      invitations-on-init:
         enabled: true
   mongodb-security-jwt-configs:
     mongodb:

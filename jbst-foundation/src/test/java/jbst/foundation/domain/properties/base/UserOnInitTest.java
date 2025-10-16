@@ -11,10 +11,10 @@ class UserOnInitTest {
     @Test
     void getEmailNullTest() {
         // Arrange
-        var defaultUsers = SecurityJwtConfigs.hardcoded().getEssenceConfigs().getUsersOnInit();
+        var users = SecurityJwtConfigs.hardcoded().getEssenceConfigs().getUsersOnInit();
 
         // Act
-        var email = defaultUsers.getUsers().get(0).getEmailOrNull();
+        var email = users.getUsers().get(0).getEmailOrNull();
 
         // Assert
         assertThat(email).isNull();
@@ -23,10 +23,10 @@ class UserOnInitTest {
     @Test
     void getEmailTest() {
         // Arrange
-        var defaultUsers = entity(UserOnInit.class);
+        var users = entity(UserOnInit.class);
 
         // Act
-        var email = defaultUsers.getEmailOrNull();
+        var email = users.getEmailOrNull();
 
         // Assert
         assertThat(email).isNotNull();
