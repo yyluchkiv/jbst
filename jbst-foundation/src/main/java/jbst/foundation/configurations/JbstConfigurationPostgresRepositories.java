@@ -1,5 +1,6 @@
 package jbst.foundation.configurations;
 
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.postgres.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +8,15 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@Import({
-        JbstConfigurationProperties.class
+@EnableConfigurationProperties({
+        JbstProperties.class
 })
 @EntityScan({
         "jbst.foundation.domain.databases.postgres"

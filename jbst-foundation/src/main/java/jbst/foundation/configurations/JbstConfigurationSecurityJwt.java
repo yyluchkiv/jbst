@@ -13,6 +13,7 @@ import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -56,6 +57,9 @@ import static org.springframework.http.HttpMethod.*;
 @SuppressWarnings("deprecation")
 // TODO [YYL, deprecation] fixme
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @ComponentScan({
         "jbst.foundation.assistants.utils",
         "jbst.foundation.crons",
@@ -74,7 +78,6 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.foundation.websockets"
 })
 @Import({
-        JbstConfigurationProperties.class,
         JbstConfigurationJasypt.class,
         JbstConfigurationUtils.class,
         JbstConfigurationSpringBootServer.class,

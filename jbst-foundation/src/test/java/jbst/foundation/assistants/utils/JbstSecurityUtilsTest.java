@@ -1,7 +1,6 @@
-package jbst.foundation.utils;
+package jbst.foundation.assistants.utils;
 
 import io.jsonwebtoken.Jwts;
-import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.jwt.JwtAccessToken;

@@ -14,7 +14,6 @@ import jbst.foundation.services.UsersEmailsService;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.utilities.concurrent.SleepUtility;
-import jbst.foundation.utils.JbstUserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -115,24 +114,21 @@ class BaseUsersEmailsServiceConsoleTest {
         }
 
         @Bean
-        JbstUserEmailUtils userEmailUtils() {
+        ServerProperties serverProperties() {
             var serverProperties = mock(ServerProperties.class);
             var servlet = mock(ServerProperties.Servlet.class);
             when(servlet.getContextPath()).thenReturn("/api");
             when(serverProperties.getServlet()).thenReturn(servlet);
-            return new JbstUserEmailUtils(
-                    this.resourceLoader,
-                    this.jbstProperties(),
-                    serverProperties
-            );
+            return serverProperties;
         }
 
         @Bean
         public UsersEmailsService userEmailService() {
             return new BaseUsersEmailsService(
+                    this.resourceLoader,
                     this.emailService(),
-                    this.userEmailUtils(),
-                    this.jbstProperties()
+                    this.jbstProperties(),
+                    this.serverProperties()
             );
         }
     }
