@@ -18,8 +18,6 @@ import java.util.Map;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.domain.enums.AccountAccessMethod.SESSION_TOKEN;
-import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
 
 @Service
@@ -50,6 +48,14 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     }
 
     @Override
+    public void executeAccountAccessed(FunctionAccountAccessed function) {
+        if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().isEnabled(function.accountAccessMethod())) {
+            return;
+        }
+        this.emailService.sendHTML(this.getAccountAccessedHTML(function));
+    }
+
+    @Override
     public void executeAuthenticationLogin(FunctionAccountAccessed function) {
         if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin().isEnabled()) {
             return;
@@ -71,12 +77,12 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
         // TODO [YYL] easier codebase?
         var templateName = "jbst-account-accessed";
-        if (USERNAME_PASSWORD.equals(function.accountAccessMethod())) {
+        if (function.accountAccessMethod().isUsernamePassword()) {
             templateName = this.getServerOrFallbackJbstTemplateName(
                     "server-authentication-login",
                     "jbst-account-accessed"
             );
-        } else if (SESSION_TOKEN.equals(function.accountAccessMethod())) {
+        } else if (function.accountAccessMethod().isSessionToken()) {
             templateName = this.getServerOrFallbackJbstTemplateName(
                     "server-session-refreshed",
                     "jbst-account-accessed"
