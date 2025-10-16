@@ -1,11 +1,13 @@
 package jbst.foundation.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
@@ -23,7 +25,6 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -223,8 +224,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.session().id()).isEqualTo(actualDbUserSession.id());
         assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
-        assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
-        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
+        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.USERNAME_PASSWORD);
     }
 
     @Test
@@ -269,8 +269,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.session().id()).isNotEqualTo(actualDbUserSession.id());
         assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
-        assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
-        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
+        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.USERNAME_PASSWORD);
     }
 
     @Test
@@ -302,8 +301,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.email()).isEqualTo(user.email());
         assertThat(event.session().id()).isNotEqualTo(newUserSession.id());
-        assertThat(event.isAuthenticationLoginEndpoint()).isFalse();
-        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isTrue();
+        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.SESSION_TOKEN);
     }
 
     @Test

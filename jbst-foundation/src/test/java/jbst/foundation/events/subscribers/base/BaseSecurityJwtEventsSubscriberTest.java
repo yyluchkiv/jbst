@@ -68,8 +68,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                true,
-                                false
+                                USERNAME_PASSWORD
                         ),
                         null
                 ),
@@ -80,8 +79,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                true,
-                                false
+                                USERNAME_PASSWORD
                         ),
                         null
                 ),
@@ -92,8 +90,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                true,
-                                false
+                                USERNAME_PASSWORD
                         ),
                         new RuntimeException("Unexpected error occurred")
                 )
@@ -109,8 +106,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                false,
-                                true
+                                SESSION_TOKEN
                         ),
                         null
                 ),
@@ -121,8 +117,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                false,
-                                true
+                                SESSION_TOKEN
                         ),
                         null
                 ),
@@ -133,8 +128,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
                                 mock(UserAgentHeader.class),
-                                false,
-                                true
+                                SESSION_TOKEN
                         ),
                         new RuntimeException("Unexpected error occurred")
                 )
@@ -393,8 +387,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                 entity(JbstUserSession.class),
                 IPAddress.random(),
                 mock(UserAgentHeader.class),
-                false,
-                false
+                null
         );
         when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
 

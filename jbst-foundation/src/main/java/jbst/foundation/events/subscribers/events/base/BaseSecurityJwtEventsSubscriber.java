@@ -155,7 +155,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
         if (isNull(event.email())) {
             return;
         }
-        if (event.isAuthenticationLoginEndpoint()) {
+        if (event.isUsernamePassword()) {
             this.usersEmailsService.executeAuthenticationLogin(
                     new FunctionAccountAccessed(
                             event.username(),
@@ -165,7 +165,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
                     )
             );
         }
-        if (event.isAuthenticationRefreshTokenEndpoint()) {
+        if (event.isSessionToken()) {
             this.usersEmailsService.executeSessionRefreshed(
                     new FunctionAccountAccessed(
                             event.username(),
@@ -181,7 +181,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
             EventSessionUserRequestMetadataAdd event,
             UserRequestMetadata metadata
     ) {
-        if (event.isAuthenticationLoginEndpoint()) {
+        if (event.isUsernamePassword()) {
             this.securityJwtIncidentsPublisher.publishAuthenticationLogin(
                     new IncidentAuthenticationLogin(
                             event.username(),
@@ -189,7 +189,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
                     )
             );
         }
-        if (event.isAuthenticationRefreshTokenEndpoint()) {
+        if (event.isSessionToken()) {
             this.securityJwtIncidentsPublisher.publishSessionRefreshed(
                     new IncidentSessionRefreshed(
                             event.username(),

@@ -11,17 +11,15 @@ import jbst.foundation.domain.tuples.TupleToggle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static java.util.Objects.nonNull;
+
 public record EventSessionUserRequestMetadataAdd(
         @NotNull Username username,
         @Nullable Email email,
         @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,
         UserAgentHeader userAgentHeader,
-        AccountAccessMethod accountAccessMethod,
-        @Deprecated
-        boolean isAuthenticationLoginEndpoint,
-        @Deprecated
-        boolean isAuthenticationRefreshTokenEndpoint
+        @Nullable AccountAccessMethod accountAccessMethod
 ) {
     public FunctionSessionUserRequestMetadataSave getSaveFunction() {
         return new FunctionSessionUserRequestMetadataSave(
@@ -32,5 +30,13 @@ public record EventSessionUserRequestMetadataAdd(
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
+    }
+
+    public boolean isUsernamePassword() {
+        return nonNull(this.accountAccessMethod) && this.accountAccessMethod.isUsernamePassword();
+    }
+
+    public boolean isSessionToken() {
+        return nonNull(this.accountAccessMethod) && this.accountAccessMethod.isSessionToken();
     }
 }

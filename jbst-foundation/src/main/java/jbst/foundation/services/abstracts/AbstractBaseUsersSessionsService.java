@@ -88,9 +88,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                         session,
                         clientIpAddr,
                         new UserAgentHeader(httpServletRequest),
-                        AccountAccessMethod.USERNAME_PASSWORD,
-                        true,
-                        false
+                        AccountAccessMethod.USERNAME_PASSWORD
                 )
         );
     }
@@ -107,9 +105,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                         newSession,
                         getClientIpAddr(httpServletRequest),
                         new UserAgentHeader(httpServletRequest),
-                        AccountAccessMethod.SESSION_TOKEN,
-                        false,
-                        true
+                        AccountAccessMethod.SESSION_TOKEN
                 )
         );
     }
