@@ -3,6 +3,7 @@ package jbst.foundation.services.base;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.UsersEmailsService;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.function.Function;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
@@ -55,43 +57,14 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         this.emailService.sendHTML(this.getAccountAccessedHTML(function));
     }
 
-    @Override
-    public void executeAuthenticationLogin(FunctionAccountAccessed function) {
-        if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin().isEnabled()) {
-            return;
-        }
-        this.emailService.sendHTML(this.getAccountAccessedHTML(function));
-    }
-
-    @Override
-    public void executeSessionRefreshed(FunctionAccountAccessed function) {
-        if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSessionRefreshed().isEnabled()) {
-            return;
-        }
-        this.emailService.sendHTML(this.getAccountAccessedHTML(function));
-    }
-
     // =================================================================================================================
     // PRIVATE METHODS: Mails
     // =================================================================================================================
     private EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
-        // TODO [YYL] easier codebase?
-        var templateName = "jbst-account-accessed";
-        if (function.accountAccessMethod().isUsernamePassword()) {
-            templateName = this.getServerOrFallbackJbstTemplateName(
-                    "server-authentication-login",
-                    "jbst-account-accessed"
-            );
-        } else if (function.accountAccessMethod().isSessionToken()) {
-            templateName = this.getServerOrFallbackJbstTemplateName(
-                    "server-session-refreshed",
-                    "jbst-account-accessed"
-            );
-        }
         return EmailHTML.of(
                 function.to(),
                 this.getSubject("Account Accessed"),
-                templateName,
+                function.getTemplateName(this.getTemplateNameFNC()),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
@@ -171,5 +144,14 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private String getServerOrFallbackJbstTemplateName(String serverTemplateName, String jbstTemplateName) {
         var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
         return resource.exists() ? serverTemplateName : jbstTemplateName;
+    }
+
+    private Function<Tuple2<String, String>, String> getTemplateNameFNC() {
+        return tuple2 -> {
+            var serverTemplateName = tuple2.a();
+            var jbstTemplateName = tuple2.b();
+            var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
+            return resource.exists() ? serverTemplateName : jbstTemplateName;
+        };
     }
 }

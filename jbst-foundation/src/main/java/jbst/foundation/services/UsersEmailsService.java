@@ -1,6 +1,5 @@
 package jbst.foundation.services;
 
-import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import org.springframework.scheduling.annotation.Async;
@@ -14,12 +13,4 @@ public interface UsersEmailsService {
     void executePasswordReset(JbstUserToken userToken);
     @Async
     void executeAccountAccessed(FunctionAccountAccessed function);
-    @JbstDeletionScheduled(version = "1.26")
-    @Deprecated
-    @Async
-    void executeAuthenticationLogin(FunctionAccountAccessed function);
-    @JbstDeletionScheduled(version = "1.26")
-    @Deprecated
-    @Async
-    void executeSessionRefreshed(FunctionAccountAccessed function);
 }

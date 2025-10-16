@@ -416,7 +416,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
-            verify(this.usersEmailsService).executeAuthenticationLogin(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
+            verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }
@@ -442,7 +442,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
-            verify(this.usersEmailsService).executeSessionRefreshed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
+            verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }

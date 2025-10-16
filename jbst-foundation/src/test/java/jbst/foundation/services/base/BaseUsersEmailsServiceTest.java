@@ -191,7 +191,7 @@ class BaseUsersEmailsServiceTest {
         this.jbstProperties.setSecurityJwtConfigs(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
         // Act
-        this.componentUnderTest.executeAuthenticationLogin(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
+        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
 
         // Assert
         // no actions + revert
@@ -201,7 +201,7 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executeAuthenticationLogin() {
         // Act
-        this.componentUnderTest.executeAuthenticationLogin(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
+        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
 
         // Assert
         ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
@@ -228,7 +228,7 @@ class BaseUsersEmailsServiceTest {
         this.jbstProperties.setSecurityJwtConfigs(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
         // Act
-        this.componentUnderTest.executeSessionRefreshed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
+        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
         // no actions + revert
@@ -238,7 +238,7 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executeSessionRefreshed() {
         // Act
-        this.componentUnderTest.executeSessionRefreshed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
+        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
         ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);

@@ -175,7 +175,7 @@ class BaseUsersEmailsServiceConsoleTest {
     @Test
     void executeAuthenticationLogin() {
         // Act
-        this.componentUnderTest.executeAuthenticationLogin(
+        this.componentUnderTest.executeAccountAccessed(
                 FunctionAccountAccessed.hardcoded(
                         AccountAccessMethod.USERNAME_PASSWORD
                 )
@@ -189,7 +189,7 @@ class BaseUsersEmailsServiceConsoleTest {
     @Test
     void executeSessionRefreshed() {
         // Act
-        this.componentUnderTest.executeAuthenticationLogin(
+        this.componentUnderTest.executeAccountAccessed(
                 FunctionAccountAccessed.hardcoded(
                         AccountAccessMethod.SESSION_TOKEN
                 )

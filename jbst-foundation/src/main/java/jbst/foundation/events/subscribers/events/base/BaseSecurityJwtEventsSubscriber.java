@@ -156,7 +156,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
             return;
         }
         if (event.isUsernamePassword()) {
-            this.usersEmailsService.executeAuthenticationLogin(
+            this.usersEmailsService.executeAccountAccessed(
                     new FunctionAccountAccessed(
                             event.username(),
                             event.email(),
@@ -166,7 +166,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
             );
         }
         if (event.isSessionToken()) {
-            this.usersEmailsService.executeSessionRefreshed(
+            this.usersEmailsService.executeAccountAccessed(
                     new FunctionAccountAccessed(
                             event.username(),
                             event.email(),
