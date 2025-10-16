@@ -21,7 +21,6 @@ public class IncidentsResource {
 
     @PostMapping("/register")
     public void register(@RequestBody Incident incident, HttpServletRequest request) {
-        incident.print();
         this.incidentsService.registerIncident(incident, new OpsIncidentEnv(request));
     }
 }
