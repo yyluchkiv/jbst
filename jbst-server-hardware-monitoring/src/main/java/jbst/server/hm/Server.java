@@ -6,12 +6,23 @@ import jbst.server.hm.properties.ServerProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
-@SpringBootApplication
+@SpringBootApplication(exclude = {
+        // mongo
+        MongoAutoConfiguration.class,
+        MongoDataAutoConfiguration.class,
+        // postgres
+        DataSourceAutoConfiguration.class,
+        HibernateJpaAutoConfiguration.class
+})
 public class Server {
 
     public static void main(String[] args) {

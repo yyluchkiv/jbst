@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/incidents")
+@RequestMapping("/incidents")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IncidentsResource {
 
@@ -21,6 +21,7 @@ public class IncidentsResource {
 
     @PostMapping("/register")
     public void register(@RequestBody Incident incident, HttpServletRequest request) {
+        incident.print();
         this.incidentsService.registerIncident(incident, new OpsIncidentEnv(request));
     }
 }

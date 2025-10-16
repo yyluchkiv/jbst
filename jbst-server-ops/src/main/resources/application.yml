@@ -1,5 +1,10 @@
 #file: noinspection SpringBootApplicationYaml
 
+# Server
+server:
+  servlet:
+    context-path: /api
+
 # Spring Security: actuator endpoints
 management:
   endpoints:
