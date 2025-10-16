@@ -378,26 +378,6 @@ class BaseSecurityJwtEventsSubscriberTest {
         assertThat(event).isNotNull();
     }
 
-    @Test
-    void onSessionUserRequestMetadataAddNotAuthenticationEndpointTest() {
-        // Arrange
-        var event = new EventSessionUserRequestMetadataAdd(
-                Username.random(),
-                Email.random(),
-                entity(JbstUserSession.class),
-                IPAddress.random(),
-                mock(UserAgentHeader.class),
-                null
-        );
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
-
-        // Act
-        this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
-
-        // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-    }
-
     @ParameterizedTest
     @MethodSource("eventSessionUserRequestMetadataAddLoginTest")
     void onSessionUserRequestMetadataAddIsAuthenticationLoginEndpointTest(

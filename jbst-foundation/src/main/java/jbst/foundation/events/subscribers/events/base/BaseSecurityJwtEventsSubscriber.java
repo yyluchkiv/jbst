@@ -1,7 +1,6 @@
 package jbst.foundation.events.subscribers.events.base;
 
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
@@ -155,26 +154,14 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
         if (isNull(event.email())) {
             return;
         }
-        if (event.isUsernamePassword()) {
-            this.usersEmailsService.executeAccountAccessed(
-                    new FunctionAccountAccessed(
-                            event.username(),
-                            event.email(),
-                            metadata,
-                            AccountAccessMethod.USERNAME_PASSWORD
-                    )
-            );
-        }
-        if (event.isSessionToken()) {
-            this.usersEmailsService.executeAccountAccessed(
-                    new FunctionAccountAccessed(
-                            event.username(),
-                            event.email(),
-                            metadata,
-                            AccountAccessMethod.SESSION_TOKEN
-                    )
-            );
-        }
+        this.usersEmailsService.executeAccountAccessed(
+                new FunctionAccountAccessed(
+                        event.username(),
+                        event.email(),
+                        metadata,
+                        event.accountAccessMethod()
+                )
+        );
     }
 
     private void processSessionUserRequestMetadataAddIncidents(
