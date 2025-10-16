@@ -3,26 +3,41 @@ package jbst.server.hm.client;
 import feign.FeignException;
 import feign.Headers;
 import feign.RequestLine;
+import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
-import lombok.RequiredArgsConstructor;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.time.SchedulerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static jbst.foundation.domain.tuples.TuplePercentage.progressTuplePercentage;
+import static jbst.server.hm.utilities.HardwareMonitoringUtility.getSystemMemories;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HardwareMonitoringClient {
+public class HardwareMonitoringClient extends AbstractInfiniteTimerTask {
 
     private final AtomicLong successes = new AtomicLong(0);
     private final AtomicLong failures = new AtomicLong(0);
+
+    @Autowired
+    public HardwareMonitoringClient(
+            HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition,
+            JbstProperties jbstProperties
+    ) {
+        super(
+                new SchedulerConfiguration(0L, 30L, SECONDS)
+        );
+        this.hardwareMonitoringClientDefinition = hardwareMonitoringClientDefinition;
+        this.jbstProperties = jbstProperties;
+        this.start();
+    }
 
     // Classes: Definitions
     public interface HardwareMonitoringClientDefinition {
@@ -33,26 +48,36 @@ public class HardwareMonitoringClient {
 
     // Definitions
     private final HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition;
+    // Properties
+    private final JbstProperties jbstProperties;
 
-    @Async
-    public void sendHardwareMonitoringMetadata(HardwareMonitoringMetadata hardwareMonitoringMetadata) {
-        var status = Status.STARTED;
+    @Override
+    public void onTick() {
         try {
-            this.hardwareMonitoringClientDefinition.sendHardwareMonitoringMetadata(hardwareMonitoringMetadata);
-            this.successes.incrementAndGet();
-            status = Status.SUCCESS;
-        } catch (FeignException ex) {
-            this.failures.incrementAndGet();
-            status = Status.FAILURE;
+            var metadata = new HardwareMonitoringMetadata(
+                    this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion(),
+                    getSystemMemories()
+            );
+            var status = Status.STARTED;
+            try {
+                this.hardwareMonitoringClientDefinition.sendHardwareMonitoringMetadata(metadata);
+                this.successes.incrementAndGet();
+                status = Status.SUCCESS;
+            } catch (FeignException ex) {
+                this.failures.incrementAndGet();
+                status = Status.FAILURE;
+            }
+            LOGGER.info(
+                    "SEND HARDWARE METADATA #{} — {}. Success Rate: {}%",
+                    this.successes.get() + this.failures.get(),
+                    status.asANSI(),
+                    progressTuplePercentage(
+                            this.successes.get(),
+                            this.successes.get() + this.failures.get()
+                    ).percentage()
+            );
+        } catch (RuntimeException ex) {
+            // ignore
         }
-        LOGGER.info(
-                "SEND HARDWARE METADATA #{} — {}. Success Rate: {}%",
-                this.successes.get() + this.failures.get(),
-                status.asANSI(),
-                progressTuplePercentage(
-                        this.successes.get(),
-                        this.successes.get() + this.failures.get()
-                ).percentage()
-        );
     }
 }
