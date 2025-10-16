@@ -1,5 +1,9 @@
 package jbst.foundation.utils;
 
+import com.blueconic.browscap.BrowsCapField;
+import com.blueconic.browscap.ParseException;
+import com.blueconic.browscap.UserAgentParser;
+import com.blueconic.browscap.UserAgentService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,9 +23,12 @@ import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
 import jbst.foundation.domain.geo.GeoCountryFlag;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.http.requests.UserAgentDetails;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.utilities.GeoCountryFlagsConfigs;
 import jbst.foundation.domain.properties.configs.utilities.GeoLocationsConfigs;
+import jbst.foundation.domain.properties.configs.utilities.UserAgentConfigs;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -45,11 +52,12 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.con
 @Slf4j
 @Component
 public class JbstGeoUtils {
-    private static final String FLAGS_CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";
-    private static final String MINDMAX_CONFIGURATION_LOG = PREFIX + " Geo location database GeoLite2-City.mmdb — {}";
+    private static final String CONFIGURATION_LOG_FLAGS = PREFIX + " Geo country flags geo-countries-flags.json — {}";
+    private static final String CONFIGURATION_LOG_MINDMAX = PREFIX + " Geo location database GeoLite2-City.mmdb — {}";
+    private static final String CONFIGURATION_LOG_USER_AGENT_DETAILS = PREFIX + " User agent — {}";
 
     // ================================================================================================================
-    // FLAGS: CLASSES
+    // CLASSES: FLAGS
     // ================================================================================================================
     private record GeoFlags(
             GeoCountryFlagsConfigs configs,
@@ -78,7 +86,7 @@ public class JbstGeoUtils {
     }
 
     // ================================================================================================================
-    // IPAPI: CLASSES
+    // CLASSES: IPAPI
     // ================================================================================================================
     public interface IPAPIDefinition {
         @RequestLine("GET /json/{ipAddress}")
@@ -94,9 +102,26 @@ public class JbstGeoUtils {
     }
 
     // ================================================================================================================
-    // MINDMAX: CLASSES
+    // CLASSES: MINDMAX
     // ================================================================================================================
     private record GeoMindMax(GeoLocationsConfigs configs, DatabaseReader databaseReader) {}
+
+    // ================================================================================================================
+    // CLASSES: User Agent Details
+    // ================================================================================================================
+    private record GeoUserAgentDetails(UserAgentConfigs configs, boolean configured, UserAgentParser userAgentParser, String exception) {
+        public UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
+            if (!configs.isEnabled() || !this.configured) {
+                return UserAgentDetails.unknown(this.exception);
+            }
+            var capabilities = this.userAgentParser.parse(userAgentHeader.getValue());
+            return UserAgentDetails.processed(
+                    capabilities.getBrowser(),
+                    capabilities.getPlatform(),
+                    capabilities.getDeviceType()
+            );
+        }
+    }
 
     // Definitions
     private final IPAPIDefinition ipapi = Feign.builder()
@@ -110,12 +135,14 @@ public class JbstGeoUtils {
     // State
     private final GeoFlags geoFlags;
     private final GeoMindMax geoMindMax;
+    private final GeoUserAgentDetails geoUserAgentDetails;
 
     @Autowired
     public JbstGeoUtils(ResourceLoader resourceLoader, JbstProperties jbstProperties) {
         this.jbstProperties = jbstProperties;
         this.geoFlags = this.initFlags(resourceLoader);
         this.geoMindMax = this.initMindMax(resourceLoader);
+        this.geoUserAgentDetails = this.initUserAgentDetails();
     }
 
     // ================================================================================================================
@@ -191,25 +218,32 @@ public class JbstGeoUtils {
     }
 
     // ================================================================================================================
+    // METHODS (atomic): MINDMAX
+    // ================================================================================================================
+    public final UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
+        return this.geoUserAgentDetails.getUserAgentDetails(userAgentHeader);
+    }
+
+    // ================================================================================================================
     // INITIALIZERS: FLAGS
     // ================================================================================================================
     private GeoFlags initFlags(ResourceLoader resourceLoader) {
-        var geoCountryFlagsConfigs = this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs();
-        LOGGER.info(FLAGS_CONFIGURATION_LOG, Status.of(geoCountryFlagsConfigs.isEnabled()).asANSI());
-        if (geoCountryFlagsConfigs.isEnabled()) {
+        var enabled = this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs().isEnabled();
+        LOGGER.info(CONFIGURATION_LOG_FLAGS, Status.of(enabled).asANSI());
+        if (enabled) {
             try {
                 var resource = resourceLoader.getResource("classpath:geo-countries-flags.json");
                 var typeReference = new TypeReference<List<GeoCountryFlag>>() {};
                 var objectMapper = new ObjectMapper();
                 var geoCountryFlags = objectMapper.readValue(resource.getInputStream(), typeReference);
-                LOGGER.info(FLAGS_CONFIGURATION_LOG, SUCCESS.asANSI());
+                LOGGER.info(CONFIGURATION_LOG_FLAGS, SUCCESS.asANSI());
                 return new GeoFlags(
                         this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs(),
                         geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.name().toLowerCase(), identity())),
                         geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.code().toLowerCase(), identity()))
                 );
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error(FLAGS_CONFIGURATION_LOG, FAILURE.asANSI());
+                LOGGER.error(CONFIGURATION_LOG_FLAGS, FAILURE.asANSI());
                 LOGGER.error("Please make sure geo-countries-flags.json is in classpath");
                 throw new IllegalArgumentException(ex.getMessage());
             }
@@ -227,18 +261,18 @@ public class JbstGeoUtils {
     // ================================================================================================================
     private GeoMindMax initMindMax(ResourceLoader resourceLoader) {
         var enabled = this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled();
-        LOGGER.info(MINDMAX_CONFIGURATION_LOG, Status.of(enabled).asANSI());
+        LOGGER.info(CONFIGURATION_LOG_MINDMAX, Status.of(enabled).asANSI());
         if (enabled) {
             try {
                 var resource = resourceLoader.getResource("classpath:GeoLite2-City.mmdb");
                 var inputStream = resource.getInputStream();
-                LOGGER.info(MINDMAX_CONFIGURATION_LOG, SUCCESS.asANSI());
+                LOGGER.info(CONFIGURATION_LOG_MINDMAX, SUCCESS.asANSI());
                 return new GeoMindMax(
                         this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs(),
                         new DatabaseReader.Builder(inputStream).build()
                 );
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error(MINDMAX_CONFIGURATION_LOG, FAILURE.asANSI());
+                LOGGER.error(CONFIGURATION_LOG_MINDMAX, FAILURE.asANSI());
                 LOGGER.error("Please make sure GeoLite2-City.mmdb is in classpath");
                 throw new IllegalArgumentException(ex.getMessage());
             }
@@ -246,6 +280,41 @@ public class JbstGeoUtils {
             return new GeoMindMax(
                     this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs(),
                     null
+            );
+        }
+    }
+
+    // ================================================================================================================
+    // INITIALIZERS: User Agent Details
+    // ================================================================================================================
+    private GeoUserAgentDetails initUserAgentDetails() {
+        var enabled = this.jbstProperties.getUtilsConfigs().getUserAgentConfigs().isEnabled();
+        LOGGER.info(CONFIGURATION_LOG_USER_AGENT_DETAILS, Status.of(enabled).asANSI());
+        if (enabled) {
+            try {
+                LOGGER.info(CONFIGURATION_LOG_USER_AGENT_DETAILS, SUCCESS);
+                return new GeoUserAgentDetails(
+                        this.jbstProperties.getUtilsConfigs().getUserAgentConfigs(),
+                        true,
+                        new UserAgentService().loadParser(
+                                List.of(
+                                        BrowsCapField.BROWSER,
+                                        BrowsCapField.PLATFORM,
+                                        BrowsCapField.DEVICE_TYPE
+                                )
+                        ),
+                        null
+                );
+            } catch (ParseException | IOException ex) {
+                LOGGER.error(CONFIGURATION_LOG_USER_AGENT_DETAILS, FAILURE);
+                throw new IllegalArgumentException(ex);
+            }
+        } else {
+            return new GeoUserAgentDetails(
+                    this.jbstProperties.getUtilsConfigs().getUserAgentConfigs(),
+                    false,
+                    null,
+                    contactDevelopmentTeam("User agent configuration failure")
             );
         }
     }

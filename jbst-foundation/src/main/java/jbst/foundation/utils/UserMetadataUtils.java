@@ -12,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public final class UserMetadataUtils {
     // Utils
     private final JbstGeoUtils geoUtils;
-    private final UserAgentDetailsUtils userAgentDetailsUtils;
 
     public UserRequestMetadata getUserRequestMetadataProcessed(IPAddress ipAddress, UserAgentHeader userAgentHeader) {
         return UserRequestMetadata.processed(
                 this.geoUtils.getGeoLocation(ipAddress),
-                this.userAgentDetailsUtils.getUserAgentDetails(userAgentHeader)
+                this.geoUtils.getUserAgentDetails(userAgentHeader)
         );
     }
 }

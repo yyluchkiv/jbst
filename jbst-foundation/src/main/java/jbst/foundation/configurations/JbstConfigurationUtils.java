@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.JbstGeoUtils;
-import jbst.foundation.utils.UserAgentDetailsUtils;
 import jbst.foundation.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,17 +42,9 @@ public class JbstConfigurationUtils {
     }
 
     @Bean
-    UserAgentDetailsUtils userAgentDetailsUtils() {
-        return new UserAgentDetailsUtils(
-                this.jbstProperties
-        );
-    }
-
-    @Bean
     UserMetadataUtils userMetadataUtils() {
         return new UserMetadataUtils(
-                this.geoUtils(),
-                this.userAgentDetailsUtils()
+                this.geoUtils()
         );
     }
 }
