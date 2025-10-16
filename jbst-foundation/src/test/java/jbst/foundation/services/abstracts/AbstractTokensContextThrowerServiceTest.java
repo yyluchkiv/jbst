@@ -1,6 +1,7 @@
 package jbst.foundation.services.abstracts;
 
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -9,7 +10,6 @@ import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,7 @@
 package jbst.foundation.services.abstracts;
 
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -10,7 +11,6 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.TokensContextThrowerService;
-import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

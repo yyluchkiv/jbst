@@ -1,8 +1,8 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.UsersOnInit;
 import jbst.foundation.domain.properties.base.InvitationsOnInit;
+import jbst.foundation.domain.properties.base.UsersOnInit;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
