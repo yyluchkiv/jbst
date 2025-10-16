@@ -42,7 +42,9 @@ public class JbstConfigurationPostgres {
     @Bean
     PostgresJbstSettingsService postgresJbstSettingsService() {
         return new PostgresJbstSettingsService(
-                this.postgresJbstSettingsRepository
+                this.postgresJbstSettingsRepository,
+                this.postgresJbstInvitationsRepository,
+                this.postgresUsersRepository
         );
     }
 
