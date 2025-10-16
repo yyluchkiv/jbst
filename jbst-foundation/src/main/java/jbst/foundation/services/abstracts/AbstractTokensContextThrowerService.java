@@ -10,7 +10,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.TokensContextThrowerService;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

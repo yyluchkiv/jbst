@@ -17,7 +17,7 @@ import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.services.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

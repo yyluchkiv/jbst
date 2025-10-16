@@ -10,7 +10,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
 import jbst.foundation.utils.JbstHttpUtils;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

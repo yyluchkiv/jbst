@@ -3,7 +3,7 @@ package jbst.foundation.services.postgres;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractBaseUsersSessionsService;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

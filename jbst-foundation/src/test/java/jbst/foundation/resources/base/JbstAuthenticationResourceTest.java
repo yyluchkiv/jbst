@@ -36,7 +36,7 @@ import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;

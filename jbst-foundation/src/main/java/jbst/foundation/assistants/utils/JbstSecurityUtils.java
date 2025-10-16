@@ -1,4 +1,4 @@
-package jbst.foundation.utils;
+package jbst.foundation.assistants.utils;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

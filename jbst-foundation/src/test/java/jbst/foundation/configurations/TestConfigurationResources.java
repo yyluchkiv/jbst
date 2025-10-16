@@ -17,7 +17,7 @@ import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.validators.*;
 import jbst.foundation.websockets.WebsocketsService;
 import org.springframework.context.annotation.Bean;

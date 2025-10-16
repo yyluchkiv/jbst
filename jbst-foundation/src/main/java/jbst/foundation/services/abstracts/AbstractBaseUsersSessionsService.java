@@ -19,7 +19,7 @@ import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.utils.UserMetadataUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

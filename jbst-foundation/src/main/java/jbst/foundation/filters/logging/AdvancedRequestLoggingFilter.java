@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utils.JbstHttpUtils;
-import jbst.foundation.utils.JbstSecurityUtils;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

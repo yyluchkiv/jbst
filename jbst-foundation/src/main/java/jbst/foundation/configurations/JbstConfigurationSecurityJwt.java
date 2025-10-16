@@ -57,6 +57,7 @@ import static org.springframework.http.HttpMethod.*;
 // TODO [YYL, deprecation] fixme
 @Configuration
 @ComponentScan({
+        "jbst.foundation.assistants.utils",
         "jbst.foundation.crons",
         "jbst.foundation.events.publishers.events",
         "jbst.foundation.events.publishers.incidents",
