@@ -44,7 +44,6 @@ public class JbstConfigurationEmail {
         var mailSender = new JavaMailSenderImpl();
         mailSender.setHost(emailConfigs.getHost());
         mailSender.setPort(emailConfigs.getPort());
-
         mailSender.setUsername(emailConfigs.getUsername().value());
         mailSender.setPassword(emailConfigs.getPassword().value());
 
