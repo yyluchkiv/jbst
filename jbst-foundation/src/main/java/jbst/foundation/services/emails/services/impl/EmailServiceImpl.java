@@ -9,11 +9,11 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.foundation.services.emails.utils.JbstEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Set;
 
 import static jakarta.mail.Message.RecipientType.TO;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EmailServiceImpl implements EmailService {
@@ -30,8 +32,6 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
     // HTML Engine
     private final SpringTemplateEngine springTemplateEngine;
-    // Utils
-    private final JbstEmailUtils emailUtils;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -95,16 +95,17 @@ public class EmailServiceImpl implements EmailService {
         var emailConfigs = this.jbstProperties.getEmailConfigs();
         if (emailConfigs.isEnabled()) {
             try {
-                var tuple2 = this.emailUtils.getMimeMessageTuple2();
-                var message = tuple2.a();
-                var mmHelper = tuple2.b();
-                mmHelper.setFrom(emailConfigs.getFrom());
-                mmHelper.setTo(emailHTML.to().toArray(new String[0]));
-                mmHelper.setSubject(emailHTML.subject());
+                var message = this.javaMailSender.createMimeMessage();
+                var messageHelper = new MimeMessageHelper(message, MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
+                messageHelper.setFrom(emailConfigs.getFrom());
+                messageHelper.setTo(emailHTML.to().toArray(new String[0]));
+                messageHelper.setSubject(emailHTML.subject());
                 var context = new Context();
                 context.setVariables(emailHTML.templateVariables());
-                var processedHTML = this.springTemplateEngine.process(emailHTML.templateName(), context);
-                mmHelper.setText(processedHTML, true);
+                messageHelper.setText(
+                        this.springTemplateEngine.process(emailHTML.templateName(), context),
+                        true
+                );
                 this.javaMailSender.send(message);
             } catch (MessagingException ex) {
                 // ignored
