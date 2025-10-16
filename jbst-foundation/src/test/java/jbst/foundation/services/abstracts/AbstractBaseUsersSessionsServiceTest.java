@@ -24,7 +24,7 @@ import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -114,8 +114,8 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        UserMetadataUtils userMetadataUtils() {
-            return mock(UserMetadataUtils.class);
+        JbstGeoUtils geoUtils() {
+            return mock(JbstGeoUtils.class);
         }
 
         @Bean
@@ -123,7 +123,7 @@ class AbstractBaseUsersSessionsServiceTest {
             return new AbstractBaseUsersSessionsService(
                     this.securityJwtPublisher(),
                     this.usersSessionsRepository(),
-                    this.userMetadataUtils(),
+                    this.geoUtils(),
                     this.securityUtils()
             ) {};
         }
@@ -134,7 +134,7 @@ class AbstractBaseUsersSessionsServiceTest {
     // Repositories
     private final JbstUsersSessionsRepository usersSessionsRepository;
     // Utils
-    private final UserMetadataUtils userMetadataUtils;
+    private final JbstGeoUtils geoUtils;
 
     private final AbstractBaseUsersSessionsService componentUnderTest;
 
@@ -143,7 +143,7 @@ class AbstractBaseUsersSessionsServiceTest {
         reset(
                 this.securityJwtEventsPublisher,
                 this.usersSessionsRepository,
-                this.userMetadataUtils
+                this.geoUtils
         );
     }
 
@@ -152,7 +152,7 @@ class AbstractBaseUsersSessionsServiceTest {
         verifyNoMoreInteractions(
                 this.securityJwtEventsPublisher,
                 this.usersSessionsRepository,
-                this.userMetadataUtils
+                this.geoUtils
         );
     }
 
@@ -309,14 +309,14 @@ class AbstractBaseUsersSessionsServiceTest {
     @Test
     void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
         var event = entity(EventSessionUserRequestMetadataAdd.class);
-        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
-        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
+        verify(this.geoUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
@@ -332,14 +332,14 @@ class AbstractBaseUsersSessionsServiceTest {
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
-        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
-        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
+        verify(this.geoUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
@@ -374,14 +374,14 @@ class AbstractBaseUsersSessionsServiceTest {
                 metadataRenewCron,
                 metadataRenewManually
         );
-        when(this.userMetadataUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(saveFunction.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(saveFunction);
 
         // Assert
-        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader());
+        verify(this.geoUtils).getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         var sessionProcessedMetadata = userSessionAC.getValue();

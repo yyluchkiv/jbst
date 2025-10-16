@@ -9,7 +9,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class AuthenticationIncidentFilter extends OncePerRequestFilter {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Utils
-    private final UserMetadataUtils userMetadataUtils;
+    private final JbstGeoUtils geoUtils;
     // Properties
     private final ServerProperties serverProperties;
 
@@ -53,7 +53,7 @@ public class AuthenticationIncidentFilter extends OncePerRequestFilter {
             if (!server.containsCredentials(credentials)) {
                 var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
                         credentials,
-                        this.userMetadataUtils.getUserRequestMetadataProcessed(
+                        this.geoUtils.getUserRequestMetadataProcessed(
                                 getClientIpAddr(request),
                                 new UserAgentHeader(request)
                         )

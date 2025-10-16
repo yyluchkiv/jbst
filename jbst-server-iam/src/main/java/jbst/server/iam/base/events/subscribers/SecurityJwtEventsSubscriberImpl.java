@@ -7,7 +7,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.UsersEmailsService;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class SecurityJwtEventsSubscriberImpl extends BaseSecurityJwtEventsSubscr
             BaseUsersTokensService baseUsersTokensService,
             UsersEmailsService usersEmailsService,
             BaseUsersSessionsService baseUsersSessionsService,
-            UserMetadataUtils userMetadataUtils,
+            JbstGeoUtils geoUtils,
             IncidentPublisher incidentPublisher
     ) {
         super(
@@ -31,7 +31,7 @@ public class SecurityJwtEventsSubscriberImpl extends BaseSecurityJwtEventsSubscr
                 baseUsersTokensService,
                 usersEmailsService,
                 baseUsersSessionsService,
-                userMetadataUtils,
+                geoUtils,
                 incidentPublisher
         );
     }

@@ -16,7 +16,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.UsersEmailsService;
-import jbst.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Utils
-    private final UserMetadataUtils userMetadataUtils;
+    private final JbstGeoUtils geoUtils;
     // Incidents
     private final IncidentPublisher incidentPublisher;
 
@@ -54,7 +54,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
         try {
             LOGGER.debug(USER_ACTION, event.username(), "[sub, events] login failure");
-            var userRequestMetadata = this.userMetadataUtils.getUserRequestMetadataProcessed(
+            var userRequestMetadata = this.geoUtils.getUserRequestMetadataProcessed(
                     event.ipAddress(),
                     event.userAgentHeader()
             );

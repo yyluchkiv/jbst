@@ -25,6 +25,7 @@ import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.utilities.GeoCountryFlagsConfigs;
 import jbst.foundation.domain.properties.configs.utilities.GeoLocationsConfigs;
@@ -158,6 +159,13 @@ public class JbstGeoUtils {
                 return GeoLocation.unknown(ipAddress, ex2.getMessage());
             }
         }
+    }
+
+    public final UserRequestMetadata getUserRequestMetadataProcessed(IPAddress ipAddress, UserAgentHeader userAgentHeader) {
+        return UserRequestMetadata.processed(
+                this.getGeoLocation(ipAddress),
+                this.getUserAgentDetails(userAgentHeader)
+        );
     }
 
     // ================================================================================================================
