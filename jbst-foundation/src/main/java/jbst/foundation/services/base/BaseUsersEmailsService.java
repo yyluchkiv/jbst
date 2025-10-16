@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.foundation.domain.enums.AccountAccessMethod.SESSION_TOKEN;
 import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
 
@@ -69,13 +69,14 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     // PRIVATE METHODS: Mails
     // =================================================================================================================
     private EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
+        // TODO [YYL] easier codebase?
         var templateName = "jbst-account-accessed";
         if (USERNAME_PASSWORD.equals(function.accountAccessMethod())) {
             templateName = this.getServerOrFallbackJbstTemplateName(
                     "server-authentication-login",
                     "jbst-account-accessed"
             );
-        } else if (SECURITY_TOKEN.equals(function.accountAccessMethod())) {
+        } else if (SESSION_TOKEN.equals(function.accountAccessMethod())) {
             templateName = this.getServerOrFallbackJbstTemplateName(
                     "server-session-refreshed",
                     "jbst-account-accessed"

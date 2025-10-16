@@ -32,7 +32,7 @@ import java.util.Set;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.foundation.domain.enums.AccountAccessMethod.SESSION_TOKEN;
 import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
@@ -228,7 +228,7 @@ class BaseUsersEmailsServiceTest {
         this.jbstProperties.setSecurityJwtConfigs(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
         // Act
-        this.componentUnderTest.executeSessionRefreshed(FunctionAccountAccessed.hardcoded(SECURITY_TOKEN));
+        this.componentUnderTest.executeSessionRefreshed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
         // no actions + revert
@@ -238,7 +238,7 @@ class BaseUsersEmailsServiceTest {
     @Test
     void executeSessionRefreshed() {
         // Act
-        this.componentUnderTest.executeSessionRefreshed(FunctionAccountAccessed.hardcoded(SECURITY_TOKEN));
+        this.componentUnderTest.executeSessionRefreshed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
         ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
@@ -252,7 +252,7 @@ class BaseUsersEmailsServiceTest {
                 .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
                 .containsEntry("year", now(UTC).getYear())
                 .containsEntry("username", Username.hardcoded().value())
-                .containsEntry("accessMethod", SECURITY_TOKEN.getValue())
+                .containsEntry("accessMethod", SESSION_TOKEN.getValue())
                 .containsEntry("where", "🇺🇦 Ukraine, Lviv")
                 .containsEntry("what", "Chrome, macOS on Desktop")
                 .containsEntry("ipAddress", "127.0.0.1")

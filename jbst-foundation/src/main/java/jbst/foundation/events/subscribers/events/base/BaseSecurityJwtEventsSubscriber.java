@@ -171,7 +171,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
                             event.username(),
                             event.email(),
                             metadata,
-                            AccountAccessMethod.SECURITY_TOKEN
+                            AccountAccessMethod.SESSION_TOKEN
                     )
             );
         }

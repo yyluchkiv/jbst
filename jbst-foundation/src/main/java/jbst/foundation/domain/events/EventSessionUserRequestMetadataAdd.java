@@ -3,6 +3,7 @@ package jbst.foundation.domain.events;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
+import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
@@ -16,7 +17,10 @@ public record EventSessionUserRequestMetadataAdd(
         @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,
         UserAgentHeader userAgentHeader,
+        AccountAccessMethod accountAccessMethod,
+        @Deprecated
         boolean isAuthenticationLoginEndpoint,
+        @Deprecated
         boolean isAuthenticationRefreshTokenEndpoint
 ) {
     public FunctionSessionUserRequestMetadataSave getSaveFunction() {

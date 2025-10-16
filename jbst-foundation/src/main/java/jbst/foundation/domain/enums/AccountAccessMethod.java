@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum AccountAccessMethod {
     USERNAME_PASSWORD("username/password"),
-    SECURITY_TOKEN("security token");
+    SESSION_TOKEN("session token");
 
     private final String value;
 }

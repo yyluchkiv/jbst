@@ -41,7 +41,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.foundation.domain.enums.AccountAccessMethod.SESSION_TOKEN;
 import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -449,7 +449,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
-            verify(this.usersEmailsService).executeSessionRefreshed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SECURITY_TOKEN));
+            verify(this.usersEmailsService).executeSessionRefreshed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }

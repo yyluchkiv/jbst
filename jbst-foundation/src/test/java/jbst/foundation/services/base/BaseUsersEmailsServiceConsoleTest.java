@@ -191,7 +191,7 @@ class BaseUsersEmailsServiceConsoleTest {
         // Act
         this.componentUnderTest.executeAuthenticationLogin(
                 FunctionAccountAccessed.hardcoded(
-                        AccountAccessMethod.SECURITY_TOKEN
+                        AccountAccessMethod.SESSION_TOKEN
                 )
         );
 
