@@ -9,6 +9,7 @@ import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -182,14 +183,21 @@ class AbstractBaseUsersSessionsServiceTest {
                 .hasMessage(entityAccessDenied("Session", UserSessionId.hardcoded().value()));
     }
 
-    @Test
-    void saveUserSessionNotNullTest() {
+    private static Stream<Arguments> saveUserSessionTest() {
+        return Stream.of(
+                Arguments.of(JwtUser.hardcoded(UserCreationOption.STANDARD), AccountAccessMethod.USERNAME_PASSWORD),
+                Arguments.of(JwtUser.hardcoded(UserCreationOption.MAGICLINK), AccountAccessMethod.MAGICLINK)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("saveUserSessionTest")
+    void saveUserSessionNotNullTest(JwtUser user, AccountAccessMethod accountAccessMethod) {
         // Arrange
         var ipAddr = randomIPv4();
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
-        var user = entity(JwtUser.class);
         var username = user.username();
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
@@ -224,7 +232,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.session().id()).isEqualTo(actualDbUserSession.id());
         assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
-        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.USERNAME_PASSWORD);
+        assertThat(event.accountAccessMethod()).isEqualTo(accountAccessMethod);
     }
 
     @Test
@@ -234,7 +242,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
-        var user = entity(JwtUser.class);
+        var user = JwtUser.hardcoded();
         var username = user.username();
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();

@@ -88,7 +88,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                         session,
                         clientIpAddr,
                         new UserAgentHeader(httpServletRequest),
-                        AccountAccessMethod.USERNAME_PASSWORD
+                        AccountAccessMethod.getMethod(user.creationOption())
                 )
         );
     }

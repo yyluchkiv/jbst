@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.util.Objects.isNull;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 @Slf4j
@@ -22,11 +23,11 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String subjectPrefix;
     @MandatoryProperty
-    private final Checkbox magicLink;
+    private final Checkbox accountAccessedMagicLink;
     @MandatoryProperty
-    private final Checkbox usernamePassword;
+    private final Checkbox accountAccessedUsernamePassword;
     @MandatoryProperty
-    private final Checkbox sessionToken;
+    private final Checkbox accountAccessedSessionToken;
 
     public static UsersEmailsConfigs hardcoded() {
         return new UsersEmailsConfigs(
@@ -48,19 +49,19 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
 
     public boolean isEnabled(AccountAccessMethod method) {
         if (isNull(method)) {
-            // failsafe
-            LOGGER.error("AccountAccessMethod method in UsersEmailsConfigs in null");
             return false;
         }
-        // TODO [YYL] process MagicLink
-        if (method.isUsernamePassword() && this.usernamePassword.isEnabled()) {
+        if (method.isMagicLink() && this.accountAccessedMagicLink.isEnabled()) {
             return true;
         }
-        if (method.isSessionToken() && this.sessionToken.isEnabled()) {
+        if (method.isUsernamePassword() && this.accountAccessedUsernamePassword.isEnabled()) {
             return true;
         }
-        LOGGER.error("AccountAccessMethod method in UsersEmailsConfigs in unexpected");
+        if (method.isSessionToken() && this.accountAccessedSessionToken.isEnabled()) {
+            return true;
+        }
         // fallback
+        LOGGER.error(contactDevelopmentTeam("Unexpected AccountAccessMethod method or UsersEmailsConfigs configs"));
         return false;
     }
 

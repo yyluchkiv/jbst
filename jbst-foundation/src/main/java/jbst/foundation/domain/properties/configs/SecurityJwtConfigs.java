@@ -107,6 +107,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
                 new UsersEmailsConfigs(
                         "[jbst]",
                         Checkbox.disabled(),
+                        Checkbox.disabled(),
                         Checkbox.disabled()
                 ),
                 null,
