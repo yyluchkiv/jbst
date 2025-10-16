@@ -70,6 +70,7 @@ public class SlackBotsService {
         }
     }
 
+    @SuppressWarnings("unused")
     public final void sendMainCommunication(Map<Team, List<String>> teamsMessages) {
         teamsMessages.forEach((team, messages) -> {
             var bot = this.bots.get(team);

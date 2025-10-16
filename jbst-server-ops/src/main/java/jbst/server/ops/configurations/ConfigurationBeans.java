@@ -48,6 +48,7 @@ public class ConfigurationBeans {
         this.serverProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipientsConfigs"));
     }
 
+    @SuppressWarnings("deprecation")
     @Bean
     public RestTemplate restTemplate() {
         var connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
