@@ -65,8 +65,7 @@ public class JbstConstants {
         // =================================================================================================================
         // Prefixes
         // =================================================================================================================
-        public static final String PREFIX = "[jbst]";
-        public static final String PREFIX_SETTINGS = "[jbst-settings]";
+        public static final String PREFIX = BLACK_BOLD_TEXT.format("jbst");
 
         // =================================================================================================================
         // Standard

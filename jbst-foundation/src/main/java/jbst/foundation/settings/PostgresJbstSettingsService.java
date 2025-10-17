@@ -19,8 +19,8 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 
 public class PostgresJbstSettingsService extends JbstSettingsService {
 
-    private final PostgresJbstInvitationsRepository invitationsRepository;
-    private final PostgresJbstUsersRepository usersRepository;
+    protected final PostgresJbstInvitationsRepository invitationsRepository;
+    protected final PostgresJbstUsersRepository usersRepository;
 
     public PostgresJbstSettingsService(
             PostgresJbstSettingsRepository settingsRepository,

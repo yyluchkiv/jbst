@@ -19,8 +19,8 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 
 public class MongoJbstSettingsService extends JbstSettingsService {
 
-    private final MongoJbstInvitationsRepository invitationsRepository;
-    private final MongoJbstUsersRepository usersRepository;
+    protected final MongoJbstInvitationsRepository invitationsRepository;
+    protected final MongoJbstUsersRepository usersRepository;
 
     public MongoJbstSettingsService(
             MongoJbstSettingsRepository settingsRepository,
