@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
-import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
@@ -31,6 +30,6 @@ public class Server {
         var jbstProperties = applicationContext.getBean(JbstProperties.class);
         var serverProperties = applicationContext.getBean(ServerProperties.class);
         LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getServerConfigs(), COMPLETED));
-        LOGGER.info(PREFIX + " TargetURL: {}", serverProperties.getServerConfigs().getTargetURL());
+        LOGGER.info("Server targetURL: {}", serverProperties.getServerConfigs().getTargetURL());
     }
 }

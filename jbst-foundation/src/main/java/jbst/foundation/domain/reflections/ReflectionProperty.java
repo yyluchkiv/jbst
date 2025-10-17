@@ -1,7 +1,6 @@
 package jbst.foundation.domain.reflections;
 
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.constants.JbstConstants;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +11,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static org.springframework.util.StringUtils.uncapitalize;
 
 @Slf4j
@@ -63,6 +63,6 @@ public class ReflectionProperty {
     }
 
     public void print() {
-        LOGGER.debug(JbstConstants.Logs.PREFIX + " — {}", this.readableValue);
+        LOGGER.debug("{} — {}", PREFIX, this.readableValue);
     }
 }

@@ -53,9 +53,9 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.con
 @Slf4j
 @Component
 public class JbstGeoUtils {
-    private static final String CONFIGURATION_LOG_FLAGS = PREFIX + " Geo country flags geo-countries-flags.json — {}";
-    private static final String CONFIGURATION_LOG_MINDMAX = PREFIX + " Geo location database GeoLite2-City.mmdb — {}";
-    private static final String CONFIGURATION_LOG_USER_AGENT_DETAILS = PREFIX + " User agent — {}";
+    private static final String CONFIGURATION_LOG_FLAGS = PREFIX + " geo country flags geo-countries-flags.json — {}";
+    private static final String CONFIGURATION_LOG_MINDMAX = PREFIX + " geo location database GeoLite2-City.mmdb — {}";
+    private static final String CONFIGURATION_LOG_USER_AGENT_DETAILS = PREFIX + " user agent — {}";
 
     // ================================================================================================================
     // CLASSES: FLAGS

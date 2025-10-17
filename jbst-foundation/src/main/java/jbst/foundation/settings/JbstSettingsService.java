@@ -1,7 +1,6 @@
 package jbst.foundation.settings;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -18,6 +17,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
@@ -52,7 +52,7 @@ public abstract class JbstSettingsService {
     // Settings: [jbst_setting] table/collection
     // ================================================================================================================
     public void initSettings() {
-        LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", STARTED.asANSI());
+        LOGGER.info("{} settings storage initialization — {}", PREFIX, STARTED.asANSI());
         assertTrueOrThrow(
                 this.settingsRepository.isPresent(),
                 contactDevelopmentTeam("jbst-setting initialization failure")
@@ -60,7 +60,7 @@ public abstract class JbstSettingsService {
         this.settingsAR.set(
                 this.settingsRepository.getSettings()
         );
-        LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", COMPLETED.asANSI());
+        LOGGER.info("{} settings storage initialization — {}", PREFIX, COMPLETED.asANSI());
     }
 
     @SuppressWarnings("LoggingSimilarMessage")
@@ -71,11 +71,11 @@ public abstract class JbstSettingsService {
                 invalidAttribute("essence-configs.users-on-init.enabled == true")
         );
         if (this.usersRepository.count() == 0L) {
-            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'users-on-init' — adding users to database");
+            LOGGER.info("{} essence 'users-on-init' — adding users to database", PREFIX);
             var usersCount = this.initUsers(essenceConfigs.getUsersOnInit().getUsers());
-            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'users-on-init' — saved users: {}", usersCount);
+            LOGGER.info("{} essence 'users-on-init' — saved users: {}", PREFIX, usersCount);
         }
-        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'users-on-init' — {}", COMPLETED.asANSI());
+        LOGGER.info("{} essence 'users-on-init' — {}", PREFIX, COMPLETED.asANSI());
     }
 
     public void initInvitations() {
@@ -89,11 +89,11 @@ public abstract class JbstSettingsService {
         essenceConfigs.getUsersOnInit().getUsers().forEach(userOnInit -> {
             var username = userOnInit.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {
-                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations-on-init' — add invitations, username: {}", username);
+                LOGGER.info("{} essence 'invitations-on-init' — add invitations, username: {}", PREFIX, username);
                 this.initInvitations(userOnInit, authorities);
             }
         });
-        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations-on-init' — {}", COMPLETED.asANSI());
+        LOGGER.info("{} essence 'invitations-on-init' — {}", PREFIX, COMPLETED.asANSI());
     }
 
     public final JbstSettings getSettings() {
