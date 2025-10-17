@@ -14,4 +14,4 @@ spring:
 # jbst
 jbst:
   server-configs:
-    name: jbst-postgres
+    name: jbst-server-iam-postgres
