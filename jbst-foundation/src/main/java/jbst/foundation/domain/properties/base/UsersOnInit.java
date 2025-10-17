@@ -64,4 +64,14 @@ public class UsersOnInit extends AbstractTogglePropertyConfigs {
             return Collections.emptySet();
         }
     }
+
+    public final Set<Username> getUsernames() {
+        if (nonNull(this.users)) {
+            return this.users.stream()
+                    .map(UserOnInit::getUsername)
+                    .collect(Collectors.toSet());
+        } else {
+            return Collections.emptySet();
+        }
+    }
 }

@@ -35,7 +35,7 @@ public abstract class JbstSettingsService {
     protected final JbstProperties jbstProperties;
 
     // Store
-    private final AtomicReference<JbstSettings> settingsAR;
+    protected final AtomicReference<JbstSettings> settingsAR;
 
     public JbstSettingsService(JbstSettingsRepository settingsRepository, JbstInvitationsRepository invitationsRepository, JbstUsersRepository usersRepository, JbstProperties jbstProperties) {
         this.settingsRepository = settingsRepository;
@@ -51,7 +51,7 @@ public abstract class JbstSettingsService {
     // ================================================================================================================
     // Settings: [jbst_setting] table/collection
     // ================================================================================================================
-    public final void initSettings() {
+    public void initSettings() {
         LOGGER.info(JbstConstants.Logs.PREFIX_SETTINGS + " storage initialization — {}", STARTED.asANSI());
         assertTrueOrThrow(
                 this.settingsRepository.isPresent(),
@@ -64,7 +64,7 @@ public abstract class JbstSettingsService {
     }
 
     @SuppressWarnings("LoggingSimilarMessage")
-    public final void initUsers() {
+    public void initUsers() {
         var essenceConfigs = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs();
         assertTrueOrThrow(
                 essenceConfigs.getUsersOnInit().isEnabled(),
@@ -78,7 +78,7 @@ public abstract class JbstSettingsService {
         LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'users-on-init' — {}", COMPLETED.asANSI());
     }
 
-    public final void initInvitations() {
+    public void initInvitations() {
         var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
         var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
         assertTrueOrThrow(
