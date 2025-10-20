@@ -1,7 +1,7 @@
-package jbst.foundation.services.emails.services;
+package jbst.foundation.services;
 
-import jbst.foundation.services.emails.domain.EmailHTML;
-import jbst.foundation.services.emails.domain.EmailPlainAttachment;
+import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.domain.emails.EmailPlainAttachment;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;

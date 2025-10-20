@@ -1,8 +1,8 @@
-package jbst.foundation.services.emails.services.impl;
+package jbst.foundation.services.emails;
 
-import jbst.foundation.services.emails.domain.EmailHTML;
-import jbst.foundation.services.emails.domain.EmailPlainAttachment;
-import jbst.foundation.services.emails.services.EmailService;
+import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.domain.emails.EmailPlainAttachment;
+import jbst.foundation.services.EmailService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

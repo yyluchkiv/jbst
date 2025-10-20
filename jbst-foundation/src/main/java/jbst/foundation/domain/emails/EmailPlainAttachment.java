@@ -1,4 +1,4 @@
-package jbst.foundation.services.emails.domain;
+package jbst.foundation.domain.emails;
 
 import java.util.Set;
 

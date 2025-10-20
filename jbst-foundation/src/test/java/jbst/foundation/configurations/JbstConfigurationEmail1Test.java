@@ -1,8 +1,8 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.services.emails.services.EmailService;
-import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
+import jbst.foundation.services.EmailService;
+import jbst.foundation.services.emails.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

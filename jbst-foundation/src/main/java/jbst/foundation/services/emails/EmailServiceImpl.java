@@ -1,4 +1,4 @@
-package jbst.foundation.services.emails.services.impl;
+package jbst.foundation.services.emails;
 
 import jakarta.activation.DataHandler;
 import jakarta.mail.MessagingException;
@@ -6,9 +6,9 @@ import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMultipart;
 import jakarta.mail.util.ByteArrayDataSource;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.services.emails.domain.EmailHTML;
-import jbst.foundation.services.emails.domain.EmailPlainAttachment;
-import jbst.foundation.services.emails.services.EmailService;
+import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.domain.emails.EmailPlainAttachment;
+import jbst.foundation.services.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
