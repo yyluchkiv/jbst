@@ -1,4 +1,4 @@
-package jbst.foundation.services.base;
+package jbst.foundation.services;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,9 +13,6 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.services.TokensContextThrowerService;
-import jbst.foundation.services.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseTokensServiceTest {
+class TokensServiceTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))

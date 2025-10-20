@@ -12,7 +12,6 @@ import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.services.*;
 import jbst.foundation.services.base.AuthenticationServiceImpl;
-import jbst.foundation.services.base.BaseUsersEmailsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -108,8 +107,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseUsersEmailsService baseUsersEmailsService() {
-        return mock(BaseUsersEmailsService.class);
+    UsersEmailsService usersEmailsService() {
+        return mock(UsersEmailsService.class);
     }
 
     @Bean
@@ -241,14 +240,6 @@ public class TestConfigurationResources {
     @Bean
     JbstUsersTokensRepository usersTokensRepository() {
         return mock(JbstUsersTokensRepository.class);
-    }
-
-    // =================================================================================================================
-    // Services
-    // =================================================================================================================
-    @Bean
-    UsersEmailsService usersEmailsService() {
-        return mock(UsersEmailsService.class);
     }
 
     // =================================================================================================================

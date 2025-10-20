@@ -1,4 +1,4 @@
-package jbst.foundation.services.base;
+package jbst.foundation.services;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Email;
@@ -44,7 +44,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseUsersEmailsServiceTest {
+class UsersEmailsServiceTest {
 
     @Configuration
     @Import({
@@ -70,8 +70,8 @@ class BaseUsersEmailsServiceTest {
         }
 
         @Bean
-        public BaseUsersEmailsService userEmailService() {
-            return new BaseUsersEmailsService(
+        public UsersEmailsService userEmailService() {
+            return new UsersEmailsService(
                     this.resourceLoader,
                     this.emailService(),
                     this.jbstProperties,
@@ -85,7 +85,7 @@ class BaseUsersEmailsServiceTest {
     // Properties
     private final JbstProperties jbstProperties;
 
-    private final BaseUsersEmailsService componentUnderTest;
+    private final UsersEmailsService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

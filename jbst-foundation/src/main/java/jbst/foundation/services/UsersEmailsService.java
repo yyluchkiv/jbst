@@ -2,15 +2,147 @@ package jbst.foundation.services;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
-import org.springframework.scheduling.annotation.Async;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.tuples.Tuple2;
+import jbst.foundation.services.emails.domain.EmailHTML;
+import jbst.foundation.services.emails.services.EmailService;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
 
-public interface UsersEmailsService {
-    @Async
-    void executeMagicLink(JbstUserToken userToken);
-    @Async
-    void executeEmailConfirmation(JbstUserToken userToken);
-    @Async
-    void executePasswordReset(JbstUserToken userToken);
-    @Async
-    void executeAccountAccessed(FunctionAccountAccessed function);
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.function.Function;
+
+import static java.time.ZoneOffset.UTC;
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
+import static jbst.foundation.utilities.time.LocalDateUtility.now;
+
+@Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class UsersEmailsService {
+    // Resources
+    private final ResourceLoader resourceLoader;
+    // Services
+    private final EmailService emailService;
+    // Properties
+    private final JbstProperties jbstProperties;
+    private final ServerProperties serverProperties;
+
+    public final void executeMagicLink(JbstUserToken userToken) {
+        this.emailService.sendHTML(this.getMagicLinkHTML(userToken));
+    }
+
+    public final void executeEmailConfirmation(JbstUserToken userToken) {
+        this.emailService.sendHTML(this.getEmailConfirmationHTML(userToken));
+    }
+
+    public final void executePasswordReset(JbstUserToken userToken) {
+        this.emailService.sendHTML(this.getPasswordResetHTML(userToken));
+    }
+
+    public final void executeAccountAccessed(FunctionAccountAccessed function) {
+        if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().isEnabled(function.accountAccessMethod())) {
+            return;
+        }
+        this.emailService.sendHTML(this.getAccountAccessedHTML(function));
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS: Mails
+    // =================================================================================================================
+    private EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
+        return EmailHTML.of(
+                function.to(),
+                this.getSubjectV1("Account Accessed"),
+                function.getTemplateName(this.getTemplateNameFNC()),
+                Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("username", function.username().value()),
+                        Map.entry("accessMethod", function.accountAccessMethod().getValue()),
+                        Map.entry("where", function.userRequestMetadata().getGeoLocation().getWhere()),
+                        Map.entry("what", function.userRequestMetadata().getUserAgentDetails().getWhat()),
+                        Map.entry("ipAddress", function.userRequestMetadata().getGeoLocation().getIpAddr()),
+                        Map.entry("webclientURL", this.jbstProperties.getServerConfigs().getWebclientURL())
+                )
+        );
+    }
+
+    private EmailHTML getMagicLinkHTML(@NotNull JbstUserToken userToken) {
+        return EmailHTML.of(
+                userToken.email(),
+                this.getSubjectV1("Secure Link"),
+                this.getTemplateNameFNC().apply(new Tuple2<>(
+                        "server-magic-link",
+                        "jbst-magic-link"
+                )),
+                Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("email", userToken.email().value()),
+                        Map.entry("magicLink", this.jbstProperties.getMagicLink(userToken.value()))
+                )
+        );
+    }
+
+    private EmailHTML getEmailConfirmationHTML(@NotNull JbstUserToken userToken) {
+        return EmailHTML.of(
+                userToken.email(),
+                this.getSubjectV1("Email Confirmation"),
+                this.getTemplateNameFNC().apply(new Tuple2<>(
+                        "server-email-confirmation",
+                        "jbst-email-confirmation"
+                )),
+                Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("email", userToken.email().value()),
+                        Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, userToken.value()))
+                )
+        );
+    }
+
+    private EmailHTML getPasswordResetHTML(@NotNull JbstUserToken userToken) {
+        return EmailHTML.of(
+                userToken.email(),
+                this.getSubjectV1("Password Reset"),
+                this.getTemplateNameFNC().apply(new Tuple2<>(
+                        "server-password-reset",
+                        "jbst-password-reset"
+                )),
+                Map.ofEntries(
+                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("email", userToken.email().value()),
+                        Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(userToken.value()))
+                )
+        );
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS: Subject(s)
+    // =================================================================================================================
+    protected String getSubjectV1(@NotNull String subject) {
+        return "%s %s | %s".formatted(
+                this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix(),
+                subject,
+                LocalDateTime.now(UTC).format(DTF11) + " (UTC)"
+        );
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS: Spring
+    // =================================================================================================================
+    private Function<Tuple2<String, String>, String> getTemplateNameFNC() {
+        return tuple2 -> {
+            var serverTemplateName = tuple2.a();
+            var jbstTemplateName = tuple2.b();
+            var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
+            return resource.exists() ? serverTemplateName : jbstTemplateName;
+        };
+    }
 }

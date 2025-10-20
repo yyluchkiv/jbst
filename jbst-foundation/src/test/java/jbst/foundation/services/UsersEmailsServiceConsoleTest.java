@@ -1,4 +1,4 @@
-package jbst.foundation.services.base;
+package jbst.foundation.services;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
@@ -10,7 +10,6 @@ import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
-import jbst.foundation.services.UsersEmailsService;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.utilities.concurrent.SleepUtility;
@@ -41,7 +40,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseUsersEmailsServiceConsoleTest {
+class UsersEmailsServiceConsoleTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -124,7 +123,7 @@ class BaseUsersEmailsServiceConsoleTest {
 
         @Bean
         public UsersEmailsService userEmailService() {
-            return new BaseUsersEmailsService(
+            return new UsersEmailsService(
                     this.resourceLoader,
                     this.emailService(),
                     this.jbstProperties(),
