@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SecurityJwtEventsSubscriberImpl extends BaseSecurityJwtEventsSubscriber {
+public class ServerSecurityJwtEventsSubscriber extends BaseSecurityJwtEventsSubscriber {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public SecurityJwtEventsSubscriberImpl(
+    public ServerSecurityJwtEventsSubscriber(
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             JbstUsersTokensService usersTokensService,
             UsersEmailsService usersEmailsService,
