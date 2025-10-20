@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.JbstEmailService;
-import jbst.foundation.services.emails.JbstEmailServiceImpl;
+import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -91,7 +91,7 @@ class JbstConfigurationEmail1Test {
 
         // Assert
         assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstEmailService.class);
-        assertThat(incidentClientDefinition.getClass()).isEqualTo(JbstEmailServiceImpl.class);
+        assertThat(incidentClientDefinition.getClass()).isEqualTo(JbstEmailServiceEnabled.class);
     }
 
     @Test

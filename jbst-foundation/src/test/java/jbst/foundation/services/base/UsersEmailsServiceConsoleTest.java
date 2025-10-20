@@ -11,7 +11,7 @@ import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
 import jbst.foundation.services.JbstEmailService;
-import jbst.foundation.services.emails.JbstEmailServiceImpl;
+import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.concurrent.SleepUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
@@ -105,7 +105,7 @@ class UsersEmailsServiceConsoleTest {
 
         @Bean
         JbstEmailService emailService() {
-            return new JbstEmailServiceImpl(
+            return new JbstEmailServiceEnabled(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
                     this.jbstProperties()

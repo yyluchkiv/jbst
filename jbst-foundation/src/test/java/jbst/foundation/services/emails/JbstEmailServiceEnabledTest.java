@@ -43,7 +43,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstEmailServiceImplTest {
+class JbstEmailServiceEnabledTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -76,7 +76,7 @@ class JbstEmailServiceImplTest {
 
         @Bean
         JbstEmailService emailService() {
-            return new JbstEmailServiceImpl(
+            return new JbstEmailServiceEnabled(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
                     this.jbstProperties()

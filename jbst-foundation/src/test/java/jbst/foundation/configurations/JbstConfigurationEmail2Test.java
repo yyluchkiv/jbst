@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.services.JbstEmailService;
-import jbst.foundation.services.emails.JbstEmailServiceImpl;
+import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,6 +76,6 @@ class JbstConfigurationEmail2Test {
 
         // Assert
         assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstEmailService.class);
-        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstEmailServiceImpl.class);
+        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstEmailServiceEnabled.class);
     }
 }

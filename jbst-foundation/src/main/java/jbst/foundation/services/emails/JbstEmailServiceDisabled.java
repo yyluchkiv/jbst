@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-public class JbstEmailServiceSlf4J implements JbstEmailService {
+public class JbstEmailServiceDisabled implements JbstEmailService {
 
     @Override
     public void sendPlain(String[] to, String subject, String message) {

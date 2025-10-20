@@ -8,7 +8,7 @@ import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.properties.configs.UtilsConfigs;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.services.JbstEmailService;
-import jbst.foundation.services.emails.JbstEmailServiceImpl;
+import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +99,7 @@ class JbstEmailServiceConsoleTest {
 
         @Bean
         JbstEmailService emailService() {
-            return new JbstEmailServiceImpl(
+            return new JbstEmailServiceEnabled(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
                     this.jbstProperties()
