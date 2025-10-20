@@ -13,6 +13,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException
 import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.services.AuthenticationService;
+import jbst.foundation.services.JbstSynchronousExtensionService;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class JbstAuthenticationResource {
 
     // Services
     private final AuthenticationService authenticationService;
+    private final JbstSynchronousExtensionService synchronousExtensionService;
     // Validators
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
 
@@ -53,7 +55,9 @@ public class JbstAuthenticationResource {
     ) throws JbstLoginException {
         request = request.createReworkedUkraineZoneId();
         var credentials = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
-        return this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
+        var user = this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
+        this.synchronousExtensionService.authenticateAsMagicLink(user);
+        return user;
     }
 
     @PostMapping("/logout")

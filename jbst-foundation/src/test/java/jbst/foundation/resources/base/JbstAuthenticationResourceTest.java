@@ -35,6 +35,7 @@ import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstSynchronousExtensionService;
 import jbst.foundation.services.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -80,6 +81,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
+    private final JbstSynchronousExtensionService synchronousExtensionService;
     private final BaseUsersService baseUsersService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
@@ -107,6 +109,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         reset(
                 this.authenticationManager,
                 this.sessionRegistry,
+                this.synchronousExtensionService,
                 this.baseUsersService,
                 this.baseUsersSessionsService,
                 this.tokensService,
@@ -126,6 +129,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.authenticationManager,
                 this.sessionRegistry,
+                this.synchronousExtensionService,
                 this.baseUsersService,
                 this.baseUsersSessionsService,
                 this.tokensService,
@@ -234,6 +238,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
+        verify(this.synchronousExtensionService).authenticateAsMagicLink(currentClientUser);
     }
 
     @Test

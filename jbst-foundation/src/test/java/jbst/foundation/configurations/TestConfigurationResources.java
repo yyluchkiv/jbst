@@ -13,7 +13,6 @@ import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.services.*;
 import jbst.foundation.services.base.AuthenticationServiceImpl;
 import jbst.foundation.services.base.BaseUsersEmailsService;
-import jbst.foundation.services.base.RateLimitsServiceImpl;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -89,8 +88,13 @@ public class TestConfigurationResources {
     // Services
     // =================================================================================================================
     @Bean
+    JbstSynchronousExtensionService synchronousExtensionService() {
+        return mock(JbstSynchronousExtensionService.class);
+    }
+
+    @Bean
     RateLimitsService rateLimitsService() {
-        return new RateLimitsServiceImpl();
+        return new RateLimitsService();
     }
 
     @Bean
