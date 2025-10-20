@@ -115,8 +115,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseInvitationsService baseInvitationsService() {
-        return mock(BaseInvitationsService.class);
+    JbstInvitationsService baseInvitationsService() {
+        return mock(JbstInvitationsService.class);
     }
 
     @Bean

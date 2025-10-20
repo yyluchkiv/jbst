@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseInvitationsServiceTest {
+class AbstractJbstInvitationsServiceTest {
 
     @Configuration
     @Import({
@@ -45,8 +45,8 @@ class AbstractBaseInvitationsServiceTest {
         }
 
         @Bean
-        AbstractBaseInvitationsService abstractBaseInvitationsService() {
-            return new AbstractBaseInvitationsService(
+        AbstractJbstInvitationsService abstractBaseInvitationsService() {
+            return new AbstractJbstInvitationsService(
                     this.invitationsRepository(),
                     this.jbstProperties
             ) {};
@@ -56,7 +56,7 @@ class AbstractBaseInvitationsServiceTest {
     private final JbstInvitationsRepository invitationsRepository;
     private final JbstProperties jbstProperties;
 
-    private final AbstractBaseInvitationsService componentUnderTest;
+    private final AbstractJbstInvitationsService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

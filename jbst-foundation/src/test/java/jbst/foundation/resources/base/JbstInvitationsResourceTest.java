@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.services.BaseInvitationsService;
+import jbst.foundation.services.JbstInvitationsService;
 import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +32,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseInvitationsService baseInvitationsService;
+    private final JbstInvitationsService invitationsService;
     // Validators
     private final BaseInvitationsRequestsValidator baseInvitationsRequestsValidator;
     // Properties
@@ -46,7 +46,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
-                this.baseInvitationsService
+                this.invitationsService
         );
     }
 
@@ -54,7 +54,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
-                this.baseInvitationsService
+                this.invitationsService
         );
     }
 
@@ -66,7 +66,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
         var authorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitations = list345(ResponseInvitation.class);
         var responseInvitations = new ResponseInvitations(authorities, invitations);
-        when(this.baseInvitationsService.findByOwner(owner)).thenReturn(responseInvitations);
+        when(this.invitationsService.findByOwner(owner)).thenReturn(responseInvitations);
 
         // Act
         this.mvc.perform(get("/invitations"))
@@ -76,7 +76,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationsService).findByOwner(owner);
+        verify(this.invitationsService).findByOwner(owner);
     }
 
     @Test
@@ -96,7 +96,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.baseInvitationsRequestsValidator).validateCreateNewInvitation(request);
-        verify(this.baseInvitationsService).save(Username.hardcoded(), request);
+        verify(this.invitationsService).save(Username.hardcoded(), request);
     }
 
     @Test
@@ -113,6 +113,6 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.baseInvitationsRequestsValidator).validateDeleteById(username, invitationId);
-        verify(this.baseInvitationsService).deleteById(invitationId);
+        verify(this.invitationsService).deleteById(invitationId);
     }
 }

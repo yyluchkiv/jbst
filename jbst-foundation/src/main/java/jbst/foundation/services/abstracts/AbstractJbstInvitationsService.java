@@ -7,12 +7,12 @@ import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
-import jbst.foundation.services.BaseInvitationsService;
+import jbst.foundation.services.JbstInvitationsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseInvitationsService implements BaseInvitationsService {
+public abstract class AbstractJbstInvitationsService implements JbstInvitationsService {
 
     // Repositories
     protected final JbstInvitationsRepository invitationsRepository;

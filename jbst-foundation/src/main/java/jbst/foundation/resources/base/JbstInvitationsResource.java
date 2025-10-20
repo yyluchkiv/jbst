@@ -7,7 +7,7 @@ import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
-import jbst.foundation.services.BaseInvitationsService;
+import jbst.foundation.services.JbstInvitationsService;
 import jbst.foundation.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class JbstInvitationsResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseInvitationsService baseInvitationsService;
+    private final JbstInvitationsService invitationsService;
     // Validators
     private final BaseInvitationsRequestsValidator baseInvitationsRequestsValidator;
 
@@ -36,7 +36,7 @@ public class JbstInvitationsResource {
     @ResponseStatus(HttpStatus.OK)
     public ResponseInvitations findAll() {
         var owner = this.currentSessionAssistant.getCurrentUsername();
-        return this.baseInvitationsService.findByOwner(owner);
+        return this.invitationsService.findByOwner(owner);
     }
 
     @PostMapping
@@ -44,7 +44,7 @@ public class JbstInvitationsResource {
     public void save(@RequestBody @Valid RequestNewInvitationParams request) {
         this.baseInvitationsRequestsValidator.validateCreateNewInvitation(request);
         var owner = this.currentSessionAssistant.getCurrentUsername();
-        this.baseInvitationsService.save(owner, request);
+        this.invitationsService.save(owner, request);
     }
 
     @DeleteMapping("/{invitationId}")
@@ -52,7 +52,7 @@ public class JbstInvitationsResource {
     public void deleteById(@PathVariable InvitationId invitationId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
         this.baseInvitationsRequestsValidator.validateDeleteById(username, invitationId);
-        this.baseInvitationsService.deleteById(invitationId);
+        this.invitationsService.deleteById(invitationId);
     }
 }
 
