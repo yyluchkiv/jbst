@@ -16,8 +16,8 @@ import java.time.Duration;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstRateLimitsService {
+    private final RateLimiter<Email> magicLinkRL = new RateLimiter<>(5, Duration.ofMinutes(1), Duration.ofMinutes(10));
     private final RateLimiter<Username> emailConfirmationRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofHours(1));
-    private final RateLimiter<Email> magicLinkRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofMinutes(15));
 
     public final void acquireMagicLinkOrThrow(Email email) throws JbstTooManyRequestsException {
         this.magicLinkRL.acquire(email);
