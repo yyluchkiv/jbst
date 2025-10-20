@@ -24,7 +24,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogo
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,8 +72,8 @@ class AbstractJbstSessionRegistryTest {
         }
 
         @Bean
-        BaseUsersSessionsService userSessionService() {
-            return mock(BaseUsersSessionsService.class);
+        JbstUsersSessionsService userSessionService() {
+            return mock(JbstUsersSessionsService.class);
         }
 
         @Bean
@@ -96,7 +96,7 @@ class AbstractJbstSessionRegistryTest {
     private final SecurityJwtEventsPublisher securityJwtPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentPublisher;
     // Services
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService jbstUsersSessionsService;
     // Repositories
     private final JbstUsersSessionsRepository usersSessionsRepository;
 
@@ -109,7 +109,7 @@ class AbstractJbstSessionRegistryTest {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
-                this.baseUsersSessionsService,
+                this.jbstUsersSessionsService,
                 this.usersSessionsRepository
         );
     }
@@ -119,7 +119,7 @@ class AbstractJbstSessionRegistryTest {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
-                this.baseUsersSessionsService,
+                this.jbstUsersSessionsService,
                 this.usersSessionsRepository
         );
     }
@@ -315,13 +315,13 @@ class AbstractJbstSessionRegistryTest {
                 Set.of(dbUserSession1.id(), dbUserSession2.id())
         );
         var usernames = Set.of(username1, username2, username3);
-        when(this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames)).thenReturn(sessionsExpiredTable);
+        when(this.jbstUsersSessionsService.getExpiredRefreshTokensSessions(usernames)).thenReturn(sessionsExpiredTable);
 
         // Act
         this.componentUnderTest.cleanByExpiredRefreshTokens(usernames);
 
         // Assert
-        verify(this.baseUsersSessionsService).getExpiredRefreshTokensSessions(usernames);
+        verify(this.jbstUsersSessionsService).getExpiredRefreshTokensSessions(usernames);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(2);
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEqualTo(Set.of("username1", "username2"));
         var eseCaptor = ArgumentCaptor.forClass(EventSessionExpired.class);

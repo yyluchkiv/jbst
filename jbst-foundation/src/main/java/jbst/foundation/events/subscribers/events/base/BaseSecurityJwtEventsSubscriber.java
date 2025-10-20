@@ -12,7 +12,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
@@ -33,7 +33,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
     private final UsersEmailsService usersEmailsService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;
     // Incidents
@@ -130,7 +130,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event) {
         try {
             LOGGER.debug(USER_ACTION, event.username(), "[sub, events] session user request metadata add");
-            var session = this.baseUsersSessionsService.saveUserRequestMetadata(event);
+            var session = this.usersSessionsService.saveUserRequestMetadata(event);
             var metadata = session.metadata();
             this.processSessionUserRequestMetadataAddEmails(event, metadata);
             this.processSessionUserRequestMetadataAddIncidents(event, metadata);
@@ -143,7 +143,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event) {
         try {
             LOGGER.debug(USER_ACTION, event.username(), "[sub, events] session user request metadata renew, sessionId: " + event.session().id());
-            this.baseUsersSessionsService.saveUserRequestMetadata(event);
+            this.usersSessionsService.saveUserRequestMetadata(event);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

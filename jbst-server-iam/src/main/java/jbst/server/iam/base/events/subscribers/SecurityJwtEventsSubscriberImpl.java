@@ -4,7 +4,7 @@ import jbst.foundation.domain.events.EventAuthenticationLogin;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.events.subscribers.events.base.BaseSecurityJwtEventsSubscriber;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
@@ -22,7 +22,7 @@ public class SecurityJwtEventsSubscriberImpl extends BaseSecurityJwtEventsSubscr
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             BaseUsersTokensService baseUsersTokensService,
             UsersEmailsService usersEmailsService,
-            BaseUsersSessionsService baseUsersSessionsService,
+            JbstUsersSessionsService usersSessionsService,
             JbstGeoUtils geoUtils,
             IncidentPublisher incidentPublisher
     ) {
@@ -30,7 +30,7 @@ public class SecurityJwtEventsSubscriberImpl extends BaseSecurityJwtEventsSubscr
                 securityJwtIncidentsPublisher,
                 baseUsersTokensService,
                 usersEmailsService,
-                baseUsersSessionsService,
+                usersSessionsService,
                 geoUtils,
                 incidentPublisher
         );

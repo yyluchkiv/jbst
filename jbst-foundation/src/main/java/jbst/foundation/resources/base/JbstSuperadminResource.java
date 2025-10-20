@@ -10,7 +10,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class JbstSuperadminResource {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final JbstSuperadminService superadminService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService jbstUsersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
 
@@ -74,20 +74,20 @@ public class JbstSuperadminResource {
 
     @PostMapping("/sessions/{sessionId}/renew/manually")
     public void renewManually(@PathVariable UserSessionId sessionId) {
-        this.baseUsersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
+        this.jbstUsersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable UserSessionId sessionId) {
-        this.baseUsersSessionsService.deleteById(sessionId);
+        this.jbstUsersSessionsService.deleteById(sessionId);
     }
 
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
-        this.baseUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
+        this.jbstUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }
 

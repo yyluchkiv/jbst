@@ -34,7 +34,7 @@ import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstSynchronousExtensionService;
 import jbst.foundation.services.base.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -83,7 +83,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     // Services
     private final JbstSynchronousExtensionService synchronousExtensionService;
     private final JbstUsersService usersService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     private final TokensService tokensService;
     // Repositories
     private final JbstUsersRepository usersRepository;
@@ -111,7 +111,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.sessionRegistry,
                 this.synchronousExtensionService,
                 this.usersService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensService,
                 this.usersRepository,
                 this.usersTokensRepository,
@@ -131,7 +131,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.sessionRegistry,
                 this.synchronousExtensionService,
                 this.usersService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensService,
                 this.usersRepository,
                 this.usersTokensRepository,
@@ -183,7 +183,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.jwtUserDetailsService).loadUserByUsername(username.value());
         verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
+        verify(this.usersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
@@ -233,7 +233,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.jwtUserDetailsService).loadUserByUsername(user.username().value());
         verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
+        verify(this.usersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));

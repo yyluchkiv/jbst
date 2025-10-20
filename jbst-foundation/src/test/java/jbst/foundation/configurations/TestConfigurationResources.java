@@ -135,8 +135,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseUsersSessionsService baseUsersSessionsService() {
-        return mock(BaseUsersSessionsService.class);
+    JbstUsersSessionsService baseUsersSessionsService() {
+        return mock(JbstUsersSessionsService.class);
     }
 
     // =================================================================================================================

@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -28,7 +28,7 @@ public class TokensService {
     private final JbstSessionRegistry sessionRegistry;
     // Services
     private final TokensContextThrowerService tokensContextThrowerService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
@@ -66,7 +66,7 @@ public class TokensService {
         var accessToken = this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var newRefreshToken = this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.baseUsersSessionsService.refresh(user, session, accessToken, newRefreshToken, request);
+        this.usersSessionsService.refresh(user, session, accessToken, newRefreshToken, request);
 
         this.tokensProvider.createResponseAccessToken(accessToken, response);
         this.tokensProvider.createResponseRefreshToken(newRefreshToken, response);

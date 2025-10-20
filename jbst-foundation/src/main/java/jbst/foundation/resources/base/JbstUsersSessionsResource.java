@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class JbstUsersSessionsResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
 
@@ -43,23 +43,23 @@ public class JbstUsersSessionsResource {
     public CurrentClientUser getCurrentClientUser(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var user = this.currentSessionAssistant.getCurrentClientUser();
         var session = this.currentSessionAssistant.getCurrentUserSession(httpRequest);
-        this.baseUsersSessionsService.renewUserRequestMetadata(session, httpRequest);
+        this.usersSessionsService.renewUserRequestMetadata(session, httpRequest);
         return user;
     }
 
     @PostMapping("/{sessionId}/renew/manually")
     public void renewManually(@PathVariable UserSessionId sessionId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        this.baseUsersSessionsService.assertAccess(username, sessionId);
-        this.baseUsersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
+        this.usersSessionsService.assertAccess(username, sessionId);
+        this.usersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @DeleteMapping("/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable UserSessionId sessionId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        this.baseUsersSessionsService.assertAccess(username, sessionId);
-        this.baseUsersSessionsService.deleteById(sessionId);
+        this.usersSessionsService.assertAccess(username, sessionId);
+        this.usersSessionsService.deleteById(sessionId);
     }
 
     @DeleteMapping
@@ -67,7 +67,7 @@ public class JbstUsersSessionsResource {
     public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var username = this.currentSessionAssistant.getCurrentUsername();
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
-        this.baseUsersSessionsService.deleteAllExceptCurrent(username, cookie);
+        this.usersSessionsService.deleteAllExceptCurrent(username, cookie);
     }
 }
 

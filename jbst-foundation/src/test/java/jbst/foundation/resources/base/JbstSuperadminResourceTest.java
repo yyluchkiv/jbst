@@ -11,7 +11,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -35,7 +35,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final JbstSuperadminService superadminService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
 
@@ -48,7 +48,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
         reset(
                 this.currentSessionAssistant,
                 this.superadminService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensProvider
         );
     }
@@ -58,7 +58,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
                 this.superadminService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensProvider
         );
     }
@@ -168,7 +168,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(sessionId);
+        verify(this.usersSessionsService).enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @Test
@@ -181,7 +181,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUsersSessionsService).deleteById(sessionId);
+        verify(this.usersSessionsService).deleteById(sessionId);
     }
 
     @Test
@@ -196,6 +196,6 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).deleteAllExceptCurrentAsSuperuser(requestAccessToken);
+        verify(this.usersSessionsService).deleteAllExceptCurrentAsSuperuser(requestAccessToken);
     }
 }

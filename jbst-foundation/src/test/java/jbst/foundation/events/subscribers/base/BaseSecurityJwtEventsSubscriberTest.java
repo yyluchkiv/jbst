@@ -19,7 +19,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
@@ -160,8 +160,8 @@ class BaseSecurityJwtEventsSubscriberTest {
         }
 
         @Bean
-        BaseUsersSessionsService baseUsersSessionsService() {
-            return mock(BaseUsersSessionsService.class);
+        JbstUsersSessionsService baseUsersSessionsService() {
+            return mock(JbstUsersSessionsService.class);
         }
 
         @Bean
@@ -192,7 +192,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
     private final UsersEmailsService usersEmailsService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;
     // Incidents
@@ -206,7 +206,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                 this.securityJwtIncidentsPublisher,
                 this.baseUsersTokensService,
                 this.usersEmailsService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.geoUtils,
                 this.incidentPublisher
         );
@@ -218,7 +218,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                 this.securityJwtIncidentsPublisher,
                 this.baseUsersTokensService,
                 this.usersEmailsService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.geoUtils,
                 this.incidentPublisher
         );
@@ -397,7 +397,7 @@ class BaseSecurityJwtEventsSubscriberTest {
             RuntimeException ex
     ) {
         // Arrange
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
+        when(this.usersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
         if (nonNull(ex)) {
             doThrow(ex).when(this.securityJwtIncidentsPublisher).publishAuthenticationLogin(any());
         }
@@ -406,7 +406,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
 
         // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+        verify(this.usersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
             verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
         } else {
@@ -423,7 +423,7 @@ class BaseSecurityJwtEventsSubscriberTest {
             RuntimeException ex
     ) {
         // Arrange
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
+        when(this.usersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
         if (nonNull(ex)) {
             doThrow(ex).when(this.securityJwtIncidentsPublisher).publishSessionRefreshed(any());
         }
@@ -432,7 +432,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
 
         // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+        verify(this.usersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
             verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
         } else {
@@ -448,14 +448,14 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Arrange
         var event = entity(EventSessionUserRequestMetadataRenew.class);
         if (nonNull(ex)) {
-            doThrow(ex).when(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+            doThrow(ex).when(this.usersSessionsService).saveUserRequestMetadata(event);
         }
 
         // Act
         this.componentUnderTest.onSessionUserRequestMetadataRenew(event);
 
         // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+        verify(this.usersSessionsService).saveUserRequestMetadata(event);
         verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 }

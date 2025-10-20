@@ -20,7 +20,7 @@ import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestam
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {
+public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessionsService {
 
     // Publishers
     protected final SecurityJwtEventsPublisher securityJwtPublisher;

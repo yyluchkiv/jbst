@@ -15,7 +15,7 @@ import jbst.foundation.domain.sessions.SessionsExpiredTable;
 
 import java.util.Set;
 
-public interface BaseUsersSessionsService {
+public interface JbstUsersSessionsService {
     void assertAccess(Username username, UserSessionId sessionId);
     void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest);
     void refresh(JwtUser user, JbstUserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);

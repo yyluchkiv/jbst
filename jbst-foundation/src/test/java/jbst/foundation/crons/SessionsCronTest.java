@@ -6,7 +6,7 @@ import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -48,8 +48,8 @@ class SessionsCronTest {
         }
 
         @Bean
-        BaseUsersSessionsService baseUsersSessionsService() {
-            return mock(BaseUsersSessionsService.class);
+        JbstUsersSessionsService baseUsersSessionsService() {
+            return mock(JbstUsersSessionsService.class);
         }
 
         @Bean
@@ -74,7 +74,7 @@ class SessionsCronTest {
     }
 
     private final JbstSessionRegistry sessionRegistry;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService jbstUsersSessionsService;
     private final IncidentPublisher incidentPublisher;
     private final JbstProperties jbstProperties;
 
@@ -84,7 +84,7 @@ class SessionsCronTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
-                this.baseUsersSessionsService,
+                this.jbstUsersSessionsService,
                 this.incidentPublisher,
                 this.jbstProperties
         );
@@ -94,7 +94,7 @@ class SessionsCronTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
-                this.baseUsersSessionsService,
+                this.jbstUsersSessionsService,
                 this.incidentPublisher,
                 this.jbstProperties
         );
@@ -144,7 +144,7 @@ class SessionsCronTest {
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
         if (cron.isEnabled()) {
-            verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewCron();
+            verify(this.jbstUsersSessionsService).enableUserRequestMetadataRenewCron();
         }
     }
 }

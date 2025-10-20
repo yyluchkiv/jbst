@@ -13,7 +13,7 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.TokensContextThrowerService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -60,8 +60,8 @@ class TokensServiceTest {
         }
 
         @Bean
-        BaseUsersSessionsService baseUsersSessionsService() {
-            return mock(BaseUsersSessionsService.class);
+        JbstUsersSessionsService baseUsersSessionsService() {
+            return mock(JbstUsersSessionsService.class);
         }
 
         @Bean
@@ -93,7 +93,7 @@ class TokensServiceTest {
     private final JbstSessionRegistry sessionRegistry;
     // Services
     private final TokensContextThrowerService tokensContextThrowerService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
@@ -107,7 +107,7 @@ class TokensServiceTest {
                 this.jwtUserDetailsService,
                 this.sessionRegistry,
                 this.tokensContextThrowerService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensProvider,
                 this.securityUtils
         );
@@ -119,7 +119,7 @@ class TokensServiceTest {
                 this.jwtUserDetailsService,
                 this.sessionRegistry,
                 this.tokensContextThrowerService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensProvider,
                 this.securityUtils
         );
@@ -180,7 +180,7 @@ class TokensServiceTest {
         verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims);
         verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).refresh(user, session, newAccessToken, newRefreshToken, request);
+        verify(this.usersSessionsService).refresh(user, session, newAccessToken, newRefreshToken, request);
         verify(this.tokensProvider).createResponseAccessToken(newAccessToken, response);
         verify(this.tokensProvider).createResponseRefreshToken(newRefreshToken, response);
         verify(this.sessionRegistry).renew(user.username(), oldRefreshToken, newAccessToken, newRefreshToken);

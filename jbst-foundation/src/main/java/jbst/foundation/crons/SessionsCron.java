@@ -3,7 +3,7 @@ package jbst.foundation.crons;
 import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class SessionsCron extends AbstractBaseCron {
     // Sessions
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Properties
@@ -52,7 +52,7 @@ public class SessionsCron extends AbstractBaseCron {
     public void enableSessionsMetadataRenew() {
         this.executeCron(
                 this.jbstProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled(),
-                this.baseUsersSessionsService::enableUserRequestMetadataRenewCron
+                this.usersSessionsService::enableUserRequestMetadataRenewCron
         );
     }
 }

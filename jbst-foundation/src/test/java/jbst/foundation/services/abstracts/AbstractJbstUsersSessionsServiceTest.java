@@ -65,7 +65,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseUsersSessionsServiceTest {
+class AbstractJbstUsersSessionsServiceTest {
 
     private static Stream<Arguments> saveUserRequestMetadataTest() {
         return Stream.of(
@@ -121,8 +121,8 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        AbstractBaseUsersSessionsService abstractTokensContextThrowerService() {
-            return new AbstractBaseUsersSessionsService(
+        AbstractJbstUsersSessionsService abstractTokensContextThrowerService() {
+            return new AbstractJbstUsersSessionsService(
                     this.securityJwtPublisher(),
                     this.usersSessionsRepository(),
                     this.geoUtils(),
@@ -138,7 +138,7 @@ class AbstractBaseUsersSessionsServiceTest {
     // Utils
     private final JbstGeoUtils geoUtils;
 
-    private final AbstractBaseUsersSessionsService componentUnderTest;
+    private final AbstractJbstUsersSessionsService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

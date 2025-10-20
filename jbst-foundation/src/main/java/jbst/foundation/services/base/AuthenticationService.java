@@ -19,7 +19,7 @@ import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +50,7 @@ public class AuthenticationService {
     private final JbstSessionRegistry sessionRegistry;
     // Services
     private final JbstUsersService usersService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService jbstUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
@@ -160,7 +160,7 @@ public class AuthenticationService {
         var accessToken = this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var refreshToken = this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
+        this.jbstUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
 
         this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
         this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
