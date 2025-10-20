@@ -63,7 +63,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
         return EmailHTML.of(
                 function.to(),
-                this.getSubject("Account Accessed"),
+                this.getSubjectV1("Account Accessed"),
                 function.getTemplateName(this.getTemplateNameFNC()),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
@@ -81,7 +81,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private EmailHTML getMagicLinkHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
-                this.getSubject("Magic Link"),
+                this.getSubjectV1("Secure Link"),
                 this.getTemplateNameFNC().apply(new Tuple2<>(
                         "server-magic-link",
                         "jbst-magic-link"
@@ -98,7 +98,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private EmailHTML getEmailConfirmationHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
-                this.getSubject("Email Confirmation"),
+                this.getSubjectV1("Email Confirmation"),
                 this.getTemplateNameFNC().apply(new Tuple2<>(
                         "server-email-confirmation",
                         "jbst-email-confirmation"
@@ -115,7 +115,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private EmailHTML getPasswordResetHTML(@NotNull JbstUserToken userToken) {
         return EmailHTML.of(
                 userToken.email(),
-                this.getSubject("Password Reset"),
+                this.getSubjectV1("Password Reset"),
                 this.getTemplateNameFNC().apply(new Tuple2<>(
                         "server-password-reset",
                         "jbst-password-reset"
@@ -132,12 +132,12 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     // =================================================================================================================
     // PRIVATE METHODS: Subject(s)
     // =================================================================================================================
-    // TODO [YYL] maybe create different subjects
-    // "[localhost] Magic Link at 20-10-2025 08:36:53 (UTC)" vs. "Secure link to log in to ? | 2025-09-01 07:20:06"
-    protected String getSubject(@NotNull String eventName) {
-        var prefix = this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
-        var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
-        return prefix + " " + eventName + " at " + time;
+    protected String getSubjectV1(@NotNull String subject) {
+        return "%s %s | %s".formatted(
+                this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix(),
+                subject,
+                LocalDateTime.now(UTC).format(DTF11) + " (UTC)"
+        );
     }
 
     // =================================================================================================================

@@ -104,13 +104,13 @@ class BaseUsersEmailsServiceTest {
     @RepeatedTest(FIVE_TIMES)
     void getSubjectTest() {
         // Act
-        var subject = this.componentUnderTest.getSubject("Account Accessed");
+        var subject = this.componentUnderTest.getSubjectV1("Account Accessed");
 
         // Assert
         assertThat(subject)
-                .startsWith("[jbst.com] Account Accessed at ")
+                .startsWith("[jbst.com] Account Accessed | ")
                 .endsWith(" (UTC)");
-        subject = subject.replace("[jbst.com] Account Accessed at ", "");
+        subject = subject.replace("[jbst.com] Account Accessed | ", "");
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);
@@ -129,7 +129,7 @@ class BaseUsersEmailsServiceTest {
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
-        assertThat(emailHTML.subject()).startsWith("[jbst.com] Magic Link at ");
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Secure Link | ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-magic-link");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
@@ -152,7 +152,7 @@ class BaseUsersEmailsServiceTest {
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
-        assertThat(emailHTML.subject()).startsWith("[jbst.com] Email Confirmation at ");
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Email Confirmation | ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-email-confirmation");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
@@ -175,7 +175,7 @@ class BaseUsersEmailsServiceTest {
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
-        assertThat(emailHTML.subject()).startsWith("[jbst.com] Password Reset at ");
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Password Reset | ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-password-reset");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
@@ -208,7 +208,7 @@ class BaseUsersEmailsServiceTest {
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(Email.hardcoded().value()));
-        assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed at ");
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed | ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
@@ -245,7 +245,7 @@ class BaseUsersEmailsServiceTest {
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(Email.hardcoded().value()));
-        assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed at ");
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed | ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
