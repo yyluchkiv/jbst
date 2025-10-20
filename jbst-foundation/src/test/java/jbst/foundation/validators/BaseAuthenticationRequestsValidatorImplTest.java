@@ -25,6 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -116,8 +117,15 @@ class BaseAuthenticationRequestsValidatorImplTest {
     @ParameterizedTest
     @MethodSource("validateLoginStandardTest")
     void validateLoginStandardTest(RequestUserLogin request, String exceptionMessage) {
-        // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateLoginStandard(request));
+        // Act + Assert
+        var throwable = catchThrowable(() -> {
+            // Act
+            var credentials = this.componentUnderTest.validateLoginStandard(request);
+
+            // Assert
+            assertThat(credentials.username()).isEqualTo(request.username());
+            assertThat(credentials.password()).isEqualTo(request.password());
+        });
 
         // Assert
         if (nonNull(exceptionMessage)) {
@@ -133,13 +141,20 @@ class BaseAuthenticationRequestsValidatorImplTest {
     @MethodSource("validateLoginMagicLinkTest")
     void validateLoginMagicLinkTest(RequestMagicLinkToken request, JbstUserToken userToken, String exceptionMessage) {
         // Arrange
-        when(this.usersTokensRepository.findByValueAsAny(request.value())).thenReturn(userToken);
+        when(this.usersTokensRepository.findByValueAsAnyOrNull(request.value())).thenReturn(userToken);
 
-        // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateLoginMagicLink(request));
+        // Act + Assert
+        var throwable = catchThrowable(() -> {
+            // Act
+            var credentials = this.componentUnderTest.validateLoginMagicLink(request);
+
+            // Assert
+            assertThat(credentials.userToken()).isEqualTo(userToken);
+            assertThat(credentials.zoneId()).isEqualTo(UKRAINE);
+        });
 
         // Assert
-        verify(this.usersTokensRepository).findByValueAsAny(request.value());
+        verify(this.usersTokensRepository).findByValueAsAnyOrNull(request.value());
         if (nonNull(exceptionMessage)) {
             assertThat(throwable)
                     .isInstanceOf(JbstLoginException.class)

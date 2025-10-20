@@ -45,6 +45,7 @@ jbst:
         AUTHENTICATION_LOGOUT_MIN: false
         SESSION_REFRESHED: true
         SESSION_EXPIRED: false
+        REGISTER_MAGICLINK: true
         REGISTER0: true
         REGISTER0_FAILURE: true
         REGISTER1: true

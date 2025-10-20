@@ -19,9 +19,9 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.services.BaseUsersTokensService;
-import jbst.foundation.services.UsersEmailsService;
+import jbst.foundation.services.JbstUsersSessionsService;
+import jbst.foundation.services.JbstUsersTokensService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -150,18 +150,18 @@ class BaseSecurityJwtEventsSubscriberTest {
         }
 
         @Bean
-        BaseUsersTokensService baseUsersTokensService() {
-            return mock(BaseUsersTokensService.class);
+        JbstUsersTokensService baseUsersTokensService() {
+            return mock(JbstUsersTokensService.class);
         }
 
         @Bean
-        UsersEmailsService userEmailService() {
-            return mock(UsersEmailsService.class);
+        JbstUsersEmailsService userEmailService() {
+            return mock(JbstUsersEmailsService.class);
         }
 
         @Bean
-        BaseUsersSessionsService baseUsersSessionsService() {
-            return mock(BaseUsersSessionsService.class);
+        JbstUsersSessionsService usersSessionsService() {
+            return mock(JbstUsersSessionsService.class);
         }
 
         @Bean
@@ -180,7 +180,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                     this.securityJwtIncidentPublisher(),
                     this.baseUsersTokensService(),
                     this.userEmailService(),
-                    this.baseUsersSessionsService(),
+                    this.usersSessionsService(),
                     this.geoUtils(),
                     this.incidentPublisher()
             );
@@ -190,9 +190,9 @@ class BaseSecurityJwtEventsSubscriberTest {
     // Publishers
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
-    private final BaseUsersTokensService baseUsersTokensService;
-    private final UsersEmailsService usersEmailsService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersTokensService usersTokensService;
+    private final JbstUsersEmailsService usersEmailsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;
     // Incidents
@@ -204,9 +204,9 @@ class BaseSecurityJwtEventsSubscriberTest {
     void beforeEach() {
         reset(
                 this.securityJwtIncidentsPublisher,
-                this.baseUsersTokensService,
+                this.usersTokensService,
                 this.usersEmailsService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.geoUtils,
                 this.incidentPublisher
         );
@@ -216,9 +216,9 @@ class BaseSecurityJwtEventsSubscriberTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentsPublisher,
-                this.baseUsersTokensService,
+                this.usersTokensService,
                 this.usersEmailsService,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.geoUtils,
                 this.incidentPublisher
         );
@@ -303,7 +303,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
         var event = new EventRegistration0(requestUserRegistration0);
         var userToken = JbstUserToken.hardcodedEmailConfirmation();
-        when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
+        when(this.usersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
         if (nonNull(ex)) {
             doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(userToken);
         }
@@ -313,9 +313,21 @@ class BaseSecurityJwtEventsSubscriberTest {
 
         // Assert
         assertThat(event).isNotNull();
-        verify(this.baseUsersTokensService).saveAs(requestUserRegistration0.asRequestUserToken());
+        verify(this.usersTokensService).saveAs(requestUserRegistration0.asRequestUserToken());
         verify(this.usersEmailsService).executeEmailConfirmation(userToken);
         verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
+    }
+
+    @Test
+    void onRegistrationMagicLinkTest() {
+        // Arrange
+        var event = entity(EventRegistrationMagicLink.class);
+
+        // Act
+        this.componentUnderTest.onRegistrationMagicLink(event);
+
+        // Assert
+        assertThat(event).isNotNull();
     }
 
     @Test
@@ -385,7 +397,7 @@ class BaseSecurityJwtEventsSubscriberTest {
             RuntimeException ex
     ) {
         // Arrange
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
+        when(this.usersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
         if (nonNull(ex)) {
             doThrow(ex).when(this.securityJwtIncidentsPublisher).publishAuthenticationLogin(any());
         }
@@ -394,7 +406,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
 
         // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+        verify(this.usersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
             verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
         } else {
@@ -411,7 +423,7 @@ class BaseSecurityJwtEventsSubscriberTest {
             RuntimeException ex
     ) {
         // Arrange
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
+        when(this.usersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
         if (nonNull(ex)) {
             doThrow(ex).when(this.securityJwtIncidentsPublisher).publishSessionRefreshed(any());
         }
@@ -420,7 +432,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
 
         // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+        verify(this.usersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
             verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
         } else {
@@ -436,14 +448,14 @@ class BaseSecurityJwtEventsSubscriberTest {
         // Arrange
         var event = entity(EventSessionUserRequestMetadataRenew.class);
         if (nonNull(ex)) {
-            doThrow(ex).when(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+            doThrow(ex).when(this.usersSessionsService).saveUserRequestMetadata(event);
         }
 
         // Act
         this.componentUnderTest.onSessionUserRequestMetadataRenew(event);
 
         // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+        verify(this.usersSessionsService).saveUserRequestMetadata(event);
         verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 }

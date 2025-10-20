@@ -7,13 +7,15 @@ import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.services.*;
-import jbst.foundation.services.base.AuthenticationServiceImpl;
-import jbst.foundation.services.base.BaseUsersEmailsService;
-import jbst.foundation.services.base.RateLimitsServiceImpl;
+import jbst.foundation.services.base.JbstAuthenticationService;
+import jbst.foundation.services.base.JbstRateLimitsService;
+import jbst.foundation.services.base.JbstTokensService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -56,14 +58,14 @@ public class TestConfigurationResources {
     // Authentication
     // =================================================================================================================
     @Bean
-    AuthenticationService authenticationService() {
-        return new AuthenticationServiceImpl(
+    JbstAuthenticationService authenticationService() {
+        return new JbstAuthenticationService(
                 this.authenticationManager(),
                 this.currentSessionAssistant(),
                 this.jwtUserDetailsService(),
                 this.sessionRegistry(),
-                this.baseUsersService(),
-                this.baseUsersSessionsService(),
+                this.usersService(),
+                this.usersSessionsService(),
                 this.tokenService(),
                 this.usersTokensRepository(),
                 this.tokensProvider(),
@@ -89,48 +91,53 @@ public class TestConfigurationResources {
     // Services
     // =================================================================================================================
     @Bean
-    RateLimitsService rateLimitsService() {
-        return new RateLimitsServiceImpl();
+    JbstExtensionService extensionService() {
+        return mock(JbstExtensionService.class);
     }
 
     @Bean
-    BaseUsersService baseUsersService() {
-        return mock(BaseUsersService.class);
+    JbstRateLimitsService rateLimitsService() {
+        return new JbstRateLimitsService();
     }
 
     @Bean
-    BaseUsersTokensService baseUsersTokensService() {
-        return mock(BaseUsersTokensService.class);
+    JbstUsersService usersService() {
+        return mock(JbstUsersService.class);
     }
 
     @Bean
-    BaseUsersEmailsService baseUsersEmailsService() {
-        return mock(BaseUsersEmailsService.class);
+    JbstUsersTokensService baseUsersTokensService() {
+        return mock(JbstUsersTokensService.class);
     }
 
     @Bean
-    BaseInvitationsService baseInvitationsService() {
-        return mock(BaseInvitationsService.class);
+    JbstUsersEmailsService usersEmailsService() {
+        return mock(JbstUsersEmailsService.class);
     }
 
     @Bean
-    BaseRegistrationService baseRegistrationService() {
-        return mock(BaseRegistrationService.class);
+    JbstInvitationsService baseInvitationsService() {
+        return mock(JbstInvitationsService.class);
     }
 
     @Bean
-    BaseSuperadminService baseSuperadminService() {
-        return mock(BaseSuperadminService.class);
+    JbstRegistrationService baseRegistrationService() {
+        return mock(JbstRegistrationService.class);
     }
 
     @Bean
-    TokensService tokenService() {
-        return mock(TokensService.class);
+    JbstSuperadminService baseSuperadminService() {
+        return mock(JbstSuperadminService.class);
     }
 
     @Bean
-    BaseUsersSessionsService baseUsersSessionsService() {
-        return mock(BaseUsersSessionsService.class);
+    JbstTokensService tokenService() {
+        return mock(JbstTokensService.class);
+    }
+
+    @Bean
+    JbstUsersSessionsService usersSessionsService() {
+        return mock(JbstUsersSessionsService.class);
     }
 
     // =================================================================================================================
@@ -237,14 +244,6 @@ public class TestConfigurationResources {
     @Bean
     JbstUsersTokensRepository usersTokensRepository() {
         return mock(JbstUsersTokensRepository.class);
-    }
-
-    // =================================================================================================================
-    // Services
-    // =================================================================================================================
-    @Bean
-    UsersEmailsService usersEmailsService() {
-        return mock(UsersEmailsService.class);
     }
 
     // =================================================================================================================

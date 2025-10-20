@@ -75,6 +75,14 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         }
     }
 
+    default void resetPassword(Username username, Password password) {
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            user.setPassword(password);
+            this.save(user);
+        }
+    }
+
     default UserId saveAs(JwtUser user) {
         var entity = this.save(new MongoDbUser(user));
         return entity.userId();

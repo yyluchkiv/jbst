@@ -2,6 +2,7 @@ package jbst.foundation.validators.abtracts;
 
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0Failure;
 import jbst.foundation.domain.events.EventRegistration1Failure;
 import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
@@ -28,6 +29,11 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     // Repositories
     protected final JbstInvitationsRepository invitationsRepository;
     protected final JbstUsersRepository usersRepository;
+
+    @Override
+    public void validateRegistrationRequestMagicLink(RequestUserRegistrationMagicLink request) {
+        // no required actions
+    }
 
     @Override
     public void validateRegistrationRequest0(RequestUserRegistration0 request) throws JbstRegistrationException {

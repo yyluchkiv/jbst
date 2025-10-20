@@ -28,13 +28,15 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.services.BaseUsersService;
-import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.services.TokensService;
+import jbst.foundation.services.JbstUsersService;
+import jbst.foundation.services.JbstUsersSessionsService;
+import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
@@ -79,9 +81,10 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final BaseUsersService baseUsersService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
-    private final TokensService tokensService;
+    private final JbstExtensionService extensionService;
+    private final JbstUsersService usersService;
+    private final JbstUsersSessionsService usersSessionsService;
+    private final JbstTokensService tokensService;
     // Repositories
     private final JbstUsersRepository usersRepository;
     private final JbstUsersTokensRepository usersTokensRepository;
@@ -106,8 +109,9 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         reset(
                 this.authenticationManager,
                 this.sessionRegistry,
-                this.baseUsersService,
-                this.baseUsersSessionsService,
+                this.extensionService,
+                this.usersService,
+                this.usersSessionsService,
                 this.tokensService,
                 this.usersRepository,
                 this.usersTokensRepository,
@@ -125,8 +129,9 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.authenticationManager,
                 this.sessionRegistry,
-                this.baseUsersService,
-                this.baseUsersSessionsService,
+                this.extensionService,
+                this.usersService,
+                this.usersSessionsService,
                 this.tokensService,
                 this.usersRepository,
                 this.usersTokensRepository,
@@ -178,7 +183,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.jwtUserDetailsService).loadUserByUsername(username.value());
         verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
+        verify(this.usersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
@@ -191,11 +196,11 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
         var userToken = JbstUserToken.hardcodedMagicLink();
-        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(userToken);
-
+        var magicLinkUserCredentials = new MagicLinkUserCredentials(userToken, request.zoneId());
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
-        var userCreationOption = UserCreationOption.MAGICLINK;
-        when(this.baseUsersService.safeSave(userCreationOption, userToken.email(), request.zoneId())).thenReturn(user);
+        var credentials = new UsernamePasswordCredentials(user.username(), user.password());
+        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
+        when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
 
         var accessToken = JwtAccessToken.random();
@@ -208,7 +213,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                        post("/authentication/login/magic-link")
+                        post("/authentication/login/magiclink")
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -222,17 +227,18 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
-        verify(this.baseUsersService).safeSave(userCreationOption, userToken.email(), request.zoneId());
+        verify(this.usersService).saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(this.jwtUserDetailsService).loadUserByUsername(user.username().value());
         verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
+        verify(this.usersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
+        verify(this.extensionService).authenticateAsMagicLink(currentClientUser);
     }
 
     @Test

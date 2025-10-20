@@ -61,7 +61,7 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
             return true;
         }
         // fallback
-        LOGGER.error(contactDevelopmentTeam("Unexpected AccountAccessMethod method or UsersEmailsConfigs configs"));
+        LOGGER.warn("Please double-check users-emails-configs to verify required {AccountAccessMethod + enable} configuration");
         return false;
     }
 

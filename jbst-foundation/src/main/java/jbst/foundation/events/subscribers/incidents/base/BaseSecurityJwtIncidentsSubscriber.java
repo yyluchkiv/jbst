@@ -3,10 +3,7 @@ package jbst.foundation.events.subscribers.incidents.base;
 import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
 import jbst.foundation.events.subscribers.incidents.SecurityJwtIncidentsSubscriber;
 import jbst.foundation.incidents.domain.authetication.*;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
@@ -53,6 +50,12 @@ public class BaseSecurityJwtIncidentsSubscriber extends AbstractEventSubscriber 
     @Override
     public void onEvent(IncidentAuthenticationLogoutFull incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] logout");
+        this.incidentClient.registerIncident(incident.getPlainIncident());
+    }
+
+    @Override
+    public void onEvent(IncidentRegistrationMagicLink incident) {
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register-magiclink");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 

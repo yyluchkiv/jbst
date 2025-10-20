@@ -80,6 +80,14 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         }
     }
 
+    default void resetPassword(Username username, Password password) {
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            user.setPassword(password);
+            this.save(user);
+        }
+    }
+
     default UserId saveAs(JwtUser user) {
         var entity = this.save(new PostgresDbUser(user));
         return entity.userId();

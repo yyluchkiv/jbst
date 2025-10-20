@@ -34,14 +34,14 @@ class JbstUserTokenTest {
         var futureTimestamp = currentTimestamp + 1000; // 1 second in the future
 
         return Stream.of(
-                Arguments.of(MAGIC_LINK, MAGIC_LINK, false, futureTimestamp, false),
-                Arguments.of(EMAIL_CONFIRMATION, MAGIC_LINK, false, futureTimestamp, true),
-                Arguments.of(MAGIC_LINK, MAGIC_LINK, true, futureTimestamp, true),
-                Arguments.of(MAGIC_LINK, MAGIC_LINK, false, pastTimestamp, true),
-                Arguments.of(PASSWORD_RESET, MAGIC_LINK, true, futureTimestamp, true),
-                Arguments.of(EMAIL_CONFIRMATION, MAGIC_LINK, false, pastTimestamp, true),
-                Arguments.of(MAGIC_LINK, MAGIC_LINK, true, pastTimestamp, true),
-                Arguments.of(PASSWORD_RESET, MAGIC_LINK, true, pastTimestamp, true),
+                Arguments.of(MAGICLINK, MAGICLINK, false, futureTimestamp, false),
+                Arguments.of(EMAIL_CONFIRMATION, MAGICLINK, false, futureTimestamp, true),
+                Arguments.of(MAGICLINK, MAGICLINK, true, futureTimestamp, true),
+                Arguments.of(MAGICLINK, MAGICLINK, false, pastTimestamp, true),
+                Arguments.of(PASSWORD_RESET, MAGICLINK, true, futureTimestamp, true),
+                Arguments.of(EMAIL_CONFIRMATION, MAGICLINK, false, pastTimestamp, true),
+                Arguments.of(MAGICLINK, MAGICLINK, true, pastTimestamp, true),
+                Arguments.of(PASSWORD_RESET, MAGICLINK, true, pastTimestamp, true),
                 Arguments.of(PASSWORD_RESET, EMAIL_CONFIRMATION, false, futureTimestamp, true),
                 Arguments.of(EMAIL_CONFIRMATION, EMAIL_CONFIRMATION, false, futureTimestamp, false),
                 Arguments.of(PASSWORD_RESET, PASSWORD_RESET, false, futureTimestamp, false)
@@ -56,7 +56,7 @@ class JbstUserTokenTest {
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "test-token-value",
-                MAGIC_LINK,
+                MAGICLINK,
                 expiryTimestamp,
                 false
         );

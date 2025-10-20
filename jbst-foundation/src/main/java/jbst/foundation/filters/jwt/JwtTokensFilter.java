@@ -8,7 +8,7 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
-import jbst.foundation.services.TokensService;
+import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final TokensService tokensService;
+    private final JbstTokensService tokensService;
     // Tokens
     private final TokensProvider tokensProvider;
     // Extension

@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.validators.BaseUsersSessionsRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
     // Validators
@@ -51,7 +51,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensProvider,
                 this.baseUsersSessionsRequestsValidator
         );
@@ -61,7 +61,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
-                this.baseUsersSessionsService,
+                this.usersSessionsService,
                 this.tokensProvider,
                 this.baseUsersSessionsRequestsValidator
         );
@@ -121,7 +121,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentClientUser();
         verify(this.currentSessionAssistant).getCurrentUserSession(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).renewUserRequestMetadata(eq(session), any(HttpServletRequest.class));
+        verify(this.usersSessionsService).renewUserRequestMetadata(eq(session), any(HttpServletRequest.class));
     }
 
     @Test
@@ -137,8 +137,8 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
-        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(UserSessionId.hardcoded());
+        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
+        verify(this.usersSessionsService).enableUserRequestMetadataRenewManually(UserSessionId.hardcoded());
     }
 
     @Test
@@ -152,8 +152,8 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
-        verify(this.baseUsersSessionsService).deleteById(UserSessionId.hardcoded());
+        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
+        verify(this.usersSessionsService).deleteById(UserSessionId.hardcoded());
     }
 
     @Test
@@ -169,6 +169,6 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(Username.hardcoded(), RequestAccessToken.hardcoded());
+        verify(this.usersSessionsService).deleteAllExceptCurrent(Username.hardcoded(), RequestAccessToken.hardcoded());
     }
 }

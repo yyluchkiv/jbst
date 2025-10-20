@@ -108,6 +108,18 @@ class BaseSecurityJwtEventsPublisherTest {
     }
 
     @Test
+    void publishRegistrationMagicLinkTest() {
+        // Arrange
+        var event = entity(EventRegistrationMagicLink.class);
+
+        // Act
+        this.componentUnderTest.publishRegistrationMagicLink(event);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(event);
+    }
+
+    @Test
     void publishRegistration0Test() {
         // Arrange
         var event = entity(EventRegistration0.class);

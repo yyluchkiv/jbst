@@ -37,6 +37,7 @@ public class IncidentsConfigs extends AbstractPropertyConfigs {
                                 Map.entry(AUTHENTICATION_LOGOUT_MIN, false),
                                 Map.entry(SESSION_REFRESHED, true),
                                 Map.entry(SESSION_EXPIRED, false),
+                                Map.entry(REGISTER_MAGICLINK, true),
                                 Map.entry(REGISTER0, true),
                                 Map.entry(REGISTER0_FAILURE, true),
                                 Map.entry(REGISTER1, true),

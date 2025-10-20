@@ -174,18 +174,19 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 .authorizeHttpRequests(authorizeHttpRequests -> {
                     authorizeHttpRequests
                             .requestMatchers(POST, basePathPrefix + "/authentication/login/standard").permitAll()
-                            .requestMatchers(POST, basePathPrefix + "/authentication/login/magic-link").permitAll()
+                            .requestMatchers(POST, basePathPrefix + "/authentication/login/magiclink").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                             .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
-                            .requestMatchers(POST, basePathPrefix + "/registration/register0").anonymous()
-                            .requestMatchers(POST, basePathPrefix + "/registration/register1").anonymous()
+                            .requestMatchers(POST, basePathPrefix + "/registration/register-magiclink").denyAll()
+                            .requestMatchers(POST, basePathPrefix + "/registration/register0").denyAll()
+                            .requestMatchers(POST, basePathPrefix + "/registration/register1").denyAll()
                             .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated()
-                            .requestMatchers(GET, basePathPrefix + "/tokens/magic-link").permitAll()
-                            .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").permitAll()
-                            .requestMatchers(basePathPrefix + "/tokens/password/reset").anonymous();
+                            .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").denyAll()
+                            .requestMatchers(POST, basePathPrefix + "/tokens/password/reset").denyAll()
+                            .requestMatchers(PATCH, basePathPrefix + "/tokens/password/reset").denyAll();
 
                     if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationsOnInit().isEnabled()) {
                         authorizeHttpRequests

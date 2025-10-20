@@ -12,6 +12,7 @@ public enum JbstIamIncidentType {
     AUTHENTICATION_LOGOUT_MIN("Authentication Logout Min"),
     SESSION_REFRESHED("Session Refreshed"),
     SESSION_EXPIRED("Session Expired"),
+    REGISTER_MAGICLINK("Register MagicLink"),
     REGISTER0("Register0"),
     REGISTER0_FAILURE("Register0 Failure"),
     REGISTER1("Register1"),

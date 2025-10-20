@@ -47,12 +47,12 @@ class JbstHttpUtilsTest {
 
     private static Stream<Arguments> authenticationAuthenticateMagicLinkEndpointCases() {
         return Stream.of(
-                Arguments.of("GET", "/api/jbst/security/authentication/login/magic-link", false),
-                Arguments.of("PUT", "/api/jbst/security/authentication/login/magic-link", false),
-                Arguments.of("POST", "/api/jbst/security/authentication/login/magic-link", true),
-                Arguments.of("GET", "/api/jbst/security/authentication/login/magic-link1", false),
-                Arguments.of("PUT", "/api/jbst/security/authentication/login/magic-link1", false),
-                Arguments.of("POST", "/api/jbst/security/authentication/login/magic-link1", false)
+                Arguments.of("GET", "/api/jbst/security/authentication/login/magiclink", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/magiclink", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/magiclink", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/login/magiclink1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login/magiclink1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login/magiclink1", false)
         );
     }
 

@@ -16,7 +16,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogo
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.services.BaseUsersSessionsService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     protected final SecurityJwtEventsPublisher securityJwtEventsPublisher;
     protected final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
-    protected final BaseUsersSessionsService baseUsersSessionsService;
+    protected final JbstUsersSessionsService usersSessionsService;
     // Repositories
     protected final JbstUsersSessionsRepository usersSessionsRepository;
 
@@ -105,7 +105,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
 
     @Override
     public void cleanByExpiredRefreshTokens(Set<Username> usernames) {
-        var sessionsValidatedTuple2 = this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames);
+        var sessionsValidatedTuple2 = this.usersSessionsService.getExpiredRefreshTokensSessions(usernames);
 
         sessionsValidatedTuple2.expiredSessions().forEach(tuple -> {
             var username = tuple.a();

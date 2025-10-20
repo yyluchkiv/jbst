@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.services.TokensService;
+import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -58,8 +58,8 @@ class JbstSecurityHandshakeHandlerTest {
     static class ContextConfiguration {
 
         @Bean
-        TokensService tokenService() {
-            return mock(TokensService.class);
+        JbstTokensService tokenService() {
+            return mock(JbstTokensService.class);
         }
 
         @Bean
@@ -77,7 +77,7 @@ class JbstSecurityHandshakeHandlerTest {
     }
 
     // Services
-    private final TokensService tokensService;
+    private final JbstTokensService tokensService;
     // Tokens
     private final TokensProvider tokensProvider;
 

@@ -6,7 +6,7 @@ import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.services.BaseUsersService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class JbstUsersResourceTest extends TestRunnerResources1 {
 
     // Services
-    private final BaseUsersService baseUsersService;
+    private final JbstUsersService usersService;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Validators
@@ -36,7 +36,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
-                this.baseUsersService,
+                this.usersService,
                 this.currentSessionAssistant,
                 this.baseUsersValidator
         );
@@ -45,7 +45,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.baseUsersService,
+                this.usersService,
                 this.currentSessionAssistant,
                 this.baseUsersValidator
         );
@@ -69,7 +69,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.baseUsersValidator).validateUserUpdateRequest1(user.username(), request);
-        verify(this.baseUsersService).updateUser1(user, request);
+        verify(this.usersService).updateUser1(user, request);
     }
 
     @Test
@@ -89,7 +89,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersService).updateUser2(user, request);
+        verify(this.usersService).updateUser2(user, request);
     }
 
     @Test
@@ -110,7 +110,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.baseUsersValidator).validateUserChangePasswordRequestBasic(request);
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersService).changePasswordRequired(user, request);
+        verify(this.usersService).changePasswordRequired(user, request);
     }
 
     @Test
@@ -131,6 +131,6 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.baseUsersValidator).validateUserChangePasswordRequestBasic(request);
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersService).changePassword1(user, request);
+        verify(this.usersService).changePassword1(user, request);
     }
 }

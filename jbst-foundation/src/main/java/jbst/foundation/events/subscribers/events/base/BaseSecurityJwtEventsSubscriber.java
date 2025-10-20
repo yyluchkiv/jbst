@@ -12,9 +12,9 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersSessionsService;
-import jbst.foundation.services.BaseUsersTokensService;
-import jbst.foundation.services.UsersEmailsService;
+import jbst.foundation.services.JbstUsersSessionsService;
+import jbst.foundation.services.JbstUsersTokensService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +31,9 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     // Publishers
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
-    private final BaseUsersTokensService baseUsersTokensService;
-    private final UsersEmailsService usersEmailsService;
-    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final JbstUsersTokensService usersTokensService;
+    private final JbstUsersEmailsService usersEmailsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;
     // Incidents
@@ -41,7 +41,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
 
     @Override
     public void onAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event) {
-        LOGGER.debug(USER_ACTION, event.token(), "[sub, events] login magic-link");
+        LOGGER.debug(USER_ACTION, event.token(), "[sub, events] login magiclink");
     }
 
     @Override
@@ -86,10 +86,15 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     }
 
     @Override
+    public void onRegistrationMagicLink(EventRegistrationMagicLink event) {
+        LOGGER.debug(USER_ACTION, event.request().email(), "[sub, events] register magiclink");
+    }
+
+    @Override
     public void onRegistration0(EventRegistration0 event) {
         try {
             LOGGER.debug(USER_ACTION, event.requestUserRegistration0().username(), "[sub, events] register0");
-            var userToken = this.baseUsersTokensService.saveAs(event.requestUserRegistration0().asRequestUserToken());
+            var userToken = this.usersTokensService.saveAs(event.requestUserRegistration0().asRequestUserToken());
             this.usersEmailsService.executeEmailConfirmation(userToken);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
@@ -125,7 +130,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event) {
         try {
             LOGGER.debug(USER_ACTION, event.username(), "[sub, events] session user request metadata add");
-            var session = this.baseUsersSessionsService.saveUserRequestMetadata(event);
+            var session = this.usersSessionsService.saveUserRequestMetadata(event);
             var metadata = session.metadata();
             this.processSessionUserRequestMetadataAddEmails(event, metadata);
             this.processSessionUserRequestMetadataAddIncidents(event, metadata);
@@ -138,7 +143,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event) {
         try {
             LOGGER.debug(USER_ACTION, event.username(), "[sub, events] session user request metadata renew, sessionId: " + event.session().id());
-            this.baseUsersSessionsService.saveUserRequestMetadata(event);
+            this.usersSessionsService.saveUserRequestMetadata(event);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

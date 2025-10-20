@@ -10,7 +10,7 @@ import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
-import jbst.foundation.services.mongodb.MongoBaseUsersSessionsService;
+import jbst.foundation.services.mongodb.MongoJbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.sessions.MongoSessionRegistry;
 import jbst.foundation.settings.MongoJbstSettingsService;
@@ -67,7 +67,7 @@ public class JbstConfigurationMongo {
     JbstSessionRegistry mongoSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
-            MongoBaseUsersSessionsService mongoBaseUsersSessionsService
+            MongoJbstUsersSessionsService mongoBaseUsersSessionsService
     ) {
         return new MongoSessionRegistry(
                 securityJwtEventsPublisher,

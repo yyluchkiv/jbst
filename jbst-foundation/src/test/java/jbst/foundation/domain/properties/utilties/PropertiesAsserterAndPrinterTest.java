@@ -168,6 +168,7 @@ class PropertiesAsserterAndPrinterTest {
                         entry(AUTHENTICATION_LOGOUT_MIN, randomBoolean()),
                         entry(SESSION_REFRESHED, randomBoolean()),
                         entry(SESSION_EXPIRED, randomBoolean()),
+                        entry(REGISTER_MAGICLINK, randomBoolean()),
                         entry(REGISTER0, randomBoolean()),
                         entry(REGISTER0_FAILURE, randomBoolean()),
                         entry(REGISTER1, randomBoolean()),
@@ -205,6 +206,7 @@ class PropertiesAsserterAndPrinterTest {
                     entry(AUTHENTICATION_LOGOUT, randomBoolean()),
                     entry(AUTHENTICATION_LOGOUT_MIN, randomBoolean()),
                     entry(SESSION_EXPIRED, randomBoolean()),
+                    entry(REGISTER_MAGICLINK, randomBoolean()),
                     entry(REGISTER0, randomBoolean()),
                     entry(REGISTER0_FAILURE, randomBoolean()),
                     entry(REGISTER1, randomBoolean()),
@@ -230,7 +232,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property \"\u001B[31msecurityJwtConfigs.incidentsConfigs.typesConfigs\u001B[0m\" is invalid. Options: \"[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired, Session Refreshed]\". Required: \"[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired]\". Disjunction: \"[\u001B[31mSession Refreshed\u001B[0m]\"");
+        assertThat(throwable.getMessage()).isEqualTo("Property \"\u001B[31msecurityJwtConfigs.incidentsConfigs.typesConfigs\u001B[0m\" is invalid. Options: \"[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired, Session Refreshed]\". Required: \"[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired]\". Disjunction: \"[\u001B[31mSession Refreshed\u001B[0m]\"");
     }
 
     @Test
@@ -244,6 +246,7 @@ class PropertiesAsserterAndPrinterTest {
                     entry(AUTHENTICATION_LOGOUT_MIN, randomBoolean()),
                     entry(SESSION_REFRESHED, randomBoolean()),
                     entry(SESSION_EXPIRED, randomBoolean()),
+                    entry(REGISTER_MAGICLINK, randomBoolean()),
                     entry(REGISTER0, randomBoolean()),
                     entry(REGISTER0_FAILURE, randomBoolean()),
                     entry(REGISTER1, randomBoolean()),

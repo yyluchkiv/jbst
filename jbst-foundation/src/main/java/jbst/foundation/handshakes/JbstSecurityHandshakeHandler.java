@@ -1,7 +1,7 @@
 package jbst.foundation.handshakes;
 
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.foundation.services.TokensService;
+import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class JbstSecurityHandshakeHandler extends DefaultHandshakeHandler {
 
     // Services
-    private final TokensService tokensService;
+    private final JbstTokensService tokensService;
     // Tokens
     private final TokensProvider tokensProvider;
 

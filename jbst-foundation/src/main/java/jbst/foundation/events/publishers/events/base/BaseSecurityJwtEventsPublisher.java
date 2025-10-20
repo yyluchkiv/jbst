@@ -22,7 +22,7 @@ public class BaseSecurityJwtEventsPublisher extends AbstractEventPublisher imple
 
     @Override
     public void publishAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event) {
-        LOGGER.debug(USER_ACTION, event.token(), "[pub, events] login magic-link failure");
+        LOGGER.debug(USER_ACTION, event.token(), "[pub, events] login magiclink failure");
         this.applicationEventPublisher.publishEvent(event);
     }
 
@@ -41,6 +41,12 @@ public class BaseSecurityJwtEventsPublisher extends AbstractEventPublisher imple
     @Override
     public void publishAuthenticationLogout(EventAuthenticationLogout event) {
         LOGGER.debug(USER_ACTION, event.username(), "[pub, events] logout");
+        this.applicationEventPublisher.publishEvent(event);
+    }
+
+    @Override
+    public void publishRegistrationMagicLink(EventRegistrationMagicLink event) {
+        LOGGER.debug(USER_ACTION, event.request().email(), "[pub, events] register magiclink");
         this.applicationEventPublisher.publishEvent(event);
     }
 

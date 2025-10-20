@@ -12,7 +12,8 @@ import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.foundation.services.AuthenticationService;
+import jbst.foundation.extension.JbstExtensionService;
+import jbst.foundation.services.base.JbstAuthenticationService;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ import org.springframework.web.bind.annotation.*;
 public class JbstAuthenticationResource {
 
     // Services
-    private final AuthenticationService authenticationService;
+    private final JbstAuthenticationService authenticationService;
+    private final JbstExtensionService extensionService;
     // Validators
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
 
@@ -44,7 +46,7 @@ public class JbstAuthenticationResource {
         return this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
     }
 
-    @PostMapping("/login/magic-link")
+    @PostMapping("/login/magiclink")
     @ResponseStatus(HttpStatus.OK)
     public CurrentClientUser loginMagicLink(
             @RequestBody @Valid RequestMagicLinkToken request,
@@ -52,8 +54,10 @@ public class JbstAuthenticationResource {
             HttpServletResponse httpResponse
     ) throws JbstLoginException {
         request = request.createReworkedUkraineZoneId();
-        var userToken = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
-        return this.authenticationService.asMagicLink(userToken, request, httpRequest, httpResponse);
+        var credentials = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
+        var user = this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
+        this.extensionService.authenticateAsMagicLink(user);
+        return user;
     }
 
     @PostMapping("/logout")

@@ -4,10 +4,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.pubsub.AbstractEventPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.*;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +63,14 @@ public class BaseSecurityJwtIncidentsPublisher extends AbstractEventPublisher im
     public void publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull incident) {
         if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGOUT)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] logout");
+            this.applicationEventPublisher.publishEvent(incident);
+        }
+    }
+
+    @Override
+    public void publishRegistrationMagicLink(IncidentRegistrationMagicLink incident) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER_MAGICLINK)) {
+            LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] register magiclink");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }

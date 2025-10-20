@@ -1,10 +1,7 @@
 package jbst.foundation.events.subscribers.incidents;
 
 import jbst.foundation.incidents.domain.authetication.*;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import org.springframework.context.event.EventListener;
@@ -20,6 +17,8 @@ public interface SecurityJwtIncidentsSubscriber {
     void onEvent(IncidentAuthenticationLogoutMin incident);
     @EventListener
     void onEvent(IncidentAuthenticationLogoutFull incident);
+    @EventListener
+    void onEvent(IncidentRegistrationMagicLink incident);
     @EventListener
     void onEvent(IncidentRegistration0 incident);
     @EventListener

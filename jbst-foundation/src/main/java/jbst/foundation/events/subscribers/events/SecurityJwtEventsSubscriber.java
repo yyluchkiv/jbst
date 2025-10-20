@@ -13,6 +13,8 @@ public interface SecurityJwtEventsSubscriber {
     @EventListener
     void onAuthenticationLogout(EventAuthenticationLogout event);
     @EventListener
+    void onRegistrationMagicLink(EventRegistrationMagicLink event);
+    @EventListener
     void onRegistration0(EventRegistration0 event);
     @EventListener
     void onRegistration0Failure(EventRegistration0Failure event);
