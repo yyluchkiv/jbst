@@ -77,7 +77,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         verify(this.baseRegistrationRequestsValidator).validateRegistrationRequestMagicLink(request);
         verify(this.baseRegistrationService).registerMagicLink(request);
         verify(this.securityJwtEventsPublisher).publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
-        verify(this.securityJwtIncidentsPublisher).publishRegistrationMagicLink(new IncidentRegistrationMagicLink(request.email()));
+        verify(this.securityJwtIncidentsPublisher).publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
     }
 
     @Test

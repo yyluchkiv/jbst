@@ -7,10 +7,7 @@ import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.events.publishers.incidents.impl.BaseSecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.*;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import lombok.RequiredArgsConstructor;
@@ -287,6 +284,24 @@ class BaseSecurityJwtIncidentsPublisherTest {
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = { true, false })
+    void publishRegistrationMagicLinkTest(boolean enabled) {
+        // Arrange
+        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER_MAGICLINK, enabled);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incident = entity(IncidentRegistrationMagicLink.class);
+
+        // Act
+        this.componentUnderTest.publishRegistrationMagicLink(incident);
+
+        // Assert
+        verify(this.jbstProperties).getSecurityJwtConfigs();
+        if (enabled) {
+            verify(this.applicationEventPublisher).publishEvent(incident);
+        }
     }
 
     @ParameterizedTest

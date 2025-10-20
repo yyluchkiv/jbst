@@ -70,7 +70,7 @@ public class BaseSecurityJwtIncidentsPublisher extends AbstractEventPublisher im
     @Override
     public void publishRegistrationMagicLink(IncidentRegistrationMagicLink incident) {
         if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER_MAGICLINK)) {
-            LOGGER.debug(USER_ACTION, incident.email(), "[pub, incidents] register magiclink");
+            LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] register magiclink");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }

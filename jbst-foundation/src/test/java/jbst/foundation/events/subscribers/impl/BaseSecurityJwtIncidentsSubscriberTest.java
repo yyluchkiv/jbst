@@ -3,10 +3,7 @@ package jbst.foundation.events.subscribers.impl;
 import jbst.foundation.events.subscribers.incidents.SecurityJwtIncidentsSubscriber;
 import jbst.foundation.events.subscribers.incidents.base.BaseSecurityJwtIncidentsSubscriber;
 import jbst.foundation.incidents.domain.authetication.*;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
@@ -141,6 +138,18 @@ class BaseSecurityJwtIncidentsSubscriberTest {
     void onEventSessionExpiredIncidentTest() {
         // Arrange
         var incident = entity(IncidentSessionExpired.class);
+
+        // Act
+        this.componentUnderTest.onEvent(incident);
+
+        // Assert
+        verify(this.incidentClient).registerIncident(incident.getPlainIncident());
+    }
+
+    @Test
+    void onEventRegisterMagicLinkIncidentTest() {
+        // Arrange
+        var incident = entity(IncidentRegistrationMagicLink.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);

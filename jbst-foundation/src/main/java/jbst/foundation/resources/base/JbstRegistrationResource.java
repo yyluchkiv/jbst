@@ -51,7 +51,7 @@ public class JbstRegistrationResource {
         this.baseRegistrationRequestsValidator.validateRegistrationRequestMagicLink(request);
         this.baseRegistrationService.registerMagicLink(request);
         this.securityJwtEventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
-        this.securityJwtIncidentsPublisher.publishRegistrationMagicLink(new IncidentRegistrationMagicLink(request.email()));
+        this.securityJwtIncidentsPublisher.publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
     }
 
     @PostMapping("/register0")
