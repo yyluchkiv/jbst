@@ -31,11 +31,11 @@ import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.services.JbstSynchronousExtensionService;
 import jbst.foundation.services.base.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -81,7 +81,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final JbstSynchronousExtensionService synchronousExtensionService;
+    private final JbstExtensionService extensionService;
     private final JbstUsersService usersService;
     private final JbstUsersSessionsService usersSessionsService;
     private final TokensService tokensService;
@@ -109,7 +109,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         reset(
                 this.authenticationManager,
                 this.sessionRegistry,
-                this.synchronousExtensionService,
+                this.extensionService,
                 this.usersService,
                 this.usersSessionsService,
                 this.tokensService,
@@ -129,7 +129,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.authenticationManager,
                 this.sessionRegistry,
-                this.synchronousExtensionService,
+                this.extensionService,
                 this.usersService,
                 this.usersSessionsService,
                 this.tokensService,
@@ -238,7 +238,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
-        verify(this.synchronousExtensionService).authenticateAsMagicLink(currentClientUser);
+        verify(this.extensionService).authenticateAsMagicLink(currentClientUser);
     }
 
     @Test

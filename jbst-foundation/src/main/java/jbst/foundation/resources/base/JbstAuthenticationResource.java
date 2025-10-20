@@ -12,8 +12,8 @@ import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.services.base.AuthenticationService;
-import jbst.foundation.services.JbstSynchronousExtensionService;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class JbstAuthenticationResource {
 
     // Services
     private final AuthenticationService authenticationService;
-    private final JbstSynchronousExtensionService synchronousExtensionService;
+    private final JbstExtensionService extensionService;
     // Validators
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
 
@@ -56,7 +56,7 @@ public class JbstAuthenticationResource {
         request = request.createReworkedUkraineZoneId();
         var credentials = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
         var user = this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
-        this.synchronousExtensionService.authenticateAsMagicLink(user);
+        this.extensionService.authenticateAsMagicLink(user);
         return user;
     }
 

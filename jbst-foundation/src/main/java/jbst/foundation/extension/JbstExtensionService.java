@@ -1,7 +1,7 @@
-package jbst.foundation.services;
+package jbst.foundation.extension;
 
 import jbst.foundation.domain.security.CurrentClientUser;
 
-public interface JbstSynchronousExtensionService {
+public interface JbstExtensionService {
     void authenticateAsMagicLink(CurrentClientUser user);
 }

@@ -7,6 +7,7 @@ import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
@@ -90,8 +91,8 @@ public class TestConfigurationResources {
     // Services
     // =================================================================================================================
     @Bean
-    JbstSynchronousExtensionService synchronousExtensionService() {
-        return mock(JbstSynchronousExtensionService.class);
+    JbstExtensionService extensionService() {
+        return mock(JbstExtensionService.class);
     }
 
     @Bean
