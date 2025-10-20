@@ -11,7 +11,6 @@ import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.services.*;
-import jbst.foundation.services.base.AuthenticationServiceImpl;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -55,7 +54,7 @@ public class TestConfigurationResources {
     // =================================================================================================================
     @Bean
     AuthenticationService authenticationService() {
-        return new AuthenticationServiceImpl(
+        return new AuthenticationService(
                 this.authenticationManager(),
                 this.currentSessionAssistant(),
                 this.jwtUserDetailsService(),

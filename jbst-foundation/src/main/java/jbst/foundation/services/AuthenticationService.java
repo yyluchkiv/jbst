@@ -2,17 +2,171 @@ package jbst.foundation.services;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
+import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
+import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
+import jbst.foundation.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
+import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
+import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
+import jbst.foundation.sessions.JbstSessionRegistry;
+import jbst.foundation.tokens.facade.TokensProvider;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
-public interface AuthenticationService {
-    CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException;
-    CurrentClientUser asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException;
-    void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException;
-    ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException;
+import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.getUserProcess;
+import static jbst.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class AuthenticationService {
+
+    // Authentication
+    private final AuthenticationManager authenticationManager;
+    // Assistants
+    private final CurrentSessionAssistant currentSessionAssistant;
+    private final JbstJwtUserDetailsService jwtUserDetailsService;
+    // Sessions
+    private final JbstSessionRegistry sessionRegistry;
+    // Services
+    private final BaseUsersService baseUsersService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final TokensService tokensService;
+    // Repositories
+    private final JbstUsersTokensRepository usersTokensRepository;
+    // Tokens
+    private final TokensProvider tokensProvider;
+    // Utilities
+    private final JbstSecurityUtils securityUtils;
+    // Publishers
+    private final SecurityJwtEventsPublisher securityJwtPublisher;
+
+    public final CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+        try {
+            return this.asAuthentication(
+                    UserCreationOption.STANDARD,
+                    credentials,
+                    httpRequest,
+                    httpResponse
+            );
+        } catch (BadCredentialsException ex) {
+            this.securityJwtPublisher.publishAuthenticationLoginFailure(
+                    new EventAuthenticationLoginFailure(
+                            credentials.username(),
+                            credentials.password(),
+                            getClientIpAddr(httpRequest),
+                            new UserAgentHeader(httpRequest)
+                    )
+            );
+            throw new JbstLoginException(ex.getMessage());
+        }
+    }
+
+    public final CurrentClientUser asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+        try {
+            var credentials = this.baseUsersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
+            this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
+            return this.asAuthentication(
+                    UserCreationOption.MAGICLINK,
+                    credentials,
+                    httpRequest,
+                    httpResponse
+            );
+        } catch (BadCredentialsException ex) {
+            this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
+                    new EventAuthenticationMagicLinkFailure(
+                            magicLinkUserCredentials.userToken(),
+                            getClientIpAddr(httpRequest),
+                            new UserAgentHeader(httpRequest)
+                    )
+            );
+            throw new JbstLoginException(ex.getMessage());
+        }
+    }
+
+    public final void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
+        if (nonNull(cookie.value())) {
+            var accessToken = cookie.getJwtAccessToken();
+            var validatedClaims = this.securityUtils.validate(accessToken);
+            if (validatedClaims.valid()) {
+                var username = validatedClaims.username();
+                this.sessionRegistry.logout(username, accessToken);
+                this.tokensProvider.clearTokens(httpResponse);
+                SecurityContextHolder.clearContext();
+                var session = httpRequest.getSession(false);
+                if (nonNull(session)) {
+                    session.invalidate();
+                }
+                LOGGER.debug(getUserProcess(username, "Logout Attempt", COMPLETED));
+            }
+        }
+    }
+
+    public final ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException {
+        try {
+            return this.tokensService.refreshSessionOrThrow(httpRequest, httpResponse);
+        } catch (
+                JbstRefreshTokenNotFoundException |
+                JbstRefreshTokenInvalidException |
+                JbstRefreshTokenExpiredException |
+                JbstRefreshTokenDbNotFoundException ex
+        ) {
+            this.tokensProvider.clearTokens(httpResponse);
+            throw new JbstTokenUnauthorizedException(ex.getMessage());
+        }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    public CurrentClientUser asAuthentication(
+            UserCreationOption userCreationOption,
+            UsernamePasswordCredentials credentials,
+            HttpServletRequest httpRequest,
+            HttpServletResponse httpResponse
+    ) {
+        var username = credentials.username();
+        LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), STARTED));
+
+        var authentication = this.authenticationManager.authenticate(credentials.getAuthenticationToken());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
+        if (!user.creationOption().is(userCreationOption)) {
+            throw new BadCredentialsException("Unexpected user creation option: %s".formatted(user.creationOption().name()));
+        }
+
+        var accessToken = this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var refreshToken = this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+
+        this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
+
+        this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
+        this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
+
+        LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), COMPLETED));
+
+        this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
+
+        return this.currentSessionAssistant.getCurrentClientUser();
+    }
 }
