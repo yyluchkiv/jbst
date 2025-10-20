@@ -2,14 +2,14 @@ package jbst.foundation.services.emails;
 
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.emails.EmailPlainAttachment;
-import jbst.foundation.services.EmailService;
+import jbst.foundation.services.JbstEmailService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Set;
 
 @Slf4j
-public class EmailServiceSlf4j implements EmailService {
+public class JbstEmailServiceSlf4J implements JbstEmailService {
 
     @Override
     public void sendPlain(String[] to, String subject, String message) {

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 @Async
-public interface EmailService {
+public interface JbstEmailService {
     void sendPlain(String[] to, String subject, String message);
     void sendPlain(List<String> to, String subject, String message);
     void sendPlain(Set<String> to, String subject, String message);

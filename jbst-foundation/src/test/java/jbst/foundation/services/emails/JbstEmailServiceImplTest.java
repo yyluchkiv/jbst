@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.emails.EmailPlainAttachment;
-import jbst.foundation.services.EmailService;
+import jbst.foundation.services.JbstEmailService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class EmailServiceImplTest {
+class JbstEmailServiceImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -75,8 +75,8 @@ class EmailServiceImplTest {
         }
 
         @Bean
-        EmailService emailService() {
-            return new EmailServiceImpl(
+        JbstEmailService emailService() {
+            return new JbstEmailServiceImpl(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
                     this.jbstProperties()
@@ -89,7 +89,7 @@ class EmailServiceImplTest {
     // Properties
     private final JbstProperties jbstProperties;
 
-    private final EmailService componentUnderTest;
+    private final JbstEmailService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

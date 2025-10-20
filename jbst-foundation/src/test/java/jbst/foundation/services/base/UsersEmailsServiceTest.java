@@ -8,7 +8,7 @@ import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.emails.EmailHTML;
-import jbst.foundation.services.EmailService;
+import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -56,8 +56,8 @@ class UsersEmailsServiceTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        EmailService emailService() {
-            return mock(EmailService.class);
+        JbstEmailService emailService() {
+            return mock(JbstEmailService.class);
         }
 
         @Bean
@@ -81,7 +81,7 @@ class UsersEmailsServiceTest {
     }
 
     // Services
-    private final EmailService emailService;
+    private final JbstEmailService emailService;
     // Properties
     private final JbstProperties jbstProperties;
 

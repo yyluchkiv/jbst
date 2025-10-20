@@ -5,7 +5,7 @@ import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.emails.EmailHTML;
-import jbst.foundation.services.EmailService;
+import jbst.foundation.services.JbstEmailService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class UsersEmailsService {
     // Resources
     private final ResourceLoader resourceLoader;
     // Services
-    private final EmailService emailService;
+    private final JbstEmailService emailService;
     // Properties
     private final JbstProperties jbstProperties;
     private final ServerProperties serverProperties;

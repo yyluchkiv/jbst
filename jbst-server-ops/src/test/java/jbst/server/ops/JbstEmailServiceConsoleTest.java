@@ -7,8 +7,8 @@ import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.properties.configs.UtilsConfigs;
 import jbst.foundation.domain.emails.EmailHTML;
-import jbst.foundation.services.EmailService;
-import jbst.foundation.services.emails.EmailServiceImpl;
+import jbst.foundation.services.JbstEmailService;
+import jbst.foundation.services.emails.JbstEmailServiceImpl;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ import java.util.Set;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class EmailServiceConsoleTest {
+class JbstEmailServiceConsoleTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -98,8 +98,8 @@ class EmailServiceConsoleTest {
         }
 
         @Bean
-        EmailService emailService() {
-            return new EmailServiceImpl(
+        JbstEmailService emailService() {
+            return new JbstEmailServiceImpl(
                     this.javaMailSender(),
                     this.springTemplateEngine(),
                     this.jbstProperties()
@@ -117,7 +117,7 @@ class EmailServiceConsoleTest {
 
     private final JbstGeoUtils geoUtils;
 
-    private final EmailService componentUnderTest;
+    private final JbstEmailService componentUnderTest;
 
     @Test
     @Disabled

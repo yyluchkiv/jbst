@@ -8,7 +8,7 @@ import jakarta.mail.util.ByteArrayDataSource;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.emails.EmailPlainAttachment;
-import jbst.foundation.services.EmailService;
+import jbst.foundation.services.JbstEmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,7 +26,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class EmailServiceImpl implements EmailService {
+public class JbstEmailServiceImpl implements JbstEmailService {
 
     // Services
     private final JavaMailSender javaMailSender;

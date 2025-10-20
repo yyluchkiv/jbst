@@ -7,7 +7,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.emails.EmailPlainAttachment;
-import jbst.foundation.services.EmailService;
+import jbst.foundation.services.JbstEmailService;
 import jbst.server.ops.domain.incidents.OpsConcurrentIncidentStats;
 import jbst.server.ops.domain.incidents.OpsIncidentEnv;
 import jbst.server.ops.domain.incidents.OpsIncidentHTML;
@@ -42,7 +42,7 @@ public class IncidentsService {
     // Services
     private final NotificationsService notificationsService;
     private final MonitoringService monitoringService;
-    private final EmailService emailService;
+    private final JbstEmailService emailService;
     // Properties
     private final ServerProperties serverProperties;
 
