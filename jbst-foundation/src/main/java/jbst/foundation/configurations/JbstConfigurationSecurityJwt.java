@@ -174,7 +174,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 .authorizeHttpRequests(authorizeHttpRequests -> {
                     authorizeHttpRequests
                             .requestMatchers(POST, basePathPrefix + "/authentication/login/standard").permitAll()
-                            .requestMatchers(POST, basePathPrefix + "/authentication/login/magic-link").permitAll()
+                            .requestMatchers(POST, basePathPrefix + "/authentication/login/magiclink").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                             .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()

@@ -42,7 +42,7 @@ public class JbstHttpUtils {
     }
 
     public final boolean isAuthenticationAuthenticateMagicLinkEndpoint(HttpServletRequest request) {
-        return isPOST(request) && this.isEndpoint(request, "/authentication/login/magic-link");
+        return isPOST(request) && this.isEndpoint(request, "/authentication/login/magiclink");
     }
 
     public final boolean isAuthenticationRefreshTokenEndpoint(HttpServletRequest request) {

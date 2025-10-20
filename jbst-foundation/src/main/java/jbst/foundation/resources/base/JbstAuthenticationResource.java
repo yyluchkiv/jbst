@@ -44,7 +44,7 @@ public class JbstAuthenticationResource {
         return this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
     }
 
-    @PostMapping("/login/magic-link")
+    @PostMapping("/login/magiclink")
     @ResponseStatus(HttpStatus.OK)
     public CurrentClientUser loginMagicLink(
             @RequestBody @Valid RequestMagicLinkToken request,

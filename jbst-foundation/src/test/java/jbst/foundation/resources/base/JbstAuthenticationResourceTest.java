@@ -209,7 +209,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                        post("/authentication/login/magic-link")
+                        post("/authentication/login/magiclink")
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
