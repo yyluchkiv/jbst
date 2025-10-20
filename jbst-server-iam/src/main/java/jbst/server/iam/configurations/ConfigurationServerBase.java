@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "jbst.server.iam.base"
+        "jbst.server.iam.base",
+        "jbst.server.iam.extension"
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableConfigurationProperties({
