@@ -77,7 +77,7 @@ class BaseTokensServiceTest {
 
         @Bean
         TokensService tokenService() {
-            return new BaseTokensService(
+            return new TokensService(
                     this.jwtUserDetailsService(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),

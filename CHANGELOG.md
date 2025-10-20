@@ -3,3 +3,4 @@
 — Modification: /authentication/login/magic-link is authentication/login/magiclink
 — Addition: JbstIamIncidentType.REGISTER_MAGICLINK
 — Addition: JbstSynchronousExtensionService
+— Modification: base services no implementation
