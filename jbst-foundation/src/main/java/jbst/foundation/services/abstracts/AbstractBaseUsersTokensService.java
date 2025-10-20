@@ -22,7 +22,7 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
 
     @Override
     public void confirmEmail(String token) throws JbstUserEmailConfirmException {
-        var userToken = this.usersTokensRepository.findByValueAsAny(token);
+        var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(token);
         if (isNull(userToken)) {
             throw JbstUserEmailConfirmException.tokenNotFound();
         }

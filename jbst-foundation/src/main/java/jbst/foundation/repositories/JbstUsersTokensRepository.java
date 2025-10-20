@@ -7,7 +7,7 @@ import jbst.foundation.domain.ids.TokenId;
 import static java.util.Objects.nonNull;
 
 public interface JbstUsersTokensRepository {
-    JbstUserToken findByValueAsAny(String value);
+    JbstUserToken findByValueAsAnyOrNull(String value);
     JbstUserToken findByUserTokenValidOrNull(RequestUserToken request);
     void cleanupExpired();
     void cleanupUsed();

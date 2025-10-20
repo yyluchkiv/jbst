@@ -34,7 +34,7 @@ public class BaseBaseAuthenticationRequestsValidatorImpl implements BaseAuthenti
 
     @Override
     public JbstUserToken validateLoginMagicLink(RequestMagicLinkToken request) throws JbstLoginException {
-        var userToken = this.usersTokensRepository.findByValueAsAny(request.value());
+        var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(request.value());
         if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGICLINK)) {
             throw new JbstLoginException("Invalid magic link token: %s".formatted(request.value()));
         }

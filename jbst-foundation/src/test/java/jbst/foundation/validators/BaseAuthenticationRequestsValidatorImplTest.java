@@ -133,13 +133,13 @@ class BaseAuthenticationRequestsValidatorImplTest {
     @MethodSource("validateLoginMagicLinkTest")
     void validateLoginMagicLinkTest(RequestMagicLinkToken request, JbstUserToken userToken, String exceptionMessage) {
         // Arrange
-        when(this.usersTokensRepository.findByValueAsAny(request.value())).thenReturn(userToken);
+        when(this.usersTokensRepository.findByValueAsAnyOrNull(request.value())).thenReturn(userToken);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateLoginMagicLink(request));
 
         // Assert
-        verify(this.usersTokensRepository).findByValueAsAny(request.value());
+        verify(this.usersTokensRepository).findByValueAsAnyOrNull(request.value());
         if (nonNull(exceptionMessage)) {
             assertThat(throwable)
                     .isInstanceOf(JbstLoginException.class)

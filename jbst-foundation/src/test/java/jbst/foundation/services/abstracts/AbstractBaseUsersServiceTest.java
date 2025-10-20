@@ -251,14 +251,14 @@ class AbstractBaseUsersServiceTest {
         // Arrange
         var request = RequestUserPasswordReset.hardcoded();
         var userToken = JbstUserToken.hardcodedPasswordReset();
-        when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
+        when(this.usersTokensRepository.findByValueAsAnyOrNull(request.token())).thenReturn(userToken);
         var passwordAC = ArgumentCaptor.forClass(Password.class);
 
         // Act
         this.componentUnderTest.resetPassword(request);
 
         // Assert
-        verify(this.usersTokensRepository).findByValueAsAny(request.token());
+        verify(this.usersTokensRepository).findByValueAsAnyOrNull(request.token());
         verify(this.usersRepository).resetPassword(eq(userToken.email()), passwordAC.capture());
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         assertThat(

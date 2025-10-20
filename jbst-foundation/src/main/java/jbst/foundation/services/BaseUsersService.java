@@ -12,6 +12,7 @@ import java.time.ZoneId;
 
 public interface BaseUsersService {
     JwtUser findByEmail(Email email);
+    JwtUser saveMagic(UserCreationOption creationOption, Email email, ZoneId zoneId);
     JwtUser safeSave(UserCreationOption creationOption, Email email, ZoneId zoneId);
     void updateUser1(JwtUser user, RequestUserUpdate1 request);
     void updateUser2(JwtUser user, RequestUserUpdate2 request);

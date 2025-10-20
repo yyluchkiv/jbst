@@ -99,14 +99,14 @@ class AbstractBaseUsersTokensServiceTest {
     ) {
         // Arrange
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
-        when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
+        when(this.usersTokensRepository.findByValueAsAnyOrNull(token)).thenReturn(userToken);
         var email = nonNull(userToken) ? userToken.email() : null;
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.confirmEmail(token));
 
         // Assert
-        verify(this.usersTokensRepository).findByValueAsAny(token);
+        verify(this.usersTokensRepository).findByValueAsAnyOrNull(token);
         if (nonNull(exception)) {
             assertThat(actual)
                     .isInstanceOf(JbstUserEmailConfirmException.class)

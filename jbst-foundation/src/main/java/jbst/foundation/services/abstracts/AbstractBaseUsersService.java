@@ -139,7 +139,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
 
     @Override
     public void resetPassword(RequestUserPasswordReset request) {
-        var userToken = this.usersTokensRepository.findByValueAsAny(request.token());
+        var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(request.token());
         var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
         this.usersRepository.resetPassword(userToken.email(), Password.of(hashPassword));
         userToken = userToken.withUsed(true);

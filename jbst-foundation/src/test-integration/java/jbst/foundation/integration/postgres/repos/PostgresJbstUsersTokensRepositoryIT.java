@@ -70,12 +70,12 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         assertThat(count).isEqualTo(6);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
-        assertThat(this.usersTokensRepository.findByValueAsAny(existentToken)).isNotNull();
-        assertThat(this.usersTokensRepository.findByValueAsAny(notExistentToken)).isNull();
+        assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(existentToken)).isNotNull();
+        assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(notExistentToken)).isNull();
         assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isNotEmpty();
-        assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNotNull();
+        assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(expiredToken)).isNotNull();
         assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isNotEmpty();
-        assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNotNull();
+        assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(usedToken)).isNotNull();
         assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.random(), EMAIL_CONFIRMATION))).isNull();
         assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.random(), PASSWORD_RESET))).isNull();
         assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username1@gmail.com"), EMAIL_CONFIRMATION))).isNotNull();
@@ -105,13 +105,13 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         this.usersTokensRepository.cleanupExpired();
         assertThat(this.usersTokensRepository.count()).isEqualTo(3);
         assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isEmpty();
-        assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNull();
+        assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(expiredToken)).isNull();
 
         // Act-Assert-2
         this.usersTokensRepository.cleanupUsed();
         assertThat(this.usersTokensRepository.count()).isEqualTo(2);
         assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isEmpty();
-        assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNull();
+        assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(usedToken)).isNull();
     }
 
     @Test
@@ -138,7 +138,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         var userEmailToken = this.usersTokensRepository.saveAs(requestUserEmailToken);
         assertThat(this.usersTokensRepository.count()).isEqualTo(8);
         assertThat(this.usersTokensRepository.findById(userEmailToken.id().value())).isNotEmpty();
-        assertThat(this.usersTokensRepository.findByValueAsAny(userEmailToken.value())).isNotNull();
+        assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(userEmailToken.value())).isNotNull();
 
         // Act-Assert-4
         var savedToken = saved.get(0);
@@ -148,7 +148,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         var updatedToken = this.usersTokensRepository.findById(tokenId.value());
         assertThat(updatedToken).isNotEmpty();
         assertThat(updatedToken.get().isUsed()).isTrue();
-        var updatedAnyToken = this.usersTokensRepository.findByValueAsAny(savedToken.getValue());
+        var updatedAnyToken = this.usersTokensRepository.findByValueAsAnyOrNull(savedToken.getValue());
         assertThat(updatedAnyToken).isNotNull();
         assertThat(updatedAnyToken.used()).isTrue();
     }

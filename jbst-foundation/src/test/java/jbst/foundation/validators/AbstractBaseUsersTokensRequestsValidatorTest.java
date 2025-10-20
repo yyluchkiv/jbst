@@ -291,13 +291,13 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     ) {
         // Arrange
         var token = randomStringLetterOrNumbersOnly(255);
-        when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
+        when(this.usersTokensRepository.findByValueAsAnyOrNull(token)).thenReturn(userToken);
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.validateEmailConfirmationToken(token));
 
         // Assert
-        verify(this.usersTokensRepository).findByValueAsAny(token);
+        verify(this.usersTokensRepository).findByValueAsAnyOrNull(token);
         if (nonNull(expected)) {
             assertThat(actual)
                     .isInstanceOf(JbstUserTokenValidationException.class)
@@ -331,20 +331,20 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     ) {
         // Arrange
         var token = request.token();
-        when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
+        when(this.usersTokensRepository.findByValueAsAnyOrNull(request.token())).thenReturn(userToken);
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.validatePasswordReset(request));
 
         // Assert
         if (expected instanceof JbstUserTokenValidationException) {
-            verify(this.usersTokensRepository).findByValueAsAny(token);
+            verify(this.usersTokensRepository).findByValueAsAnyOrNull(token);
             assertThat(actual).hasMessage(expected.getMessage());
         } else if (expected instanceof IllegalArgumentException) {
-            verify(this.usersTokensRepository, never()).findByValueAsAny(token);
+            verify(this.usersTokensRepository, never()).findByValueAsAnyOrNull(token);
             assertThat(actual).hasMessage(expected.getMessage());
         } else {
-            verify(this.usersTokensRepository).findByValueAsAny(token);
+            verify(this.usersTokensRepository).findByValueAsAnyOrNull(token);
             assertThat(actual).isNull();
         }
     }

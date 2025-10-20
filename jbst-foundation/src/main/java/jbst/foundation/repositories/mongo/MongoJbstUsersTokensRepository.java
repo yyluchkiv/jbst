@@ -17,7 +17,7 @@ public interface MongoJbstUsersTokensRepository extends MongoRepository<MongoDbU
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default JbstUserToken findByValueAsAny(String value) {
+    default JbstUserToken findByValueAsAnyOrNull(String value) {
         var entity = this.findByValue(value);
         return nonNull(entity) ? entity.asUserToken() : null;
     }

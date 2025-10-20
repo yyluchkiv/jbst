@@ -54,7 +54,7 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     // PROTECTED METHODS
     // =================================================================================================================
     protected void validateToken(String token, UserTokenType type) throws JbstUserTokenValidationException {
-        var userToken = this.usersTokensRepository.findByValueAsAny(token);
+        var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(token);
         if (isNull(userToken)) {
             throw JbstUserTokenValidationException.notFound();
         }
