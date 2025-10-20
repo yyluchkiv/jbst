@@ -16,7 +16,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersService;
-import jbst.foundation.services.BaseUsersTokensService;
+import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.RateLimitsService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
@@ -42,7 +42,7 @@ public class JbstUsersTokensResource {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final RateLimitsService rateLimitsService;
-    private final BaseUsersTokensService baseUsersTokensService;
+    private final JbstUsersTokensService usersTokensService;
     private final JbstUsersService usersService;
     private final UsersEmailsService usersEmailsService;
     // Validators
@@ -58,7 +58,7 @@ public class JbstUsersTokensResource {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         this.rateLimitsService.acquireEmailConfirmationOrThrow(user);
-        var userToken = this.baseUsersTokensService.findOrCreate(user.getRequestUserTokenAsEmailConfirmation());
+        var userToken = this.usersTokensService.findOrCreate(user.getRequestUserTokenAsEmailConfirmation());
         this.usersEmailsService.executeEmailConfirmation(userToken);
     }
 
@@ -71,7 +71,7 @@ public class JbstUsersTokensResource {
         var redirectView = new RedirectView(this.jbstProperties.getEmailConfirmationRedirectLink());
         try {
             this.baseUsersTokensRequestsValidator.validateEmailConfirmationToken(token);
-            this.baseUsersTokensService.confirmEmail(token);
+            this.usersTokensService.confirmEmail(token);
             redirectAttributes.addAttribute("code", 1);
             return redirectView;
         } catch (JbstUserTokenValidationException | JbstUserEmailConfirmException ex) {
@@ -90,7 +90,7 @@ public class JbstUsersTokensResource {
         try {
             var user = this.usersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
-            var userToken = this.baseUsersTokensService.findOrCreate(user.getRequestUserTokenAsPasswordReset());
+            var userToken = this.usersTokensService.findOrCreate(user.getRequestUserTokenAsPasswordReset());
             this.usersEmailsService.executePasswordReset(userToken);
         } catch (JbstPasswordResetException ex) {
             // ignored

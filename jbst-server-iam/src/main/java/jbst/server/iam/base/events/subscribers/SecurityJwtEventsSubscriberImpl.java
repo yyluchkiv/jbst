@@ -5,7 +5,7 @@ import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher
 import jbst.foundation.events.subscribers.events.base.BaseSecurityJwtEventsSubscriber;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.services.BaseUsersTokensService;
+import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class SecurityJwtEventsSubscriberImpl extends BaseSecurityJwtEventsSubscr
     @Autowired
     public SecurityJwtEventsSubscriberImpl(
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
-            BaseUsersTokensService baseUsersTokensService,
+            JbstUsersTokensService usersTokensService,
             UsersEmailsService usersEmailsService,
             JbstUsersSessionsService usersSessionsService,
             JbstGeoUtils geoUtils,
@@ -28,7 +28,7 @@ public class SecurityJwtEventsSubscriberImpl extends BaseSecurityJwtEventsSubscr
     ) {
         super(
                 securityJwtIncidentsPublisher,
-                baseUsersTokensService,
+                usersTokensService,
                 usersEmailsService,
                 usersSessionsService,
                 geoUtils,

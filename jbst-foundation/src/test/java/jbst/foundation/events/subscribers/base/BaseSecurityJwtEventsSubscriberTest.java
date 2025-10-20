@@ -20,7 +20,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.services.BaseUsersTokensService;
+import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
@@ -150,8 +150,8 @@ class BaseSecurityJwtEventsSubscriberTest {
         }
 
         @Bean
-        BaseUsersTokensService baseUsersTokensService() {
-            return mock(BaseUsersTokensService.class);
+        JbstUsersTokensService baseUsersTokensService() {
+            return mock(JbstUsersTokensService.class);
         }
 
         @Bean
@@ -190,7 +190,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     // Publishers
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
-    private final BaseUsersTokensService baseUsersTokensService;
+    private final JbstUsersTokensService usersTokensService;
     private final UsersEmailsService usersEmailsService;
     private final JbstUsersSessionsService usersSessionsService;
     // Utils
@@ -204,7 +204,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     void beforeEach() {
         reset(
                 this.securityJwtIncidentsPublisher,
-                this.baseUsersTokensService,
+                this.usersTokensService,
                 this.usersEmailsService,
                 this.usersSessionsService,
                 this.geoUtils,
@@ -216,7 +216,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentsPublisher,
-                this.baseUsersTokensService,
+                this.usersTokensService,
                 this.usersEmailsService,
                 this.usersSessionsService,
                 this.geoUtils,
@@ -303,7 +303,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
         var event = new EventRegistration0(requestUserRegistration0);
         var userToken = JbstUserToken.hardcodedEmailConfirmation();
-        when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
+        when(this.usersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
         if (nonNull(ex)) {
             doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(userToken);
         }
@@ -313,7 +313,7 @@ class BaseSecurityJwtEventsSubscriberTest {
 
         // Assert
         assertThat(event).isNotNull();
-        verify(this.baseUsersTokensService).saveAs(requestUserRegistration0.asRequestUserToken());
+        verify(this.usersTokensService).saveAs(requestUserRegistration0.asRequestUserToken());
         verify(this.usersEmailsService).executeEmailConfirmation(userToken);
         verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }

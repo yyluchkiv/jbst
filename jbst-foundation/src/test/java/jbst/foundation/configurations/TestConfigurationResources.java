@@ -105,8 +105,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseUsersTokensService baseUsersTokensService() {
-        return mock(BaseUsersTokensService.class);
+    JbstUsersTokensService baseUsersTokensService() {
+        return mock(JbstUsersTokensService.class);
     }
 
     @Bean

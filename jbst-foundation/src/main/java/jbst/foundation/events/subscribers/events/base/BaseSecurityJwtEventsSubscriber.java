@@ -13,7 +13,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.services.BaseUsersTokensService;
+import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     // Publishers
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
-    private final BaseUsersTokensService baseUsersTokensService;
+    private final JbstUsersTokensService usersTokensService;
     private final UsersEmailsService usersEmailsService;
     private final JbstUsersSessionsService usersSessionsService;
     // Utils
@@ -94,7 +94,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     public void onRegistration0(EventRegistration0 event) {
         try {
             LOGGER.debug(USER_ACTION, event.requestUserRegistration0().username(), "[sub, events] register0");
-            var userToken = this.baseUsersTokensService.saveAs(event.requestUserRegistration0().asRequestUserToken());
+            var userToken = this.usersTokensService.saveAs(event.requestUserRegistration0().asRequestUserToken());
             this.usersEmailsService.executeEmailConfirmation(userToken);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);

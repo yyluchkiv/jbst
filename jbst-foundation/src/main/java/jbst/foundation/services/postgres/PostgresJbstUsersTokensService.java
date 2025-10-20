@@ -2,15 +2,15 @@ package jbst.foundation.services.postgres;
 
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
-import jbst.foundation.services.abstracts.AbstractBaseUsersTokensService;
+import jbst.foundation.services.abstracts.AbstractJbstUsersTokensService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostgresBaseUsersTokensService extends AbstractBaseUsersTokensService {
+public class PostgresJbstUsersTokensService extends AbstractJbstUsersTokensService {
 
     @Autowired
-    public PostgresBaseUsersTokensService(
+    public PostgresJbstUsersTokensService(
             PostgresJbstUsersTokensRepository usersTokensRepository,
             PostgresJbstUsersRepository usersRepository
     ) {

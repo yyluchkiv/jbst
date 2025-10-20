@@ -5,7 +5,7 @@ import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.services.BaseUsersTokensService;
+import jbst.foundation.services.JbstUsersTokensService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensService {
+public abstract class AbstractJbstUsersTokensService implements JbstUsersTokensService {
 
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;

@@ -2,15 +2,15 @@ package jbst.foundation.services.mongodb;
 
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersTokensRepository;
-import jbst.foundation.services.abstracts.AbstractBaseUsersTokensService;
+import jbst.foundation.services.abstracts.AbstractJbstUsersTokensService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MongoBaseUsersTokensService extends AbstractBaseUsersTokensService {
+public class MongoJbstUsersTokensService extends AbstractJbstUsersTokensService {
 
     @Autowired
-    public MongoBaseUsersTokensService(
+    public MongoJbstUsersTokensService(
             MongoJbstUsersTokensRepository usersTokensRepository,
             MongoJbstUsersRepository usersRepository
     ) {

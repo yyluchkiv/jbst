@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseUsersTokensServiceTest {
+class AbstractJbstUsersTokensServiceTest {
 
     private static Stream<Arguments> confirmEmailTest() {
         return Stream.of(
@@ -61,8 +61,8 @@ class AbstractBaseUsersTokensServiceTest {
         }
 
         @Bean
-        AbstractBaseUsersTokensService abstractBaseUsersTokensService() {
-            return new AbstractBaseUsersTokensService(
+        AbstractJbstUsersTokensService abstractBaseUsersTokensService() {
+            return new AbstractJbstUsersTokensService(
                     this.usersTokensRepository(),
                     this.usersRepository()
             ) {};
@@ -72,7 +72,7 @@ class AbstractBaseUsersTokensServiceTest {
     private final JbstUsersTokensRepository usersTokensRepository;
     private final JbstUsersRepository usersRepository;
 
-    private final AbstractBaseUsersTokensService componentUnderTest;
+    private final AbstractJbstUsersTokensService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
