@@ -2,6 +2,8 @@ package jbst.foundation.services.postgres;
 
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
+import jbst.foundation.services.UsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +31,11 @@ class PostgresBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
+        UsersEmailsService usersEmailsService() {
+            return mock(UsersEmailsService.class);
+        }
+
+        @Bean
         PostgresJbstInvitationsRepository invitationsRepository() {
             return mock(PostgresJbstInvitationsRepository.class);
         }
@@ -39,6 +46,11 @@ class PostgresBaseRegistrationServiceTest {
         }
 
         @Bean
+        PostgresJbstUsersTokensRepository usersTokensRepository() {
+            return mock(PostgresJbstUsersTokensRepository.class);
+        }
+
+        @Bean
         BCryptPasswordEncoder bCryptPasswordEncoder() {
             return mock(BCryptPasswordEncoder.class);
         }
@@ -46,8 +58,10 @@ class PostgresBaseRegistrationServiceTest {
         @Bean
         PostgresBaseRegistrationService registrationService() {
             return new PostgresBaseRegistrationService(
+                    this.usersEmailsService(),
                     this.invitationsRepository(),
                     this.userRepository(),
+                    this.usersTokensRepository(),
                     this.bCryptPasswordEncoder()
             ) {};
         }

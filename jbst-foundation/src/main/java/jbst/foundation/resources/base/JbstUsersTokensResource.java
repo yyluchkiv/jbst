@@ -57,7 +57,7 @@ public class JbstUsersTokensResource {
     @ResponseStatus(HttpStatus.OK)
     public void magicLink(@RequestBody @Valid RequestUserTokenMagicLink request) throws JbstTooManyRequestsException {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
-        var userToken = this.baseUsersTokensService.getOrCreate(request.asRequestUserToken());
+        var userToken = this.baseUsersTokensService.findOrCreate(request.asRequestUserToken());
         this.usersEmailsService.executeMagicLink(userToken);
     }
 
@@ -67,7 +67,7 @@ public class JbstUsersTokensResource {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         this.rateLimitsService.acquireEmailConfirmationOrThrow(user);
-        var userToken = this.baseUsersTokensService.getOrCreate(user.getRequestUserTokenAsEmailConfirmation());
+        var userToken = this.baseUsersTokensService.findOrCreate(user.getRequestUserTokenAsEmailConfirmation());
         this.usersEmailsService.executeEmailConfirmation(userToken);
     }
 
@@ -99,7 +99,7 @@ public class JbstUsersTokensResource {
         try {
             var user = this.baseUsersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
-            var userToken = this.baseUsersTokensService.getOrCreate(user.getRequestUserTokenAsPasswordReset());
+            var userToken = this.baseUsersTokensService.findOrCreate(user.getRequestUserTokenAsPasswordReset());
             this.usersEmailsService.executePasswordReset(userToken);
         } catch (JbstPasswordResetException ex) {
             // ignored

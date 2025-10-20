@@ -8,7 +8,9 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.BaseRegistrationService;
+import jbst.foundation.services.UsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +38,11 @@ class AbstractBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
+        UsersEmailsService usersEmailsService() {
+            return mock(UsersEmailsService.class);
+        }
+
+        @Bean
         JbstInvitationsRepository invitationsRepository() {
             return mock(JbstInvitationsRepository.class);
         }
@@ -46,6 +53,11 @@ class AbstractBaseRegistrationServiceTest {
         }
 
         @Bean
+        JbstUsersTokensRepository usersTokensRepository() {
+            return mock(JbstUsersTokensRepository.class);
+        }
+
+        @Bean
         BCryptPasswordEncoder bCryptPasswordEncoder() {
             return mock(BCryptPasswordEncoder.class);
         }
@@ -53,8 +65,10 @@ class AbstractBaseRegistrationServiceTest {
         @Bean
         AbstractBaseRegistrationService registrationService() {
             return new AbstractBaseRegistrationService(
+                    this.usersEmailsService(),
                     this.invitationsRepository(),
                     this.userRepository(),
+                    this.usersTokensRepository(),
                     this.bCryptPasswordEncoder()
             ) {};
         }

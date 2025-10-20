@@ -37,7 +37,7 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
     }
 
     @Override
-    public JbstUserToken getOrCreate(RequestUserToken request) {
+    public JbstUserToken findOrCreate(RequestUserToken request) {
         return this.usersTokensRepository.findOrCreate(request);
     }
 }

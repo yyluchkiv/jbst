@@ -101,7 +101,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsEmailConfirmation();
         var userToken = JbstUserToken.hardcodedEmailConfirmation();
-        when(this.baseUsersTokensService.getOrCreate(eq(requestUserToken))).thenReturn(userToken);
+        when(this.baseUsersTokensService.findOrCreate(eq(requestUserToken))).thenReturn(userToken);
 
         // Act
         this.mvc.perform(
@@ -114,7 +114,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         // Arrange
         verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
         verify(this.baseUsersTokensRequestsValidator, times(2)).validateExecuteConfirmEmail(user);
-        verify(this.baseUsersTokensService).getOrCreate(eq(requestUserToken));
+        verify(this.baseUsersTokensService).findOrCreate(eq(requestUserToken));
         verify(this.usersEmailsService).executeEmailConfirmation(userToken);
     }
 
@@ -160,7 +160,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         when(this.baseUsersService.findByEmail(request.email())).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsPasswordReset();
         var userToken = JbstUserToken.hardcodedPasswordReset();
-        when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
+        when(this.baseUsersTokensService.findOrCreate(requestUserToken)).thenReturn(userToken);
 
         // Act
         this.mvc.perform(
@@ -172,7 +172,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.baseUsersService).findByEmail(request.email());
         verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
-        verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
+        verify(this.baseUsersTokensService).findOrCreate(requestUserToken);
         verify(this.usersEmailsService).executePasswordReset(userToken);
     }
 

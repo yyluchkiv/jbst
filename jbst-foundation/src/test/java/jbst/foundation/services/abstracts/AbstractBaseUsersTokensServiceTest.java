@@ -46,17 +46,6 @@ class AbstractBaseUsersTokensServiceTest {
         );
     }
 
-    private static Stream<Arguments> getOrCreateTest() {
-        return Stream.of(
-                Arguments.of(
-                        (Object) null
-                ),
-                Arguments.of(
-                        JbstUserToken.random()
-                )
-        );
-    }
-
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
@@ -143,27 +132,15 @@ class AbstractBaseUsersTokensServiceTest {
         verify(this.usersTokensRepository).saveAs(request);
     }
 
-    @ParameterizedTest
-    @MethodSource("getOrCreateTest")
-    void getOrCreateTest(JbstUserToken foundUserToken) {
+    @Test
+    void findOrCreateTest() {
         // Arrange
         var request = RequestUserToken.hardcoded();
-        when(this.usersTokensRepository.findByUserTokenValidOrNull(request)).thenReturn(foundUserToken);
-        var savedUserToken = JbstUserToken.random();
-        when(this.usersTokensRepository.saveAs(request)).thenReturn(savedUserToken);
 
         // Arrange
-        var actual = this.componentUnderTest.getOrCreate(request);
+        this.componentUnderTest.findOrCreate(request);
 
         // Arrange
-        verify(this.usersTokensRepository).findByUserTokenValidOrNull(request);
-        if (nonNull(foundUserToken)) {
-            verify(this.usersTokensRepository, never()).saveAs(request);
-            assertThat(actual).isEqualTo(foundUserToken);
-        } else {
-            verify(this.usersTokensRepository).saveAs(request);
-            assertThat(actual).isEqualTo(savedUserToken);
-        }
+        verify(this.usersTokensRepository).findOrCreate(request);
     }
-
 }
