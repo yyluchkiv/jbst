@@ -11,6 +11,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.time.ZoneId;
-
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -102,21 +102,24 @@ class AbstractBaseUsersServiceTest {
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 
-    @Test
+    @RepeatedTest(value = FIVE_TIMES)
     void safeSaveAlreadyExistsTest() {
         // Arrange
-        var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
-        var zoneId = ZoneId.systemDefault();
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
+        var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeSave(creationOption, email, zoneId);
+        var credentials = this.componentUnderTest.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
 
         // Assert
-        assertThat(actualUser).isEqualTo(user);
+        assertThat(credentials.username()).isEqualTo(Username.hardcoded());
+        assertThat(credentials.password().value()).hasSize(20);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+        ArgumentCaptor<Password> passwordAC = ArgumentCaptor.forClass(Password.class);
+        verify(this.usersRepository).resetPassword(eq(credentials.username()), passwordAC.capture());
+        assertThat(passwordAC.getValue().value()).hasSize(60);
     }
 
     @Test
@@ -124,19 +127,23 @@ class AbstractBaseUsersServiceTest {
         // Arrange
         var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
-        var zoneId = ZoneId.systemDefault();
-        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
+        var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var username = email.getUsername();
-        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(zoneId))).thenReturn(user);
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeSave(creationOption, email, zoneId);
+        var credentials = this.componentUnderTest.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
 
         // Assert
-        assertThat(actualUser).isEqualTo(user);
+        assertThat(credentials.username()).isEqualTo(Username.hardcoded());
+        assertThat(credentials.password().value()).hasSize(20);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(zoneId));
+        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(UKRAINE));
+        ArgumentCaptor<Password> passwordAC = ArgumentCaptor.forClass(Password.class);
+        verify(this.usersRepository).resetPassword(eq(credentials.username()), passwordAC.capture());
+        assertThat(passwordAC.getValue().value()).hasSize(60);
     }
 
     @Test
@@ -144,23 +151,26 @@ class AbstractBaseUsersServiceTest {
         // Arrange
         var creationOption = UserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
-        var zoneId = ZoneId.systemDefault();
-        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
-
-        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(zoneId))).thenThrow(new JbstUsernameAlreadyExistException(baseUsername));
-        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(zoneId))).thenReturn(user);
+        var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(UKRAINE))).thenThrow(new JbstUsernameAlreadyExistException(baseUsername));
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);
 
         // Act
-        var actualUser = this.componentUnderTest.safeSave(creationOption, email, zoneId);
+        var credentials = this.componentUnderTest.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
 
         // Assert
-        assertThat(actualUser).isEqualTo(user);
+        assertThat(credentials.username()).isEqualTo(Username.hardcoded());
+        assertThat(credentials.password().value()).hasSize(20);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(zoneId));
-        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(zoneId));
+        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(UKRAINE));
+        verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(UKRAINE));
+        ArgumentCaptor<Password> passwordAC = ArgumentCaptor.forClass(Password.class);
+        verify(this.usersRepository).resetPassword(eq(credentials.username()), passwordAC.capture());
+        assertThat(passwordAC.getValue().value()).hasSize(60);
     }
 
     @Test

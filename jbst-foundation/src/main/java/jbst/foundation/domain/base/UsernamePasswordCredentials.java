@@ -1,6 +1,9 @@
 package jbst.foundation.domain.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.utilities.strings.MaskUtility;
+import org.springframework.data.annotation.Transient;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public record UsernamePasswordCredentials(
         Username username,
@@ -16,5 +19,11 @@ public record UsernamePasswordCredentials(
 
     public static UsernamePasswordCredentials random() {
         return new UsernamePasswordCredentials(Username.random(), Password.random());
+    }
+
+    @JsonIgnore
+    @Transient
+    public UsernamePasswordAuthenticationToken getAuthenticationToken() {
+        return new UsernamePasswordAuthenticationToken(username.value(), password.value());
     }
 }

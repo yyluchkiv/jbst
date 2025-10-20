@@ -5,8 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.enums.UserCreationOption;
@@ -31,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -71,8 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             return this.asAuthentication(
                     UserCreationOption.STANDARD,
-                    credentials.username(),
-                    credentials.password(),
+                    credentials,
                     httpRequest,
                     httpResponse
             );
@@ -96,8 +92,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
             return this.asAuthentication(
                     UserCreationOption.MAGICLINK,
-                    credentials.username(),
-                    credentials.password(),
+                    credentials,
                     httpRequest,
                     httpResponse
             );
@@ -153,15 +148,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // =================================================================================================================
     public CurrentClientUser asAuthentication(
             UserCreationOption userCreationOption,
-            Username username,
-            Password password,
+            UsernamePasswordCredentials credentials,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) {
+        var username = credentials.username();
         LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), STARTED));
 
-        var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
-        var authentication = this.authenticationManager.authenticate(authenticationToken);
+        var authentication = this.authenticationManager.authenticate(credentials.getAuthenticationToken());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         var user = this.jwtUserDetailsService.loadUserByUsername(username.value());

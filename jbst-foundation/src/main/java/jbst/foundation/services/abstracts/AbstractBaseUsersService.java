@@ -20,8 +20,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.time.ZoneId;
-
 import static java.util.Objects.isNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
@@ -67,32 +65,6 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
         // re-save password to avoid BadCredentials in authenticationManager
         this.usersRepository.resetPassword(user.username(), hashPassword);
         return new UsernamePasswordCredentials(user.username(), password);
-    }
-
-    @Override
-    public JwtUser safeSave(UserCreationOption creationOption, Email email, ZoneId zoneId) {
-        var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
-        if (isNull(user)) {
-            var created = false;
-            var index = -1;
-            var hashPassword = this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20));
-            while (!created) {
-                var username = (index == -1) ? email.getUsername() : new Username(email.getUsername().value() + index);
-                try {
-                    user = this.usersRepository.saveAsOrThrow(
-                            creationOption,
-                            username,
-                            Password.of(hashPassword),
-                            email,
-                            zoneId
-                    );
-                    created = true;
-                } catch (JbstUsernameAlreadyExistException ex) {
-                    index++;
-                }
-            }
-        }
-        return user;
     }
 
     @Override
