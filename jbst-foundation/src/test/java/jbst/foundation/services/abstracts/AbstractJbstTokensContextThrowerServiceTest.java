@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractTokensContextThrowerServiceTest {
+class AbstractJbstTokensContextThrowerServiceTest {
 
     private static Stream<Arguments> verifyAccessTokenExpirationOrThrow() {
         return Stream.of(
@@ -78,8 +78,8 @@ class AbstractTokensContextThrowerServiceTest {
         }
 
         @Bean
-        AbstractTokensContextThrowerService abstractTokensContextThrowerService() {
-            return new AbstractTokensContextThrowerService(
+        AbstractJbstTokensContextThrowerService abstractTokensContextThrowerService() {
+            return new AbstractJbstTokensContextThrowerService(
                     this.jwtUserDetailsService(),
                     this.usersSessionsRepository(),
                     this.securityUtils()
@@ -94,7 +94,7 @@ class AbstractTokensContextThrowerServiceTest {
     // Utilities
     private final JbstSecurityUtils securityUtils;
 
-    private final AbstractTokensContextThrowerService componentUnderTest;
+    private final AbstractJbstTokensContextThrowerService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

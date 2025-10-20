@@ -3,15 +3,15 @@ package jbst.foundation.services.mongodb;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
-import jbst.foundation.services.abstracts.AbstractTokensContextThrowerService;
+import jbst.foundation.services.abstracts.AbstractJbstTokensContextThrowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MongoTokensContextThrowerService extends AbstractTokensContextThrowerService {
+public class MongoJbstTokensContextThrowerService extends AbstractJbstTokensContextThrowerService {
 
     @Autowired
-    public MongoTokensContextThrowerService(
+    public MongoJbstTokensContextThrowerService(
             MongoUserDetailsAssistant userDetailsAssistant,
             MongoJbstUsersSessionsRepository usersSessionsRepository,
             JbstSecurityUtils securityUtils

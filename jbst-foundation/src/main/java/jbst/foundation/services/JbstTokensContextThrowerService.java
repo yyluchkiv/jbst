@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 
-public interface TokensContextThrowerService {
+public interface JbstTokensContextThrowerService {
     JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws JbstAccessTokenInvalidException;
     JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws JbstRefreshTokenInvalidException;
 

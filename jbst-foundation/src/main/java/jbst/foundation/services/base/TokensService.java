@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.services.TokensContextThrowerService;
+import jbst.foundation.services.JbstTokensContextThrowerService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class TokensService {
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final TokensContextThrowerService tokensContextThrowerService;
+    private final JbstTokensContextThrowerService tokensContextThrowerService;
     private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;

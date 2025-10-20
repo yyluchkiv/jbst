@@ -14,7 +14,7 @@ import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.services.TokensContextThrowerService;
+import jbst.foundation.services.JbstTokensContextThrowerService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +55,8 @@ class TokensServiceTest {
         }
 
         @Bean
-        TokensContextThrowerService tokenContextThrowerService() {
-            return mock(TokensContextThrowerService.class);
+        JbstTokensContextThrowerService tokenContextThrowerService() {
+            return mock(JbstTokensContextThrowerService.class);
         }
 
         @Bean
@@ -92,7 +92,7 @@ class TokensServiceTest {
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final TokensContextThrowerService tokensContextThrowerService;
+    private final JbstTokensContextThrowerService tokensContextThrowerService;
     private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
