@@ -46,8 +46,25 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_CONTAINERS }}
 
-      # TODO [YYL] cleanup jbst-iam package
       # Delete packages - package-type: maven
+
+      - name: "delete maven package [jbst]"
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ env.PACKAGE_OWNER }}
+          package-name: 'packages.jbst.jbst'
+          package-type: 'maven'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
+
+      - name: "delete maven package [jbst-foundation]"
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ env.PACKAGE_OWNER }}
+          package-name: 'packages.jbst.jbst-foundation'
+          package-type: 'maven'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
 
       - name: "delete maven package [jbst-server-hardware-monitoring]"
         uses: actions/delete-package-versions@v5
