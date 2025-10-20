@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
-import jbst.foundation.services.BaseSuperadminService;
+import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseSuperadminService baseSuperadminService;
+    private final JbstSuperadminService superadminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
@@ -47,7 +47,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
-                this.baseSuperadminService,
+                this.superadminService,
                 this.baseUsersSessionsService,
                 this.tokensProvider
         );
@@ -57,7 +57,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
-                this.baseSuperadminService,
+                this.superadminService,
                 this.baseUsersSessionsService,
                 this.tokensProvider
         );
@@ -66,7 +66,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void getResetServerStatusTest() throws Exception {
         // Arrange
-        when(this.baseSuperadminService.getResetServerStatus()).thenReturn(ResetServerStatus.random());
+        when(this.superadminService.getResetServerStatus()).thenReturn(ResetServerStatus.random());
 
         // Act
         this.mvc.perform(get("/superadmin/server/reset/status"))
@@ -78,7 +78,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.description").exists());
 
         // Assert
-        verify(this.baseSuperadminService).getResetServerStatus();
+        verify(this.superadminService).getResetServerStatus();
     }
 
     @Test
@@ -93,14 +93,14 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseSuperadminService).resetServerBy(user);
+        verify(this.superadminService).resetServerBy(user);
     }
 
     @Test
     void getUnusedInvitationsTest() throws Exception {
         // Arrange
         var codes = list345(ResponseInvitation.class);
-        when(this.baseSuperadminService.findUnused()).thenReturn(codes);
+        when(this.superadminService.findUnused()).thenReturn(codes);
 
         // Act
         this.mvc.perform(get("/superadmin/invitations/unused"))
@@ -113,7 +113,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.[0].invited", notNullValue()));
 
         // Assert
-        verify(this.baseSuperadminService).findUnused();
+        verify(this.superadminService).findUnused();
     }
 
     @Test
@@ -125,7 +125,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
         );
         var requestAccessToken = RequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        when(this.baseSuperadminService.getSessions(requestAccessToken)).thenReturn(sessionsTable);
+        when(this.superadminService.getSessions(requestAccessToken)).thenReturn(sessionsTable);
 
         // Act
         this.mvc.perform(get("/superadmin/sessions"))
@@ -155,7 +155,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.baseSuperadminService).getSessions(requestAccessToken);
+        verify(this.superadminService).getSessions(requestAccessToken);
     }
 
     @Test

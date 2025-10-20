@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseSuperadminServiceTest {
+class AbstractJbstSuperadminServiceTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -85,8 +85,8 @@ class AbstractBaseSuperadminServiceTest {
         }
 
         @Bean
-        AbstractBaseSuperadminService abstractBaseSuperadminService() {
-            return new AbstractBaseSuperadminService(
+        AbstractJbstSuperadminService abstractBaseSuperadminService() {
+            return new AbstractJbstSuperadminService(
                     this.incidentPublisher(),
                     this.sessionRegistry(),
                     this.invitationsRepository(),
@@ -106,7 +106,7 @@ class AbstractBaseSuperadminServiceTest {
     // Mocks
     private final AbstractMockService abstractMockService;
 
-    private final AbstractBaseSuperadminService componentUnderTest;
+    private final AbstractJbstSuperadminService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

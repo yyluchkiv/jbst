@@ -1,9 +1,9 @@
-package jbst.foundation.services.postgres;
+package jbst.foundation.services.mongodb;
 
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
-import jbst.foundation.services.abstracts.AbstractBaseSuperadminService;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
+import jbst.foundation.services.abstracts.AbstractJbstSuperadminService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class PostgresBaseSuperadminService extends AbstractBaseSuperadminService {
+public class MongoJbstSuperadminService extends AbstractJbstSuperadminService {
 
     @Autowired
-    public PostgresBaseSuperadminService(
+    public MongoJbstSuperadminService(
             IncidentPublisher incidentPublisher,
             JbstSessionRegistry sessionRegistry,
-            PostgresJbstInvitationsRepository invitationsRepository,
-            PostgresJbstUsersSessionsRepository usersSessionsRepository,
+            MongoJbstInvitationsRepository invitationsRepository,
+            MongoJbstUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {
         super(

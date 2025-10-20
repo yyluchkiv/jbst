@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 
-public interface BaseSuperadminService {
+public interface JbstSuperadminService {
     // =================================================================================================================
     // Server
     // =================================================================================================================

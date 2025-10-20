@@ -10,7 +10,7 @@ import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
-import jbst.foundation.services.BaseSuperadminService;
+import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
 import lombok.AccessLevel;
@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseSuperadminService implements BaseSuperadminService {
+public abstract class AbstractJbstSuperadminService implements JbstSuperadminService {
 
     // Incidents
     protected final IncidentPublisher incidentPublisher;

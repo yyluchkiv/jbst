@@ -125,8 +125,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseSuperadminService baseSuperadminService() {
-        return mock(BaseSuperadminService.class);
+    JbstSuperadminService baseSuperadminService() {
+        return mock(JbstSuperadminService.class);
     }
 
     @Bean
