@@ -184,9 +184,9 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                             .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated()
-                            .requestMatchers(GET, basePathPrefix + "/tokens/magic-link").permitAll() // TODO [YYL] delete me
-                            .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").permitAll()
-                            .requestMatchers(basePathPrefix + "/tokens/password/reset").anonymous();
+                            .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").denyAll()
+                            .requestMatchers(POST, basePathPrefix + "/tokens/password/reset").denyAll()
+                            .requestMatchers(PATCH, basePathPrefix + "/tokens/password/reset").denyAll();
 
                     if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationsOnInit().isEnabled()) {
                         authorizeHttpRequests

@@ -9,7 +9,6 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
-import jbst.foundation.domain.dto.requests.RequestUserTokenMagicLink;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
@@ -52,14 +51,6 @@ public class JbstUsersTokensResource {
     private final IncidentPublisher incidentPublisher;
     // Properties
     private final JbstProperties jbstProperties;
-
-    @PostMapping("/magic-link")
-    @ResponseStatus(HttpStatus.OK)
-    public void magicLink(@RequestBody @Valid RequestUserTokenMagicLink request) throws JbstTooManyRequestsException {
-        this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
-        var userToken = this.baseUsersTokensService.findOrCreate(request.asRequestUserToken());
-        this.usersEmailsService.executeMagicLink(userToken);
-    }
 
     @PostMapping("/email/confirm")
     @ResponseStatus(HttpStatus.OK)
