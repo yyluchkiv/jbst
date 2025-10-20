@@ -12,10 +12,10 @@ import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.services.*;
-import jbst.foundation.services.base.AuthenticationService;
-import jbst.foundation.services.base.RateLimitsService;
-import jbst.foundation.services.base.TokensService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstAuthenticationService;
+import jbst.foundation.services.base.JbstRateLimitsService;
+import jbst.foundation.services.base.JbstTokensService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -58,8 +58,8 @@ public class TestConfigurationResources {
     // Authentication
     // =================================================================================================================
     @Bean
-    AuthenticationService authenticationService() {
-        return new AuthenticationService(
+    JbstAuthenticationService authenticationService() {
+        return new JbstAuthenticationService(
                 this.authenticationManager(),
                 this.currentSessionAssistant(),
                 this.jwtUserDetailsService(),
@@ -96,8 +96,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    RateLimitsService rateLimitsService() {
-        return new RateLimitsService();
+    JbstRateLimitsService rateLimitsService() {
+        return new JbstRateLimitsService();
     }
 
     @Bean
@@ -111,8 +111,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    UsersEmailsService usersEmailsService() {
-        return mock(UsersEmailsService.class);
+    JbstUsersEmailsService usersEmailsService() {
+        return mock(JbstUsersEmailsService.class);
     }
 
     @Bean
@@ -131,8 +131,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    TokensService tokenService() {
-        return mock(TokensService.class);
+    JbstTokensService tokenService() {
+        return mock(JbstTokensService.class);
     }
 
     @Bean

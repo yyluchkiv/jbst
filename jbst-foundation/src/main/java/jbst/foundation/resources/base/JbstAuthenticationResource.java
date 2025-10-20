@@ -13,7 +13,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException
 import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.extension.JbstExtensionService;
-import jbst.foundation.services.base.AuthenticationService;
+import jbst.foundation.services.base.JbstAuthenticationService;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 public class JbstAuthenticationResource {
 
     // Services
-    private final AuthenticationService authenticationService;
+    private final JbstAuthenticationService authenticationService;
     private final JbstExtensionService extensionService;
     // Validators
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;

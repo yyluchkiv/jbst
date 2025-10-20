@@ -21,7 +21,7 @@ import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -155,8 +155,8 @@ class BaseSecurityJwtEventsSubscriberTest {
         }
 
         @Bean
-        UsersEmailsService userEmailService() {
-            return mock(UsersEmailsService.class);
+        JbstUsersEmailsService userEmailService() {
+            return mock(JbstUsersEmailsService.class);
         }
 
         @Bean
@@ -191,7 +191,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
     private final JbstUsersTokensService usersTokensService;
-    private final UsersEmailsService usersEmailsService;
+    private final JbstUsersEmailsService usersEmailsService;
     private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;

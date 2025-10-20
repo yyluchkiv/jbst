@@ -40,7 +40,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UsersEmailsServiceConsoleTest {
+class JbstUsersEmailsServiceConsoleTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -122,8 +122,8 @@ class UsersEmailsServiceConsoleTest {
         }
 
         @Bean
-        public UsersEmailsService userEmailService() {
-            return new UsersEmailsService(
+        public JbstUsersEmailsService userEmailService() {
+            return new JbstUsersEmailsService(
                     this.resourceLoader,
                     this.emailService(),
                     this.jbstProperties(),
@@ -132,7 +132,7 @@ class UsersEmailsServiceConsoleTest {
         }
     }
 
-    private final UsersEmailsService componentUnderTest;
+    private final JbstUsersEmailsService componentUnderTest;
 
     @Disabled
     @Test

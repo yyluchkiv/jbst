@@ -9,7 +9,7 @@ import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstRegistrationService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public abstract class AbstractJbstRegistrationService implements JbstRegistrationService {
 
     // Services
-    private final UsersEmailsService usersEmailsService;
+    private final JbstUsersEmailsService usersEmailsService;
     // Repositories
     private final JbstInvitationsRepository invitationsRepository;
     private final JbstUsersRepository usersRepository;

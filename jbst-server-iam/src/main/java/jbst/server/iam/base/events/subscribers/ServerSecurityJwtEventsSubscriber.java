@@ -6,7 +6,7 @@ import jbst.foundation.events.subscribers.events.base.BaseSecurityJwtEventsSubsc
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ServerSecurityJwtEventsSubscriber extends BaseSecurityJwtEventsSubs
     public ServerSecurityJwtEventsSubscriber(
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             JbstUsersTokensService usersTokensService,
-            UsersEmailsService usersEmailsService,
+            JbstUsersEmailsService usersEmailsService,
             JbstUsersSessionsService usersSessionsService,
             JbstGeoUtils geoUtils,
             IncidentPublisher incidentPublisher

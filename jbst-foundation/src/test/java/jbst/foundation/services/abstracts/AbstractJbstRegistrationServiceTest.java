@@ -10,7 +10,7 @@ import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstRegistrationService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +38,8 @@ class AbstractJbstRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        UsersEmailsService usersEmailsService() {
-            return mock(UsersEmailsService.class);
+        JbstUsersEmailsService usersEmailsService() {
+            return mock(JbstUsersEmailsService.class);
         }
 
         @Bean

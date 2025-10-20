@@ -12,7 +12,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +60,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     // Services
     private final JbstUsersTokensService usersTokensService;
     private final JbstUsersService usersService;
-    private final UsersEmailsService usersEmailsService;
+    private final JbstUsersEmailsService usersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     // Incidents

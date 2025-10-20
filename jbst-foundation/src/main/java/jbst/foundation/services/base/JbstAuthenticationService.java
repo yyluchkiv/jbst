@@ -39,7 +39,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClient
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AuthenticationService {
+public class JbstAuthenticationService {
 
     // Authentication
     private final AuthenticationManager authenticationManager;
@@ -51,7 +51,7 @@ public class AuthenticationService {
     // Services
     private final JbstUsersService usersService;
     private final JbstUsersSessionsService jbstUsersSessionsService;
-    private final TokensService tokensService;
+    private final JbstTokensService tokensService;
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
     // Tokens

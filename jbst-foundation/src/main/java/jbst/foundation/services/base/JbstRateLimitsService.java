@@ -15,7 +15,7 @@ import java.time.Duration;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RateLimitsService {
+public class JbstRateLimitsService {
     private final RateLimiter<Username> emailConfirmationRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofHours(1));
     private final RateLimiter<Email> magicLinkRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofMinutes(15));
 

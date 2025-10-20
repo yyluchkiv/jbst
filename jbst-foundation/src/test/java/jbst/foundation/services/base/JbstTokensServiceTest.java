@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TokensServiceTest {
+class JbstTokensServiceTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -75,8 +75,8 @@ class TokensServiceTest {
         }
 
         @Bean
-        TokensService tokenService() {
-            return new TokensService(
+        JbstTokensService tokenService() {
+            return new JbstTokensService(
                     this.jwtUserDetailsService(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),
@@ -99,7 +99,7 @@ class TokensServiceTest {
     // Utilities
     private final JbstSecurityUtils securityUtils;
 
-    private final TokensService componentUnderTest;
+    private final JbstTokensService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

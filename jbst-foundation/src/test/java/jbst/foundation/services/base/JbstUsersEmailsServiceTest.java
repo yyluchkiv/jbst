@@ -44,7 +44,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UsersEmailsServiceTest {
+class JbstUsersEmailsServiceTest {
 
     @Configuration
     @Import({
@@ -70,8 +70,8 @@ class UsersEmailsServiceTest {
         }
 
         @Bean
-        public UsersEmailsService userEmailService() {
-            return new UsersEmailsService(
+        public JbstUsersEmailsService userEmailService() {
+            return new JbstUsersEmailsService(
                     this.resourceLoader,
                     this.emailService(),
                     this.jbstProperties,
@@ -85,7 +85,7 @@ class UsersEmailsServiceTest {
     // Properties
     private final JbstProperties jbstProperties;
 
-    private final UsersEmailsService componentUnderTest;
+    private final JbstUsersEmailsService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

@@ -36,7 +36,7 @@ import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.services.base.TokensService;
+import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
@@ -84,7 +84,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     private final JbstExtensionService extensionService;
     private final JbstUsersService usersService;
     private final JbstUsersSessionsService usersSessionsService;
-    private final TokensService tokensService;
+    private final JbstTokensService tokensService;
     // Repositories
     private final JbstUsersRepository usersRepository;
     private final JbstUsersTokensRepository usersTokensRepository;

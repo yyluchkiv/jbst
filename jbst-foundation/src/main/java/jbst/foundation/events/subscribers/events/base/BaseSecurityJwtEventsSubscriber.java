@@ -14,7 +14,7 @@ import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
     private final JbstUsersTokensService usersTokensService;
-    private final UsersEmailsService usersEmailsService;
+    private final JbstUsersEmailsService usersEmailsService;
     private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;

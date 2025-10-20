@@ -17,8 +17,8 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
-import jbst.foundation.services.base.RateLimitsService;
-import jbst.foundation.services.base.UsersEmailsService;
+import jbst.foundation.services.base.JbstRateLimitsService;
+import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,10 +41,10 @@ public class JbstUsersTokensResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final RateLimitsService rateLimitsService;
+    private final JbstRateLimitsService rateLimitsService;
     private final JbstUsersTokensService usersTokensService;
     private final JbstUsersService usersService;
-    private final UsersEmailsService usersEmailsService;
+    private final JbstUsersEmailsService usersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     // Incidents

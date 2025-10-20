@@ -23,7 +23,7 @@ import static jbst.foundation.utilities.time.LocalDateUtility.now;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UsersEmailsService {
+public class JbstUsersEmailsService {
     // Resources
     private final ResourceLoader resourceLoader;
     // Services
