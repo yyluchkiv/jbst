@@ -7,10 +7,9 @@ on:
 
 env:
   PACKAGE_OWNER: 'tech1-agency'
-  KEEP_COUNT_RELEASES_AND_TAGS: 10
   KEEP_COUNT_CONTAINERS: 5
   KEEP_COUNT_MAVEN_PACKAGES: 10
-  MAVEN_MIN_VERSION_TO_KEEP: 10
+  KEEP_COUNT_RELEASES_AND_TAGS: 10
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -47,9 +46,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_CONTAINERS }}
 
+      # TODO [YYL] cleanup jbst-iam package
       # Delete packages - package-type: maven
 
-      - name: "delete packages"
+      - name: "delete maven package [jbst-server-hardware-monitoring]"
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
@@ -58,7 +58,24 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
 
-      # TODO [YYL] cleanup jbst-iam package
+      - name: "delete maven package [jbst-server-iam]"
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ env.PACKAGE_OWNER }}
+          package-name: 'packages.jbst.jbst-server-iam'
+          package-type: 'maven'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
+
+      - name: "delete maven package [jbst-server-ops]"
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ env.PACKAGE_OWNER }}
+          package-name: 'packages.jbst.jbst-server-ops'
+          package-type: 'maven'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
+
       # Delete releases and tags
 
       - name: "delete releases and tags"

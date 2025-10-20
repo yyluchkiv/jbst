@@ -1,6 +1,2 @@
-### Changelog [v1.27]
-— Modification: /tokens/magic-link is /registration/register-magiclink
-— Modification: /authentication/login/magic-link is authentication/login/magiclink
-— Addition: JbstIamIncidentType.REGISTER_MAGICLINK
-— Addition: JbstSynchronousExtensionService
-— Modification: base services no implementation
+### Changelog [v1.28]
+— TBD
