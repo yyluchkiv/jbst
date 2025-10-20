@@ -3,6 +3,7 @@ package jbst.foundation.services.abstracts;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
@@ -10,6 +11,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.BaseUsersService;
@@ -38,19 +40,49 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     }
 
     @Override
+    public UsernamePasswordCredentials saveOrGetMagicLinkCredentials(MagicLinkUserCredentials credentials) {
+        var email = credentials.userToken().email();
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
+        var password = Password.of(randomStringLetterOrNumbersOnly(20));
+        var hashPassword = Password.of(this.bCryptPasswordEncoder.encode(password.value()));
+        if (isNull(user)) {
+            var created = false;
+            var index = -1;
+            while (!created) {
+                var username = (index == -1) ? email.getUsername() : new Username(email.getUsername().value() + index);
+                try {
+                    user = this.usersRepository.saveAsOrThrow(
+                            UserCreationOption.MAGICLINK,
+                            username,
+                            hashPassword,
+                            email,
+                            credentials.zoneId()
+                    );
+                    created = true;
+                } catch (JbstUsernameAlreadyExistException ex) {
+                    index++;
+                }
+            }
+        }
+        // re-save password to avoid BadCredentials in authenticationManager
+        this.usersRepository.resetPassword(user.username(), hashPassword);
+        return new UsernamePasswordCredentials(user.username(), password);
+    }
+
+    @Override
     public JwtUser safeSave(UserCreationOption creationOption, Email email, ZoneId zoneId) {
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
         if (isNull(user)) {
             var created = false;
             var index = -1;
-            var password = Password.of(this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20)));
+            var hashPassword = this.bCryptPasswordEncoder.encode(randomStringLetterOrNumbersOnly(20));
             while (!created) {
                 var username = (index == -1) ? email.getUsername() : new Username(email.getUsername().value() + index);
                 try {
                     user = this.usersRepository.saveAsOrThrow(
                             creationOption,
                             username,
-                            password,
+                            Password.of(hashPassword),
                             email,
                             zoneId
                     );

@@ -28,6 +28,7 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -191,12 +192,11 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
         var userToken = JbstUserToken.hardcodedMagicLink();
-        // TODO [YYL] fixme
-        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(null);
-
+        var magicLinkUserCredentials = new MagicLinkUserCredentials(userToken, request.zoneId());
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
-        var userCreationOption = UserCreationOption.MAGICLINK;
-        when(this.baseUsersService.safeSave(userCreationOption, userToken.email(), request.zoneId())).thenReturn(user);
+        var credentials = new UsernamePasswordCredentials(user.username(), user.password());
+        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
+        when(this.baseUsersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
 
         var accessToken = JwtAccessToken.random();
@@ -223,7 +223,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
-        verify(this.baseUsersService).safeSave(userCreationOption, userToken.email(), request.zoneId());
+        verify(this.baseUsersService).saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(this.jwtUserDetailsService).loadUserByUsername(user.username().value());

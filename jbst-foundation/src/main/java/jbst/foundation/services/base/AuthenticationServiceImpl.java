@@ -90,29 +90,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public CurrentClientUser asMagicLink(MagicLinkUserCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+    public CurrentClientUser asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
-            var userCreationOption = UserCreationOption.MAGICLINK;
-            var user = this.baseUsersService.safeSave(
-                    userCreationOption,
-                    null,
-                    null
-                    // TODO [YYL] fixme
-//                    userToken.email(),
-//                    request.zoneId()
-            );
-            this.usersTokensRepository.saveAs(credentials.userToken().withUsed(true));
+            var credentials = this.baseUsersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
+            this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
             return this.asAuthentication(
-                    userCreationOption,
-                    user.username(),
-                    user.password(),
+                    UserCreationOption.MAGICLINK,
+                    credentials.username(),
+                    credentials.password(),
                     httpRequest,
                     httpResponse
             );
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
                     new EventAuthenticationMagicLinkFailure(
-                            credentials.userToken(),
+                            magicLinkUserCredentials.userToken(),
                             getClientIpAddr(httpRequest),
                             new UserAgentHeader(httpRequest)
                     )
@@ -170,6 +162,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
         if (!user.creationOption().is(userCreationOption)) {
@@ -183,8 +176,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
         this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), COMPLETED));
 

@@ -12,7 +12,7 @@ import jbst.foundation.domain.security.MagicLinkUserCredentials;
 
 public interface AuthenticationService {
     CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException;
-    CurrentClientUser asMagicLink(MagicLinkUserCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException;
+    CurrentClientUser asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException;
     void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException;
     ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException;
 }
