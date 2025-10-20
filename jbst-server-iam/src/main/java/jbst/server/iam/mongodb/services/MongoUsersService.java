@@ -1,4 +1,4 @@
-package jbst.server.iam.mongodb.services.impl;
+package jbst.server.iam.mongodb.services;
 
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UsersServiceImpl implements UsersService {
+public class MongoUsersService implements UsersService {
 
     // Repositories
     private final MongoJbstUsersRepository mongoUsersRepository;

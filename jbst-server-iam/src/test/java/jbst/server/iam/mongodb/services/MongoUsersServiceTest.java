@@ -1,4 +1,4 @@
-package jbst.server.iam.mongodb.services.impl;
+package jbst.server.iam.mongodb.services;
 
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UsersServiceImplTest {
+class MongoUsersServiceTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -34,7 +34,7 @@ class UsersServiceImplTest {
 
         @Bean
         UsersService userService() {
-            return new UsersServiceImpl(
+            return new MongoUsersService(
                     this.usersRepository()
             );
         }

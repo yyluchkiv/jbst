@@ -1,4 +1,4 @@
-package jbst.server.iam.postgres.services.impl;
+package jbst.server.iam.postgres.services;
 
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UsersServiceImpl implements UsersService {
+public class PostgresUsersService implements UsersService {
 
     // Repositories
     private final PostgresJbstUsersRepository postgresUsersRepository;

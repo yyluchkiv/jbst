@@ -1,4 +1,4 @@
-package jbst.server.iam.postgres.domain.db;
+package jbst.server.iam.postgres.domain;
 
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;

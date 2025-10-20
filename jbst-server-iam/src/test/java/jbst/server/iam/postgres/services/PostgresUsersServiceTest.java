@@ -1,4 +1,4 @@
-package jbst.server.iam.postgres.services.impl;
+package jbst.server.iam.postgres.services;
 
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UsersServiceImplTest {
+class PostgresUsersServiceTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -34,7 +34,7 @@ class UsersServiceImplTest {
 
         @Bean
         UsersService userService() {
-            return new UsersServiceImpl(
+            return new PostgresUsersService(
                     this.usersRepository()
             );
         }
