@@ -10,13 +10,13 @@ public class PostgresSessionRegistry extends AbstractJbstSessionRegistry {
     public PostgresSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
-            PostgresJbstUsersSessionsService baseUsersSessionsService,
+            PostgresJbstUsersSessionsService usersSessionsService,
             PostgresJbstUsersSessionsRepository usersSessionsRepository
     ) {
         super(
                 securityJwtEventsPublisher,
                 securityJwtIncidentsPublisher,
-                baseUsersSessionsService,
+                usersSessionsService,
                 usersSessionsRepository
         );
     }

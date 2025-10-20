@@ -50,7 +50,7 @@ public class JbstAuthenticationService {
     private final JbstSessionRegistry sessionRegistry;
     // Services
     private final JbstUsersService usersService;
-    private final JbstUsersSessionsService jbstUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     private final JbstTokensService tokensService;
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
@@ -160,7 +160,7 @@ public class JbstAuthenticationService {
         var accessToken = this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var refreshToken = this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.jbstUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
+        this.usersSessionsService.save(user, accessToken, refreshToken, httpRequest);
 
         this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
         this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);

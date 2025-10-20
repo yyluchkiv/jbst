@@ -48,7 +48,7 @@ class SessionsCronTest {
         }
 
         @Bean
-        JbstUsersSessionsService baseUsersSessionsService() {
+        JbstUsersSessionsService usersSessionsService() {
             return mock(JbstUsersSessionsService.class);
         }
 
@@ -66,7 +66,7 @@ class SessionsCronTest {
         SessionsCron sessionsCron() {
             return new SessionsCron(
                     this.sessionRegistry(),
-                    this.baseUsersSessionsService(),
+                    this.usersSessionsService(),
                     this.incidentPublisher(),
                     this.jbstProperties()
             );

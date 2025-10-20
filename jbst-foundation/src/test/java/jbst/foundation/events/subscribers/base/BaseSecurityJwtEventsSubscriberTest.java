@@ -160,7 +160,7 @@ class BaseSecurityJwtEventsSubscriberTest {
         }
 
         @Bean
-        JbstUsersSessionsService baseUsersSessionsService() {
+        JbstUsersSessionsService usersSessionsService() {
             return mock(JbstUsersSessionsService.class);
         }
 
@@ -180,7 +180,7 @@ class BaseSecurityJwtEventsSubscriberTest {
                     this.securityJwtIncidentPublisher(),
                     this.baseUsersTokensService(),
                     this.userEmailService(),
-                    this.baseUsersSessionsService(),
+                    this.usersSessionsService(),
                     this.geoUtils(),
                     this.incidentPublisher()
             );

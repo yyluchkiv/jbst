@@ -10,13 +10,13 @@ public class MongoSessionRegistry extends AbstractJbstSessionRegistry {
     public MongoSessionRegistry(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
-            MongoJbstUsersSessionsService baseUsersSessionsService,
+            MongoJbstUsersSessionsService usersSessionsService,
             MongoJbstUsersSessionsRepository usersSessionsRepository
     ) {
         super(
                 securityJwtEventsPublisher,
                 securityJwtIncidentsPublisher,
-                baseUsersSessionsService,
+                usersSessionsService,
                 usersSessionsRepository
         );
     }

@@ -64,8 +64,8 @@ public class TestConfigurationResources {
                 this.currentSessionAssistant(),
                 this.jwtUserDetailsService(),
                 this.sessionRegistry(),
-                this.baseUsersService(),
-                this.baseUsersSessionsService(),
+                this.usersService(),
+                this.usersSessionsService(),
                 this.tokenService(),
                 this.usersTokensRepository(),
                 this.tokensProvider(),
@@ -101,7 +101,7 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    JbstUsersService baseUsersService() {
+    JbstUsersService usersService() {
         return mock(JbstUsersService.class);
     }
 
@@ -136,7 +136,7 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    JbstUsersSessionsService baseUsersSessionsService() {
+    JbstUsersSessionsService usersSessionsService() {
         return mock(JbstUsersSessionsService.class);
     }
 

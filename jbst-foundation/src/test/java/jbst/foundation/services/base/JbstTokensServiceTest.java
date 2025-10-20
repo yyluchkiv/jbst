@@ -60,7 +60,7 @@ class JbstTokensServiceTest {
         }
 
         @Bean
-        JbstUsersSessionsService baseUsersSessionsService() {
+        JbstUsersSessionsService usersSessionsService() {
             return mock(JbstUsersSessionsService.class);
         }
 
@@ -80,7 +80,7 @@ class JbstTokensServiceTest {
                     this.jwtUserDetailsService(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),
-                    this.baseUsersSessionsService(),
+                    this.usersSessionsService(),
                     this.tokensProvider(),
                     this.securityUtils()
             );
