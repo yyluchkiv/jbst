@@ -52,8 +52,8 @@ public class JbstAuthenticationResource {
             HttpServletResponse httpResponse
     ) throws JbstLoginException {
         request = request.createReworkedUkraineZoneId();
-        var userToken = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
-        return this.authenticationService.asMagicLink(userToken, request, httpRequest, httpResponse);
+        var credentials = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
+        return this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
     }
 
     @PostMapping("/logout")

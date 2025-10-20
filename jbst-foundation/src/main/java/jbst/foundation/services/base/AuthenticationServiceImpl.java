@@ -8,8 +8,6 @@ import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
@@ -18,6 +16,7 @@ import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -91,15 +90,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public CurrentClientUser asMagicLink(JbstUserToken userToken, RequestMagicLinkToken request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+    public CurrentClientUser asMagicLink(MagicLinkUserCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
             var userCreationOption = UserCreationOption.MAGICLINK;
             var user = this.baseUsersService.safeSave(
                     userCreationOption,
-                    userToken.email(),
-                    request.zoneId()
+                    null,
+                    null
+                    // TODO [YYL] fixme
+//                    userToken.email(),
+//                    request.zoneId()
             );
-            this.usersTokensRepository.saveAs(userToken.withUsed(true));
+            this.usersTokensRepository.saveAs(credentials.userToken().withUsed(true));
             return this.asAuthentication(
                     userCreationOption,
                     user.username(),
@@ -110,7 +112,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
                     new EventAuthenticationMagicLinkFailure(
-                            userToken,
+                            credentials.userToken(),
                             getClientIpAddr(httpRequest),
                             new UserAgentHeader(httpRequest)
                     )

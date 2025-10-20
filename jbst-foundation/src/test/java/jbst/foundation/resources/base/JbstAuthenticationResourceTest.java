@@ -191,7 +191,8 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
         var userToken = JbstUserToken.hardcodedMagicLink();
-        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(userToken);
+        // TODO [YYL] fixme
+        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(null);
 
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var userCreationOption = UserCreationOption.MAGICLINK;
