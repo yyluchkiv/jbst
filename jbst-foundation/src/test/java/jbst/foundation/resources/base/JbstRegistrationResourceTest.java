@@ -3,12 +3,15 @@ package jbst.foundation.resources.base;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
+import jbst.foundation.domain.events.EventRegistrationMagicLink;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
+import jbst.foundation.incidents.domain.registration.IncidentRegistrationMagicLink;
 import jbst.foundation.services.BaseRegistrationService;
 import jbst.foundation.validators.BaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +58,26 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
                 this.securityJwtIncidentsPublisher,
                 this.baseRegistrationRequestsValidator
         );
+    }
+
+    @Test
+    void registerMagicLink() throws Exception {
+        // Arrange
+        var request = RequestUserRegistrationMagicLink.hardcoded();
+
+        // Act
+        this.mvc.perform(
+                        post("/registration/register-magiclink")
+                                .content(this.objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.baseRegistrationRequestsValidator).validateRegistrationRequestMagicLink(request);
+        verify(this.baseRegistrationService).registerMagicLink(request);
+        verify(this.securityJwtEventsPublisher).publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
+        verify(this.securityJwtIncidentsPublisher).publishRegistrationMagicLink(new IncidentRegistrationMagicLink(request.email()));
     }
 
     @Test

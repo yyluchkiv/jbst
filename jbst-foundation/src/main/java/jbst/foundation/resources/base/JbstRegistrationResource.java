@@ -15,6 +15,7 @@ import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
+import jbst.foundation.incidents.domain.registration.IncidentRegistrationMagicLink;
 import jbst.foundation.services.BaseRegistrationService;
 import jbst.foundation.services.RateLimitsService;
 import jbst.foundation.validators.BaseRegistrationRequestsValidator;
@@ -50,7 +51,7 @@ public class JbstRegistrationResource {
         this.baseRegistrationRequestsValidator.validateRegistrationRequestMagicLink(request);
         this.baseRegistrationService.registerMagicLink(request);
         this.securityJwtEventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
-        // TODO [YYL] add incidents
+        this.securityJwtIncidentsPublisher.publishRegistrationMagicLink(new IncidentRegistrationMagicLink(request.email()));
     }
 
     @PostMapping("/register0")
