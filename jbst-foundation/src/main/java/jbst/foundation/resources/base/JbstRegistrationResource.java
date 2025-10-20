@@ -5,14 +5,17 @@ import jakarta.validation.Valid;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
 import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
+import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.services.BaseRegistrationService;
+import jbst.foundation.services.RateLimitsService;
 import jbst.foundation.validators.BaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,12 +34,22 @@ import org.springframework.web.bind.annotation.*;
 public class JbstRegistrationResource {
 
     // Services
+    private final RateLimitsService rateLimitsService;
     private final BaseRegistrationService baseRegistrationService;
     // Publishers
     private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Validators
     private final BaseRegistrationRequestsValidator baseRegistrationRequestsValidator;
+
+    @PostMapping("/register-magiclink")
+    @ResponseStatus(HttpStatus.OK)
+    public void registerMagicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws JbstTooManyRequestsException {
+        this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
+        this.baseRegistrationRequestsValidator.validateRegistrationRequestMagicLink(request);
+        this.baseRegistrationService.registerMagicLink(request);
+        // TODO [YYL] add incidents/events
+    }
 
     @PostMapping("/register0")
     @ResponseStatus(HttpStatus.OK)

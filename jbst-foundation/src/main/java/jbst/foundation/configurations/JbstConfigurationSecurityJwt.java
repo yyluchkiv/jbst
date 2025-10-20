@@ -178,12 +178,13 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                             .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                             .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                             .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
-                            .requestMatchers(POST, basePathPrefix + "/registration/register0").anonymous()
-                            .requestMatchers(POST, basePathPrefix + "/registration/register1").anonymous()
+                            .requestMatchers(POST, basePathPrefix + "/registration/register-magiclink").denyAll()
+                            .requestMatchers(POST, basePathPrefix + "/registration/register0").denyAll()
+                            .requestMatchers(POST, basePathPrefix + "/registration/register1").denyAll()
                             .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
                             .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated()
-                            .requestMatchers(GET, basePathPrefix + "/tokens/magic-link").permitAll()
+                            .requestMatchers(GET, basePathPrefix + "/tokens/magic-link").permitAll() // TODO [YYL] delete me
                             .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").permitAll()
                             .requestMatchers(basePathPrefix + "/tokens/password/reset").anonymous();
 

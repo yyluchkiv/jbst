@@ -1,2 +1,2 @@
 ### Changelog [v1.27]
-— TBD
+— Modification: /tokens/magic-link is /registration/register-magiclink

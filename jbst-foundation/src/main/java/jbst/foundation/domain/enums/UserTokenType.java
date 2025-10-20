@@ -8,7 +8,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 public enum UserTokenType {
     EMAIL_CONFIRMATION,
     PASSWORD_RESET,
-    MAGIC_LINK;
+    MAGIC_LINK; // TODO [YYL] rename
 
     public boolean isEmailConfirmation() {
         return EMAIL_CONFIRMATION.equals(this);

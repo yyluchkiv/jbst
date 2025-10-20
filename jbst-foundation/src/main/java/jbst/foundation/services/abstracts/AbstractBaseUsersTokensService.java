@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,11 +38,6 @@ public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensS
 
     @Override
     public JbstUserToken getOrCreate(RequestUserToken request) {
-        var token = this.usersTokensRepository.findByUserTokenValidOrNull(request);
-        if (nonNull(token)) {
-            return token;
-        } else {
-            return this.usersTokensRepository.saveAs(request);
-        }
+        return this.usersTokensRepository.findOrCreate(request);
     }
 }

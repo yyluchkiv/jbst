@@ -7,5 +7,6 @@ import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 public interface BaseUsersTokensService {
     void confirmEmail(String token) throws JbstUserEmailConfirmException;
     JbstUserToken saveAs(RequestUserToken request);
+    @Deprecated // TODO: [YYL] rename to findOrCreate()
     JbstUserToken getOrCreate(RequestUserToken request);
 }

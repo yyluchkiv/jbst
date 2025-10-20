@@ -132,6 +132,8 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     // =================================================================================================================
     // PRIVATE METHODS: Subject(s)
     // =================================================================================================================
+    // TODO [YYL] maybe create different subjects
+    // "[localhost] Magic Link at 20-10-2025 08:36:53 (UTC)" vs. "Secure link to log in to ? | 2025-09-01 07:20:06"
     protected String getSubject(@NotNull String eventName) {
         var prefix = this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
         var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
