@@ -44,8 +44,8 @@ public record JbstUserToken(
                 TokenId.hardcoded(),
                 Email.hardcoded(),
                 "B3A85D887DB47A307330C93DC06787EF54A0F46F",
-                MAGIC_LINK,
-                MAGIC_LINK.getExpiryTimestamp(),
+                MAGICLINK,
+                MAGICLINK.getExpiryTimestamp(),
                 false
         );
     }

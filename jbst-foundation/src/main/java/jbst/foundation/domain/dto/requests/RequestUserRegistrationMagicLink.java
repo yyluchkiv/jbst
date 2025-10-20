@@ -22,7 +22,7 @@ public record RequestUserRegistrationMagicLink(
     public RequestUserToken asRequestUserToken() {
         return new RequestUserToken(
                 this.email,
-                UserTokenType.MAGIC_LINK
+                UserTokenType.MAGICLINK
         );
     }
 }
