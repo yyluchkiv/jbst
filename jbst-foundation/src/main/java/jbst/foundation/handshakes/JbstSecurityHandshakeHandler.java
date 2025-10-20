@@ -1,7 +1,7 @@
 package jbst.foundation.handshakes;
 
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.foundation.services.TokensService;
+import jbst.foundation.services.base.TokensService;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

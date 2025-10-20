@@ -36,7 +36,7 @@ import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.JbstSynchronousExtensionService;
-import jbst.foundation.services.TokensService;
+import jbst.foundation.services.base.TokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;

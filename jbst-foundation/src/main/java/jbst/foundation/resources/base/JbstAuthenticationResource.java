@@ -12,7 +12,7 @@ import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.foundation.services.AuthenticationService;
+import jbst.foundation.services.base.AuthenticationService;
 import jbst.foundation.services.JbstSynchronousExtensionService;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;

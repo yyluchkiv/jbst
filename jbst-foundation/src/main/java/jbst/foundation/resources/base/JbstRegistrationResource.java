@@ -17,7 +17,7 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistrationMagicLink;
 import jbst.foundation.services.BaseRegistrationService;
-import jbst.foundation.services.RateLimitsService;
+import jbst.foundation.services.base.RateLimitsService;
 import jbst.foundation.validators.BaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

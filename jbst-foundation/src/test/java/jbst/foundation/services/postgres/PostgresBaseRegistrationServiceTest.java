@@ -3,7 +3,7 @@ package jbst.foundation.services.postgres;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
-import jbst.foundation.services.UsersEmailsService;
+import jbst.foundation.services.base.UsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

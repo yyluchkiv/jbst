@@ -1,4 +1,4 @@
-package jbst.foundation.services;
+package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +18,8 @@ import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
+import jbst.foundation.services.BaseUsersService;
+import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,7 @@ import jbst.foundation.events.subscribers.events.base.BaseSecurityJwtEventsSubsc
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.BaseUsersTokensService;
-import jbst.foundation.services.UsersEmailsService;
+import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

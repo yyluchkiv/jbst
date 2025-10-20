@@ -72,7 +72,7 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.foundation.resources.base",
         "jbst.foundation.resources.hardware",
         "jbst.foundation.resources.system",
-        "jbst.foundation.services.base", // TODO [YYL] fixme
+        "jbst.foundation.services.base",
         "jbst.foundation.tokens",
         "jbst.foundation.validators.base",
         "jbst.foundation.websockets"

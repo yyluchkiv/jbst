@@ -1,4 +1,4 @@
-package jbst.foundation.services.emails.services.impl;
+package jbst.foundation.services.emails;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -7,7 +7,6 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
-import jbst.foundation.services.emails.EmailServiceImpl;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.emails.EmailPlainAttachment;
 import jbst.foundation.services.EmailService;

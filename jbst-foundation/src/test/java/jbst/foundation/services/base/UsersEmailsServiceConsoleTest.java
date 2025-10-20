@@ -1,4 +1,4 @@
-package jbst.foundation.services;
+package jbst.foundation.services.base;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
@@ -10,6 +10,7 @@ import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
+import jbst.foundation.services.EmailService;
 import jbst.foundation.services.emails.EmailServiceImpl;
 import jbst.foundation.utilities.concurrent.SleepUtility;
 import lombok.RequiredArgsConstructor;

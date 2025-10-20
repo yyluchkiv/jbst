@@ -12,7 +12,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.BaseUsersService;
 import jbst.foundation.services.BaseUsersTokensService;
-import jbst.foundation.services.UsersEmailsService;
+import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;

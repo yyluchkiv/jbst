@@ -1,4 +1,4 @@
-package jbst.foundation.services;
+package jbst.foundation.services.base;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Email;
@@ -8,6 +8,7 @@ import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.services.EmailService;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

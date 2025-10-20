@@ -1,4 +1,4 @@
-package jbst.foundation.services;
+package jbst.foundation.services.base;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;

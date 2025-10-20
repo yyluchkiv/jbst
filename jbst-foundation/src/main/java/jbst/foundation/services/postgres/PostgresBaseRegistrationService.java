@@ -6,7 +6,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
-import jbst.foundation.services.UsersEmailsService;
+import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.services.abstracts.AbstractBaseRegistrationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

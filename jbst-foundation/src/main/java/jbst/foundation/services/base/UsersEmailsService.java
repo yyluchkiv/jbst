@@ -1,10 +1,11 @@
-package jbst.foundation.services;
+package jbst.foundation.services.base;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.services.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
