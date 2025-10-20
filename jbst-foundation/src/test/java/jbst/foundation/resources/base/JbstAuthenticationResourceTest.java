@@ -33,7 +33,7 @@ import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.services.BaseUsersService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.services.JbstSynchronousExtensionService;
 import jbst.foundation.services.base.TokensService;
@@ -82,7 +82,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     private final JbstSessionRegistry sessionRegistry;
     // Services
     private final JbstSynchronousExtensionService synchronousExtensionService;
-    private final BaseUsersService baseUsersService;
+    private final JbstUsersService usersService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
@@ -110,7 +110,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.authenticationManager,
                 this.sessionRegistry,
                 this.synchronousExtensionService,
-                this.baseUsersService,
+                this.usersService,
                 this.baseUsersSessionsService,
                 this.tokensService,
                 this.usersRepository,
@@ -130,7 +130,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.authenticationManager,
                 this.sessionRegistry,
                 this.synchronousExtensionService,
-                this.baseUsersService,
+                this.usersService,
                 this.baseUsersSessionsService,
                 this.tokensService,
                 this.usersRepository,
@@ -200,7 +200,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var credentials = new UsernamePasswordCredentials(user.username(), user.password());
         when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
-        when(this.baseUsersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
+        when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
 
         var accessToken = JwtAccessToken.random();
@@ -227,7 +227,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
-        verify(this.baseUsersService).saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
+        verify(this.usersService).saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(this.jwtUserDetailsService).loadUserByUsername(user.username().value());

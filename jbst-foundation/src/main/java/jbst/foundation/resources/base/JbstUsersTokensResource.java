@@ -15,7 +15,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.base.RateLimitsService;
 import jbst.foundation.services.base.UsersEmailsService;
@@ -43,7 +43,7 @@ public class JbstUsersTokensResource {
     // Services
     private final RateLimitsService rateLimitsService;
     private final BaseUsersTokensService baseUsersTokensService;
-    private final BaseUsersService baseUsersService;
+    private final JbstUsersService usersService;
     private final UsersEmailsService usersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
@@ -88,7 +88,7 @@ public class JbstUsersTokensResource {
     @ResponseStatus(HttpStatus.OK)
     public void executeResetPassword(@RequestBody @Valid RequestUserEmail request) {
         try {
-            var user = this.baseUsersService.findByEmail(request.email());
+            var user = this.usersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
             var userToken = this.baseUsersTokensService.findOrCreate(user.getRequestUserTokenAsPasswordReset());
             this.usersEmailsService.executePasswordReset(userToken);
@@ -101,6 +101,6 @@ public class JbstUsersTokensResource {
     @ResponseStatus(HttpStatus.OK)
     public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws JbstUserTokenValidationException {
         this.baseUsersTokensRequestsValidator.validatePasswordReset(request);
-        this.baseUsersService.resetPassword(request);
+        this.usersService.resetPassword(request);
     }
 }

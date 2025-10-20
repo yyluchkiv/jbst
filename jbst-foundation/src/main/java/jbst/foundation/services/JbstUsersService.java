@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 
-public interface BaseUsersService {
+public interface JbstUsersService {
     JwtUser findByEmail(Email email);
     UsernamePasswordCredentials saveOrGetMagicLinkCredentials(MagicLinkUserCredentials credentials);
     void updateUser1(JwtUser user, RequestUserUpdate1 request);

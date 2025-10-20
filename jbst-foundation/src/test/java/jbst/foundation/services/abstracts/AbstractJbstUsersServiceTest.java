@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseUsersServiceTest {
+class AbstractJbstUsersServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
@@ -56,8 +56,8 @@ class AbstractBaseUsersServiceTest {
         }
 
         @Bean
-        AbstractBaseUsersService baseUserService() {
-            return new AbstractBaseUsersService(
+        AbstractJbstUsersService baseUserService() {
+            return new AbstractJbstUsersService(
                     this.usersTokensRepository(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
@@ -69,7 +69,7 @@ class AbstractBaseUsersServiceTest {
     private final JbstUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final AbstractBaseUsersService componentUnderTest;
+    private final AbstractJbstUsersService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

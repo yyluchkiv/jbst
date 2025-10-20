@@ -14,7 +14,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.services.BaseUsersService;
+import jbst.foundation.services.JbstUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +24,7 @@ import static java.util.Objects.isNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 @AllArgsConstructor
-public abstract class AbstractBaseUsersService implements BaseUsersService {
+public abstract class AbstractJbstUsersService implements JbstUsersService {
 
     // Repository
     private final JbstUsersTokensRepository usersTokensRepository;

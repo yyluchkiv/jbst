@@ -10,7 +10,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.services.BaseUsersService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.BaseUsersTokensService;
 import jbst.foundation.services.base.UsersEmailsService;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -59,7 +59,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
-    private final BaseUsersService baseUsersService;
+    private final JbstUsersService usersService;
     private final UsersEmailsService usersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
@@ -76,7 +76,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.baseUsersTokensService,
                 this.usersEmailsService,
-                this.baseUsersService,
+                this.usersService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
         );
@@ -88,7 +88,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.baseUsersTokensService,
                 this.usersEmailsService,
-                this.baseUsersService,
+                this.usersService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
         );
@@ -157,7 +157,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         // Arrange
         var request = RequestUserEmail.hardcoded();
         var user = JwtUser.hardcoded(request.email(), JbstUserEmailDetails.confirmed());
-        when(this.baseUsersService.findByEmail(request.email())).thenReturn(user);
+        when(this.usersService.findByEmail(request.email())).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsPasswordReset();
         var userToken = JbstUserToken.hardcodedPasswordReset();
         when(this.baseUsersTokensService.findOrCreate(requestUserToken)).thenReturn(userToken);
@@ -170,7 +170,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         ).andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUsersService).findByEmail(request.email());
+        verify(this.usersService).findByEmail(request.email());
         verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
         verify(this.baseUsersTokensService).findOrCreate(requestUserToken);
         verify(this.usersEmailsService).executePasswordReset(userToken);
@@ -190,7 +190,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.baseUsersTokensRequestsValidator).validatePasswordReset(request);
-        verify(this.baseUsersService).resetPassword(request);
+        verify(this.usersService).resetPassword(request);
     }
 
 }

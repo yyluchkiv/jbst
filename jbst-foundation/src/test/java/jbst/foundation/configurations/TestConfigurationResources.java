@@ -100,8 +100,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseUsersService baseUsersService() {
-        return mock(BaseUsersService.class);
+    JbstUsersService baseUsersService() {
+        return mock(JbstUsersService.class);
     }
 
     @Bean

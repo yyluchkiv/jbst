@@ -18,7 +18,7 @@ import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.services.BaseUsersService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.BaseUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.TokensProvider;
@@ -49,7 +49,7 @@ public class AuthenticationService {
     // Sessions
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final BaseUsersService baseUsersService;
+    private final JbstUsersService usersService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
     // Repositories
@@ -84,7 +84,7 @@ public class AuthenticationService {
 
     public final CurrentClientUser asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
-            var credentials = this.baseUsersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
+            var credentials = this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
             this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
             return this.asAuthentication(
                     UserCreationOption.MAGICLINK,
