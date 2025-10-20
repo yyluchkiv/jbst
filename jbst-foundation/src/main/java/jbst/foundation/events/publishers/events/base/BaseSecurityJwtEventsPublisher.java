@@ -45,6 +45,12 @@ public class BaseSecurityJwtEventsPublisher extends AbstractEventPublisher imple
     }
 
     @Override
+    public void publishRegistrationMagicLink(EventRegistrationMagicLink event) {
+        LOGGER.debug(USER_ACTION, event.request().email(), "[pub, events] register magiclink");
+        this.applicationEventPublisher.publishEvent(event);
+    }
+
+    @Override
     public void publishRegistration0(EventRegistration0 event) {
         LOGGER.debug(USER_ACTION, event.requestUserRegistration0().username(), "[pub, events] register0");
         this.applicationEventPublisher.publishEvent(event);

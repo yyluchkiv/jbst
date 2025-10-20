@@ -8,6 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
+import jbst.foundation.domain.events.EventRegistrationMagicLink;
 import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
@@ -48,7 +49,8 @@ public class JbstRegistrationResource {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         this.baseRegistrationRequestsValidator.validateRegistrationRequestMagicLink(request);
         this.baseRegistrationService.registerMagicLink(request);
-        // TODO [YYL] add incidents/events
+        this.securityJwtEventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
+        // TODO [YYL] add incidents
     }
 
     @PostMapping("/register0")

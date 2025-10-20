@@ -86,6 +86,11 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
     }
 
     @Override
+    public void onRegistrationMagicLink(EventRegistrationMagicLink event) {
+        LOGGER.debug(USER_ACTION, event.request().email(), "[sub, events] register magiclink");
+    }
+
+    @Override
     public void onRegistration0(EventRegistration0 event) {
         try {
             LOGGER.debug(USER_ACTION, event.requestUserRegistration0().username(), "[sub, events] register0");
