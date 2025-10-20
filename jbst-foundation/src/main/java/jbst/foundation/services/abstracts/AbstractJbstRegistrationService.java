@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.services.BaseRegistrationService;
+import jbst.foundation.services.JbstRegistrationService;
 import jbst.foundation.services.base.UsersEmailsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseRegistrationService implements BaseRegistrationService {
+public abstract class AbstractJbstRegistrationService implements JbstRegistrationService {
 
     // Services
     private final UsersEmailsService usersEmailsService;

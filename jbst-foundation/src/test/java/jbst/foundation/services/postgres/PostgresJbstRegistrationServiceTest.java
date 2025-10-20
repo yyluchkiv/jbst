@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresBaseRegistrationServiceTest {
+class PostgresJbstRegistrationServiceTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -56,8 +56,8 @@ class PostgresBaseRegistrationServiceTest {
         }
 
         @Bean
-        PostgresBaseRegistrationService registrationService() {
-            return new PostgresBaseRegistrationService(
+        PostgresJbstRegistrationService registrationService() {
+            return new PostgresJbstRegistrationService(
                     this.usersEmailsService(),
                     this.invitationsRepository(),
                     this.userRepository(),
@@ -71,7 +71,7 @@ class PostgresBaseRegistrationServiceTest {
     private final PostgresJbstUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final PostgresBaseRegistrationService componentUnderTest;
+    private final PostgresJbstRegistrationService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

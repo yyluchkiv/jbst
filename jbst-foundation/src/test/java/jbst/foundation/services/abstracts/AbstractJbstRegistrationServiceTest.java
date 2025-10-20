@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.services.BaseRegistrationService;
+import jbst.foundation.services.JbstRegistrationService;
 import jbst.foundation.services.base.UsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseRegistrationServiceTest {
+class AbstractJbstRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
@@ -63,8 +63,8 @@ class AbstractBaseRegistrationServiceTest {
         }
 
         @Bean
-        AbstractBaseRegistrationService registrationService() {
-            return new AbstractBaseRegistrationService(
+        AbstractJbstRegistrationService registrationService() {
+            return new AbstractJbstRegistrationService(
                     this.usersEmailsService(),
                     this.invitationsRepository(),
                     this.userRepository(),
@@ -78,7 +78,7 @@ class AbstractBaseRegistrationServiceTest {
     private final JbstUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final BaseRegistrationService componentUnderTest;
+    private final JbstRegistrationService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

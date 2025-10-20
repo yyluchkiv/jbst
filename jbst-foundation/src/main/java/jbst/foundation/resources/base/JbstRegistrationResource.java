@@ -16,7 +16,7 @@ import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistrationMagicLink;
-import jbst.foundation.services.BaseRegistrationService;
+import jbst.foundation.services.JbstRegistrationService;
 import jbst.foundation.services.base.RateLimitsService;
 import jbst.foundation.validators.BaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class JbstRegistrationResource {
 
     // Services
     private final RateLimitsService rateLimitsService;
-    private final BaseRegistrationService baseRegistrationService;
+    private final JbstRegistrationService registrationService;
     // Publishers
     private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
@@ -49,7 +49,7 @@ public class JbstRegistrationResource {
     public void registerMagicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws JbstTooManyRequestsException {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         this.baseRegistrationRequestsValidator.validateRegistrationRequestMagicLink(request);
-        this.baseRegistrationService.registerMagicLink(request);
+        this.registrationService.registerMagicLink(request);
         this.securityJwtEventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
         this.securityJwtIncidentsPublisher.publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
     }
@@ -59,7 +59,7 @@ public class JbstRegistrationResource {
     public void register0(@RequestBody @Valid RequestUserRegistration0 request) throws JbstRegistrationException {
         request = request.createReworkedUkraineZoneId();
         this.baseRegistrationRequestsValidator.validateRegistrationRequest0(request);
-        this.baseRegistrationService.register0(request);
+        this.registrationService.register0(request);
         this.securityJwtEventsPublisher.publishRegistration0(new EventRegistration0(request));
         this.securityJwtIncidentsPublisher.publishRegistration0(new IncidentRegistration0(request.username()));
     }
@@ -69,7 +69,7 @@ public class JbstRegistrationResource {
     public void register1(@RequestBody @Valid RequestUserRegistration1 request) throws JbstRegistrationException {
         request = request.createReworkedUkraineZoneId();
         this.baseRegistrationRequestsValidator.validateRegistrationRequest1(request);
-        this.baseRegistrationService.register1(request);
+        this.registrationService.register1(request);
         this.securityJwtEventsPublisher.publishRegistration1(new EventRegistration1(request));
         this.securityJwtIncidentsPublisher.publishRegistration1(new IncidentRegistration1(request.username()));
     }

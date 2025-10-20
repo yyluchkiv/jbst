@@ -120,8 +120,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseRegistrationService baseRegistrationService() {
-        return mock(BaseRegistrationService.class);
+    JbstRegistrationService baseRegistrationService() {
+        return mock(JbstRegistrationService.class);
     }
 
     @Bean

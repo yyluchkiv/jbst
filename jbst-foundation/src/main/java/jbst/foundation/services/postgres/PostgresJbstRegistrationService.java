@@ -7,7 +7,7 @@ import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
 import jbst.foundation.services.base.UsersEmailsService;
-import jbst.foundation.services.abstracts.AbstractBaseRegistrationService;
+import jbst.foundation.services.abstracts.AbstractJbstRegistrationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
-public class PostgresBaseRegistrationService extends AbstractBaseRegistrationService {
+public class PostgresJbstRegistrationService extends AbstractJbstRegistrationService {
 
     @Autowired
-    public PostgresBaseRegistrationService(
+    public PostgresJbstRegistrationService(
             UsersEmailsService usersEmailsService,
             PostgresJbstInvitationsRepository invitationsRepository,
             PostgresJbstUsersRepository usersRepository,
