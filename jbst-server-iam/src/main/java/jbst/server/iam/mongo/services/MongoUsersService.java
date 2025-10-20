@@ -1,4 +1,4 @@
-package jbst.server.iam.mongodb.services;
+package jbst.server.iam.mongo.services;
 
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.jwt.JwtUser;

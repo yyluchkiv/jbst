@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
         JbstConfigurationMongo.class
 })
 @ComponentScan({
-        "jbst.server.iam.mongodb"
+        "jbst.server.iam.mongo"
 })
 public class ConfigurationServerMongo {
 }

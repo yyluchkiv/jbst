@@ -3,6 +3,6 @@ package jbst.server.iam.postgres.constants;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class TablesConstants {
+public class PostgresConstants {
     public static final String ANYTHING = "anything";
 }

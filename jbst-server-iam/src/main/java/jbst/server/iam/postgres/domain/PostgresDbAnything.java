@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static jbst.server.iam.postgres.constants.TablesConstants.ANYTHING;
+import static jbst.server.iam.postgres.constants.PostgresConstants.ANYTHING;
 
 // Lombok
 @NoArgsConstructor
