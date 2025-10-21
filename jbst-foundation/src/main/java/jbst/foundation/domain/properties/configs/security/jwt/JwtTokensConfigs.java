@@ -1,8 +1,5 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.asserts.Asserts;
-import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.JwtToken;
 import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
@@ -16,6 +13,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
+import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
@@ -66,26 +66,26 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     public void assertProperties() {
         super.assertProperties();
         if (this.storageMethod.isCookies()) {
-            Asserts.assertFalseOrThrow(
+            assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
-                    "Please make sure \"%s.accessToken.cookieKey\" and \"%s.refreshToken.cookieKey\" are different".formatted(
-                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName()),
-                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName())
+                    "Please make sure %s.access-token.cookie-key and %s.refresh-token.cookie-key are different".formatted(
+                            RED_TEXT.format(this.getPropertyName()),
+                            RED_TEXT.format(this.getPropertyName())
                     )
             );
         }
         if (this.storageMethod.isHeaders()) {
-            Asserts.assertFalseOrThrow(
+            assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
-                    "Please make sure \"%s.accessToken.headerKey\" and \"%s.refreshToken.headerKey\" are different".formatted(
-                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName()),
-                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName())
+                    "Please make sure %s.access-token.header-key and %s.refresh-token.header-key are different".formatted(
+                            RED_TEXT.format(this.getPropertyName()),
+                            RED_TEXT.format(this.getPropertyName())
                     )
             );
         }
         LOGGER.info(
-                "{} JWT tokens storage method — {}: \"{}\" and \"{}\"",
-                JbstConstants.Logs.PREFIX,
+                "{} tokens storage method — {}: {} and {}",
+                PREFIX,
                 this.storageMethod,
                 this.accessToken.getKey(this.storageMethod),
                 this.refreshToken.getKey(this.storageMethod)

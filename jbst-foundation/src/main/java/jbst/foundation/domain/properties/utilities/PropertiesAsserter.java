@@ -1,7 +1,6 @@
 package jbst.foundation.domain.properties.utilities;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
@@ -53,7 +52,7 @@ public class PropertiesAsserter {
         ACTIONS.put(BigInteger.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(BigDecimal.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(String.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Collection.class::isAssignableFrom, cp -> ConsoleAsserts.assertNonNullNotEmptyOrThrow((Collection<?>) cp.getPropertyValue(), new PropertyId(cp.getPropertyName())));
+        ACTIONS.put(Collection.class::isAssignableFrom, property -> ConsoleAsserts.assertNonNullNotEmptyOrThrow((Collection<?>) property.getPropertyValue(), property.getPropertyName()));
     }
 
     // =================================================================================================================
