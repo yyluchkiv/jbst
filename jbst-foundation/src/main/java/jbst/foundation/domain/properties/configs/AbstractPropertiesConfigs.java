@@ -33,7 +33,7 @@ public abstract class AbstractPropertiesConfigs {
                     if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                         ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).printProperties();
                     } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                        ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).printProperties(jbstProperty.getTreePropertyName());
+                        jbstProperty.printAbstractPropertyConfigs();
                     } else {
                         jbstProperty.print();
                     }

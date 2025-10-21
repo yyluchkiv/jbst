@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.base;
 
-import jbst.foundation.domain.reflections.JbstPropertiesUtility;
 import jbst.foundation.domain.reflections.JbstProperty;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,7 +7,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
-import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
 import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryFields;
 
 // TODO [YYL] merge AbstractPropertyConfigs + AbstractPropertiesConfigs
@@ -17,13 +15,6 @@ public abstract class AbstractPropertyConfigs {
 
     public void assertProperties(String propertyName) {
         this.assertFields(propertyName, getMandatoryFields(this, propertyName));
-    }
-
-    public void printProperties(String propertyName) {
-        var fields = getMandatoryBasedFields(this, propertyName);
-        var jbstProperties = JbstPropertiesUtility.getProperties(this, propertyName, fields);
-        jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
-        jbstProperties.forEach(JbstProperty::print);
     }
 
     // =================================================================================================================

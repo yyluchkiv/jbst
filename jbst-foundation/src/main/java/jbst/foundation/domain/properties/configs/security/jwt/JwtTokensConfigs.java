@@ -84,7 +84,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             );
         }
         LOGGER.info(
-                "{} tokens storage method — {}: {} and {}",
+                "{} — tokens storage method — {}: {} and {}",
                 PREFIX,
                 this.storageMethod,
                 this.accessToken.getKey(this.storageMethod),

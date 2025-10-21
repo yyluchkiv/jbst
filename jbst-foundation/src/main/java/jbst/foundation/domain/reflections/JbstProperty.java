@@ -3,6 +3,7 @@ package jbst.foundation.domain.reflections;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
+import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,9 @@ import java.util.Map;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
+import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
@@ -26,8 +29,6 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @Slf4j
 @Data
 public class JbstProperty {
-    private static final String READABLE_PROPERTY = "%s: `%s`";
-
     public static final Comparator<JbstProperty> PRINTER_COMPARATOR = (o1, o2) -> {
         if ("enabled".equals(o1.getPropertyName())) {
             return -1;
@@ -62,17 +63,17 @@ public class JbstProperty {
 
         if (isArrayOfStrings) {
             var castedPropertyValue = (String[]) this.propertyValue;
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName, Arrays.toString(castedPropertyValue));
+            this.readableValue = "%s: %s".formatted(this.treePropertyName, Arrays.toString(castedPropertyValue));
         } else if (isZoneId) {
             var castedPropertyValue = (ZoneId) this.propertyValue;
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName, castedPropertyValue.getId());
+            this.readableValue = "%s: %s".formatted(this.treePropertyName, castedPropertyValue.getId());
         } else {
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName, this.propertyValue);
+            this.readableValue = "%s: %s".formatted(this.treePropertyName, this.propertyValue);
         }
     }
 
-    public void print() {
-        LOGGER.debug("{} — {}", PREFIX, this.readableValue);
+    public void assertOrThrow() {
+        // TODO [YYL] fixme?
     }
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
@@ -98,5 +99,18 @@ public class JbstProperty {
                 .map(Map.Entry::getValue)
                 .findFirst()
                 .ifPresent(consumer -> consumer.accept(this));
+    }
+
+    public void printAbstractPropertyConfigs() {
+        assertTrueOrThrow(AbstractPropertyConfigs.class.isAssignableFrom(this.propertyValue.getClass()));
+        var fields = getMandatoryBasedFields(this, this.treePropertyName);
+        var jbstProperties = JbstPropertiesUtility.getProperties(this, this.treePropertyName, fields);
+        jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
+        jbstProperties.forEach(JbstProperty::print);
+    }
+
+    // TODO [YYL] fixme -> debug?
+    public void print() {
+        LOGGER.warn("{} — {}", PREFIX, BLACK_BOLD_TEXT.format(this.readableValue));
     }
 }
