@@ -1,7 +1,7 @@
 package jbst.server.iam.base.properties;
 
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.server.iam.base.domain.enums.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends AbstractPropertiesConfigs {
+public class ServerConfigs extends JbstProperty {
     @MandatoryProperty
     private final String targetAttribute1;
     @MandatoryProperty
@@ -21,12 +21,22 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     private final UserAuthority targetAuthority;
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return true;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "server-configs";
     }
 }

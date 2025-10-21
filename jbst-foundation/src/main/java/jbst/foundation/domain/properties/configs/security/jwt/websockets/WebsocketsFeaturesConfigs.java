@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security.jwt.websockets;
 
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
+public class WebsocketsFeaturesConfigs extends JbstProperty {
     @NonMandatoryProperty
     private WebsocketsFeatureConfigs hardwareConfigs;
     @NonMandatoryProperty
@@ -32,12 +32,22 @@ public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return false;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "websockets-features-configs";
     }
 }

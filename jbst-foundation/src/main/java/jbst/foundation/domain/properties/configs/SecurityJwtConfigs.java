@@ -1,6 +1,7 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.AbstractAuthority;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
@@ -27,7 +28,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
+public class SecurityJwtConfigs extends JbstProperty {
     @MandatoryProperty
     private final AuthoritiesConfigs authoritiesConfigs;
     @MandatoryProperty
@@ -115,12 +116,22 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return true;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "security-jwt-configs";
     }
 

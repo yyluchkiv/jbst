@@ -1,8 +1,8 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Cron;
-import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SessionConfigs extends AbstractPropertiesConfigs {
+public class SessionConfigs extends JbstProperty {
     @MandatoryProperty
     private final Cron cleanSessionsByExpiredRefreshTokensCron;
     @MandatoryProperty
@@ -35,12 +35,22 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return false;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "session-configs";
     }
 }

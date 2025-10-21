@@ -1,7 +1,8 @@
 package jbst.server.ops.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class GithubConfigs extends AbstractPropertyConfigs {
+public class GithubConfigs extends JbstProperty {
     @MandatoryProperty
     private final String token;
     @MandatoryProperty
@@ -20,4 +21,24 @@ public class GithubConfigs extends AbstractPropertyConfigs {
     private final String repo;
     @MandatoryProperty
     private final String content;
+
+    @Override
+    public boolean isRoot() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
+    }
 }

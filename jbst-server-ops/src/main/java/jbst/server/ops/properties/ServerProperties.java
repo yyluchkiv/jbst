@@ -18,9 +18,11 @@ import org.springframework.core.PriorityOrdered;
 @Data
 public class ServerProperties implements PriorityOrdered {
     private SpringLogging logging;
+    // WARNING: create new class to avoid using dedicated leaf(s) as root-based property
     private RemoteServer serverConfigs;
     private SlacksConfigs slacksConfigs;
     private ServersConfigs serversConfigs;
+    // WARNING: create new class to avoid using dedicated leaf(s) as root-based property
     private RecipientsConfigs recipientsConfigs;
 
     @Override

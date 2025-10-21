@@ -1,8 +1,8 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
-import jbst.foundation.domain.properties.configs.AbstractTogglePropertiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
@@ -17,7 +17,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsConfigs extends AbstractTogglePropertiesConfigs {
+public class WebsocketsConfigs extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty
@@ -50,12 +50,22 @@ public class WebsocketsConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return false;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return this.enabled;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "websockets-configs";
     }
 }

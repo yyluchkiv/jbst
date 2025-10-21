@@ -1,8 +1,9 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRan
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentsConfigs extends AbstractPropertyConfigs {
+public class IncidentsConfigs extends JbstProperty {
     @MandatoryProperty
     @MandatoryMapProperty(propertyName = "typesConfigs", keySetClass = JbstIamIncidentType.class)
     private final Map<JbstIamIncidentType, Boolean> typesConfigs;
@@ -51,11 +52,31 @@ public class IncidentsConfigs extends AbstractPropertyConfigs {
     }
 
     @Override
-    public void assertProperties(String propertyName) {
-        super.assertProperties(propertyName);
+    public boolean isRoot() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
+    }
+
+    @Override
+    public void assertPropertiesAsLeaf(String parentTreeName) {
+        super.assertPropertiesAsLeaf(parentTreeName);
         if (TRUE.equals(this.typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD)) &&
                 TRUE.equals(this.typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD))) {
-            throw new IllegalArgumentException("Please configure login failure incident feature. Only one feature type could be enabled");
+            throw new IllegalArgumentException("[IncidentsConfigs]: one login failure feature type expected to be provided");
         }
     }
 

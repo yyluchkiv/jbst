@@ -2,6 +2,7 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.maven.MavenDetails;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MavenConfigs extends AbstractPropertiesConfigs {
+public class MavenConfigs extends JbstProperty {
     @MandatoryProperty
     private final String groupId;
     @MandatoryProperty
@@ -25,12 +26,22 @@ public class MavenConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
-        return true;
+    public boolean isRoot() {
+        return false;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "maven-configs";
     }
 

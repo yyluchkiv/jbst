@@ -1,9 +1,9 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
-import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
+public class UsersEmailsConfigs extends JbstProperty {
     @MandatoryProperty
     private final String subjectPrefix;
     @MandatoryProperty
@@ -47,12 +47,22 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return false;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "users-emails-configs";
     }
 

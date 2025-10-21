@@ -2,6 +2,8 @@ package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -16,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.*;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Mongodb extends AbstractPropertyConfigs {
+public class Mongodb extends JbstProperty {
     @MandatoryProperty
     private final String host;
     @MandatoryProperty
@@ -46,6 +48,26 @@ public class Mongodb extends AbstractPropertyConfigs {
         } else {
             return "mongodb://" + this.host + ":" + this.port + "/" + this.database;
         }
+    }
+
+    @Override
+    public boolean isRoot() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     // ================================================================================================================

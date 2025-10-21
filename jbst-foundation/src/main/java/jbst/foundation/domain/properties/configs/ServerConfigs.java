@@ -2,6 +2,7 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Version;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -13,11 +14,11 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends AbstractPropertiesConfigs {
+public class ServerConfigs extends JbstProperty {
     @MandatoryProperty
     private final ServerName name;
     @MandatoryProperty
-    private MavenConfigs mavenConfigs;
+    private final MavenConfigs mavenConfigs;
     @MandatoryProperty
     private final Boolean springdocEnabled;
     @NonMandatoryProperty
@@ -36,12 +37,22 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return true;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "server-configs";
     }
 

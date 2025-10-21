@@ -1,6 +1,6 @@
 package jbst.foundation.domain.asserts;
 
-import jbst.foundation.domain.reflections.JbstProperty;
+import jbst.foundation.domain.properties.JbstPropertyEdge;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @UtilityClass
 public class ConsoleAsserts {
-    public static final Map<Function<Class<?>, Boolean>, Consumer<JbstProperty>> PROPERTIES_ACTIONS = new HashMap<>();
+    public static final Map<Function<Class<?>, Boolean>, Consumer<JbstPropertyEdge>> PROPERTIES_ACTIONS = new HashMap<>();
 
     static {
         PROPERTIES_ACTIONS.put(Date.class::equals, ConsoleAsserts::assertNonNullOrThrow);
@@ -48,11 +48,11 @@ public class ConsoleAsserts {
         }
     }
 
-    public static void assertNonNullOrThrow(JbstProperty jbstProperty) {
-        if (isNull(jbstProperty)) {
+    public static void assertNonNullOrThrow(JbstPropertyEdge edge) {
+        if (isNull(edge)) {
             throw new IllegalArgumentException(RED_TEXT.format("Unknown reflection property"));
         }
-        assertNonNullOrThrow(jbstProperty.getPropertyValue(), jbstProperty.getTreePropertyName());
+        assertNonNullOrThrow(edge.getValueRAW(), edge.getName());
     }
 
     @SuppressWarnings("unused")

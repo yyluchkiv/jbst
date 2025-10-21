@@ -1,7 +1,8 @@
 package jbst.foundation.domain.properties.configs.mvc;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CorsConfigs extends AbstractPropertyConfigs {
+public class CorsConfigs extends JbstProperty {
     @NonMandatoryProperty
     private String pathPattern;
     @NonMandatoryProperty
@@ -51,5 +52,25 @@ public class CorsConfigs extends AbstractPropertyConfigs {
                 randomBoolean(),
                 new String[] { randomString() }
         );
+    }
+
+    @Override
+    public boolean isRoot() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 }

@@ -1,5 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +12,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
-import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
@@ -18,7 +19,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JwtToken extends AbstractPropertyConfigs {
+public class JwtToken extends JbstProperty {
     @MandatoryProperty
     private final TimeAmount expiration;
     @NonMandatoryProperty
@@ -43,13 +44,31 @@ public class JwtToken extends AbstractPropertyConfigs {
     }
 
     @Override
-    public void assertProperties(String propertyName) {
-        super.assertProperties(propertyName);
+    public boolean isRoot() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
+    }
+
+    @Override
+    public void assertPropertiesAsLeaf(String parentTreeName) {
+        super.assertPropertiesAsLeaf(parentTreeName);
         assertFalseOrThrow(
                 nonNull(this.cookieKey) && nonNull(this.headerKey),
-                "Attribute '%s' requires only 'cookie-key' or 'header-key' to be provided".formatted(
-                        RED_TEXT.format(propertyName)
-                )
+                "[JwtToken]: 'cookie-key' or 'header-key' expected to be provided"
         );
     }
 

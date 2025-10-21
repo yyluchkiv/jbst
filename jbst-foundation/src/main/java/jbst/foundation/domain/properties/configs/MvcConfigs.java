@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
@@ -15,7 +16,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MvcConfigs extends AbstractTogglePropertiesConfigs {
+public class MvcConfigs extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty
@@ -52,12 +53,22 @@ public class MvcConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isRoot() {
         return true;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return this.enabled;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "mvc-configs";
     }
 }
