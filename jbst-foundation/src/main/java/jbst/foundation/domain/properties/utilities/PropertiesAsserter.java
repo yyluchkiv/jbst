@@ -5,7 +5,6 @@ import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
-import jbst.foundation.domain.properties.base.AbstractTogglePropertyConfigs;
 import jbst.foundation.domain.reflections.JbstProperty;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -20,27 +19,6 @@ import static jbst.foundation.utilities.reflections.ReflectionUtility.getFields;
 @Slf4j
 @UtilityClass
 public class PropertiesAsserter {
-    // =================================================================================================================
-    // Assertions
-    // =================================================================================================================
-    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
-        assertNonNullOrThrow(propertyConfigs, propertyName);
-        assertPropertyConfigs(
-                propertyConfigs,
-                propertyName,
-                getMandatoryFields(propertyConfigs, propertyName)
-        );
-    }
-
-    public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, String propertyName) {
-        assertNonNullOrThrow(propertyConfigs, propertyName);
-        assertPropertyConfigs(
-                propertyConfigs,
-                propertyName,
-                getMandatoryToggleFields(propertyConfigs, propertyName)
-        );
-    }
-
     // =================================================================================================================
     // GETTERS
     // =================================================================================================================

@@ -45,9 +45,9 @@ public abstract class AbstractPropertiesConfigs {
     }
 
     // =================================================================================================================
-    // PRIVATE METHODS
+    // PROTECTED METHODS
     // =================================================================================================================
-    public void assertFields(List<Field> fields) {
+    protected void assertFields(List<Field> fields) {
         fields.forEach(field -> {
             try {
                 var jbstProperty = new JbstProperty(this.getPropertyName(), field, field.get(this));

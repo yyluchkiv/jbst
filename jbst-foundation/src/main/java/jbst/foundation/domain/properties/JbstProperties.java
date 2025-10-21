@@ -48,7 +48,7 @@ public class JbstProperties implements PriorityOrdered {
     // ================================================================================================================
     // MERGED METHODS
     // ================================================================================================================
-    public String getMagicLink(@NotNull String token) {
+    public final String getMagicLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
                 this.serverConfigs.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientMagicLinkPath(),
@@ -56,14 +56,14 @@ public class JbstProperties implements PriorityOrdered {
         );
     }
 
-    public String getEmailConfirmationRedirectLink() {
+    public final String getEmailConfirmationRedirectLink() {
         return "%s%s".formatted(
                 this.serverConfigs.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath()
         );
     }
 
-    public String getEmailConfirmationLink(@NotNull ServerProperties serverProperties, @NotNull String token) {
+    public final String getEmailConfirmationLink(@NotNull ServerProperties serverProperties, @NotNull String token) {
         return "%s%s/tokens/email/confirm?token=%s".formatted(
                 this.serverConfigs.getServerURL() + serverProperties.getServlet().getContextPath(),
                 this.mvcConfigs.getBasePathPrefix(),
@@ -71,7 +71,7 @@ public class JbstProperties implements PriorityOrdered {
         );
     }
 
-    public String getPasswordResetLink(@NotNull String token) {
+    public final String getPasswordResetLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
                 this.serverConfigs.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),
