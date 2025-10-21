@@ -112,7 +112,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getSecurityJwtConfigs().assertProperties();
+        this.jbstProperties.getSecurityJwtConfigs().assertRoot();
     }
 
     @Autowired

@@ -24,7 +24,7 @@ public abstract class JbstProperty {
     public abstract String getNameNonMandatory();
 
     // TODO [YYL] fixme?
-    public void assertProperties() {
+    public void assertRoot() {
         if (this.isLeaf()) {
             return;
         }
@@ -35,7 +35,7 @@ public abstract class JbstProperty {
             var edge = new JbstPropertyEdge(this, field);
             assertNonNullOrThrow(edge);
             if (edge.isBranch()) {
-
+                edge.getChildAsJbstProperty().assertRoot();
             } else if (edge.isLeaf()) {
 
             } else {
@@ -63,16 +63,17 @@ public abstract class JbstProperty {
     }
 
     private void assertProperties(JbstProperty parent) {
-        if (this.isLeaf()) {
-            var fields = this.isToggle() ?
-                    getMandatoryToggleFields(this, parent.getNameNonMandatory()) :
-                    getMandatoryFields(this, parent.getNameNonMandatory());
-            fields.forEach(field -> {
-                var edge = new JbstPropertyEdge(parent, field);
-                assertNonNullOrThrow(edge);
-                edge.assertOrThrow();
-            });
+        if (!this.isLeaf()) {
+            return;
         }
+        var fields = this.isToggle() ?
+                getMandatoryToggleFields(this, parent.getNameNonMandatory()) :
+                getMandatoryFields(this, parent.getNameNonMandatory());
+        fields.forEach(field -> {
+            var edge = new JbstPropertyEdge(parent, field);
+            assertNonNullOrThrow(edge);
+            edge.assertOrThrow();
+        });
     }
 
     private void printProperties() {

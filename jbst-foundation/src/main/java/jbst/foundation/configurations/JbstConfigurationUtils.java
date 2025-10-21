@@ -23,6 +23,6 @@ public class JbstConfigurationUtils {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getUtilsConfigs().assertProperties();
+        this.jbstProperties.getUtilsConfigs().assertRoot();
     }
 }

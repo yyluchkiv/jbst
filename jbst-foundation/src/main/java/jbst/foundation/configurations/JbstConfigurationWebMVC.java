@@ -26,7 +26,7 @@ public class JbstConfigurationWebMVC implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getMvcConfigs().assertProperties();
+        this.jbstProperties.getMvcConfigs().assertRoot();
     }
 
     @Override
