@@ -50,26 +50,6 @@ public record JwtUser(
         return this.username.value();
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
     public static JwtUser hardcoded(UserCreationOption userCreationOption) {
         return new JwtUser(
                 UserId.hardcoded(),
