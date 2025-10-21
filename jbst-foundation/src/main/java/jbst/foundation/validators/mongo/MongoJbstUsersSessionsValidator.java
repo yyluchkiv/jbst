@@ -1,4 +1,4 @@
-package jbst.foundation.validators.mongodb;
+package jbst.foundation.validators.mongo;
 
 import jbst.foundation.validators.abtracts.AbstractJbstUsersSessionsValidator;
 import lombok.extern.slf4j.Slf4j;

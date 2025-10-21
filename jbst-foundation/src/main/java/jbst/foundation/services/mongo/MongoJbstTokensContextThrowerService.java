@@ -1,4 +1,4 @@
-package jbst.foundation.services.mongodb;
+package jbst.foundation.services.mongo;
 
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;

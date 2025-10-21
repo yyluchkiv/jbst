@@ -10,7 +10,7 @@ import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
-import jbst.foundation.services.mongodb.MongoJbstUsersSessionsService;
+import jbst.foundation.services.mongo.MongoJbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.sessions.MongoSessionRegistry;
 import jbst.foundation.settings.MongoJbstSettingsService;
@@ -23,8 +23,8 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan({
-        "jbst.foundation.services.mongodb",
-        "jbst.foundation.validators.mongodb"
+        "jbst.foundation.services.mongo",
+        "jbst.foundation.validators.mongo"
 })
 @Import({
         JbstConfigurationMongoRepositories.class

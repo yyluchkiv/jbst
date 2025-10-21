@@ -1,4 +1,4 @@
-package jbst.foundation.services.mongodb;
+package jbst.foundation.services.mongo;
 
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;

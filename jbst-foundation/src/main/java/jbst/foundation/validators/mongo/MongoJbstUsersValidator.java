@@ -1,4 +1,4 @@
-package jbst.foundation.validators.mongodb;
+package jbst.foundation.validators.mongo;
 
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.validators.abtracts.AbstractJbstUsersValidator;

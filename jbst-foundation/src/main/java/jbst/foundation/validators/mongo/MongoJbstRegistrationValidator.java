@@ -1,4 +1,4 @@
-package jbst.foundation.validators.mongodb;
+package jbst.foundation.validators.mongo;
 
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;

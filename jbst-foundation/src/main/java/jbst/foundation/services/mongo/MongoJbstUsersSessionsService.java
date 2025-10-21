@@ -1,4 +1,4 @@
-package jbst.foundation.services.mongodb;
+package jbst.foundation.services.mongo;
 
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;

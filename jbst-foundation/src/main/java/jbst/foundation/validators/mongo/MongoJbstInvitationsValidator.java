@@ -1,4 +1,4 @@
-package jbst.foundation.validators.mongodb;
+package jbst.foundation.validators.mongo;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
