@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class GithubConfigs extends AbstractProperty {
+public class GithubConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final String token;
     @MandatoryProperty

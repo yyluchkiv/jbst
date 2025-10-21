@@ -1,6 +1,6 @@
 package jbst.server.iam.base.properties;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.server.iam.base.domain.enums.UserAuthority;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends AbstractProperty {
+public class ServerConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final String targetAttribute1;
     @MandatoryProperty

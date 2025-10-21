@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
@@ -21,7 +21,7 @@ import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRan
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentsConfigs extends AbstractProperty {
+public class IncidentsConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     @MandatoryMapProperty(propertyName = "typesConfigs", keySetClass = JbstIamIncidentType.class)
     private final Map<JbstIamIncidentType, Boolean> typesConfigs;

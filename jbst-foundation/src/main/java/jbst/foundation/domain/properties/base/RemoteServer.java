@@ -7,7 +7,7 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +21,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RemoteServer extends AbstractProperty {
+public class RemoteServer extends AbstractJbstProperty {
     @MandatoryProperty
     private final String baseURL;
     @MandatoryProperty

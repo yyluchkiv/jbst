@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SpringServer extends AbstractProperty {
+public class SpringServer extends AbstractJbstProperty {
     @MandatoryProperty
     private final Integer port;
 

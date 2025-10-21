@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.configs.utilities.GeoCountryFlagsConfigs;
 import jbst.foundation.domain.properties.configs.utilities.GeoLocationsConfigs;
@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UtilsConfigs extends AbstractProperty {
+public class UtilsConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final GeoLocationsConfigs geoLocationsConfigs;
     @MandatoryProperty

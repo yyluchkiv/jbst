@@ -1,6 +1,6 @@
 package jbst.server.hm.properties;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends AbstractProperty {
+public class ServerConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final String targetURL;
 

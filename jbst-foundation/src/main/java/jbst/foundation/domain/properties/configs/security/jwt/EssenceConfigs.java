@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.InvitationsOnInit;
 import jbst.foundation.domain.properties.base.UsersOnInit;
@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EssenceConfigs extends AbstractProperty {
+public class EssenceConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final UsersOnInit usersOnInit;
     @MandatoryProperty

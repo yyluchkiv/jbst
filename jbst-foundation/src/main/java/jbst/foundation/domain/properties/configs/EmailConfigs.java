@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EmailConfigs extends AbstractProperty {
+public class EmailConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty

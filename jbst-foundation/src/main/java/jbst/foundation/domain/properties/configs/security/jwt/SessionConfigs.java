@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Cron;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SessionConfigs extends AbstractProperty {
+public class SessionConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final Cron cleanSessionsByExpiredRefreshTokensCron;
     @MandatoryProperty

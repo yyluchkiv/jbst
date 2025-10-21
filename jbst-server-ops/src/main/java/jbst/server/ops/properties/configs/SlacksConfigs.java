@@ -1,6 +1,6 @@
 package jbst.server.ops.properties.configs;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.server.ops.domain.servers.Team;
 import jbst.server.ops.properties.base.SlackConfigs;
@@ -17,7 +17,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlacksConfigs extends AbstractProperty {
+public class SlacksConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final List<SlackConfigs> values;
 

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Authority extends AbstractProperty {
+public class Authority extends AbstractJbstProperty {
     @MandatoryProperty
     private final String value;
 

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomTimeUnit;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SchedulerConfiguration extends AbstractProperty {
+public class SchedulerConfiguration extends AbstractJbstProperty {
     @MandatoryProperty
     private final Long initialDelay;
     @MandatoryProperty

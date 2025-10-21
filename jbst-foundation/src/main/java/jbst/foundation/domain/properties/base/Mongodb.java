@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.*;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Mongodb extends AbstractProperty {
+public class Mongodb extends AbstractJbstProperty {
     @MandatoryProperty
     private final String host;
     @MandatoryProperty

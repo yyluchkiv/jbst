@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt.websockets;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsFeaturesConfigs extends AbstractProperty {
+public class WebsocketsFeaturesConfigs extends AbstractJbstProperty {
     @NonMandatoryProperty
     private WebsocketsFeatureConfigs hardwareConfigs;
     @NonMandatoryProperty

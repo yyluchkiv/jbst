@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Cron extends AbstractProperty {
+public class Cron extends AbstractJbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty

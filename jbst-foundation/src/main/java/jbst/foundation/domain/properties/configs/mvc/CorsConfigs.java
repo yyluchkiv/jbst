@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.mvc;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CorsConfigs extends AbstractProperty {
+public class CorsConfigs extends AbstractJbstProperty {
     @NonMandatoryProperty
     private String pathPattern;
     @NonMandatoryProperty

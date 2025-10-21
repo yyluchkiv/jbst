@@ -1,6 +1,6 @@
 package jbst.server.ops.properties.configs;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.server.ops.properties.base.GithubConfigs;
@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServersConfigs extends AbstractProperty {
+public class ServersConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final Mode mode;
     @MandatoryProperty

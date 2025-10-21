@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security.jwt.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsFeatureConfigs extends AbstractProperty {
+public class WebsocketsFeatureConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty

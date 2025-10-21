@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.server.ops.domain.servers.Team;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlackTeamCommunication extends AbstractProperty {
+public class SlackTeamCommunication extends AbstractJbstProperty {
     @MandatoryProperty
     private final Team team;
     @MandatoryProperty

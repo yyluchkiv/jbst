@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.properties.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MvcConfigs extends AbstractProperty {
+public class MvcConfigs extends AbstractJbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty
