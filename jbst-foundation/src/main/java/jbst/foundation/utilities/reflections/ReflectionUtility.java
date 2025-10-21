@@ -3,12 +3,15 @@ package jbst.foundation.utilities.reflections;
 import jbst.foundation.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -104,6 +107,31 @@ public class ReflectionUtility {
                     return !"getClass".equals(methodName) && !"getDeclaringClass".equals(methodName);
                 })
                 .collect(Collectors.toList());
+    }
+
+    @SuppressWarnings("ConstantValue")
+    public static List<Field> getFields(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations) {
+        return Stream.of(property.getClass().getDeclaredFields())
+                .filter(Objects::nonNull)
+                .map(field -> {
+                    for (Class<? extends Annotation> annotation : presentAnnotations) {
+                        if (field.isAnnotationPresent(annotation)) {
+                            field.setAccessible(true);
+                            return field;
+                        }
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .sorted((o1, o2) -> {
+                    if ("enabled".equals(o1.getName())) {
+                        return -1;
+                    } else if ("enabled".equals(o2.getName())) {
+                        return 1;
+                    }
+                    return o1.getName().compareTo(o2.getName());
+                })
+                .toList();
     }
 
     public static Object getFieldValueOrNull(Object object, Field field, List<Method> getters) {

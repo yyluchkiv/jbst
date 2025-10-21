@@ -8,7 +8,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.*;
+import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
+import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryFields;
 
 public abstract class AbstractPropertiesConfigs {
     public abstract boolean isParentPropertiesNode();
@@ -57,7 +58,7 @@ public abstract class AbstractPropertiesConfigs {
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).assertProperties(jbstProperty.getTreePropertyName());
                 } else {
-                    verifyProperty(jbstProperty);
+                    jbstProperty.verify();
                 }
             } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);

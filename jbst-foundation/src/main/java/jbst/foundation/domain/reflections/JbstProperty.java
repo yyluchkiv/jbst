@@ -1,5 +1,9 @@
 package jbst.foundation.domain.reflections;
 
+import jbst.foundation.domain.asserts.ConsoleAsserts;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
+import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -8,10 +12,16 @@ import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Map;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
+import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
+import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
 import static jbst.foundation.utilities.strings.StringUtility.toKebab;
+import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j
 @Data
@@ -63,5 +73,30 @@ public class JbstProperty {
 
     public void print() {
         LOGGER.debug("{} — {}", PREFIX, this.readableValue);
+    }
+
+    @SuppressWarnings({"rawtypes", "DataFlowIssue"})
+    public void verify() {
+        if (this.field.isAnnotationPresent(MandatoryMapProperty.class)) {
+            var annotation = this.field.getAnnotation(MandatoryMapProperty.class);
+            Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
+            var castedProperty = (Map) this.propertyValue;
+            var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
+            //noinspection unchecked
+            assertTrueOrThrow(
+                    castedProperty.size() == size,
+                    "%s. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
+                            this.getTreePropertyName(),
+                            baseJoiningWildcard(keySetClass),
+                            baseJoiningRaw(castedProperty.keySet()),
+                            JbstConstants.JColor.RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
+                    )
+            );
+        }
+        ConsoleAsserts.PROPERTIES_ACTIONS.entrySet().stream()
+                .filter(entry -> entry.getKey().apply(this.propertyValue.getClass()))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .ifPresent(consumer -> consumer.accept(this));
     }
 }
