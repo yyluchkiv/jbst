@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstJbstAuthenticationEntryPoint {
+class JbstAuthenticationEntryPointTest {
 
     @Configuration
     @Import({
