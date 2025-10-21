@@ -12,8 +12,13 @@ import static jbst.foundation.utilities.reflections.ReflectionUtility.getPropert
 @Slf4j
 public abstract class AbstractPropertyConfigs {
 
+    public void assertProperties(String propertyName) {
+        assertMandatoryPropertyConfigs(this, propertyName);
+    }
+
+    @Deprecated
     public void assertProperties(PropertyId propertyId) {
-        assertMandatoryPropertyConfigs(this, propertyId);
+        // assertMandatoryPropertyConfigs(this, propertyId);
     }
 
     // TODO [YYL] delete me

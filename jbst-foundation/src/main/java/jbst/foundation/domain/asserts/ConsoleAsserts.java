@@ -2,6 +2,7 @@ package jbst.foundation.domain.asserts;
 
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.reflections.JbstProperty;
 import jbst.foundation.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
 
@@ -43,11 +44,19 @@ public class ConsoleAsserts {
         assertNonEmptyOrThrow(collection, propertyId);
     }
 
+    @Deprecated
     public static void assertNonNullPropertyOrThrow(ReflectionProperty reflectionProperty) {
         if (isNull(reflectionProperty)) {
             throw new IllegalArgumentException(JbstConstants.JColor.RED_TEXT.format("Unknown reflection property"));
         }
         assertNonNullOrThrow(reflectionProperty.getPropertyValue(), reflectionProperty.getTreePropertyId());
+    }
+
+    public static void assertNonNullPropertyOrThrow(JbstProperty jbstProperty) {
+        if (isNull(jbstProperty)) {
+            throw new IllegalArgumentException(JbstConstants.JColor.RED_TEXT.format("Unknown reflection property"));
+        }
+        assertNonNullOrThrow(jbstProperty.getPropertyValue(), jbstProperty.getTreePropertyName());
     }
 
     @SuppressWarnings("unused")

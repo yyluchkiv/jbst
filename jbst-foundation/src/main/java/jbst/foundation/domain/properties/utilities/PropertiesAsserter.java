@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.utilities;
 
-import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
@@ -11,7 +10,7 @@ import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.base.AbstractTogglePropertyConfigs;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
-import jbst.foundation.domain.reflections.ReflectionProperty;
+import jbst.foundation.domain.reflections.JbstProperty;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -29,17 +28,17 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
-import static jbst.foundation.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j
 @UtilityClass
 public class PropertiesAsserter {
-    private static final Map<Function<Class<?>, Boolean>, Consumer<ReflectionProperty>> ACTIONS = new HashMap<>();
+    private static final Map<Function<Class<?>, Boolean>, Consumer<JbstProperty>> ACTIONS = new HashMap<>();
 
     static {
         ACTIONS.put(Date.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
@@ -65,7 +64,6 @@ public class PropertiesAsserter {
         assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         assertPropertiesConfigs(
                 propertiesConfigs,
-                propertiesConfigs.getPropertyName(),
                 getMandatoryFields(propertiesConfigs, propertiesConfigs.getPropertyName())
         );
     }
@@ -74,26 +72,25 @@ public class PropertiesAsserter {
         assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         assertPropertiesConfigs(
                 propertiesConfigs,
-                propertiesConfigs.getPropertyName(),
                 getMandatoryToggleFields(propertiesConfigs, propertiesConfigs.getPropertyName())
         );
     }
 
-    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, PropertyId propertyId) {
-        assertNonNullOrThrow(propertyConfigs, propertyId);
+    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
+        assertNonNullOrThrow(propertyConfigs, propertyName);
         assertPropertyConfigs(
                 propertyConfigs,
-                propertyId,
-                getMandatoryFields(propertyConfigs, propertyId)
+                propertyName,
+                getMandatoryFields(propertyConfigs, propertyName)
         );
     }
 
-    public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, PropertyId propertyId) {
-        assertNonNullOrThrow(propertyConfigs, propertyId);
+    public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, String propertyName) {
+        assertNonNullOrThrow(propertyConfigs, propertyName);
         assertPropertyConfigs(
                 propertyConfigs,
-                propertyId,
-                getMandatoryToggleFields(propertyConfigs, propertyId)
+                propertyName,
+                getMandatoryToggleFields(propertyConfigs, propertyName)
         );
     }
 
@@ -117,32 +114,32 @@ public class PropertiesAsserter {
     // PRIVATE METHODS
     // =================================================================================================================
 
-    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, PropertyId propertyId, List<Field> fields) {
-        assertNonNullOrThrow(propertyConfigs, propertyId);
+    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName, List<Field> fields) {
+        assertNonNullOrThrow(propertyConfigs, propertyName);
         fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertyId, field, field.get(propertyConfigs));
-                ConsoleAsserts.assertNonNullPropertyOrThrow(rf);
-                verifyProperty(rf);
+                var jbstProperty = new JbstProperty(propertyName, field, field.get(propertyConfigs));
+                ConsoleAsserts.assertNonNullPropertyOrThrow(jbstProperty);
+                verifyProperty(jbstProperty);
             } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);
             }
         });
     }
 
-    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId, List<Field> fields) {
-        assertNonNullOrThrow(propertiesConfigs, propertyId);
+    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, List<Field> fields) {
+        assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertyId, field, field.get(propertiesConfigs));
-                ConsoleAsserts.assertNonNullPropertyOrThrow(rf);
-                var nestedPropertyClass = rf.getPropertyValue().getClass();
+                var jbstProperty = new JbstProperty(propertiesConfigs.getPropertyName(), field, field.get(propertiesConfigs));
+                ConsoleAsserts.assertNonNullPropertyOrThrow(jbstProperty);
+                var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                    ((AbstractPropertiesConfigs) rf.getPropertyValue()).assertProperties();
+                    ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                    ((AbstractPropertyConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyId());
+                    ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).assertProperties(jbstProperty.getTreePropertyName());
                 } else {
-                    verifyProperty(rf);
+                    verifyProperty(jbstProperty);
                 }
             } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);
@@ -151,18 +148,18 @@ public class PropertiesAsserter {
     }
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
-    private static void verifyProperty(ReflectionProperty rf) {
-        var property = rf.getPropertyValue();
-        if (rf.getField().isAnnotationPresent(MandatoryMapProperty.class)) {
-            var annotation = rf.getField().getAnnotation(MandatoryMapProperty.class);
+    private static void verifyProperty(JbstProperty jbstProperty) {
+        var property = jbstProperty.getPropertyValue();
+        if (jbstProperty.getField().isAnnotationPresent(MandatoryMapProperty.class)) {
+            var annotation = jbstProperty.getField().getAnnotation(MandatoryMapProperty.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
             var castedProperty = (Map) property;
             var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
             //noinspection unchecked
-            Asserts.assertTrueOrThrow(
+            assertTrueOrThrow(
                     castedProperty.size() == size,
-                    "%s. Options: \"[%s]\". Required: \"[%s]\". Disjunction: \"[%s]\"".formatted(
-                            invalidProperty(rf.getTreePropertyId()),
+                    "%s. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
+                            jbstProperty.getTreePropertyName(),
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
                             JbstConstants.JColor.RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
@@ -173,7 +170,7 @@ public class PropertiesAsserter {
                 .filter(entry -> entry.getKey().apply(property.getClass()))
                 .map(Map.Entry::getValue)
                 .findFirst()
-                .ifPresent(consumer -> consumer.accept(rf));
+                .ifPresent(consumer -> consumer.accept(jbstProperty));
     }
 
     @SuppressWarnings("ConstantValue")
