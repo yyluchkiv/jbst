@@ -2,10 +2,14 @@ package jbst.foundation.domain.reflections;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
+import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.SchedulerConfiguration;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
 
+import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -15,9 +19,26 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
+import static jbst.foundation.utilities.reflections.ReflectionUtility.getFields;
 
 @UtilityClass
 public class JbstPropertiesUtility {
+
+    public static List<Field> getMandatoryFields(Object property, String propertyName) {
+        assertNonNullOrThrow(property, propertyName);
+        return getFields(property, Set.of(MandatoryProperty.class));
+    }
+
+    public static List<Field> getMandatoryToggleFields(Object property, String propertyName) {
+        assertNonNullOrThrow(property, propertyName);
+        return getFields(property, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
+    }
+
+    public static List<Field> getMandatoryBasedFields(Object property, String propertyName) {
+        assertNonNullOrThrow(property, propertyName);
+        return getFields(property, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
+    }
 
     @SuppressWarnings({"ConstantValue", "unused"})
     public static List<JbstPropertyEdge> getNotNullPropertiesRecursively(Object object, String propertyName) {

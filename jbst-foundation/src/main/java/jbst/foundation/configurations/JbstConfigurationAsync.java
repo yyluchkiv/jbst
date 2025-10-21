@@ -31,7 +31,7 @@ public class JbstConfigurationAsync implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertPropertyTree();
+        this.jbstProperties.getAsyncConfigs().assertProperty();
     }
 
     @Override

@@ -24,6 +24,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
+import static jbst.foundation.domain.reflections.JbstPropertiesUtility.getMandatoryBasedFields;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
@@ -82,21 +83,17 @@ public class JbstPropertyEdge {
         }
     }
 
-    public boolean isLeaf() {
+    public boolean isChildLeaf() {
         return true;
     }
 
-    public boolean isBranch() {
+    public boolean isChildBranch() {
         return true;
     }
 
     public JbstProperty getChildAsJbstProperty() {
         return (JbstProperty) this.valueRAW;
     }
-
-//    public boolean isLeafAbstractJbstProperty() {
-//        return this.valueRAW instanceof AbstractJbstProperty;
-//    }
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void assertOrThrow() {
@@ -124,23 +121,25 @@ public class JbstPropertyEdge {
     }
 
     public void printAbstractPropertyConfigs() {
+        if (!this.isChildLeaf()) {
+            return;
+        }
         // TODO [YYL] fix assert
-        // assertTrueOrThrow(nonNull(this.propertyValue) && AbstractPropertyConfigs.class.isAssignableFrom(this.propertyValue.getClass()));
-//        var fields = JbstPropertiesUtility.getMandatoryBasedFields(this, this.treePropertyName);
-//        var jbstProperties = getProperties(this, this.treePropertyName, fields);
+        var fields = getMandatoryBasedFields(this, this.name);
+        var jbstProperties = getProperties(this.getChildAsJbstProperty(), this.name, fields);
 //        jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
 //        jbstProperties.forEach(JbstProperty::print);
     }
 
-    public static List<JbstPropertyEdge> getProperties(Object property, String propertyName, List<Field> fields) {
+    public static List<JbstPropertyEdge> getProperties(JbstProperty property, String propertyName, List<Field> fields) {
         return fields.stream()
                 .map(field -> {
                     try {
 //                        return new JbstProperty(propertyName, field, field.get(property));
-                        return new JbstPropertyEdge(null, field, field.get(property));
+                        return new JbstPropertyEdge(property, field, field.get(property));
                     } catch (IllegalAccessException | RuntimeException ex) {
 //                        return new JbstProperty(propertyName, field, null);
-                        return new JbstPropertyEdge(null, field, null);
+                        return new JbstPropertyEdge(property, field, null);
                     }
                 })
                 .collect(Collectors.toList());
