@@ -19,7 +19,7 @@ import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstRateLimitsService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
-import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
+import jbst.foundation.validators.JbstUsersTokensValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class JbstUsersTokensResource {
     private final JbstUsersService usersService;
     private final JbstUsersEmailsService usersEmailsService;
     // Validators
-    private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
+    private final JbstUsersTokensValidator usersTokensValidator;
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Properties
@@ -56,7 +56,7 @@ public class JbstUsersTokensResource {
     @ResponseStatus(HttpStatus.OK)
     public void executeConfirmEmail() throws JbstTooManyRequestsException {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
-        this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
+        this.usersTokensValidator.validateExecuteConfirmEmail(user);
         this.rateLimitsService.acquireEmailConfirmationOrThrow(user);
         var userToken = this.usersTokensService.findOrCreate(user.getRequestUserTokenAsEmailConfirmation());
         this.usersEmailsService.executeEmailConfirmation(userToken);
@@ -70,7 +70,7 @@ public class JbstUsersTokensResource {
     ) {
         var redirectView = new RedirectView(this.jbstProperties.getEmailConfirmationRedirectLink());
         try {
-            this.baseUsersTokensRequestsValidator.validateEmailConfirmationToken(token);
+            this.usersTokensValidator.validateEmailConfirmationToken(token);
             this.usersTokensService.confirmEmail(token);
             redirectAttributes.addAttribute("code", 1);
             return redirectView;
@@ -89,7 +89,7 @@ public class JbstUsersTokensResource {
     public void executeResetPassword(@RequestBody @Valid RequestUserEmail request) {
         try {
             var user = this.usersService.findByEmail(request.email());
-            this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
+            this.usersTokensValidator.validateExecuteResetPassword(user);
             var userToken = this.usersTokensService.findOrCreate(user.getRequestUserTokenAsPasswordReset());
             this.usersEmailsService.executePasswordReset(userToken);
         } catch (JbstPasswordResetException ex) {
@@ -100,7 +100,7 @@ public class JbstUsersTokensResource {
     @PatchMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
     public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws JbstUserTokenValidationException {
-        this.baseUsersTokensRequestsValidator.validatePasswordReset(request);
+        this.usersTokensValidator.validatePasswordReset(request);
         this.usersService.resetPassword(request);
     }
 }

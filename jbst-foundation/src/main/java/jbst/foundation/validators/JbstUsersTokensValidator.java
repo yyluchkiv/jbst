@@ -5,7 +5,7 @@ import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetExcepti
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
 
-public interface BaseUsersTokensRequestsValidator {
+public interface JbstUsersTokensValidator {
     void validateExecuteConfirmEmail(JwtUser user);
     void validateEmailConfirmationToken(String token) throws JbstUserTokenValidationException;
     void validateExecuteResetPassword(JwtUser user) throws JbstPasswordResetException;

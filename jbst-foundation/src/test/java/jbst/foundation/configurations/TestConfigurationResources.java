@@ -229,8 +229,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseUsersTokensRequestsValidator tokensRequestsValidator() {
-        return mock(BaseUsersTokensRequestsValidator.class);
+    JbstUsersTokensValidator tokensRequestsValidator() {
+        return mock(JbstUsersTokensValidator.class);
     }
 
     // =================================================================================================================

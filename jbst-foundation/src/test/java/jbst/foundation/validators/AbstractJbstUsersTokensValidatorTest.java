@@ -14,7 +14,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.utilities.time.TimestampUtility;
-import jbst.foundation.validators.abtracts.AbstractBaseUsersTokensRequestsValidator;
+import jbst.foundation.validators.abtracts.AbstractJbstUsersTokensValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseUsersTokensRequestsValidatorTest {
+class AbstractJbstUsersTokensValidatorTest {
 
     private static Stream<Arguments> validateExecuteConfirmEmailTest() {
         return Stream.of(
@@ -242,8 +242,8 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         private final JbstUsersTokensRepository usersTokensRepository;
 
         @Bean
-        BaseUsersTokensRequestsValidator baseUsersEmailsTokensRequestsValidator() {
-            return new AbstractBaseUsersTokensRequestsValidator(
+        JbstUsersTokensValidator baseUsersEmailsTokensRequestsValidator() {
+            return new AbstractJbstUsersTokensValidator(
                     this.usersTokensRepository
             ) {};
         }
@@ -252,7 +252,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
 
     private final JbstUsersTokensRepository usersTokensRepository;
 
-    private final BaseUsersTokensRequestsValidator componentUnderTest;
+    private final JbstUsersTokensValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

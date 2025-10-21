@@ -6,7 +6,7 @@ import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetExcepti
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
+import jbst.foundation.validators.JbstUsersTokensValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -15,7 +15,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUsersTokensRequestsValidator {
+public abstract class AbstractJbstUsersTokensValidator implements JbstUsersTokensValidator {
 
     // Repositories
     protected final JbstUsersTokensRepository usersTokensRepository;
