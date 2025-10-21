@@ -1,5 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +14,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class InvitationsOnInit extends AbstractTogglePropertyConfigs {
+public class InvitationsOnInit extends AbstractProperty {
     @MandatoryProperty
     private final boolean enabled;
 
@@ -30,5 +32,25 @@ public class InvitationsOnInit extends AbstractTogglePropertyConfigs {
 
     public static InvitationsOnInit disabled() {
         return new InvitationsOnInit(false);
+    }
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return true;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 }
