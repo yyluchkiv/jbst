@@ -12,7 +12,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
-import jbst.foundation.validators.BaseUsersSessionsRequestsValidator;
+import jbst.foundation.validators.JbstUsersSessionsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -41,7 +41,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     // Tokens
     private final JbstTokensProvider tokensProvider;
     // Validators
-    private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
+    private final JbstUsersSessionsValidator usersSessionsValidator;
 
     // Resource
     private final JbstUsersSessionsResource componentUnderTest;
@@ -53,7 +53,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.usersSessionsService,
                 this.tokensProvider,
-                this.baseUsersSessionsRequestsValidator
+                this.usersSessionsValidator
         );
     }
 
@@ -63,7 +63,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.usersSessionsService,
                 this.tokensProvider,
-                this.baseUsersSessionsRequestsValidator
+                this.usersSessionsValidator
         );
     }
 

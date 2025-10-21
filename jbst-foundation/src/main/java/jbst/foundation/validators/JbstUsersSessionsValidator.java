@@ -1,5 +1,5 @@
 package jbst.foundation.validators;
 
-public interface BaseUsersSessionsRequestsValidator {
+public interface JbstUsersSessionsValidator {
     // no methods
 }

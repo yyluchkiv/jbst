@@ -219,8 +219,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseUsersSessionsRequestsValidator sessionsRequestsValidator() {
-        return mock(BaseUsersSessionsRequestsValidator.class);
+    JbstUsersSessionsValidator sessionsRequestsValidator() {
+        return mock(JbstUsersSessionsValidator.class);
     }
 
     @Bean
