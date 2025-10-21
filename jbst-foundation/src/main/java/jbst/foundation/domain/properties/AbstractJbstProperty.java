@@ -4,16 +4,14 @@ import jbst.foundation.domain.annotations.JbstNonMandatoryMethod;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.foundation.domain.reflections.JbstProperty;
-import org.springframework.security.core.parameters.P;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
+import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.utilities.reflections.ReflectionUtility.getFields;
 
@@ -28,7 +26,6 @@ public abstract class AbstractJbstProperty {
     // TODO [YYL] fixme?
     public void assertProperties() {
         if (this.isLeaf()) {
-            var fields = this.isToggle() ? AbstractJbstProperty.
             if (this.isToggle()) {
 
             } else {
@@ -42,8 +39,7 @@ public abstract class AbstractJbstProperty {
             }
         }
         if (this.isParent()) {
-            // TODO [YYL]
-            // this.printProperties();
+            this.printProperties();
         }
     }
 
@@ -62,21 +58,24 @@ public abstract class AbstractJbstProperty {
         }
     }
 
-    // =================================================================================================================
-    // PROTECTED METHODS
-    // =================================================================================================================
-    protected void assertFields(List<Field> fields) {
-        fields.forEach(field -> {
+    private void printProperties() {
+        if (!this.isParent()) {
+            return;
+        }
+        getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
             try {
-                var jbstProperty = new JbstProperty(this.getPropertyName(), field, field.get(this));
-                assertNonNullOrThrow(jbstProperty);
-                var nestedPropertyClass = requireNonNull(jbstProperty.getPropertyValue()).getClass();
-                if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                    ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
-                } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                    ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).assertProperties(jbstProperty.getTreePropertyName());
+                var jbstProperty = new JbstProperty(this.getNameNonMandatory(), field, field.get(this));
+                if (isNull(jbstProperty.getPropertyValue())) {
+                    jbstProperty.print();
                 } else {
-                    jbstProperty.verify();
+                    var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
+                    if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).printProperties();
+                    } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        jbstProperty.printAbstractPropertyConfigs();
+                    } */ else {
+                        jbstProperty.print();
+                    }
                 }
             } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);

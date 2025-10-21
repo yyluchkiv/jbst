@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.reflections.JbstPropertiesUtility;
 import jbst.foundation.domain.reflections.JbstProperty;
 
@@ -32,9 +31,9 @@ public abstract class AbstractPropertiesConfigs {
                     var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
                     if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                         ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).printProperties();
-                    } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                    } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                         jbstProperty.printAbstractPropertyConfigs();
-                    } else {
+                    } */ else {
                         jbstProperty.print();
                     }
                 }
@@ -55,9 +54,9 @@ public abstract class AbstractPropertiesConfigs {
                 var nestedPropertyClass = requireNonNull(jbstProperty.getPropertyValue()).getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
-                } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).assertProperties(jbstProperty.getTreePropertyName());
-                } else {
+                } */ else {
                     jbstProperty.verify();
                 }
             } catch (IllegalAccessException ex) {
