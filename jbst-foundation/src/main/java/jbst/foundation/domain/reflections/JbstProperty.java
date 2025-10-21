@@ -35,10 +35,10 @@ public class JbstProperty {
     private final Object propertyValue;
     private final String readableValue;
 
-    public JbstProperty(@NotNull PropertyId propertyId, Field field, Object propertyValue) {
+    public JbstProperty(@NotNull PropertyName propertyName, Field field, Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
-        this.treePropertyName = new PropertyName(uncapitalize(propertyId.value()) + "." + uncapitalize(this.propertyName));
+        this.treePropertyName = new PropertyName(uncapitalize(propertyName.value()) + "." + uncapitalize(this.propertyName));
         this.propertyValue = propertyValue;
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
