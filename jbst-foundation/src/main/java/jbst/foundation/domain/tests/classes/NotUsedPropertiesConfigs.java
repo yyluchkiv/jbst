@@ -1,5 +1,6 @@
 package jbst.foundation.domain.tests.classes;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.ScheduledJob;
 import jbst.foundation.domain.properties.base.SpringLogging;
@@ -25,5 +26,10 @@ public class NotUsedPropertiesConfigs extends AbstractPropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return true;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("not-used-properties-configs");
     }
 }

@@ -28,6 +28,11 @@ public class SlacksConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("slack-configs");
+    }
+
+    @Override
     public void assertProperties(PropertyId propertyId) {
         super.assertProperties(propertyId);
         assertTrueOrThrow(

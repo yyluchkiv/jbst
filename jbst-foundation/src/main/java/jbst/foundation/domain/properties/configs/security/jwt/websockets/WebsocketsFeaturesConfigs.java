@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt.websockets;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,10 @@ public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return false;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("websockets-features-configs");
     }
 }

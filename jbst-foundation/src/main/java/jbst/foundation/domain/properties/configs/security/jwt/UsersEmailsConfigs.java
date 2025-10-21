@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
@@ -11,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 @Slf4j
@@ -47,6 +47,16 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
         );
     }
 
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("users-emails-configs");
+    }
+
     public boolean isEnabled(AccountAccessMethod method) {
         if (isNull(method)) {
             return false;
@@ -62,11 +72,6 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
         }
         // fallback
         LOGGER.warn("Please double-check users-emails-configs to verify required {AccountAccessMethod + enable} configuration");
-        return false;
-    }
-
-    @Override
-    public boolean isParentPropertiesNode() {
         return false;
     }
 }

@@ -9,7 +9,16 @@ import static java.util.Objects.isNull;
 
 public abstract class AbstractPropertiesConfigs {
     public abstract boolean isParentPropertiesNode();
+    public abstract PropertyId getPropertyId();
 
+    public void assertProperties() {
+        PropertiesAsserter.assertMandatoryPropertiesConfigs(this, this.getPropertyId());
+        if (this.isParentPropertiesNode()) {
+            printProperties(this.getPropertyId());
+        }
+    }
+
+    @Deprecated
     public void assertProperties(PropertyId propertyId) {
         PropertiesAsserter.assertMandatoryPropertiesConfigs(this, propertyId);
         if (this.isParentPropertiesNode()) {
@@ -17,6 +26,7 @@ public abstract class AbstractPropertiesConfigs {
         }
     }
 
+    @Deprecated
     public void printProperties(PropertyId propertyId) {
         this.printMandatoryPropertiesConfigs(propertyId);
     }
@@ -24,6 +34,7 @@ public abstract class AbstractPropertiesConfigs {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
+    @Deprecated
     private void printMandatoryPropertiesConfigs(PropertyId propertyId) {
         var fields = PropertiesAsserter.getMandatoryBasedFields(this, propertyId);
         fields.forEach(field -> {

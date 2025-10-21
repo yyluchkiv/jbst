@@ -121,6 +121,11 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("security-jwt-configs");
+    }
+
+    @Override
     public void assertProperties(PropertyId propertyId) {
         super.assertProperties(propertyId);
 

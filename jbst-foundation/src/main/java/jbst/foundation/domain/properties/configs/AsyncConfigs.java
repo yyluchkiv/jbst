@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,11 @@ public class AsyncConfigs extends AbstractPropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return true;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("async-configs");
     }
 
     public TuplePercentage asThreadsCorePoolTuplePercentage() {

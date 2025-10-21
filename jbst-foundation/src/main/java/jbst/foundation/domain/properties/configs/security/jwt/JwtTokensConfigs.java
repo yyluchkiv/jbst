@@ -59,6 +59,11 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("jwt-tokens-configs");
+    }
+
+    @Override
     public void assertProperties(PropertyId propertyId) {
         super.assertProperties(propertyId);
         if (this.storageMethod.isCookies()) {

@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
@@ -37,5 +38,10 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return false;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("session-configs");
     }
 }

@@ -1,5 +1,6 @@
 package jbst.server.hm.properties;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,10 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return true;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("server-configs");
     }
 }

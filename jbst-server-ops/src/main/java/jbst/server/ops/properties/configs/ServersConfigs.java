@@ -1,5 +1,6 @@
 package jbst.server.ops.properties.configs;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
@@ -27,6 +28,11 @@ public class ServersConfigs extends AbstractPropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return true;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("servers-configs");
     }
 
     public enum Mode {

@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
+import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.base.IncidentsManagerType;
@@ -42,5 +43,10 @@ public class IncidentsManagerConfigs extends AbstractTogglePropertiesConfigs {
     @Override
     public boolean isParentPropertiesNode() {
         return true;
+    }
+
+    @Override
+    public PropertyId getPropertyId() {
+        return new PropertyId("incidents-manager-configs");
     }
 }
