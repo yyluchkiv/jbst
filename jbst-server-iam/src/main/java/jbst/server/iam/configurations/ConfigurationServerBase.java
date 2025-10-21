@@ -1,7 +1,6 @@
 package jbst.server.iam.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.server.iam.base.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,6 @@ public class ConfigurationServerBase {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.serverProperties.getServerConfigs().assertProperties();
     }
 }
