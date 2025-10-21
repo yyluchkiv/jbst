@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.repositories.JbstUsersRepository;
-import jbst.foundation.validators.BaseUsersValidator;
+import jbst.foundation.validators.JbstUsersValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -12,7 +12,7 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
+public abstract class AbstractJbstUsersValidator implements JbstUsersValidator {
     // Repositories
     protected final JbstUsersRepository usersRepository;
 

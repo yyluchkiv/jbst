@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.JbstUsersService;
-import jbst.foundation.validators.BaseUsersValidator;
+import jbst.foundation.validators.JbstUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Validators
-    private final BaseUsersValidator baseUsersValidator;
+    private final JbstUsersValidator baseUsersValidator;
 
     // Resource
     private final JbstUsersResource componentUnderTest;

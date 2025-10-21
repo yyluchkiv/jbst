@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.JbstUsersRepository;
-import jbst.foundation.validators.abtracts.AbstractBaseUsersValidator;
+import jbst.foundation.validators.abtracts.AbstractJbstUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseUsersValidatorTest {
+class AbstractJbstUsersValidatorTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequestBasicArgs() {
         return Stream.of(
@@ -60,8 +60,8 @@ class AbstractBaseUsersValidatorTest {
         private final JbstUsersRepository usersRepository;
 
         @Bean
-        BaseUsersValidator baseUsersValidator() {
-            return new AbstractBaseUsersValidator(
+        JbstUsersValidator baseUsersValidator() {
+            return new AbstractJbstUsersValidator(
                     this.usersRepository
             ) {};
         }
@@ -69,7 +69,7 @@ class AbstractBaseUsersValidatorTest {
 
     private final JbstUsersRepository usersRepository;
 
-    private final BaseUsersValidator componentUnderTest;
+    private final JbstUsersValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
