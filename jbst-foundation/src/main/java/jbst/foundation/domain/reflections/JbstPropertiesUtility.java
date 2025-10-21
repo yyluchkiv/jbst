@@ -47,7 +47,7 @@ public class JbstPropertiesUtility {
             if (breakoutClassesPredicate.test(property.getPropertyValue())) {
                 traversedProperties.add(property);
             } else {
-                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), property.getTreePropertyName()));
+                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), property.getName()));
             }
         });
         return traversedProperties;

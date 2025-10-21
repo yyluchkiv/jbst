@@ -33,33 +33,32 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @Data
 public class JbstPropertyEdge {
     public static final Comparator<JbstPropertyEdge> PRINTER_COMPARATOR = (o1, o2) -> {
-        if ("enabled".equals(o1.getPropertyName())) {
+        if ("enabled".equals(o1.getLeafName())) {
             return -1;
-        } else if ("enabled".equals(o2.getPropertyName())) {
+        } else if ("enabled".equals(o2.getLeafName())) {
             return 1;
         }
         return o1.getReadableValue().compareTo(o2.getReadableValue());
     };
 
     @NotNull
-    private final AbstractJbstProperty parentProperty;
+    private final AbstractJbstProperty parent;
     @NotNull
-    private final Field field;
+    private final Field leaf;
     @NotNull
-    private final String propertyName;
+    private final String leafName;
     @NotNull
-    private final String treePropertyName;
+    private final String name;
     @Nullable
     private final Object propertyValue;
     @NotNull
     private final String readableValue;
 
-//    public JbstProperty(@NotNull String propertyName, @NotNull Field field, @Nullable Object propertyValue) {
-    public JbstPropertyEdge(@NotNull AbstractJbstProperty parentProperty, @NotNull Field field, @Nullable Object propertyValue) {
-        this.parentProperty = parentProperty;
-        this.field = field;
-        this.propertyName = field.getName();
-        this.treePropertyName = toKebab(this.propertyName) + "." + toKebab(this.propertyName);
+    public JbstPropertyEdge(@NotNull AbstractJbstProperty parent, @NotNull Field leaf, @Nullable Object propertyValue) {
+        this.parent = parent;
+        this.leaf = leaf;
+        this.leafName = leaf.getName();
+        this.name = toKebab(this.parent.getNameNonMandatory()) + "." + toKebab(this.leafName);
         this.propertyValue = propertyValue;
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
@@ -86,8 +85,8 @@ public class JbstPropertyEdge {
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void assertOrThrow() {
-        if (this.field.isAnnotationPresent(MandatoryMapProperty.class)) {
-            var annotation = this.field.getAnnotation(MandatoryMapProperty.class);
+        if (this.leaf.isAnnotationPresent(MandatoryMapProperty.class)) {
+            var annotation = this.leaf.getAnnotation(MandatoryMapProperty.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
             var castedProperty = (Map) this.propertyValue;
             var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
@@ -95,7 +94,7 @@ public class JbstPropertyEdge {
             assertTrueOrThrow(
                     castedProperty.size() == size,
                     "Property %s is invalid. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
-                            this.getTreePropertyName(),
+                            this.getName(),
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
                             RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
@@ -133,6 +132,6 @@ public class JbstPropertyEdge {
     }
 
     public void print() {
-        LOGGER.debug("{} — {}: {}", PREFIX, this.treePropertyName, BLACK_BOLD_TEXT.format(this.readableValue));
+        LOGGER.debug("{} — {}: {}", PREFIX, this.name, BLACK_BOLD_TEXT.format(this.readableValue));
     }
 }
