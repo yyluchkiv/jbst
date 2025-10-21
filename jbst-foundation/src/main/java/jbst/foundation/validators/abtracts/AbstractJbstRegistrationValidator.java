@@ -12,7 +12,7 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failur
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
-import jbst.foundation.validators.BaseRegistrationRequestsValidator;
+import jbst.foundation.validators.JbstRegistrationValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -21,7 +21,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseRegistrationRequestsValidator implements BaseRegistrationRequestsValidator {
+public abstract class AbstractJbstRegistrationValidator implements JbstRegistrationValidator {
 
     // Publishers
     protected final SecurityJwtEventsPublisher securityJwtPublisher;

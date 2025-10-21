@@ -15,7 +15,7 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failur
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
-import jbst.foundation.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
+import jbst.foundation.validators.abtracts.AbstractJbstRegistrationValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseRegistrationRequestsValidatorTest {
+class AbstractJbstRegistrationValidatorTest {
 
     @Configuration
     @Import({
@@ -50,8 +50,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
 
         @Bean
-        BaseRegistrationRequestsValidator baseInvitationRequestsValidator() {
-            return new AbstractBaseRegistrationRequestsValidator(
+        JbstRegistrationValidator baseInvitationRequestsValidator() {
+            return new AbstractJbstRegistrationValidator(
                     this.securityJwtEventsPublisher,
                     this.securityJwtIncidentsPublisher,
                     this.invitationsRepository,
@@ -65,7 +65,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     private final JbstInvitationsRepository invitationsRepository;
     private final JbstUsersRepository usersRepository;
 
-    private final BaseRegistrationRequestsValidator componentUnderTest;
+    private final JbstRegistrationValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

@@ -214,8 +214,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseRegistrationRequestsValidator registrationRequestsValidator() {
-        return mock(BaseRegistrationRequestsValidator.class);
+    JbstRegistrationValidator registrationRequestsValidator() {
+        return mock(JbstRegistrationValidator.class);
     }
 
     @Bean

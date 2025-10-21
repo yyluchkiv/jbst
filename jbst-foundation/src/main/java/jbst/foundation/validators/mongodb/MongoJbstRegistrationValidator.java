@@ -1,24 +1,22 @@
-package jbst.foundation.validators.postgres;
+package jbst.foundation.validators.mongodb;
 
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
-import jbst.foundation.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
-import lombok.extern.slf4j.Slf4j;
+import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
+import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
+import jbst.foundation.validators.abtracts.AbstractJbstRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
-public class PostgresBaseRegistrationRequestsValidator extends AbstractBaseRegistrationRequestsValidator {
+public class MongoJbstRegistrationValidator extends AbstractJbstRegistrationValidator {
 
     @Autowired
-    public PostgresBaseRegistrationRequestsValidator(
+    public MongoJbstRegistrationValidator(
             SecurityJwtEventsPublisher securityJwtEventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
-            PostgresJbstInvitationsRepository invitationsRepository,
-            PostgresJbstUsersRepository usersRepository
+            MongoJbstInvitationsRepository invitationsRepository,
+            MongoJbstUsersRepository usersRepository
     ) {
         super(
                 securityJwtEventsPublisher,
