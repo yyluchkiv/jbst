@@ -1,7 +1,7 @@
 package jbst.foundation.handshakes;
 
 import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class JbstCsrfInterceptorHandshake implements HandshakeInterceptor {
 
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
 
     @Override
     public boolean beforeHandshake(

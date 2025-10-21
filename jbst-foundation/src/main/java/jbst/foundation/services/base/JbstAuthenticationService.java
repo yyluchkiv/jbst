@@ -20,7 +20,7 @@ import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class JbstAuthenticationService {
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Utilities
     private final JbstSecurityUtils securityUtils;
     // Publishers

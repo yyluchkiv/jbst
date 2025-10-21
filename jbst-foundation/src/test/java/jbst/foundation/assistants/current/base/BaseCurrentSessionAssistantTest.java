@@ -16,7 +16,7 @@ import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,8 +63,8 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        TokensProvider tokensProvider() {
-            return mock(TokensProvider.class);
+        JbstTokensProvider tokensProvider() {
+            return mock(JbstTokensProvider.class);
         }
 
         @Bean
@@ -88,7 +88,7 @@ class BaseCurrentSessionAssistantTest {
     private final JbstSettingsService settingsService;
     private final JbstSessionRegistry sessionRegistry;
     private final JbstUsersSessionsRepository usersSessionsRepository;
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     private final JbstSecurityUtils securityUtils;
     private final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 

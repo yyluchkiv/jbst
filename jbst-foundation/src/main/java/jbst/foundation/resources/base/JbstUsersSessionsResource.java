@@ -9,7 +9,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class JbstUsersSessionsResource {
     // Services
     private final JbstUsersSessionsService usersSessionsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
 
     @GetMapping
     public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {

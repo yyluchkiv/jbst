@@ -12,7 +12,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +37,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     private final JbstSuperadminService superadminService;
     private final JbstUsersSessionsService usersSessionsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
 
     // Resource
     private final JbstSuperadminResource componentUnderTest;

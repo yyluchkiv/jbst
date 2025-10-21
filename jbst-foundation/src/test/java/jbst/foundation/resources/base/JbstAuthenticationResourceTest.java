@@ -38,7 +38,7 @@ import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
@@ -92,7 +92,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     private final CurrentSessionAssistant currentSessionAssistant;
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Validators
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
     // Utilities

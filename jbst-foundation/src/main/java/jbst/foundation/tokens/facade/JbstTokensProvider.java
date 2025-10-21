@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class TokensProvider {
+public class JbstTokensProvider {
 
     // Providers
     private final TokenCookiesProvider tokensCookiesProvider;
@@ -29,7 +29,7 @@ public class TokensProvider {
     private final JbstProperties jbstProperties;
 
     @Autowired
-    public TokensProvider(
+    public JbstTokensProvider(
             @Qualifier("tokenCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
             @Qualifier("tokenHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
             JbstProperties jbstProperties

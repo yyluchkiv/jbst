@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.validators.BaseUsersSessionsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;
@@ -39,7 +39,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     // Services
     private final JbstUsersSessionsService usersSessionsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Validators
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 

@@ -13,7 +13,7 @@ import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
 import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,8 +65,8 @@ class JwtTokensFilterTest {
         }
 
         @Bean
-        TokensProvider tokensProvider() {
-            return mock(TokensProvider.class);
+        JbstTokensProvider tokensProvider() {
+            return mock(JbstTokensProvider.class);
         }
 
         @Bean
@@ -96,7 +96,7 @@ class JwtTokensFilterTest {
     // Services
     private final JbstTokensService tokensService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Extension
     private final JwtTokensFilterExtension jwtTokensFilterExtension;
     // Handlers

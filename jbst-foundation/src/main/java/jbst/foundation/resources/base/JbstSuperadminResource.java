@@ -11,7 +11,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.services.JbstUsersSessionsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class JbstSuperadminResource {
     private final JbstSuperadminService superadminService;
     private final JbstUsersSessionsService jbstUsersSessionsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
 
     // =================================================================================================================
     // Server

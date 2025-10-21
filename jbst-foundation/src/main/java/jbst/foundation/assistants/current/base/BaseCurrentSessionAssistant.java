@@ -15,7 +15,7 @@ import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     // Repositories
     protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Tokens
-    protected final TokensProvider tokensProvider;
+    protected final JbstTokensProvider tokensProvider;
     // Utilities
     protected final JbstSecurityUtils securityUtils;
     // Stores

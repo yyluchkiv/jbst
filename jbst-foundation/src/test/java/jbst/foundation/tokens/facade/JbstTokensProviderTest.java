@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
-class TokensProviderTest {
+class JbstTokensProviderTest {
 
     private static Stream<Arguments> jwtTokenStoragesArgs() {
         return Stream.of(
@@ -67,8 +67,8 @@ class TokensProviderTest {
         }
 
         @Bean
-        TokensProvider tokensProvider() {
-            return new TokensProvider(
+        JbstTokensProvider tokensProvider() {
+            return new JbstTokensProvider(
                     this.tokensCookiesProvider(),
                     this.tokensHeadersProvider(),
                     this.jbstProperties()
@@ -80,14 +80,14 @@ class TokensProviderTest {
     private final TokenHeadersProvider tokensHeadersProvider;
     private final JbstProperties jbstProperties;
 
-    private final TokensProvider componentUnderTest;
+    private final JbstTokensProvider componentUnderTest;
 
     @Autowired
-    public TokensProviderTest(
+    public JbstTokensProviderTest(
             @Qualifier("tokensCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
             @Qualifier("tokensHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
             JbstProperties jbstProperties,
-            TokensProvider tokensProvider
+            JbstTokensProvider tokensProvider
     ) {
         this.tokensCookiesProvider = tokensCookiesProvider;
         this.tokensHeadersProvider = tokensHeadersProvider;

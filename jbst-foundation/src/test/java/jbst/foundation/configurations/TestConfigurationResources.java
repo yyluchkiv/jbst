@@ -18,7 +18,7 @@ import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.foundation.validators.*;
 import jbst.foundation.websockets.WebsocketsService;
@@ -174,8 +174,8 @@ public class TestConfigurationResources {
     // Tokens
     // =================================================================================================================
     @Bean
-    TokensProvider tokensProvider() {
-        return mock(TokensProvider.class);
+    JbstTokensProvider tokensProvider() {
+        return mock(JbstTokensProvider.class);
     }
 
     // =================================================================================================================
