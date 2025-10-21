@@ -48,16 +48,6 @@ public class ConsoleAsserts {
         }
     }
 
-    public static void assertNonEmptyOrThrow(Collection<?> collection, String propertyName) {
-        if (collection.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Property %s is empty".formatted(
-                            RED_TEXT.format(propertyName)
-                    )
-            );
-        }
-    }
-
     public static void assertNonNullOrThrow(JbstProperty jbstProperty) {
         if (isNull(jbstProperty)) {
             throw new IllegalArgumentException(RED_TEXT.format("Unknown reflection property"));

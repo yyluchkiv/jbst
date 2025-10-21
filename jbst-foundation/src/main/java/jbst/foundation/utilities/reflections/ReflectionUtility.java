@@ -19,7 +19,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.uncapitalize;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 @UtilityClass
 public class ReflectionUtility {
 

@@ -32,7 +32,7 @@ public class JbstPropertiesUtility {
                 .collect(Collectors.toList());
     }
 
-    @SuppressWarnings("ConstantValue")
+    @SuppressWarnings({"ConstantValue", "unused"})
     public static List<JbstProperty> getNotNullPropertiesRecursively(Object object, String propertyName) {
         Predicate<Object> breakoutClassesPredicate = breakoutObj -> {
             var clazz = breakoutObj.getClass();
