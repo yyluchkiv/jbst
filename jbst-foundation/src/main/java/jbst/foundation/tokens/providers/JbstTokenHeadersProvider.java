@@ -23,7 +23,7 @@ import static java.util.Objects.nonNull;
 @Service
 @Qualifier("tokenHeadersProvider")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokenHeadersProvider implements TokenProvider {
+public class JbstTokenHeadersProvider implements JbstTokenProvider {
 
     // Properties
     private final JbstProperties jbstProperties;

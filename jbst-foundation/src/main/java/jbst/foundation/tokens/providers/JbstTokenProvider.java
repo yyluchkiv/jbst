@@ -11,7 +11,7 @@ import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 
-public interface TokenProvider {
+public interface JbstTokenProvider {
     void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
     void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
     DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws JbstCsrfTokenNotFoundException;

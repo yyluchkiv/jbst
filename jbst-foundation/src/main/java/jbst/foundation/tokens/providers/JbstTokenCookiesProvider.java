@@ -25,7 +25,7 @@ import static jbst.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOv
 @Service
 @Qualifier("tokenCookiesProvider")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokenCookiesProvider implements TokenProvider {
+public class JbstTokenCookiesProvider implements JbstTokenProvider {
 
     // Properties
     private final JbstProperties jbstProperties;

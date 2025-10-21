@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TokenCookiesProviderTest {
+class JbstTokenCookiesProviderTest {
 
     private static Stream<Arguments> readRequestAccessTokenArgs() {
         return Stream.of(
@@ -61,8 +61,8 @@ class TokenCookiesProviderTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        TokenCookiesProvider tokensCookiesProvider() {
-            return new TokenCookiesProvider(
+        JbstTokenCookiesProvider tokensCookiesProvider() {
+            return new JbstTokenCookiesProvider(
                     this.jbstProperties
             );
         }
@@ -70,7 +70,7 @@ class TokenCookiesProviderTest {
 
     private final JbstProperties jbstProperties;
 
-    private final TokenCookiesProvider componentUnderTest;
+    private final JbstTokenCookiesProvider componentUnderTest;
 
     @Test
     void createResponseAccessToken() {

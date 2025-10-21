@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TokenHeadersProviderTest {
+class JbstTokenHeadersProviderTest {
 
     @Configuration
     @Import({
@@ -41,8 +41,8 @@ class TokenHeadersProviderTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        TokenHeadersProvider tokenHeadersProvider() {
-            return new TokenHeadersProvider(
+        JbstTokenHeadersProvider tokenHeadersProvider() {
+            return new JbstTokenHeadersProvider(
                     this.jbstProperties
             );
         }
@@ -50,7 +50,7 @@ class TokenHeadersProviderTest {
 
     private final JbstProperties jbstProperties;
 
-    private final TokenHeadersProvider componentUnderTest;
+    private final JbstTokenHeadersProvider componentUnderTest;
 
     @Test
     void createResponseAccessToken() {

@@ -13,8 +13,8 @@ import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
-import jbst.foundation.tokens.providers.TokenCookiesProvider;
-import jbst.foundation.tokens.providers.TokenHeadersProvider;
+import jbst.foundation.tokens.providers.JbstTokenCookiesProvider;
+import jbst.foundation.tokens.providers.JbstTokenHeadersProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,13 +57,13 @@ class JbstTokensProviderTest {
         }
 
         @Bean("tokensCookiesProvider")
-        TokenCookiesProvider tokensCookiesProvider() {
-            return mock(TokenCookiesProvider.class);
+        JbstTokenCookiesProvider tokensCookiesProvider() {
+            return mock(JbstTokenCookiesProvider.class);
         }
 
         @Bean("tokensHeadersProvider")
-        TokenHeadersProvider tokensHeadersProvider() {
-            return mock(TokenHeadersProvider.class);
+        JbstTokenHeadersProvider tokensHeadersProvider() {
+            return mock(JbstTokenHeadersProvider.class);
         }
 
         @Bean
@@ -76,16 +76,16 @@ class JbstTokensProviderTest {
         }
     }
 
-    private final TokenCookiesProvider tokensCookiesProvider;
-    private final TokenHeadersProvider tokensHeadersProvider;
+    private final JbstTokenCookiesProvider tokensCookiesProvider;
+    private final JbstTokenHeadersProvider tokensHeadersProvider;
     private final JbstProperties jbstProperties;
 
     private final JbstTokensProvider componentUnderTest;
 
     @Autowired
     public JbstTokensProviderTest(
-            @Qualifier("tokensCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
-            @Qualifier("tokensHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
+            @Qualifier("tokensCookiesProvider") JbstTokenCookiesProvider tokensCookiesProvider,
+            @Qualifier("tokensHeadersProvider") JbstTokenHeadersProvider tokensHeadersProvider,
             JbstProperties jbstProperties,
             JbstTokensProvider tokensProvider
     ) {

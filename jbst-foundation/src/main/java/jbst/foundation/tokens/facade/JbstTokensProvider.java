@@ -10,8 +10,8 @@ import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundExceptio
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.tokens.providers.TokenCookiesProvider;
-import jbst.foundation.tokens.providers.TokenHeadersProvider;
+import jbst.foundation.tokens.providers.JbstTokenCookiesProvider;
+import jbst.foundation.tokens.providers.JbstTokenHeadersProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,15 +23,15 @@ import org.springframework.stereotype.Service;
 public class JbstTokensProvider {
 
     // Providers
-    private final TokenCookiesProvider tokensCookiesProvider;
-    private final TokenHeadersProvider tokensHeadersProvider;
+    private final JbstTokenCookiesProvider tokensCookiesProvider;
+    private final JbstTokenHeadersProvider tokensHeadersProvider;
     // Properties
     private final JbstProperties jbstProperties;
 
     @Autowired
     public JbstTokensProvider(
-            @Qualifier("tokenCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
-            @Qualifier("tokenHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
+            @Qualifier("tokenCookiesProvider") JbstTokenCookiesProvider tokensCookiesProvider,
+            @Qualifier("tokenHeadersProvider") JbstTokenHeadersProvider tokensHeadersProvider,
             JbstProperties jbstProperties
     ) {
         this.tokensCookiesProvider = tokensCookiesProvider;
