@@ -35,7 +35,7 @@ public class JbstProperty {
     private final Object propertyValue;
     private final String readableValue;
 
-    public JbstProperty(@NotNull PropertyName propertyName, Field field, Object propertyValue) {
+    public JbstProperty(@NotNull PropertyName propertyName, @NotNull Field field, Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
         this.treePropertyName = new PropertyName(uncapitalize(propertyName.value()) + "." + uncapitalize(this.propertyName));

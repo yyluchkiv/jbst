@@ -6,3 +6,4 @@
 — Addition: JbstExtensionService.registerMagicLink(email)
 — Addition: JbstExtensionService.register0(username)
 — Addition: JbstExtensionService.register1(username)
+— Addition: StringUtility.toKebab(value)
