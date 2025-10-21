@@ -8,7 +8,7 @@ import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstInvitationsRepository;
-import jbst.foundation.validators.abtracts.AbstractBaseInvitationsRequestsValidator;
+import jbst.foundation.validators.abtracts.AbstractJbstInvitationsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +39,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseInvitationsRequestsValidatorTest {
+class AbstractJbstInvitationsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationTest() {
         return Stream.of(
@@ -60,8 +60,8 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        BaseInvitationsRequestsValidator baseInvitationsRequestsValidator() {
-            return new AbstractBaseInvitationsRequestsValidator(
+        JbstInvitationsValidator baseInvitationsRequestsValidator() {
+            return new AbstractJbstInvitationsValidator(
                     this.invitationsRepository,
                     this.jbstProperties
             ) {};
@@ -70,7 +70,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
 
     private final JbstInvitationsRepository invitationsRepository;
 
-    private final BaseInvitationsRequestsValidator componentUnderTest;
+    private final JbstInvitationsValidator componentUnderTest;
 
     @ParameterizedTest
     @MethodSource("validateCreateNewInvitationTest")

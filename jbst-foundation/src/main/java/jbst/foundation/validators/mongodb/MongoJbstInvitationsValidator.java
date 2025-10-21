@@ -2,13 +2,13 @@ package jbst.foundation.validators.mongodb;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
-import jbst.foundation.validators.abtracts.AbstractBaseInvitationsRequestsValidator;
+import jbst.foundation.validators.abtracts.AbstractJbstInvitationsValidator;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MongoBaseInvitationsRequestsValidator extends AbstractBaseInvitationsRequestsValidator {
+public class MongoJbstInvitationsValidator extends AbstractJbstInvitationsValidator {
 
-    public MongoBaseInvitationsRequestsValidator(
+    public MongoJbstInvitationsValidator(
             MongoJbstInvitationsRepository invitationsRepository,
             JbstProperties jbstProperties
     ) {

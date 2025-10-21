@@ -5,7 +5,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
-import jbst.foundation.validators.BaseInvitationsRequestsValidator;
+import jbst.foundation.validators.JbstInvitationsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseInvitationsRequestsValidator implements BaseInvitationsRequestsValidator {
+public abstract class AbstractJbstInvitationsValidator implements JbstInvitationsValidator {
 
     // Repositories
     protected final JbstInvitationsRepository invitationsRepository;

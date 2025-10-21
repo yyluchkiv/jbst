@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.JbstInvitationsService;
-import jbst.foundation.validators.BaseInvitationsRequestsValidator;
+import jbst.foundation.validators.JbstInvitationsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
     // Services
     private final JbstInvitationsService invitationsService;
     // Validators
-    private final BaseInvitationsRequestsValidator baseInvitationsRequestsValidator;
+    private final JbstInvitationsValidator invitationsValidator;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -95,7 +95,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationsRequestsValidator).validateCreateNewInvitation(request);
+        verify(this.invitationsValidator).validateCreateNewInvitation(request);
         verify(this.invitationsService).save(Username.hardcoded(), request);
     }
 
@@ -112,7 +112,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationsRequestsValidator).validateDeleteById(username, invitationId);
+        verify(this.invitationsValidator).validateDeleteById(username, invitationId);
         verify(this.invitationsService).deleteById(invitationId);
     }
 }

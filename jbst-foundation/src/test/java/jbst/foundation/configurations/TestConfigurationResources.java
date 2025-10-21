@@ -209,8 +209,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseInvitationsRequestsValidator invitationsRequestsValidator() {
-        return mock(BaseInvitationsRequestsValidator.class);
+    JbstInvitationsValidator invitationsRequestsValidator() {
+        return mock(JbstInvitationsValidator.class);
     }
 
     @Bean
