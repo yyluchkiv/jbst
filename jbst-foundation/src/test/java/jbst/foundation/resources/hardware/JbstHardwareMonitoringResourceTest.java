@@ -7,7 +7,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.foundation.websockets.WebsocketsService;
+import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     // Settings
     private final JbstSettingsService settingsService;
     // Websockets
-    private final WebsocketsService websocketsService;
+    private final JbstWebsocketsService websocketsService;
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // State

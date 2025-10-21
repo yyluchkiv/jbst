@@ -5,7 +5,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.websockets.WebsocketsService;
+import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ import static jbst.foundation.utilities.concurrent.SleepUtility.sleepMillisecond
 public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
 
     // Wss
-    private final WebsocketsService websocketsService;
+    private final JbstWebsocketsService websocketsService;
 
     private final ResetServerStatus status = new ResetServerStatus(6);
 
     @Autowired
     public TestDataResetServerTask(
             IncidentPublisher incidentPublisher,
-            WebsocketsService websocketsService
+            JbstWebsocketsService websocketsService
     ) {
         super(
                 incidentPublisher

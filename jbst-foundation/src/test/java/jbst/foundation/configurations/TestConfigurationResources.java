@@ -22,7 +22,7 @@ import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.foundation.validators.*;
 import jbst.foundation.validators.base.JbstAuthenticationValidator;
-import jbst.foundation.websockets.WebsocketsService;
+import jbst.foundation.websockets.JbstWebsocketsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -250,8 +250,8 @@ public class TestConfigurationResources {
     // Websockets
     // =================================================================================================================
     @Bean
-    WebsocketsService websocketsService() {
-        return mock(WebsocketsService.class);
+    JbstWebsocketsService websocketsService() {
+        return mock(JbstWebsocketsService.class);
     }
 
     // =================================================================================================================

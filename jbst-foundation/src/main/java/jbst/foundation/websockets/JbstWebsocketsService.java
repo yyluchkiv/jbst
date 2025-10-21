@@ -19,7 +19,7 @@ import static jbst.foundation.domain.events.WebsocketEvent.resetServerProgress;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class WebsocketsService {
+public class JbstWebsocketsService {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final IncidentPublisher incidentPublisher;

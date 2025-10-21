@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class WebsocketsServiceTest {
+class JbstWebsocketsServiceTest {
 
     private static Stream<Arguments> convertAndSendToUserTestArgs() {
         return Stream.of(
@@ -64,8 +64,8 @@ class WebsocketsServiceTest {
         }
 
         @Bean
-        WebsocketsService websocketsService() {
-            return new WebsocketsService(
+        JbstWebsocketsService websocketsService() {
+            return new JbstWebsocketsService(
                     this.simpMessagingTemplate(),
                     this.serverIncidentPublisher(),
                     this.jbstProperties()
@@ -77,7 +77,7 @@ class WebsocketsServiceTest {
     private final IncidentPublisher incidentPublisher;
     private final JbstProperties jbstProperties;
 
-    private final WebsocketsService componentUnderTest;
+    private final JbstWebsocketsService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
