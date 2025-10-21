@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.server.ops.domain.servers.Team;
@@ -20,7 +20,7 @@ import static java.lang.Boolean.TRUE;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlackConfigs extends AbstractJbstProperty {
+public class SlackConfigs extends JbstProperty {
     @MandatoryProperty
     private final Team team;
     @MandatoryProperty

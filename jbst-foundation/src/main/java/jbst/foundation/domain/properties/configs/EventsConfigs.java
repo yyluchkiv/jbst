@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EventsConfigs extends AbstractJbstProperty {
+public class EventsConfigs extends JbstProperty {
     @MandatoryProperty
     private final String threadNamePrefix;
     @MandatoryProperty

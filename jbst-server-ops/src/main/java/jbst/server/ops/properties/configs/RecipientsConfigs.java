@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.configs;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RecipientsConfigs extends AbstractJbstProperty {
+public class RecipientsConfigs extends JbstProperty {
     @MandatoryProperty
     private final List<String> to;
 

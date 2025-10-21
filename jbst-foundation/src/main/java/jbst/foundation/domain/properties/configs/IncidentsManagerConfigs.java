@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.base.IncidentsManagerType;
@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentsManagerConfigs extends AbstractJbstProperty {
+public class IncidentsManagerConfigs extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty

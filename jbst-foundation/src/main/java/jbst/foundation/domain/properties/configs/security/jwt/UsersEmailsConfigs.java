@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.enums.AccountAccessMethod;
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UsersEmailsConfigs extends AbstractJbstProperty {
+public class UsersEmailsConfigs extends JbstProperty {
     @MandatoryProperty
     private final String subjectPrefix;
     @MandatoryProperty

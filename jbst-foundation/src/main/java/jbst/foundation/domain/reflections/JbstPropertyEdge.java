@@ -1,7 +1,7 @@
 package jbst.foundation.domain.reflections;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
@@ -43,7 +43,7 @@ public class JbstPropertyEdge {
     };
 
     @NotNull
-    private final AbstractJbstProperty parent;
+    private final JbstProperty parent;
     @NotNull
     private final Field child;
     @NotNull
@@ -54,7 +54,7 @@ public class JbstPropertyEdge {
     private final String readable;
 
     @SneakyThrows
-    public JbstPropertyEdge(@NotNull AbstractJbstProperty parent, @NotNull Field child) {
+    public JbstPropertyEdge(@NotNull JbstProperty parent, @NotNull Field child) {
         this.parent = parent;
         this.child = child;
         this.name = toKebab(this.parent.getNameNonMandatory()) + "." + toKebab(child.getName());
@@ -82,9 +82,21 @@ public class JbstPropertyEdge {
         }
     }
 
-    public boolean isLeafAbstractJbstProperty() {
-        return this.valueRAW instanceof AbstractJbstProperty;
+    public boolean isLeaf() {
+        return true;
     }
+
+    public boolean isBranch() {
+        return true;
+    }
+
+    public JbstProperty getChildAsJbstProperty() {
+        return (JbstProperty) this.valueRAW;
+    }
+
+//    public boolean isLeafAbstractJbstProperty() {
+//        return this.valueRAW instanceof AbstractJbstProperty;
+//    }
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void assertOrThrow() {

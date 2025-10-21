@@ -16,7 +16,7 @@ import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow
 import static jbst.foundation.utilities.reflections.ReflectionUtility.getFields;
 
 // TODO [YYL] merge AbstractPropertyConfigs + AbstractPropertiesConfigs: [parent, leaf, name]?
-public abstract class AbstractJbstProperty {
+public abstract class JbstProperty {
     public abstract boolean isRoot();
     public abstract boolean isLeaf();
     public abstract boolean isToggle();
@@ -34,10 +34,12 @@ public abstract class AbstractJbstProperty {
         fields.forEach(field -> {
             var edge = new JbstPropertyEdge(this, field);
             assertNonNullOrThrow(edge);
-            if (edge.isLeafAbstractJbstProperty()) {
+            if (edge.isBranch()) {
+
+            } else if (edge.isLeaf()) {
 
             } else {
-
+                edge.assertOrThrow();
             }
 
 
@@ -60,15 +62,15 @@ public abstract class AbstractJbstProperty {
         }
     }
 
-    private void assertProperties(AbstractJbstProperty parent) {
+    private void assertProperties(JbstProperty parent) {
         if (this.isLeaf()) {
             var fields = this.isToggle() ?
                     getMandatoryToggleFields(this, parent.getNameNonMandatory()) :
                     getMandatoryFields(this, parent.getNameNonMandatory());
             fields.forEach(field -> {
-                var jbstProperty = new JbstPropertyEdge(parent, field);
-                assertNonNullOrThrow(jbstProperty);
-                jbstProperty.assertOrThrow();
+                var edge = new JbstPropertyEdge(parent, field);
+                assertNonNullOrThrow(edge);
+                edge.assertOrThrow();
             });
         }
     }
@@ -78,11 +80,10 @@ public abstract class AbstractJbstProperty {
             return;
         }
         getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
-            try {
-                var jbstProperty = new JbstPropertyEdge(this, field, field.get(this));
-                if (isNull(jbstProperty.getValueRAW())) {
-                    jbstProperty.print();
-                } else {
+            var jbstProperty = new JbstPropertyEdge(this, field);
+            if (isNull(jbstProperty.getValueRAW())) {
+                jbstProperty.print();
+            } else {
 //                    var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
 //                    if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
 //                        ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).printProperties();
@@ -91,9 +92,6 @@ public abstract class AbstractJbstProperty {
 //                    } */ else {
 //                        jbstProperty.print();
 //                    }
-                }
-            } catch (IllegalAccessException ex) {
-                throw new IllegalArgumentException(ex);
             }
         });
     }

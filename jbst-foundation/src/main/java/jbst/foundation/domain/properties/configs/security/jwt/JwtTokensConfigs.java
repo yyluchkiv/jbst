@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.JwtToken;
 import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
@@ -24,7 +24,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JwtTokensConfigs extends AbstractJbstProperty {
+public class JwtTokensConfigs extends JbstProperty {
     @MandatoryProperty
     private final String secretKey;
     @MandatoryProperty

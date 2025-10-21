@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServersMonitoringConfigs extends AbstractJbstProperty {
+public class ServersMonitoringConfigs extends JbstProperty {
     @MandatoryProperty
     private final ZoneId zoneId;
     @MandatoryProperty

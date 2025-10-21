@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Mongodb;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MongodbSecurityJwtConfigs extends AbstractJbstProperty {
+public class MongodbSecurityJwtConfigs extends JbstProperty {
     @MandatoryProperty
     private final Mongodb mongodb;
 

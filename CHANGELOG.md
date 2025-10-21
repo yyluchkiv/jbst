@@ -1,6 +1,6 @@
 ### Changelog [v1.28]
 — Modification: validators include "jbst" prefix
-— Addition: AbstractProperty(parent, leaf, toggle, name)
+— Addition: AbstractProperty(root, leaf, toggle, name)
 — Deletion: AbstractPropertyConfigs, AbstractTogglePropertyConfigs, AbstractPropertiesConfigs, AbstractTogglePropertiesConfigs
 — Modification: JbstExtensionService.authenticateAsMagicLink(username, req, res)
 — Addition: JbstExtensionService.authenticateAsStandard(username, req, res)

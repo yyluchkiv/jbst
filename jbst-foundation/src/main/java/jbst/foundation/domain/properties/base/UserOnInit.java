@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -26,7 +26,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserOnInit extends AbstractJbstProperty {
+public class UserOnInit extends JbstProperty {
     @MandatoryProperty
     private final Username username;
     @MandatoryProperty

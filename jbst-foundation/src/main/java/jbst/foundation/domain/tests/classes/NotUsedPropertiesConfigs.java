@@ -1,6 +1,6 @@
 package jbst.foundation.domain.tests.classes;
 
-import jbst.foundation.domain.properties.AbstractJbstProperty;
+import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.ScheduledJob;
 import jbst.foundation.domain.properties.base.SpringLogging;
@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NotUsedPropertiesConfigs extends AbstractJbstProperty {
+public class NotUsedPropertiesConfigs extends JbstProperty {
     @MandatoryProperty
     private final ScheduledJob scheduledJob;
     @MandatoryProperty
