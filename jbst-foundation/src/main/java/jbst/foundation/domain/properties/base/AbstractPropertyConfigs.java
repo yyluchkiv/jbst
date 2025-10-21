@@ -21,9 +21,9 @@ public abstract class AbstractPropertyConfigs {
 
     public void printProperties(String propertyName) {
         var fields = getMandatoryBasedFields(this, propertyName);
-        var rfs = JbstPropertiesUtility.getProperties(this, propertyName, fields);
-        rfs.sort(JbstProperty.PRINTER_COMPARATOR);
-        rfs.forEach(JbstProperty::print);
+        var jbstProperties = JbstPropertiesUtility.getProperties(this, propertyName, fields);
+        jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
+        jbstProperties.forEach(JbstProperty::print);
     }
 
     // =================================================================================================================

@@ -25,17 +25,17 @@ public abstract class AbstractPropertiesConfigs {
     public void printProperties() {
         getMandatoryBasedFields(this, this.getPropertyName()).forEach(field -> {
             try {
-                var rf = new JbstProperty(this.getPropertyName(), field, field.get(this));
-                if (isNull(rf.getPropertyValue())) {
-                    rf.print();
+                var jbstProperty = new JbstProperty(this.getPropertyName(), field, field.get(this));
+                if (isNull(jbstProperty.getPropertyValue())) {
+                    jbstProperty.print();
                 } else {
-                    var nestedPropertyClass = rf.getPropertyValue().getClass();
+                    var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
                     if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                        ((AbstractPropertiesConfigs) rf.getPropertyValue()).printProperties();
+                        ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).printProperties();
                     } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                        ((AbstractPropertyConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyName());
+                        ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).printProperties(jbstProperty.getTreePropertyName());
                     } else {
-                        rf.print();
+                        jbstProperty.print();
                     }
                 }
             } catch (IllegalAccessException ex) {
