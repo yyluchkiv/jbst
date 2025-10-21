@@ -13,7 +13,9 @@ import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -107,10 +109,24 @@ public class JbstProperty {
     public void printAbstractPropertyConfigs() {
         // TODO [YYL] fix assert
         // assertTrueOrThrow(nonNull(this.propertyValue) && AbstractPropertyConfigs.class.isAssignableFrom(this.propertyValue.getClass()));
-        var fields = JbstPropertiesUtility.getMandatoryBasedFields(this, this.treePropertyName);
-        var jbstProperties = JbstPropertiesUtility.getProperties(this, this.treePropertyName, fields);
-        jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
-        jbstProperties.forEach(JbstProperty::print);
+//        var fields = JbstPropertiesUtility.getMandatoryBasedFields(this, this.treePropertyName);
+//        var jbstProperties = getProperties(this, this.treePropertyName, fields);
+//        jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
+//        jbstProperties.forEach(JbstProperty::print);
+    }
+
+    public static List<JbstProperty> getProperties(Object property, String propertyName, List<Field> fields) {
+        return fields.stream()
+                .map(field -> {
+                    try {
+//                        return new JbstProperty(propertyName, field, field.get(property));
+                        return new JbstProperty(null, field, field.get(property));
+                    } catch (IllegalAccessException | RuntimeException ex) {
+//                        return new JbstProperty(propertyName, field, null);
+                        return new JbstProperty(null, field, null);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     public void print() {
