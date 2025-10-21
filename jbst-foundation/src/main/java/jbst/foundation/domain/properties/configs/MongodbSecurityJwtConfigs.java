@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Mongodb;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
+public class MongodbSecurityJwtConfigs extends AbstractProperty {
     @MandatoryProperty
     private final Mongodb mongodb;
 
@@ -28,12 +29,22 @@ public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isParent() {
         return true;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "mongodb-security-jwt-configs";
     }
 }

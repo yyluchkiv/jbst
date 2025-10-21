@@ -65,7 +65,7 @@ public class WebsocketsConfigs extends AbstractProperty {
     }
 
     @Override
-    public String getName() {
+    public String getNameNonMandatory() {
         return "websockets-configs";
     }
 }

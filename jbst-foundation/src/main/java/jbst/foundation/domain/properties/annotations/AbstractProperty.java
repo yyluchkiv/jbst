@@ -7,5 +7,5 @@ public abstract class AbstractProperty {
     public abstract boolean isLeaf();
     public abstract boolean isToggle();
     @JbstNonMandatoryMethod
-    public abstract String getName();
+    public abstract String getNameNonMandatory();
 }

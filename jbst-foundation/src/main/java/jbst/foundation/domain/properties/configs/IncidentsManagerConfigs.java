@@ -56,7 +56,7 @@ public class IncidentsManagerConfigs extends AbstractProperty {
     }
 
     @Override
-    public String getName() {
+    public String getNameNonMandatory() {
         return "incidents-manager-configs";
     }
 }

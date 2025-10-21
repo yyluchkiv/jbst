@@ -68,7 +68,7 @@ public class EmailConfigs extends AbstractProperty {
     }
 
     @Override
-    public String getName() {
+    public String getNameNonMandatory() {
         return "email-configs";
     }
 }

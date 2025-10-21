@@ -68,7 +68,7 @@ public class MvcConfigs extends AbstractProperty {
     }
 
     @Override
-    public String getName() {
+    public String getNameNonMandatory() {
         return "mvc-configs";
     }
 }

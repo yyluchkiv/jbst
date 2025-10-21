@@ -79,11 +79,11 @@ public class JbstConstants {
         // Server
         // =================================================================================================================
         public static String getServerContainer(ServerConfigs serverConfigs, Status status) {
-            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " container/server: " + status.asANSI();
+            return BLACK_BOLD_TEXT.format(serverConfigs.getNameNonMandatory().value()) + " container/server: " + status.asANSI();
         }
 
         public static String getServerStartup(ServerConfigs serverConfigs, Status status) {
-            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " startup listener: " + status.asANSI();
+            return BLACK_BOLD_TEXT.format(serverConfigs.getNameNonMandatory().value()) + " startup listener: " + status.asANSI();
         }
 
         public static String getServerProcess(String processId, Status status) {
