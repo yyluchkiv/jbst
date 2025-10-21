@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JwtAuthenticationEntryPointExceptionHandlerTest {
+class JbstJbstAuthenticationEntryPoint {
 
     @Configuration
     @Import({
@@ -53,7 +53,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
     private final JbstHttpUtils httpUtils;
     private final ObjectMapper objectMapper;
 
-    private final JwtAuthenticationEntryPointExceptionHandler componentUnderTest;
+    private final JbstAuthenticationEntryPoint componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

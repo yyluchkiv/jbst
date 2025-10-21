@@ -24,7 +24,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClient
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtAuthenticationEntryPointExceptionHandler implements AuthenticationEntryPoint {
+public class JbstAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     // Publishers
     private final SecurityJwtEventsPublisher securityJwtPublisher;

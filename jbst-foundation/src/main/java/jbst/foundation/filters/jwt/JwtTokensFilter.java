@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
-import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
+import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
@@ -38,7 +38,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     // Extension
     private final JwtTokensFilterExtension jwtTokensFilterExtension;
     // Handlers
-    private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
+    private final JbstAccessDeniedHandler accessDeniedHandler;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest req, @NotNull HttpServletResponse res, @NotNull FilterChain chain) throws ServletException, IOException {
@@ -74,7 +74,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
         } catch (JbstTokenExtensionAccessDeniedException ex) {
             LOGGER.debug("JWT forbidden request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
-            this.jwtAccessDeniedExceptionHandler.handle(req, res, new AccessDeniedException(ex.getMessage()));
+            this.accessDeniedHandler.handle(req, res, new AccessDeniedException(ex.getMessage()));
         }
     }
 }

@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JwtAccessDeniedExceptionHandlerTest {
+class JbstAccessDeniedHandlerTest {
 
     @Configuration
     @Import({
@@ -42,7 +42,7 @@ class JwtAccessDeniedExceptionHandlerTest {
 
     private final ObjectMapper objectMapper;
 
-    private final JwtAccessDeniedExceptionHandler componentUnderTest;
+    private final JbstAccessDeniedHandler componentUnderTest;
 
     @SuppressWarnings("unchecked")
     @Test

@@ -10,7 +10,7 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
-import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
+import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
@@ -75,8 +75,8 @@ class JwtTokensFilterTest {
         }
 
         @Bean
-        JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler() {
-            return mock(JwtAccessDeniedExceptionHandler.class);
+        JbstAccessDeniedHandler jwtAccessDeniedExceptionHandler() {
+            return mock(JbstAccessDeniedHandler.class);
         }
 
         @Bean
@@ -100,7 +100,7 @@ class JwtTokensFilterTest {
     // Extension
     private final JwtTokensFilterExtension jwtTokensFilterExtension;
     // Handlers
-    private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
+    private final JbstAccessDeniedHandler accessDeniedHandler;
 
     private final JwtTokensFilter componentUnderTest;
 
@@ -111,7 +111,7 @@ class JwtTokensFilterTest {
                 this.tokensService,
                 this.tokensProvider,
                 this.jwtTokensFilterExtension,
-                this.jwtAccessDeniedExceptionHandler
+                this.accessDeniedHandler
         );
     }
 
@@ -122,7 +122,7 @@ class JwtTokensFilterTest {
                 this.tokensService,
                 this.tokensProvider,
                 this.jwtTokensFilterExtension,
-                this.jwtAccessDeniedExceptionHandler
+                this.accessDeniedHandler
         );
     }
 
@@ -319,7 +319,7 @@ class JwtTokensFilterTest {
         verify(this.jwtTokensFilterExtension).doFilter(request);
         verify(this.tokensProvider).clearTokens(response);
         var exceptionAC = ArgumentCaptor.forClass(AccessDeniedException.class);
-        verify(this.jwtAccessDeniedExceptionHandler).handle(eq(request), eq(response), exceptionAC.capture());
+        verify(this.accessDeniedHandler).handle(eq(request), eq(response), exceptionAC.capture());
         assertThat(exceptionAC.getValue().getMessage()).isEqualTo(exception.getMessage());
         verifyNoMoreInteractions(
                 request,

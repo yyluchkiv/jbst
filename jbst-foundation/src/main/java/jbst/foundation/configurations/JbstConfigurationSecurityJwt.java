@@ -5,8 +5,8 @@ import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.filters.jwt.JwtTokensFilter;
-import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
-import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
+import jbst.foundation.handlers.JbstAccessDeniedHandler;
+import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
 import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
 import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
@@ -99,8 +99,8 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     // Filters
     private final JwtTokensFilter jwtTokensFilter;
     // Handlers
-    private final JwtAuthenticationEntryPointExceptionHandler jwtAuthenticationEntryPointExceptionHandler;
-    private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
+    private final JbstAuthenticationEntryPoint authenticationEntryPoint;
+    private final JbstAccessDeniedHandler accessDeniedHandler;
     // Handshakes
     private final JbstCsrfInterceptorHandshake csrfInterceptorHandshake;
     private final JbstSecurityHandshakeHandler securityHandshakeHandler;
@@ -157,8 +157,8 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 )
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling
-                                .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
-                                .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
+                                .authenticationEntryPoint(this.authenticationEntryPoint)
+                                .accessDeniedHandler(this.accessDeniedHandler)
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement
