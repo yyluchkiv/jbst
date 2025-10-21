@@ -1,8 +1,9 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.base.AbstractAuthority;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.base.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthoritiesConfigs extends AbstractPropertyConfigs {
+public class AuthoritiesConfigs extends AbstractProperty {
     @MandatoryProperty
     private final String packageName;
     @MandatoryProperty
@@ -44,6 +45,26 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
                 randomString(),
                 randomStringsAsSet(3).stream().map(Authority::new).collect(Collectors.toSet())
         );
+    }
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     public Set<String> getAllAuthoritiesValues() {

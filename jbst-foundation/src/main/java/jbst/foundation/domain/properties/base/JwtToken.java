@@ -1,5 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -18,7 +20,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JwtToken extends AbstractPropertyConfigs {
+public class JwtToken extends AbstractProperty {
     @MandatoryProperty
     private final TimeAmount expiration;
     @NonMandatoryProperty
@@ -40,6 +42,26 @@ public class JwtToken extends AbstractPropertyConfigs {
 
     public static JwtToken randomHeaderBasedToken() {
         return new JwtToken(TimeAmount.random(), null, randomString());
+    }
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     @Override

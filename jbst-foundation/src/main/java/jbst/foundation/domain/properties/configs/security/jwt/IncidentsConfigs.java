@@ -1,8 +1,9 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRan
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentsConfigs extends AbstractPropertyConfigs {
+public class IncidentsConfigs extends AbstractProperty {
     @MandatoryProperty
     @MandatoryMapProperty(propertyName = "typesConfigs", keySetClass = JbstIamIncidentType.class)
     private final Map<JbstIamIncidentType, Boolean> typesConfigs;
@@ -48,6 +49,26 @@ public class IncidentsConfigs extends AbstractPropertyConfigs {
 
     public static IncidentsConfigs random() {
         return new IncidentsConfigs(getEnumMapMappedRandomBoolean(JbstIamIncidentType.values()));
+    }
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     @Override
