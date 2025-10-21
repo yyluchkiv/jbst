@@ -41,7 +41,7 @@ public class JbstConfigurationMongo {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getMongodbSecurityJwtConfigs().assertRoot();
+        this.jbstProperties.getMongodbSecurityJwtConfigs().assertPropertyTree();
     }
 
     @Bean

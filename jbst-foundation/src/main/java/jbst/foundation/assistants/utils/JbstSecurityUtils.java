@@ -33,7 +33,7 @@ public class JbstSecurityUtils {
     public JbstSecurityUtils(JbstProperties jbstProperties) {
         this.jbstProperties = jbstProperties;
         var jwtTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
-        jwtTokensConfigs.assertRoot();
+        jwtTokensConfigs.assertPropertyTree();
         // WARNING: consider using Base64 encoded key in properties, and decode it here
         // https://www.baeldung.com/spring-security-sign-jwt-token#1-using-key-instance
         this.secretKey = Keys.hmacShaKeyFor(jwtTokensConfigs.getSecretKey().getBytes());

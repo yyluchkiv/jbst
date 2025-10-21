@@ -29,7 +29,7 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        notUsedPropertiesConfigs.assertRoot();
+        notUsedPropertiesConfigs.assertPropertyTree();
         notUsedPropertiesConfigs.printProperties();
 
         // Assert
@@ -39,7 +39,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void serverConfigsTest() {
         // Act
-        ServerConfigs.hardcoded().assertRoot();
+        ServerConfigs.hardcoded().assertPropertyTree();
         ServerConfigs.hardcoded().printProperties();
 
         // Assert
@@ -49,7 +49,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilitiesConfigsTest() {
         // Act
-        UtilsConfigs.hardcoded().assertRoot();
+        UtilsConfigs.hardcoded().assertPropertyTree();
         UtilsConfigs.hardcoded().printProperties();
 
         // Assert
@@ -59,7 +59,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void asyncConfigsTest() {
         // Act
-        AsyncConfigs.hardcoded().assertRoot();
+        AsyncConfigs.hardcoded().assertPropertyTree();
         AsyncConfigs.hardcoded().printProperties();
 
         // Assert
@@ -69,7 +69,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void eventsConfigsTest() {
         // Act
-        EventsConfigs.hardcoded().assertRoot();
+        EventsConfigs.hardcoded().assertPropertyTree();
         EventsConfigs.hardcoded().printProperties();
 
         // Assert
@@ -82,7 +82,7 @@ class PropertiesAsserterAndPrinterTest {
         var mvcConfigs = new MvcConfigs(false, null, null);
 
         // Act
-        mvcConfigs.assertRoot();
+        mvcConfigs.assertPropertyTree();
         mvcConfigs.printProperties();
 
         // Assert
@@ -92,7 +92,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsTest() {
         // Act
-        MvcConfigs.hardcoded().assertRoot();
+        MvcConfigs.hardcoded().assertPropertyTree();
         MvcConfigs.hardcoded().printProperties();
 
         // Assert
@@ -102,7 +102,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsDisabledTest() {
         // Act
-        EmailConfigs.disabled().assertRoot();
+        EmailConfigs.disabled().assertPropertyTree();
         EmailConfigs.disabled().printProperties();
 
         // Assert
@@ -112,7 +112,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsTest() {
         // Act
-        EmailConfigs.hardcoded().assertRoot();
+        EmailConfigs.hardcoded().assertPropertyTree();
         EmailConfigs.hardcoded().printProperties();
 
         // Assert
@@ -122,7 +122,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void incidentConfigsTest() {
         // Act
-        IncidentsManagerConfigs.hardcoded().assertRoot();
+        IncidentsManagerConfigs.hardcoded().assertPropertyTree();
         IncidentsManagerConfigs.hardcoded().printProperties();
 
         // Assert
@@ -135,7 +135,7 @@ class PropertiesAsserterAndPrinterTest {
         var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
 
         // Act
-        var throwable = catchThrowable(securityJwtConfigs::assertRoot);
+        var throwable = catchThrowable(securityJwtConfigs::assertPropertyTree);
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -147,7 +147,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtConfigsTest() {
         // Act
-        SecurityJwtConfigs.hardcoded().assertRoot();
+        SecurityJwtConfigs.hardcoded().assertPropertyTree();
         SecurityJwtConfigs.hardcoded().printProperties();
 
         // Assert
@@ -188,7 +188,7 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        securityJwtConfigs.assertRoot();
+        securityJwtConfigs.assertPropertyTree();
         securityJwtConfigs.printProperties();
 
         // Assert
@@ -226,7 +226,7 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        var throwable = catchThrowable(securityJwtConfigs::assertRoot);
+        var throwable = catchThrowable(securityJwtConfigs::assertPropertyTree);
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -266,7 +266,7 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        var throwable = catchThrowable(securityJwtConfigs::assertRoot);
+        var throwable = catchThrowable(securityJwtConfigs::assertPropertyTree);
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -277,7 +277,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mongodbSecurityJwtConfigsTest() {
         // Act
-        MongodbSecurityJwtConfigs.hardcoded().assertRoot();
+        MongodbSecurityJwtConfigs.hardcoded().assertPropertyTree();
         MongodbSecurityJwtConfigs.hardcoded().printProperties();
 
         // Assert

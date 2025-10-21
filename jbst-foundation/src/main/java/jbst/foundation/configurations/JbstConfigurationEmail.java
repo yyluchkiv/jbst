@@ -31,8 +31,8 @@ public class JbstConfigurationEmail {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertRoot();
-        this.jbstProperties.getEmailConfigs().assertRoot();
+        this.jbstProperties.getAsyncConfigs().assertPropertyTree();
+        this.jbstProperties.getEmailConfigs().assertPropertyTree();
     }
 
     @Bean

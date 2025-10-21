@@ -35,7 +35,7 @@ public class JbstConfigurationSpringBootServer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getServerConfigs().assertRoot();
+        this.jbstProperties.getServerConfigs().assertPropertyTree();
     }
 
     @Bean

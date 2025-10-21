@@ -26,6 +26,6 @@ public class ConfigurationServerBase {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertRoot();
+        this.serverProperties.getServerConfigs().assertPropertyTree();
     }
 }

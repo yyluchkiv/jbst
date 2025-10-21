@@ -42,8 +42,8 @@ public class SlacksConfigs extends JbstProperty {
     }
 
     @Override
-    public void assertRoot() {
-        super.assertRoot();
+    public void assertPropertyTree() {
+        super.assertPropertyTree();
         assertTrueOrThrow(
                 this.values.stream().map(SlackConfigs::isMain).filter(Boolean::booleanValue).count() == 1,
                 "Slacks configs must have one main team"

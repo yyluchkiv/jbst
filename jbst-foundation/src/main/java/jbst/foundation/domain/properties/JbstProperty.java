@@ -24,7 +24,7 @@ public abstract class JbstProperty {
     public abstract String getNameNonMandatory();
 
     // TODO [YYL] fixme?
-    public void assertRoot() {
+    public void assertPropertyTree() {
         if (this.isLeaf()) {
             return;
         }
@@ -35,7 +35,7 @@ public abstract class JbstProperty {
             var edge = new JbstPropertyEdge(this, field);
             assertNonNullOrThrow(edge);
             if (edge.isBranch()) {
-                edge.getChildAsJbstProperty().assertRoot();
+                edge.getChildAsJbstProperty().assertPropertyTree();
             } else if (edge.isLeaf()) {
 
             } else {

@@ -26,7 +26,7 @@ public class JbstConfigurationEvents {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getEventsConfigs().assertRoot();
+        this.jbstProperties.getEventsConfigs().assertPropertyTree();
     }
 
     @SuppressWarnings("DuplicatedCode")

@@ -73,8 +73,8 @@ public class JwtTokensConfigs extends JbstProperty {
     }
 
     @Override
-    public void assertRoot() {
-        super.assertRoot();
+    public void assertPropertyTree() {
+        super.assertPropertyTree();
         if (this.storageMethod.isCookies()) {
             assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),

@@ -46,9 +46,9 @@ public class ConfigurationBeans {
     @PostConstruct
     public void init() {
         this.serverProperties.getServerConfigs().assertProperties("server-configs");
-        this.serverProperties.getServersConfigs().assertRoot();
-        this.serverProperties.getSlacksConfigs().assertRoot();
-        this.serverProperties.getRecipientsConfigs().assertRoot();
+        this.serverProperties.getServersConfigs().assertPropertyTree();
+        this.serverProperties.getSlacksConfigs().assertPropertyTree();
+        this.serverProperties.getRecipientsConfigs().assertPropertyTree();
     }
 
     @SuppressWarnings("deprecation")
