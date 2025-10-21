@@ -110,7 +110,7 @@ public class ReflectionUtility {
     }
 
     @SuppressWarnings("ConstantValue")
-    public static List<Field> getFields(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations) {
+    public static List<Field> getFields(Object property, Set<Class<? extends Annotation>> presentAnnotations) {
         return Stream.of(property.getClass().getDeclaredFields())
                 .filter(Objects::nonNull)
                 .map(field -> {

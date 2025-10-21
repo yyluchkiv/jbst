@@ -47,17 +47,17 @@ public class PropertiesAsserter {
 
     public static List<Field> getMandatoryFields(Object property, String propertyName) {
         assertNonNullOrThrow(property, propertyName);
-        return getFields(property, propertyName, Set.of(MandatoryProperty.class));
+        return getFields(property, Set.of(MandatoryProperty.class));
     }
 
     public static List<Field> getMandatoryToggleFields(Object property, String propertyName) {
         assertNonNullOrThrow(property, propertyName);
-        return getFields(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
+        return getFields(property, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
     public static List<Field> getMandatoryBasedFields(Object property, String propertyName) {
         assertNonNullOrThrow(property, propertyName);
-        return getFields(property, propertyName, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
+        return getFields(property, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
     // =================================================================================================================
