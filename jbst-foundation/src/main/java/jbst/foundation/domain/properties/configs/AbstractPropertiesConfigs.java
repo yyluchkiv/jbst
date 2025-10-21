@@ -14,30 +14,21 @@ public abstract class AbstractPropertiesConfigs {
     public void assertProperties() {
         PropertiesAsserter.assertMandatoryPropertiesConfigs(this, this.getPropertyId());
         if (this.isParentPropertiesNode()) {
-            printProperties(this.getPropertyId());
+            this.printProperties();
         }
     }
 
-    @Deprecated
-    public void printProperties(PropertyId propertyId) {
-        this.printMandatoryPropertiesConfigs(propertyId);
-    }
-
-    // =================================================================================================================
-    // PRIVATE METHODS
-    // =================================================================================================================
-    @Deprecated
-    private void printMandatoryPropertiesConfigs(PropertyId propertyId) {
-        var fields = PropertiesAsserter.getMandatoryBasedFields(this, propertyId);
+    public void printProperties() {
+        var fields = PropertiesAsserter.getMandatoryBasedFields(this, this.getPropertyId());
         fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertyId, field, field.get(this));
+                var rf = new ReflectionProperty(this.getPropertyId(), field, field.get(this));
                 if (isNull(rf.getPropertyValue())) {
                     rf.print();
                 } else {
                     var nestedPropertyClass = rf.getPropertyValue().getClass();
                     if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                        ((AbstractPropertiesConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyId());
+                        ((AbstractPropertiesConfigs) rf.getPropertyValue()).printProperties();
                     } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                         ((AbstractPropertyConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyId());
                     } else {

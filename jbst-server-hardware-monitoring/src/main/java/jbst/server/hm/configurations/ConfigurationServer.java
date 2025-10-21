@@ -8,7 +8,6 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.JbstConfigurationAsync;
 import jbst.foundation.configurations.JbstConfigurationEvents;
 import jbst.foundation.configurations.JbstConfigurationSpringBootServer;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.server.hm.client.HardwareMonitoringClient;
 import jbst.server.hm.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,7 @@ public class ConfigurationServer {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().printProperties(new PropertyId("serverConfigs"));
+        this.serverProperties.getServerConfigs().printProperties();
     }
 
     @Bean
