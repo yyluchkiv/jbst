@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.reflections.JbstProperty;
 
@@ -8,6 +7,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
+import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
 import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryFields;
 
@@ -51,8 +52,8 @@ public abstract class AbstractPropertiesConfigs {
         fields.forEach(field -> {
             try {
                 var jbstProperty = new JbstProperty(this.getPropertyName(), field, field.get(this));
-                ConsoleAsserts.assertNonNullOrThrow(jbstProperty);
-                var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
+                assertNonNullOrThrow(jbstProperty);
+                var nestedPropertyClass = requireNonNull(jbstProperty.getPropertyValue()).getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {

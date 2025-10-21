@@ -8,6 +8,7 @@ import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.time.ZoneId;
@@ -39,13 +40,18 @@ public class JbstProperty {
         return o1.getReadableValue().compareTo(o2.getReadableValue());
     };
 
+    @NotNull
     private final Field field;
+    @NotNull
     private final String propertyName;
+    @NotNull
     private final String treePropertyName;
+    @Nullable
     private final Object propertyValue;
+    @NotNull
     private final String readableValue;
 
-    public JbstProperty(@NotNull String propertyName, @NotNull Field field, Object propertyValue) {
+    public JbstProperty(@NotNull String propertyName, @NotNull Field field, @Nullable Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
         this.treePropertyName = toKebab(propertyName) + "." + toKebab(this.propertyName);
@@ -103,7 +109,7 @@ public class JbstProperty {
     }
 
     public void printAbstractPropertyConfigs() {
-        assertTrueOrThrow(AbstractPropertyConfigs.class.isAssignableFrom(this.propertyValue.getClass()));
+        assertTrueOrThrow(nonNull(this.propertyValue) && AbstractPropertyConfigs.class.isAssignableFrom(this.propertyValue.getClass()));
         var fields = getMandatoryBasedFields(this, this.treePropertyName);
         var jbstProperties = JbstPropertiesUtility.getProperties(this, this.treePropertyName, fields);
         jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);

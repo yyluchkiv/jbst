@@ -9,7 +9,6 @@ import java.util.List;
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryFields;
 
-// TODO [YYL] merge AbstractPropertyConfigs + AbstractPropertiesConfigs
 @Slf4j
 public abstract class AbstractPropertyConfigs {
 
