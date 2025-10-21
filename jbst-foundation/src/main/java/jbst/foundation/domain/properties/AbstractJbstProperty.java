@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.utilities.reflections.ReflectionUtility.getFields;
 
@@ -26,18 +27,27 @@ public abstract class AbstractJbstProperty {
     // TODO [YYL] fixme?
     public void assertProperties() {
         if (this.isLeaf()) {
-            if (this.isToggle()) {
-
-            } else {
-
-            }
-        } else {
-            if (this.isToggle()) {
-
-            } else {
-
-            }
+            return;
         }
+        var fields = this.isToggle() ?
+                getMandatoryToggleFields(this, this.getNameNonMandatory()) :
+                getMandatoryFields(this, this.getNameNonMandatory());
+        fields.forEach(field -> {
+            try {
+                var jbstProperty = new JbstProperty(this, field, field.get(this));
+                assertNonNullOrThrow(jbstProperty);
+                var nestedPropertyClass = requireNonNull(jbstProperty.getPropertyValue()).getClass();
+                if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                    ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
+                } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                    ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).assertProperties(jbstProperty.getTreePropertyName());
+                } */ else {
+                    jbstProperty.assertOrThrow();
+                }
+            } catch (IllegalAccessException ex) {
+                throw new IllegalArgumentException(ex);
+            }
+        });
         if (this.isParent()) {
             this.printProperties();
         }
@@ -45,12 +55,14 @@ public abstract class AbstractJbstProperty {
 
     private void assertProperties(String parentPropertyName) {
         if (this.isLeaf()) {
-            var fields = this.isToggle() ? getMandatoryToggleFields(this, parentPropertyName) : getMandatoryFields(this, parentPropertyName);
+            var fields = this.isToggle() ?
+                    getMandatoryToggleFields(this, parentPropertyName) :
+                    getMandatoryFields(this, parentPropertyName);
             fields.forEach(field -> {
                 try {
                     var jbstProperty = new JbstProperty(parentPropertyName, field, field.get(this));
                     assertNonNullOrThrow(jbstProperty);
-                    jbstProperty.verify();
+                    jbstProperty.assertOrThrow();
                 } catch (IllegalAccessException ex) {
                     throw new IllegalArgumentException(ex);
                 }
@@ -64,7 +76,7 @@ public abstract class AbstractJbstProperty {
         }
         getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
             try {
-                var jbstProperty = new JbstProperty(this.getNameNonMandatory(), field, field.get(this));
+                var jbstProperty = new JbstProperty(this, field, field.get(this));
                 if (isNull(jbstProperty.getPropertyValue())) {
                     jbstProperty.print();
                 } else {

@@ -57,7 +57,7 @@ public abstract class AbstractPropertiesConfigs {
                 } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).assertProperties(jbstProperty.getTreePropertyName());
                 } */ else {
-                    jbstProperty.verify();
+                    jbstProperty.assertOrThrow();
                 }
             } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);

@@ -1,6 +1,7 @@
 package jbst.foundation.domain.reflections;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
+import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
@@ -49,10 +50,11 @@ public class JbstProperty {
     @NotNull
     private final String readableValue;
 
-    public JbstProperty(@NotNull String propertyName, @NotNull Field field, @Nullable Object propertyValue) {
+//    public JbstProperty(@NotNull String propertyName, @NotNull Field field, @Nullable Object propertyValue) {
+    public JbstProperty(@NotNull AbstractJbstProperty property, @NotNull Field field, @Nullable Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
-        this.treePropertyName = toKebab(propertyName) + "." + toKebab(this.propertyName);
+        this.treePropertyName = toKebab(this.propertyName) + "." + toKebab(this.propertyName);
         this.propertyValue = propertyValue;
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
@@ -78,7 +80,7 @@ public class JbstProperty {
     }
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
-    public void verify() {
+    public void assertOrThrow() {
         if (this.field.isAnnotationPresent(MandatoryMapProperty.class)) {
             var annotation = this.field.getAnnotation(MandatoryMapProperty.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
