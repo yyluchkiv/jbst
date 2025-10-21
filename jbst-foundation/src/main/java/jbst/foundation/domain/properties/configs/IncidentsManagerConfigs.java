@@ -20,7 +20,7 @@ public class IncidentsManagerConfigs extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty
-    private final IncidentsManagerType type;
+    private IncidentsManagerType type;
     @MandatoryToggleProperty
     private RemoteServer remoteServer;
 
