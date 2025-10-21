@@ -69,8 +69,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             Asserts.assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
                     "Please make sure \"%s.accessToken.cookieKey\" and \"%s.refreshToken.cookieKey\" are different".formatted(
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName()),
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName())
+                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName()),
+                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName())
                     )
             );
         }
@@ -78,8 +78,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             Asserts.assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
                     "Please make sure \"%s.accessToken.headerKey\" and \"%s.refreshToken.headerKey\" are different".formatted(
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName()),
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName())
+                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName()),
+                            JbstConstants.JColor.RED_TEXT.format(this.getPropertyName())
                     )
             );
         }

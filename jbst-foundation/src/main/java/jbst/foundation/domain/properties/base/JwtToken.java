@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
-import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -48,8 +48,8 @@ public class JwtToken extends AbstractPropertyConfigs {
         super.assertProperties(propertyId);
         assertFalseOrThrow(
                 nonNull(this.cookieKey) && nonNull(this.headerKey),
-                "Attribute \"%s\" requires only \"cookieKey\" or \"headerKey\" to be provided".formatted(
-                        ConsoleAsserts.RED_TEXT.format(propertyId.value())
+                "Attribute '%s' requires only 'cookie-key' or 'header-key' to be provided".formatted(
+                        JbstConstants.JColor.RED_TEXT.format(propertyId.value())
                 )
         );
     }

@@ -4,6 +4,7 @@ import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.base.PropertyName;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
@@ -164,7 +165,7 @@ public class PropertiesAsserter {
                             invalidProperty(rf.getTreePropertyId()),
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
-                            ConsoleAsserts.RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
+                            JbstConstants.JColor.RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
                     )
             );
         }
