@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.mvc;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;

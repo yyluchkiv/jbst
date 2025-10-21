@@ -1,6 +1,6 @@
 package jbst.server.iam.base.properties;
 
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.server.iam.base.domain.enums.UserAuthority;
 import lombok.AllArgsConstructor;

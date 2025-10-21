@@ -1,6 +1,6 @@
 package jbst.server.hm.properties;
 
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

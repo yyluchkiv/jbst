@@ -7,7 +7,7 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

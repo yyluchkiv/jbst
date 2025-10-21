@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Version;
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;

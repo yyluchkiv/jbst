@@ -1,6 +1,6 @@
 package jbst.server.ops.properties.configs;
 
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.server.ops.domain.servers.Team;
 import jbst.server.ops.properties.base.SlackConfigs;

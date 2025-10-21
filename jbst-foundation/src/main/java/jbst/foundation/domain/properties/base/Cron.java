@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
 import lombok.AllArgsConstructor;

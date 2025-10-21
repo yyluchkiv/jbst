@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Authority;
 import lombok.AllArgsConstructor;

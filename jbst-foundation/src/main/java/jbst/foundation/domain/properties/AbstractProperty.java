@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.annotations;
+package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.annotations.JbstNonMandatoryMethod;
 

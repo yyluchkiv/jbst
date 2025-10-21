@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.AbstractAuthority;
-import jbst.foundation.domain.properties.annotations.AbstractProperty;
+import jbst.foundation.domain.properties.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
