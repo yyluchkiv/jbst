@@ -27,7 +27,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtTokensFilter extends OncePerRequestFilter {
+public class JbstTokensFilter extends OncePerRequestFilter {
 
     // Session
     private final JbstSessionRegistry sessionRegistry;

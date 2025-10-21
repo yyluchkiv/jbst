@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.filters.jwt.JwtTokensFilter;
+import jbst.foundation.filters.jwt.JbstTokensFilter;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
 import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
@@ -97,7 +97,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     // Passwords
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Filters
-    private final JwtTokensFilter jwtTokensFilter;
+    private final JbstTokensFilter tokensFilter;
     // Handlers
     private final JbstAuthenticationEntryPoint authenticationEntryPoint;
     private final JbstAccessDeniedHandler accessDeniedHandler;
@@ -152,7 +152,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .addFilterBefore(
-                        this.jwtTokensFilter,
+                        this.tokensFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .exceptionHandling(exceptionHandling ->

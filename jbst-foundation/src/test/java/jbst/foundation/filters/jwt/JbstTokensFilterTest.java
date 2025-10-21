@@ -42,7 +42,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JwtTokensFilterTest {
+class JbstTokensFilterTest {
 
     private static Stream<Arguments> clearCookieTest() {
         return Stream.of(
@@ -80,8 +80,8 @@ class JwtTokensFilterTest {
         }
 
         @Bean
-        JwtTokensFilter jwtAccessTokenFilter() {
-            return new JwtTokensFilter(
+        JbstTokensFilter jwtAccessTokenFilter() {
+            return new JbstTokensFilter(
                     this.sessionRegistry(),
                     this.tokenService(),
                     this.tokensProvider(),
@@ -102,7 +102,7 @@ class JwtTokensFilterTest {
     // Handlers
     private final JbstAccessDeniedHandler accessDeniedHandler;
 
-    private final JwtTokensFilter componentUnderTest;
+    private final JbstTokensFilter componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
