@@ -2,6 +2,7 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.reflections.JbstPropertiesUtility;
 
+// TODO [YYL-properties] reuse and delete
 public abstract class AbstractTogglePropertiesConfigs extends AbstractPropertiesConfigs {
     public abstract boolean isEnabled();
 
