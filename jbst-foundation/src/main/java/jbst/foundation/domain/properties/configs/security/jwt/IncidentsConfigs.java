@@ -76,7 +76,7 @@ public class IncidentsConfigs extends JbstProperty {
         super.assertPropertiesAsLeaf(parentTreeName);
         if (TRUE.equals(this.typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD)) &&
                 TRUE.equals(this.typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD))) {
-            throw new IllegalArgumentException("Please configure login failure incident feature. Only one feature type could be enabled");
+            throw new IllegalArgumentException("[IncidentsConfigs] one login failure feature type expected to be provided");
         }
     }
 
