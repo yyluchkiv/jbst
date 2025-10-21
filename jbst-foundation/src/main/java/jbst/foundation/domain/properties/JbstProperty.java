@@ -22,6 +22,7 @@ public abstract class JbstProperty {
                 getMandatoryToggleFields(this, this.getNameNonMandatory()) :
                 getMandatoryFields(this, this.getNameNonMandatory());
         fields.forEach(field -> {
+
             var edge = new JbstPropertyEdge(this.getParentTreeName(),this, field);
             assertNonNullOrThrow(edge);
             if (edge.isChildBranch()) {
@@ -58,9 +59,6 @@ public abstract class JbstProperty {
     // PRIVATE METHODS
     // =================================================================================================================
     private void printProperties(String parentTreeName) {
-        if (!this.isRoot()) {
-            return;
-        }
         getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
             var edge = new JbstPropertyEdge(parentTreeName, this, field);
             if (isNull(edge.getValueRAW())) {
