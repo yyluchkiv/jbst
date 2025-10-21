@@ -46,10 +46,10 @@ public class ConfigurationBeans {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.serverProperties.getServerConfigs().assertProperties(new PropertyId("server-configs"));
         this.serverProperties.getServersConfigs().assertProperties();
         this.serverProperties.getSlacksConfigs().assertProperties();
-        this.serverProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipientsConfigs"));
+        this.serverProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipients-configs"));
     }
 
     @SuppressWarnings("deprecation")

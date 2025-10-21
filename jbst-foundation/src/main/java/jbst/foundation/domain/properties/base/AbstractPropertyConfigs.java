@@ -8,6 +8,7 @@ import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.ass
 import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
 import static jbst.foundation.utilities.reflections.ReflectionUtility.getProperties;
 
+// TODO [YYL] merge AbstractPropertyConfigs + AbstractPropertiesConfigs
 @Slf4j
 public abstract class AbstractPropertyConfigs {
 
