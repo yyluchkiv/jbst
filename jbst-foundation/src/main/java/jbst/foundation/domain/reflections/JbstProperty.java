@@ -1,6 +1,7 @@
 package jbst.foundation.domain.reflections;
 
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.base.PropertyName;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -30,14 +31,14 @@ public class JbstProperty {
 
     private final Field field;
     private final String propertyName;
-    private final PropertyId treePropertyId;
+    private final PropertyName treePropertyName;
     private final Object propertyValue;
     private final String readableValue;
 
     public JbstProperty(@NotNull PropertyId propertyId, Field field, Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
-        this.treePropertyId = new PropertyId(uncapitalize(propertyId.value()) + "." + uncapitalize(this.propertyName));
+        this.treePropertyName = new PropertyName(uncapitalize(propertyId.value()) + "." + uncapitalize(this.propertyName));
         this.propertyValue = propertyValue;
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
@@ -53,12 +54,12 @@ public class JbstProperty {
 
         if (isArrayOfStrings) {
             var castedPropertyValue = (String[]) this.propertyValue;
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyId.value(), Arrays.toString(castedPropertyValue));
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName.value(), Arrays.toString(castedPropertyValue));
         } else if (isZoneId) {
             var castedPropertyValue = (ZoneId) this.propertyValue;
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyId.value(), castedPropertyValue.getId());
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName.value(), castedPropertyValue.getId());
         } else {
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyId.value(), this.propertyValue);
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName.value(), this.propertyValue);
         }
     }
 
