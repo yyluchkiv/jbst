@@ -48,7 +48,7 @@ public class ConfigurationBeans {
         this.serverProperties.getServerConfigs().assertProperties("server-configs");
         this.serverProperties.getServersConfigs().assertProperties();
         this.serverProperties.getSlacksConfigs().assertProperties();
-        this.serverProperties.getRecipientsConfigs().assertProperties("recipients-configs");
+        this.serverProperties.getRecipientsConfigs().assertProperties();
     }
 
     @SuppressWarnings("deprecation")

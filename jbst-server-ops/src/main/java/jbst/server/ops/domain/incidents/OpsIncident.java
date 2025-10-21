@@ -3,10 +3,10 @@ package jbst.server.ops.domain.incidents;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.IncidentAttributes;
 import jbst.server.ops.domain.servers.Team;
+import jbst.server.ops.properties.configs.RecipientsConfigs;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -1,7 +1,8 @@
-package jbst.foundation.domain.properties.base;
+package jbst.server.ops.properties.configs;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RecipientsConfigs extends AbstractPropertyConfigs {
+public class RecipientsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final List<String> to;
 
@@ -24,5 +25,15 @@ public class RecipientsConfigs extends AbstractPropertyConfigs {
                         "test2@" + JbstConstants.Domains.HARDCODED
                 )
         );
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
+
+    @Override
+    public String getPropertyName() {
+        return "recipients-configs";
     }
 }

@@ -1,9 +1,9 @@
 package jbst.server.ops.properties;
 
-import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.domain.properties.base.RemoteServer;
 import jbst.foundation.domain.properties.base.SpringLogging;
 import jbst.server.ops.domain.incidents.OpsIncidentEnv;
+import jbst.server.ops.properties.configs.RecipientsConfigs;
 import jbst.server.ops.properties.configs.ServersConfigs;
 import jbst.server.ops.properties.configs.SlacksConfigs;
 import lombok.Data;
