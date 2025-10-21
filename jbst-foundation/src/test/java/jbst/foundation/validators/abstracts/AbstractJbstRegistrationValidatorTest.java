@@ -1,4 +1,4 @@
-package jbst.foundation.validators;
+package jbst.foundation.validators.abstracts;
 
 import jbst.foundation.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.databases.JbstInvitation;
@@ -15,6 +15,7 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failur
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
+import jbst.foundation.validators.JbstRegistrationValidator;
 import jbst.foundation.validators.abtracts.AbstractJbstRegistrationValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -1,7 +1,10 @@
 package jbst.foundation.validators.abtracts;
 
 import jbst.foundation.validators.JbstUsersSessionsValidator;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
-public interface AbstractJbstUsersSessionsValidator extends JbstUsersSessionsValidator {
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class AbstractJbstUsersSessionsValidator implements JbstUsersSessionsValidator {
     // no methods
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class PostgresJbstUsersSessionsValidator implements AbstractJbstUsersSessionsValidator {
+public class PostgresJbstUsersSessionsValidator extends AbstractJbstUsersSessionsValidator {
     // no methods
 }

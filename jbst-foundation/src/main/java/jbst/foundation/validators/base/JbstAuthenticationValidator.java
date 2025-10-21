@@ -19,7 +19,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.inv
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstAuthenticationRequestsValidator {
+public class JbstAuthenticationValidator {
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
 

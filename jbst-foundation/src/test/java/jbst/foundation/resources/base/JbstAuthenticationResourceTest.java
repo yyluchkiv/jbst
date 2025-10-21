@@ -39,7 +39,7 @@ import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
-import jbst.foundation.validators.base.JbstAuthenticationRequestsValidator;
+import jbst.foundation.validators.base.JbstAuthenticationValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -94,7 +94,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     // Tokens
     private final JbstTokensProvider tokensProvider;
     // Validators
-    private final JbstAuthenticationRequestsValidator authenticationRequestsValidator;
+    private final JbstAuthenticationValidator authenticationRequestsValidator;
     // Utilities
     private final JbstSecurityUtils securityUtils;
     // Publishers

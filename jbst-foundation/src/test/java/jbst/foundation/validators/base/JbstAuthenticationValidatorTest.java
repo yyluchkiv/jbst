@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstAuthenticationRequestsValidatorImplTest {
+class JbstAuthenticationValidatorTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -43,8 +43,8 @@ class JbstAuthenticationRequestsValidatorImplTest {
         }
 
         @Bean
-        public JbstAuthenticationRequestsValidator authenticationRequestsValidator() {
-            return new JbstAuthenticationRequestsValidator(
+        public JbstAuthenticationValidator authenticationRequestsValidator() {
+            return new JbstAuthenticationValidator(
                     this.usersTokensRepository()
             );
         }
@@ -97,7 +97,7 @@ class JbstAuthenticationRequestsValidatorImplTest {
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
 
-    private final JbstAuthenticationRequestsValidator componentUnderTest;
+    private final JbstAuthenticationValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

@@ -1,4 +1,4 @@
-package jbst.foundation.validators;
+package jbst.foundation.validators.abstracts;
 
 import jbst.foundation.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.base.Username;
@@ -8,6 +8,7 @@ import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.validators.JbstInvitationsValidator;
 import jbst.foundation.validators.abtracts.AbstractJbstInvitationsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

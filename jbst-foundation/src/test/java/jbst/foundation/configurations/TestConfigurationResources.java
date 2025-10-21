@@ -21,7 +21,7 @@ import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.foundation.validators.*;
-import jbst.foundation.validators.base.JbstAuthenticationRequestsValidator;
+import jbst.foundation.validators.base.JbstAuthenticationValidator;
 import jbst.foundation.websockets.WebsocketsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -204,8 +204,8 @@ public class TestConfigurationResources {
     // Validators
     // =================================================================================================================
     @Bean
-    JbstAuthenticationRequestsValidator authenticationRequestsValidator() {
-        return mock(JbstAuthenticationRequestsValidator.class);
+    JbstAuthenticationValidator authenticationRequestsValidator() {
+        return mock(JbstAuthenticationValidator.class);
     }
 
     @Bean

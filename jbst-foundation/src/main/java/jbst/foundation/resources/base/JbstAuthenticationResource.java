@@ -15,7 +15,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.services.base.JbstAuthenticationService;
-import jbst.foundation.validators.base.JbstAuthenticationRequestsValidator;
+import jbst.foundation.validators.base.JbstAuthenticationValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class JbstAuthenticationResource {
     private final JbstAuthenticationService authenticationService;
     private final JbstExtensionService extensionService;
     // Validators
-    private final JbstAuthenticationRequestsValidator authenticationRequestsValidator;
+    private final JbstAuthenticationValidator authenticationRequestsValidator;
 
     @PostMapping("/login/standard")
     @ResponseStatus(HttpStatus.OK)

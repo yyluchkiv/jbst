@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @ComponentScan({
         "jbst.foundation.services.mongodb",
-        "jbst.foundation.validators.mongodb",
+        "jbst.foundation.validators.mongodb"
 })
 @Import({
         JbstConfigurationMongoRepositories.class

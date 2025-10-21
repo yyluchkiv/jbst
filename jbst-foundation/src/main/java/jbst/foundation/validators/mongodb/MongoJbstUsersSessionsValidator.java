@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class MongoJbstUsersSessionsValidator implements AbstractJbstUsersSessionsValidator {
+public class MongoJbstUsersSessionsValidator extends AbstractJbstUsersSessionsValidator {
     // no methods
 }

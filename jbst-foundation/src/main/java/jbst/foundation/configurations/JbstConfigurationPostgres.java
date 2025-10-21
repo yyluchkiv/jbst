@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @ComponentScan({
         "jbst.foundation.services.postgres",
-        "jbst.foundation.validators.postgres",
+        "jbst.foundation.validators.postgres"
 })
 @Import({
         JbstConfigurationPostgresRepositories.class
