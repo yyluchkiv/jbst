@@ -34,9 +34,9 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @Data
 public class JbstPropertyEdge {
     public static final Comparator<JbstPropertyEdge> PRINTER_COMPARATOR = (o1, o2) -> {
-        if ("enabled".equals(o1.getLeafName())) {
+        if ("enabled".equals(o1.getChild().getName())) {
             return -1;
-        } else if ("enabled".equals(o2.getLeafName())) {
+        } else if ("enabled".equals(o2.getChild().getName())) {
             return 1;
         }
         return o1.getReadable().compareTo(o2.getReadable());
@@ -45,52 +45,53 @@ public class JbstPropertyEdge {
     @NotNull
     private final AbstractJbstProperty parent;
     @NotNull
-    private final Field leaf;
-    @NotNull
-    private final String leafName;
+    private final Field child;
     @NotNull
     private final String name;
     @Nullable
-    private final Object value;
+    private final Object valueRAW;
     @NotNull
     private final String readable;
 
     @SneakyThrows
-    public JbstPropertyEdge(@NotNull AbstractJbstProperty parent, @NotNull Field leaf) {
+    public JbstPropertyEdge(@NotNull AbstractJbstProperty parent, @NotNull Field child) {
         this.parent = parent;
-        this.leaf = leaf;
-        this.leafName = leaf.getName();
-        this.name = toKebab(this.parent.getNameNonMandatory()) + "." + toKebab(this.leafName);
-        this.value = leaf.get(parent);
+        this.child = child;
+        this.name = toKebab(this.parent.getNameNonMandatory()) + "." + toKebab(child.getName());
+        this.valueRAW = child.get(parent);
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
-        var isArray = nonNull(this.value) && this.value.getClass().isArray();
+        var isArray = nonNull(this.valueRAW) && this.valueRAW.getClass().isArray();
         boolean isArrayOfStrings;
         if (isArray) {
-            var array = (Object[]) this.value;
+            var array = (Object[]) this.valueRAW;
             isArrayOfStrings = array[0] instanceof String;
         } else {
             isArrayOfStrings = false;
         }
-        var isZoneId = nonNull(this.value) && this.value instanceof ZoneId;
+        var isZoneId = nonNull(this.valueRAW) && this.valueRAW instanceof ZoneId;
 
         if (isArrayOfStrings) {
-            this.readable = Arrays.toString((String[]) this.value);
+            this.readable = Arrays.toString((String[]) this.valueRAW);
         } else if (isZoneId) {
-            this.readable = ((ZoneId) this.value).getId();
-        } else if (isNull(this.value)) {
+            this.readable = ((ZoneId) this.valueRAW).getId();
+        } else if (isNull(this.valueRAW)) {
             this.readable = "null";
         } else {
-            this.readable = this.value.toString();
+            this.readable = this.valueRAW.toString();
         }
+    }
+
+    public boolean isLeafAbstractJbstProperty() {
+        return this.valueRAW instanceof AbstractJbstProperty;
     }
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void assertOrThrow() {
-        if (this.leaf.isAnnotationPresent(MandatoryMapProperty.class)) {
-            var annotation = this.leaf.getAnnotation(MandatoryMapProperty.class);
+        if (this.child.isAnnotationPresent(MandatoryMapProperty.class)) {
+            var annotation = this.child.getAnnotation(MandatoryMapProperty.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
-            var castedProperty = (Map) this.value;
+            var castedProperty = (Map) this.valueRAW;
             var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
             //noinspection unchecked
             assertTrueOrThrow(
@@ -104,7 +105,7 @@ public class JbstPropertyEdge {
             );
         }
         ConsoleAsserts.PROPERTIES_ACTIONS.entrySet().stream()
-                .filter(entry -> entry.getKey().apply(this.value.getClass()))
+                .filter(entry -> entry.getKey().apply(this.valueRAW.getClass()))
                 .map(Map.Entry::getValue)
                 .findFirst()
                 .ifPresent(consumer -> consumer.accept(this));

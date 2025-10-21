@@ -52,7 +52,7 @@ public class ConsoleAsserts {
         if (isNull(edge)) {
             throw new IllegalArgumentException(RED_TEXT.format("Unknown reflection property"));
         }
-        assertNonNullOrThrow(edge.getValue(), edge.getName());
+        assertNonNullOrThrow(edge.getValueRAW(), edge.getName());
     }
 
     @SuppressWarnings("unused")

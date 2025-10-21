@@ -32,10 +32,21 @@ public abstract class AbstractJbstProperty {
                 getMandatoryToggleFields(this, this.getNameNonMandatory()) :
                 getMandatoryFields(this, this.getNameNonMandatory());
         fields.forEach(field -> {
-            try {
-                var jbstProperty = new JbstPropertyEdge(this, field, field.get(this));
-                assertNonNullOrThrow(jbstProperty);
-                var nestedPropertyClass = requireNonNull(jbstProperty.getValue()).getClass();
+            var edge = new JbstPropertyEdge(this, field);
+            assertNonNullOrThrow(edge);
+            if (edge.isLeafAbstractJbstProperty()) {
+
+            } else {
+
+            }
+
+
+            if (edge.getParent().isLeaf()) {
+                this.assertProperties(edge.getParent());
+            } else {
+
+            }
+            var nestedPropertyClass = requireNonNull(edge.getValueRAW()).getClass();
 //                if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
 //                    ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
 //                } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
@@ -43,28 +54,21 @@ public abstract class AbstractJbstProperty {
 //                } */ else {
 //                    jbstProperty.assertOrThrow();
 //                }
-            } catch (IllegalAccessException ex) {
-                throw new IllegalArgumentException(ex);
-            }
         });
         if (this.isParent()) {
             this.printProperties();
         }
     }
 
-    private void assertProperties(String parentPropertyName) {
+    private void assertProperties(AbstractJbstProperty parent) {
         if (this.isLeaf()) {
             var fields = this.isToggle() ?
-                    getMandatoryToggleFields(this, parentPropertyName) :
-                    getMandatoryFields(this, parentPropertyName);
+                    getMandatoryToggleFields(this, parent.getNameNonMandatory()) :
+                    getMandatoryFields(this, parent.getNameNonMandatory());
             fields.forEach(field -> {
-                try {
-                    var jbstProperty = new JbstPropertyEdge(parentPropertyName, field, field.get(this));
-                    assertNonNullOrThrow(jbstProperty);
-                    jbstProperty.assertOrThrow();
-                } catch (IllegalAccessException ex) {
-                    throw new IllegalArgumentException(ex);
-                }
+                var jbstProperty = new JbstPropertyEdge(parent, field);
+                assertNonNullOrThrow(jbstProperty);
+                jbstProperty.assertOrThrow();
             });
         }
     }
@@ -76,7 +80,7 @@ public abstract class AbstractJbstProperty {
         getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
             try {
                 var jbstProperty = new JbstPropertyEdge(this, field, field.get(this));
-                if (isNull(jbstProperty.getValue())) {
+                if (isNull(jbstProperty.getValueRAW())) {
                     jbstProperty.print();
                 } else {
 //                    var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();

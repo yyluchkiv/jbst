@@ -44,10 +44,10 @@ public class JbstPropertiesUtility {
         List<JbstPropertyEdge> traversedProperties = new ArrayList<>();
         var properties = getNotNullProperties(object, propertyName);
         properties.forEach(property -> {
-            if (breakoutClassesPredicate.test(property.getValue())) {
+            if (breakoutClassesPredicate.test(property.getValueRAW())) {
                 traversedProperties.add(property);
             } else {
-                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getValue(), property.getName()));
+                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getValueRAW(), property.getName()));
             }
         });
         return traversedProperties;
