@@ -50,8 +50,8 @@ public class ServersMonitoringConfigs extends JbstProperty {
     }
 
     @Override
-    public void assertPropertiesAsLeaf() {
-        super.assertProperties();
+    public void assertPropertiesAsLeaf(String parentTreeName) {
+        super.assertPropertiesAsLeaf(parentTreeName);
         assertTrueOrThrow(
                 is(this.fileSystemThreshold, ">", this.fileSystemFilter),
                 "Property 'file-system-threshold is expected to be greater than file-system-filter"

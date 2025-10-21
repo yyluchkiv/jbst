@@ -45,7 +45,7 @@ public class GeoCountryFlagsConfigs extends JbstProperty {
 
     @Override
     public boolean isToggle() {
-        return true;
+        return this.enabled;
     }
 
     @Override

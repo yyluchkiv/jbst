@@ -30,7 +30,6 @@ class PropertiesAsserterAndPrinterTest {
 
         // Act
         notUsedPropertiesConfigs.assertProperties();
-        notUsedPropertiesConfigs.printProperties();
 
         // Assert
         // no asserts
@@ -40,7 +39,6 @@ class PropertiesAsserterAndPrinterTest {
     void serverConfigsTest() {
         // Act
         ServerConfigs.hardcoded().assertProperties();
-        ServerConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -50,7 +48,6 @@ class PropertiesAsserterAndPrinterTest {
     void utilitiesConfigsTest() {
         // Act
         UtilsConfigs.hardcoded().assertProperties();
-        UtilsConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -60,7 +57,6 @@ class PropertiesAsserterAndPrinterTest {
     void asyncConfigsTest() {
         // Act
         AsyncConfigs.hardcoded().assertProperties();
-        AsyncConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -70,7 +66,6 @@ class PropertiesAsserterAndPrinterTest {
     void eventsConfigsTest() {
         // Act
         EventsConfigs.hardcoded().assertProperties();
-        EventsConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -83,7 +78,6 @@ class PropertiesAsserterAndPrinterTest {
 
         // Act
         mvcConfigs.assertProperties();
-        mvcConfigs.printProperties();
 
         // Assert
         // no asserts
@@ -93,7 +87,6 @@ class PropertiesAsserterAndPrinterTest {
     void mvcConfigsTest() {
         // Act
         MvcConfigs.hardcoded().assertProperties();
-        MvcConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -103,7 +96,6 @@ class PropertiesAsserterAndPrinterTest {
     void emailConfigsDisabledTest() {
         // Act
         EmailConfigs.disabled().assertProperties();
-        EmailConfigs.disabled().printProperties();
 
         // Assert
         // no asserts
@@ -113,7 +105,6 @@ class PropertiesAsserterAndPrinterTest {
     void emailConfigsTest() {
         // Act
         EmailConfigs.hardcoded().assertProperties();
-        EmailConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -123,7 +114,6 @@ class PropertiesAsserterAndPrinterTest {
     void incidentConfigsTest() {
         // Act
         IncidentsManagerConfigs.hardcoded().assertProperties();
-        IncidentsManagerConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -148,7 +138,6 @@ class PropertiesAsserterAndPrinterTest {
     void securityJwtConfigsTest() {
         // Act
         SecurityJwtConfigs.hardcoded().assertProperties();
-        SecurityJwtConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts
@@ -189,7 +178,6 @@ class PropertiesAsserterAndPrinterTest {
 
         // Act
         securityJwtConfigs.assertProperties();
-        securityJwtConfigs.printProperties();
 
         // Assert
         // no asserts
@@ -278,7 +266,6 @@ class PropertiesAsserterAndPrinterTest {
     void mongodbSecurityJwtConfigsTest() {
         // Act
         MongodbSecurityJwtConfigs.hardcoded().assertProperties();
-        MongodbSecurityJwtConfigs.hardcoded().printProperties();
 
         // Assert
         // no asserts

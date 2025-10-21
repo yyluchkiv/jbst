@@ -50,7 +50,7 @@ public class WebsocketsFeatureConfigs extends JbstProperty {
 
     @Override
     public boolean isToggle() {
-        return true;
+        return this.enabled;
     }
 
     @Override

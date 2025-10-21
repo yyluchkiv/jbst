@@ -42,8 +42,6 @@ public class JbstPropertyEdge {
     };
 
     @NotNull
-    private final JbstProperty parent;
-    @NotNull
     private final Field child;
     @NotNull
     private final String name;
@@ -53,10 +51,9 @@ public class JbstPropertyEdge {
     private final String readable;
 
     @SneakyThrows
-    public JbstPropertyEdge(@NotNull JbstProperty parent, @NotNull Field child) {
-        this.parent = parent;
+    public JbstPropertyEdge(@NotNull String treeName, @NotNull JbstProperty parent, @NotNull Field child) {
         this.child = child;
-        this.name = toKebab(this.parent.getNameNonMandatory()) + "." + toKebab(child.getName());
+        this.name = treeName + "." + toKebab(child.getName());
         this.valueRAW = child.get(parent);
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
@@ -104,7 +101,7 @@ public class JbstPropertyEdge {
             assertTrueOrThrow(
                     castedProperty.size() == size,
                     "Property %s is invalid. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
-                            this.getName(),
+                            this.name,
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
                             RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
@@ -118,14 +115,14 @@ public class JbstPropertyEdge {
                 .ifPresent(consumer -> consumer.accept(this));
     }
 
-    public void printChildProperty() {
+    public void printChildProperty(String parentTreeName) {
         if (!this.isChildLeaf()) {
             return;
         }
         getMandatoryBasedFields(this.getChildAsJbstProperty(), this.name).stream()
                 .map(field -> {
                     try {
-                        return new JbstPropertyEdge(this.getChildAsJbstProperty(), field);
+                        return new JbstPropertyEdge(parentTreeName, this.getChildAsJbstProperty(), field);
                     } catch (RuntimeException ex) {
                         return null;
                     }

@@ -64,8 +64,8 @@ public class JwtToken extends JbstProperty {
     }
 
     @Override
-    public void assertPropertiesAsLeaf() {
-        super.assertProperties();
+    public void assertPropertiesAsLeaf(String parentTreeName) {
+        super.assertPropertiesAsLeaf(parentTreeName);
         assertFalseOrThrow(
                 nonNull(this.cookieKey) && nonNull(this.headerKey),
                 "Attribute '%s' requires only 'cookie-key' or 'header-key' to be provided"

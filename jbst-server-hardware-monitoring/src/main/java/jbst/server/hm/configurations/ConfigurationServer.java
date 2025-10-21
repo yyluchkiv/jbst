@@ -39,7 +39,7 @@ public class ConfigurationServer {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().printProperties();
+        this.serverProperties.getServerConfigs().assertProperties();
     }
 
     @Bean
