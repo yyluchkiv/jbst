@@ -1,6 +1,5 @@
 package jbst.foundation.domain.reflections;
 
-import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import jbst.foundation.domain.base.PropertyId;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +14,12 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static org.springframework.util.StringUtils.uncapitalize;
 
-@JbstDeletionScheduled(version = "1.28")
-@Deprecated
 @Slf4j
 @Data
-public class ReflectionProperty {
+public class JbstProperty {
     private static final String READABLE_PROPERTY = "%s: `%s`";
 
-    public static final Comparator<ReflectionProperty> PRINTER_COMPARATOR = (o1, o2) -> {
+    public static final Comparator<JbstProperty> PRINTER_COMPARATOR = (o1, o2) -> {
         if ("enabled".equals(o1.getPropertyName())) {
             return -1;
         } else if ("enabled".equals(o2.getPropertyName())) {
@@ -37,7 +34,7 @@ public class ReflectionProperty {
     private final Object propertyValue;
     private final String readableValue;
 
-    public ReflectionProperty(@NotNull PropertyId propertyId, Field field, Object propertyValue) {
+    public JbstProperty(@NotNull PropertyId propertyId, Field field, Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
         this.treePropertyId = new PropertyId(uncapitalize(propertyId.value()) + "." + uncapitalize(this.propertyName));
