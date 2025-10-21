@@ -20,7 +20,7 @@ import static java.util.Objects.isNull;
 public class JbstPropertiesUtility {
 
     @SuppressWarnings({"ConstantValue", "unused"})
-    public static List<JbstProperty> getNotNullPropertiesRecursively(Object object, String propertyName) {
+    public static List<JbstPropertyEdge> getNotNullPropertiesRecursively(Object object, String propertyName) {
         Predicate<Object> breakoutClassesPredicate = breakoutObj -> {
             var clazz = breakoutObj.getClass();
             var isArray = clazz.isArray();
@@ -41,7 +41,7 @@ public class JbstPropertiesUtility {
                     long.class.equals(clazz) || Long.class.equals(clazz);
         };
 
-        List<JbstProperty> traversedProperties = new ArrayList<>();
+        List<JbstPropertyEdge> traversedProperties = new ArrayList<>();
         var properties = getNotNullProperties(object, propertyName);
         properties.forEach(property -> {
             if (breakoutClassesPredicate.test(property.getPropertyValue())) {
@@ -56,7 +56,7 @@ public class JbstPropertiesUtility {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static List<JbstProperty> getNotNullProperties(Object object, String propertyName) {
+    private static List<JbstPropertyEdge> getNotNullProperties(Object object, String propertyName) {
         return Stream.of(object.getClass().getDeclaredFields())
                 .map(field -> {
                     try {
@@ -65,7 +65,7 @@ public class JbstPropertiesUtility {
                             return null;
                         } else {
 //                            return new JbstProperty(propertyName, field, nestedProperty);
-                            return new JbstProperty(null, field, nestedProperty);
+                            return new JbstPropertyEdge(null, field, nestedProperty);
                         }
                     } catch (IllegalAccessException | RuntimeException ex) {
                         return null;

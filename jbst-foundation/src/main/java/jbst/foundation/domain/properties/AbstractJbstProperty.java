@@ -4,7 +4,7 @@ import jbst.foundation.domain.annotations.JbstNonMandatoryMethod;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.reflections.JbstProperty;
+import jbst.foundation.domain.reflections.JbstPropertyEdge;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -33,7 +33,7 @@ public abstract class AbstractJbstProperty {
                 getMandatoryFields(this, this.getNameNonMandatory());
         fields.forEach(field -> {
             try {
-                var jbstProperty = new JbstProperty(this, field, field.get(this));
+                var jbstProperty = new JbstPropertyEdge(this, field, field.get(this));
                 assertNonNullOrThrow(jbstProperty);
                 var nestedPropertyClass = requireNonNull(jbstProperty.getPropertyValue()).getClass();
 //                if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
@@ -59,7 +59,7 @@ public abstract class AbstractJbstProperty {
                     getMandatoryFields(this, parentPropertyName);
             fields.forEach(field -> {
                 try {
-                    var jbstProperty = new JbstProperty(parentPropertyName, field, field.get(this));
+                    var jbstProperty = new JbstPropertyEdge(parentPropertyName, field, field.get(this));
                     assertNonNullOrThrow(jbstProperty);
                     jbstProperty.assertOrThrow();
                 } catch (IllegalAccessException ex) {
@@ -75,7 +75,7 @@ public abstract class AbstractJbstProperty {
         }
         getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
             try {
-                var jbstProperty = new JbstProperty(this, field, field.get(this));
+                var jbstProperty = new JbstPropertyEdge(this, field, field.get(this));
                 if (isNull(jbstProperty.getPropertyValue())) {
                     jbstProperty.print();
                 } else {

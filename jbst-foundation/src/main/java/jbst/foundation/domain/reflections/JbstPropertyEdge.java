@@ -31,8 +31,8 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j
 @Data
-public class JbstProperty {
-    public static final Comparator<JbstProperty> PRINTER_COMPARATOR = (o1, o2) -> {
+public class JbstPropertyEdge {
+    public static final Comparator<JbstPropertyEdge> PRINTER_COMPARATOR = (o1, o2) -> {
         if ("enabled".equals(o1.getPropertyName())) {
             return -1;
         } else if ("enabled".equals(o2.getPropertyName())) {
@@ -41,6 +41,8 @@ public class JbstProperty {
         return o1.getReadableValue().compareTo(o2.getReadableValue());
     };
 
+    @NotNull
+    private final AbstractJbstProperty parentProperty;
     @NotNull
     private final Field field;
     @NotNull
@@ -53,7 +55,8 @@ public class JbstProperty {
     private final String readableValue;
 
 //    public JbstProperty(@NotNull String propertyName, @NotNull Field field, @Nullable Object propertyValue) {
-    public JbstProperty(@NotNull AbstractJbstProperty property, @NotNull Field field, @Nullable Object propertyValue) {
+    public JbstPropertyEdge(@NotNull AbstractJbstProperty parentProperty, @NotNull Field field, @Nullable Object propertyValue) {
+        this.parentProperty = parentProperty;
         this.field = field;
         this.propertyName = field.getName();
         this.treePropertyName = toKebab(this.propertyName) + "." + toKebab(this.propertyName);
@@ -115,15 +118,15 @@ public class JbstProperty {
 //        jbstProperties.forEach(JbstProperty::print);
     }
 
-    public static List<JbstProperty> getProperties(Object property, String propertyName, List<Field> fields) {
+    public static List<JbstPropertyEdge> getProperties(Object property, String propertyName, List<Field> fields) {
         return fields.stream()
                 .map(field -> {
                     try {
 //                        return new JbstProperty(propertyName, field, field.get(property));
-                        return new JbstProperty(null, field, field.get(property));
+                        return new JbstPropertyEdge(null, field, field.get(property));
                     } catch (IllegalAccessException | RuntimeException ex) {
 //                        return new JbstProperty(propertyName, field, null);
-                        return new JbstProperty(null, field, null);
+                        return new JbstPropertyEdge(null, field, null);
                     }
                 })
                 .collect(Collectors.toList());
