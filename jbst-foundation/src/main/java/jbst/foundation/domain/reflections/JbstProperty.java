@@ -1,7 +1,6 @@
 package jbst.foundation.domain.reflections;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.utilities.enums.EnumUtility;
@@ -20,6 +19,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
@@ -88,11 +88,11 @@ public class JbstProperty {
             //noinspection unchecked
             assertTrueOrThrow(
                     castedProperty.size() == size,
-                    "%s. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
+                    "Property %s is invalid. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
                             this.getTreePropertyName(),
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
-                            JbstConstants.JColor.RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
+                            RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
                     )
             );
         }

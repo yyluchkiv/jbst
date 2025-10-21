@@ -141,7 +141,7 @@ class PropertiesAsserterAndPrinterTest {
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).startsWith("Property");
-        assertThat(throwable.getMessage()).endsWith(" is invalid");
+        assertThat(throwable.getMessage()).endsWith(" is null");
     }
 
     @Test
@@ -231,7 +231,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property \"\u001B[31msecurity-jwt-configs.incidentsConfigs.typesConfigs\u001B[0m\" is invalid. Options: \"[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired, Session Refreshed]\". Required: \"[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired]\". Disjunction: \"[\u001B[31mSession Refreshed\u001B[0m]\"");
+        assertThat(throwable.getMessage()).isEqualTo("Property security-jwt-configs.incidents-configs.types-configs is invalid. Options: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired, Session Refreshed]. Required: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired]. Disjunction: [\u001B[31mSession Refreshed\u001B[0m]");
     }
 
     @Test
