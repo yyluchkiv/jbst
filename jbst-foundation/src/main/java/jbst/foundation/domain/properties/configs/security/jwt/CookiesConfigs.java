@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.TimeAmount;
@@ -37,7 +36,7 @@ public class CookiesConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("cookies-configs");
+    public String getPropertyName() {
+        return "cookies-configs";
     }
 }

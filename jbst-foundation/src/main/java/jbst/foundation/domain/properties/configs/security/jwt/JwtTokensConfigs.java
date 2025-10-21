@@ -2,7 +2,6 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.JwtToken;
@@ -59,8 +58,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("jwt-tokens-configs");
+    public String getPropertyName() {
+        return"jwt-tokens-configs";
     }
 
     @Override
@@ -70,8 +69,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             Asserts.assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
                     "Please make sure \"%s.accessToken.cookieKey\" and \"%s.refreshToken.cookieKey\" are different".formatted(
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value()),
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value())
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName()),
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName())
                     )
             );
         }
@@ -79,8 +78,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             Asserts.assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
                     "Please make sure \"%s.accessToken.headerKey\" and \"%s.refreshToken.headerKey\" are different".formatted(
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value()),
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value())
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName()),
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName())
                     )
             );
         }

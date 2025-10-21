@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
@@ -42,8 +41,8 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("server-configs");
+    public String getPropertyName() {
+        return "server-configs";
     }
 
     public boolean isSpringdocEnabled() {

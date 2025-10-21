@@ -2,6 +2,7 @@ package jbst.foundation.domain.asserts;
 
 import com.diogonunes.jcolor.AnsiFormat;
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
 
@@ -21,6 +22,12 @@ public class ConsoleAsserts {
     public static void assertNonNullOrThrow(Object object, PropertyId propertyId) {
         if (isNull(object)) {
             throw new IllegalArgumentException(invalidProperty(propertyId));
+        }
+    }
+
+    public static void assertNonNullOrThrow(Object object, PropertyName propertyName) {
+        if (isNull(object)) {
+            throw new IllegalArgumentException(invalidProperty(propertyName));
         }
     }
 

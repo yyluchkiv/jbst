@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.configs.utilities.GeoCountryFlagsConfigs;
 import jbst.foundation.domain.properties.configs.utilities.GeoLocationsConfigs;
@@ -44,7 +43,7 @@ public class UtilsConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("utils-configs");
+    public String getPropertyName() {
+        return "utils-configs";
     }
 }

@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
@@ -44,7 +43,7 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("users-tokens-configs");
+    public String getPropertyName() {
+        return "users-tokens-configs";
     }
 }

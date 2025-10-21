@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.InvitationsOnInit;
 import jbst.foundation.domain.properties.base.UsersOnInit;
@@ -40,7 +39,7 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("essence-configs");
+    public String getPropertyName() {
+        return "essence-configs";
     }
 }

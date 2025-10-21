@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.configs.AbstractTogglePropertiesConfigs;
@@ -56,7 +55,7 @@ public class WebsocketsConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("websockets-configs");
+    public String getPropertyName() {
+        return "websockets-configs";
     }
 }

@@ -1,6 +1,8 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.base.PropertyName;
+import jbst.foundation.domain.reflections.JbstProperty;
 import jbst.foundation.domain.reflections.ReflectionProperty;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,10 +18,20 @@ public abstract class AbstractPropertyConfigs {
         assertMandatoryPropertyConfigs(this, propertyId);
     }
 
+    // TODO [YYL] delete me
+    @Deprecated
     public void printProperties(PropertyId propertyId) {
-        var fields = getMandatoryBasedFields(this, propertyId);
-        var rfs = getProperties(this, propertyId, fields);
-        rfs.sort(ReflectionProperty.PRINTER_COMPARATOR);
-        rfs.forEach(ReflectionProperty::print);
+//        var fields = getMandatoryBasedFields(this, propertyId);
+//        var rfs = getProperties(this, propertyId, fields);
+//        rfs.sort(ReflectionProperty.PRINTER_COMPARATOR);
+//        rfs.forEach(ReflectionProperty::print);
+    }
+
+    @Deprecated
+    public void printProperties(PropertyName propertyName) {
+        var fields = getMandatoryBasedFields(this, propertyName);
+        var rfs = getProperties(this, propertyName, fields);
+        rfs.sort(JbstProperty.PRINTER_COMPARATOR);
+        rfs.forEach(JbstProperty::print);
     }
 }

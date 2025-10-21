@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.maven.MavenDetails;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
@@ -31,8 +30,8 @@ public class MavenConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("maven-configs");
+    public String getPropertyName() {
+        return "maven-configs";
     }
 
     public MavenDetails asMavenDetails() {

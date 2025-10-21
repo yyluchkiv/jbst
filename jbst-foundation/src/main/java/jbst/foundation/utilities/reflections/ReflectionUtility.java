@@ -2,9 +2,11 @@ package jbst.foundation.utilities.reflections;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.base.SchedulerConfiguration;
 import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.reflections.JbstProperty;
 import jbst.foundation.domain.reflections.ReflectionProperty;
 import jbst.foundation.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
@@ -166,6 +168,7 @@ public class ReflectionUtility {
                 .collect(Collectors.toList());
     }
 
+    @Deprecated
     public static List<ReflectionProperty> getProperties(Object property, PropertyId propertyId, List<Field> fields) {
         return fields.stream()
                 .map(field -> {
@@ -173,6 +176,18 @@ public class ReflectionUtility {
                         return new ReflectionProperty(propertyId, field, field.get(property));
                     } catch (IllegalAccessException | RuntimeException ex) {
                         return new ReflectionProperty(propertyId, field, null);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    public static List<JbstProperty> getProperties(Object property, PropertyName propertyName, List<Field> fields) {
+        return fields.stream()
+                .map(field -> {
+                    try {
+                        return new JbstProperty(propertyName, field, field.get(property));
+                    } catch (IllegalAccessException | RuntimeException ex) {
+                        return new JbstProperty(propertyName, field, null);
                     }
                 })
                 .collect(Collectors.toList());

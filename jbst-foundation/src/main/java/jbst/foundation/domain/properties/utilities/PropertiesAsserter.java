@@ -3,6 +3,7 @@ package jbst.foundation.domain.properties.utilities;
 import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
@@ -99,16 +100,16 @@ public class PropertiesAsserter {
     // GETTERS
     // =================================================================================================================
 
-    public static List<Field> getMandatoryFields(Object property, PropertyId propertyId) {
-        return getFields(property, propertyId, Set.of(MandatoryProperty.class));
+    public static List<Field> getMandatoryFields(Object property, PropertyName propertyName) {
+        return getFields(property, propertyName, Set.of(MandatoryProperty.class));
     }
 
-    public static List<Field> getMandatoryToggleFields(Object property, PropertyId propertyId) {
-        return getFields(property, propertyId, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
+    public static List<Field> getMandatoryToggleFields(Object property, PropertyName propertyName) {
+        return getFields(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
-    public static List<Field> getMandatoryBasedFields(Object property, PropertyId propertyId) {
-        return getFields(property, propertyId, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
+    public static List<Field> getMandatoryBasedFields(Object property, PropertyName propertyName) {
+        return getFields(property, propertyName, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
     // =================================================================================================================
@@ -175,8 +176,8 @@ public class PropertiesAsserter {
     }
 
     @SuppressWarnings("ConstantValue")
-    private static List<Field> getFields(Object property, PropertyId propertyId, Set<Class<? extends Annotation>> presentAnnotations) {
-        ConsoleAsserts.assertNonNullOrThrow(property, propertyId);
+    private static List<Field> getFields(Object property, PropertyName propertyName, Set<Class<? extends Annotation>> presentAnnotations) {
+        ConsoleAsserts.assertNonNullOrThrow(property, propertyName);
         return Stream.of(property.getClass().getDeclaredFields())
                 .filter(Objects::nonNull)
                 .map(field -> {

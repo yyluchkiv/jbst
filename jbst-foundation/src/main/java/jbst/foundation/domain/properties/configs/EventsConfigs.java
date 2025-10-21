@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.AllArgsConstructor;
@@ -39,8 +38,8 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("events-configs");
+    public String getPropertyName() {
+        return "events-configs";
     }
 
     public TuplePercentage asThreadsCorePoolTuplePercentage() {

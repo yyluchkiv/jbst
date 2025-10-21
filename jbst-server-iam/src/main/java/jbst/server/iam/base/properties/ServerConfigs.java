@@ -1,6 +1,5 @@
 package jbst.server.iam.base.properties;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.server.iam.base.domain.enums.UserAuthority;
@@ -27,7 +26,7 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("server-configs");
+    public String getPropertyName() {
+        return "server-configs";
     }
 }

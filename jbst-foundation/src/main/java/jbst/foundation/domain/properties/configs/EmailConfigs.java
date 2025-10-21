@@ -1,7 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
@@ -58,7 +57,7 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("email-configs");
+    public String getPropertyName() {
+        return "email-configs";
     }
 }

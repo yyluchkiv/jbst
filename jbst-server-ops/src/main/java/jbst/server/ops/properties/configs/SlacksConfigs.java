@@ -1,6 +1,5 @@
 package jbst.server.ops.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.server.ops.domain.servers.Team;
@@ -28,8 +27,8 @@ public class SlacksConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyName() {
-        return new PropertyId("slack-configs");
+    public String getPropertyName() {
+        return "slack-configs";
     }
 
     @Override
