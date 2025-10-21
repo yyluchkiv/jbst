@@ -1,6 +1,7 @@
 package jbst.foundation.filters.jwt_extension;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.filters.jwt.JbstTokensFilterExtension;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

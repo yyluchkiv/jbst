@@ -1,4 +1,4 @@
-package jbst.foundation.filters.jwt_extension;
+package jbst.foundation.filters.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.exceptions.tokens.*;

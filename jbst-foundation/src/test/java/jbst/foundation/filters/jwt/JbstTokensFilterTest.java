@@ -9,7 +9,6 @@ import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.filters.jwt_extension.JbstTokensFilterExtension;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;

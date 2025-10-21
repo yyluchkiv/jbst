@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.filters.jwt_extension.JbstTokensFilterExtension;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
