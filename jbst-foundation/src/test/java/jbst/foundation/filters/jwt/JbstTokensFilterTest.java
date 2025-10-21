@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
+import jbst.foundation.filters.jwt_extension.JbstTokensFilterExtension;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -70,8 +70,8 @@ class JbstTokensFilterTest {
         }
 
         @Bean
-        JwtTokensFilterExtension jwtTokenFilterExtension() {
-            return mock(JwtTokensFilterExtension.class);
+        JbstTokensFilterExtension jwtTokenFilterExtension() {
+            return mock(JbstTokensFilterExtension.class);
         }
 
         @Bean
@@ -98,7 +98,7 @@ class JbstTokensFilterTest {
     // Tokens
     private final JbstTokensProvider tokensProvider;
     // Extension
-    private final JwtTokensFilterExtension jwtTokensFilterExtension;
+    private final JbstTokensFilterExtension tokensFilterExtension;
     // Handlers
     private final JbstAccessDeniedHandler accessDeniedHandler;
 
@@ -110,7 +110,7 @@ class JbstTokensFilterTest {
                 this.sessionRegistry,
                 this.tokensService,
                 this.tokensProvider,
-                this.jwtTokensFilterExtension,
+                this.tokensFilterExtension,
                 this.accessDeniedHandler
         );
     }
@@ -121,7 +121,7 @@ class JbstTokensFilterTest {
                 this.sessionRegistry,
                 this.tokensService,
                 this.tokensProvider,
-                this.jwtTokensFilterExtension,
+                this.tokensFilterExtension,
                 this.accessDeniedHandler
         );
     }
@@ -250,7 +250,7 @@ class JbstTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(this.jwtTokensFilterExtension).doFilter(request);
+        verify(this.tokensFilterExtension).doFilter(request);
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
                 request,
@@ -271,7 +271,7 @@ class JbstTokensFilterTest {
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
-        doThrow(new JbstTokenExtensionUnauthorizedException(randomString())).when(this.jwtTokensFilterExtension).doFilter(request);
+        doThrow(new JbstTokenExtensionUnauthorizedException(randomString())).when(this.tokensFilterExtension).doFilter(request);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -282,7 +282,7 @@ class JbstTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(this.jwtTokensFilterExtension).doFilter(request);
+        verify(this.tokensFilterExtension).doFilter(request);
         verify(this.tokensProvider).clearTokens(response);
         verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
         verifyNoMoreInteractions(
@@ -305,7 +305,7 @@ class JbstTokensFilterTest {
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
         var exception = new JbstTokenExtensionAccessDeniedException(randomString());
-        doThrow(exception).when(this.jwtTokensFilterExtension).doFilter(request);
+        doThrow(exception).when(this.tokensFilterExtension).doFilter(request);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -316,7 +316,7 @@ class JbstTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(this.jwtTokensFilterExtension).doFilter(request);
+        verify(this.tokensFilterExtension).doFilter(request);
         verify(this.tokensProvider).clearTokens(response);
         var exceptionAC = ArgumentCaptor.forClass(AccessDeniedException.class);
         verify(this.accessDeniedHandler).handle(eq(request), eq(response), exceptionAC.capture());

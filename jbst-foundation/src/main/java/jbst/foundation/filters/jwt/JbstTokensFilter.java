@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.filters.jwt_extension.JwtTokensFilterExtension;
+import jbst.foundation.filters.jwt_extension.JbstTokensFilterExtension;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -36,7 +36,7 @@ public class JbstTokensFilter extends OncePerRequestFilter {
     // Tokens
     private final JbstTokensProvider tokensProvider;
     // Extension
-    private final JwtTokensFilterExtension jwtTokensFilterExtension;
+    private final JbstTokensFilterExtension tokensFilterExtension;
     // Handlers
     private final JbstAccessDeniedHandler accessDeniedHandler;
 
@@ -52,7 +52,7 @@ public class JbstTokensFilter extends OncePerRequestFilter {
 
             this.sessionRegistry.register(new Session(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));
 
-            this.jwtTokensFilterExtension.doFilter(req);
+            this.tokensFilterExtension.doFilter(req);
 
             chain.doFilter(req, res);
         } catch (
