@@ -33,7 +33,7 @@ public class ConsoleAsserts {
         }
     }
 
-    public static void assertNonNullPropertyOrThrow(JbstProperty jbstProperty) {
+    public static void assertNonNullOrThrow(JbstProperty jbstProperty) {
         if (isNull(jbstProperty)) {
             throw new IllegalArgumentException(RED_TEXT.format("Unknown reflection property"));
         }

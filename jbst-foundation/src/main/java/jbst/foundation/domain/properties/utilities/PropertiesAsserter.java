@@ -40,18 +40,18 @@ public class PropertiesAsserter {
     private static final Map<Function<Class<?>, Boolean>, Consumer<JbstProperty>> ACTIONS = new HashMap<>();
 
     static {
-        ACTIONS.put(Date.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(LocalDate.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(LocalDateTime.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(ChronoUnit.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(TimeUnit.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Boolean.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Short.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Integer.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Long.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(BigInteger.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(BigDecimal.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(String.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Date.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(LocalDate.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(LocalDateTime.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(ChronoUnit.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(TimeUnit.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(Boolean.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(Short.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(Integer.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(Long.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(BigInteger.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(BigDecimal.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        ACTIONS.put(String.class::equals, ConsoleAsserts::assertNonNullOrThrow);
         ACTIONS.put(Collection.class::isAssignableFrom, property -> {
             var collection = (Collection<?>) property.getPropertyValue();
             ConsoleAsserts.assertNonNullOrThrow(collection, property.getPropertyName());
@@ -62,23 +62,6 @@ public class PropertiesAsserter {
     // =================================================================================================================
     // Assertions
     // =================================================================================================================
-
-    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs) {
-        assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
-        assertPropertiesConfigs(
-                propertiesConfigs,
-                getMandatoryFields(propertiesConfigs, propertiesConfigs.getPropertyName())
-        );
-    }
-
-    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs) {
-        assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
-        assertPropertiesConfigs(
-                propertiesConfigs,
-                getMandatoryToggleFields(propertiesConfigs, propertiesConfigs.getPropertyName())
-        );
-    }
-
     public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
         assertNonNullOrThrow(propertyConfigs, propertyName);
         assertPropertyConfigs(
@@ -122,7 +105,7 @@ public class PropertiesAsserter {
         fields.forEach(field -> {
             try {
                 var jbstProperty = new JbstProperty(propertyName, field, field.get(propertyConfigs));
-                ConsoleAsserts.assertNonNullPropertyOrThrow(jbstProperty);
+                ConsoleAsserts.assertNonNullOrThrow(jbstProperty);
                 verifyProperty(jbstProperty);
             } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);
@@ -130,12 +113,13 @@ public class PropertiesAsserter {
         });
     }
 
-    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, List<Field> fields) {
+    // TODO [YYL] fixme?
+    public static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, List<Field> fields) {
         assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         fields.forEach(field -> {
             try {
                 var jbstProperty = new JbstProperty(propertiesConfigs.getPropertyName(), field, field.get(propertiesConfigs));
-                ConsoleAsserts.assertNonNullPropertyOrThrow(jbstProperty);
+                ConsoleAsserts.assertNonNullOrThrow(jbstProperty);
                 var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
@@ -150,8 +134,9 @@ public class PropertiesAsserter {
         });
     }
 
+    // TODO [YYL} fixme
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
-    private static void verifyProperty(JbstProperty jbstProperty) {
+    public static void verifyProperty(JbstProperty jbstProperty) {
         var property = jbstProperty.getPropertyValue();
         if (jbstProperty.getField().isAnnotationPresent(MandatoryMapProperty.class)) {
             var annotation = jbstProperty.getField().getAnnotation(MandatoryMapProperty.class);
