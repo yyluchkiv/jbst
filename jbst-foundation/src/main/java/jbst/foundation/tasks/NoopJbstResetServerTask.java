@@ -19,7 +19,7 @@ import static jbst.foundation.utilities.concurrent.SleepUtility.sleepMillisecond
 @Slf4j
 @Getter
 @Component
-public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
+public class NoopJbstResetServerTask extends AbstractJbstResetServerTask {
 
     // Wss
     private final JbstWebsocketsService websocketsService;
@@ -27,7 +27,7 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
     private final ResetServerStatus status = new ResetServerStatus(6);
 
     @Autowired
-    public TestDataResetServerTask(
+    public NoopJbstResetServerTask(
             IncidentPublisher incidentPublisher,
             JbstWebsocketsService websocketsService
     ) {
@@ -44,12 +44,12 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
         try {
             this.status.reset();
 
-            this.computeAndSendResetServerProgress(usernames, "[Server] Test Data Stage #1");
-            this.computeAndSendResetServerProgress(usernames, "[Server] Test Data Stage #2");
-            this.computeAndSendResetServerProgress(usernames, "[Server] Test Data Stage #3");
-            this.computeAndSendResetServerProgress(usernames, "[Server] Test Data Stage #4");
-            this.computeAndSendResetServerProgress(usernames, "[Server] Test Data Stage #5");
-            this.computeAndSendResetServerProgress(usernames, "[Server] Test Data Stage #6");
+            this.computeAndSendResetServerProgress(usernames, "[Server] Noop Jbst Stage #1");
+            this.computeAndSendResetServerProgress(usernames, "[Server] Noop Jbst Stage #2");
+            this.computeAndSendResetServerProgress(usernames, "[Server] Noop Jbst Stage #3");
+            this.computeAndSendResetServerProgress(usernames, "[Server] Noop Jbst Stage #4");
+            this.computeAndSendResetServerProgress(usernames, "[Server] Noop Jbst Stage #5");
+            this.computeAndSendResetServerProgress(usernames, "[Server] Noop Jbst Stage #6");
 
             this.status.complete(initiator.zoneId());
             this.websocketsService.sendResetServerStatus(usernames, this.status);

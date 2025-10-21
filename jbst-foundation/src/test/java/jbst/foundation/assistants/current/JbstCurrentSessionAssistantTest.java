@@ -1,7 +1,6 @@
-package jbst.foundation.assistants.current.base;
+package jbst.foundation.assistants.current;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
@@ -38,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseCurrentSessionAssistantTest {
+class JbstCurrentSessionAssistantTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -74,7 +73,7 @@ class BaseCurrentSessionAssistantTest {
 
         @Bean
         CurrentSessionAssistant currentSessionAssistant() {
-            return new BaseCurrentSessionAssistant(
+            return new JbstCurrentSessionAssistant(
                     this.jbstSettingsService(),
                     this.sessionRegistry(),
                     this.usersSessionsRepository(),

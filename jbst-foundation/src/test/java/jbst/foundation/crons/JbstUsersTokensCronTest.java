@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UsersTokensCronTest {
+public class JbstUsersTokensCronTest {
 
     public static Stream<Arguments> cronArgs() {
         return Stream.of(
@@ -47,8 +47,8 @@ public class UsersTokensCronTest {
         }
 
         @Bean
-        UsersTokensCron sessionsCron() {
-            return new UsersTokensCron(
+        JbstUsersTokensCron sessionsCron() {
+            return new JbstUsersTokensCron(
                     this.usersTokensRepository(),
                     this.incidentPublisher()
             );
@@ -60,7 +60,7 @@ public class UsersTokensCronTest {
     // Incidents
     private final IncidentPublisher incidentPublisher;
 
-    private final UsersTokensCron componentUnderTest;
+    private final JbstUsersTokensCron componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

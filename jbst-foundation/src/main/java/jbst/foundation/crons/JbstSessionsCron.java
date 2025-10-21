@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SessionsCron extends AbstractBaseCron {
+public class JbstSessionsCron extends AbstractBaseCron {
 
     // Sessions
     private final JbstSessionRegistry sessionRegistry;

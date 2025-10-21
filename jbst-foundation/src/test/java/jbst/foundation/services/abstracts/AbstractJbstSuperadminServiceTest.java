@@ -12,7 +12,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
+import jbst.foundation.tasks.AbstractJbstResetServerTask;
 import jbst.foundation.tests.stubbers.AbstractMockService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -68,8 +68,8 @@ class AbstractJbstSuperadminServiceTest {
         }
 
         @Bean
-        AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask() {
-            return new AbstractSuperAdminResetServerTask(
+        AbstractJbstResetServerTask abstractSuperAdminResetServerTask() {
+            return new AbstractJbstResetServerTask(
                     this.incidentPublisher()
             ) {
                 @Override

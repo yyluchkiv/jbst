@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "jbst.foundation.assistants.current.base",
+        "jbst.foundation.assistants.current",
         "jbst.foundation.tasks"
         // -------------------------------------------------------------------------------------------------------------
 })
@@ -18,6 +18,6 @@ import org.springframework.context.annotation.Configuration;
         JbstProperties.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstConfigurationSecurityJwtFallbackBases {
+public class JbstConfigurationSecurityJwtFallbacks {
 
 }

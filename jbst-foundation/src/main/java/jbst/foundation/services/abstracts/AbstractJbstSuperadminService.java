@@ -12,7 +12,7 @@ import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tasks.AbstractSuperAdminResetServerTask;
+import jbst.foundation.tasks.AbstractJbstResetServerTask;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -29,7 +29,7 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     protected final JbstInvitationsRepository invitationsRepository;
     protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Tasks
-    protected final AbstractSuperAdminResetServerTask resetServerTask;
+    protected final AbstractJbstResetServerTask resetServerTask;
 
     // =================================================================================================================
     // Server

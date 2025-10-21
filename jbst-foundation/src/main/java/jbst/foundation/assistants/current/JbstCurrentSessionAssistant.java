@@ -1,7 +1,6 @@
-package jbst.foundation.assistants.current.base;
+package jbst.foundation.assistants.current;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
@@ -27,7 +26,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
+public class JbstCurrentSessionAssistant implements CurrentSessionAssistant {
     // Settings
     protected final JbstSettingsService jbstSettingsService;
     // Sessions
