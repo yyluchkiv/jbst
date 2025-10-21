@@ -2,7 +2,7 @@ package jbst.foundation.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.utilities.random.EntityUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -38,8 +38,8 @@ class JbstCsrfInterceptorHandshakeTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        TokensProvider tokensProvider() {
-            return mock(TokensProvider.class);
+        JbstTokensProvider tokensProvider() {
+            return mock(JbstTokensProvider.class);
         }
 
         @Bean
@@ -51,7 +51,7 @@ class JbstCsrfInterceptorHandshakeTest {
     }
 
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
 
     private final JbstCsrfInterceptorHandshake componentUnderTest;
 

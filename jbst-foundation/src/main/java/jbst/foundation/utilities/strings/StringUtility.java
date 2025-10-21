@@ -76,4 +76,10 @@ public class StringUtility {
         }
         return splitFormat.toString();
     }
+
+    public static String toKebab(String value) {
+        return StringUtils.uncapitalize(
+                value.replaceAll("([a-z])([A-Z])", "$1-$2")
+        ).toLowerCase();
+    }
 }

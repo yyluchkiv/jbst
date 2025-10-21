@@ -55,4 +55,9 @@ public class MvcConfigs extends AbstractTogglePropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return true;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "mvc-configs";
+    }
 }

@@ -38,8 +38,8 @@ import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tokens.facade.TokensProvider;
-import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
+import jbst.foundation.validators.base.JbstAuthenticationValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -78,10 +78,11 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
     // Authentication
     private final AuthenticationManager authenticationManager;
+    // Extension
+    private final JbstExtensionService extensionService;
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final JbstExtensionService extensionService;
     private final JbstUsersService usersService;
     private final JbstUsersSessionsService usersSessionsService;
     private final JbstTokensService tokensService;
@@ -92,9 +93,9 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     private final CurrentSessionAssistant currentSessionAssistant;
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Validators
-    private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
+    private final JbstAuthenticationValidator authenticationRequestsValidator;
     // Utilities
     private final JbstSecurityUtils securityUtils;
     // Publishers
@@ -118,7 +119,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.tokensProvider,
-                this.baseAuthenticationRequestsValidator,
+                this.authenticationRequestsValidator,
                 this.securityUtils,
                 this.securityJwtPublisher
         );
@@ -138,7 +139,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.tokensProvider,
-                this.baseAuthenticationRequestsValidator,
+                this.authenticationRequestsValidator,
                 this.securityUtils,
                 this.securityJwtPublisher
         );
@@ -148,7 +149,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     void loginStandardTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
-        when(this.baseAuthenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
+        when(this.authenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
                 request.username(),
                 request.password()
         ));
@@ -160,8 +161,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var refreshToken = JwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-        var currentClientUser = CurrentClientUser.random();
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(CurrentClientUser.hardcoded());
 
         // Act
         this.mvc.perform(
@@ -170,15 +170,15 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().value())))
-                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())))
-                .andExpect(jsonPath("$.name", equalTo(currentClientUser.getName())))
-                .andExpect(jsonPath("$.zoneId", equalTo(currentClientUser.getZoneId().getId())))
+                .andExpect(jsonPath("$.username", equalTo("jbst")))
+                .andExpect(jsonPath("$.email", equalTo("tests@yyluchkiv.com")))
+                .andExpect(jsonPath("$.name", equalTo("JBST")))
+                .andExpect(jsonPath("$.zoneId", equalTo("Europe/Kyiv")))
                 .andExpect(jsonPath("$.authorities", notNullValue()))
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginStandard(request);
+        verify(this.authenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.value(), password.value()));
         verify(this.jwtUserDetailsService).loadUserByUsername(username.value());
         verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
@@ -188,6 +188,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
+        verify(this.extensionService).authenticateAsStandard(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
 
@@ -199,17 +200,14 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var magicLinkUserCredentials = new MagicLinkUserCredentials(userToken, request.zoneId());
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var credentials = new UsernamePasswordCredentials(user.username(), user.password());
-        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
+        when(this.authenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
         when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
-
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-
-        var currentClientUser = CurrentClientUser.random();
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(CurrentClientUser.hardcoded());
 
         // Act
         this.mvc.perform(
@@ -218,15 +216,15 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().value())))
-                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())))
-                .andExpect(jsonPath("$.name", equalTo(currentClientUser.getName())))
-                .andExpect(jsonPath("$.zoneId", equalTo(currentClientUser.getZoneId().getId())))
+                .andExpect(jsonPath("$.username", equalTo("jbst")))
+                .andExpect(jsonPath("$.email", equalTo("tests@yyluchkiv.com")))
+                .andExpect(jsonPath("$.name", equalTo("JBST")))
+                .andExpect(jsonPath("$.zoneId", equalTo("Europe/Kyiv")))
                 .andExpect(jsonPath("$.authorities", notNullValue()))
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
+        verify(this.authenticationRequestsValidator).validateLoginMagicLink(request);
         verify(this.usersService).saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
@@ -237,15 +235,15 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));
+        verify(this.extensionService).authenticateAsMagicLink(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
-        verify(this.extensionService).authenticateAsMagicLink(currentClientUser);
     }
 
     @Test
     void authenticateStandardWithInvalidCredentialsTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
-        when(this.baseAuthenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
+        when(this.authenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
                 request.username(),
                 request.password()
         ));
@@ -272,7 +270,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.timestamp", Matchers.greaterThan(exceptionEntity.getTimestamp())));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginStandard(request);
+        verify(this.authenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(authenticationToken);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(any(EventAuthenticationLoginFailure.class));
     }

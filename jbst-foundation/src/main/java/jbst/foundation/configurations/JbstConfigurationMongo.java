@@ -2,7 +2,6 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
@@ -10,7 +9,7 @@ import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
-import jbst.foundation.services.mongodb.MongoJbstUsersSessionsService;
+import jbst.foundation.services.mongo.MongoJbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.sessions.MongoSessionRegistry;
 import jbst.foundation.settings.MongoJbstSettingsService;
@@ -23,8 +22,8 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan({
-        "jbst.foundation.services.mongodb",
-        "jbst.foundation.validators.mongodb",
+        "jbst.foundation.services.mongo",
+        "jbst.foundation.validators.mongo"
 })
 @Import({
         JbstConfigurationMongoRepositories.class
@@ -42,7 +41,7 @@ public class JbstConfigurationMongo {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getMongodbSecurityJwtConfigs().assertProperties(new PropertyId("mongodbSecurityJwtConfigs"));
+        this.jbstProperties.getMongodbSecurityJwtConfigs().assertProperties();
     }
 
     @Bean

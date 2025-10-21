@@ -53,4 +53,9 @@ public class WebsocketsConfigs extends AbstractTogglePropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return false;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "websockets-configs";
+    }
 }

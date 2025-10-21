@@ -8,9 +8,9 @@ import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
-import jbst.foundation.filters.jwt.JwtTokensFilter;
-import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
-import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
+import jbst.foundation.filters.jwt.JbstTokensFilter;
+import jbst.foundation.handlers.JbstAccessDeniedHandler;
+import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
 import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
 import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
@@ -126,9 +126,9 @@ class JbstConfigurationSecurityJwtTest {
             return new JbstConfigurationSecurityJwt(
                     mock(JbstJwtUserDetailsService.class),
                     mock(BCryptPasswordEncoder.class),
-                    mock(JwtTokensFilter.class),
-                    mock(JwtAuthenticationEntryPointExceptionHandler.class),
-                    mock(JwtAccessDeniedExceptionHandler.class),
+                    mock(JbstTokensFilter.class),
+                    mock(JbstAuthenticationEntryPoint.class),
+                    mock(JbstAccessDeniedHandler.class),
                     this.csrfInterceptorHandshake(),
                     this.securityHandshakeHandler(),
                     mock(AbstractJbstSecurityJwtConfigurer.class),

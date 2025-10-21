@@ -34,6 +34,7 @@ public record PropertyId(@NotNull String value) {
         return of(JbstConstants.Symbols.HYPHEN);
     }
 
+    @SuppressWarnings("NullableProblems")
     @JsonValue
     @Override
     public String toString() {

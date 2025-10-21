@@ -2,12 +2,11 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.filters.jwt.JwtTokensFilter;
-import jbst.foundation.handlers.JwtAccessDeniedExceptionHandler;
-import jbst.foundation.handlers.JwtAuthenticationEntryPointExceptionHandler;
+import jbst.foundation.filters.jwt.JbstTokensFilter;
+import jbst.foundation.handlers.JbstAccessDeniedHandler;
+import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
 import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
 import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
@@ -98,10 +97,10 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     // Passwords
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Filters
-    private final JwtTokensFilter jwtTokensFilter;
+    private final JbstTokensFilter tokensFilter;
     // Handlers
-    private final JwtAuthenticationEntryPointExceptionHandler jwtAuthenticationEntryPointExceptionHandler;
-    private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
+    private final JbstAuthenticationEntryPoint authenticationEntryPoint;
+    private final JbstAccessDeniedHandler accessDeniedHandler;
     // Handshakes
     private final JbstCsrfInterceptorHandshake csrfInterceptorHandshake;
     private final JbstSecurityHandshakeHandler securityHandshakeHandler;
@@ -113,7 +112,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getSecurityJwtConfigs().assertProperties(new PropertyId("securityJwtConfigs"));
+        this.jbstProperties.getSecurityJwtConfigs().assertProperties();
     }
 
     @Autowired
@@ -153,13 +152,13 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .addFilterBefore(
-                        this.jwtTokensFilter,
+                        this.tokensFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling
-                                .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
-                                .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
+                                .authenticationEntryPoint(this.authenticationEntryPoint)
+                                .accessDeniedHandler(this.accessDeniedHandler)
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement

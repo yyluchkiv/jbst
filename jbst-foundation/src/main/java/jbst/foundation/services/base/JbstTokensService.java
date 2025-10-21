@@ -12,7 +12,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstTokensContextThrowerService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class JbstTokensService {
     private final JbstTokensContextThrowerService tokensContextThrowerService;
     private final JbstUsersSessionsService usersSessionsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Utilities
     private final JbstSecurityUtils securityUtils;
 

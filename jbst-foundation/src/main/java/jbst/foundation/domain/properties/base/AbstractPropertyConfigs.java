@@ -1,30 +1,34 @@
 package jbst.foundation.domain.properties.base;
 
-import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.utilities.PropertiesAsserter;
-import jbst.foundation.domain.reflections.ReflectionProperty;
+import jbst.foundation.domain.reflections.JbstPropertiesUtility;
+import jbst.foundation.domain.reflections.JbstProperty;
 import lombok.extern.slf4j.Slf4j;
 
-import static jbst.foundation.utilities.reflections.ReflectionUtility.getProperties;
+import java.lang.reflect.Field;
+import java.util.List;
 
+import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
+
+// TODO [YYL] merge AbstractPropertyConfigs + AbstractPropertiesConfigs: [parent, leaf, name]?
 @Slf4j
 public abstract class AbstractPropertyConfigs {
 
-    public void assertProperties(PropertyId propertyId) {
-        PropertiesAsserter.assertMandatoryPropertyConfigs(this, propertyId);
-    }
-
-    public void printProperties(PropertyId propertyId) {
-        this.printMandatoryBasedConfigs(propertyId);
+    public void assertProperties(String propertyName) {
+        this.assertFields(propertyName, JbstPropertiesUtility.getMandatoryFields(this, propertyName));
     }
 
     // =================================================================================================================
-    // PRIVATE METHODS
+    // PROTECTED METHODS
     // =================================================================================================================
-    private void printMandatoryBasedConfigs(PropertyId propertyId) {
-        var fields = PropertiesAsserter.getMandatoryBasedFields(this, propertyId);
-        var rfs = getProperties(this, propertyId, fields);
-        rfs.sort(ReflectionProperty.PRINTER_COMPARATOR);
-        rfs.forEach(ReflectionProperty::print);
+    protected void assertFields(String propertyName, List<Field> fields) {
+        fields.forEach(field -> {
+            try {
+                var jbstProperty = new JbstProperty(propertyName, field, field.get(this));
+                assertNonNullOrThrow(jbstProperty);
+                jbstProperty.verify();
+            } catch (IllegalAccessException ex) {
+                throw new IllegalArgumentException(ex);
+            }
+        });
     }
 }

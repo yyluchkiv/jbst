@@ -14,7 +14,7 @@ import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.foundation.validators.BaseUsersTokensRequestsValidator;
+import jbst.foundation.validators.JbstUsersTokensValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,7 +62,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     private final JbstUsersService usersService;
     private final JbstUsersEmailsService usersEmailsService;
     // Validators
-    private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
+    private final JbstUsersTokensValidator usersTokensValidator;
     // Incidents
     private final IncidentPublisher incidentPublisher;
 
@@ -77,7 +77,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
                 this.usersTokensService,
                 this.usersEmailsService,
                 this.usersService,
-                this.baseUsersTokensRequestsValidator,
+                this.usersTokensValidator,
                 this.incidentPublisher
         );
     }
@@ -89,7 +89,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
                 this.usersTokensService,
                 this.usersEmailsService,
                 this.usersService,
-                this.baseUsersTokensRequestsValidator,
+                this.usersTokensValidator,
                 this.incidentPublisher
         );
     }
@@ -113,7 +113,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
 
         // Arrange
         verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
-        verify(this.baseUsersTokensRequestsValidator, times(2)).validateExecuteConfirmEmail(user);
+        verify(this.usersTokensValidator, times(2)).validateExecuteConfirmEmail(user);
         verify(this.usersTokensService).findOrCreate(eq(requestUserToken));
         verify(this.usersEmailsService).executeEmailConfirmation(userToken);
     }
@@ -129,7 +129,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         // Arrange
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
         Function<Exception, Stubber> doThrowNonNull = ex -> nonNull(ex) ? doThrow(ex) : doNothing();
-        doThrowNonNull.apply(validationException).when(this.baseUsersTokensRequestsValidator).validateEmailConfirmationToken(token);
+        doThrowNonNull.apply(validationException).when(this.usersTokensValidator).validateEmailConfirmationToken(token);
         doThrowNonNull.apply(confirmException).when(this.usersTokensService).confirmEmail(token);
         if (nonNull(runtimeException)) {
             doThrow(runtimeException).when(this.usersTokensService).confirmEmail(token);
@@ -143,7 +143,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
                 .andExpect(header().string("Location", expectedLocation));
 
         // Assert
-        verify(this.baseUsersTokensRequestsValidator).validateEmailConfirmationToken(token);
+        verify(this.usersTokensValidator).validateEmailConfirmationToken(token);
         var tokensServiceInvoked = Stream.of(nonNull(confirmException), nonNull(runtimeException), code == 1).anyMatch(b -> b);
         var confirmEmailInvocations = tokensServiceInvoked ? times(1) : times(0);
         verify(this.usersTokensService, confirmEmailInvocations).confirmEmail(token);
@@ -171,7 +171,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.usersService).findByEmail(request.email());
-        verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
+        verify(this.usersTokensValidator).validateExecuteResetPassword(user);
         verify(this.usersTokensService).findOrCreate(requestUserToken);
         verify(this.usersEmailsService).executePasswordReset(userToken);
     }
@@ -189,7 +189,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         ).andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUsersTokensRequestsValidator).validatePasswordReset(request);
+        verify(this.usersTokensValidator).validatePasswordReset(request);
         verify(this.usersService).resetPassword(request);
     }
 

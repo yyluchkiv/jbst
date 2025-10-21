@@ -1,45 +1,64 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
-import jbst.foundation.domain.properties.utilities.PropertiesAsserter;
-import jbst.foundation.domain.reflections.ReflectionProperty;
+import jbst.foundation.domain.reflections.JbstPropertiesUtility;
+import jbst.foundation.domain.reflections.JbstProperty;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
+import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 
 public abstract class AbstractPropertiesConfigs {
     public abstract boolean isParentPropertiesNode();
+    public abstract String getPropertyName();
 
-    public void assertProperties(PropertyId propertyId) {
-        PropertiesAsserter.assertMandatoryPropertiesConfigs(this, propertyId);
+    public void assertProperties() {
+        this.assertFields(JbstPropertiesUtility.getMandatoryFields(this, this.getPropertyName()));
         if (this.isParentPropertiesNode()) {
-            printProperties(propertyId);
+            this.printProperties();
         }
     }
 
-    public void printProperties(PropertyId propertyId) {
-        this.printMandatoryPropertiesConfigs(propertyId);
+    public void printProperties() {
+        JbstPropertiesUtility.getMandatoryBasedFields(this, this.getPropertyName()).forEach(field -> {
+            try {
+                var jbstProperty = new JbstProperty(this.getPropertyName(), field, field.get(this));
+                if (isNull(jbstProperty.getPropertyValue())) {
+                    jbstProperty.print();
+                } else {
+                    var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
+                    if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).printProperties();
+                    } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        jbstProperty.printAbstractPropertyConfigs();
+                    } else {
+                        jbstProperty.print();
+                    }
+                }
+            } catch (IllegalAccessException ex) {
+                throw new IllegalArgumentException(ex);
+            }
+        });
     }
 
     // =================================================================================================================
-    // PRIVATE METHODS
+    // PROTECTED METHODS
     // =================================================================================================================
-    private void printMandatoryPropertiesConfigs(PropertyId propertyId) {
-        var fields = PropertiesAsserter.getMandatoryBasedFields(this, propertyId);
+    protected void assertFields(List<Field> fields) {
         fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertyId, field, field.get(this));
-                if (isNull(rf.getPropertyValue())) {
-                    rf.print();
+                var jbstProperty = new JbstProperty(this.getPropertyName(), field, field.get(this));
+                assertNonNullOrThrow(jbstProperty);
+                var nestedPropertyClass = requireNonNull(jbstProperty.getPropertyValue()).getClass();
+                if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                    ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
+                } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                    ((AbstractPropertyConfigs) jbstProperty.getPropertyValue()).assertProperties(jbstProperty.getTreePropertyName());
                 } else {
-                    var nestedPropertyClass = rf.getPropertyValue().getClass();
-                    if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                        ((AbstractPropertiesConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyId());
-                    } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                        ((AbstractPropertyConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyId());
-                    } else {
-                        rf.print();
-                    }
+                    jbstProperty.verify();
                 }
             } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);

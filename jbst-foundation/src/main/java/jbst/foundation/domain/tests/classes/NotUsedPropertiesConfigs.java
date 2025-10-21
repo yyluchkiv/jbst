@@ -26,4 +26,9 @@ public class NotUsedPropertiesConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return true;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "not-used-properties-configs";
+    }
 }

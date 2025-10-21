@@ -37,6 +37,11 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
         return true;
     }
 
+    @Override
+    public String getPropertyName() {
+        return "events-configs";
+    }
+
     public TuplePercentage asThreadsCorePoolTuplePercentage() {
         return TuplePercentage.progressTuplePercentage(this.threadsCorePoolPercentage, HUNDRED);
     }

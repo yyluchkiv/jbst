@@ -2,7 +2,7 @@ package jbst.foundation.handshakes;
 
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.services.base.JbstTokensService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class JbstSecurityHandshakeHandler extends DefaultHandshakeHandler {
     // Services
     private final JbstTokensService tokensService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
 
     @Override
     protected Principal determineUser(

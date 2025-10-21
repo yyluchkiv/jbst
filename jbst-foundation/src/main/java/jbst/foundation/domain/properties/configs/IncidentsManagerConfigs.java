@@ -43,4 +43,9 @@ public class IncidentsManagerConfigs extends AbstractTogglePropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return true;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "incidents-manager-configs";
+    }
 }

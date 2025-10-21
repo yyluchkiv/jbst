@@ -1,23 +1,17 @@
 package jbst.foundation.utilities.reflections;
 
-import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.base.SchedulerConfiguration;
-import jbst.foundation.domain.properties.base.TimeAmount;
-import jbst.foundation.domain.reflections.ReflectionProperty;
 import jbst.foundation.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,7 +19,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.uncapitalize;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 @UtilityClass
 public class ReflectionUtility {
 
@@ -115,67 +109,29 @@ public class ReflectionUtility {
                 .collect(Collectors.toList());
     }
 
-    public static List<ReflectionProperty> getNotNullPropertiesRecursively(Object object, PropertyId propertyId) {
-        Predicate<Object> breakoutClassesPredicate = breakoutObj -> {
-            var clazz = breakoutObj.getClass();
-            var isArray = clazz.isArray();
-            var isMap = Map.class.isAssignableFrom(clazz);
-            var isSet = Set.class.isAssignableFrom(clazz);
-            return isArray || isMap || isSet ||
-                    Username.class.equals(clazz) ||
-                    Password.class.equals(clazz) ||
-                    ZoneId.class.isAssignableFrom(clazz) ||
-                    ChronoUnit.class.equals(clazz) ||
-                    TimeUnit.class.equals(clazz) ||
-                    TimeAmount.class.equals(clazz) ||
-                    SchedulerConfiguration.class.equals(clazz) ||
-                    String.class.equals(clazz) ||
-                    boolean.class.equals(clazz) || Boolean.class.equals(clazz) ||
-                    short.class.equals(clazz) || Short.class.equals(clazz) ||
-                    int.class.equals(clazz) || Integer.class.equals(clazz) ||
-                    long.class.equals(clazz) || Long.class.equals(clazz);
-        };
-
-        List<ReflectionProperty> traversedProperties = new ArrayList<>();
-        var properties = getNotNullProperties(object, propertyId);
-        properties.forEach(property -> {
-            if (breakoutClassesPredicate.test(property.getPropertyValue())) {
-                traversedProperties.add(property);
-            } else {
-                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), property.getTreePropertyId()));
-            }
-        });
-        return traversedProperties;
-    }
-
-    public static List<ReflectionProperty> getNotNullProperties(Object object, PropertyId propertyId) {
-        return Stream.of(object.getClass().getDeclaredFields())
+    @SuppressWarnings("ConstantValue")
+    public static List<Field> getFields(Object property, Set<Class<? extends Annotation>> presentAnnotations) {
+        return Stream.of(property.getClass().getDeclaredFields())
+                .filter(Objects::nonNull)
                 .map(field -> {
-                    try {
-                        var nestedProperty = field.get(object);
-                        if (isNull(nestedProperty)) {
-                            return null;
-                        } else {
-                            return new ReflectionProperty(propertyId, field, nestedProperty);
+                    for (Class<? extends Annotation> annotation : presentAnnotations) {
+                        if (field.isAnnotationPresent(annotation)) {
+                            field.setAccessible(true);
+                            return field;
                         }
-                    } catch (IllegalAccessException | RuntimeException ex) {
-                        return null;
                     }
+                    return null;
                 })
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
-
-    public static List<ReflectionProperty> getProperties(Object property, PropertyId propertyId, List<Field> fields) {
-        return fields.stream()
-                .map(field -> {
-                    try {
-                        return new ReflectionProperty(propertyId, field, field.get(property));
-                    } catch (IllegalAccessException | RuntimeException ex) {
-                        return new ReflectionProperty(propertyId, field, null);
+                .sorted((o1, o2) -> {
+                    if ("enabled".equals(o1.getName())) {
+                        return -1;
+                    } else if ("enabled".equals(o2.getName())) {
+                        return 1;
                     }
+                    return o1.getName().compareTo(o2.getName());
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static Object getFieldValueOrNull(Object object, Field field, List<Method> getters) {

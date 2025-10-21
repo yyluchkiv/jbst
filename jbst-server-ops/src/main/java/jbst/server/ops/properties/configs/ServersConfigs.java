@@ -29,6 +29,11 @@ public class ServersConfigs extends AbstractPropertiesConfigs {
         return true;
     }
 
+    @Override
+    public String getPropertyName() {
+        return "servers-configs";
+    }
+
     public enum Mode {
         RESOURCES,
         GITHUB

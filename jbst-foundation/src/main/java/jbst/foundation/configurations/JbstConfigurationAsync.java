@@ -1,7 +1,6 @@
 package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -32,7 +31,7 @@ public class JbstConfigurationAsync implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
+        this.jbstProperties.getAsyncConfigs().assertProperties();
     }
 
     @Override

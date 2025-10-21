@@ -37,4 +37,9 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return false;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "essence-configs";
+    }
 }

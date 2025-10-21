@@ -33,4 +33,9 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return true;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "server-configs";
+    }
 }

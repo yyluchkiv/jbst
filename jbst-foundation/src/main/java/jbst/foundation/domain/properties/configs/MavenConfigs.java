@@ -29,6 +29,11 @@ public class MavenConfigs extends AbstractPropertiesConfigs {
         return true;
     }
 
+    @Override
+    public String getPropertyName() {
+        return "maven-configs";
+    }
+
     public MavenDetails asMavenDetails() {
         return new MavenDetails(this.groupId, this.artifactId, this.version);
     }

@@ -31,4 +31,9 @@ public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return true;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "mongodb-security-jwt-configs";
+    }
 }

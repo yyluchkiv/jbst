@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
 import jbst.foundation.domain.ids.InvitationId;
 import jbst.foundation.services.JbstInvitationsService;
-import jbst.foundation.validators.BaseInvitationsRequestsValidator;
+import jbst.foundation.validators.JbstInvitationsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class JbstInvitationsResource {
     // Services
     private final JbstInvitationsService invitationsService;
     // Validators
-    private final BaseInvitationsRequestsValidator baseInvitationsRequestsValidator;
+    private final JbstInvitationsValidator invitationsValidator;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -42,7 +42,7 @@ public class JbstInvitationsResource {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void save(@RequestBody @Valid RequestNewInvitationParams request) {
-        this.baseInvitationsRequestsValidator.validateCreateNewInvitation(request);
+        this.invitationsValidator.validateCreateNewInvitation(request);
         var owner = this.currentSessionAssistant.getCurrentUsername();
         this.invitationsService.save(owner, request);
     }
@@ -51,7 +51,7 @@ public class JbstInvitationsResource {
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable InvitationId invitationId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        this.baseInvitationsRequestsValidator.validateDeleteById(username, invitationId);
+        this.invitationsValidator.validateDeleteById(username, invitationId);
         this.invitationsService.deleteById(invitationId);
     }
 }

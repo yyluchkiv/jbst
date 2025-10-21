@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
@@ -14,7 +15,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.services.base.JbstAuthenticationService;
-import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
+import jbst.foundation.validators.base.JbstAuthenticationValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,35 +30,40 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstAuthenticationResource {
 
+    // Assistants
+    private final CurrentSessionAssistant currentSessionAssistant;
+    // Extension
+    private final JbstExtensionService extensionService;
     // Services
     private final JbstAuthenticationService authenticationService;
-    private final JbstExtensionService extensionService;
     // Validators
-    private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
+    private final JbstAuthenticationValidator authenticationRequestsValidator;
 
     @PostMapping("/login/standard")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser loginStandard(
+    public CurrentClientUser authenticateAsStandard(
             @RequestBody @Valid RequestUserLogin request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws JbstLoginException {
-        var credentials = this.baseAuthenticationRequestsValidator.validateLoginStandard(request);
-        return this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
+        var credentials = this.authenticationRequestsValidator.validateLoginStandard(request);
+        var username = this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
+        this.extensionService.authenticateAsStandard(username, httpRequest, httpResponse);
+        return this.currentSessionAssistant.getCurrentClientUser();
     }
 
     @PostMapping("/login/magiclink")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser loginMagicLink(
+    public CurrentClientUser authenticateAsMagicLink(
             @RequestBody @Valid RequestMagicLinkToken request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws JbstLoginException {
         request = request.createReworkedUkraineZoneId();
-        var credentials = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
-        var user = this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
-        this.extensionService.authenticateAsMagicLink(user);
-        return user;
+        var credentials = this.authenticationRequestsValidator.validateLoginMagicLink(request);
+        var username = this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
+        this.extensionService.authenticateAsMagicLink(username, httpRequest, httpResponse);
+        return this.currentSessionAssistant.getCurrentClientUser();
     }
 
     @PostMapping("/logout")

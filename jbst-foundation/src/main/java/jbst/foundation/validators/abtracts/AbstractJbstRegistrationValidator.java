@@ -1,0 +1,145 @@
+package jbst.foundation.validators.abtracts;
+
+import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.foundation.domain.events.EventRegistration0Failure;
+import jbst.foundation.domain.events.EventRegistration1Failure;
+import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
+import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
+import jbst.foundation.validators.JbstRegistrationValidator;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+
+import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class AbstractJbstRegistrationValidator implements JbstRegistrationValidator {
+
+    // Publishers
+    protected final SecurityJwtEventsPublisher securityJwtPublisher;
+    protected final SecurityJwtIncidentsPublisher securityJwtIncidentPublisher;
+    // Repositories
+    protected final JbstInvitationsRepository invitationsRepository;
+    protected final JbstUsersRepository usersRepository;
+
+    @Override
+    public void validateRegistrationRequestMagicLink(RequestUserRegistrationMagicLink request) {
+        // no required actions
+    }
+
+    @Override
+    public void validateRegistrationRequest0(RequestUserRegistration0 request) throws JbstRegistrationException {
+        request.assertPasswordsOrThrow();
+        var existsByUsername = this.usersRepository.existsByUsername(request.username());
+        if (existsByUsername) {
+            var message = entityAlreadyUsed("Username", request.username().value());
+            this.securityJwtPublisher.publishRegistration0Failure(
+                    new EventRegistration0Failure(
+                            request.email(),
+                            request.username(),
+                            message
+                    )
+            );
+            this.securityJwtIncidentPublisher.publishRegistration0Failure(
+                    new IncidentRegistration0Failure(
+                            request.email(),
+                            request.username(),
+                            message
+                    )
+            );
+            throw new JbstRegistrationException(message);
+        }
+        var existsByEmail = this.usersRepository.existsByEmail(request.email());
+        if (existsByEmail) {
+            var message = entityAlreadyUsed("Email", request.email().value());
+            this.securityJwtPublisher.publishRegistration0Failure(
+                    new EventRegistration0Failure(
+                            request.email(),
+                            request.username(),
+                            message
+                    )
+            );
+            this.securityJwtIncidentPublisher.publishRegistration0Failure(
+                    new IncidentRegistration0Failure(
+                            request.email(),
+                            request.username(),
+                            message
+                    )
+            );
+            throw new JbstRegistrationException(message);
+        }
+    }
+
+    @Override
+    public void validateRegistrationRequest1(RequestUserRegistration1 request) throws JbstRegistrationException {
+        request.assertPasswordsOrThrow();
+        var user = this.usersRepository.findByUsernameAsJwtUserOrNull(request.username());
+        if (nonNull(user)) {
+            var message = entityAlreadyUsed("Username", request.username().value());
+            this.securityJwtPublisher.publishRegistration1Failure(
+                    EventRegistration1Failure.of(
+                            request.username(),
+                            request.code(),
+                            message
+                    )
+            );
+            this.securityJwtIncidentPublisher.publishRegistration1Failure(
+                    IncidentRegistration1Failure.of(
+                            request.username(),
+                            request.code(),
+                            message
+                    )
+            );
+            throw new JbstRegistrationException(message);
+        }
+
+        var invitation = this.invitationsRepository.findByCodeAsAny(request.code());
+        if (nonNull(invitation)) {
+            if (nonNull(invitation.invited())) {
+                var message = entityAlreadyUsed("Code", invitation.code());
+                this.securityJwtPublisher.publishRegistration1Failure(
+                        new EventRegistration1Failure(
+                                request.username(),
+                                request.code(),
+                                invitation.owner(),
+                                message
+                        )
+                );
+                this.securityJwtIncidentPublisher.publishRegistration1Failure(
+                        new IncidentRegistration1Failure(
+                                request.username(),
+                                request.code(),
+                                invitation.owner(),
+                                message
+                        )
+                );
+                throw new JbstRegistrationException(message);
+            }
+        } else {
+            var exception = entityNotFound("Code", request.code());
+            this.securityJwtPublisher.publishRegistration1Failure(
+                    EventRegistration1Failure.of(
+                            request.username(),
+                            request.code(),
+                            exception
+                    )
+            );
+            this.securityJwtIncidentPublisher.publishRegistration1Failure(
+                    IncidentRegistration1Failure.of(
+                            request.username(),
+                            request.code(),
+                            exception
+                    )
+            );
+            throw new JbstRegistrationException(exception);
+        }
+    }
+}

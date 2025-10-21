@@ -1,6 +1,5 @@
 package jbst.server.ops.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.server.ops.domain.servers.Team;
@@ -28,8 +27,13 @@ public class SlacksConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
-        super.assertProperties(propertyId);
+    public String getPropertyName() {
+        return "slack-configs";
+    }
+
+    @Override
+    public void assertProperties() {
+        super.assertProperties();
         assertTrueOrThrow(
                 this.values.stream().map(SlackConfigs::isMain).filter(Boolean::booleanValue).count() == 1,
                 "Slacks configs must have one main team"

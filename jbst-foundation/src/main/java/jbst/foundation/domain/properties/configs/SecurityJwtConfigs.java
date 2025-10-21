@@ -1,7 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.AbstractAuthority;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
@@ -121,8 +120,13 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
-        super.assertProperties(propertyId);
+    public String getPropertyName() {
+        return "security-jwt-configs";
+    }
+
+    @Override
+    public void assertProperties() {
+        super.assertProperties();
 
         // Requirements: availableAuthorities vs. configuredAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();

@@ -16,7 +16,7 @@ import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstTokensContextThrowerService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,8 +65,8 @@ class JbstTokensServiceTest {
         }
 
         @Bean
-        TokensProvider tokensProvider() {
-            return mock(TokensProvider.class);
+        JbstTokensProvider tokensProvider() {
+            return mock(JbstTokensProvider.class);
         }
 
         @Bean
@@ -95,7 +95,7 @@ class JbstTokensServiceTest {
     private final JbstTokensContextThrowerService tokensContextThrowerService;
     private final JbstUsersSessionsService usersSessionsService;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Utilities
     private final JbstSecurityUtils securityUtils;
 

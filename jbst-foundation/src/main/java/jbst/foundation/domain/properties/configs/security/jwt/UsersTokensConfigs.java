@@ -41,4 +41,9 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return false;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "users-tokens-configs";
+    }
 }

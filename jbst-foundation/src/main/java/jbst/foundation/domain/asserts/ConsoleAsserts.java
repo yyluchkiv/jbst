@@ -1,53 +1,66 @@
 package jbst.foundation.domain.asserts;
 
-import com.diogonunes.jcolor.AnsiFormat;
-import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.reflections.ReflectionProperty;
+import jbst.foundation.domain.reflections.JbstProperty;
 import lombok.experimental.UtilityClass;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
-import static com.diogonunes.jcolor.Attribute.RED_TEXT;
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
-import static jbst.foundation.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @UtilityClass
 public class ConsoleAsserts {
-    public static final AnsiFormat RED_TEXT = new AnsiFormat(RED_TEXT());
+    public static final Map<Function<Class<?>, Boolean>, Consumer<JbstProperty>> PROPERTIES_ACTIONS = new HashMap<>();
 
-    public static void assertNonNullOrThrow(Object object, PropertyId propertyId) {
+    static {
+        PROPERTIES_ACTIONS.put(Date.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(LocalDate.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(LocalDateTime.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(ChronoUnit.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(TimeUnit.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(Boolean.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(Short.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(Integer.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(Long.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(BigInteger.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(BigDecimal.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(String.class::equals, ConsoleAsserts::assertNonNullOrThrow);
+        PROPERTIES_ACTIONS.put(Collection.class::isAssignableFrom, ConsoleAsserts::assertNonNullOrThrow);
+    }
+
+    public static void assertNonNullOrThrow(Object object, String propertyName) {
         if (isNull(object)) {
-            throw new IllegalArgumentException(invalidProperty(propertyId));
+            throw new IllegalArgumentException(
+                    "Property %s is null".formatted(
+                            RED_TEXT.format(propertyName)
+                    )
+            );
         }
     }
 
-    public static void assertNonEmptyOrThrow(Collection<?> collection, PropertyId propertyId) {
-        if (collection.isEmpty()) {
-            throw new IllegalArgumentException(invalidProperty(propertyId));
-        }
-    }
-
-    public static void assertNonNullNotEmptyOrThrow(Collection<?> collection, PropertyId propertyId) {
-        assertNonNullOrThrow(collection, propertyId);
-        assertNonEmptyOrThrow(collection, propertyId);
-    }
-
-    public static void assertNonNullPropertyOrThrow(ReflectionProperty reflectionProperty) {
-        if (isNull(reflectionProperty)) {
+    public static void assertNonNullOrThrow(JbstProperty jbstProperty) {
+        if (isNull(jbstProperty)) {
             throw new IllegalArgumentException(RED_TEXT.format("Unknown reflection property"));
         }
-        assertNonNullOrThrow(reflectionProperty.getPropertyValue(), reflectionProperty.getTreePropertyId());
+        assertNonNullOrThrow(jbstProperty.getPropertyValue(), jbstProperty.getTreePropertyName());
     }
 
     @SuppressWarnings("unused")
-    public static <T> void assertContainsAllOrThrow(Collection<T> options, Collection<T> required, PropertyId propertyId) {
+    public static <T> void assertContainsAllOrThrow(Collection<T> options, Collection<T> required, String propertyName) {
         if (!options.containsAll(required)) {
             throw new IllegalArgumentException(
-                    "%s. Options: \"[%s]\". Required: \"[%s]\". Disjunction: \"[%s]\"".formatted(
-                            invalidProperty(propertyId),
+                    "%s. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
+                            propertyName,
                             baseJoiningRaw(options),
                             baseJoiningRaw(required),
                             RED_TEXT.format(baseJoiningRaw(disjunction(new HashSet<>(options), new HashSet<>(required))))
@@ -57,11 +70,11 @@ public class ConsoleAsserts {
     }
 
     @SuppressWarnings("unused")
-    public static <T> void assertEqualsOrThrow(Collection<T> options, Collection<T> required, PropertyId propertyId) {
+    public static <T> void assertEqualsOrThrow(Collection<T> options, Collection<T> required, String propertyName) {
         if (!options.equals(required)) {
             throw new IllegalArgumentException(
-                    "%s. Options: \"[%s]\". Required: \"[%s]\". Disjunction: \"[%s]\"".formatted(
-                            invalidProperty(propertyId),
+                    "%s. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
+                            propertyName,
                             baseJoiningRaw(options),
                             baseJoiningRaw(required),
                             RED_TEXT.format(baseJoiningRaw(disjunction(new HashSet<>(options), new HashSet<>(required))))

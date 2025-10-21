@@ -1,7 +1,5 @@
 package jbst.foundation.domain.properties.base;
 
-import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -12,6 +10,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
@@ -44,12 +43,12 @@ public class JwtToken extends AbstractPropertyConfigs {
     }
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
-        super.assertProperties(propertyId);
+    public void assertProperties(String propertyName) {
+        super.assertProperties(propertyName);
         assertFalseOrThrow(
                 nonNull(this.cookieKey) && nonNull(this.headerKey),
-                "Attribute \"%s\" requires only \"cookieKey\" or \"headerKey\" to be provided".formatted(
-                        ConsoleAsserts.RED_TEXT.format(propertyId.value())
+                "Attribute '%s' requires only 'cookie-key' or 'header-key' to be provided".formatted(
+                        RED_TEXT.format(propertyName)
                 )
         );
     }

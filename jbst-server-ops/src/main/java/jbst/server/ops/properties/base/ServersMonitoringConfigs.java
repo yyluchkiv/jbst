@@ -1,6 +1,5 @@
 package jbst.server.ops.properties.base;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
@@ -34,11 +33,11 @@ public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
     }
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
-        super.assertProperties(propertyId);
+    public void assertProperties(String propertyName) {
+        super.assertProperties(propertyName);
         assertTrueOrThrow(
                 is(this.fileSystemThreshold, ">", this.fileSystemFilter),
-                "Attribute `fileSystemThreshold` is expected to be greater than `fileSystemFilter`"
+                "Property 'file-system-threshold is expected to be greater than file-system-filter"
         );
     }
 

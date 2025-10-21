@@ -2,9 +2,9 @@ package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.enums.UserCreationOption;
@@ -13,7 +13,6 @@ import jbst.foundation.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
@@ -21,7 +20,7 @@ import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,6 @@ public class JbstAuthenticationService {
     // Authentication
     private final AuthenticationManager authenticationManager;
     // Assistants
-    private final CurrentSessionAssistant currentSessionAssistant;
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Sessions
     private final JbstSessionRegistry sessionRegistry;
@@ -55,20 +53,21 @@ public class JbstAuthenticationService {
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
     // Tokens
-    private final TokensProvider tokensProvider;
+    private final JbstTokensProvider tokensProvider;
     // Utilities
     private final JbstSecurityUtils securityUtils;
     // Publishers
     private final SecurityJwtEventsPublisher securityJwtPublisher;
 
-    public final CurrentClientUser asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+    public final Username asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
-            return this.asAuthentication(
+            this.asAuthentication(
                     UserCreationOption.STANDARD,
                     credentials,
                     httpRequest,
                     httpResponse
             );
+            return credentials.username();
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(
@@ -82,16 +81,17 @@ public class JbstAuthenticationService {
         }
     }
 
-    public final CurrentClientUser asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+    public final Username asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
             var credentials = this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
             this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
-            return this.asAuthentication(
+            this.asAuthentication(
                     UserCreationOption.MAGICLINK,
                     credentials,
                     httpRequest,
                     httpResponse
             );
+            return credentials.username();
         } catch (BadCredentialsException ex) {
             this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
                     new EventAuthenticationMagicLinkFailure(
@@ -140,7 +140,7 @@ public class JbstAuthenticationService {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    public CurrentClientUser asAuthentication(
+    public void asAuthentication(
             UserCreationOption userCreationOption,
             UsernamePasswordCredentials credentials,
             HttpServletRequest httpRequest,
@@ -168,7 +168,5 @@ public class JbstAuthenticationService {
         LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), COMPLETED));
 
         this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
-
-        return this.currentSessionAssistant.getCurrentClientUser();
     }
 }

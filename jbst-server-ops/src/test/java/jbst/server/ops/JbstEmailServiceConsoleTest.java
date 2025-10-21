@@ -2,15 +2,15 @@ package jbst.server.ops;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.RecipientsConfigs;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.properties.configs.UtilsConfigs;
-import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.utils.JbstGeoUtils;
+import jbst.server.ops.properties.configs.RecipientsConfigs;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

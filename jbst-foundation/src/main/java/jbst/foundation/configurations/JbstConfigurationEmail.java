@@ -1,11 +1,10 @@
 package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.JbstEmailService;
-import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.services.emails.JbstEmailServiceDisabled;
+import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -32,8 +31,8 @@ public class JbstConfigurationEmail {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
-        this.jbstProperties.getEmailConfigs().assertProperties(new PropertyId("emailConfigs"));
+        this.jbstProperties.getAsyncConfigs().assertProperties();
+        this.jbstProperties.getEmailConfigs().assertProperties();
     }
 
     @Bean

@@ -5,9 +5,9 @@ import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
@@ -18,10 +18,11 @@ import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.settings.JbstSettingsService;
-import jbst.foundation.tokens.facade.TokensProvider;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.foundation.validators.*;
-import jbst.foundation.websockets.WebsocketsService;
+import jbst.foundation.validators.base.JbstAuthenticationValidator;
+import jbst.foundation.websockets.JbstWebsocketsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +62,6 @@ public class TestConfigurationResources {
     JbstAuthenticationService authenticationService() {
         return new JbstAuthenticationService(
                 this.authenticationManager(),
-                this.currentSessionAssistant(),
                 this.jwtUserDetailsService(),
                 this.sessionRegistry(),
                 this.usersService(),
@@ -175,8 +175,8 @@ public class TestConfigurationResources {
     // Tokens
     // =================================================================================================================
     @Bean
-    TokensProvider tokensProvider() {
-        return mock(TokensProvider.class);
+    JbstTokensProvider tokensProvider() {
+        return mock(JbstTokensProvider.class);
     }
 
     // =================================================================================================================
@@ -204,33 +204,33 @@ public class TestConfigurationResources {
     // Validators
     // =================================================================================================================
     @Bean
-    BaseAuthenticationRequestsValidator authenticationRequestsValidator() {
-        return mock(BaseAuthenticationRequestsValidator.class);
+    JbstAuthenticationValidator authenticationRequestsValidator() {
+        return mock(JbstAuthenticationValidator.class);
     }
 
     @Bean
-    BaseInvitationsRequestsValidator invitationsRequestsValidator() {
-        return mock(BaseInvitationsRequestsValidator.class);
+    JbstInvitationsValidator invitationsRequestsValidator() {
+        return mock(JbstInvitationsValidator.class);
     }
 
     @Bean
-    BaseRegistrationRequestsValidator registrationRequestsValidator() {
-        return mock(BaseRegistrationRequestsValidator.class);
+    JbstRegistrationValidator registrationRequestsValidator() {
+        return mock(JbstRegistrationValidator.class);
     }
 
     @Bean
-    BaseUsersSessionsRequestsValidator sessionsRequestsValidator() {
-        return mock(BaseUsersSessionsRequestsValidator.class);
+    JbstUsersSessionsValidator sessionsRequestsValidator() {
+        return mock(JbstUsersSessionsValidator.class);
     }
 
     @Bean
-    BaseUsersValidator userRequestsValidator() {
-        return mock(BaseUsersValidator.class);
+    JbstUsersValidator userRequestsValidator() {
+        return mock(JbstUsersValidator.class);
     }
 
     @Bean
-    BaseUsersTokensRequestsValidator tokensRequestsValidator() {
-        return mock(BaseUsersTokensRequestsValidator.class);
+    JbstUsersTokensValidator tokensRequestsValidator() {
+        return mock(JbstUsersTokensValidator.class);
     }
 
     // =================================================================================================================
@@ -250,8 +250,8 @@ public class TestConfigurationResources {
     // Websockets
     // =================================================================================================================
     @Bean
-    WebsocketsService websocketsService() {
-        return mock(WebsocketsService.class);
+    JbstWebsocketsService websocketsService() {
+        return mock(JbstWebsocketsService.class);
     }
 
     // =================================================================================================================

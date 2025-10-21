@@ -38,4 +38,9 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return false;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "session-configs";
+    }
 }

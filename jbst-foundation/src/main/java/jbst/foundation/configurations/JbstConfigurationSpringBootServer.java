@@ -3,7 +3,6 @@ package jbst.foundation.configurations;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.resources.system.JbstActuatorResource;
 import jbst.foundation.utils.JbstEnvUtils;
@@ -36,7 +35,7 @@ public class JbstConfigurationSpringBootServer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.jbstProperties.getServerConfigs().assertProperties();
     }
 
     @Bean

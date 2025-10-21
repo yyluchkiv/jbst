@@ -40,6 +40,11 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
         return true;
     }
 
+    @Override
+    public String getPropertyName() {
+        return "server-configs";
+    }
+
     public boolean isSpringdocEnabled() {
         return this.springdocEnabled;
     }

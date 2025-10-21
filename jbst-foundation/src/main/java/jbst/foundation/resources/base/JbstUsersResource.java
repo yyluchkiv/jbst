@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.services.JbstUsersService;
-import jbst.foundation.validators.BaseUsersValidator;
+import jbst.foundation.validators.JbstUsersValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class JbstUsersResource {
     // Services
     private final JbstUsersService usersService;
     // Validators
-    private final BaseUsersValidator baseUsersValidator;
+    private final JbstUsersValidator baseUsersValidator;
 
     @PostMapping("/update1")
     @ResponseStatus(HttpStatus.OK)

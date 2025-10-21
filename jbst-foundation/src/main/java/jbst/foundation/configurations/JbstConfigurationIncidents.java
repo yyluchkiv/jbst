@@ -6,7 +6,6 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.incidents.events.publishers.impl.IncidentPublisherImpl;
@@ -56,9 +55,9 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
-        this.jbstProperties.getEventsConfigs().assertProperties(new PropertyId("eventsConfigs"));
-        this.jbstProperties.getIncidentsManagerConfigs().assertProperties(new PropertyId("incidentsManagerConfigs"));
+        this.jbstProperties.getAsyncConfigs().assertProperties();
+        this.jbstProperties.getEventsConfigs().assertProperties();
+        this.jbstProperties.getIncidentsManagerConfigs().assertProperties();
     }
 
     // ================================================================================================================

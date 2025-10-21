@@ -34,4 +34,9 @@ public class CookiesConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return false;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "cookies-configs";
+    }
 }

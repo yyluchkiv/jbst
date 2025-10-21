@@ -68,6 +68,18 @@ class StringUtilityTest {
         );
     }
 
+    private static Stream<Arguments> toKebabArgs() {
+        return Stream.of(
+                Arguments.of("", ""),
+                Arguments.of("abc", "abc"),
+                Arguments.of("abcDefGht", "abc-def-ght"),
+                Arguments.of("invitation", "invitation"),
+                Arguments.of("invitationRequest", "invitation-request"),
+                Arguments.of("invitationRequestLong", "invitation-request-long"),
+                Arguments.of("invitationRequestLongLongLong", "invitation-request-long-long-long")
+        );
+    }
+
     private static Stream<Arguments> hasLengthTest() {
         return Stream.of(
                 Arguments.of(null, false),
@@ -126,6 +138,16 @@ class StringUtilityTest {
     void convertCamelCaseToSplitTest(String value, String expected) {
         // Act
         var actual = convertCamelCaseToSplit(value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("toKebabArgs")
+    void toKebabTest(String value, String expected) {
+        // Act
+        var actual = toKebab(value);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

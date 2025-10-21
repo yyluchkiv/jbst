@@ -41,4 +41,9 @@ public class UtilsConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return true;
     }
+
+    @Override
+    public String getPropertyName() {
+        return "utils-configs";
+    }
 }

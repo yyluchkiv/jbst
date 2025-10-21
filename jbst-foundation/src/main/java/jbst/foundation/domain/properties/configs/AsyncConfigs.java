@@ -37,6 +37,11 @@ public class AsyncConfigs extends AbstractPropertiesConfigs {
         return true;
     }
 
+    @Override
+    public String getPropertyName() {
+        return "async-configs";
+    }
+
     public TuplePercentage asThreadsCorePoolTuplePercentage() {
         return TuplePercentage.progressTuplePercentage(this.threadsCorePoolPercentage, HUNDRED);
     }

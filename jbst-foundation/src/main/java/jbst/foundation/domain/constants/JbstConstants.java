@@ -14,8 +14,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.diogonunes.jcolor.Attribute.BLACK_TEXT;
-import static com.diogonunes.jcolor.Attribute.BOLD;
+import static com.diogonunes.jcolor.Attribute.*;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 
 @SuppressWarnings("unused")
@@ -54,6 +53,9 @@ public class JbstConstants {
     }
 
     public static class JColor {
+        public static final AnsiFormat RED_TEXT = new AnsiFormat(RED_TEXT());
+        public static final AnsiFormat RED_BOLD_TEXT = new AnsiFormat(RED_TEXT(), BOLD());
+        public static final AnsiFormat BLACK_TEXT = new AnsiFormat(BLACK_TEXT());
         public static final AnsiFormat BLACK_BOLD_TEXT = new AnsiFormat(BLACK_TEXT(), BOLD());
     }
 
