@@ -67,9 +67,9 @@ public abstract class JbstProperty {
                 edge.print();
             } else {
                 if (edge.isChildBranch()) {
-                    edge.getChildAsJbstProperty().printProperties(edge.getChildAsJbstProperty().getParentTreeName());
+                    edge.getChildAsJbstProperty().printProperties(edge.getName());
                 } else if (edge.isChildLeaf()) {
-                    edge.printChildProperty(edge.getChildAsJbstProperty().getParentTreeName());
+                    edge.printChildProperty(edge.getName());
                 } else {
                     edge.print();
                 }
