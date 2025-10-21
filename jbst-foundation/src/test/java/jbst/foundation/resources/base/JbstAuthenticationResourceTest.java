@@ -39,7 +39,7 @@ import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
-import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
+import jbst.foundation.validators.base.JbstAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -94,7 +94,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     // Tokens
     private final JbstTokensProvider tokensProvider;
     // Validators
-    private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
+    private final JbstAuthenticationRequestsValidator authenticationRequestsValidator;
     // Utilities
     private final JbstSecurityUtils securityUtils;
     // Publishers
@@ -118,7 +118,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.tokensProvider,
-                this.baseAuthenticationRequestsValidator,
+                this.authenticationRequestsValidator,
                 this.securityUtils,
                 this.securityJwtPublisher
         );
@@ -138,7 +138,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.tokensProvider,
-                this.baseAuthenticationRequestsValidator,
+                this.authenticationRequestsValidator,
                 this.securityUtils,
                 this.securityJwtPublisher
         );
@@ -148,7 +148,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     void loginStandardTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
-        when(this.baseAuthenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
+        when(this.authenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
                 request.username(),
                 request.password()
         ));
@@ -177,7 +177,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginStandard(request);
+        verify(this.authenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.value(), password.value()));
         verify(this.jwtUserDetailsService).loadUserByUsername(username.value());
         verify(this.securityUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
@@ -199,7 +199,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var magicLinkUserCredentials = new MagicLinkUserCredentials(userToken, request.zoneId());
         var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
         var credentials = new UsernamePasswordCredentials(user.username(), user.password());
-        when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
+        when(this.authenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
         when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
         var accessToken = JwtAccessToken.random();
@@ -223,7 +223,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginMagicLink(request);
+        verify(this.authenticationRequestsValidator).validateLoginMagicLink(request);
         verify(this.usersService).saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
         verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         verify(this.authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
@@ -242,7 +242,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     void authenticateStandardWithInvalidCredentialsTest() throws Exception {
         // Arrange
         var request = RequestUserLogin.hardcoded();
-        when(this.baseAuthenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
+        when(this.authenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
                 request.username(),
                 request.password()
         ));
@@ -269,7 +269,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.timestamp", Matchers.greaterThan(exceptionEntity.getTimestamp())));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginStandard(request);
+        verify(this.authenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(authenticationToken);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(any(EventAuthenticationLoginFailure.class));
     }

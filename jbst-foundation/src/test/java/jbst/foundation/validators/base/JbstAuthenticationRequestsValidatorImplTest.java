@@ -1,4 +1,4 @@
-package jbst.foundation.validators;
+package jbst.foundation.validators.base;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
@@ -7,7 +7,6 @@ import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.validators.base.BaseBaseAuthenticationRequestsValidatorImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseAuthenticationRequestsValidatorImplTest {
+class JbstAuthenticationRequestsValidatorImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -44,8 +43,8 @@ class BaseAuthenticationRequestsValidatorImplTest {
         }
 
         @Bean
-        public BaseAuthenticationRequestsValidator authenticationRequestsValidator() {
-            return new BaseBaseAuthenticationRequestsValidatorImpl(
+        public JbstAuthenticationRequestsValidator authenticationRequestsValidator() {
+            return new JbstAuthenticationRequestsValidator(
                     this.usersTokensRepository()
             );
         }
@@ -98,7 +97,7 @@ class BaseAuthenticationRequestsValidatorImplTest {
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
 
-    private final BaseAuthenticationRequestsValidator componentUnderTest;
+    private final JbstAuthenticationRequestsValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

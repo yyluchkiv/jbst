@@ -7,7 +7,6 @@ import jbst.foundation.domain.enums.UserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +19,17 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.inv
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseBaseAuthenticationRequestsValidatorImpl implements BaseAuthenticationRequestsValidator {
-
+public class JbstAuthenticationRequestsValidator {
     // Repositories
     private final JbstUsersTokensRepository usersTokensRepository;
 
-    @Override
-    public UsernamePasswordCredentials validateLoginStandard(RequestUserLogin request) {
+    public final UsernamePasswordCredentials validateLoginStandard(RequestUserLogin request) {
         assertNonNullOrThrow(request.username(), invalidAttribute("username"));
         assertNonNullOrThrow(request.password(), invalidAttribute("password"));
         return new UsernamePasswordCredentials(request.username(), request.password());
     }
 
-    @Override
-    public MagicLinkUserCredentials validateLoginMagicLink(RequestMagicLinkToken request) throws JbstLoginException {
+    public final MagicLinkUserCredentials validateLoginMagicLink(RequestMagicLinkToken request) throws JbstLoginException {
         var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(request.value());
         if (isNull(userToken) || userToken.isInvalid(UserTokenType.MAGICLINK)) {
             throw new JbstLoginException("Invalid magic link token: %s".formatted(request.value()));

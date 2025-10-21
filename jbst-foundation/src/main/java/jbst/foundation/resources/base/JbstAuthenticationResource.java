@@ -15,7 +15,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.services.base.JbstAuthenticationService;
-import jbst.foundation.validators.BaseAuthenticationRequestsValidator;
+import jbst.foundation.validators.base.JbstAuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class JbstAuthenticationResource {
     private final JbstAuthenticationService authenticationService;
     private final JbstExtensionService extensionService;
     // Validators
-    private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
+    private final JbstAuthenticationRequestsValidator authenticationRequestsValidator;
 
     @PostMapping("/login/standard")
     @ResponseStatus(HttpStatus.OK)
@@ -45,7 +45,7 @@ public class JbstAuthenticationResource {
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws JbstLoginException {
-        var credentials = this.baseAuthenticationRequestsValidator.validateLoginStandard(request);
+        var credentials = this.authenticationRequestsValidator.validateLoginStandard(request);
         var username = this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
         this.extensionService.authenticateAsStandard(username, httpRequest, httpResponse);
         return this.currentSessionAssistant.getCurrentClientUser();
@@ -59,7 +59,7 @@ public class JbstAuthenticationResource {
             HttpServletResponse httpResponse
     ) throws JbstLoginException {
         request = request.createReworkedUkraineZoneId();
-        var credentials = this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request);
+        var credentials = this.authenticationRequestsValidator.validateLoginMagicLink(request);
         var username = this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
         this.extensionService.authenticateAsMagicLink(username, httpRequest, httpResponse);
         return this.currentSessionAssistant.getCurrentClientUser();
