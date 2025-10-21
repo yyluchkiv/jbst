@@ -8,4 +8,9 @@ public abstract class AbstractJbstProperty {
     public abstract boolean isToggle();
     @JbstNonMandatoryMethod
     public abstract String getNameNonMandatory();
+
+    // TODO [YYL] fixme?
+    public void assertProperties() {
+
+    }
 }
