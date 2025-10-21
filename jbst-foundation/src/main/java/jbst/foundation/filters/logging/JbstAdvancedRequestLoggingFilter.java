@@ -22,7 +22,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.isMultipa
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
+public class JbstAdvancedRequestLoggingFilter extends OncePerRequestFilter {
 
     // Utils
     private final JbstHttpUtils httpUtils;

@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AdvancedRequestLoggingFilterTest {
+class JbstAdvancedRequestLoggingFilterTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -51,8 +51,8 @@ class AdvancedRequestLoggingFilterTest {
         }
 
         @Bean
-        AdvancedRequestLoggingFilter advancedRequestLoggingFilter() {
-            return new AdvancedRequestLoggingFilter(
+        JbstAdvancedRequestLoggingFilter advancedRequestLoggingFilter() {
+            return new JbstAdvancedRequestLoggingFilter(
                     this.httpUtils(),
                     this.securityUtils(),
                     this.jbstProperties()
@@ -64,7 +64,7 @@ class AdvancedRequestLoggingFilterTest {
     private final JbstSecurityUtils securityUtils;
     private final JbstProperties jbstProperties;
 
-    private final AdvancedRequestLoggingFilter componentUnderTest;
+    private final JbstAdvancedRequestLoggingFilter componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
