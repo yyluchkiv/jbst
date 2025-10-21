@@ -21,20 +21,22 @@ public abstract class JbstProperty {
         var fields = this.isToggle() ?
                 getMandatoryToggleFields(this, this.getNameNonMandatory()) :
                 getMandatoryFields(this, this.getNameNonMandatory());
+        var currentParentTreeName = this.getParentTreeName();
         fields.forEach(field -> {
-
-            var edge = new JbstPropertyEdge(this.getParentTreeName(),this, field);
+            var edge = new JbstPropertyEdge(currentParentTreeName,this, field);
             assertNonNullOrThrow(edge);
             if (edge.isChildBranch()) {
-                edge.getChildAsJbstProperty().assertProperties();
+                var property = edge.getChildAsJbstProperty();
+                property.assertProperties();
             } else if (edge.isChildLeaf()) {
-                edge.getChildAsJbstProperty().assertPropertiesAsLeaf(this.getParentTreeName());
+                var property = edge.getChildAsJbstProperty();
+                property.assertPropertiesAsLeaf(currentParentTreeName + "." + toKebab(field.getName()));
             } else {
                 edge.assertOrThrow();
             }
         });
         if (this.isRoot()) {
-            this.printProperties(this.getParentTreeName());
+            this.printProperties(currentParentTreeName);
         }
     }
 

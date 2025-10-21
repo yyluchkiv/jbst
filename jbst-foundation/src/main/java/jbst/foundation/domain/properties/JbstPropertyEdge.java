@@ -133,6 +133,6 @@ public class JbstPropertyEdge {
     }
 
     public void print() {
-        LOGGER.warn("{} — {}: {}", PREFIX, this.name, BLACK_BOLD_TEXT.format(this.readable));
+        LOGGER.debug("{} — {}: {}", PREFIX, this.name, BLACK_BOLD_TEXT.format(this.readable));
     }
 }
