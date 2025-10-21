@@ -1,5 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +17,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreate
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TimeAmount extends AbstractPropertyConfigs {
+public class TimeAmount extends AbstractProperty {
     @MandatoryProperty
     private final long amount;
     @MandatoryProperty
@@ -29,15 +31,35 @@ public class TimeAmount extends AbstractPropertyConfigs {
         return new TimeAmount(randomIntegerGreaterThanZeroByBounds(1, 10), randomChronoUnit());
     }
 
-    public jbst.foundation.domain.time.TimeAmount getTimeAmount() {
-        return new jbst.foundation.domain.time.TimeAmount(
-                this.amount,
-                this.unit
-        );
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     @Override
     public String toString() {
         return this.amount + " " + this.unit;
+    }
+
+    public jbst.foundation.domain.time.TimeAmount getTimeAmount() {
+        return new jbst.foundation.domain.time.TimeAmount(
+                this.amount,
+                this.unit
+        );
     }
 }

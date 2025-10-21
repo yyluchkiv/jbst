@@ -1,5 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
@@ -10,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SpringServer extends AbstractPropertyConfigs {
+public class SpringServer extends AbstractProperty {
     @MandatoryProperty
     private final Integer port;
 
@@ -20,5 +22,25 @@ public class SpringServer extends AbstractPropertyConfigs {
 
     public static SpringServer random() {
         return new SpringServer(RandomUtility.randomIntegerGreaterThanZeroByBounds(8000, 8100));
+    }
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 }

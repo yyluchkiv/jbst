@@ -1,7 +1,8 @@
 package jbst.server.ops.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
+public class ServersMonitoringConfigs extends AbstractProperty {
     @MandatoryProperty
     private final ZoneId zoneId;
     @MandatoryProperty
@@ -28,8 +29,24 @@ public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final BigDecimal fileSystemThreshold;
 
-    public boolean isHideIP() {
-        return this.hideIP;
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     @Override
@@ -39,6 +56,10 @@ public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
                 is(this.fileSystemThreshold, ">", this.fileSystemFilter),
                 "Property 'file-system-threshold is expected to be greater than file-system-filter"
         );
+    }
+
+    public boolean isHideIP() {
+        return this.hideIP;
     }
 
     public boolean isFileSystemProcessable(ServerFileSystemMetadata.FileSystemMetadataRow row) {

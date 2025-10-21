@@ -1,8 +1,9 @@
 package jbst.server.ops.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.server.ops.domain.servers.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ import static java.lang.Boolean.TRUE;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlackConfigs extends AbstractPropertyConfigs {
+public class SlackConfigs extends AbstractProperty {
     @MandatoryProperty
     private final Team team;
     @MandatoryProperty
@@ -34,6 +35,26 @@ public class SlackConfigs extends AbstractPropertyConfigs {
     private final String mainCommunicationId;
     @NonMandatoryProperty
     private final List<SlackTeamCommunication> teamsCommunications;
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
+    }
 
     public boolean isMain() {
         return TRUE.equals(this.main);

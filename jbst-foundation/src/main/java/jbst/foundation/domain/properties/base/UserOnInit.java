@@ -3,6 +3,8 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -24,7 +26,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserOnInit extends AbstractPropertyConfigs {
+public class UserOnInit extends AbstractProperty {
     @MandatoryProperty
     private final Username username;
     @MandatoryProperty
@@ -58,6 +60,26 @@ public class UserOnInit extends AbstractPropertyConfigs {
                 randomBoolean(),
                 randomStringsAsSet(3)
         );
+    }
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     public Email getEmailOrNull() {

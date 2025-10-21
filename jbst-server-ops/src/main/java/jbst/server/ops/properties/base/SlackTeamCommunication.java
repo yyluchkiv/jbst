@@ -1,7 +1,8 @@
 package jbst.server.ops.properties.base;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.server.ops.domain.servers.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlackTeamCommunication extends AbstractPropertyConfigs {
+public class SlackTeamCommunication extends AbstractProperty {
     @MandatoryProperty
     private final Team team;
     @MandatoryProperty
@@ -23,6 +24,26 @@ public class SlackTeamCommunication extends AbstractPropertyConfigs {
     public enum Mode {
         DISABLED,
         OPERATIONAL
+    }
+
+    @Override
+    public boolean isParent() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
+        return JbstConstants.Symbols.DASH;
     }
 
     public boolean isOperationalMode() {
