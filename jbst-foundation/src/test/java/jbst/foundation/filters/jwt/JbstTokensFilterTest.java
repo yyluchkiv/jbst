@@ -9,6 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -59,6 +60,11 @@ class JbstTokensFilterTest {
         }
 
         @Bean
+        JbstExtensionService extensionService() {
+            return mock(JbstExtensionService.class);
+        }
+
+        @Bean
         JbstTokensService tokenService() {
             return mock(JbstTokensService.class);
         }
@@ -69,12 +75,7 @@ class JbstTokensFilterTest {
         }
 
         @Bean
-        JbstTokensFilterExtension jwtTokenFilterExtension() {
-            return mock(JbstTokensFilterExtension.class);
-        }
-
-        @Bean
-        JbstAccessDeniedHandler jwtAccessDeniedExceptionHandler() {
+        JbstAccessDeniedHandler accessDeniedHandler() {
             return mock(JbstAccessDeniedHandler.class);
         }
 
@@ -82,22 +83,22 @@ class JbstTokensFilterTest {
         JbstTokensFilter jwtAccessTokenFilter() {
             return new JbstTokensFilter(
                     this.sessionRegistry(),
+                    this.extensionService(),
                     this.tokenService(),
                     this.tokensProvider(),
-                    this.jwtTokenFilterExtension(),
-                    this.jwtAccessDeniedExceptionHandler()
+                    this.accessDeniedHandler()
             );
         }
     }
 
     // Session
     private final JbstSessionRegistry sessionRegistry;
+    // Extension
+    private final JbstExtensionService extensionService;
     // Services
     private final JbstTokensService tokensService;
     // Tokens
     private final JbstTokensProvider tokensProvider;
-    // Extension
-    private final JbstTokensFilterExtension tokensFilterExtension;
     // Handlers
     private final JbstAccessDeniedHandler accessDeniedHandler;
 
@@ -107,9 +108,9 @@ class JbstTokensFilterTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
+                this.extensionService,
                 this.tokensService,
                 this.tokensProvider,
-                this.tokensFilterExtension,
                 this.accessDeniedHandler
         );
     }
@@ -118,9 +119,9 @@ class JbstTokensFilterTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
+                this.extensionService,
                 this.tokensService,
                 this.tokensProvider,
-                this.tokensFilterExtension,
                 this.accessDeniedHandler
         );
     }
@@ -249,7 +250,7 @@ class JbstTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(this.tokensFilterExtension).doFilter(request);
+        verify(this.extensionService).doFilter(request);
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
                 request,
@@ -270,7 +271,7 @@ class JbstTokensFilterTest {
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
-        doThrow(new JbstTokenExtensionUnauthorizedException(randomString())).when(this.tokensFilterExtension).doFilter(request);
+        doThrow(new JbstTokenExtensionUnauthorizedException(randomString())).when(this.extensionService).doFilter(request);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -281,7 +282,7 @@ class JbstTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(this.tokensFilterExtension).doFilter(request);
+        verify(this.extensionService).doFilter(request);
         verify(this.tokensProvider).clearTokens(response);
         verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
         verifyNoMoreInteractions(
@@ -304,7 +305,7 @@ class JbstTokensFilterTest {
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
         var exception = new JbstTokenExtensionAccessDeniedException(randomString());
-        doThrow(exception).when(this.tokensFilterExtension).doFilter(request);
+        doThrow(exception).when(this.extensionService).doFilter(request);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -315,7 +316,7 @@ class JbstTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(this.tokensFilterExtension).doFilter(request);
+        verify(this.extensionService).doFilter(request);
         verify(this.tokensProvider).clearTokens(response);
         var exceptionAC = ArgumentCaptor.forClass(AccessDeniedException.class);
         verify(this.accessDeniedHandler).handle(eq(request), eq(response), exceptionAC.capture());

@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "jbst.foundation.assistants.current.base",
-        "jbst.foundation.filters.jwt_extension",
         "jbst.foundation.tasks"
         // -------------------------------------------------------------------------------------------------------------
 })

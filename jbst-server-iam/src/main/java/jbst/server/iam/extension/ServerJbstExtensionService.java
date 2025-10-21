@@ -6,12 +6,18 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.extension.JbstExtensionService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ServerJbstExtensionService implements JbstExtensionService {
+
+    @Override
+    public void doFilter(@NotNull HttpServletRequest request) {
+        // no required actions
+    }
 
     @Override
     public void authenticateAsStandard(Username username, HttpServletRequest request, HttpServletResponse response) {
