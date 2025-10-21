@@ -52,8 +52,8 @@ public class IncidentsConfigs extends AbstractPropertyConfigs {
     }
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
-        super.assertProperties(propertyId);
+    public void assertProperties(String propertyName) {
+        super.assertProperties(propertyName);
 
         var loginFailureUsernamePassword = this.typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD);
         var loginFailureUsernameMaskedPassword = this.typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD);

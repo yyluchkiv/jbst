@@ -2,7 +2,6 @@ package jbst.server.ops.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.*;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.config.ConnectionConfig;
@@ -46,10 +45,10 @@ public class ConfigurationBeans {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertProperties(new PropertyId("server-configs"));
+        this.serverProperties.getServerConfigs().assertProperties("server-configs");
         this.serverProperties.getServersConfigs().assertProperties();
         this.serverProperties.getSlacksConfigs().assertProperties();
-        this.serverProperties.getRecipientsConfigs().assertProperties(new PropertyId("recipients-configs"));
+        this.serverProperties.getRecipientsConfigs().assertProperties("recipients-configs");
     }
 
     @SuppressWarnings("deprecation")

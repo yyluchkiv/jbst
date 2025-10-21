@@ -1,6 +1,5 @@
 package jbst.foundation.domain.asserts;
 
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.reflections.JbstProperty;
 import lombok.experimental.UtilityClass;
 
@@ -8,6 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
@@ -16,8 +16,8 @@ public class ConsoleAsserts {
     public static void assertNonNullOrThrow(Object object, String propertyName) {
         if (isNull(object)) {
             throw new IllegalArgumentException(
-                    "Property '%s' is null".formatted(
-                            JbstConstants.JColor.RED_TEXT.format(propertyName)
+                    "Property %s is null".formatted(
+                            RED_TEXT.format(propertyName)
                     )
             );
         }
@@ -26,21 +26,16 @@ public class ConsoleAsserts {
     public static void assertNonEmptyOrThrow(Collection<?> collection, String propertyName) {
         if (collection.isEmpty()) {
             throw new IllegalArgumentException(
-                    "Property '%s' is empty".formatted(
-                            JbstConstants.JColor.RED_TEXT.format(propertyName)
+                    "Property %s is empty".formatted(
+                            RED_TEXT.format(propertyName)
                     )
             );
         }
     }
 
-    public static void assertNonNullNotEmptyOrThrow(Collection<?> collection, String propertyName) {
-        assertNonNullOrThrow(collection, propertyName);
-        assertNonEmptyOrThrow(collection, propertyName);
-    }
-
     public static void assertNonNullPropertyOrThrow(JbstProperty jbstProperty) {
         if (isNull(jbstProperty)) {
-            throw new IllegalArgumentException(JbstConstants.JColor.RED_TEXT.format("Unknown reflection property"));
+            throw new IllegalArgumentException(RED_TEXT.format("Unknown reflection property"));
         }
         assertNonNullOrThrow(jbstProperty.getPropertyValue(), jbstProperty.getTreePropertyName());
     }
@@ -53,7 +48,7 @@ public class ConsoleAsserts {
                             propertyName,
                             baseJoiningRaw(options),
                             baseJoiningRaw(required),
-                            JbstConstants.JColor.RED_TEXT.format(baseJoiningRaw(disjunction(new HashSet<>(options), new HashSet<>(required))))
+                            RED_TEXT.format(baseJoiningRaw(disjunction(new HashSet<>(options), new HashSet<>(required))))
                     )
             );
         }
@@ -67,7 +62,7 @@ public class ConsoleAsserts {
                             propertyName,
                             baseJoiningRaw(options),
                             baseJoiningRaw(required),
-                            JbstConstants.JColor.RED_TEXT.format(baseJoiningRaw(disjunction(new HashSet<>(options), new HashSet<>(required))))
+                            RED_TEXT.format(baseJoiningRaw(disjunction(new HashSet<>(options), new HashSet<>(required))))
                     )
             );
         }

@@ -52,7 +52,11 @@ public class PropertiesAsserter {
         ACTIONS.put(BigInteger.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(BigDecimal.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(String.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Collection.class::isAssignableFrom, property -> ConsoleAsserts.assertNonNullNotEmptyOrThrow((Collection<?>) property.getPropertyValue(), property.getPropertyName()));
+        ACTIONS.put(Collection.class::isAssignableFrom, property -> {
+            var collection = (Collection<?>) property.getPropertyValue();
+            ConsoleAsserts.assertNonNullOrThrow(collection, property.getPropertyName());
+            ConsoleAsserts.assertNonEmptyOrThrow(collection, property.getPropertyName());
+        });
     }
 
     // =================================================================================================================
