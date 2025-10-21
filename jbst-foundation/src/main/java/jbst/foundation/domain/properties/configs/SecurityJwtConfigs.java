@@ -136,8 +136,8 @@ public class SecurityJwtConfigs extends JbstProperty {
     }
 
     @Override
-    public void assertProperty() {
-        super.assertProperty();
+    public void assertProperties() {
+        super.assertProperties();
 
         // Requirements: availableAuthorities vs. configuredAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();

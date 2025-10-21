@@ -1,6 +1,6 @@
 package jbst.foundation.domain.asserts;
 
-import jbst.foundation.domain.reflections.JbstPropertyEdge;
+import jbst.foundation.domain.properties.JbstPropertyEdge;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;

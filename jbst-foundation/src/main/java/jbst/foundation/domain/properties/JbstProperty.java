@@ -1,13 +1,11 @@
 package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.annotations.JbstNonMandatoryMethod;
-import jbst.foundation.domain.reflections.JbstPropertyEdge;
 
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
-import static jbst.foundation.domain.reflections.JbstPropertiesUtility.*;
+import static jbst.foundation.domain.properties.JbstPropertiesUtility.*;
 
-// TODO [YYL] merge AbstractPropertyConfigs + AbstractPropertiesConfigs: [parent, leaf, name]?
 public abstract class JbstProperty {
     public abstract boolean isRoot();
     public abstract boolean isLeaf();
@@ -15,8 +13,7 @@ public abstract class JbstProperty {
     @JbstNonMandatoryMethod
     public abstract String getNameNonMandatory();
 
-    // TODO [YYL] fixme?
-    public void assertProperty() {
+    public void assertProperties() {
         if (this.isLeaf()) {
             return;
         }
@@ -27,9 +24,9 @@ public abstract class JbstProperty {
             var edge = new JbstPropertyEdge(this, field);
             assertNonNullOrThrow(edge);
             if (edge.isChildBranch()) {
-                edge.getChildAsJbstProperty().assertProperty();
+                edge.getChildAsJbstProperty().assertProperties();
             } else if (edge.isChildLeaf()) {
-                edge.getChildAsJbstProperty().assertPropertyLeaf();
+                edge.getChildAsJbstProperty().assertPropertiesAsLeaf();
             } else {
                 edge.assertOrThrow();
             }
@@ -39,7 +36,30 @@ public abstract class JbstProperty {
         }
     }
 
-    private void assertPropertyLeaf() {
+    public void printProperties() {
+        if (!this.isRoot()) {
+            return;
+        }
+        getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
+            var edge = new JbstPropertyEdge(this, field);
+            if (isNull(edge.getValueRAW())) {
+                edge.print();
+            } else {
+                if (edge.isChildBranch()) {
+                    edge.getChildAsJbstProperty().printProperties();
+                } else if (edge.isChildLeaf()) {
+                    edge.printChildProperty();
+                } else {
+                    edge.print();
+                }
+            }
+        });
+    }
+
+    // =================================================================================================================
+    // PROTECTED METHODS
+    // =================================================================================================================
+    protected void assertPropertiesAsLeaf() {
         if (!this.isLeaf()) {
             return;
         }
@@ -50,34 +70,6 @@ public abstract class JbstProperty {
             var edge = new JbstPropertyEdge(this, field);
             assertNonNullOrThrow(edge);
             edge.assertOrThrow();
-        });
-    }
-
-    private void printProperties() {
-        if (!this.isRoot()) {
-            return;
-        }
-        getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
-            var edge = new JbstPropertyEdge(this, field);
-            if (isNull(edge.getValueRAW())) {
-                edge.print();
-            } else {
-                if (edge.isChildBranch()) {
-                    // edge.getChildAsJbstProperty().assertProperty();
-                } else if (edge.isChildLeaf()) {
-                    edge.printAbstractPropertyConfigs();
-                } else {
-                    edge.print();
-                }
-//                    var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();
-//                    if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-//                        ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).printProperties();
-//                    } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-//                        jbstProperty.printAbstractPropertyConfigs();
-//                    } */ else {
-//                        jbstProperty.print();
-//                    }
-            }
         });
     }
 }

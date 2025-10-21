@@ -55,9 +55,9 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertProperty();
-        this.jbstProperties.getEventsConfigs().assertProperty();
-        this.jbstProperties.getIncidentsManagerConfigs().assertProperty();
+        this.jbstProperties.getAsyncConfigs().assertProperties();
+        this.jbstProperties.getEventsConfigs().assertProperties();
+        this.jbstProperties.getIncidentsManagerConfigs().assertProperties();
     }
 
     // ================================================================================================================

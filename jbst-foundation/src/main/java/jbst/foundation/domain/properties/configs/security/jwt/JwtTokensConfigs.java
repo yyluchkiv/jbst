@@ -14,7 +14,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
-import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -73,24 +72,18 @@ public class JwtTokensConfigs extends JbstProperty {
     }
 
     @Override
-    public void assertProperty() {
-        super.assertProperty();
+    public void assertProperties() {
+        super.assertProperties();
         if (this.storageMethod.isCookies()) {
             assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
-                    "Please make sure %s.access-token.cookie-key and %s.refresh-token.cookie-key are different".formatted(
-                            RED_TEXT.format(this.getPropertyName()),
-                            RED_TEXT.format(this.getPropertyName())
-                    )
+                    "Please make sure access-token.cookie-key and refresh-token.cookie-key are different"
             );
         }
         if (this.storageMethod.isHeaders()) {
             assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
-                    "Please make sure %s.access-token.header-key and %s.refresh-token.header-key are different".formatted(
-                            RED_TEXT.format(this.getPropertyName()),
-                            RED_TEXT.format(this.getPropertyName())
-                    )
+                    "Please make sure access-token.header-key and refresh-token.header-key are different"
             );
         }
         LOGGER.info(

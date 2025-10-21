@@ -1,7 +1,6 @@
-package jbst.foundation.domain.reflections;
+package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
@@ -14,9 +13,8 @@ import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -24,7 +22,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
-import static jbst.foundation.domain.reflections.JbstPropertiesUtility.getMandatoryBasedFields;
+import static jbst.foundation.domain.properties.JbstPropertiesUtility.getMandatoryBasedFields;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
@@ -84,11 +82,11 @@ public class JbstPropertyEdge {
     }
 
     public boolean isChildLeaf() {
-        return true;
+        return this.valueRAW instanceof JbstProperty property && property.isLeaf();
     }
 
     public boolean isChildBranch() {
-        return true;
+        return this.valueRAW instanceof JbstProperty property && !property.isRoot() && !property.isLeaf();
     }
 
     public JbstProperty getChildAsJbstProperty() {
@@ -120,32 +118,24 @@ public class JbstPropertyEdge {
                 .ifPresent(consumer -> consumer.accept(this));
     }
 
-    public void printAbstractPropertyConfigs() {
+    public void printChildProperty() {
         if (!this.isChildLeaf()) {
             return;
         }
-        // TODO [YYL] fix assert
-        var fields = getMandatoryBasedFields(this, this.name);
-        var jbstProperties = getProperties(this.getChildAsJbstProperty(), this.name, fields);
-//        jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
-//        jbstProperties.forEach(JbstProperty::print);
-    }
-
-    public static List<JbstPropertyEdge> getProperties(JbstProperty property, String propertyName, List<Field> fields) {
-        return fields.stream()
+        getMandatoryBasedFields(this.getChildAsJbstProperty(), this.name).stream()
                 .map(field -> {
                     try {
-//                        return new JbstProperty(propertyName, field, field.get(property));
-                        return new JbstPropertyEdge(property, field, field.get(property));
-                    } catch (IllegalAccessException | RuntimeException ex) {
-//                        return new JbstProperty(propertyName, field, null);
-                        return new JbstPropertyEdge(property, field, null);
+                        return new JbstPropertyEdge(this.getChildAsJbstProperty(), field);
+                    } catch (RuntimeException ex) {
+                        return null;
                     }
                 })
-                .collect(Collectors.toList());
+                .filter(Objects::nonNull)
+                .sorted(JbstPropertyEdge.PRINTER_COMPARATOR)
+                .forEach(JbstPropertyEdge::print);
     }
 
     public void print() {
-        LOGGER.debug("{} — {}: {}", PREFIX, this.name, BLACK_BOLD_TEXT.format(this.readable));
+        LOGGER.warn("{} — {}: {}", PREFIX, this.name, BLACK_BOLD_TEXT.format(this.readable));
     }
 }

@@ -1,4 +1,4 @@
-package jbst.foundation.domain.reflections;
+package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
