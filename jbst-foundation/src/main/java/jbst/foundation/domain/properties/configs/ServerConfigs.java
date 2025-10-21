@@ -18,7 +18,7 @@ public class ServerConfigs extends AbstractProperty {
     @MandatoryProperty
     private final ServerName name;
     @MandatoryProperty
-    private MavenConfigs mavenConfigs;
+    private final MavenConfigs mavenConfigs;
     @MandatoryProperty
     private final Boolean springdocEnabled;
     @NonMandatoryProperty

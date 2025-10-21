@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.configs;
 
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.server.ops.domain.servers.Team;
 import jbst.server.ops.properties.base.SlackConfigs;
 import lombok.AllArgsConstructor;
@@ -17,17 +17,27 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlacksConfigs extends AbstractPropertiesConfigs {
+public class SlacksConfigs extends AbstractProperty {
     @MandatoryProperty
     private final List<SlackConfigs> values;
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isParent() {
         return true;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "slack-configs";
     }
 

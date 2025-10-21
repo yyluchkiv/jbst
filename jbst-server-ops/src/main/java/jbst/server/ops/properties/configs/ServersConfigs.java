@@ -1,8 +1,8 @@
 package jbst.server.ops.properties.configs;
 
+import jbst.foundation.domain.properties.annotations.AbstractProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.server.ops.properties.base.GithubConfigs;
 import jbst.server.ops.properties.base.ServersMonitoringConfigs;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServersConfigs extends AbstractPropertiesConfigs {
+public class ServersConfigs extends AbstractProperty {
     @MandatoryProperty
     private final Mode mode;
     @MandatoryProperty
@@ -25,12 +25,22 @@ public class ServersConfigs extends AbstractPropertiesConfigs {
     private final GithubConfigs githubConfigs;
 
     @Override
-    public boolean isParentPropertiesNode() {
+    public boolean isParent() {
         return true;
     }
 
     @Override
-    public String getPropertyName() {
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return false;
+    }
+
+    @Override
+    public String getNameNonMandatory() {
         return "servers-configs";
     }
 
