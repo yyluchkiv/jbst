@@ -29,7 +29,7 @@ public class NotUsedPropertiesConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("not-used-properties-configs");
     }
 }

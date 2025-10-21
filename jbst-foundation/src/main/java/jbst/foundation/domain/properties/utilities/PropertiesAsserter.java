@@ -59,21 +59,21 @@ public class PropertiesAsserter {
     // Assertions
     // =================================================================================================================
 
-    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId) {
-        ConsoleAsserts.assertNonNullOrThrow(propertiesConfigs, propertyId);
+    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs) {
+        ConsoleAsserts.assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         assertPropertiesConfigs(
                 propertiesConfigs,
-                propertyId,
-                getMandatoryFields(propertiesConfigs, propertyId)
+                propertiesConfigs.getPropertyName(),
+                getMandatoryFields(propertiesConfigs, propertiesConfigs.getPropertyName())
         );
     }
 
-    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId) {
-        ConsoleAsserts.assertNonNullOrThrow(propertiesConfigs, propertyId);
+    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs) {
+        ConsoleAsserts.assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         assertPropertiesConfigs(
                 propertiesConfigs,
-                propertyId,
-                getMandatoryToggleFields(propertiesConfigs, propertyId)
+                propertiesConfigs.getPropertyName(),
+                getMandatoryToggleFields(propertiesConfigs, propertiesConfigs.getPropertyName())
         );
     }
 

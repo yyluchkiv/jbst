@@ -10,19 +10,19 @@ import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.get
 
 public abstract class AbstractPropertiesConfigs {
     public abstract boolean isParentPropertiesNode();
-    public abstract PropertyId getPropertyId();
+    public abstract PropertyId getPropertyName();
 
     public void assertProperties() {
-        assertMandatoryPropertiesConfigs(this, this.getPropertyId());
+        assertMandatoryPropertiesConfigs(this);
         if (this.isParentPropertiesNode()) {
             this.printProperties();
         }
     }
 
     public void printProperties() {
-        getMandatoryBasedFields(this, this.getPropertyId()).forEach(field -> {
+        getMandatoryBasedFields(this, this.getPropertyName()).forEach(field -> {
             try {
-                var rf = new ReflectionProperty(this.getPropertyId(), field, field.get(this));
+                var rf = new ReflectionProperty(this.getPropertyName(), field, field.get(this));
                 if (isNull(rf.getPropertyValue())) {
                     rf.print();
                 } else {

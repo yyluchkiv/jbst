@@ -31,7 +31,7 @@ public class MavenConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("maven-configs");
     }
 

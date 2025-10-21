@@ -59,7 +59,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("jwt-tokens-configs");
     }
 
@@ -70,8 +70,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             Asserts.assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
                     "Please make sure \"%s.accessToken.cookieKey\" and \"%s.refreshToken.cookieKey\" are different".formatted(
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyId().value()),
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyId().value())
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value()),
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value())
                     )
             );
         }
@@ -79,8 +79,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             Asserts.assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
                     "Please make sure \"%s.accessToken.headerKey\" and \"%s.refreshToken.headerKey\" are different".formatted(
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyId().value()),
-                            ConsoleAsserts.RED_TEXT.format(this.getPropertyId().value())
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value()),
+                            ConsoleAsserts.RED_TEXT.format(this.getPropertyName().value())
                     )
             );
         }

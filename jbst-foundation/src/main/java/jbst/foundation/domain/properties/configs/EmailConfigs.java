@@ -58,7 +58,7 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("email-configs");
     }
 }

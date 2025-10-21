@@ -53,7 +53,7 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("users-emails-configs");
     }
 

@@ -46,7 +46,7 @@ public class IncidentsManagerConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("incidents-manager-configs");
     }
 }

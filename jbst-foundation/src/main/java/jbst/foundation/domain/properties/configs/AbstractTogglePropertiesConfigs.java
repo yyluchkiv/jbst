@@ -8,9 +8,9 @@ public abstract class AbstractTogglePropertiesConfigs extends AbstractProperties
     @Override
     public void assertProperties() {
         if (this.isEnabled()) {
-            PropertiesAsserter.assertMandatoryTogglePropertiesConfigs(this, this.getPropertyId());
+            PropertiesAsserter.assertMandatoryTogglePropertiesConfigs(this);
         } else {
-            PropertiesAsserter.assertMandatoryPropertiesConfigs(this, this.getPropertyId());
+            PropertiesAsserter.assertMandatoryPropertiesConfigs(this);
         }
         if (this.isParentPropertiesNode()) {
             this.printProperties();

@@ -56,7 +56,7 @@ public class WebsocketsConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("websockets-configs");
     }
 }

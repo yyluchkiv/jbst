@@ -44,7 +44,7 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("users-tokens-configs");
     }
 }

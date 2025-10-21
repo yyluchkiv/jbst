@@ -39,7 +39,7 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public PropertyId getPropertyId() {
+    public PropertyId getPropertyName() {
         return new PropertyId("events-configs");
     }
 
