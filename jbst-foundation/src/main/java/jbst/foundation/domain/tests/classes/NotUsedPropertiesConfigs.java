@@ -23,7 +23,7 @@ public class NotUsedPropertiesConfigs extends AbstractJbstProperty {
     private final SpringLogging springLogging;
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return true;
     }
 

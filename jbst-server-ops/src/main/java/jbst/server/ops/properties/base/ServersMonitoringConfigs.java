@@ -30,7 +30,7 @@ public class ServersMonitoringConfigs extends AbstractJbstProperty {
     private final BigDecimal fileSystemThreshold;
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return false;
     }
 

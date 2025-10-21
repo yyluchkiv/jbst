@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.reflections.ReflectionUtility.getFields;
 
 // TODO [YYL] merge AbstractPropertyConfigs + AbstractPropertiesConfigs: [parent, leaf, name]?
 public abstract class AbstractJbstProperty {
-    public abstract boolean isParent();
+    public abstract boolean isRoot();
     public abstract boolean isLeaf();
     public abstract boolean isToggle();
     @JbstNonMandatoryMethod
@@ -55,7 +55,7 @@ public abstract class AbstractJbstProperty {
 //                    jbstProperty.assertOrThrow();
 //                }
         });
-        if (this.isParent()) {
+        if (this.isRoot()) {
             this.printProperties();
         }
     }
@@ -74,7 +74,7 @@ public abstract class AbstractJbstProperty {
     }
 
     private void printProperties() {
-        if (!this.isParent()) {
+        if (!this.isRoot()) {
             return;
         }
         getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {

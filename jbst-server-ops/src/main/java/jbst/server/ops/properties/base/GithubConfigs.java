@@ -23,7 +23,7 @@ public class GithubConfigs extends AbstractJbstProperty {
     private final String content;
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return false;
     }
 

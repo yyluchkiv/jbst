@@ -21,7 +21,7 @@ public class ServerConfigs extends AbstractJbstProperty {
     private final UserAuthority targetAuthority;
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return true;
     }
 

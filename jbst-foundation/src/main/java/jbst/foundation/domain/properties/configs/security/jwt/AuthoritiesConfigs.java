@@ -48,7 +48,7 @@ public class AuthoritiesConfigs extends AbstractJbstProperty {
     }
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return false;
     }
 

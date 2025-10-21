@@ -39,7 +39,7 @@ public class UtilsConfigs extends AbstractJbstProperty {
     }
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return true;
     }
 

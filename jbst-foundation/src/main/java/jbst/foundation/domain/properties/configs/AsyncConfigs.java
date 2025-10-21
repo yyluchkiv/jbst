@@ -34,7 +34,7 @@ public class AsyncConfigs extends AbstractJbstProperty {
     }
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return true;
     }
 

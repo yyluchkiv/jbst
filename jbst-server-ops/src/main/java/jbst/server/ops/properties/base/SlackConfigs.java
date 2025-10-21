@@ -37,7 +37,7 @@ public class SlackConfigs extends AbstractJbstProperty {
     private final List<SlackTeamCommunication> teamsCommunications;
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return false;
     }
 

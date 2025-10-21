@@ -32,7 +32,7 @@ public class WebsocketsFeaturesConfigs extends AbstractJbstProperty {
     }
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return false;
     }
 

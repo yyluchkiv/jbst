@@ -25,7 +25,7 @@ public class ServersConfigs extends AbstractJbstProperty {
     private final GithubConfigs githubConfigs;
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return true;
     }
 

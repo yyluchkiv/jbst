@@ -32,7 +32,7 @@ public class TimeAmount extends AbstractJbstProperty {
     }
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return false;
     }
 

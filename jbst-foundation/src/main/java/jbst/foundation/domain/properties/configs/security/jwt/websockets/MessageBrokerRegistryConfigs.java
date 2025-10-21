@@ -33,7 +33,7 @@ public class MessageBrokerRegistryConfigs extends AbstractJbstProperty {
     }
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return false;
     }
 

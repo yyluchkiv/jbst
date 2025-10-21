@@ -22,7 +22,7 @@ public class SlacksConfigs extends AbstractJbstProperty {
     private final List<SlackConfigs> values;
 
     @Override
-    public boolean isParent() {
+    public boolean isRoot() {
         return true;
     }
 
