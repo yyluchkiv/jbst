@@ -1,6 +1,5 @@
 package jbst.foundation.domain.reflections;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.base.PropertyName;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,7 @@ import java.util.Comparator;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
-import static org.springframework.util.StringUtils.uncapitalize;
+import static jbst.foundation.utilities.strings.StringUtility.toKebab;
 
 @Slf4j
 @Data
@@ -38,7 +37,7 @@ public class JbstProperty {
     public JbstProperty(@NotNull PropertyName propertyName, @NotNull Field field, Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
-        this.treePropertyName = new PropertyName(uncapitalize(propertyName.value()) + "." + uncapitalize(this.propertyName));
+        this.treePropertyName = new PropertyName(toKebab(propertyName.value()) + "." + toKebab(this.propertyName));
         this.propertyValue = propertyValue;
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
