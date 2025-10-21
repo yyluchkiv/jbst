@@ -2,6 +2,7 @@ package jbst.server.iam.extension;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.extension.JbstExtensionService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class ServerJbstExtensionService implements JbstExtensionService {
     }
 
     @Override
-    public void registerMagicLink(Username username) {
+    public void registerMagicLink(Email email) {
         // no required actions
     }
 
