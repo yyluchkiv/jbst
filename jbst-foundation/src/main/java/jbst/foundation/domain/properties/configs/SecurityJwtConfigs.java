@@ -126,8 +126,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
-        super.assertProperties(propertyId);
+    public void assertProperties() {
+        super.assertProperties();
 
         // Requirements: availableAuthorities vs. configuredAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();

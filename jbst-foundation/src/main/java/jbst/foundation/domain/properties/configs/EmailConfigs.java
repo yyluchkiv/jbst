@@ -47,6 +47,7 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
         return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.hardcoded(), Password.hardcoded());
     }
 
+    @SuppressWarnings("unused")
     public static EmailConfigs gmail(String from, Username username, Password password) {
         return new EmailConfigs(true, "smtp.gmail.com", 587, from, username, password);
     }

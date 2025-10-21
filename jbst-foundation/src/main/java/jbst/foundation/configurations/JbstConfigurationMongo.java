@@ -2,7 +2,6 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
@@ -42,7 +41,7 @@ public class JbstConfigurationMongo {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getMongodbSecurityJwtConfigs().assertProperties(new PropertyId("mongodbSecurityJwtConfigs"));
+        this.jbstProperties.getMongodbSecurityJwtConfigs().assertProperties();
     }
 
     @Bean

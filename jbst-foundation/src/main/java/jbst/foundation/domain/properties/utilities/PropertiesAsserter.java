@@ -136,7 +136,7 @@ public class PropertiesAsserter {
                 ConsoleAsserts.assertNonNullPropertyOrThrow(rf);
                 var nestedPropertyClass = rf.getPropertyValue().getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                    ((AbstractPropertiesConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyId());
+                    ((AbstractPropertiesConfigs) rf.getPropertyValue()).assertProperties();
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertyConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyId());
                 } else {

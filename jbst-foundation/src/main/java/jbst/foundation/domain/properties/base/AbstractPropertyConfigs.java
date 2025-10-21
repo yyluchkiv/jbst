@@ -10,10 +10,12 @@ import static jbst.foundation.utilities.reflections.ReflectionUtility.getPropert
 @Slf4j
 public abstract class AbstractPropertyConfigs {
 
+    @Deprecated
     public void assertProperties(PropertyId propertyId) {
         PropertiesAsserter.assertMandatoryPropertyConfigs(this, propertyId);
     }
 
+    @Deprecated
     public void printProperties(PropertyId propertyId) {
         this.printMandatoryBasedConfigs(propertyId);
     }

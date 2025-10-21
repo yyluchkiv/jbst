@@ -33,8 +33,8 @@ public class SlacksConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
-        super.assertProperties(propertyId);
+    public void assertProperties() {
+        super.assertProperties();
         assertTrueOrThrow(
                 this.values.stream().map(SlackConfigs::isMain).filter(Boolean::booleanValue).count() == 1,
                 "Slacks configs must have one main team"

@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.utilities.PropertiesAsserter;
 
 public abstract class AbstractTogglePropertiesConfigs extends AbstractPropertiesConfigs {
@@ -8,14 +7,14 @@ public abstract class AbstractTogglePropertiesConfigs extends AbstractProperties
     public abstract boolean isEnabled();
 
     @Override
-    public void assertProperties(PropertyId propertyId) {
+    public void assertProperties() {
         if (this.isEnabled()) {
-            PropertiesAsserter.assertMandatoryTogglePropertiesConfigs(this, propertyId);
+            PropertiesAsserter.assertMandatoryTogglePropertiesConfigs(this, this.getPropertyId());
         } else {
-            PropertiesAsserter.assertMandatoryPropertiesConfigs(this, propertyId);
+            PropertiesAsserter.assertMandatoryPropertiesConfigs(this, this.getPropertyId());
         }
         if (this.isParentPropertiesNode()) {
-            printProperties(propertyId);
+            printProperties(this.getPropertyId());
         }
     }
 }

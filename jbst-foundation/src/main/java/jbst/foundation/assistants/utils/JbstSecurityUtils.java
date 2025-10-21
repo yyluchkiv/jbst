@@ -4,7 +4,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.jwt.*;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.TimeAmount;
@@ -34,7 +33,7 @@ public class JbstSecurityUtils {
     public JbstSecurityUtils(JbstProperties jbstProperties) {
         this.jbstProperties = jbstProperties;
         var jwtTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
-        jwtTokensConfigs.assertProperties(new PropertyId("securityJwtConfigs.jwtTokensConfigs"));
+        jwtTokensConfigs.assertProperties();
         // WARNING: consider using Base64 encoded key in properties, and decode it here
         // https://www.baeldung.com/spring-security-sign-jwt-token#1-using-key-instance
         this.secretKey = Keys.hmacShaKeyFor(jwtTokensConfigs.getSecretKey().getBytes());

@@ -2,7 +2,6 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
-import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.filters.jwt.JwtTokensFilter;
@@ -113,7 +112,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getSecurityJwtConfigs().assertProperties(new PropertyId("securityJwtConfigs"));
+        this.jbstProperties.getSecurityJwtConfigs().assertProperties();
     }
 
     @Autowired

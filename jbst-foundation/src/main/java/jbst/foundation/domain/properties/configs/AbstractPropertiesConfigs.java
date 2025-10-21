@@ -19,14 +19,6 @@ public abstract class AbstractPropertiesConfigs {
     }
 
     @Deprecated
-    public void assertProperties(PropertyId propertyId) {
-        PropertiesAsserter.assertMandatoryPropertiesConfigs(this, propertyId);
-        if (this.isParentPropertiesNode()) {
-            printProperties(propertyId);
-        }
-    }
-
-    @Deprecated
     public void printProperties(PropertyId propertyId) {
         this.printMandatoryPropertiesConfigs(propertyId);
     }
