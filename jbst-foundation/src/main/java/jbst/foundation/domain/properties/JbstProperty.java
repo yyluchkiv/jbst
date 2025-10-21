@@ -2,6 +2,7 @@ package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.annotations.JbstNonMandatoryMethod;
 
+import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.domain.properties.JbstPropertiesUtility.*;
 import static jbst.foundation.utilities.strings.StringUtility.toKebab;
@@ -27,35 +28,13 @@ public abstract class JbstProperty {
                 edge.getChildAsJbstProperty().assertProperties();
             } else if (edge.isChildLeaf()) {
                 edge.getChildAsJbstProperty().assertPropertiesAsLeaf(this.getParentTreeName());
-                edge.printChildProperty(this.getParentTreeName());
             } else {
                 edge.assertOrThrow();
-                edge.print();
             }
         });
-//        if (this.isRoot()) {
-//            this.printProperties();
-//        }
-    }
-
-    public void printPropertiesV1() {
-        if (!this.isRoot()) {
-            return;
+        if (this.isRoot()) {
+            this.printProperties(this.getParentTreeName());
         }
-        getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
-//            var edge = new JbstPropertyEdge(this, field);
-//            if (isNull(edge.getValueRAW())) {
-//                edge.print();
-//            } else {
-//                if (edge.isChildBranch()) {
-//                    edge.getChildAsJbstProperty().printProperties();
-//                } else if (edge.isChildLeaf()) {
-//                    edge.printChildProperty();
-//                } else {
-//                    edge.print();
-//                }
-//            }
-        });
     }
 
     // =================================================================================================================
@@ -78,6 +57,26 @@ public abstract class JbstProperty {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
+    private void printProperties(String parentTreeName) {
+        if (!this.isRoot()) {
+            return;
+        }
+        getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
+            var edge = new JbstPropertyEdge(parentTreeName, this, field);
+            if (isNull(edge.getValueRAW())) {
+                edge.print();
+            } else {
+                if (edge.isChildBranch()) {
+                    edge.getChildAsJbstProperty().printProperties(edge.getChildAsJbstProperty().getParentTreeName());
+                } else if (edge.isChildLeaf()) {
+                    edge.printChildProperty(edge.getChildAsJbstProperty().getParentTreeName());
+                } else {
+                    edge.print();
+                }
+            }
+        });
+    }
+
     private String getParentTreeName() {
         return toKebab(this.getNameNonMandatory());
     }
