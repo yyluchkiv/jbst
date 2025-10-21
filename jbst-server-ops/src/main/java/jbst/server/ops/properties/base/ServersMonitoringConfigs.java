@@ -37,7 +37,7 @@ public class ServersMonitoringConfigs extends AbstractPropertyConfigs {
         super.assertProperties(propertyName);
         assertTrueOrThrow(
                 is(this.fileSystemThreshold, ">", this.fileSystemFilter),
-                "Attribute `fileSystemThreshold` is expected to be greater than `fileSystemFilter`"
+                "Property 'file-system-threshold is expected to be greater than file-system-filter"
         );
     }
 

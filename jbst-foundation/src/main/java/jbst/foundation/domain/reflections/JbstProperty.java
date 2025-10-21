@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
@@ -62,13 +63,13 @@ public class JbstProperty {
         var isZoneId = nonNull(this.propertyValue) && this.propertyValue instanceof ZoneId;
 
         if (isArrayOfStrings) {
-            var castedPropertyValue = (String[]) this.propertyValue;
-            this.readableValue = "%s: %s".formatted(this.treePropertyName, Arrays.toString(castedPropertyValue));
+            this.readableValue = Arrays.toString((String[]) this.propertyValue);
         } else if (isZoneId) {
-            var castedPropertyValue = (ZoneId) this.propertyValue;
-            this.readableValue = "%s: %s".formatted(this.treePropertyName, castedPropertyValue.getId());
+            this.readableValue = ((ZoneId) this.propertyValue).getId();
+        } else if (isNull(this.propertyValue)) {
+            this.readableValue = "—";
         } else {
-            this.readableValue = "%s: %s".formatted(this.treePropertyName, this.propertyValue);
+            this.readableValue = this.propertyValue.toString();
         }
     }
 
@@ -111,6 +112,6 @@ public class JbstProperty {
 
     // TODO [YYL] fixme -> debug?
     public void print() {
-        LOGGER.warn("{} — {}", PREFIX, BLACK_BOLD_TEXT.format(this.readableValue));
+        LOGGER.warn("{} — {} — {}", PREFIX, this.treePropertyName, BLACK_BOLD_TEXT.format(this.readableValue));
     }
 }
