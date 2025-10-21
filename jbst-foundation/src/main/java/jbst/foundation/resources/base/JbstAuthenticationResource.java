@@ -32,9 +32,10 @@ public class JbstAuthenticationResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
+    // Extension
+    private final JbstExtensionService extensionService;
     // Services
     private final JbstAuthenticationService authenticationService;
-    private final JbstExtensionService extensionService;
     // Validators
     private final JbstAuthenticationValidator authenticationRequestsValidator;
 

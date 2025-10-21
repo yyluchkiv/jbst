@@ -13,6 +13,7 @@ import jbst.foundation.domain.exceptions.authentication.JbstRegistrationExceptio
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistrationMagicLink;
@@ -35,6 +36,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstRegistrationResource {
 
+    // Extension
+    private final JbstExtensionService extensionService;
     // Services
     private final JbstRateLimitsService rateLimitsService;
     private final JbstRegistrationService registrationService;
@@ -52,6 +55,7 @@ public class JbstRegistrationResource {
         this.registrationService.registerMagicLink(request);
         this.securityJwtEventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
         this.securityJwtIncidentsPublisher.publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
+        this.extensionService.registerMagicLink(request.email());
     }
 
     @PostMapping("/register0")
@@ -62,6 +66,7 @@ public class JbstRegistrationResource {
         this.registrationService.register0(request);
         this.securityJwtEventsPublisher.publishRegistration0(new EventRegistration0(request));
         this.securityJwtIncidentsPublisher.publishRegistration0(new IncidentRegistration0(request.username()));
+        this.extensionService.register0(request.username());
     }
 
     @PostMapping("/register1")
@@ -72,5 +77,6 @@ public class JbstRegistrationResource {
         this.registrationService.register1(request);
         this.securityJwtEventsPublisher.publishRegistration1(new EventRegistration1(request));
         this.securityJwtIncidentsPublisher.publishRegistration1(new IncidentRegistration1(request.username()));
+        this.extensionService.register1(request.username());
     }
 }

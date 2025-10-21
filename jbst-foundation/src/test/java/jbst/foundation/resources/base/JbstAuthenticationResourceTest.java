@@ -78,10 +78,11 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
     // Authentication
     private final AuthenticationManager authenticationManager;
+    // Extension
+    private final JbstExtensionService extensionService;
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services
-    private final JbstExtensionService extensionService;
     private final JbstUsersService usersService;
     private final JbstUsersSessionsService usersSessionsService;
     private final JbstTokensService tokensService;

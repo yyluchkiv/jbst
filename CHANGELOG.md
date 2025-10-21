@@ -3,3 +3,6 @@
 — Addition: AbstractPropertiesConfigs.getPropertyId()
 — Modification: JbstExtensionService.authenticateAsMagicLink(username, req, res)
 — Addition: JbstExtensionService.authenticateAsStandard(username, req, res)
+— Addition: JbstExtensionService.registerMagicLink(email)
+— Addition: JbstExtensionService.register0(username)
+— Addition: JbstExtensionService.register1(username)

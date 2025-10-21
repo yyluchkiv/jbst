@@ -21,4 +21,19 @@ public class ServerJbstExtensionService implements JbstExtensionService {
     public void authenticateAsMagicLink(Username username, HttpServletRequest request, HttpServletResponse response) {
         // no required actions
     }
+
+    @Override
+    public void registerMagicLink(Username username) {
+        // no required actions
+    }
+
+    @Override
+    public void register0(Username username) {
+        // no required actions
+    }
+
+    @Override
+    public void register1(Username username) {
+        // no required actions
+    }
 }
