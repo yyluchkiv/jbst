@@ -21,7 +21,6 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
-import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
@@ -79,10 +78,6 @@ public class JbstProperty {
         }
     }
 
-    public void assertOrThrow() {
-        // TODO [YYL] fixme?
-    }
-
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void verify() {
         if (this.field.isAnnotationPresent(MandatoryMapProperty.class)) {
@@ -110,14 +105,13 @@ public class JbstProperty {
 
     public void printAbstractPropertyConfigs() {
         assertTrueOrThrow(nonNull(this.propertyValue) && AbstractPropertyConfigs.class.isAssignableFrom(this.propertyValue.getClass()));
-        var fields = getMandatoryBasedFields(this, this.treePropertyName);
+        var fields = JbstPropertiesUtility.getMandatoryBasedFields(this, this.treePropertyName);
         var jbstProperties = JbstPropertiesUtility.getProperties(this, this.treePropertyName, fields);
         jbstProperties.sort(JbstProperty.PRINTER_COMPARATOR);
         jbstProperties.forEach(JbstProperty::print);
     }
 
-    // TODO [YYL] fixme -> debug?
     public void print() {
-        LOGGER.warn("{} — {}: {}", PREFIX, this.treePropertyName, BLACK_BOLD_TEXT.format(this.readableValue));
+        LOGGER.debug("{} — {}: {}", PREFIX, this.treePropertyName, BLACK_BOLD_TEXT.format(this.readableValue));
     }
 }
