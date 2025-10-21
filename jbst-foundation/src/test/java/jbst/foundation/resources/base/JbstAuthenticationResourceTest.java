@@ -160,8 +160,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var refreshToken = JwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-        var currentClientUser = CurrentClientUser.random();
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(CurrentClientUser.hardcoded());
 
         // Act
         this.mvc.perform(
@@ -170,10 +169,10 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().value())))
-                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())))
-                .andExpect(jsonPath("$.name", equalTo(currentClientUser.getName())))
-                .andExpect(jsonPath("$.zoneId", equalTo(currentClientUser.getZoneId().getId())))
+                .andExpect(jsonPath("$.username", equalTo("jbst")))
+                .andExpect(jsonPath("$.email", equalTo("tests@yyluchkiv.com")))
+                .andExpect(jsonPath("$.name", equalTo("JBST")))
+                .andExpect(jsonPath("$.zoneId", equalTo("Europe/Kyiv")))
                 .andExpect(jsonPath("$.authorities", notNullValue()))
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
@@ -188,6 +187,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
+        verify(this.extensionService).authenticateAsStandard(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
 
@@ -202,14 +202,11 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         when(this.baseAuthenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
         when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
-
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-
-        var currentClientUser = CurrentClientUser.random();
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(CurrentClientUser.hardcoded());
 
         // Act
         this.mvc.perform(
@@ -218,10 +215,10 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().value())))
-                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())))
-                .andExpect(jsonPath("$.name", equalTo(currentClientUser.getName())))
-                .andExpect(jsonPath("$.zoneId", equalTo(currentClientUser.getZoneId().getId())))
+                .andExpect(jsonPath("$.username", equalTo("jbst")))
+                .andExpect(jsonPath("$.email", equalTo("tests@yyluchkiv.com")))
+                .andExpect(jsonPath("$.name", equalTo("JBST")))
+                .andExpect(jsonPath("$.zoneId", equalTo("Europe/Kyiv")))
                 .andExpect(jsonPath("$.authorities", notNullValue()))
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
@@ -237,8 +234,8 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));
+        verify(this.extensionService).authenticateAsMagicLink(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
-        verify(this.extensionService).authenticateAsMagicLink(currentClientUser);
     }
 
     @Test

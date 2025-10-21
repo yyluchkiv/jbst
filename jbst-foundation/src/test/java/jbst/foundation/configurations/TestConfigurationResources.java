@@ -5,9 +5,9 @@ import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
@@ -61,7 +61,6 @@ public class TestConfigurationResources {
     JbstAuthenticationService authenticationService() {
         return new JbstAuthenticationService(
                 this.authenticationManager(),
-                this.currentSessionAssistant(),
                 this.jwtUserDetailsService(),
                 this.sessionRegistry(),
                 this.usersService(),

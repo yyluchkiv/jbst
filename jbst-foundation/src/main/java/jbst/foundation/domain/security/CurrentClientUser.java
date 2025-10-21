@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.*;
 
 // Lombok
@@ -31,6 +32,19 @@ public class CurrentClientUser {
     private final JbstUserEmailDetails emailDetails;
     private final Set<String> authorities;
     private Map<String, Object> attributes;
+
+    public static CurrentClientUser hardcoded() {
+        return new CurrentClientUser(
+                Username.hardcoded(),
+                Email.hardcoded(),
+                "JBST",
+                UKRAINE,
+                false,
+                JbstUserEmailDetails.unnecessary(),
+                new HashSet<>(),
+                new HashMap<>()
+        );
+    }
 
     public static CurrentClientUser random() {
         return new CurrentClientUser(
