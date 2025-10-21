@@ -35,7 +35,7 @@ public abstract class AbstractJbstProperty {
             try {
                 var jbstProperty = new JbstPropertyEdge(this, field, field.get(this));
                 assertNonNullOrThrow(jbstProperty);
-                var nestedPropertyClass = requireNonNull(jbstProperty.getPropertyValue()).getClass();
+                var nestedPropertyClass = requireNonNull(jbstProperty.getValue()).getClass();
 //                if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
 //                    ((AbstractPropertiesConfigs) jbstProperty.getPropertyValue()).assertProperties();
 //                } /* else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
@@ -76,7 +76,7 @@ public abstract class AbstractJbstProperty {
         getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
             try {
                 var jbstProperty = new JbstPropertyEdge(this, field, field.get(this));
-                if (isNull(jbstProperty.getPropertyValue())) {
+                if (isNull(jbstProperty.getValue())) {
                     jbstProperty.print();
                 } else {
 //                    var nestedPropertyClass = jbstProperty.getPropertyValue().getClass();

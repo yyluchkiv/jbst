@@ -5,6 +5,7 @@ import jbst.foundation.domain.properties.AbstractJbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +39,7 @@ public class JbstPropertyEdge {
         } else if ("enabled".equals(o2.getLeafName())) {
             return 1;
         }
-        return o1.getReadableValue().compareTo(o2.getReadableValue());
+        return o1.getReadable().compareTo(o2.getReadable());
     };
 
     @NotNull
@@ -50,36 +51,37 @@ public class JbstPropertyEdge {
     @NotNull
     private final String name;
     @Nullable
-    private final Object propertyValue;
+    private final Object value;
     @NotNull
-    private final String readableValue;
+    private final String readable;
 
-    public JbstPropertyEdge(@NotNull AbstractJbstProperty parent, @NotNull Field leaf, @Nullable Object propertyValue) {
+    @SneakyThrows
+    public JbstPropertyEdge(@NotNull AbstractJbstProperty parent, @NotNull Field leaf) {
         this.parent = parent;
         this.leaf = leaf;
         this.leafName = leaf.getName();
         this.name = toKebab(this.parent.getNameNonMandatory()) + "." + toKebab(this.leafName);
-        this.propertyValue = propertyValue;
+        this.value = leaf.get(parent);
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
-        var isArray = nonNull(this.propertyValue) && this.propertyValue.getClass().isArray();
+        var isArray = nonNull(this.value) && this.value.getClass().isArray();
         boolean isArrayOfStrings;
         if (isArray) {
-            var array = (Object[]) this.propertyValue;
+            var array = (Object[]) this.value;
             isArrayOfStrings = array[0] instanceof String;
         } else {
             isArrayOfStrings = false;
         }
-        var isZoneId = nonNull(this.propertyValue) && this.propertyValue instanceof ZoneId;
+        var isZoneId = nonNull(this.value) && this.value instanceof ZoneId;
 
         if (isArrayOfStrings) {
-            this.readableValue = Arrays.toString((String[]) this.propertyValue);
+            this.readable = Arrays.toString((String[]) this.value);
         } else if (isZoneId) {
-            this.readableValue = ((ZoneId) this.propertyValue).getId();
-        } else if (isNull(this.propertyValue)) {
-            this.readableValue = "null";
+            this.readable = ((ZoneId) this.value).getId();
+        } else if (isNull(this.value)) {
+            this.readable = "null";
         } else {
-            this.readableValue = this.propertyValue.toString();
+            this.readable = this.value.toString();
         }
     }
 
@@ -88,7 +90,7 @@ public class JbstPropertyEdge {
         if (this.leaf.isAnnotationPresent(MandatoryMapProperty.class)) {
             var annotation = this.leaf.getAnnotation(MandatoryMapProperty.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
-            var castedProperty = (Map) this.propertyValue;
+            var castedProperty = (Map) this.value;
             var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
             //noinspection unchecked
             assertTrueOrThrow(
@@ -102,7 +104,7 @@ public class JbstPropertyEdge {
             );
         }
         ConsoleAsserts.PROPERTIES_ACTIONS.entrySet().stream()
-                .filter(entry -> entry.getKey().apply(this.propertyValue.getClass()))
+                .filter(entry -> entry.getKey().apply(this.value.getClass()))
                 .map(Map.Entry::getValue)
                 .findFirst()
                 .ifPresent(consumer -> consumer.accept(this));
@@ -132,6 +134,6 @@ public class JbstPropertyEdge {
     }
 
     public void print() {
-        LOGGER.debug("{} — {}: {}", PREFIX, this.name, BLACK_BOLD_TEXT.format(this.readableValue));
+        LOGGER.debug("{} — {}: {}", PREFIX, this.name, BLACK_BOLD_TEXT.format(this.readable));
     }
 }
