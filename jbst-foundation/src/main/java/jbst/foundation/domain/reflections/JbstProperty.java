@@ -67,7 +67,7 @@ public class JbstProperty {
         } else if (isZoneId) {
             this.readableValue = ((ZoneId) this.propertyValue).getId();
         } else if (isNull(this.propertyValue)) {
-            this.readableValue = "—";
+            this.readableValue = "null";
         } else {
             this.readableValue = this.propertyValue.toString();
         }
@@ -112,6 +112,6 @@ public class JbstProperty {
 
     // TODO [YYL] fixme -> debug?
     public void print() {
-        LOGGER.warn("{} — {} — {}", PREFIX, this.treePropertyName, BLACK_BOLD_TEXT.format(this.readableValue));
+        LOGGER.warn("{} — {}: {}", PREFIX, this.treePropertyName, BLACK_BOLD_TEXT.format(this.readableValue));
     }
 }
