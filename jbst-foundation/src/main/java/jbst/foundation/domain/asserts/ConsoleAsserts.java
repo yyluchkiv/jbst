@@ -1,7 +1,6 @@
 package jbst.foundation.domain.asserts;
 
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
@@ -16,15 +15,20 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @UtilityClass
 public class ConsoleAsserts {
-    public static void assertNonNullOrThrow(Object object, PropertyId propertyId) {
+    public static void assertNonNullOrThrow(Object object, String propertyName) {
         if (isNull(object)) {
-            throw new IllegalArgumentException(invalidProperty(propertyId));
+            throw new IllegalArgumentException(
+                    "Property '%s' is invalid".formatted(
+                            JbstConstants.JColor.RED_TEXT.format(propertyName)
+                    )
+            );
         }
     }
 
-    public static void assertNonNullOrThrow(Object object, PropertyName propertyName) {
+    @Deprecated
+    public static void assertNonNullOrThrow(Object object, PropertyId propertyId) {
         if (isNull(object)) {
-            throw new IllegalArgumentException(invalidProperty(propertyName));
+            throw new IllegalArgumentException(invalidProperty(propertyId));
         }
     }
 

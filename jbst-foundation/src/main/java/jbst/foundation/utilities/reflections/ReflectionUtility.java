@@ -2,7 +2,6 @@ package jbst.foundation.utilities.reflections;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.base.SchedulerConfiguration;
 import jbst.foundation.domain.properties.base.TimeAmount;
@@ -181,7 +180,7 @@ public class ReflectionUtility {
                 .collect(Collectors.toList());
     }
 
-    public static List<JbstProperty> getProperties(Object property, PropertyName propertyName, List<Field> fields) {
+    public static List<JbstProperty> getProperties(Object property, String propertyName, List<Field> fields) {
         return fields.stream()
                 .map(field -> {
                     try {

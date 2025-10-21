@@ -1,9 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.reflections.JbstProperty;
-import jbst.foundation.domain.reflections.ReflectionProperty;
 import lombok.extern.slf4j.Slf4j;
 
 import static jbst.foundation.domain.properties.utilities.PropertiesAsserter.assertMandatoryPropertyConfigs;
@@ -27,8 +25,7 @@ public abstract class AbstractPropertyConfigs {
 //        rfs.forEach(ReflectionProperty::print);
     }
 
-    @Deprecated
-    public void printProperties(PropertyName propertyName) {
+    public void printProperties(String propertyName) {
         var fields = getMandatoryBasedFields(this, propertyName);
         var rfs = getProperties(this, propertyName, fields);
         rfs.sort(JbstProperty.PRINTER_COMPARATOR);

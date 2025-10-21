@@ -3,7 +3,6 @@ package jbst.foundation.domain.properties.utilities;
 import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
@@ -30,6 +29,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
@@ -62,7 +62,7 @@ public class PropertiesAsserter {
     // =================================================================================================================
 
     public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs) {
-        ConsoleAsserts.assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
+        assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         assertPropertiesConfigs(
                 propertiesConfigs,
                 propertiesConfigs.getPropertyName(),
@@ -71,7 +71,7 @@ public class PropertiesAsserter {
     }
 
     public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs) {
-        ConsoleAsserts.assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
+        assertNonNullOrThrow(propertiesConfigs, propertiesConfigs.getPropertyName());
         assertPropertiesConfigs(
                 propertiesConfigs,
                 propertiesConfigs.getPropertyName(),
@@ -80,7 +80,7 @@ public class PropertiesAsserter {
     }
 
     public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, PropertyId propertyId) {
-        ConsoleAsserts.assertNonNullOrThrow(propertyConfigs, propertyId);
+        assertNonNullOrThrow(propertyConfigs, propertyId);
         assertPropertyConfigs(
                 propertyConfigs,
                 propertyId,
@@ -89,7 +89,7 @@ public class PropertiesAsserter {
     }
 
     public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, PropertyId propertyId) {
-        ConsoleAsserts.assertNonNullOrThrow(propertyConfigs, propertyId);
+        assertNonNullOrThrow(propertyConfigs, propertyId);
         assertPropertyConfigs(
                 propertyConfigs,
                 propertyId,
@@ -101,15 +101,15 @@ public class PropertiesAsserter {
     // GETTERS
     // =================================================================================================================
 
-    public static List<Field> getMandatoryFields(Object property, PropertyName propertyName) {
+    public static List<Field> getMandatoryFields(Object property, String propertyName) {
         return getFields(property, propertyName, Set.of(MandatoryProperty.class));
     }
 
-    public static List<Field> getMandatoryToggleFields(Object property, PropertyName propertyName) {
+    public static List<Field> getMandatoryToggleFields(Object property, String propertyName) {
         return getFields(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
-    public static List<Field> getMandatoryBasedFields(Object property, PropertyName propertyName) {
+    public static List<Field> getMandatoryBasedFields(Object property, String propertyName) {
         return getFields(property, propertyName, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
@@ -118,7 +118,7 @@ public class PropertiesAsserter {
     // =================================================================================================================
 
     private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, PropertyId propertyId, List<Field> fields) {
-        ConsoleAsserts.assertNonNullOrThrow(propertyConfigs, propertyId);
+        assertNonNullOrThrow(propertyConfigs, propertyId);
         fields.forEach(field -> {
             try {
                 var rf = new ReflectionProperty(propertyId, field, field.get(propertyConfigs));
@@ -131,7 +131,7 @@ public class PropertiesAsserter {
     }
 
     private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId, List<Field> fields) {
-        ConsoleAsserts.assertNonNullOrThrow(propertiesConfigs, propertyId);
+        assertNonNullOrThrow(propertiesConfigs, propertyId);
         fields.forEach(field -> {
             try {
                 var rf = new ReflectionProperty(propertyId, field, field.get(propertiesConfigs));
@@ -177,8 +177,8 @@ public class PropertiesAsserter {
     }
 
     @SuppressWarnings("ConstantValue")
-    private static List<Field> getFields(Object property, PropertyName propertyName, Set<Class<? extends Annotation>> presentAnnotations) {
-        ConsoleAsserts.assertNonNullOrThrow(property, propertyName);
+    private static List<Field> getFields(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations) {
+        assertNonNullOrThrow(property, propertyName);
         return Stream.of(property.getClass().getDeclaredFields())
                 .filter(Objects::nonNull)
                 .map(field -> {

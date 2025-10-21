@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.base.PropertyName;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.reflections.JbstProperty;
 
@@ -20,9 +19,9 @@ public abstract class AbstractPropertiesConfigs {
     }
 
     public void printProperties() {
-        getMandatoryBasedFields(this, new PropertyName(this.getPropertyName())).forEach(field -> {
+        getMandatoryBasedFields(this, this.getPropertyName()).forEach(field -> {
             try {
-                var rf = new JbstProperty(new PropertyName(this.getPropertyName()), field, field.get(this));
+                var rf = new JbstProperty(this.getPropertyName(), field, field.get(this));
                 if (isNull(rf.getPropertyValue())) {
                     rf.print();
                 } else {
