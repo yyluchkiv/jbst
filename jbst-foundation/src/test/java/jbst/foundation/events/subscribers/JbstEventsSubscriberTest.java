@@ -1,4 +1,4 @@
-package jbst.foundation.events.subscribers.base;
+package jbst.foundation.events.subscribers;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
@@ -12,8 +12,6 @@ import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
-import jbst.foundation.events.subscribers.events.SecurityJwtEventsSubscriber;
-import jbst.foundation.events.subscribers.events.base.BaseSecurityJwtEventsSubscriber;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -50,7 +48,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityJwtEventsSubscriberTest {
+class JbstEventsSubscriberTest {
 
     private static Stream<Arguments> exceptionalExecutionParams() {
         return Stream.of(
@@ -175,8 +173,8 @@ class BaseSecurityJwtEventsSubscriberTest {
         }
 
         @Bean
-        SecurityJwtEventsSubscriber securityJwtSubscriber() {
-            return new BaseSecurityJwtEventsSubscriber(
+        JbstEventsSubscriber eventsSubscriber() {
+            return new JbstEventsSubscriber(
                     this.securityJwtIncidentPublisher(),
                     this.baseUsersTokensService(),
                     this.userEmailService(),
@@ -198,7 +196,7 @@ class BaseSecurityJwtEventsSubscriberTest {
     // Incidents
     private final IncidentPublisher incidentPublisher;
 
-    private final SecurityJwtEventsSubscriber componentUnderTest;
+    private final JbstEventsSubscriber componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

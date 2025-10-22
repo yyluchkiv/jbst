@@ -2,7 +2,7 @@ package jbst.server.iam.base.events.subscribers;
 
 import jbst.foundation.domain.events.EventAuthenticationLogin;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
-import jbst.foundation.events.subscribers.events.base.BaseSecurityJwtEventsSubscriber;
+import jbst.foundation.events.subscribers.JbstEventsSubscriber;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ServerSecurityJwtEventsSubscriber extends BaseSecurityJwtEventsSubscriber {
+public class ServerJbstEventsSubscriber extends JbstEventsSubscriber {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public ServerSecurityJwtEventsSubscriber(
+    public ServerJbstEventsSubscriber(
             JbstIncidentsPublisher incidentsPublisher,
             JbstUsersTokensService usersTokensService,
             JbstUsersEmailsService usersEmailsService,
