@@ -8,4 +8,4 @@
 
 ##### Minor
 - JbstProperty: add enum {ROOT, BRANCH, LEAF}
-- investigate merger JbstSettings + PostgresDbJbstSettings 
+
