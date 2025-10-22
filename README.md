@@ -10,3 +10,4 @@ jbst — java17 bootstrapping (mostly spring) tools
 ### Swagger
 URL-dev: http://localhost:3002/api/swagger-ui/index.html  
 URL-prod: http://{server:port}/api/swagger-ui/index.html
+
