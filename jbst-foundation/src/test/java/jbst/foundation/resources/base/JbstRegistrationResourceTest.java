@@ -8,7 +8,7 @@ import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
 import jbst.foundation.domain.events.EventRegistrationMagicLink;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
@@ -35,7 +35,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     private final JbstRegistrationService registrationService;
     // Publishers
     private final JbstEventsPublisher eventsPublisher;
-    private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     // Validators
     private final JbstRegistrationValidator registrationValidator;
 
@@ -49,7 +49,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
                 this.extensionService,
                 this.registrationService,
                 this.eventsPublisher,
-                this.securityJwtIncidentsPublisher,
+                this.incidentsPublisher,
                 this.registrationValidator
         );
     }
@@ -60,7 +60,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
                 this.extensionService,
                 this.registrationService,
                 this.eventsPublisher,
-                this.securityJwtIncidentsPublisher,
+                this.incidentsPublisher,
                 this.registrationValidator
         );
     }
@@ -82,7 +82,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         verify(this.registrationValidator).validateRegistrationRequestMagicLink(request);
         verify(this.registrationService).registerMagicLink(request);
         verify(this.eventsPublisher).publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
-        verify(this.securityJwtIncidentsPublisher).publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
+        verify(this.incidentsPublisher).publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
         verify(this.extensionService).registerMagicLink(request.email());
     }
 
@@ -104,7 +104,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         verify(this.registrationValidator).validateRegistrationRequest0(request);
         verify(this.registrationService).register0(request);
         verify(this.eventsPublisher).publishRegistration0(new EventRegistration0(request));
-        verify(this.securityJwtIncidentsPublisher).publishRegistration0(new IncidentRegistration0(request.username()));
+        verify(this.incidentsPublisher).publishRegistration0(new IncidentRegistration0(request.username()));
         verify(this.extensionService).register0(request.username());
     }
 
@@ -126,7 +126,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         verify(this.registrationValidator).validateRegistrationRequest1(request);
         verify(this.registrationService).register1(request);
         verify(this.eventsPublisher).publishRegistration1(new EventRegistration1(request));
-        verify(this.securityJwtIncidentsPublisher).publishRegistration1(new IncidentRegistration1(request.username()));
+        verify(this.incidentsPublisher).publishRegistration1(new IncidentRegistration1(request.username()));
         verify(this.extensionService).register1(request.username());
     }
 }

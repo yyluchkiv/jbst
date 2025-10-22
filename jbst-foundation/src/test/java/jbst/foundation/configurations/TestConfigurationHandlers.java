@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.JbstHttpUtils;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +28,8 @@ public class TestConfigurationHandlers {
     }
 
     @Bean
-    SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher() {
-        return mock(SecurityJwtIncidentsPublisher.class);
+    JbstIncidentsPublisher securityJwtIncidentsPublisher() {
+        return mock(JbstIncidentsPublisher.class);
     }
 
     @Bean

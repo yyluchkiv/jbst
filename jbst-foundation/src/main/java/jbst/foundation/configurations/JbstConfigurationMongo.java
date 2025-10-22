@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
@@ -65,12 +65,12 @@ public class JbstConfigurationMongo {
     @Bean
     JbstSessionRegistry mongoSessionRegistry(
             JbstEventsPublisher eventsPublisher,
-            SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
+            JbstIncidentsPublisher incidentsPublisher,
             MongoJbstUsersSessionsService mongoBaseUsersSessionsService
     ) {
         return new MongoSessionRegistry(
                 eventsPublisher,
-                securityJwtIncidentsPublisher,
+                incidentsPublisher,
                 mongoBaseUsersSessionsService,
                 this.mongoUsersSessionsRepository
         );

@@ -5,7 +5,7 @@ import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.events.SecurityJwtEventsSubscriber;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
@@ -29,7 +29,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber implements SecurityJwtEventsSubscriber {
 
     // Publishers
-    private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     // Services
     private final JbstUsersTokensService usersTokensService;
     private final JbstUsersEmailsService usersEmailsService;
@@ -57,7 +57,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
                     event.ipAddress(),
                     event.userAgentHeader()
             );
-            this.securityJwtIncidentsPublisher.publishAuthenticationLoginFailureUsernamePassword(
+            this.incidentsPublisher.publishAuthenticationLoginFailureUsernamePassword(
                     new IncidentAuthenticationLoginFailureUsernamePassword(
                             new UsernamePasswordCredentials(
                                     event.username(),
@@ -66,7 +66,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
                             userRequestMetadata
                     )
             );
-            this.securityJwtIncidentsPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
+            this.incidentsPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
                     new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                             UsernamePasswordCredentials.mask5(
                                     event.username(),
@@ -174,7 +174,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
             UserRequestMetadata metadata
     ) {
         if (event.isUsernamePassword()) {
-            this.securityJwtIncidentsPublisher.publishAuthenticationLogin(
+            this.incidentsPublisher.publishAuthenticationLogin(
                     new IncidentAuthenticationLogin(
                             event.username(),
                             metadata
@@ -182,7 +182,7 @@ public class BaseSecurityJwtEventsSubscriber extends AbstractEventSubscriber imp
             );
         }
         if (event.isSessionToken()) {
-            this.securityJwtIncidentsPublisher.publishSessionRefreshed(
+            this.incidentsPublisher.publishSessionRefreshed(
                     new IncidentSessionRefreshed(
                             event.username(),
                             metadata

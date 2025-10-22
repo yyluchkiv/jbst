@@ -3,7 +3,7 @@ package jbst.foundation.configurations;
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
@@ -59,12 +59,12 @@ public class JbstConfigurationPostgres {
     @Bean
     JbstSessionRegistry postgresSessionRegistry(
             JbstEventsPublisher eventsPublisher,
-            SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
+            JbstIncidentsPublisher incidentsPublisher,
             PostgresJbstUsersSessionsService postgresBaseUsersSessionsService
     ) {
         return new PostgresSessionRegistry(
                 eventsPublisher,
-                securityJwtIncidentsPublisher,
+                incidentsPublisher,
                 postgresBaseUsersSessionsService,
                 this.postgresUsersSessionsRepository
         );

@@ -1,7 +1,7 @@
 package jbst.foundation.validators.mongo;
 
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.foundation.validators.abtracts.AbstractJbstRegistrationValidator;
@@ -14,13 +14,13 @@ public class MongoJbstRegistrationValidator extends AbstractJbstRegistrationVali
     @Autowired
     public MongoJbstRegistrationValidator(
             JbstEventsPublisher eventsPublisher,
-            SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
+            JbstIncidentsPublisher incidentsPublisher,
             MongoJbstInvitationsRepository invitationsRepository,
             MongoJbstUsersRepository usersRepository
     ) {
         super(
                 eventsPublisher,
-                securityJwtIncidentsPublisher,
+                incidentsPublisher,
                 invitationsRepository,
                 usersRepository
         );
