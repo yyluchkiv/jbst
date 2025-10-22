@@ -30,13 +30,8 @@ public class ServersMonitoringConfigs extends JbstProperty {
     private final BigDecimal fileSystemThreshold;
 
     @Override
-    public boolean isRoot() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return true;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override

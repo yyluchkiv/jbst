@@ -37,13 +37,8 @@ public class SlackConfigs extends JbstProperty {
     private final List<SlackTeamCommunication> teamsCommunications;
 
     @Override
-    public boolean isRoot() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return true;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override
