@@ -15,7 +15,7 @@ import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersSessionsService;

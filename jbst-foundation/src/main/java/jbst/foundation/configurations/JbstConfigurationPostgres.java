@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;

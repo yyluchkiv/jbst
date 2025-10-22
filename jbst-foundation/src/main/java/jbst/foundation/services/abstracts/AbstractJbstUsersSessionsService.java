@@ -18,7 +18,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.utils.JbstGeoUtils;

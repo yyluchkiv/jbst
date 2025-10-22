@@ -24,7 +24,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.utils.JbstGeoUtils;
 import lombok.RequiredArgsConstructor;

@@ -9,7 +9,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.utils.JbstHttpUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -3,7 +3,7 @@ package jbst.foundation.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;

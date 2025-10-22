@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
 import jbst.foundation.domain.events.EventRegistrationMagicLink;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;

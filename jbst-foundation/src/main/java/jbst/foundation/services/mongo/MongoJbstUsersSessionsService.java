@@ -1,7 +1,7 @@
 package jbst.foundation.services.mongo;
 
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractJbstUsersSessionsService;
 import jbst.foundation.utils.JbstGeoUtils;

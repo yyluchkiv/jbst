@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;

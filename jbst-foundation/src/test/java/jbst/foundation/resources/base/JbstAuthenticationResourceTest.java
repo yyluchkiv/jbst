@@ -30,7 +30,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;

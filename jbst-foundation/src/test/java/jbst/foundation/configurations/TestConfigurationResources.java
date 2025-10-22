@@ -3,7 +3,7 @@ package jbst.foundation.configurations;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;

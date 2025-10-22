@@ -1,8 +1,7 @@
 package jbst.foundation.events.publishers.base;
 
 import jbst.foundation.domain.events.*;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.events.publishers.events.base.BaseSecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +34,7 @@ class BaseSecurityJwtEventsPublisherTest {
 
         @Bean
         SecurityJwtEventsPublisher securityJwtPublisher() {
-            return new BaseSecurityJwtEventsPublisher(
+            return new SecurityJwtEventsPublisher(
                     this.applicationEventPublisher()
             );
         }

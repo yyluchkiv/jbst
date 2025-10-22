@@ -10,7 +10,7 @@ import jbst.foundation.domain.events.EventSessionRefreshed;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
