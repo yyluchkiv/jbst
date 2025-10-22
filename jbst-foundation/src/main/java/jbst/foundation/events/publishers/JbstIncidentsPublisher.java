@@ -1,7 +1,6 @@
 package jbst.foundation.events.publishers;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.pubsub.AbstractEventPublisher;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -19,7 +18,7 @@ import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstIncidentsPublisher extends AbstractEventPublisher {
+public class JbstIncidentsPublisher {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties

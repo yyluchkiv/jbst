@@ -4,7 +4,6 @@ import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
@@ -26,7 +25,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstEventsSubscriber extends AbstractEventSubscriber {
+public class JbstEventsSubscriber {
     // Publishers
     private final JbstIncidentsPublisher incidentsPublisher;
     // Services

@@ -1,6 +1,5 @@
 package jbst.foundation.incidents.events.subscribers.impl;
 
-import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentSubscriberImpl extends AbstractEventSubscriber implements IncidentSubscriber {
+public class IncidentSubscriberImpl implements IncidentSubscriber {
 
     // Clients
     private final IncidentClient incidentClient;

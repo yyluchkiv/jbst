@@ -39,6 +39,6 @@ public class ServerJbstEventsSubscriber extends JbstEventsSubscriber {
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
         super.onAuthenticationLogin(event);
-        LOGGER.info("[Server] SecurityJwtSubscriber.onAuthenticationLogin(). Username: {}", event.username());
+        LOGGER.info("[server] JbstEventsSubscriber.onAuthenticationLogin(). Username: {}", event.username());
     }
 }

@@ -1,6 +1,5 @@
 package jbst.foundation.events.subscribers;
 
-import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -18,7 +17,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstIncidentsSubscriber extends AbstractEventSubscriber {
+public class JbstIncidentsSubscriber {
     // Clients
     private final IncidentClient incidentClient;
 

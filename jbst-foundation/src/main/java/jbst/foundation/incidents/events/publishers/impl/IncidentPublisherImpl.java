@@ -1,7 +1,6 @@
 package jbst.foundation.incidents.events.publishers.impl;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.pubsub.AbstractEventPublisher;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -16,7 +15,7 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentPublisherImpl extends AbstractEventPublisher implements IncidentPublisher {
+public class IncidentPublisherImpl implements IncidentPublisher {
 
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
