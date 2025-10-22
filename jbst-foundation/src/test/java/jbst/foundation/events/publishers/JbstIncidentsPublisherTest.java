@@ -50,7 +50,7 @@ class JbstIncidentsPublisherTest {
         }
 
         @Bean
-        JbstIncidentsPublisher securityJwtIncidentPublisher() {
+        JbstIncidentsPublisher incidentsPublisher() {
             return new JbstIncidentsPublisher(
                     this.applicationEventPublisher(),
                     this.jbstProperties()

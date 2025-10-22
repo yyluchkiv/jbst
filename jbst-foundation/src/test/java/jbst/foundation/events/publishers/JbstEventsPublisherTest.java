@@ -32,7 +32,7 @@ class JbstEventsPublisherTest {
         }
 
         @Bean
-        JbstEventsPublisher securityJwtPublisher() {
+        JbstEventsPublisher eventsPublisher() {
             return new JbstEventsPublisher(
                     this.applicationEventPublisher()
             );

@@ -1,7 +1,5 @@
-package jbst.foundation.events.subscribers.impl;
+package jbst.foundation.events.subscribers;
 
-import jbst.foundation.events.subscribers.incidents.SecurityJwtIncidentsSubscriber;
-import jbst.foundation.events.subscribers.incidents.base.BaseSecurityJwtIncidentsSubscriber;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -25,7 +23,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityJwtIncidentsSubscriberTest {
+class JbstIncidentsSubscriberTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -35,8 +33,8 @@ class BaseSecurityJwtIncidentsSubscriberTest {
         }
 
         @Bean
-        SecurityJwtIncidentsSubscriber securityJwtIncidentSubscriber() {
-            return new BaseSecurityJwtIncidentsSubscriber(
+        JbstIncidentsSubscriber incidentsSubscriber() {
+            return new JbstIncidentsSubscriber(
                     this.incidentClient()
             );
         }
@@ -45,7 +43,7 @@ class BaseSecurityJwtIncidentsSubscriberTest {
     // Clients
     private final IncidentClient incidentClient;
 
-    private final SecurityJwtIncidentsSubscriber componentUnderTest;
+    private final JbstIncidentsSubscriber componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
