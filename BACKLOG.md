@@ -5,4 +5,3 @@
 - Users <-> GitHub OAuth Registration
 - Users + Plans
 - Plan Payments (Stripe)
-

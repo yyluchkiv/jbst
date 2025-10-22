@@ -53,7 +53,7 @@ public class IncidentsConfigs extends JbstProperty {
 
     @Override
     public JbstPropertyNodeType getNodeType() {
-        return JbstPropertyNodeType.BRANCH;
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override
