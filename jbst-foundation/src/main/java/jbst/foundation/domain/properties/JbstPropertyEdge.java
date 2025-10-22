@@ -79,11 +79,11 @@ public class JbstPropertyEdge {
     }
 
     public boolean isChildBranch() {
-        return this.valueRAW instanceof JbstProperty property && !property.isRoot() && !property.isLeaf();
+        return this.valueRAW instanceof JbstProperty property && property.getNodeType().isBranch();
     }
 
     public boolean isChildLeaf() {
-        return this.valueRAW instanceof JbstProperty property && property.isLeaf();
+        return this.valueRAW instanceof JbstProperty property && property.getNodeType().isLeaf();
     }
 
     public JbstProperty getChildAsJbstProperty() {

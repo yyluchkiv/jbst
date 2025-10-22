@@ -37,7 +37,7 @@ public class SlacksConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return "slack-configs";
     }
 

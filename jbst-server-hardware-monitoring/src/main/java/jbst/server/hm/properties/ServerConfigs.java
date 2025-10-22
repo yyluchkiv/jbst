@@ -45,7 +45,7 @@ public class ServerConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return "server-configs";
     }
 }

@@ -45,7 +45,7 @@ public class ServersMonitoringConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
     }
 

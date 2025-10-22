@@ -52,13 +52,8 @@ public class JwtTokensConfigs extends JbstProperty {
     }
 
     @Override
-    public boolean isRoot() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return false;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.BRANCH;
     }
 
     @Override
@@ -67,7 +62,7 @@ public class JwtTokensConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return "jwt-tokens-configs";
     }
 

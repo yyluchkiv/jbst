@@ -38,13 +38,8 @@ public class UsersTokensConfigs extends JbstProperty {
     }
 
     @Override
-    public boolean isRoot() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return false;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.BRANCH;
     }
 
     @Override
@@ -53,7 +48,7 @@ public class UsersTokensConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return "users-tokens-configs";
     }
 }

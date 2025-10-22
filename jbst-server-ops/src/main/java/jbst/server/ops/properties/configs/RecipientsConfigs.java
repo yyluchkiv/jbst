@@ -43,7 +43,7 @@ public class RecipientsConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return "recipients-configs";
     }
 }

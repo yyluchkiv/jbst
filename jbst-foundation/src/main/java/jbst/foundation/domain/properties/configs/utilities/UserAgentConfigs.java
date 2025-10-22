@@ -34,13 +34,8 @@ public class UserAgentConfigs extends JbstProperty {
     }
 
     @Override
-    public boolean isRoot() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return true;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override
@@ -49,7 +44,7 @@ public class UserAgentConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
     }
 }

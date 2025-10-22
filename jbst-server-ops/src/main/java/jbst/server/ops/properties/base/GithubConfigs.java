@@ -38,7 +38,7 @@ public class GithubConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
     }
 }

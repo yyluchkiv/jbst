@@ -6,6 +6,3 @@
 - Users + Plans
 - Plan Payments (Stripe)
 
-##### Minor
-- JbstProperty: add enum {ROOT, BRANCH, LEAF}
-

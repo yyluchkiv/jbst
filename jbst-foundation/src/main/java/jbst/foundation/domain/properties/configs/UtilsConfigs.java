@@ -39,13 +39,8 @@ public class UtilsConfigs extends JbstProperty {
     }
 
     @Override
-    public boolean isRoot() {
-        return true;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return false;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.ROOT;
     }
 
     @Override
@@ -54,7 +49,7 @@ public class UtilsConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return "utils-configs";
     }
 }
