@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
 import jbst.foundation.domain.events.EventRegistrationMagicLink;
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
@@ -34,7 +34,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     // Services
     private final JbstRegistrationService registrationService;
     // Publishers
-    private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
+    private final JbstEventsPublisher eventsPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Validators
     private final JbstRegistrationValidator registrationValidator;
@@ -48,7 +48,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         reset(
                 this.extensionService,
                 this.registrationService,
-                this.securityJwtEventsPublisher,
+                this.eventsPublisher,
                 this.securityJwtIncidentsPublisher,
                 this.registrationValidator
         );
@@ -59,7 +59,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.extensionService,
                 this.registrationService,
-                this.securityJwtEventsPublisher,
+                this.eventsPublisher,
                 this.securityJwtIncidentsPublisher,
                 this.registrationValidator
         );
@@ -81,7 +81,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.registrationValidator).validateRegistrationRequestMagicLink(request);
         verify(this.registrationService).registerMagicLink(request);
-        verify(this.securityJwtEventsPublisher).publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
+        verify(this.eventsPublisher).publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
         verify(this.securityJwtIncidentsPublisher).publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
         verify(this.extensionService).registerMagicLink(request.email());
     }
@@ -103,7 +103,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         request = request.createReworkedUkraineZoneId();
         verify(this.registrationValidator).validateRegistrationRequest0(request);
         verify(this.registrationService).register0(request);
-        verify(this.securityJwtEventsPublisher).publishRegistration0(new EventRegistration0(request));
+        verify(this.eventsPublisher).publishRegistration0(new EventRegistration0(request));
         verify(this.securityJwtIncidentsPublisher).publishRegistration0(new IncidentRegistration0(request.username()));
         verify(this.extensionService).register0(request.username());
     }
@@ -125,7 +125,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         request = request.createReworkedUkraineZoneId();
         verify(this.registrationValidator).validateRegistrationRequest1(request);
         verify(this.registrationService).register1(request);
-        verify(this.securityJwtEventsPublisher).publishRegistration1(new EventRegistration1(request));
+        verify(this.eventsPublisher).publishRegistration1(new EventRegistration1(request));
         verify(this.securityJwtIncidentsPublisher).publishRegistration1(new IncidentRegistration1(request.username()));
         verify(this.extensionService).register1(request.username());
     }

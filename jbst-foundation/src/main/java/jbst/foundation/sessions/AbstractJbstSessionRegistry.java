@@ -10,7 +10,7 @@ import jbst.foundation.domain.events.EventSessionRefreshed;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.sessions.Session;
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
@@ -34,7 +34,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     protected final ConcurrentHashMap.KeySetView<Session, Boolean> sessions = ConcurrentHashMap.newKeySet();
 
     // Publishers
-    protected final SecurityJwtEventsPublisher securityJwtEventsPublisher;
+    protected final JbstEventsPublisher eventsPublisher;
     protected final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Services
     protected final JbstUsersSessionsService usersSessionsService;
@@ -68,7 +68,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
         boolean added = this.sessions.add(session);
         if (added) {
             LOGGER.debug(USER_ACTION, username, "Session Registration");
-            this.securityJwtEventsPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
+            this.eventsPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
         }
     }
 
@@ -79,7 +79,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
         var added = this.sessions.add(newSession);
         if (added) {
             LOGGER.debug(USER_ACTION, username, "Session Renew");
-            this.securityJwtEventsPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
+            this.eventsPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
         }
     }
 
@@ -88,7 +88,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
         LOGGER.debug(USER_ACTION, username, "Session Deletion");
         var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
         if (removed) {
-            this.securityJwtEventsPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
+            this.eventsPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
 
             var sessionTP = this.usersSessionsRepository.isPresent(accessToken);
 
@@ -120,7 +120,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
             if (sessionOpt.isPresent()) {
                 var session = sessionOpt.get();
                 this.sessions.remove(session);
-                this.securityJwtEventsPublisher.publishSessionExpired(new EventSessionExpired(session));
+                this.eventsPublisher.publishSessionExpired(new EventSessionExpired(session));
                 this.securityJwtIncidentsPublisher.publishSessionExpired(new IncidentSessionExpired(username, metadata));
             }
         });

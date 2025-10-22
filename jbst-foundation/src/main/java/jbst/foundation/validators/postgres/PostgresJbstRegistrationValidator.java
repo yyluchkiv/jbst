@@ -1,6 +1,6 @@
 package jbst.foundation.validators.postgres;
 
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
@@ -15,13 +15,13 @@ public class PostgresJbstRegistrationValidator extends AbstractJbstRegistrationV
 
     @Autowired
     public PostgresJbstRegistrationValidator(
-            SecurityJwtEventsPublisher securityJwtEventsPublisher,
+            JbstEventsPublisher eventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             PostgresJbstInvitationsRepository invitationsRepository,
             PostgresJbstUsersRepository usersRepository
     ) {
         super(
-                securityJwtEventsPublisher,
+                eventsPublisher,
                 securityJwtIncidentsPublisher,
                 invitationsRepository,
                 usersRepository

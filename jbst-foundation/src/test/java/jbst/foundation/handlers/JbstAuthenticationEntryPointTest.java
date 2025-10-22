@@ -9,7 +9,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.utils.JbstHttpUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -49,7 +49,7 @@ class JbstAuthenticationEntryPointTest {
 
     }
 
-    private final SecurityJwtEventsPublisher securityJwtPublisher;
+    private final JbstEventsPublisher securityJwtPublisher;
     private final JbstHttpUtils httpUtils;
     private final ObjectMapper objectMapper;
 

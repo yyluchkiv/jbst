@@ -11,7 +11,7 @@ import jbst.foundation.domain.events.EventRegistration1;
 import jbst.foundation.domain.events.EventRegistrationMagicLink;
 import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
@@ -42,7 +42,7 @@ public class JbstRegistrationResource {
     private final JbstRateLimitsService rateLimitsService;
     private final JbstRegistrationService registrationService;
     // Publishers
-    private final SecurityJwtEventsPublisher securityJwtEventsPublisher;
+    private final JbstEventsPublisher eventsPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher;
     // Validators
     private final JbstRegistrationValidator registrationValidator;
@@ -53,7 +53,7 @@ public class JbstRegistrationResource {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         this.registrationValidator.validateRegistrationRequestMagicLink(request);
         this.registrationService.registerMagicLink(request);
-        this.securityJwtEventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
+        this.eventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
         this.securityJwtIncidentsPublisher.publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
         this.extensionService.registerMagicLink(request.email());
     }
@@ -64,7 +64,7 @@ public class JbstRegistrationResource {
         request = request.createReworkedUkraineZoneId();
         this.registrationValidator.validateRegistrationRequest0(request);
         this.registrationService.register0(request);
-        this.securityJwtEventsPublisher.publishRegistration0(new EventRegistration0(request));
+        this.eventsPublisher.publishRegistration0(new EventRegistration0(request));
         this.securityJwtIncidentsPublisher.publishRegistration0(new IncidentRegistration0(request.username()));
         this.extensionService.register0(request.username());
     }
@@ -75,7 +75,7 @@ public class JbstRegistrationResource {
         request = request.createReworkedUkraineZoneId();
         this.registrationValidator.validateRegistrationRequest1(request);
         this.registrationService.register1(request);
-        this.securityJwtEventsPublisher.publishRegistration1(new EventRegistration1(request));
+        this.eventsPublisher.publishRegistration1(new EventRegistration1(request));
         this.securityJwtIncidentsPublisher.publishRegistration1(new IncidentRegistration1(request.username()));
         this.extensionService.register1(request.username());
     }

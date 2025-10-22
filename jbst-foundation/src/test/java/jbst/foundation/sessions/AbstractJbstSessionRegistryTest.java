@@ -18,7 +18,7 @@ import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
@@ -62,8 +62,8 @@ class AbstractJbstSessionRegistryTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        SecurityJwtEventsPublisher securityJwtPublisher() {
-            return mock(SecurityJwtEventsPublisher.class);
+        JbstEventsPublisher securityJwtPublisher() {
+            return mock(JbstEventsPublisher.class);
         }
 
         @Bean
@@ -93,7 +93,7 @@ class AbstractJbstSessionRegistryTest {
     }
 
     // Publishers
-    private final SecurityJwtEventsPublisher securityJwtPublisher;
+    private final JbstEventsPublisher securityJwtPublisher;
     private final SecurityJwtIncidentsPublisher securityJwtIncidentPublisher;
     // Services
     private final JbstUsersSessionsService jbstUsersSessionsService;

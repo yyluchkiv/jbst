@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
@@ -23,8 +23,8 @@ public class TestConfigurationValidators {
     // Publishers
     // =================================================================================================================
     @Bean
-    SecurityJwtEventsPublisher securityJwtPublisher() {
-        return mock(SecurityJwtEventsPublisher.class);
+    JbstEventsPublisher securityJwtPublisher() {
+        return mock(JbstEventsPublisher.class);
     }
 
     @Bean

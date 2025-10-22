@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
@@ -58,12 +58,12 @@ public class JbstConfigurationPostgres {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     JbstSessionRegistry postgresSessionRegistry(
-            SecurityJwtEventsPublisher securityJwtEventsPublisher,
+            JbstEventsPublisher eventsPublisher,
             SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
             PostgresJbstUsersSessionsService postgresBaseUsersSessionsService
     ) {
         return new PostgresSessionRegistry(
-                securityJwtEventsPublisher,
+                eventsPublisher,
                 securityJwtIncidentsPublisher,
                 postgresBaseUsersSessionsService,
                 this.postgresUsersSessionsRepository

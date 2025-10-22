@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jbst.foundation.events.publishers.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.JbstHttpUtils;
@@ -23,8 +23,8 @@ public class TestConfigurationHandlers {
     }
 
     @Bean
-    SecurityJwtEventsPublisher securityJwtEventsPublisher() {
-        return mock(SecurityJwtEventsPublisher.class);
+    JbstEventsPublisher securityJwtEventsPublisher() {
+        return mock(JbstEventsPublisher.class);
     }
 
     @Bean

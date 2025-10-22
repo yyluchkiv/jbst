@@ -13,7 +13,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityJwtEventsPublisher {
+public class JbstEventsPublisher {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
 
