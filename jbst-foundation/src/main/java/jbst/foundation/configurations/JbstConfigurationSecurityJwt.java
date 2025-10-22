@@ -62,10 +62,8 @@ import static org.springframework.http.HttpMethod.*;
 @ComponentScan({
         "jbst.foundation.assistants.utils",
         "jbst.foundation.crons",
-        "jbst.foundation.events.publishers.events",
-        "jbst.foundation.events.publishers.incidents",
-        "jbst.foundation.events.subscribers.events",
-        "jbst.foundation.events.subscribers.incidents",
+        "jbst.foundation.events.publishers",
+        "jbst.foundation.events.subscribers",
         "jbst.foundation.handlers",
         "jbst.foundation.handshakes",
         "jbst.foundation.resources",
