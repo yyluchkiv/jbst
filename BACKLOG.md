@@ -5,3 +5,6 @@
 - Users <-> GitHub OAuth Registration
 - Users + Plans
 - Plan Payments (Stripe)
+
+##### Major
+- investigate merger IncidentPublisher + JbstIncidentsPublisher
