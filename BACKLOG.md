@@ -9,3 +9,4 @@
 ##### Minor
 - JbstProperty: add enum {ROOT, BRANCH, LEAF}
 - SecurityJwt{Events+Incidents}Publishers: add "jbst" prefix OR interface/base -> "jbst"
+- investigate merger JbstSettings + PostgresDbJbstSettings 
