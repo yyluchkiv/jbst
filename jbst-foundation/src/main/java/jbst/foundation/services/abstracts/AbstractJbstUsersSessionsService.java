@@ -18,7 +18,7 @@ import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.sessions.SessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.utils.JbstGeoUtils;
@@ -42,7 +42,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessionsService {
 
     // Publishers
-    protected final SecurityJwtEventsPublisher securityJwtPublisher;
+    protected final JbstEventsPublisher securityJwtPublisher;
     // Repositories
     protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Utils

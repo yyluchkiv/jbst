@@ -32,13 +32,8 @@ public class WebsocketsFeaturesConfigs extends JbstProperty {
     }
 
     @Override
-    public boolean isRoot() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return false;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override
@@ -47,7 +42,7 @@ public class WebsocketsFeaturesConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return "websockets-features-configs";
     }
 }

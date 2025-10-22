@@ -8,20 +8,35 @@ import static jbst.foundation.domain.properties.JbstPropertiesUtility.*;
 import static jbst.foundation.utilities.strings.StringUtility.toKebab;
 
 public abstract class JbstProperty {
-    public abstract boolean isRoot();
-    public abstract boolean isLeaf();
+    public enum JbstPropertyNodeType {
+        ROOT, BRANCH, LEAF;
+
+        public boolean isRoot() {
+            return this == ROOT;
+        }
+
+        public boolean isBranch() {
+            return this == BRANCH;
+        }
+
+        public boolean isLeaf() {
+            return this == LEAF;
+        }
+    }
+
+    public abstract JbstPropertyNodeType getNodeType();
     public abstract boolean isToggle();
     @JbstNonMandatoryMethod
-    public abstract String getNameNonMandatory();
+    public abstract String getNameNonLeaf();
 
     public void assertProperties() {
-        if (this.isLeaf()) {
+        if (this.getNodeType().isLeaf()) {
             return;
         }
         var fields = this.isToggle() ?
-                getMandatoryToggleFields(this, this.getNameNonMandatory()) :
-                getMandatoryFields(this, this.getNameNonMandatory());
-        var currentParentTreeName = this.getParentTreeName();
+                getMandatoryToggleFields(this, this.getNameNonLeaf()) :
+                getMandatoryFields(this, this.getNameNonLeaf());
+        var currentParentTreeName = toKebab(this.getNameNonLeaf());
         fields.forEach(field -> {
             var edge = new JbstPropertyEdge(currentParentTreeName,this, field);
             assertNonNullOrThrow(edge);
@@ -35,7 +50,7 @@ public abstract class JbstProperty {
                 edge.assertOrThrow();
             }
         });
-        if (this.isRoot()) {
+        if (this.getNodeType().isRoot()) {
             this.printProperties(currentParentTreeName);
         }
     }
@@ -44,12 +59,12 @@ public abstract class JbstProperty {
     // PROTECTED METHODS
     // =================================================================================================================
     protected void assertPropertiesAsLeaf(String parentTreeName) {
-        if (!this.isLeaf()) {
+        if (!this.getNodeType().isLeaf()) {
             return;
         }
         var fields = this.isToggle() ?
-                getMandatoryToggleFields(this, this.getNameNonMandatory()) :
-                getMandatoryFields(this, this.getNameNonMandatory());
+                getMandatoryToggleFields(this, this.getNameNonLeaf()) :
+                getMandatoryFields(this, this.getNameNonLeaf());
         fields.forEach(field -> {
             var edge = new JbstPropertyEdge(parentTreeName, this, field);
             assertNonNullOrThrow(edge);
@@ -61,7 +76,7 @@ public abstract class JbstProperty {
     // PRIVATE METHODS
     // =================================================================================================================
     private void printProperties(String parentTreeName) {
-        getMandatoryBasedFields(this, this.getNameNonMandatory()).forEach(field -> {
+        getMandatoryBasedFields(this, this.getNameNonLeaf()).forEach(field -> {
             var edge = new JbstPropertyEdge(parentTreeName, this, field);
             if (isNull(edge.getValueRAW())) {
                 edge.print();
@@ -75,9 +90,5 @@ public abstract class JbstProperty {
                 }
             }
         });
-    }
-
-    private String getParentTreeName() {
-        return toKebab(this.getNameNonMandatory());
     }
 }

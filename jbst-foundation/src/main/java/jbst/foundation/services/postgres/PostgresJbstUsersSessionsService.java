@@ -1,7 +1,7 @@
 package jbst.foundation.services.postgres;
 
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractJbstUsersSessionsService;
 import jbst.foundation.utils.JbstGeoUtils;
@@ -15,13 +15,13 @@ public class PostgresJbstUsersSessionsService extends AbstractJbstUsersSessionsS
 
     @Autowired
     public PostgresJbstUsersSessionsService(
-            SecurityJwtEventsPublisher securityJwtEventsPublisher,
+            JbstEventsPublisher eventsPublisher,
             PostgresJbstUsersSessionsRepository usersSessionsRepository,
             JbstGeoUtils geoUtils,
             JbstSecurityUtils securityUtils
     ) {
         super(
-                securityJwtEventsPublisher,
+                eventsPublisher,
                 usersSessionsRepository,
                 geoUtils,
                 securityUtils

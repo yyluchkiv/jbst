@@ -14,6 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.time.ZoneOffset.UTC;
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF12;
+import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
@@ -37,10 +40,7 @@ public class MongoDbJbstSettings {
     private boolean hmtEnabled;
     private Map<HardwareName, Decimal128> hmtValues;
 
-    public void edit(
-            Username updatedBy,
-            JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
-    ) {
+    public void edit(Username updatedBy, JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds) {
         this.updatedBy = updatedBy;
         this.updatedAt = getCurrentTimestamp();
         this.hmtEnabled = hardwareMonitoringThresholds.enabled();
@@ -61,11 +61,19 @@ public class MongoDbJbstSettings {
                 ))
         );
         return new JbstSettings(
-                this.createdBy,
-                this.createdAt,
-                this.updatedBy,
-                this.updatedAt,
+                this.getActionUTC(this.createdBy, this.createdAt),
+                this.getActionUTC(this.updatedBy, this.updatedAt),
                 hardwareMonitoringThresholds
+        );
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private String getActionUTC(Username username, long timestamp) {
+        return "%s @ %s".formatted(
+                username,
+                DTF12.format(convertTimestamp(timestamp, UTC)) + " UTC"
         );
     }
 }

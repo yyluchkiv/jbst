@@ -83,7 +83,7 @@ public abstract class JbstSettingsService {
         var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
         assertTrueOrThrow(
                 essenceConfigs.getInvitationsOnInit().isEnabled(),
-                invalidAttribute("essenceConfigs.invitations-on-init.enabled == true")
+                invalidAttribute("essence-configs.invitations-on-init.enabled == true")
         );
         var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());
         essenceConfigs.getUsersOnInit().getUsers().forEach(userOnInit -> {
@@ -112,10 +112,10 @@ public abstract class JbstSettingsService {
     // Hardware Monitoring Thresholds
     // ================================================================================================================
     public final boolean isHardwareMonitoringThresholdsEnabled() {
-        return this.settingsAR.get().getHardwareMonitoringThresholds().enabled();
+        return this.settingsAR.get().hardwareMonitoringThresholds().enabled();
     }
 
     public JbstSettingsHardwareMonitoringThresholds getHardwareMonitoringThresholds() {
-        return this.settingsAR.get().getHardwareMonitoringThresholds();
+        return this.settingsAR.get().hardwareMonitoringThresholds();
     }
 }

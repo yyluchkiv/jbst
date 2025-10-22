@@ -3,8 +3,8 @@ package jbst.foundation.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
@@ -64,13 +64,13 @@ public class JbstConfigurationMongo {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     JbstSessionRegistry mongoSessionRegistry(
-            SecurityJwtEventsPublisher securityJwtEventsPublisher,
-            SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
+            JbstEventsPublisher eventsPublisher,
+            JbstIncidentsPublisher incidentsPublisher,
             MongoJbstUsersSessionsService mongoBaseUsersSessionsService
     ) {
         return new MongoSessionRegistry(
-                securityJwtEventsPublisher,
-                securityJwtIncidentsPublisher,
+                eventsPublisher,
+                incidentsPublisher,
                 mongoBaseUsersSessionsService,
                 this.mongoUsersSessionsRepository
         );

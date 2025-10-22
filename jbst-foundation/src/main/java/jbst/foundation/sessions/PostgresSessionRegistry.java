@@ -1,21 +1,21 @@
 package jbst.foundation.sessions;
 
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.postgres.PostgresJbstUsersSessionsService;
 
 public class PostgresSessionRegistry extends AbstractJbstSessionRegistry {
 
     public PostgresSessionRegistry(
-            SecurityJwtEventsPublisher securityJwtEventsPublisher,
-            SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher,
+            JbstEventsPublisher eventsPublisher,
+            JbstIncidentsPublisher incidentsPublisher,
             PostgresJbstUsersSessionsService usersSessionsService,
             PostgresJbstUsersSessionsRepository usersSessionsRepository
     ) {
         super(
-                securityJwtEventsPublisher,
-                securityJwtIncidentsPublisher,
+                eventsPublisher,
+                incidentsPublisher,
                 usersSessionsService,
                 usersSessionsRepository
         );

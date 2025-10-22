@@ -1,7 +1,7 @@
 package jbst.foundation.services.mongo;
 
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractJbstUsersSessionsService;
 import jbst.foundation.utils.JbstGeoUtils;
@@ -13,13 +13,13 @@ public class MongoJbstUsersSessionsService extends AbstractJbstUsersSessionsServ
 
     @Autowired
     public MongoJbstUsersSessionsService(
-            SecurityJwtEventsPublisher securityJwtEventsPublisher,
+            JbstEventsPublisher eventsPublisher,
             MongoJbstUsersSessionsRepository usersSessionsRepository,
             JbstGeoUtils geoUtils,
             JbstSecurityUtils securityUtils
     ) {
         super(
-                securityJwtEventsPublisher,
+                eventsPublisher,
                 usersSessionsRepository,
                 geoUtils,
                 securityUtils

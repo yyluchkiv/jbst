@@ -1,11 +1,9 @@
-package jbst.foundation.events.publishers.impl;
+package jbst.foundation.events.publishers;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
-import jbst.foundation.events.publishers.incidents.impl.BaseSecurityJwtIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -36,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityJwtIncidentsPublisherTest {
+class JbstIncidentsPublisherTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -52,8 +50,8 @@ class BaseSecurityJwtIncidentsPublisherTest {
         }
 
         @Bean
-        SecurityJwtIncidentsPublisher securityJwtIncidentPublisher() {
-            return new BaseSecurityJwtIncidentsPublisher(
+        JbstIncidentsPublisher incidentsPublisher() {
+            return new JbstIncidentsPublisher(
                     this.applicationEventPublisher(),
                     this.jbstProperties()
             );
@@ -65,7 +63,7 @@ class BaseSecurityJwtIncidentsPublisherTest {
     // Properties
     private final JbstProperties jbstProperties;
 
-    private final SecurityJwtIncidentsPublisher componentUnderTest;
+    private final JbstIncidentsPublisher componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

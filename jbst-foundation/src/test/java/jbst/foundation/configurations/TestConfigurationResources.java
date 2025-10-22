@@ -3,8 +3,8 @@ package jbst.foundation.configurations;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
@@ -157,13 +157,13 @@ public class TestConfigurationResources {
     // Publishers
     // =================================================================================================================
     @Bean
-    SecurityJwtEventsPublisher securityJwtEventsPublisher() {
-        return mock(SecurityJwtEventsPublisher.class);
+    JbstEventsPublisher securityJwtEventsPublisher() {
+        return mock(JbstEventsPublisher.class);
     }
 
     @Bean
-    SecurityJwtIncidentsPublisher securityJwtIncidentsPublisher() {
-        return mock(SecurityJwtIncidentsPublisher.class);
+    JbstIncidentsPublisher securityJwtIncidentsPublisher() {
+        return mock(JbstIncidentsPublisher.class);
     }
 
     @Bean

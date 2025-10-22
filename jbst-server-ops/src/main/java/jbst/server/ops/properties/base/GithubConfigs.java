@@ -23,13 +23,8 @@ public class GithubConfigs extends JbstProperty {
     private final String content;
 
     @Override
-    public boolean isRoot() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return true;
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override
@@ -38,7 +33,7 @@ public class GithubConfigs extends JbstProperty {
     }
 
     @Override
-    public String getNameNonMandatory() {
+    public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
     }
 }

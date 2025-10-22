@@ -6,8 +6,8 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0Failure;
 import jbst.foundation.domain.events.EventRegistration1Failure;
 import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
-import jbst.foundation.events.publishers.incidents.SecurityJwtIncidentsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import jbst.foundation.repositories.JbstInvitationsRepository;
@@ -24,8 +24,8 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 public abstract class AbstractJbstRegistrationValidator implements JbstRegistrationValidator {
 
     // Publishers
-    protected final SecurityJwtEventsPublisher securityJwtPublisher;
-    protected final SecurityJwtIncidentsPublisher securityJwtIncidentPublisher;
+    protected final JbstEventsPublisher securityJwtPublisher;
+    protected final JbstIncidentsPublisher securityJwtIncidentPublisher;
     // Repositories
     protected final JbstInvitationsRepository invitationsRepository;
     protected final JbstUsersRepository usersRepository;

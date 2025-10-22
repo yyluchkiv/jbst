@@ -1,5 +1,7 @@
 package jbst.foundation.domain.databases.postgres.superclasses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.PostgresConverters;
@@ -9,7 +11,10 @@ import org.springframework.lang.Nullable;
 
 import java.util.UUID;
 
+import static java.time.ZoneOffset.UTC;
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF12;
+import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @MappedSuperclass
@@ -40,16 +45,36 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     }
 
     @Nullable
+    @JsonIgnore
     @Override
     public UUID getId() {
         return this.id;
     }
 
     // DATAJPA-622
+    @JsonIgnore
     @Transient
     @Override
     public boolean isNew() {
         return isNull(this.getId());
+    }
+
+    @JsonInclude
+    @Transient
+    public String getCreatedUTC() {
+        return "%s @ %s".formatted(
+                this.createdBy,
+                DTF12.format(convertTimestamp(this.createdAt, UTC)) + " UTC"
+        );
+    }
+
+    @JsonInclude
+    @Transient
+    public String getUpdatedUTC() {
+        return "%s @ %s".formatted(
+                this.updatedBy,
+                DTF12.format(convertTimestamp(this.updatedAt, UTC)) + " UTC"
+        );
     }
 
     @SuppressWarnings("unused")

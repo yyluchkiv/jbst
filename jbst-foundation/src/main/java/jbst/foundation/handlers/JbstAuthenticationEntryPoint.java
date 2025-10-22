@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.events.publishers.events.SecurityJwtEventsPublisher;
+import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.utils.JbstHttpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClient
 public class JbstAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     // Publishers
-    private final SecurityJwtEventsPublisher securityJwtPublisher;
+    private final JbstEventsPublisher securityJwtPublisher;
     // Utilities
     private final JbstHttpUtils httpUtils;
     // JSONs

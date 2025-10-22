@@ -14,6 +14,7 @@
     <logger name="org.apache" level="warn" />
     <logger name="org.springframework" level="warn" />
     <logger name="org.hibernate.metamodel.internal.MetadataContext" level="error" />
+    <logger name="jbst.foundation.domain.properties.JbstPropertyEdge" level="warn" />
 
     <root level="info">
         <appender-ref ref="CONSOLE" />
