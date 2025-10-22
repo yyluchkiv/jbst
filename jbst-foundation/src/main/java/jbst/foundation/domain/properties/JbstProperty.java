@@ -20,7 +20,7 @@ public abstract class JbstProperty {
         }
 
         public boolean isLeaf() {
-            return this == ROOT;
+            return this == LEAF;
         }
     }
 
