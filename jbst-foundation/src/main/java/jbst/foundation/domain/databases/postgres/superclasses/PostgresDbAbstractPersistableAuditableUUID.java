@@ -52,16 +52,15 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     }
 
     // DATAJPA-622
-    @Transient
     @JsonIgnore
+    @Transient
     @Override
     public boolean isNew() {
         return isNull(this.getId());
     }
 
-    @SuppressWarnings("unused")
-    @Transient
     @JsonInclude
+    @Transient
     public String getCreatedUTC() {
         return "%s @ %s".formatted(
                 this.createdBy,
@@ -69,9 +68,8 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
         );
     }
 
-    @SuppressWarnings("unused")
-    @Transient
     @JsonInclude
+    @Transient
     public String getUpdatedUTC() {
         return "%s @ %s".formatted(
                 this.updatedBy,

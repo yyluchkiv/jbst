@@ -56,11 +56,9 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
         // Act
         this.mvc.perform(get("/settings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(5))
-                .andExpect(jsonPath("$.createdBy").exists())
-                .andExpect(jsonPath("$.createdAt").exists())
-                .andExpect(jsonPath("$.updatedBy").exists())
-                .andExpect(jsonPath("$.updatedAt").exists())
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$.createdUTC").exists())
+                .andExpect(jsonPath("$.updatedUTC").exists())
                 .andExpect(jsonPath("$.hardwareMonitoringThresholds").exists());
 
         // Assert
@@ -81,11 +79,9 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(5))
-                .andExpect(jsonPath("$.createdBy").exists())
-                .andExpect(jsonPath("$.createdAt").exists())
-                .andExpect(jsonPath("$.updatedBy").exists())
-                .andExpect(jsonPath("$.updatedAt").exists())
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$.createdUTC").exists())
+                .andExpect(jsonPath("$.updatedUTC").exists())
                 .andExpect(jsonPath("$.hardwareMonitoringThresholds").exists());
 
         // Assert
