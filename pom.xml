@@ -566,7 +566,7 @@
                 <configuration>
                     <source>${version.java}</source>
                     <target>${version.java}</target>
-                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <forceLegacyJavacApi>true</forceLegacyJavacApi>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
                     <!-- https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention  -->
