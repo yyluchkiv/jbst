@@ -24,6 +24,7 @@ class MongoDbUserTest {
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 Set.of(
                         new SimpleGrantedAuthority("admin123")
@@ -47,6 +48,7 @@ class MongoDbUserTest {
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 Set.of(
                         new SimpleGrantedAuthority("admin123")

@@ -139,6 +139,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
                             creationOption,
                             username,
                             password,
+                            true,
                             zoneId,
                             new HashSet<>(),
                             email,

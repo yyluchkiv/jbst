@@ -134,6 +134,7 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
                             creationOption,
                             username,
                             password,
+                            true,
                             zoneId,
                             new HashSet<>(),
                             email,

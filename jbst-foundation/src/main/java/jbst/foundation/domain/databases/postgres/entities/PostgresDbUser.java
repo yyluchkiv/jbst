@@ -94,6 +94,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull UserCreationOption creationOption,
             @NotNull Username username,
             @NotNull Password password,
+            boolean enabled,
             @NotNull ZoneId zoneId,
             @NotNull Set<SimpleGrantedAuthority> authorities,
             @Nullable Email email,
@@ -103,6 +104,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
         this.creationOption = creationOption;
         this.username = username;
         this.password = password;
+        this.enabled = enabled;
         this.zoneId = zoneId;
         this.authorities = authorities;
         this.email = email;
@@ -119,6 +121,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 UserCreationOption.STANDARD,
                 requestUserRegistration0.username(),
                 password,
+                true,
                 requestUserRegistration0.zoneId(),
                 new HashSet<>(),
                 requestUserRegistration0.email(),
@@ -136,6 +139,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 UserCreationOption.STANDARD,
                 requestUserRegistration1.username(),
                 password,
+                true,
                 requestUserRegistration1.zoneId(),
                 invitation.authorities(),
                 null,
@@ -163,6 +167,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 UserCreationOption.random(),
                 Username.of(username),
                 Password.random(),
+                true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
                 Email.of(username + "@" + JbstConstants.Domains.HARDCODED),

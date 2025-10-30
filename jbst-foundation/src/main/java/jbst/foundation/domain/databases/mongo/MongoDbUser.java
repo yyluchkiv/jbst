@@ -61,6 +61,7 @@ public class MongoDbUser {
             @NotNull UserCreationOption creationOption,
             @NotNull Username username,
             @NotNull Password password,
+            boolean enabled,
             @NotNull ZoneId zoneId,
             @NotNull Set<SimpleGrantedAuthority> authorities,
             @Nullable Email email,
@@ -70,6 +71,7 @@ public class MongoDbUser {
         this.creationOption = creationOption;
         this.username = username;
         this.password = password;
+        this.enabled = enabled;
         this.zoneId = zoneId;
         this.authorities = authorities;
         this.email = email;
@@ -86,6 +88,7 @@ public class MongoDbUser {
                 UserCreationOption.STANDARD,
                 requestUserRegistration0.username(),
                 password,
+                true,
                 requestUserRegistration0.zoneId(),
                 new HashSet<>(),
                 requestUserRegistration0.email(),
@@ -103,6 +106,7 @@ public class MongoDbUser {
                 UserCreationOption.STANDARD,
                 requestUserRegistration1.username(),
                 password,
+                true,
                 requestUserRegistration1.zoneId(),
                 invitation.authorities(),
                 null,
@@ -134,6 +138,7 @@ public class MongoDbUser {
                 UserCreationOption.random(),
                 Username.of(username),
                 Password.random(),
+                true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
                 Email.of(username + "@" + JbstConstants.Domains.HARDCODED),
