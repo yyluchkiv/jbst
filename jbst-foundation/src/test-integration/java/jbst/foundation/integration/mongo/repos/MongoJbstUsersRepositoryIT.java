@@ -136,6 +136,12 @@ class MongoJbstUsersRepositoryIT extends TestsJbstConfigurationMongoRepositories
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
                 .hasMessageStartingWith(entityNotFound("Username", username.value()));
+
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin1")).getValues()).hasSize(5);
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin1")).getUsernamesAsStrings()).containsOnly("sa1", "sa2", "sa3", "user1", "user2");
+
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin2")).getValues()).hasSize(6);
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin2")).getUsernamesAsStrings()).containsOnly("sa1", "sa2", "sa3", "user1", "user2", "admin1");
     }
 
     @Test

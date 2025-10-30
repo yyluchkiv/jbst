@@ -1,7 +1,7 @@
 package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.databases.JbstUser;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -62,7 +62,7 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     // Users
     // =================================================================================================================
     @Override
-    public List<JbstUser> findUsersExcept(Username username) {
+    public JbstUsers findUsersExcept(Username username) {
         return this.usersRepository.findUsersExcept(username);
     }
 

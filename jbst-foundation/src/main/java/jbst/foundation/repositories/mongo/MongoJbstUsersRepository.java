@@ -4,8 +4,8 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
@@ -21,7 +21,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,9 +60,8 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default List<JbstUser> findUsersExcept(Username username) {
-        // TODO [YYL] fixme
-        return new ArrayList<>();
+    default JbstUsers findUsersExcept(Username username) {
+        return new JbstUsers(this.findByUsernameNot(username).stream().map(MongoDbUser::asJbstUser).collect(Collectors.toList()));
     }
 
     default void confirmEmail(Email email) {
@@ -145,6 +143,7 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
     boolean existsByEmail(Email email);
     MongoDbUser findByUsername(Username username);
     boolean existsByUsername(Username username);
+    List<MongoDbUser> findByUsernameNot(Username username);
     List<MongoDbUser> findByUsernameIn(Set<Username> usernames);
     List<MongoDbUser> findByUsernameIn(List<Username> usernames);
 

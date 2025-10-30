@@ -1,7 +1,7 @@
 package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.databases.JbstUser;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -183,15 +183,14 @@ class AbstractJbstSuperadminServiceTest {
     void findUsersExcept() {
         // Arrange
         var username = Username.hardcoded();
-        var users1 = list345(JbstUser.class);
-        when(this.usersRepository.findUsersExcept(username)).thenReturn(users1);
+        when(this.usersRepository.findUsersExcept(username)).thenReturn(JbstUsers.hardcoded());
 
         // Act
-        var users2 = this.componentUnderTest.findUsersExcept(username);
+        var users = this.componentUnderTest.findUsersExcept(username);
 
         // Assert
         verify(this.usersRepository).findUsersExcept(username);
-        assertThat(users2).isEqualTo(users1);
+        assertThat(users).isEqualTo(JbstUsers.hardcoded());
     }
 
     @Test

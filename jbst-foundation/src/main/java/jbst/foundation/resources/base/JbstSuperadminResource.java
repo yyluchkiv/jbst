@@ -6,7 +6,7 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.databases.JbstUser;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
@@ -69,7 +69,7 @@ public class JbstSuperadminResource {
     // Users
     // =================================================================================================================
     @GetMapping("/users")
-    public List<JbstUser> findUsersExcept() {
+    public JbstUsers findUsersExcept() {
         var currentUsername = this.currentSessionAssistant.getCurrentUsername();
         return this.superadminService.findUsersExcept(currentUsername);
     }

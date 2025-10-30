@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.databases.JbstUser;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -124,23 +124,22 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
         // Arrange
         var username = Username.hardcoded();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
-        var users = list345(JbstUser.class);
-        when(this.superadminService.findUsersExcept(username)).thenReturn(users);
+        when(this.superadminService.findUsersExcept(username)).thenReturn(JbstUsers.hardcoded());
 
         // Act
         this.mvc.perform(get("/superadmin/users"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(users.size()))
-                .andExpect(jsonPath("$.[0].length()").value(8))
-                .andExpect(jsonPath("$.[0].id").exists())
-                .andExpect(jsonPath("$.[0].creationOption").exists())
-                .andExpect(jsonPath("$.[0].username").exists())
-                .andExpect(jsonPath("$.[0].zoneId").exists())
-                .andExpect(jsonPath("$.[0].authorities").exists())
-                .andExpect(jsonPath("$.[0].email").exists())
-                .andExpect(jsonPath("$.[0].name").exists())
-                .andExpect(jsonPath("$.[0].enabled").exists());
+                .andExpect(jsonPath("$.values.length()").value(1))
+                .andExpect(jsonPath("$.values[0].length()").value(8))
+                .andExpect(jsonPath("$.values[0].id").exists())
+                .andExpect(jsonPath("$.values[0].creationOption").exists())
+                .andExpect(jsonPath("$.values[0].username").exists())
+                .andExpect(jsonPath("$.values[0].zoneId").exists())
+                .andExpect(jsonPath("$.values[0].authorities").exists())
+                .andExpect(jsonPath("$.values[0].email").exists())
+                .andExpect(jsonPath("$.values[0].name").exists())
+                .andExpect(jsonPath("$.values[0].enabled").exists());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();

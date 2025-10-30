@@ -1,7 +1,7 @@
 package jbst.foundation.services;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.databases.JbstUser;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -27,7 +27,7 @@ public interface JbstSuperadminService {
     // =================================================================================================================
     // Users
     // =================================================================================================================
-    List<JbstUser> findUsersExcept(Username username);
+    JbstUsers findUsersExcept(Username username);
     void disableUser(Username username);
 
     // =================================================================================================================

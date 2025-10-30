@@ -10,6 +10,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.databases.JbstInvitation;
+import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
@@ -229,6 +230,21 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 this.enabled,
                 this.emailDetails,
                 this.attributes
+        );
+    }
+
+    @JsonIgnore
+    @Transient
+    public JbstUser asJbstUser() {
+        return new JbstUser(
+                this.userId(),
+                this.creationOption,
+                this.username,
+                this.zoneId,
+                this.authorities,
+                this.email,
+                this.name,
+                this.enabled
         );
     }
 }

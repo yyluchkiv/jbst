@@ -7,6 +7,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstInvitation;
+import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
@@ -196,6 +197,21 @@ public class MongoDbUser {
                 this.enabled,
                 this.emailDetails,
                 this.attributes
+        );
+    }
+
+    @JsonIgnore
+    @Transient
+    public JbstUser asJbstUser() {
+        return new JbstUser(
+                this.userId(),
+                this.creationOption,
+                this.username,
+                this.zoneId,
+                this.authorities,
+                this.email,
+                this.name,
+                this.enabled
         );
     }
 }

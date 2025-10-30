@@ -4,8 +4,8 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.databases.postgres.projections.PostgresDbUserProjection1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
@@ -25,7 +25,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,9 +65,8 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default List<JbstUser> findUsersExcept(Username username) {
-        // TODO [YYL] fixme
-        return new ArrayList<>();
+    default JbstUsers findUsersExcept(Username username) {
+        return new JbstUsers(this.findByUsernameNot(username).stream().map(PostgresDbUser::asJbstUser).collect(Collectors.toList()));
     }
 
     default void confirmEmail(Email email) {
@@ -150,6 +148,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
     boolean existsByEmail(Email email);
     PostgresDbUser findByUsername(Username username);
     boolean existsByUsername(Username username);
+    List<PostgresDbUser> findByUsernameNot(Username username);
     List<PostgresDbUser> findByUsernameIn(Set<Username> usernames);
     List<PostgresDbUser> findByUsernameIn(List<Username> usernames);
 
