@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.base.AbstractAuthority;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
@@ -44,7 +46,6 @@ public class JbstSuperadminResource {
     // =================================================================================================================
     // Server
     // =================================================================================================================
-
     @GetMapping("/server/reset/status")
     public ResetServerStatus getResetServerStatus() {
         return this.superadminService.getResetServerStatus();
@@ -59,7 +60,6 @@ public class JbstSuperadminResource {
     // =================================================================================================================
     // Invitations
     // =================================================================================================================
-
     @GetMapping("/invitations/unused")
     public List<ResponseInvitation> findInvitationsUnused() {
         return this.superadminService.findInvitationsUnused();
@@ -68,13 +68,20 @@ public class JbstSuperadminResource {
     // =================================================================================================================
     // Users
     // =================================================================================================================
+    @GetMapping("/users")
+    public List<JbstUser> findUsersExcept() {
+        var currentUsername = this.currentSessionAssistant.getCurrentUsername();
+        return this.superadminService.findUsersExcept(currentUsername);
+    }
 
-
+    @PostMapping("/users/{username}/disable")
+    public void disableUser(@PathVariable Username username) {
+        this.superadminService.disableUser(username);
+    }
 
     // =================================================================================================================
     // Users Sessions
     // =================================================================================================================
-
     @GetMapping("/sessions")
     public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
