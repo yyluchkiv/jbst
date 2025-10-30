@@ -2,7 +2,6 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
@@ -33,11 +32,6 @@ public class TestConfigurationPostgresValidators {
     @Bean
     JbstIncidentsPublisher securityJwtIncidentPublisher() {
         return mock(JbstIncidentsPublisher.class);
-    }
-
-    @Bean
-    IncidentPublisher incidentPublisher() {
-        return mock(IncidentPublisher.class);
     }
 
     // =================================================================================================================

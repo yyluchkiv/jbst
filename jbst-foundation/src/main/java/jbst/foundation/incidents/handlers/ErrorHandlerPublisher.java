@@ -1,6 +1,6 @@
 package jbst.foundation.incidents.handlers;
 
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +10,10 @@ import org.springframework.util.ErrorHandler;
 public class ErrorHandlerPublisher implements ErrorHandler {
 
     // Publisher
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     @Override
     public void handleError(@NotNull Throwable throwable) {
-        this.incidentPublisher.publishThrowable(throwable);
+        this.incidentsPublisher.publishThrowable(throwable);
     }
 }

@@ -1,6 +1,6 @@
 package jbst.foundation.incidents.handlers;
 
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,34 +23,34 @@ class ErrorHandlerPublisherTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
         }
 
         @Bean
         ErrorHandlerPublisher errorHandlerPublisher() {
             return new ErrorHandlerPublisher(
-                    this.incidentPublisher()
+                    this.incidentsPublisher()
             );
         }
     }
 
     // Publisher
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     private final ErrorHandlerPublisher componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -63,6 +63,6 @@ class ErrorHandlerPublisherTest {
         this.componentUnderTest.handleError(throwable);
 
         // Assert
-        verify(this.incidentPublisher).publishThrowable(throwable);
+        verify(this.incidentsPublisher).publishThrowable(throwable);
     }
 }

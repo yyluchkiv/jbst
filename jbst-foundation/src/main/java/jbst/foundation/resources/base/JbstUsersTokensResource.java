@@ -14,7 +14,7 @@ import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstRateLimitsService;
@@ -48,7 +48,7 @@ public class JbstUsersTokensResource {
     // Validators
     private final JbstUsersTokensValidator usersTokensValidator;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -78,7 +78,7 @@ public class JbstUsersTokensResource {
             redirectAttributes.addAttribute("code", 0);
             return redirectView;
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
             redirectAttributes.addAttribute("code", 0);
             return redirectView;
         }

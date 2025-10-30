@@ -9,8 +9,6 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.JbstIncidentsSubscriber;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.incidents.events.publishers.impl.IncidentPublisherImpl;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
 import jbst.foundation.incidents.feigns.clients.impl.IncidentClientImpl;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
@@ -94,14 +92,6 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     // ================================================================================================================
     // Incidents: Pub+Sub
     // ================================================================================================================
-    @Deprecated
-    @Bean
-    IncidentPublisher incidentPublisher() {
-        return new IncidentPublisherImpl(
-                this.applicationEventPublisher
-        );
-    }
-
     @Bean
     JbstIncidentsPublisher incidentsPublisher() {
         return new JbstIncidentsPublisher(this.applicationEventPublisher, this.jbstProperties);
@@ -117,7 +107,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     // ================================================================================================================
     @Bean
     RejectedExecutionHandler rejectedExecutionHandler() {
-        return new RejectedExecutionHandlerPublisher(this.incidentPublisher());
+        return new RejectedExecutionHandlerPublisher(this.incidentsPublisher());
     }
 
     @Override
@@ -142,7 +132,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     // ================================================================================================================
     @Bean
     ErrorHandler errorHandlerPublisher() {
-        return new ErrorHandlerPublisher(this.incidentPublisher());
+        return new ErrorHandlerPublisher(this.incidentsPublisher());
     }
 
     @SuppressWarnings("DuplicatedCode")

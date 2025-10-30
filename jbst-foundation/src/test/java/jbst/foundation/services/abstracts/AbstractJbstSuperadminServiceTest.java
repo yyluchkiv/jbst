@@ -9,7 +9,6 @@ import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -44,11 +43,6 @@ class AbstractJbstSuperadminServiceTest {
     static class ContextConfiguration {
 
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
-        }
-
-        @Bean
         JbstIncidentsPublisher incidentsPublisher() {
             return mock(JbstIncidentsPublisher.class);
         }
@@ -76,7 +70,7 @@ class AbstractJbstSuperadminServiceTest {
         @Bean
         AbstractJbstResetServerTask abstractSuperAdminResetServerTask() {
             return new AbstractJbstResetServerTask(
-                    this.incidentPublisher()
+                    this.incidentsPublisher()
             ) {
                 @Override
                 public ResetServerStatus getStatus() {
@@ -104,7 +98,6 @@ class AbstractJbstSuperadminServiceTest {
 
     // Incidents
     private final JbstIncidentsPublisher incidentsPublisher;
-    private final IncidentPublisher incidentPublisher;
     // Sessions
     private final JbstSessionRegistry sessionRegistry;
     // Repositories
@@ -119,7 +112,6 @@ class AbstractJbstSuperadminServiceTest {
     void beforeEach() {
         reset(
                 this.incidentsPublisher,
-                this.incidentPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
                 this.usersSessionsRepository,
@@ -131,7 +123,6 @@ class AbstractJbstSuperadminServiceTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentsPublisher,
-                this.incidentPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
                 this.usersSessionsRepository,

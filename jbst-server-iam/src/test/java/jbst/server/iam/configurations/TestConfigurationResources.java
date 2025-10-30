@@ -1,7 +1,7 @@
 package jbst.server.iam.configurations;
 
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.server.iam.base.services.UsersService;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +23,12 @@ public class TestConfigurationResources {
     // =================================================================================================================
     @Bean
     JbstResourceExceptionHandler resourceExceptionHandler() {
-        return new JbstResourceExceptionHandler(this.incidentPublisher());
+        return new JbstResourceExceptionHandler(this.incidentsPublisher());
     }
 
     @Bean
-    IncidentPublisher incidentPublisher() {
-        return mock(IncidentPublisher.class);
+    JbstIncidentsPublisher incidentsPublisher() {
+        return mock(JbstIncidentsPublisher.class);
     }
 
     // =================================================================================================================

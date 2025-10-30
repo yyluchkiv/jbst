@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
@@ -64,7 +64,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     // Validators
     private final JbstUsersTokensValidator usersTokensValidator;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     // Resource
     private final JbstUsersTokensResource componentUnderTest;
@@ -78,7 +78,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
                 this.usersEmailsService,
                 this.usersService,
                 this.usersTokensValidator,
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -90,7 +90,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
                 this.usersEmailsService,
                 this.usersService,
                 this.usersTokensValidator,
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -148,7 +148,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
         var confirmEmailInvocations = tokensServiceInvoked ? times(1) : times(0);
         verify(this.usersTokensService, confirmEmailInvocations).confirmEmail(token);
         if (nonNull(runtimeException)) {
-            verify(this.incidentPublisher).publishThrowable(any());
+            verify(this.incidentsPublisher).publishThrowable(any());
         }
     }
 

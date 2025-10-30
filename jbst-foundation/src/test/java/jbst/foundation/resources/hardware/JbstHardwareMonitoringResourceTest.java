@@ -5,7 +5,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTab
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     // Websockets
     private final JbstWebsocketsService websocketsService;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     // State
     private final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 
@@ -45,7 +45,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         reset(
                 this.settingsService,
                 this.websocketsService,
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -54,7 +54,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         verifyNoMoreInteractions(
                 this.settingsService,
                 this.websocketsService,
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -74,7 +74,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.settingsService).getHardwareMonitoringThresholds();
-        verify(this.incidentPublisher).publishThrowable(npe);
+        verify(this.incidentsPublisher).publishThrowable(npe);
     }
 
     @SuppressWarnings("unchecked")

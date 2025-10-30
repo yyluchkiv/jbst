@@ -7,7 +7,6 @@ import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
@@ -52,7 +51,7 @@ public class TestConfigurationResources {
     // =================================================================================================================
     @Bean
     JbstResourceExceptionHandler resourceExceptionHandler() {
-        return new JbstResourceExceptionHandler(this.incidentPublisher());
+        return new JbstResourceExceptionHandler(this.incidentsPublishers());
     }
 
     // =================================================================================================================
@@ -162,13 +161,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    JbstIncidentsPublisher securityJwtIncidentsPublisher() {
+    JbstIncidentsPublisher incidentsPublishers() {
         return mock(JbstIncidentsPublisher.class);
-    }
-
-    @Bean
-    IncidentPublisher incidentPublisher() {
-        return mock(IncidentPublisher.class);
     }
 
     // =================================================================================================================
