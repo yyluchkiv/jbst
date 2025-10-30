@@ -53,7 +53,7 @@ public abstract class AbstractTimerTask {
         }
     }
 
-    public final void start() {
+    public void start() {
         if (this.state.isOperative()) {
             return;
         }
@@ -68,7 +68,7 @@ public abstract class AbstractTimerTask {
         }, this.interval.initialDelay(), this.interval.delay(), this.interval.unit());
     }
 
-    public final void stop() {
+    public void stop() {
         if (!this.state.isOperative()) {
             return;
         }
