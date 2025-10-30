@@ -37,7 +37,7 @@ public class JbstSuperadminResource {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final JbstSuperadminService superadminService;
-    private final JbstUsersSessionsService jbstUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final JbstTokensProvider tokensProvider;
 
@@ -66,6 +66,10 @@ public class JbstSuperadminResource {
     }
 
     // =================================================================================================================
+    // Users
+    // =================================================================================================================
+
+    // =================================================================================================================
     // Users Sessions
     // =================================================================================================================
 
@@ -77,20 +81,20 @@ public class JbstSuperadminResource {
 
     @PostMapping("/sessions/{sessionId}/renew/manually")
     public void renewManually(@PathVariable UserSessionId sessionId) {
-        this.jbstUsersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
+        this.usersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable UserSessionId sessionId) {
-        this.jbstUsersSessionsService.deleteById(sessionId);
+        this.usersSessionsService.deleteById(sessionId);
     }
 
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
-        this.jbstUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
+        this.usersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }
 

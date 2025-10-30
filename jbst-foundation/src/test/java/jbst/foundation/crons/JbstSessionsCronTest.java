@@ -74,7 +74,7 @@ class JbstSessionsCronTest {
     }
 
     private final JbstSessionRegistry sessionRegistry;
-    private final JbstUsersSessionsService jbstUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     private final JbstIncidentsPublisher incidentsPublisher;
     private final JbstProperties jbstProperties;
 
@@ -84,7 +84,7 @@ class JbstSessionsCronTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
-                this.jbstUsersSessionsService,
+                this.usersSessionsService,
                 this.incidentsPublisher,
                 this.jbstProperties
         );
@@ -94,7 +94,7 @@ class JbstSessionsCronTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
-                this.jbstUsersSessionsService,
+                this.usersSessionsService,
                 this.incidentsPublisher,
                 this.jbstProperties
         );
@@ -144,7 +144,7 @@ class JbstSessionsCronTest {
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
         if (cron.isEnabled()) {
-            verify(this.jbstUsersSessionsService).enableUserRequestMetadataRenewCron();
+            verify(this.usersSessionsService).enableUserRequestMetadataRenewCron();
         }
     }
 }
