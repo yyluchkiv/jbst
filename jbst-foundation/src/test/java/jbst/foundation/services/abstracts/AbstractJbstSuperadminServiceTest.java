@@ -1,5 +1,7 @@
 package jbst.foundation.services.abstracts;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -10,6 +12,7 @@ import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tasks.AbstractJbstResetServerTask;
@@ -58,6 +61,11 @@ class AbstractJbstSuperadminServiceTest {
         }
 
         @Bean
+        JbstUsersRepository usersRepository() {
+            return mock(JbstUsersRepository.class);
+        }
+
+        @Bean
         JbstUsersSessionsRepository usersSessionsRepository() {
             return mock(JbstUsersSessionsRepository.class);
         }
@@ -90,6 +98,7 @@ class AbstractJbstSuperadminServiceTest {
                     this.incidentsPublisher(),
                     this.sessionRegistry(),
                     this.invitationsRepository(),
+                    this.usersRepository(),
                     this.usersSessionsRepository(),
                     this.abstractSuperAdminResetServerTask()
             ) {};
@@ -102,6 +111,7 @@ class AbstractJbstSuperadminServiceTest {
     private final JbstSessionRegistry sessionRegistry;
     // Repositories
     private final JbstInvitationsRepository invitationsRepository;
+    private final JbstUsersRepository usersRepository;
     private final JbstUsersSessionsRepository usersSessionsRepository;
     // Mocks
     private final AbstractMockService abstractMockService;
@@ -114,6 +124,7 @@ class AbstractJbstSuperadminServiceTest {
                 this.incidentsPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
+                this.usersRepository,
                 this.usersSessionsRepository,
                 this.abstractMockService
         );
@@ -125,6 +136,7 @@ class AbstractJbstSuperadminServiceTest {
                 this.incidentsPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
+                this.usersRepository,
                 this.usersSessionsRepository,
                 this.abstractMockService
         );
@@ -154,17 +166,32 @@ class AbstractJbstSuperadminServiceTest {
     }
 
     @Test
-    void findUnusedTest() {
+    void findInvitationsUnusedTest() {
         // Arrange
         var invitations = list345(ResponseInvitation.class);
         when(this.invitationsRepository.findUnused()).thenReturn(invitations);
 
         // Act
-        var unused = this.componentUnderTest.findUnused();
+        var unused = this.componentUnderTest.findInvitationsUnused();
 
         // Assert
         verify(this.invitationsRepository).findUnused();
         assertThat(unused).isEqualTo(invitations);
+    }
+
+    @Test
+    void findUsersExcept() {
+        // Arrange
+        var username = Username.hardcoded();
+        var users1 = list345(JbstUser.class);
+        when(this.usersRepository.findUsersExcept(username)).thenReturn(users1);
+
+        // Act
+        var users2 = this.componentUnderTest.findUsersExcept(username);
+
+        // Assert
+        verify(this.usersRepository).findUsersExcept(username);
+        assertThat(users2).isEqualTo(users1);
     }
 
     @Test

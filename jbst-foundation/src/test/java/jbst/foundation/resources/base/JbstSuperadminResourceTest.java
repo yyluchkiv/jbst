@@ -100,7 +100,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     void getUnusedInvitationsTest() throws Exception {
         // Arrange
         var codes = list345(ResponseInvitation.class);
-        when(this.superadminService.findUnused()).thenReturn(codes);
+        when(this.superadminService.findInvitationsUnused()).thenReturn(codes);
 
         // Act
         this.mvc.perform(get("/superadmin/invitations/unused"))
@@ -113,7 +113,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.[0].invited", notNullValue()));
 
         // Assert
-        verify(this.superadminService).findUnused();
+        verify(this.superadminService).findInvitationsUnused();
     }
 
     @Test

@@ -1,5 +1,7 @@
 package jbst.foundation.services.abstracts;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -9,6 +11,7 @@ import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -27,6 +30,7 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     protected final JbstSessionRegistry sessionRegistry;
     // Repositories
     protected final JbstInvitationsRepository invitationsRepository;
+    protected final JbstUsersRepository usersRepository;
     protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Tasks
     protected final AbstractJbstResetServerTask resetServerTask;
@@ -42,9 +46,7 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     @Override
     public void resetServerBy(JwtUser user) {
         this.incidentsPublisher.publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
-
         this.resetServerTask.reset(user);
-
         this.incidentsPublisher.publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
     }
 
@@ -52,8 +54,16 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     // Invitations
     // =================================================================================================================
     @Override
-    public List<ResponseInvitation> findUnused() {
+    public List<ResponseInvitation> findInvitationsUnused() {
         return this.invitationsRepository.findUnused();
+    }
+
+    // =================================================================================================================
+    // Users
+    // =================================================================================================================
+    @Override
+    public List<JbstUser> findUsersExcept(Username username) {
+        return this.usersRepository.findUsersExcept(username);
     }
 
     // =================================================================================================================

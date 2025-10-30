@@ -2,6 +2,7 @@ package jbst.foundation.services.postgres;
 
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
+import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractJbstSuperadminService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -19,6 +20,7 @@ public class PostgresJbstSuperadminService extends AbstractJbstSuperadminService
             JbstIncidentsPublisher incidentsPublisher,
             JbstSessionRegistry sessionRegistry,
             PostgresJbstInvitationsRepository invitationsRepository,
+            PostgresJbstUsersRepository usersRepository,
             PostgresJbstUsersSessionsRepository usersSessionsRepository,
             AbstractJbstResetServerTask resetServerTask
     ) {
@@ -26,6 +28,7 @@ public class PostgresJbstSuperadminService extends AbstractJbstSuperadminService
                 incidentsPublisher,
                 sessionRegistry,
                 invitationsRepository,
+                usersRepository,
                 usersSessionsRepository,
                 resetServerTask
         );

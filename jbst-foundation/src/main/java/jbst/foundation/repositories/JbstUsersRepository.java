@@ -4,6 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
+import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.UserCreationOption;
@@ -14,6 +15,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.ZoneId;
+import java.util.List;
 
 public interface JbstUsersRepository {
     TuplePresence<JwtUser> isPresent(UserId userId);
@@ -22,6 +24,7 @@ public interface JbstUsersRepository {
     JwtUser findByEmailAsJwtUserOrNull(Email email);
     boolean existsByUsername(Username username);
     boolean existsByEmail(Email email);
+    List<JbstUser> findUsersExcept(Username username);
     long count();
     void confirmEmail(Email email);
     void resetPassword(Email email, Password password);

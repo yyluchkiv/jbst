@@ -61,13 +61,15 @@ public class JbstSuperadminResource {
     // =================================================================================================================
 
     @GetMapping("/invitations/unused")
-    public List<ResponseInvitation> getUnusedInvitations() {
-        return this.superadminService.findUnused();
+    public List<ResponseInvitation> findInvitationsUnused() {
+        return this.superadminService.findInvitationsUnused();
     }
 
     // =================================================================================================================
     // Users
     // =================================================================================================================
+
+
 
     // =================================================================================================================
     // Users Sessions

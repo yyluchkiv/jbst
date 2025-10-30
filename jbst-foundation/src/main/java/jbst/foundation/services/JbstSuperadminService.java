@@ -1,5 +1,7 @@
 package jbst.foundation.services;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -20,12 +22,15 @@ public interface JbstSuperadminService {
     // =================================================================================================================
     // Invitations
     // =================================================================================================================
+    List<ResponseInvitation> findInvitationsUnused();
 
-    List<ResponseInvitation> findUnused();
+    // =================================================================================================================
+    // Users
+    // =================================================================================================================
+    List<JbstUser> findUsersExcept(Username username);
 
     // =================================================================================================================
     // Users Sessions
     // =================================================================================================================
-
     ResponseSuperadminSessionsTable getSessions(RequestAccessToken requestAccessToken);
 }
