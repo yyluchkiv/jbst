@@ -32,12 +32,12 @@ CREATE TABLE "jbst_users" (
     "creation_option" varchar(255) NOT NULL,
     "username" varchar(255) NOT NULL,
     "password" varchar(255) NOT NULL,
+    "enabled" bool NOT NULL,
     "zone_id" varchar(255) NOT NULL,
     "authorities" varchar(1024) NOT NULL,
     "email" varchar(255),
     "name" varchar(255),
     "password_change_required" bool NOT NULL,
-    "enabled" bool NOT NULL,
     "email_details" jsonb NOT NULL,
     "attributes" varchar(65535)
 );
