@@ -9,9 +9,9 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.JbstIncidentsSubscriber;
-import jbst.foundation.incidents.feigns.clients.IncidentClient;
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
 import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.ErrorHandlerPublisher;
 import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
@@ -62,7 +62,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     // ================================================================================================================
     @Bean
     @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "true")
-    IncidentClientDefinition incidentClientDefinition() {
+    JbstIncidentClientDefinition incidentClientDefinition() {
         var incidentServer = this.jbstProperties.getIncidentsManagerConfigs().getRemoteServer();
         return Feign.builder()
                 .client(new OkHttpClient())
@@ -74,18 +74,18 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
                                 incidentServer.getCredentials().password().value()
                         )
                 )
-                .target(IncidentClientDefinition.class, incidentServer.getBaseURL());
+                .target(JbstIncidentClientDefinition.class, incidentServer.getBaseURL());
     }
 
     @Bean
     @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "false", matchIfMissing = true)
-    IncidentClientDefinition incidentClientDefinitionSlf4j() {
-        return new IncidentClientDefinitionSlf4j();
+    JbstIncidentClientDefinition incidentClientDefinitionSlf4j() {
+        return new JbstIncidentClientDefinitionSlf4J();
     }
 
     @Bean
-    IncidentClient incidentClient(IncidentClientDefinition incidentClientDefinition) {
-        return new IncidentClient(incidentClientDefinition);
+    JbstIncidentClient incidentClient(JbstIncidentClientDefinition incidentClientDefinition) {
+        return new JbstIncidentClient(incidentClientDefinition);
     }
 
     // ================================================================================================================
@@ -97,7 +97,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     }
 
     @Bean
-    JbstIncidentsSubscriber incidentsSubscriber(IncidentClient incidentClient) {
+    JbstIncidentsSubscriber incidentsSubscriber(JbstIncidentClient incidentClient) {
         return new JbstIncidentsSubscriber(incidentClient);
     }
 

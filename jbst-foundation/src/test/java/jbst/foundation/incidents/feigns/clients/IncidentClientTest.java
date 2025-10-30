@@ -1,8 +1,7 @@
-package jbst.foundation.incidents.feigns.clients.impl;
+package jbst.foundation.incidents.feigns.clients;
 
 import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.incidents.feigns.clients.IncidentClient;
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,27 +20,27 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class IncidentClientImplTest {
+class IncidentClientTest {
 
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentClientDefinition incidentClientDefinition() {
-            return mock(IncidentClientDefinition.class);
+        JbstIncidentClientDefinition incidentClientDefinition() {
+            return mock(JbstIncidentClientDefinition.class);
         }
 
         @Bean
-        IncidentClient incidentClient() {
-            return new IncidentClient(
+        JbstIncidentClient incidentClient() {
+            return new JbstIncidentClient(
                     this.incidentClientDefinition()
             );
         }
     }
 
     // Definitions
-    private final IncidentClientDefinition incidentClientDefinition;
+    private final JbstIncidentClientDefinition incidentClientDefinition;
 
-    private final IncidentClient componentUnderTest;
+    private final JbstIncidentClient componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

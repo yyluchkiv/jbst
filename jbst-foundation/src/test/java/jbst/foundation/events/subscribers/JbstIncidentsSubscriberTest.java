@@ -7,7 +7,7 @@ import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import jbst.foundation.incidents.feigns.clients.IncidentClient;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +33,8 @@ class JbstIncidentsSubscriberTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentClient incidentClient() {
-            return mock(IncidentClient.class);
+        JbstIncidentClient incidentClient() {
+            return mock(JbstIncidentClient.class);
         }
 
         @Bean
@@ -46,7 +46,7 @@ class JbstIncidentsSubscriberTest {
     }
 
     // Clients
-    private final IncidentClient incidentClient;
+    private final JbstIncidentClient incidentClient;
 
     private final JbstIncidentsSubscriber componentUnderTest;
 

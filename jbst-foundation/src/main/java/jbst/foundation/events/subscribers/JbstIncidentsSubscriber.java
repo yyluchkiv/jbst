@@ -7,7 +7,7 @@ import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import jbst.foundation.incidents.feigns.clients.IncidentClient;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstIncidentsSubscriber {
     // Clients
-    private final IncidentClient incidentClient;
+    private final JbstIncidentClient incidentClient;
 
     @EventListener
     public void onEvent(Incident incident) {

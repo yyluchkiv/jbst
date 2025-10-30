@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -72,8 +72,8 @@ class JbstConfigurationIncidents1Test {
         var incidentClientDefinition = this.componentUnderTest.incidentClientDefinition();
 
         // Assert
-        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(IncidentClientDefinition.class);
-        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(IncidentClientDefinitionSlf4j.class);
+        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstIncidentClientDefinition.class);
+        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstIncidentClientDefinitionSlf4J.class);
     }
 
     @Test
