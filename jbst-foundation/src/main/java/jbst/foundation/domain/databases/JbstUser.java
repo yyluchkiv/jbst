@@ -16,11 +16,11 @@ public record JbstUser(
         UserId id,
         UserCreationOption creationOption,
         Username username,
+        boolean enabled,
         ZoneId zoneId,
         Set<SimpleGrantedAuthority> authorities,
         Email email,
-        String name,
-        boolean enabled
+        String name
 ) implements Plurable<UserId> {
 
     public static JbstUser hardcoded() {
@@ -28,11 +28,11 @@ public record JbstUser(
                 UserId.hardcoded(),
                 UserCreationOption.hardcoded(),
                 Username.hardcoded(),
+                true,
                 JbstConstants.ZoneIds.UKRAINE,
                 new HashSet<>(),
                 Email.hardcoded(),
-                "jbst-user",
-                true
+                "jbst-user"
         );
     }
     @Override

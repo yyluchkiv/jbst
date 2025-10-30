@@ -74,12 +74,12 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 user.creationOption(),
                 user.username(),
                 user.password(),
+                user.enabled(),
                 request.zoneId(),
                 user.authorities(),
                 request.email(),
                 request.name(),
                 user.passwordChangeRequired(),
-                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );
@@ -93,12 +93,12 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 user.creationOption(),
                 user.username(),
                 user.password(),
+                user.enabled(),
                 request.zoneId(),
                 user.authorities(),
                 user.email(),
                 request.name(),
                 user.passwordChangeRequired(),
-                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );
@@ -113,12 +113,12 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 user.creationOption(),
                 user.username(),
                 Password.of(hashPassword),
+                user.enabled(),
                 user.zoneId(),
                 user.authorities(),
                 user.email(),
                 user.name(),
                 false,
-                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );
@@ -133,12 +133,12 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 user.creationOption(),
                 user.username(),
                 Password.of(hashPassword),
+                user.enabled(),
                 user.zoneId(),
                 user.authorities(),
                 user.email(),
                 user.name(),
                 user.passwordChangeRequired(),
-                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );

@@ -222,12 +222,12 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 this.creationOption,
                 this.username,
                 this.password,
+                this.enabled,
                 this.zoneId,
                 this.authorities,
                 this.email,
                 this.name,
                 this.passwordChangeRequired,
-                this.enabled,
                 this.emailDetails,
                 this.attributes
         );
@@ -240,11 +240,11 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 this.userId(),
                 this.creationOption,
                 this.username,
+                this.enabled,
                 this.zoneId,
                 this.authorities,
                 this.email,
-                this.name,
-                this.enabled
+                this.name
         );
     }
 }

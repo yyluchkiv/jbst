@@ -26,12 +26,12 @@ public record JwtUser(
         UserCreationOption creationOption,
         Username username,
         Password password,
+        boolean enabled,
         ZoneId zoneId,
         Set<SimpleGrantedAuthority> authorities,
         Email email,
         String name,
         boolean passwordChangeRequired,
-        boolean enabled,
         JbstUserEmailDetails emailDetails,
         Map<String, Object> attributes
 ) implements UserDetails {
@@ -57,12 +57,12 @@ public record JwtUser(
                 userCreationOption,
                 Username.hardcoded(),
                 Password.hardcoded(),
+                true,
                 UKRAINE,
                 new HashSet<>(),
                 Email.hardcoded(),
                 "",
                 false,
-                true,
                 JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
@@ -80,12 +80,12 @@ public record JwtUser(
                 UserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
+                true,
                 UKRAINE,
                 authorities,
                 Email.hardcoded(),
                 "",
                 false,
-                true,
                 JbstUserEmailDetails.confirmed(),
                 new HashMap<>()
         );
@@ -100,12 +100,12 @@ public record JwtUser(
                 UserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
+                true,
                 UKRAINE,
                 new HashSet<>(),
                 email,
                 "",
                 false,
-                true,
                 emailDetails,
                 new HashMap<>()
         );
@@ -123,13 +123,13 @@ public record JwtUser(
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 Set.of(
                         new SimpleGrantedAuthority(randomElement(List.of(SUPERADMIN, INVITATIONS_READ, INVITATIONS_WRITE)))
                 ),
                 Email.random(),
                 randomString(),
-                randomBoolean(),
                 randomBoolean(),
                 JbstUserEmailDetails.random(),
                 new HashMap<>(
@@ -147,12 +147,12 @@ public record JwtUser(
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
                 Email.random(),
                 randomString(),
                 false,
-                true,
                 JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
@@ -164,12 +164,12 @@ public record JwtUser(
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
                 Email.random(),
                 randomString(),
                 false,
-                true,
                 JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
