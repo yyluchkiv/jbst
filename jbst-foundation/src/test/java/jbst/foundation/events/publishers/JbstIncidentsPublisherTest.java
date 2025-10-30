@@ -8,6 +8,8 @@ import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,6 +81,30 @@ class JbstIncidentsPublisherTest {
                 this.applicationEventPublisher,
                 this.jbstProperties
         );
+    }
+
+    @Test
+    void publishResetServerStartedTest() {
+        // Arrange
+        var incident = IncidentSystemResetServerStarted.hardcoded();
+
+        // Act
+        this.componentUnderTest.publishResetServerStarted(incident);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(incident);
+    }
+
+    @Test
+    void publishResetServerCompletedTest() {
+        // Arrange
+        var incident = IncidentSystemResetServerCompleted.hardcoded();
+
+        // Act
+        this.componentUnderTest.publishResetServerCompleted(incident);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test

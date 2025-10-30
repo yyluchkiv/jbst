@@ -6,6 +6,7 @@ import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
@@ -48,6 +49,11 @@ class AbstractJbstSuperadminServiceTest {
         }
 
         @Bean
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
+        }
+
+        @Bean
         JbstSessionRegistry sessionRegistry() {
             return mock(JbstSessionRegistry.class);
         }
@@ -87,7 +93,7 @@ class AbstractJbstSuperadminServiceTest {
         @Bean
         AbstractJbstSuperadminService abstractBaseSuperadminService() {
             return new AbstractJbstSuperadminService(
-                    this.incidentPublisher(),
+                    this.incidentsPublisher(),
                     this.sessionRegistry(),
                     this.invitationsRepository(),
                     this.usersSessionsRepository(),
@@ -97,6 +103,7 @@ class AbstractJbstSuperadminServiceTest {
     }
 
     // Incidents
+    private final JbstIncidentsPublisher incidentsPublisher;
     private final IncidentPublisher incidentPublisher;
     // Sessions
     private final JbstSessionRegistry sessionRegistry;
@@ -111,6 +118,7 @@ class AbstractJbstSuperadminServiceTest {
     @BeforeEach
     void beforeEach() {
         reset(
+                this.incidentsPublisher,
                 this.incidentPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
@@ -122,6 +130,7 @@ class AbstractJbstSuperadminServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
+                this.incidentsPublisher,
                 this.incidentPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
@@ -148,9 +157,9 @@ class AbstractJbstSuperadminServiceTest {
         this.componentUnderTest.resetServerBy(user);
 
         // Assert
-        verify(this.incidentPublisher).publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
+        verify(this.incidentsPublisher).publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
         verify(this.abstractMockService).executeInheritedMethod();
-        verify(this.incidentPublisher).publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
+        verify(this.incidentsPublisher).publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
     }
 
     @Test

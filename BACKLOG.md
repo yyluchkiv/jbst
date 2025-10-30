@@ -7,5 +7,4 @@
 - Plan Payments (Stripe)
 
 ##### Minor
-- consider AbstractTimerTask allow start/stop to be overridable
 - investigate merger IncidentPublisher + JbstIncidentsPublisher

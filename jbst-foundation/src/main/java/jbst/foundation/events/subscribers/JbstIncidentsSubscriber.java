@@ -4,6 +4,8 @@ import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,18 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 public class JbstIncidentsSubscriber {
     // Clients
     private final IncidentClient incidentClient;
+
+    @EventListener
+    public void onEvent(IncidentSystemResetServerStarted incident) {
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] system reset server started");
+        this.incidentClient.registerIncident(incident.getPlainIncident());
+    }
+
+    @EventListener
+    public void onEvent(IncidentSystemResetServerCompleted incident) {
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] system reset server completed");
+        this.incidentClient.registerIncident(incident.getPlainIncident());
+    }
 
     @EventListener
     public void onEvent(IncidentAuthenticationLogin incident) {

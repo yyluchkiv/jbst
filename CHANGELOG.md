@@ -2,3 +2,4 @@
 — Modification: Parameter 'forceJavacCompilerUse' -> 'forceLegacyJavacApi'
 — Addition: JbstModificationBeta annotation
 — ModificationBeta: AbstractTimerTask start/stop method are open to override
+— Modification: merge IncidentPublisher + JbstIncidentsPublisher

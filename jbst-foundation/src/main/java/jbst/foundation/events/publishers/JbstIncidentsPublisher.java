@@ -1,10 +1,13 @@
 package jbst.foundation.events.publishers;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
+import static jbst.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 
 @SuppressWarnings("LoggingSimilarMessage")
@@ -23,6 +28,16 @@ public class JbstIncidentsPublisher {
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
     private final JbstProperties jbstProperties;
+
+    public void publishResetServerStarted(IncidentSystemResetServerStarted incident) {
+        LOGGER.debug(JbstConstants.Logs.getUserProcess(incident.username(), "Reset Server", STARTED));
+        this.applicationEventPublisher.publishEvent(incident);
+    }
+
+    public void publishResetServerCompleted(IncidentSystemResetServerCompleted incident) {
+        LOGGER.debug(JbstConstants.Logs.getUserProcess(incident.username(), "Reset Server", COMPLETED));
+        this.applicationEventPublisher.publishEvent(incident);
+    }
 
     public void publishAuthenticationLogin(IncidentAuthenticationLogin incident) {
         if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN)) {

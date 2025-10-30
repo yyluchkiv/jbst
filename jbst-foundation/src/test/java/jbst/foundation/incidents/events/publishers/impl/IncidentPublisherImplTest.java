@@ -2,8 +2,6 @@ package jbst.foundation.incidents.events.publishers.impl;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -68,30 +66,6 @@ class IncidentPublisherImplTest {
                 this.applicationEventPublisher,
                 this.jbstProperties
         );
-    }
-
-    @Test
-    void publishResetServerStartedTest() {
-        // Arrange
-        var incident = IncidentSystemResetServerStarted.hardcoded();
-
-        // Act
-        this.componentUnderTest.publishResetServerStarted(incident);
-
-        // Assert
-        verify(this.applicationEventPublisher).publishEvent(incident);
-    }
-
-    @Test
-    void publishResetServerCompletedTest() {
-        // Arrange
-        var incident = IncidentSystemResetServerCompleted.hardcoded();
-
-        // Act
-        this.componentUnderTest.publishResetServerCompleted(incident);
-
-        // Assert
-        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
