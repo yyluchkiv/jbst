@@ -9,7 +9,6 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
@@ -34,8 +33,6 @@ public class JbstEventsSubscriber {
     private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;
-    // Incidents
-    private final IncidentPublisher incidentPublisher;
 
     @EventListener
     public void onAuthenticationLoginMagicLinkFailure(EventAuthenticationMagicLinkFailure event) {
@@ -74,7 +71,7 @@ public class JbstEventsSubscriber {
                     )
             );
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 
@@ -95,7 +92,7 @@ public class JbstEventsSubscriber {
             var userToken = this.usersTokensService.saveAs(event.requestUserRegistration0().asRequestUserToken());
             this.usersEmailsService.executeEmailConfirmation(userToken);
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 
@@ -133,7 +130,7 @@ public class JbstEventsSubscriber {
             this.processSessionUserRequestMetadataAddEmails(event, metadata);
             this.processSessionUserRequestMetadataAddIncidents(event, metadata);
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 
@@ -143,7 +140,7 @@ public class JbstEventsSubscriber {
             LOGGER.debug(USER_ACTION, event.username(), "[sub, events] session user request metadata renew, sessionId: " + event.session().id());
             this.usersSessionsService.saveUserRequestMetadata(event);
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 

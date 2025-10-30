@@ -16,7 +16,6 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
@@ -168,19 +167,13 @@ class JbstEventsSubscriberTest {
         }
 
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
-        }
-
-        @Bean
         JbstEventsSubscriber eventsSubscriber() {
             return new JbstEventsSubscriber(
                     this.securityJwtIncidentPublisher(),
                     this.baseUsersTokensService(),
                     this.userEmailService(),
                     this.usersSessionsService(),
-                    this.geoUtils(),
-                    this.incidentPublisher()
+                    this.geoUtils()
             );
         }
     }
@@ -193,8 +186,6 @@ class JbstEventsSubscriberTest {
     private final JbstUsersSessionsService usersSessionsService;
     // Utils
     private final JbstGeoUtils geoUtils;
-    // Incidents
-    private final IncidentPublisher incidentPublisher;
 
     private final JbstEventsSubscriber componentUnderTest;
 
@@ -205,8 +196,7 @@ class JbstEventsSubscriberTest {
                 this.usersTokensService,
                 this.usersEmailsService,
                 this.usersSessionsService,
-                this.geoUtils,
-                this.incidentPublisher
+                this.geoUtils
         );
     }
 
@@ -217,8 +207,7 @@ class JbstEventsSubscriberTest {
                 this.usersTokensService,
                 this.usersEmailsService,
                 this.usersSessionsService,
-                this.geoUtils,
-                this.incidentPublisher
+                this.geoUtils
         );
     }
 
@@ -279,7 +268,7 @@ class JbstEventsSubscriberTest {
                         UserRequestMetadata.valid()
                 )
         );
-        verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
+        verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 
     @Test
@@ -313,7 +302,7 @@ class JbstEventsSubscriberTest {
         assertThat(event).isNotNull();
         verify(this.usersTokensService).saveAs(requestUserRegistration0.asRequestUserToken());
         verify(this.usersEmailsService).executeEmailConfirmation(userToken);
-        verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
+        verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 
     @Test
@@ -411,7 +400,7 @@ class JbstEventsSubscriberTest {
             verifyNoInteractions(this.usersEmailsService);
         }
         verify(this.incidentsPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), event.session().metadata()));
-        verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
+        verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 
     @ParameterizedTest
@@ -437,7 +426,7 @@ class JbstEventsSubscriberTest {
             verifyNoInteractions(this.usersEmailsService);
         }
         verify(this.incidentsPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), event.session().metadata()));
-        verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
+        verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 
     @ParameterizedTest
@@ -454,6 +443,6 @@ class JbstEventsSubscriberTest {
 
         // Assert
         verify(this.usersSessionsService).saveUserRequestMetadata(event);
-        verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
+        verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 }
