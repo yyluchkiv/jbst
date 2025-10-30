@@ -1,7 +1,7 @@
 package jbst.foundation.crons;
 
 import jbst.foundation.domain.properties.base.Cron;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -42,15 +42,15 @@ public class JbstUsersTokensCronTest {
         }
 
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
         }
 
         @Bean
         JbstUsersTokensCron sessionsCron() {
             return new JbstUsersTokensCron(
                     this.usersTokensRepository(),
-                    this.incidentPublisher()
+                    this.incidentsPublisher()
             );
         }
     }
@@ -58,7 +58,7 @@ public class JbstUsersTokensCronTest {
     // Repository
     private final JbstUsersTokensRepository usersTokensRepository;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     private final JbstUsersTokensCron componentUnderTest;
 
@@ -66,7 +66,7 @@ public class JbstUsersTokensCronTest {
     void beforeEach() {
         reset(
                 this.usersTokensRepository,
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -74,7 +74,7 @@ public class JbstUsersTokensCronTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.usersTokensRepository,
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -87,7 +87,7 @@ public class JbstUsersTokensCronTest {
         this.componentUnderTest.processException(ex);
 
         // Assert
-        verify(this.incidentPublisher).publishThrowable(ex);
+        verify(this.incidentsPublisher).publishThrowable(ex);
     }
 
     @SuppressWarnings("unused")
