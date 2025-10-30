@@ -78,6 +78,9 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(name = "password_change_required", nullable = false)
     private boolean passwordChangeRequired;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
     @Type(JsonBinaryType.class)
     @Column(name = "email_details", nullable = false)
     private JbstUserEmailDetails emailDetails;
@@ -223,6 +226,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 this.email,
                 this.name,
                 this.passwordChangeRequired,
+                this.enabled,
                 this.emailDetails,
                 this.attributes
         );

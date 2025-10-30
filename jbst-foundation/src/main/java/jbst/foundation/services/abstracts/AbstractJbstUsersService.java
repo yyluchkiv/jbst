@@ -79,6 +79,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 request.email(),
                 request.name(),
                 user.passwordChangeRequired(),
+                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );
@@ -97,6 +98,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 user.email(),
                 request.name(),
                 user.passwordChangeRequired(),
+                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );
@@ -116,6 +118,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 user.email(),
                 user.name(),
                 false,
+                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );
@@ -135,6 +138,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 user.email(),
                 user.name(),
                 user.passwordChangeRequired(),
+                user.enabled(),
                 user.emailDetails(),
                 user.attributes()
         );

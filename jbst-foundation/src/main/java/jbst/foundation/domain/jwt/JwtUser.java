@@ -31,6 +31,7 @@ public record JwtUser(
         Email email,
         String name,
         boolean passwordChangeRequired,
+        boolean enabled,
         JbstUserEmailDetails emailDetails,
         Map<String, Object> attributes
 ) implements UserDetails {
@@ -61,6 +62,7 @@ public record JwtUser(
                 Email.hardcoded(),
                 "",
                 false,
+                true,
                 JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
@@ -83,6 +85,7 @@ public record JwtUser(
                 Email.hardcoded(),
                 "",
                 false,
+                true,
                 JbstUserEmailDetails.confirmed(),
                 new HashMap<>()
         );
@@ -102,6 +105,7 @@ public record JwtUser(
                 email,
                 "",
                 false,
+                true,
                 emailDetails,
                 new HashMap<>()
         );
@@ -126,6 +130,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 randomBoolean(),
+                randomBoolean(),
                 JbstUserEmailDetails.random(),
                 new HashMap<>(
                         Map.of(
@@ -147,6 +152,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 false,
+                true,
                 JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
@@ -163,6 +169,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 false,
+                true,
                 JbstUserEmailDetails.unnecessary(),
                 new HashMap<>()
         );

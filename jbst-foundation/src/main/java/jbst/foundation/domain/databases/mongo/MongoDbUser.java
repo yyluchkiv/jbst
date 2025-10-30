@@ -52,6 +52,7 @@ public class MongoDbUser {
     private Email email;
     private String name;
     private boolean passwordChangeRequired;
+    private boolean enabled;
     private JbstUserEmailDetails emailDetails;
     private Map<String, Object> attributes;
 
@@ -192,6 +193,7 @@ public class MongoDbUser {
                 this.email,
                 this.name,
                 this.passwordChangeRequired,
+                this.enabled,
                 this.emailDetails,
                 this.attributes
         );
