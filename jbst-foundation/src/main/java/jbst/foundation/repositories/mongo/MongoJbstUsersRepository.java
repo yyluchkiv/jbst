@@ -60,6 +60,10 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
+    default JbstUsers findUsers() {
+        return new JbstUsers(this.findAll().stream().map(MongoDbUser::asJbstUser).collect(Collectors.toList()));
+    }
+
     default JbstUsers findUsersExcept(Username username) {
         return new JbstUsers(this.findByUsernameNot(username).stream().map(MongoDbUser::asJbstUser).collect(Collectors.toList()));
     }
@@ -89,7 +93,11 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
     }
 
     default void disable(Username username) {
-        // TODO [YYL] fixme
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            user.setEnabled(false);
+            this.save(user);
+        }
     }
 
     default UserId saveAs(JwtUser user) {

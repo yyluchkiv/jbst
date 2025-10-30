@@ -149,6 +149,16 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
     }
 
     @Test
+    void disable() {
+        // Arrange
+        this.usersRepository.saveAll(PostgresDbUser.dummies1());
+
+        // Act-Assert-0
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin1")).findUsernamesDisabled()).hasSize(0);
+
+    }
+
+    @Test
     void usersSpecificationTest() {
         // Arrange
         this.usersRepository.saveAll(PostgresDbUser.dummies1());

@@ -23,6 +23,7 @@ public interface JbstUsersRepository {
     JwtUser findByEmailAsJwtUserOrNull(Email email);
     boolean existsByUsername(Username username);
     boolean existsByEmail(Email email);
+    JbstUsers findUsers();
     JbstUsers findUsersExcept(Username username);
     long count();
     void confirmEmail(Email email);

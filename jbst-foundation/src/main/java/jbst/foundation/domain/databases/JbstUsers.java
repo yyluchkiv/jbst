@@ -1,7 +1,6 @@
 package jbst.foundation.domain.databases;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.plurals.Plurals;
 import lombok.EqualsAndHashCode;
@@ -26,9 +25,13 @@ public class JbstUsers extends Plurals<JbstUser, UserId> {
         return new JbstUsers(List.of(JbstUser.hardcoded()));
     }
 
-    @JbstDevelopmentOnly
     @JsonIgnore
     public Set<String> getUsernamesAsStrings() {
         return this.values.stream().map(user -> user.username().value()).collect(Collectors.toSet());
+    }
+
+    @JsonIgnore
+    public Set<String> findUsernamesDisabled() {
+        return this.values.stream().filter(user -> !user.enabled()).map(user -> user.username().value()).collect(Collectors.toSet());
     }
 }

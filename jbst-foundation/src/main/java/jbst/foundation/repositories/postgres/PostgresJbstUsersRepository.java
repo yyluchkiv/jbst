@@ -65,6 +65,10 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
+    default JbstUsers findUsers() {
+        return new JbstUsers(this.findAll().stream().map(PostgresDbUser::asJbstUser).collect(Collectors.toList()));
+    }
+
     default JbstUsers findUsersExcept(Username username) {
         return new JbstUsers(this.findByUsernameNot(username).stream().map(PostgresDbUser::asJbstUser).collect(Collectors.toList()));
     }
@@ -94,7 +98,11 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
     }
 
     default void disable(Username username) {
-        // TODO [YYL] fixme
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            user.setEnabled(false);
+            this.save(user);
+        }
     }
 
     default UserId saveAs(JwtUser user) {
