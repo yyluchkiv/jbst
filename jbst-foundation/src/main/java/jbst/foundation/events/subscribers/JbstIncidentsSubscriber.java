@@ -1,5 +1,6 @@
 package jbst.foundation.events.subscribers;
 
+import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -22,6 +23,11 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 public class JbstIncidentsSubscriber {
     // Clients
     private final IncidentClient incidentClient;
+
+    @EventListener
+    public void onEvent(Incident incident) {
+        this.incidentClient.registerIncident(incident);
+    }
 
     @EventListener
     public void onEvent(IncidentSystemResetServerStarted incident) {

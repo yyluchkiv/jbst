@@ -7,10 +7,9 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.events.subscribers.JbstIncidentsSubscriber;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.incidents.events.publishers.impl.IncidentPublisherImpl;
-import jbst.foundation.incidents.events.subscribers.IncidentSubscriber;
-import jbst.foundation.incidents.events.subscribers.impl.IncidentSubscriberImpl;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
 import jbst.foundation.incidents.feigns.clients.impl.IncidentClientImpl;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
@@ -160,9 +159,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     }
 
     @Bean
-    IncidentSubscriber incidentSubscriber(IncidentClient incidentClient) {
-        return new IncidentSubscriberImpl(
-                incidentClient
-        );
+    JbstIncidentsSubscriber incidentsSubscriber(IncidentClient incidentClient) {
+        return new JbstIncidentsSubscriber(incidentClient);
     }
 }

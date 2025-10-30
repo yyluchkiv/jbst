@@ -65,6 +65,18 @@ class JbstIncidentsSubscriberTest {
     }
 
     @Test
+    void onEventIncidentTest() {
+        // Arrange
+        var incident = Incident.random();
+
+        // Act
+        this.componentUnderTest.onEvent(incident);
+
+        // Assert
+        verify(this.incidentClient).registerIncident(incident);
+    }
+
+    @Test
     void onEventIncidentSystemResetServerStartedTest() {
         // Arrange
         var incidentSystemResetServerStarted = IncidentSystemResetServerStarted.hardcoded();

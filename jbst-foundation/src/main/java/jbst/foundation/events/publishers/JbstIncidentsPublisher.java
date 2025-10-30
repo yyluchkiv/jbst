@@ -2,6 +2,7 @@ package jbst.foundation.events.publishers;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -28,6 +29,14 @@ public class JbstIncidentsPublisher {
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
     private final JbstProperties jbstProperties;
+
+    public void publishThrowable(Throwable throwable) {
+        this.publishIncident(new Incident(throwable));
+    }
+
+    public void publishIncident(Incident incident) {
+        this.applicationEventPublisher.publishEvent(incident);
+    }
 
     public void publishResetServerStarted(IncidentSystemResetServerStarted incident) {
         LOGGER.debug(JbstConstants.Logs.getUserProcess(incident.username(), "Reset Server", STARTED));
