@@ -10,8 +10,8 @@ on:
 env:
   MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-server-iam
-  DOCKER_OPS_SERVER_IMAGE: tech1-agency/jbst-server-ops
+  DOCKER_IMAGE_SERVER_IAM: tech1-agency/jbst-server-iam
+  DOCKER_IMAGE_SERVER_OPS: tech1-agency/jbst-server-ops
   DOCKER_VERSION: '1.31-SNAPSHOT'
   DOCKER_PUSH_ENABLED: 'false'
 
@@ -63,12 +63,12 @@ jobs:
         if: env.DOCKER_PUSH_ENABLED == 'true'
         run: |
           cd jbst-server-iam
-          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
-          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
+          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_IAM }}:${{ env.DOCKER_VERSION }} .
+          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_IAM }}:${{ env.DOCKER_VERSION }}
 
       - name: "docker [server-ops]"
         if: env.DOCKER_PUSH_ENABLED == 'true'
         run: |
           cd jbst-server-ops
-          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
-          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_OPS_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
+          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_OPS }}:${{ env.DOCKER_VERSION }} .
+          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_OPS }}:${{ env.DOCKER_VERSION }}
