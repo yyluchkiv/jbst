@@ -1,5 +1,6 @@
 package jbst.foundation.domain.concurrent;
 
+import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.domain.time.TimeAmount;
 import lombok.Getter;
@@ -53,6 +54,7 @@ public abstract class AbstractTimerTask {
         }
     }
 
+    @JbstModificationBeta(releaseVersion = "v1.30")
     public void start() {
         if (this.state.isOperative()) {
             return;
@@ -68,6 +70,7 @@ public abstract class AbstractTimerTask {
         }, this.interval.initialDelay(), this.interval.delay(), this.interval.unit());
     }
 
+    @JbstModificationBeta(releaseVersion = "v1.30")
     public void stop() {
         if (!this.state.isOperative()) {
             return;
