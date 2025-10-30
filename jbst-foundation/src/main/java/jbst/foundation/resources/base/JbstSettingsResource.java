@@ -4,18 +4,21 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
+import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 // Swagger
 @Tag(name = "[jbst] Settings API")
 // Spring
 @Slf4j
+@PreAuthorize("hasAuthority('" + AbstractAuthority.SUPERADMIN + "')")
 @JbstResource
 @RestController
 @RequestMapping("/settings")

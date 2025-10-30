@@ -7,14 +7,11 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.incidents.events.publishers.impl.IncidentPublisherImpl;
-import jbst.foundation.incidents.events.subscribers.IncidentSubscriber;
-import jbst.foundation.incidents.events.subscribers.impl.IncidentSubscriberImpl;
-import jbst.foundation.incidents.feigns.clients.IncidentClient;
-import jbst.foundation.incidents.feigns.clients.impl.IncidentClientImpl;
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.events.subscribers.JbstIncidentsSubscriber;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
 import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.ErrorHandlerPublisher;
 import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
@@ -61,25 +58,55 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     }
 
     // ================================================================================================================
-    // Incidents: Publisher
+    // Incidents: HTTP
     // ================================================================================================================
+    @Bean
+    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "true")
+    JbstIncidentClientDefinition incidentClientDefinition() {
+        var incidentServer = this.jbstProperties.getIncidentsManagerConfigs().getRemoteServer();
+        return Feign.builder()
+                .client(new OkHttpClient())
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+                .requestInterceptor(
+                        new BasicAuthRequestInterceptor(
+                                incidentServer.getCredentials().username().value(),
+                                incidentServer.getCredentials().password().value()
+                        )
+                )
+                .target(JbstIncidentClientDefinition.class, incidentServer.getBaseURL());
+    }
 
     @Bean
-    IncidentPublisher incidentPublisher() {
-        return new IncidentPublisherImpl(
-                this.applicationEventPublisher
-        );
+    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "false", matchIfMissing = true)
+    JbstIncidentClientDefinition incidentClientDefinitionSlf4j() {
+        return new JbstIncidentClientDefinitionSlf4J();
+    }
+
+    @Bean
+    JbstIncidentClient incidentClient(JbstIncidentClientDefinition incidentClientDefinition) {
+        return new JbstIncidentClient(incidentClientDefinition);
+    }
+
+    // ================================================================================================================
+    // Incidents: Pub+Sub
+    // ================================================================================================================
+    @Bean
+    JbstIncidentsPublisher incidentsPublisher() {
+        return new JbstIncidentsPublisher(this.applicationEventPublisher, this.jbstProperties);
+    }
+
+    @Bean
+    JbstIncidentsSubscriber incidentsSubscriber(JbstIncidentClient incidentClient) {
+        return new JbstIncidentsSubscriber(incidentClient);
     }
 
     // ================================================================================================================
     // Async
     // ================================================================================================================
-
     @Bean
     RejectedExecutionHandler rejectedExecutionHandler() {
-        return new RejectedExecutionHandlerPublisher(
-                this.incidentPublisher()
-        );
+        return new RejectedExecutionHandlerPublisher(this.incidentsPublisher());
     }
 
     @Override
@@ -96,20 +123,15 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new AsyncUncaughtExceptionHandlerPublisher(
-                this.incidentPublisher()
-        );
+        return new AsyncUncaughtExceptionHandlerPublisher(this.incidentsPublisher());
     }
 
     // ================================================================================================================
     // Events
     // ================================================================================================================
-
     @Bean
     ErrorHandler errorHandlerPublisher() {
-        return new ErrorHandlerPublisher(
-                this.incidentPublisher()
-        );
+        return new ErrorHandlerPublisher(this.incidentsPublisher());
     }
 
     @SuppressWarnings("DuplicatedCode")
@@ -125,44 +147,5 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
         eventMulticaster.setTaskExecutor(taskExecutor);
         eventMulticaster.setErrorHandler(this.errorHandlerPublisher());
         return eventMulticaster;
-    }
-
-    // ================================================================================================================
-    // Incidents
-    // ================================================================================================================
-
-    @Bean
-    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "true")
-    IncidentClientDefinition incidentClientDefinition() {
-        var incidentServer = this.jbstProperties.getIncidentsManagerConfigs().getRemoteServer();
-        return Feign.builder()
-                .client(new OkHttpClient())
-                .encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
-                .requestInterceptor(
-                        new BasicAuthRequestInterceptor(
-                                incidentServer.getCredentials().username().value(),
-                                incidentServer.getCredentials().password().value()
-                        )
-                )
-                .target(IncidentClientDefinition.class, incidentServer.getBaseURL());
-    }
-
-    @Bean
-    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "false", matchIfMissing = true)
-    IncidentClientDefinition incidentClientDefinitionSlf4j() {
-        return new IncidentClientDefinitionSlf4j();
-    }
-
-    @Bean
-    IncidentClient incidentClient(IncidentClientDefinition incidentClientDefinition) {
-        return new IncidentClientImpl(incidentClientDefinition);
-    }
-
-    @Bean
-    IncidentSubscriber incidentSubscriber(IncidentClient incidentClient) {
-        return new IncidentSubscriberImpl(
-                incidentClient
-        );
     }
 }

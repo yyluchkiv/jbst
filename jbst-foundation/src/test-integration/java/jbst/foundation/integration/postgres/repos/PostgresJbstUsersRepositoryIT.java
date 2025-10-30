@@ -140,6 +140,33 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
                 .hasMessageStartingWith(entityNotFound("Username", username.value()));
+
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin1")).getValues()).hasSize(5);
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin1")).getUsernamesAsStrings()).containsOnly("sa1", "sa2", "sa3", "user1", "user2");
+
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin2")).getValues()).hasSize(6);
+        assertThat(this.usersRepository.findUsersExcept(new Username("admin2")).getUsernamesAsStrings()).containsOnly("sa1", "sa2", "sa3", "user1", "user2", "admin1");
+    }
+
+    @Test
+    void disable() {
+        // Arrange
+        this.usersRepository.saveAll(PostgresDbUser.dummies1());
+
+        // Act-Assert-0
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).hasSize(6);
+
+        // Act-Assert-1
+        this.usersRepository.disable(new Username("user1"));
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).containsOnly("sa1", "sa2", "sa3", "admin1", "user2");
+
+        // Act-Assert-2
+        this.usersRepository.disable(new Username("user2"));
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).containsOnly("sa1", "sa2", "sa3", "admin1");
+
+        // Act-Assert-3
+        this.usersRepository.disable(new Username("user3"));
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).containsOnly("sa1", "sa2", "sa3", "admin1");
     }
 
     @Test

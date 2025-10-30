@@ -3,7 +3,6 @@ package jbst.server.iam.base.events.subscribers;
 import jbst.foundation.domain.events.EventAuthenticationLogin;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.JbstEventsSubscriber;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
@@ -23,16 +22,14 @@ public class ServerJbstEventsSubscriber extends JbstEventsSubscriber {
             JbstUsersTokensService usersTokensService,
             JbstUsersEmailsService usersEmailsService,
             JbstUsersSessionsService usersSessionsService,
-            JbstGeoUtils geoUtils,
-            IncidentPublisher incidentPublisher
+            JbstGeoUtils geoUtils
     ) {
         super(
                 incidentsPublisher,
                 usersTokensService,
                 usersEmailsService,
                 usersSessionsService,
-                geoUtils,
-                incidentPublisher
+                geoUtils
         );
     }
 

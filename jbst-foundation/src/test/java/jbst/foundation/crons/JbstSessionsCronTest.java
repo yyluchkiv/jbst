@@ -5,7 +5,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import lombok.RequiredArgsConstructor;
@@ -53,8 +53,8 @@ class JbstSessionsCronTest {
         }
 
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
         }
 
         @Bean
@@ -67,15 +67,15 @@ class JbstSessionsCronTest {
             return new JbstSessionsCron(
                     this.sessionRegistry(),
                     this.usersSessionsService(),
-                    this.incidentPublisher(),
+                    this.incidentsPublisher(),
                     this.jbstProperties()
             );
         }
     }
 
     private final JbstSessionRegistry sessionRegistry;
-    private final JbstUsersSessionsService jbstUsersSessionsService;
-    private final IncidentPublisher incidentPublisher;
+    private final JbstUsersSessionsService usersSessionsService;
+    private final JbstIncidentsPublisher incidentsPublisher;
     private final JbstProperties jbstProperties;
 
     private final JbstSessionsCron componentUnderTest;
@@ -84,8 +84,8 @@ class JbstSessionsCronTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
-                this.jbstUsersSessionsService,
-                this.incidentPublisher,
+                this.usersSessionsService,
+                this.incidentsPublisher,
                 this.jbstProperties
         );
     }
@@ -94,8 +94,8 @@ class JbstSessionsCronTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
-                this.jbstUsersSessionsService,
-                this.incidentPublisher,
+                this.usersSessionsService,
+                this.incidentsPublisher,
                 this.jbstProperties
         );
     }
@@ -109,7 +109,7 @@ class JbstSessionsCronTest {
         this.componentUnderTest.processException(ex);
 
         // Assert
-        verify(this.incidentPublisher).publishThrowable(ex);
+        verify(this.incidentsPublisher).publishThrowable(ex);
     }
 
     @ParameterizedTest
@@ -144,7 +144,7 @@ class JbstSessionsCronTest {
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
         if (cron.isEnabled()) {
-            verify(this.jbstUsersSessionsService).enableUserRequestMetadataRenewCron();
+            verify(this.usersSessionsService).enableUserRequestMetadataRenewCron();
         }
     }
 }

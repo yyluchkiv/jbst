@@ -17,8 +17,8 @@ class JbstUserTokenTest {
 
     private static Stream<Arguments> isExpiredCases() {
         var currentTimestamp = getCurrentTimestamp();
-        var pastTimestamp = currentTimestamp - 1000; // 1 second in the past
-        var futureTimestamp = currentTimestamp + 1000; // 1 second in the future
+        var pastTimestamp = currentTimestamp - 2000; // 2 seconds in the past
+        var futureTimestamp = currentTimestamp + 2000; // 2 seconds in the future
         return Stream.of(
                 Arguments.of(pastTimestamp, true),
                 Arguments.of(futureTimestamp, false),

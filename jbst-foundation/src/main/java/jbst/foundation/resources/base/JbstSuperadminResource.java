@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
+import jbst.foundation.domain.base.AbstractAuthority;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
@@ -16,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +28,7 @@ import java.util.List;
 @Tag(name = "[jbst] Superadmin API")
 // Spring
 @Slf4j
+@PreAuthorize("hasAuthority('" + AbstractAuthority.SUPERADMIN + "')")
 @JbstResource
 @RestController
 @RequestMapping("/superadmin")
@@ -34,14 +39,13 @@ public class JbstSuperadminResource {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final JbstSuperadminService superadminService;
-    private final JbstUsersSessionsService jbstUsersSessionsService;
+    private final JbstUsersSessionsService usersSessionsService;
     // Tokens
     private final JbstTokensProvider tokensProvider;
 
     // =================================================================================================================
     // Server
     // =================================================================================================================
-
     @GetMapping("/server/reset/status")
     public ResetServerStatus getResetServerStatus() {
         return this.superadminService.getResetServerStatus();
@@ -56,16 +60,28 @@ public class JbstSuperadminResource {
     // =================================================================================================================
     // Invitations
     // =================================================================================================================
-
     @GetMapping("/invitations/unused")
-    public List<ResponseInvitation> getUnusedInvitations() {
-        return this.superadminService.findUnused();
+    public List<ResponseInvitation> findInvitationsUnused() {
+        return this.superadminService.findInvitationsUnused();
+    }
+
+    // =================================================================================================================
+    // Users
+    // =================================================================================================================
+    @GetMapping("/users")
+    public JbstUsers findUsersExcept() {
+        var currentUsername = this.currentSessionAssistant.getCurrentUsername();
+        return this.superadminService.findUsersExcept(currentUsername);
+    }
+
+    @PostMapping("/users/{username}/disable")
+    public void disableUser(@PathVariable Username username) {
+        this.superadminService.disableUser(username);
     }
 
     // =================================================================================================================
     // Users Sessions
     // =================================================================================================================
-
     @GetMapping("/sessions")
     public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
@@ -74,20 +90,20 @@ public class JbstSuperadminResource {
 
     @PostMapping("/sessions/{sessionId}/renew/manually")
     public void renewManually(@PathVariable UserSessionId sessionId) {
-        this.jbstUsersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
+        this.usersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable UserSessionId sessionId) {
-        this.jbstUsersSessionsService.deleteById(sessionId);
+        this.usersSessionsService.deleteById(sessionId);
     }
 
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
-        this.jbstUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
+        this.usersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }
 

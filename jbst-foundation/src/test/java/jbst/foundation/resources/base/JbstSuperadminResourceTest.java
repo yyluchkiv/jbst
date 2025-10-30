@@ -3,6 +3,8 @@ package jbst.foundation.resources.base;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -25,6 +27,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -100,7 +103,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     void getUnusedInvitationsTest() throws Exception {
         // Arrange
         var codes = list345(ResponseInvitation.class);
-        when(this.superadminService.findUnused()).thenReturn(codes);
+        when(this.superadminService.findInvitationsUnused()).thenReturn(codes);
 
         // Act
         this.mvc.perform(get("/superadmin/invitations/unused"))
@@ -113,7 +116,47 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
                 .andExpect(jsonPath("$.[0].invited", notNullValue()));
 
         // Assert
-        verify(this.superadminService).findUnused();
+        verify(this.superadminService).findInvitationsUnused();
+    }
+
+    @Test
+    void findUsersExcept() throws Exception {
+        // Arrange
+        var username = Username.hardcoded();
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
+        when(this.superadminService.findUsersExcept(username)).thenReturn(JbstUsers.hardcoded());
+
+        // Act
+        this.mvc.perform(get("/superadmin/users"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.values.length()").value(1))
+                .andExpect(jsonPath("$.values[0].length()").value(8))
+                .andExpect(jsonPath("$.values[0].id").exists())
+                .andExpect(jsonPath("$.values[0].creationOption").exists())
+                .andExpect(jsonPath("$.values[0].username").exists())
+                .andExpect(jsonPath("$.values[0].zoneId").exists())
+                .andExpect(jsonPath("$.values[0].authorities").exists())
+                .andExpect(jsonPath("$.values[0].email").exists())
+                .andExpect(jsonPath("$.values[0].name").exists())
+                .andExpect(jsonPath("$.values[0].enabled").exists());
+
+        // Assert
+        verify(this.currentSessionAssistant).getCurrentUsername();
+        verify(this.superadminService).findUsersExcept(username);
+    }
+
+    @Test
+    void disabledUser() throws Exception {
+        // Arrange
+        var username = Username.hardcoded();
+
+        // Act
+        this.mvc.perform(post("/superadmin/users/" + username + "/disable"))
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.superadminService).disableUser(username);
     }
 
     @Test

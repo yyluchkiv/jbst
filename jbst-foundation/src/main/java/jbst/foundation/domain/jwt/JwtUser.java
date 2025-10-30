@@ -26,6 +26,7 @@ public record JwtUser(
         UserCreationOption creationOption,
         Username username,
         Password password,
+        boolean enabled,
         ZoneId zoneId,
         Set<SimpleGrantedAuthority> authorities,
         Email email,
@@ -50,12 +51,18 @@ public record JwtUser(
         return this.username.value();
     }
 
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
     public static JwtUser hardcoded(UserCreationOption userCreationOption) {
         return new JwtUser(
                 UserId.hardcoded(),
                 userCreationOption,
                 Username.hardcoded(),
                 Password.hardcoded(),
+                true,
                 UKRAINE,
                 new HashSet<>(),
                 Email.hardcoded(),
@@ -78,6 +85,7 @@ public record JwtUser(
                 UserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
+                true,
                 UKRAINE,
                 authorities,
                 Email.hardcoded(),
@@ -97,6 +105,7 @@ public record JwtUser(
                 UserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
+                true,
                 UKRAINE,
                 new HashSet<>(),
                 email,
@@ -119,6 +128,7 @@ public record JwtUser(
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 Set.of(
                         new SimpleGrantedAuthority(randomElement(List.of(SUPERADMIN, INVITATIONS_READ, INVITATIONS_WRITE)))
@@ -142,6 +152,7 @@ public record JwtUser(
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
                 Email.random(),
@@ -158,6 +169,7 @@ public record JwtUser(
                 UserCreationOption.random(),
                 Username.random(),
                 Password.random(),
+                true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
                 Email.random(),

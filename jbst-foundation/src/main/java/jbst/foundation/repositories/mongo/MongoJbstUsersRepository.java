@@ -5,6 +5,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
@@ -59,6 +60,14 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
+    default JbstUsers findUsers() {
+        return new JbstUsers(this.findAll().stream().map(MongoDbUser::asJbstUser).collect(Collectors.toList()));
+    }
+
+    default JbstUsers findUsersExcept(Username username) {
+        return new JbstUsers(this.findByUsernameNot(username).stream().map(MongoDbUser::asJbstUser).collect(Collectors.toList()));
+    }
+
     default void confirmEmail(Email email) {
         var user = this.findByEmail(email);
         if (nonNull(user)) {
@@ -79,6 +88,14 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         var user = this.findByUsername(username);
         if (nonNull(user)) {
             user.setPassword(password);
+            this.save(user);
+        }
+    }
+
+    default void disable(Username username) {
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            user.setEnabled(false);
             this.save(user);
         }
     }
@@ -117,6 +134,7 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
                             creationOption,
                             username,
                             password,
+                            true,
                             zoneId,
                             new HashSet<>(),
                             email,
@@ -134,6 +152,7 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
     boolean existsByEmail(Email email);
     MongoDbUser findByUsername(Username username);
     boolean existsByUsername(Username username);
+    List<MongoDbUser> findByUsernameNot(Username username);
     List<MongoDbUser> findByUsernameIn(Set<Username> usernames);
     List<MongoDbUser> findByUsernameIn(List<Username> usernames);
 

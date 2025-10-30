@@ -16,17 +16,17 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class IncidentClientDefinitionSlf4JTest {
+class JbstIncidentClientDefinitionSlf4JTest {
 
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentClientDefinition incidentClientDefinition() {
-            return new IncidentClientDefinitionSlf4j();
+        JbstIncidentClientDefinition incidentClientDefinition() {
+            return new JbstIncidentClientDefinitionSlf4J();
         }
     }
 
-    private final IncidentClientDefinition componentUnderTest;
+    private final JbstIncidentClientDefinition componentUnderTest;
 
     @Test
     void registerIncidentExceptionTest() {

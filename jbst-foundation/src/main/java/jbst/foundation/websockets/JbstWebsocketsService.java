@@ -5,7 +5,7 @@ import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
@@ -22,7 +22,7 @@ import static jbst.foundation.domain.events.WebsocketEvent.resetServerProgress;
 public class JbstWebsocketsService {
 
     private final SimpMessagingTemplate messagingTemplate;
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     private final JbstProperties jbstProperties;
 
     public final void sendEventToUser(Username username, String destination, WebsocketEvent event) {
@@ -64,7 +64,7 @@ public class JbstWebsocketsService {
                     data
             );
         } catch (MessagingException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 }

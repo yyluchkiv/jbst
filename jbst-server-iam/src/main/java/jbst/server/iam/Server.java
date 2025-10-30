@@ -2,7 +2,7 @@ package jbst.server.iam;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.startup.JbstStartupEventListener;
 import jbst.server.iam.configurations.ConfigurationServer;
@@ -29,12 +29,12 @@ import static jbst.foundation.domain.enums.Status.COMPLETED;
 public class Server extends JbstStartupEventListener {
 
     // Publishers
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     @Autowired
-    public Server(JbstSettingsService settingsService, JbstProperties jbstProperties, IncidentPublisher incidentPublisher) {
+    public Server(JbstSettingsService settingsService, JbstIncidentsPublisher incidentsPublisher, JbstProperties jbstProperties) {
         super(settingsService, jbstProperties);
-        this.incidentPublisher = incidentPublisher;
+        this.incidentsPublisher = incidentsPublisher;
     }
 
     public static void main(String[] args) {
@@ -50,7 +50,7 @@ public class Server extends JbstStartupEventListener {
             super.onStartup();
             LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 }

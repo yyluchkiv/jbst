@@ -5,6 +5,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.databases.postgres.projections.PostgresDbUserProjection1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
@@ -64,6 +65,14 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
+    default JbstUsers findUsers() {
+        return new JbstUsers(this.findAll().stream().map(PostgresDbUser::asJbstUser).collect(Collectors.toList()));
+    }
+
+    default JbstUsers findUsersExcept(Username username) {
+        return new JbstUsers(this.findByUsernameNot(username).stream().map(PostgresDbUser::asJbstUser).collect(Collectors.toList()));
+    }
+
     default void confirmEmail(Email email) {
         var user = this.findByEmail(email);
         if (nonNull(user)) {
@@ -84,6 +93,14 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         var user = this.findByUsername(username);
         if (nonNull(user)) {
             user.setPassword(password);
+            this.save(user);
+        }
+    }
+
+    default void disable(Username username) {
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            user.setEnabled(false);
             this.save(user);
         }
     }
@@ -122,6 +139,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
                             creationOption,
                             username,
                             password,
+                            true,
                             zoneId,
                             new HashSet<>(),
                             email,
@@ -139,6 +157,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
     boolean existsByEmail(Email email);
     PostgresDbUser findByUsername(Username username);
     boolean existsByUsername(Username username);
+    List<PostgresDbUser> findByUsernameNot(Username username);
     List<PostgresDbUser> findByUsernameIn(Set<Username> usernames);
     List<PostgresDbUser> findByUsernameIn(List<Username> usernames);
 

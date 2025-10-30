@@ -6,7 +6,7 @@ import feign.RequestLine;
 import feign.RetryableException;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class SlackClient {
     // Definitions
     private final SlackDefinition definition;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     @SuppressWarnings("BusyWait")
     public final void configure(TimeAmount timeAmount) {
@@ -77,7 +77,7 @@ public class SlackClient {
                     Thread.currentThread().interrupt();
                     break;
                 } catch (RuntimeException ex) {
-                    this.incidentPublisher.publishThrowable(ex);
+                    this.incidentsPublisher.publishThrowable(ex);
                 }
             }
         }, "jbst-slack-client");
@@ -108,7 +108,7 @@ public class SlackClient {
         }
         var success = this.queue.offer(request);
         if (!success) {
-            this.incidentPublisher.publishThrowable(new IllegalStateException("jbst-slack-client queue is full"));
+            this.incidentsPublisher.publishThrowable(new IllegalStateException("jbst-slack-client queue is full"));
         }
     }
 

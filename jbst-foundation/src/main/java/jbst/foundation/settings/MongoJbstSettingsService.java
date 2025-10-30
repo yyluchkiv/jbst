@@ -42,6 +42,7 @@ public class MongoJbstSettingsService extends JbstSettingsService {
                             UserCreationOption.STANDARD,
                             username,
                             userOnInit.getPassword(),
+                            true,
                             userOnInit.getZoneId(),
                             getSimpleGrantedAuthorities(userOnInit.getAuthorities()),
                             null,

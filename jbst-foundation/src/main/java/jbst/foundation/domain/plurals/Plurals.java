@@ -1,5 +1,6 @@
 package jbst.foundation.domain.plurals;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,14 +25,18 @@ public abstract class Plurals<T extends Plurable<ID>, ID> {
         this.mappedValues = values.stream().collect(Collectors.toUnmodifiableMap(Plurable::getId, entry -> entry));
     }
 
+    @SuppressWarnings("unused")
     public final T getOne(ID id) {
         return this.mappedValues.get(id);
     }
 
+    @JsonIgnore
     public final List<ID> getIds() {
         return this.values.stream().map(Plurable::getId).toList();
     }
 
+    @SuppressWarnings("unused")
+    @JsonIgnore
     public final Set<ID> getUniqueIds() {
         return this.mappedValues.keySet();
     }

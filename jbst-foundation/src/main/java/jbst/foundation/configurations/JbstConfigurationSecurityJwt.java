@@ -35,7 +35,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
-import static jbst.foundation.domain.base.AbstractAuthority.*;
+import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_READ;
+import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_WRITE;
 import static org.springframework.http.HttpMethod.*;
 
 /**
@@ -193,9 +194,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                     }
 
                     authorizeHttpRequests
-                            .requestMatchers(basePathPrefix + "/test-data/**").authenticated()
-                            .requestMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN)
-                            .requestMatchers(basePathPrefix + "/settings/**").hasAuthority(SUPERADMIN)
+                            .requestMatchers(basePathPrefix + "/hardcoded/**").authenticated()
                             .requestMatchers(basePathPrefix + "/**").authenticated();
 
                     authorizeHttpRequests.requestMatchers(GET, "/system/csrf").authenticated();

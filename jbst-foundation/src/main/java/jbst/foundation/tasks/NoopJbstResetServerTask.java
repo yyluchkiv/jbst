@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +28,11 @@ public class NoopJbstResetServerTask extends AbstractJbstResetServerTask {
 
     @Autowired
     public NoopJbstResetServerTask(
-            IncidentPublisher incidentPublisher,
+            JbstIncidentsPublisher incidentsPublisher,
             JbstWebsocketsService websocketsService
     ) {
         super(
-                incidentPublisher
+                incidentsPublisher
         );
         this.websocketsService = websocketsService;
     }
@@ -58,7 +58,7 @@ public class NoopJbstResetServerTask extends AbstractJbstResetServerTask {
             this.status.setFailureDescription(ex);
             this.websocketsService.sendResetServerStatus(usernames, this.status);
             LOGGER.info(JbstConstants.Logs.getUserProcess(initiator.username(), "Reset Server", FAILURE));
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 

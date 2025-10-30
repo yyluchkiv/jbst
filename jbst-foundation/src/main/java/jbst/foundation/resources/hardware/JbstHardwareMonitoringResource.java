@@ -5,7 +5,7 @@ import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     // Websockets
     private final JbstWebsocketsService websocketsService;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     // Stores
     private final JbstHardwareMonitoringStore jbstHardwareMonitoringStore;
 
@@ -38,7 +38,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
     public JbstHardwareMonitoringResource(
             JbstSessionRegistry sessionRegistry,
             JbstWebsocketsService websocketsService,
-            IncidentPublisher incidentPublisher,
+            JbstIncidentsPublisher incidentsPublisher,
             JbstHardwareMonitoringStore jbstHardwareMonitoringStore
     ) {
         super(
@@ -46,7 +46,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
         );
         this.sessionRegistry = sessionRegistry;
         this.websocketsService = websocketsService;
-        this.incidentPublisher = incidentPublisher;
+        this.incidentsPublisher = incidentsPublisher;
         this.jbstHardwareMonitoringStore = jbstHardwareMonitoringStore;
     }
 
@@ -55,7 +55,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
         try {
             this.send();
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 
@@ -75,7 +75,7 @@ public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
                 this.send();
             }
         } catch (RuntimeException ex) {
-            this.incidentPublisher.publishThrowable(ex);
+            this.incidentsPublisher.publishThrowable(ex);
         }
     }
 

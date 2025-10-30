@@ -1,7 +1,7 @@
 package jbst.foundation.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +17,11 @@ public class JbstUsersTokensCron extends AbstractBaseCron {
     // Repository
     private final JbstUsersTokensRepository usersTokensRepository;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     @Override
     public void processException(Exception ex) {
-        this.incidentPublisher.publishThrowable(ex);
+        this.incidentsPublisher.publishThrowable(ex);
     }
 
     @Scheduled(cron = "0 1 * * * *")

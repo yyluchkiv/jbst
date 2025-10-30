@@ -1,6 +1,6 @@
 package jbst.foundation.incidents.handlers;
 
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,34 +30,34 @@ class RejectedExecutionHandlerPublisherTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
         }
 
         @Bean
         RejectedExecutionHandlerPublisher rejectedExecutionHandlerPublisher() {
             return new RejectedExecutionHandlerPublisher(
-                    this.incidentPublisher()
+                    this.incidentsPublisher()
             );
         }
     }
 
-    // Publisher
-    private final IncidentPublisher incidentPublisher;
+    // Incidents
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     private final RejectedExecutionHandlerPublisher componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -77,7 +77,7 @@ class RejectedExecutionHandlerPublisherTest {
         // Assert
         var message = "Task " + runnableName + " rejected from " + executorName;
         var exceptionAC = ArgumentCaptor.forClass(RejectedExecutionException.class);
-        verify(this.incidentPublisher).publishThrowable(exceptionAC.capture());
+        verify(this.incidentsPublisher).publishThrowable(exceptionAC.capture());
         assertThat(exceptionAC.getValue().getMessage()).isEqualTo(message);
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(RejectedExecutionException.class);

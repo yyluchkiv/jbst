@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfCon
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,22 +59,22 @@ class JbstWebsocketsServiceTest {
         }
 
         @Bean
-        IncidentPublisher serverIncidentPublisher() {
-            return mock(IncidentPublisher.class);
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
         }
 
         @Bean
         JbstWebsocketsService websocketsService() {
             return new JbstWebsocketsService(
                     this.simpMessagingTemplate(),
-                    this.serverIncidentPublisher(),
+                    this.incidentsPublisher(),
                     this.jbstProperties()
             );
         }
     }
 
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     private final JbstProperties jbstProperties;
 
     private final JbstWebsocketsService componentUnderTest;
@@ -83,7 +83,7 @@ class JbstWebsocketsServiceTest {
     void beforeEach() {
         reset(
                 this.simpMessagingTemplate,
-                this.incidentPublisher,
+                this.incidentsPublisher,
                 this.jbstProperties
         );
     }
@@ -92,7 +92,7 @@ class JbstWebsocketsServiceTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.simpMessagingTemplate,
-                this.incidentPublisher,
+                this.incidentsPublisher,
                 this.jbstProperties
         );
     }
@@ -113,7 +113,7 @@ class JbstWebsocketsServiceTest {
         // Assert
         verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
         verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
-        verify(this.incidentPublisher).publishThrowable(ex);
+        verify(this.incidentsPublisher).publishThrowable(ex);
         verifyNoMoreInteractions(this.simpMessagingTemplate);
     }
 

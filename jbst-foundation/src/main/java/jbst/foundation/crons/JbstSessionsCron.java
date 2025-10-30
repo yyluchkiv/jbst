@@ -2,7 +2,7 @@ package jbst.foundation.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +21,13 @@ public class JbstSessionsCron extends AbstractBaseCron {
     // Services
     private final JbstUsersSessionsService usersSessionsService;
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     // Properties
     private final JbstProperties jbstProperties;
 
     @Override
     public void processException(Exception ex) {
-        this.incidentPublisher.publishThrowable(ex);
+        this.incidentsPublisher.publishThrowable(ex);
     }
 
     @Scheduled(

@@ -1,15 +1,18 @@
 package jbst.foundation.services.abstracts;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
+import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tasks.AbstractJbstResetServerTask;
@@ -43,8 +46,8 @@ class AbstractJbstSuperadminServiceTest {
     static class ContextConfiguration {
 
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
         }
 
         @Bean
@@ -55,6 +58,11 @@ class AbstractJbstSuperadminServiceTest {
         @Bean
         JbstInvitationsRepository invitationsRepository() {
             return mock(JbstInvitationsRepository.class);
+        }
+
+        @Bean
+        JbstUsersRepository usersRepository() {
+            return mock(JbstUsersRepository.class);
         }
 
         @Bean
@@ -70,7 +78,7 @@ class AbstractJbstSuperadminServiceTest {
         @Bean
         AbstractJbstResetServerTask abstractSuperAdminResetServerTask() {
             return new AbstractJbstResetServerTask(
-                    this.incidentPublisher()
+                    this.incidentsPublisher()
             ) {
                 @Override
                 public ResetServerStatus getStatus() {
@@ -87,9 +95,10 @@ class AbstractJbstSuperadminServiceTest {
         @Bean
         AbstractJbstSuperadminService abstractBaseSuperadminService() {
             return new AbstractJbstSuperadminService(
-                    this.incidentPublisher(),
+                    this.incidentsPublisher(),
                     this.sessionRegistry(),
                     this.invitationsRepository(),
+                    this.usersRepository(),
                     this.usersSessionsRepository(),
                     this.abstractSuperAdminResetServerTask()
             ) {};
@@ -97,11 +106,12 @@ class AbstractJbstSuperadminServiceTest {
     }
 
     // Incidents
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
     // Sessions
     private final JbstSessionRegistry sessionRegistry;
     // Repositories
     private final JbstInvitationsRepository invitationsRepository;
+    private final JbstUsersRepository usersRepository;
     private final JbstUsersSessionsRepository usersSessionsRepository;
     // Mocks
     private final AbstractMockService abstractMockService;
@@ -111,9 +121,10 @@ class AbstractJbstSuperadminServiceTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.incidentPublisher,
+                this.incidentsPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
+                this.usersRepository,
                 this.usersSessionsRepository,
                 this.abstractMockService
         );
@@ -122,9 +133,10 @@ class AbstractJbstSuperadminServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher,
+                this.incidentsPublisher,
                 this.sessionRegistry,
                 this.invitationsRepository,
+                this.usersRepository,
                 this.usersSessionsRepository,
                 this.abstractMockService
         );
@@ -148,23 +160,49 @@ class AbstractJbstSuperadminServiceTest {
         this.componentUnderTest.resetServerBy(user);
 
         // Assert
-        verify(this.incidentPublisher).publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
+        verify(this.incidentsPublisher).publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
         verify(this.abstractMockService).executeInheritedMethod();
-        verify(this.incidentPublisher).publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
+        verify(this.incidentsPublisher).publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
     }
 
     @Test
-    void findUnusedTest() {
+    void findInvitationsUnusedTest() {
         // Arrange
         var invitations = list345(ResponseInvitation.class);
         when(this.invitationsRepository.findUnused()).thenReturn(invitations);
 
         // Act
-        var unused = this.componentUnderTest.findUnused();
+        var unused = this.componentUnderTest.findInvitationsUnused();
 
         // Assert
         verify(this.invitationsRepository).findUnused();
         assertThat(unused).isEqualTo(invitations);
+    }
+
+    @Test
+    void findUsersExcept() {
+        // Arrange
+        var username = Username.hardcoded();
+        when(this.usersRepository.findUsersExcept(username)).thenReturn(JbstUsers.hardcoded());
+
+        // Act
+        var users = this.componentUnderTest.findUsersExcept(username);
+
+        // Assert
+        verify(this.usersRepository).findUsersExcept(username);
+        assertThat(users).isEqualTo(JbstUsers.hardcoded());
+    }
+
+    @Test
+    void disableUser() {
+        // Arrange
+        var username = Username.hardcoded();
+
+        // Act
+        this.componentUnderTest.disableUser(username);
+
+        // Assert
+        verify(this.usersRepository).disable(username);
     }
 
     @Test

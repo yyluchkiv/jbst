@@ -1,9 +1,8 @@
-package jbst.foundation.incidents.feigns.clients.impl;
+package jbst.foundation.incidents.feigns.clients;
 
 import feign.FeignException;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.incidents.feigns.clients.IncidentClient;
-import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,11 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.SERVER_OFFLINE
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentClientImpl implements IncidentClient {
+public class JbstIncidentClient {
 
     // Definitions
-    private final IncidentClientDefinition incidentClientDefinition;
+    private final JbstIncidentClientDefinition incidentClientDefinition;
 
-    @Override
     public void registerIncident(Incident incident) {
         try {
             this.incidentClientDefinition.registerIncident(incident);
