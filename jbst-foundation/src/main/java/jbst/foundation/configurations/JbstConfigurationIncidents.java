@@ -10,7 +10,6 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.JbstIncidentsSubscriber;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
-import jbst.foundation.incidents.feigns.clients.impl.IncidentClientImpl;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
 import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
@@ -86,7 +85,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @Bean
     IncidentClient incidentClient(IncidentClientDefinition incidentClientDefinition) {
-        return new IncidentClientImpl(incidentClientDefinition);
+        return new IncidentClient(incidentClientDefinition);
     }
 
     // ================================================================================================================

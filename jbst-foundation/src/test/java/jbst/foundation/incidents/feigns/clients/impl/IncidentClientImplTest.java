@@ -32,7 +32,7 @@ class IncidentClientImplTest {
 
         @Bean
         IncidentClient incidentClient() {
-            return new IncidentClientImpl(
+            return new IncidentClient(
                     this.incidentClientDefinition()
             );
         }

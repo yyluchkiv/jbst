@@ -7,4 +7,4 @@
 - Plan Payments (Stripe)
 
 ##### Minor
-- investigate merger IncidentPublisher + JbstIncidentsPublisher
+- 
