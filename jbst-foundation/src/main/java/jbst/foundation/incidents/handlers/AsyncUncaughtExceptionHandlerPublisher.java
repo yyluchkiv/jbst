@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.handlers;
 
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -14,11 +14,11 @@ import java.util.Arrays;
 public class AsyncUncaughtExceptionHandlerPublisher implements AsyncUncaughtExceptionHandler {
 
     // Publisher
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     @Override
     public void handleUncaughtException(@NotNull Throwable throwable, @NotNull Method method, Object @NotNull ... params) {
-        this.incidentPublisher.publishIncident(
+        this.incidentsPublisher.publishIncident(
                 new Incident(
                         throwable,
                         method,

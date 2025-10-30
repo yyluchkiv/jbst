@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.handlers;
 
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,34 +27,34 @@ class AsyncUncaughtExceptionHandlerPublisherTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        JbstIncidentsPublisher incidentsPublisher() {
+            return mock(JbstIncidentsPublisher.class);
         }
 
         @Bean
         AsyncUncaughtExceptionHandlerPublisher asyncUncaughtExceptionHandlerPublisher() {
             return new AsyncUncaughtExceptionHandlerPublisher(
-                    this.incidentPublisher()
+                    this.incidentsPublisher()
             );
         }
     }
 
     // Publisher
-    private final IncidentPublisher incidentPublisher;
+    private final JbstIncidentsPublisher incidentsPublisher;
 
     private final AsyncUncaughtExceptionHandlerPublisher componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher
+                this.incidentsPublisher
         );
     }
 
@@ -69,6 +69,6 @@ class AsyncUncaughtExceptionHandlerPublisherTest {
         this.componentUnderTest.handleUncaughtException(throwable, method, params);
 
         // Assert
-        verify(this.incidentPublisher).publishIncident(new Incident(throwable, method, Arrays.asList(params)));
+        verify(this.incidentsPublisher).publishIncident(new Incident(throwable, method, Arrays.asList(params)));
     }
 }

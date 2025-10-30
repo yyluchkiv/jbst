@@ -7,6 +7,7 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.events.publishers.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.JbstIncidentsSubscriber;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.incidents.events.publishers.impl.IncidentPublisherImpl;
@@ -60,76 +61,8 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     }
 
     // ================================================================================================================
-    // Incidents: Publisher
+    // Incidents: HTTP
     // ================================================================================================================
-
-    @Bean
-    IncidentPublisher incidentPublisher() {
-        return new IncidentPublisherImpl(
-                this.applicationEventPublisher
-        );
-    }
-
-    // ================================================================================================================
-    // Async
-    // ================================================================================================================
-
-    @Bean
-    RejectedExecutionHandler rejectedExecutionHandler() {
-        return new RejectedExecutionHandlerPublisher(
-                this.incidentPublisher()
-        );
-    }
-
-    @Override
-    public Executor getAsyncExecutor() {
-        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
-        var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(asyncConfigs.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
-        taskExecutor.setRejectedExecutionHandler(this.rejectedExecutionHandler());
-        taskExecutor.initialize();
-        return taskExecutor;
-    }
-
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new AsyncUncaughtExceptionHandlerPublisher(
-                this.incidentPublisher()
-        );
-    }
-
-    // ================================================================================================================
-    // Events
-    // ================================================================================================================
-
-    @Bean
-    ErrorHandler errorHandlerPublisher() {
-        return new ErrorHandlerPublisher(
-                this.incidentPublisher()
-        );
-    }
-
-    @SuppressWarnings("DuplicatedCode")
-    @Bean(name = "applicationEventMulticaster")
-    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-        var eventsConfigs = this.jbstProperties.getEventsConfigs();
-        var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(eventsConfigs.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(eventsConfigs.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(eventsConfigs.asThreadsMaxPoolTuplePercentage()));
-        taskExecutor.initialize();
-        var eventMulticaster = new SimpleApplicationEventMulticaster();
-        eventMulticaster.setTaskExecutor(taskExecutor);
-        eventMulticaster.setErrorHandler(this.errorHandlerPublisher());
-        return eventMulticaster;
-    }
-
-    // ================================================================================================================
-    // Incidents
-    // ================================================================================================================
-
     @Bean
     @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "true")
     IncidentClientDefinition incidentClientDefinition() {
@@ -158,8 +91,72 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
         return new IncidentClientImpl(incidentClientDefinition);
     }
 
+    // ================================================================================================================
+    // Incidents: Pub+Sub
+    // ================================================================================================================
+    @Deprecated
+    @Bean
+    IncidentPublisher incidentPublisher() {
+        return new IncidentPublisherImpl(
+                this.applicationEventPublisher
+        );
+    }
+
+    @Bean
+    JbstIncidentsPublisher incidentsPublisher() {
+        return new JbstIncidentsPublisher(this.applicationEventPublisher, this.jbstProperties);
+    }
+
     @Bean
     JbstIncidentsSubscriber incidentsSubscriber(IncidentClient incidentClient) {
         return new JbstIncidentsSubscriber(incidentClient);
+    }
+
+    // ================================================================================================================
+    // Async
+    // ================================================================================================================
+    @Bean
+    RejectedExecutionHandler rejectedExecutionHandler() {
+        return new RejectedExecutionHandlerPublisher(this.incidentPublisher());
+    }
+
+    @Override
+    public Executor getAsyncExecutor() {
+        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
+        var taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setThreadNamePrefix(asyncConfigs.getThreadNamePrefix());
+        taskExecutor.setCorePoolSize(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
+        taskExecutor.setMaxPoolSize(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
+        taskExecutor.setRejectedExecutionHandler(this.rejectedExecutionHandler());
+        taskExecutor.initialize();
+        return taskExecutor;
+    }
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return new AsyncUncaughtExceptionHandlerPublisher(this.incidentsPublisher());
+    }
+
+    // ================================================================================================================
+    // Events
+    // ================================================================================================================
+    @Bean
+    ErrorHandler errorHandlerPublisher() {
+        return new ErrorHandlerPublisher(this.incidentPublisher());
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Bean(name = "applicationEventMulticaster")
+    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
+        var eventsConfigs = this.jbstProperties.getEventsConfigs();
+        var taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setThreadNamePrefix(eventsConfigs.getThreadNamePrefix());
+        taskExecutor.setCorePoolSize(getNumOfCores(eventsConfigs.asThreadsCorePoolTuplePercentage()));
+        taskExecutor.setMaxPoolSize(getNumOfCores(eventsConfigs.asThreadsMaxPoolTuplePercentage()));
+        taskExecutor.initialize();
+        var eventMulticaster = new SimpleApplicationEventMulticaster();
+        eventMulticaster.setTaskExecutor(taskExecutor);
+        eventMulticaster.setErrorHandler(this.errorHandlerPublisher());
+        return eventMulticaster;
     }
 }

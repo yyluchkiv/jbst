@@ -4,6 +4,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
+import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -81,6 +82,30 @@ class JbstIncidentsPublisherTest {
                 this.applicationEventPublisher,
                 this.jbstProperties
         );
+    }
+
+    @Test
+    void publishIncidentTest() {
+        // Arrange
+        var incident = Incident.random();
+
+        // Act
+        this.componentUnderTest.publishIncident(incident);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(incident);
+    }
+
+    @Test
+    void publishThrowableIncidentTest() {
+        // Arrange
+        var incident = new Incident(new Throwable("jbst"));
+
+        // Act
+        this.componentUnderTest.publishIncident(incident);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
