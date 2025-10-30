@@ -56,13 +56,13 @@ class JbstConfigurationIncidents1Test {
 
         // Assert
         assertThat(methods)
-                .contains("incidentPublisher")
+                .contains("incidentsPublisher")
+                .contains("incidentsSubscriber")
                 .contains("rejectedExecutionHandler")
                 .contains("errorHandlerPublisher")
                 .contains("simpleApplicationEventMulticaster")
                 .contains("incidentClientDefinition")
                 .contains("incidentClient")
-                .contains("incidentSubscriber")
                 .hasSizeGreaterThanOrEqualTo(24);
     }
 
