@@ -6,5 +6,6 @@
 - Users + Plans
 - Plan Payments (Stripe)
 
-##### Major
+##### Minor
+- consider AbstractTimerTask allow start/stop to be overridable
 - investigate merger IncidentPublisher + JbstIncidentsPublisher
