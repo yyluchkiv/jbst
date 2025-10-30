@@ -51,6 +51,11 @@ public record JwtUser(
         return this.username.value();
     }
 
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
     public static JwtUser hardcoded(UserCreationOption userCreationOption) {
         return new JwtUser(
                 UserId.hardcoded(),

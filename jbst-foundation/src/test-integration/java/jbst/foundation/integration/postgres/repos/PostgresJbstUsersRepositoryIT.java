@@ -154,8 +154,19 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
         this.usersRepository.saveAll(PostgresDbUser.dummies1());
 
         // Act-Assert-0
-        assertThat(this.usersRepository.findUsersExcept(new Username("admin1")).findUsernamesDisabled()).hasSize(0);
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).hasSize(6);
 
+        // Act-Assert-1
+        this.usersRepository.disable(new Username("user1"));
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).containsOnly("sa1", "sa2", "sa3", "admin1", "user2");
+
+        // Act-Assert-2
+        this.usersRepository.disable(new Username("user2"));
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).containsOnly("sa1", "sa2", "sa3", "admin1");
+
+        // Act-Assert-3
+        this.usersRepository.disable(new Username("user3"));
+        assertThat(this.usersRepository.findUsers().findUsernamesEnabled()).containsOnly("sa1", "sa2", "sa3", "admin1");
     }
 
     @Test

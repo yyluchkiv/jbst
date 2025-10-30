@@ -31,7 +31,7 @@ public class JbstUsers extends Plurals<JbstUser, UserId> {
     }
 
     @JsonIgnore
-    public Set<String> findUsernamesDisabled() {
-        return this.values.stream().filter(user -> !user.enabled()).map(user -> user.username().value()).collect(Collectors.toSet());
+    public Set<String> findUsernamesEnabled() {
+        return this.values.stream().filter(JbstUser::enabled).map(user -> user.username().value()).collect(Collectors.toSet());
     }
 }
