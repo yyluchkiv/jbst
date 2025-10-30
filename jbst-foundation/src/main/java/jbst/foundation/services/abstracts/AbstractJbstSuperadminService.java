@@ -66,6 +66,11 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
         return this.usersRepository.findUsersExcept(username);
     }
 
+    @Override
+    public void disableUser(Username username) {
+        this.usersRepository.disable(username);
+    }
+
     // =================================================================================================================
     // Users Sessions
     // =================================================================================================================

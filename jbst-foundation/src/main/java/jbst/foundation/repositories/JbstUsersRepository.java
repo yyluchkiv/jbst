@@ -29,6 +29,7 @@ public interface JbstUsersRepository {
     void confirmEmail(Email email);
     void resetPassword(Email email, Password password);
     void resetPassword(Username username, Password password);
+    void disable(Username username);
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation);

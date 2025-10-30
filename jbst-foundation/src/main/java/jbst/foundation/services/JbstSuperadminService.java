@@ -28,6 +28,7 @@ public interface JbstSuperadminService {
     // Users
     // =================================================================================================================
     List<JbstUser> findUsersExcept(Username username);
+    void disableUser(Username username);
 
     // =================================================================================================================
     // Users Sessions

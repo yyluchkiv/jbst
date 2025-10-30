@@ -95,6 +95,10 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         }
     }
 
+    default void disable(Username username) {
+        // TODO [YYL] fixme
+    }
+
     default UserId saveAs(JwtUser user) {
         var entity = this.save(new PostgresDbUser(user));
         return entity.userId();

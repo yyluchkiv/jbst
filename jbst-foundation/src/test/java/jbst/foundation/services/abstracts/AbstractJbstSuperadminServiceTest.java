@@ -195,6 +195,18 @@ class AbstractJbstSuperadminServiceTest {
     }
 
     @Test
+    void disableUser() {
+        // Arrange
+        var username = Username.hardcoded();
+
+        // Act
+        this.componentUnderTest.disableUser(username);
+
+        // Assert
+        verify(this.usersRepository).disable(username);
+    }
+
+    @Test
     void getServerSessionsTest() {
         // Arrange
         var requestAccessToken = RequestAccessToken.random();

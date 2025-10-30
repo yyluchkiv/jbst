@@ -90,6 +90,10 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         }
     }
 
+    default void disable(Username username) {
+        // TODO [YYL] fixme
+    }
+
     default UserId saveAs(JwtUser user) {
         var entity = this.save(new MongoDbUser(user));
         return entity.userId();
