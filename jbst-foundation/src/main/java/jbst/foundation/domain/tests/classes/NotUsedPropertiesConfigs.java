@@ -1,5 +1,6 @@
 package jbst.foundation.domain.tests.classes;
 
+import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
@@ -50,7 +51,7 @@ public class NotUsedPropertiesConfigs extends JbstProperty {
         return "not-used-properties-configs";
     }
 
-    // TODO [YYL] collection<string>
+    @JbstModificationBeta(releaseVersion = "v1.31")
     public void assertPropertiesExtended(Set<String> keys) {
         assertTrueOrThrow(
                 this.types.size() >= keys.size(),

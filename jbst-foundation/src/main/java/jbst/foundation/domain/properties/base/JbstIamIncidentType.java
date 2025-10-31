@@ -3,6 +3,10 @@ package jbst.foundation.domain.properties.base;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @AllArgsConstructor
 public enum JbstIamIncidentType {
     AUTHENTICATION_LOGIN("Authentication Login"),
@@ -28,5 +32,9 @@ public enum JbstIamIncidentType {
     @Override
     public String toString() {
         return this.value;
+    }
+
+    public static Set<String> getNames() {
+        return Stream.of(values()).map(Enum::name).collect(Collectors.toSet());
     }
 }

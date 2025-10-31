@@ -231,7 +231,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property incidents-manager.types is invalid. Entries: [AUTHENTICATION_LOGIN=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD=false, AUTHENTICATION_LOGOUT=true, AUTHENTICATION_LOGOUT_MIN=true, REGISTER0=true, REGISTER0_FAILURE=true, REGISTER1=true, REGISTER1_FAILURE=true, REGISTER_MAGICLINK=true, SESSION_EXPIRED=true]. Size: 11. MinSize: 12");
+        assertThat(throwable.getMessage()).isEqualTo("Property incidents-manager.incidents is invalid. Entries: [AUTHENTICATION_LOGIN=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD=false, AUTHENTICATION_LOGOUT=true, AUTHENTICATION_LOGOUT_MIN=true, REGISTER0=true, REGISTER0_FAILURE=true, REGISTER1=true, REGISTER1_FAILURE=true, REGISTER_MAGICLINK=true, SESSION_EXPIRED=true]. Size: 11. MinSize: 12");
     }
 
     @Test

@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.configs;
 
+import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
@@ -7,6 +8,7 @@ import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import jbst.foundation.domain.properties.base.IncidentsManagerType;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.domain.properties.base.RemoteServer;
+import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,12 +16,15 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
 
 import static java.lang.Boolean.TRUE;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -94,7 +99,7 @@ public class IncidentsManager extends JbstProperty {
     public void assertProperties() {
         super.assertProperties();
         if (this.enabled) {
-            this.assertPropertiesExtended(12);
+            this.assertPropertiesExtended(JbstIamIncidentType.getNames());
             var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class);
             var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class);
             if (loginFailure1 && loginFailure2) {
@@ -103,13 +108,15 @@ public class IncidentsManager extends JbstProperty {
         }
     }
 
-    public void assertPropertiesExtended(int size) {
+    @JbstModificationBeta(releaseVersion = "v1.31")
+    public void assertPropertiesExtended(Set<String> keys) {
         assertTrueOrThrow(
-                this.incidents.size() >= size,
-                "Property %s is invalid. Entries: [%s]. MinSize: %s".formatted(
-                        this.getNameNonLeaf() + ".types",
+                this.incidents.size() >= keys.size(),
+                "Property %s is invalid. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
+                        "incidents-manager.incidents",
                         baseJoiningRaw(this.incidents.entrySet()),
-                        size
+                        baseJoiningRaw(keys),
+                        RED_TEXT.format(CollectionUtility.baseJoiningRaw(disjunction(this.incidents.keySet(), keys)))
                 )
         );
     }
