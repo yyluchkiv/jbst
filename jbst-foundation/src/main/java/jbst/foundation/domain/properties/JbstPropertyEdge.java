@@ -96,7 +96,7 @@ public class JbstPropertyEdge {
             var annotation = this.child.getAnnotation(MandatoryMapProperty.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
             var castedProperty = (Map) this.valueRAW;
-            var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
+            var size = keySetClass.getEnumConstants().length;
             //noinspection unchecked
             assertTrueOrThrow(
                     castedProperty.size() == size,

@@ -9,8 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface MandatoryMapProperty {
     String propertyName();
-
     Class<? extends Enum<?>> keySetClass();
-
-    int size() default -1;
 }

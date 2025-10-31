@@ -78,4 +78,8 @@ public class IncidentsConfigs extends JbstProperty {
     public boolean isEnabled(JbstIamIncidentType type) {
         return TRUE.equals(this.typesConfigs.get(type));
     }
+
+    public boolean isEnabledV2(JbstIamIncidentType type) {
+        return TRUE.equals(this.typesConfigs.get(type));
+    }
 }
