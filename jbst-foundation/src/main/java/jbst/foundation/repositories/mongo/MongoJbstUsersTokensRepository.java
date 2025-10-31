@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -59,7 +59,7 @@ public interface MongoJbstUsersTokensRepository extends MongoRepository<MongoDbU
     MongoDbUserToken findByValue(String value);
     MongoDbUserToken findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
             Email email,
-            UserTokenType type,
+            JbstUserTokenType type,
             long timestamp
     );
     void deleteAllByExpiryTimestampBefore(long timestamp);

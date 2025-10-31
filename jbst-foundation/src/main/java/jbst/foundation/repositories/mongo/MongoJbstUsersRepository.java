@@ -9,7 +9,7 @@ import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -124,7 +124,7 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         return entity.userId();
     }
 
-    default JwtUser saveAsOrThrow(UserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstUsernameAlreadyExistException {
+    default JwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstUsernameAlreadyExistException {
         var exist = this.existsByUsername(username);
         if (exist) {
             throw new JbstUsernameAlreadyExistException(username);

@@ -1,6 +1,6 @@
-package jbst.foundation.domain.properties.base;
+package jbst.foundation.domain.enums;
 
-public enum JwtTokenStorageMethod {
+public enum JbstJwtTokenStorageMethod {
     COOKIES,
     HEADERS;
 

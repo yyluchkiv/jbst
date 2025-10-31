@@ -5,7 +5,7 @@ import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -88,7 +88,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
                         session,
                         clientIpAddr,
                         new UserAgentHeader(httpServletRequest),
-                        AccountAccessMethod.getMethod(user.creationOption())
+                        JbstAccountAccessMethod.getMethod(user.creationOption())
                 )
         );
     }
@@ -105,7 +105,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
                         newSession,
                         getClientIpAddr(httpServletRequest),
                         new UserAgentHeader(httpServletRequest),
-                        AccountAccessMethod.SESSION_TOKEN
+                        JbstAccountAccessMethod.SESSION_TOKEN
                 )
         );
     }

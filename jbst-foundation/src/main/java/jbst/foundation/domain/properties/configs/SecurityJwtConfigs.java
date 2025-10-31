@@ -36,8 +36,6 @@ public class SecurityJwtConfigs extends JbstProperty {
     @MandatoryProperty
     private final EssenceConfigs essenceConfigs;
     @MandatoryProperty
-    private final IncidentsConfigs incidentsConfigs;
-    @MandatoryProperty
     private final JwtTokensConfigs jwtTokensConfigs;
     @MandatoryProperty
     private final LoggingConfigs loggingConfigs;
@@ -55,7 +53,6 @@ public class SecurityJwtConfigs extends JbstProperty {
                 AuthoritiesConfigs.hardcoded(),
                 CookiesConfigs.hardcoded(),
                 EssenceConfigs.hardcoded(),
-                IncidentsConfigs.hardcoded(),
                 JwtTokensConfigs.hardcoded(),
                 LoggingConfigs.hardcoded(),
                 SessionConfigs.hardcoded(),
@@ -67,7 +64,6 @@ public class SecurityJwtConfigs extends JbstProperty {
 
     public static SecurityJwtConfigs of(LoggingConfigs loggingConfigs) {
         return new SecurityJwtConfigs(
-                null,
                 null,
                 null,
                 null,
@@ -87,7 +83,6 @@ public class SecurityJwtConfigs extends JbstProperty {
                 null,
                 null,
                 null,
-                null,
                 sessionConfigs,
                 null,
                 null,
@@ -97,7 +92,6 @@ public class SecurityJwtConfigs extends JbstProperty {
 
     public static SecurityJwtConfigs disabledUsersEmailsConfigs() {
         return new SecurityJwtConfigs(
-                null,
                 null,
                 null,
                 null,

@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
@@ -61,7 +61,7 @@ public class UsersEmailsConfigs extends JbstProperty {
         return "users-emails-configs";
     }
 
-    public boolean isEnabled(AccountAccessMethod method) {
+    public boolean isEnabled(JbstAccountAccessMethod method) {
         if (isNull(method)) {
             return false;
         }

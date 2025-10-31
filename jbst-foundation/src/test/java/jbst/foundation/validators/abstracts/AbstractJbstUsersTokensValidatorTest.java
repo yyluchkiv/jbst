@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.ids.TokenId;
@@ -88,7 +88,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.EMAIL_CONFIRMATION,
+                                JbstUserTokenType.EMAIL_CONFIRMATION,
                                 validTimestamp,
                                 true
                         ),
@@ -99,7 +99,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.EMAIL_CONFIRMATION,
+                                JbstUserTokenType.EMAIL_CONFIRMATION,
                                 expiredTimestamp,
                                 false
                         ),
@@ -110,7 +110,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.PASSWORD_RESET,
+                                JbstUserTokenType.PASSWORD_RESET,
                                 validTimestamp,
                                 false
                         ),
@@ -121,7 +121,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.EMAIL_CONFIRMATION,
+                                JbstUserTokenType.EMAIL_CONFIRMATION,
                                 validTimestamp,
                                 false
                         ),
@@ -189,7 +189,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.PASSWORD_RESET,
+                                JbstUserTokenType.PASSWORD_RESET,
                                 validTimestamp,
                                 true
                         ),
@@ -201,7 +201,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.PASSWORD_RESET,
+                                JbstUserTokenType.PASSWORD_RESET,
                                 expiredTimestamp,
                                 false
                         ),
@@ -213,7 +213,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.EMAIL_CONFIRMATION,
+                                JbstUserTokenType.EMAIL_CONFIRMATION,
                                 validTimestamp,
                                 false
                         ),
@@ -225,7 +225,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 TokenId.random(),
                                 Email.random(),
                                 randomStringLetterOrNumbersOnly(255),
-                                UserTokenType.PASSWORD_RESET,
+                                JbstUserTokenType.PASSWORD_RESET,
                                 validTimestamp,
                                 false
                         ),

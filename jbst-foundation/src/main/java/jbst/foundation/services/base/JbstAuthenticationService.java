@@ -7,7 +7,7 @@ import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
@@ -62,7 +62,7 @@ public class JbstAuthenticationService {
     public final Username asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
             this.asAuthentication(
-                    UserCreationOption.STANDARD,
+                    JbstUserCreationOption.STANDARD,
                     credentials,
                     httpRequest,
                     httpResponse
@@ -86,7 +86,7 @@ public class JbstAuthenticationService {
             var credentials = this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
             this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
             this.asAuthentication(
-                    UserCreationOption.MAGICLINK,
+                    JbstUserCreationOption.MAGICLINK,
                     credentials,
                     httpRequest,
                     httpResponse
@@ -141,7 +141,7 @@ public class JbstAuthenticationService {
     // PRIVATE METHODS
     // =================================================================================================================
     public void asAuthentication(
-            UserCreationOption userCreationOption,
+            JbstUserCreationOption userCreationOption,
             UsernamePasswordCredentials credentials,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse

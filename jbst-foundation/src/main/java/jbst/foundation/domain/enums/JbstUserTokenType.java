@@ -5,7 +5,7 @@ import jbst.foundation.domain.time.TimeAmount;
 import static java.time.temporal.ChronoUnit.*;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 
-public enum UserTokenType {
+public enum JbstUserTokenType {
     EMAIL_CONFIRMATION,
     PASSWORD_RESET,
     MAGICLINK;

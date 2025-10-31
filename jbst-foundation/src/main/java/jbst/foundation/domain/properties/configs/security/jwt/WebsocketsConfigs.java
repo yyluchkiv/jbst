@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
@@ -20,13 +20,13 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 public class WebsocketsConfigs extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private final CsrfConfigs csrfConfigs;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private final StompEndpointRegistryConfigs stompConfigs;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private final MessageBrokerRegistryConfigs brokerConfigs;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private WebsocketsFeaturesConfigs featuresConfigs;
 
     public static WebsocketsConfigs hardcoded() {

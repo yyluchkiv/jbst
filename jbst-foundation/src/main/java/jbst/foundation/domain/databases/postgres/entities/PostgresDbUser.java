@@ -15,7 +15,7 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import lombok.*;
@@ -48,7 +48,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     @Convert(converter = PostgresConverters.UserCreationOptionConverter.class)
     @Column(name = "creation_option", nullable = false, updatable = false)
-    private UserCreationOption creationOption;
+    private JbstUserCreationOption creationOption;
 
     @Basic
     @Convert(converter = PostgresConverters.UsernameConverter.class)
@@ -91,7 +91,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     private Map<String, Object> attributes;
 
     public PostgresDbUser(
-            @NotNull UserCreationOption creationOption,
+            @NotNull JbstUserCreationOption creationOption,
             @NotNull Username username,
             @NotNull Password password,
             boolean enabled,
@@ -118,7 +118,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull Password password
     ) {
         this(
-                UserCreationOption.STANDARD,
+                JbstUserCreationOption.STANDARD,
                 requestUserRegistration0.username(),
                 password,
                 true,
@@ -136,7 +136,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
             @NotNull JbstInvitation invitation
     ) {
         this(
-                UserCreationOption.STANDARD,
+                JbstUserCreationOption.STANDARD,
                 requestUserRegistration1.username(),
                 password,
                 true,
@@ -164,7 +164,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     public static PostgresDbUser random(String username, Set<String> authorities) {
         var user = new PostgresDbUser(
-                UserCreationOption.random(),
+                JbstUserCreationOption.random(),
                 Username.of(username),
                 Password.random(),
                 true,

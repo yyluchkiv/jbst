@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
@@ -50,7 +50,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                 var username = (index == -1) ? email.getUsername() : new Username(email.getUsername().value() + index);
                 try {
                     user = this.usersRepository.saveAsOrThrow(
-                            UserCreationOption.MAGICLINK,
+                            JbstUserCreationOption.MAGICLINK,
                             username,
                             hashPassword,
                             email,

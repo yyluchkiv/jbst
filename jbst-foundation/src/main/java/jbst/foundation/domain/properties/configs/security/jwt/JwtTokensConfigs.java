@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.JwtToken;
-import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
+import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class JwtTokensConfigs extends JbstProperty {
     @MandatoryProperty
     private final String secretKey;
     @MandatoryProperty
-    private final JwtTokenStorageMethod storageMethod;
+    private final JbstJwtTokenStorageMethod storageMethod;
     @MandatoryProperty
     private final JwtToken accessToken;
     @MandatoryProperty
@@ -36,7 +36,7 @@ public class JwtTokensConfigs extends JbstProperty {
     public static JwtTokensConfigs hardcoded() {
         return new JwtTokensConfigs(
                 "nbVwWebIpNnZ1rsNZFmkAQGiOZAijWtSt5X6FZx/qHA=",
-                JwtTokenStorageMethod.COOKIES,
+                JbstJwtTokenStorageMethod.COOKIES,
                 new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", null),
                 new JwtToken(new TimeAmount(12L, HOURS), "rjwt", null)
         );
@@ -45,7 +45,7 @@ public class JwtTokensConfigs extends JbstProperty {
     public static JwtTokensConfigs random() {
         return new JwtTokensConfigs(
                 randomString(),
-                randomEnum(JwtTokenStorageMethod.class),
+                randomEnum(JbstJwtTokenStorageMethod.class),
                 JwtToken.random(),
                 JwtToken.random()
         );

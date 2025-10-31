@@ -1,9 +1,10 @@
 package jbst.foundation.events.publishers;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.JbstIamIncidentType;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
+import jbst.foundation.domain.enums.JbstIncidentsManagerType;
+import jbst.foundation.domain.enums.JbstIncidentType;
+import jbst.foundation.domain.properties.base.RemoteServer;
+import jbst.foundation.domain.properties.configs.IncidentsManager;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
@@ -30,7 +31,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
+import static jbst.foundation.domain.enums.JbstIncidentType.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
@@ -135,203 +136,203 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLoginDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishAuthenticationLoginEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
     void publishAuthenticationLoginFailureUsernamePasswordDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishAuthenticationLoginFailureUsernamePasswordEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
     void publishAuthenticationLoginFailureUsernameMaskedPasswordDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishAuthenticationLoginFailureUsernameMaskedPasswordEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
     void publishAuthenticationLogoutMinDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT_MIN, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT_MIN, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishAuthenticationLogoutMinEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT_MIN, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT_MIN, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
     void publishAuthenticationLogoutFullDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishAuthenticationLogoutFullEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
     void publishSessionRefreshedDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_REFRESHED, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_REFRESHED, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishSessionRefreshedEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_REFRESHED, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_REFRESHED, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
     void publishSessionExpiredDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_EXPIRED, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_EXPIRED, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishSessionExpiredEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_EXPIRED, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_EXPIRED, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -339,15 +340,15 @@ class JbstIncidentsPublisherTest {
     @ValueSource(booleans = { true, false })
     void publishRegistrationMagicLinkTest(boolean enabled) {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER_MAGICLINK, enabled);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER_MAGICLINK, enabled);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistrationMagicLink.class);
 
         // Act
         this.componentUnderTest.publishRegistrationMagicLink(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         if (enabled) {
             verify(this.applicationEventPublisher).publishEvent(incident);
         }
@@ -357,15 +358,15 @@ class JbstIncidentsPublisherTest {
     @ValueSource(booleans = { true, false })
     void publishRegistration0Test(boolean enabled) {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER0, enabled);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER0, enabled);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration0.class);
 
         // Act
         this.componentUnderTest.publishRegistration0(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         if (enabled) {
             verify(this.applicationEventPublisher).publishEvent(incident);
         }
@@ -375,15 +376,15 @@ class JbstIncidentsPublisherTest {
     @ValueSource(booleans = { true, false })
     void publishRegistration0FailureTest(boolean enabled) {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER0_FAILURE, enabled);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER0_FAILURE, enabled);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration0Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration0Failure(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         if (enabled) {
             verify(this.applicationEventPublisher).publishEvent(incident);
         }
@@ -392,83 +393,75 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishRegistration1DisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishRegistration1EnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
     void publishRegistration1FailureDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1_FAILURE, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1_FAILURE, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
     void publishRegistration1FailureEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1_FAILURE, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1_FAILURE, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static SecurityJwtConfigs randomSecurityJwtConfigs(JbstIamIncidentType type, boolean enabled) {
-        var typesConfigs = Stream.of(JbstIamIncidentType.values())
+    private static IncidentsManager incidentsManager(JbstIncidentType type, boolean enabled) {
+        var types = Stream.of(JbstIncidentType.values())
                 .collect(Collectors.toMap(
-                        entry -> entry,
+                        JbstIncidentType::name,
                         entry -> type.equals(entry) && enabled
                 ));
-        return new SecurityJwtConfigs(
-                null,
-                null,
-                null,
-                new IncidentsConfigs(
-                        typesConfigs
-                ),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+        return new IncidentsManager(
+                true,
+                JbstIncidentsManagerType.hardcoded(),
+                RemoteServer.hardcoded(),
+                types
         );
     }
 }

@@ -15,7 +15,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.exceptions.ExceptionEntityType;
@@ -198,7 +198,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var request = RequestMagicLinkToken.hardcoded();
         var userToken = JbstUserToken.hardcodedMagicLink();
         var magicLinkUserCredentials = new MagicLinkUserCredentials(userToken, request.zoneId());
-        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
+        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var credentials = new UsernamePasswordCredentials(user.username(), user.password());
         when(this.authenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
         when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);

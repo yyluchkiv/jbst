@@ -9,8 +9,8 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.enums.UserCreationOption;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
@@ -136,16 +136,16 @@ public class PostgresConverters {
     }
 
     @Converter
-    public class UserCreationOptionConverter implements AttributeConverter<UserCreationOption, String> {
+    public class UserCreationOptionConverter implements AttributeConverter<JbstUserCreationOption, String> {
 
         @Override
-        public String convertToDatabaseColumn(UserCreationOption obj) {
+        public String convertToDatabaseColumn(JbstUserCreationOption obj) {
             return nonNull(obj) ? obj.getValue() : null;
         }
 
         @Override
-        public UserCreationOption convertToEntityAttribute(String column) {
-            return nonNull(column) ? UserCreationOption.find(column) : null;
+        public JbstUserCreationOption convertToEntityAttribute(String column) {
+            return nonNull(column) ? JbstUserCreationOption.find(column) : null;
         }
     }
 

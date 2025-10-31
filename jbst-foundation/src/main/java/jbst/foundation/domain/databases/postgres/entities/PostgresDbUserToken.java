@@ -8,7 +8,7 @@ import jbst.foundation.domain.converters.PostgresConverters;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable0;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.time.TimeAmount;
 import lombok.*;
@@ -45,7 +45,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, updatable = false)
-    private UserTokenType type;
+    private JbstUserTokenType type;
 
     @Column(name = "expiry_timestamp", nullable = false, updatable = false)
     private long expiryTimestamp;
@@ -56,7 +56,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     public PostgresDbUserToken(
             @NotNull Email email,
             @NotNull String value,
-            @NotNull UserTokenType type,
+            @NotNull JbstUserTokenType type,
             long expiryTimestamp,
             boolean used
     ) {
@@ -90,7 +90,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     public static PostgresDbUserToken random(
             Username username,
-            UserTokenType type,
+            JbstUserTokenType type,
             long expiryTimestamp,
             boolean used
     ) {
@@ -106,37 +106,37 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     public static List<PostgresDbUserToken> dummies1() {
         var token1 = PostgresDbUserToken.random(
                 Username.of("username1"),
-                UserTokenType.EMAIL_CONFIRMATION,
+                JbstUserTokenType.EMAIL_CONFIRMATION,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 false
         );
         var token2 = PostgresDbUserToken.random(
                 Username.of("username2"),
-                UserTokenType.PASSWORD_RESET,
+                JbstUserTokenType.PASSWORD_RESET,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 false
         );
         var token3 = PostgresDbUserToken.random(
                 Username.of("username3"),
-                UserTokenType.EMAIL_CONFIRMATION,
+                JbstUserTokenType.EMAIL_CONFIRMATION,
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 false
         );
         var token4 = PostgresDbUserToken.random(
                 Username.of("username4"),
-                UserTokenType.PASSWORD_RESET,
+                JbstUserTokenType.PASSWORD_RESET,
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 false
         );
         var token5 = PostgresDbUserToken.random(
                 Username.of("username5"),
-                UserTokenType.EMAIL_CONFIRMATION,
+                JbstUserTokenType.EMAIL_CONFIRMATION,
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 true
         );
         var token6 = PostgresDbUserToken.random(
                 Username.of("username6"),
-                UserTokenType.EMAIL_CONFIRMATION,
+                JbstUserTokenType.EMAIL_CONFIRMATION,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 true
         );

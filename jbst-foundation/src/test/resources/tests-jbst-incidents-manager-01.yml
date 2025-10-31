@@ -1,0 +1,32 @@
+jbst:
+  async-configs:
+    thread-name-prefix: tps1-async
+    threads-core-pool-percentage: 25
+    threads-max-pool-percentage: 50
+
+  events-configs:
+    thread-name-prefix: tps1-events
+    threads-core-pool-percentage: 75
+    threads-max-pool-percentage: 100
+
+  incidents-manager:
+    enabled: true
+    type: SERVER
+    remote-server:
+      baseURL: localhost
+      credentials:
+        username: jbst
+        password: jbst
+    incidents:
+      AUTHENTICATION_LOGIN: true
+      AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD: false
+      AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD: true
+      AUTHENTICATION_LOGOUT: false
+      AUTHENTICATION_LOGOUT_MIN: false
+      SESSION_REFRESHED: true
+      SESSION_EXPIRED: false
+      REGISTER_MAGICLINK: true
+      REGISTER0: true
+      REGISTER0_FAILURE: true
+      REGISTER1: true
+      REGISTER1_FAILURE: true

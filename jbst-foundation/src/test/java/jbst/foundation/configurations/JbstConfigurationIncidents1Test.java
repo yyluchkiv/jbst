@@ -20,19 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = {
-                "jbst.async-configs.thread-name-prefix=tps1-async",
-                "jbst.async-configs.threads-core-pool-percentage=25",
-                "jbst.async-configs.threads-max-pool-percentage=50",
-                "jbst.events-configs.thread-name-prefix=tps1-events",
-                "jbst.events-configs.threads-core-pool-percentage=75",
-                "jbst.events-configs.threads-max-pool-percentage=100",
-                "jbst.incidents-manager-configs.enabled=true",
-                "jbst.incidents-manager-configs.type=SERVER",
-                "jbst.incidents-manager-configs.remote-server.baseURL=localhost",
-                "jbst.incidents-manager-configs.remote-server.credentials.username=jbst",
-                "jbst.incidents-manager-configs.remote-server.credentials.password=jbst"
-        }
+        properties = "spring.config.location=classpath:tests-jbst-incidents-manager-01.yml"
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class JbstConfigurationIncidents1Test {

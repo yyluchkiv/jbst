@@ -11,7 +11,7 @@ import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import lombok.*;
@@ -44,7 +44,7 @@ public class MongoDbUser {
 
     @Id
     private String id;
-    private UserCreationOption creationOption;
+    private JbstUserCreationOption creationOption;
     private Username username;
     private Password password;
     @Schema(type = "string")
@@ -58,7 +58,7 @@ public class MongoDbUser {
     private Map<String, Object> attributes;
 
     public MongoDbUser(
-            @NotNull UserCreationOption creationOption,
+            @NotNull JbstUserCreationOption creationOption,
             @NotNull Username username,
             @NotNull Password password,
             boolean enabled,
@@ -85,7 +85,7 @@ public class MongoDbUser {
             @NotNull Password password
     ) {
         this(
-                UserCreationOption.STANDARD,
+                JbstUserCreationOption.STANDARD,
                 requestUserRegistration0.username(),
                 password,
                 true,
@@ -103,7 +103,7 @@ public class MongoDbUser {
             @NotNull JbstInvitation invitation
     ) {
         this(
-                UserCreationOption.STANDARD,
+                JbstUserCreationOption.STANDARD,
                 requestUserRegistration1.username(),
                 password,
                 true,
@@ -135,7 +135,7 @@ public class MongoDbUser {
 
     public static MongoDbUser random(String username, Set<String> authorities) {
         var user = new MongoDbUser(
-                UserCreationOption.random(),
+                JbstUserCreationOption.random(),
                 Username.of(username),
                 Password.random(),
                 true,

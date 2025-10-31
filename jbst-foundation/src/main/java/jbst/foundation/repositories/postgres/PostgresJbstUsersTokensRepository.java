@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -62,7 +62,7 @@ public interface PostgresJbstUsersTokensRepository extends JpaRepository<Postgre
     PostgresDbUserToken findByValue(String value);
     PostgresDbUserToken findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
             Email email,
-            UserTokenType type,
+            JbstUserTokenType type,
             long timestamp
     );
     @Transactional

@@ -1,10 +1,10 @@
-package jbst.foundation.domain.properties.base;
+package jbst.foundation.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum JbstIamIncidentType {
+public enum JbstIncidentType {
     AUTHENTICATION_LOGIN("Authentication Login"),
     AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD("Authentication Login Failure Username/Password"),
     AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD("Authentication Login Failure Username/Masked Password"),

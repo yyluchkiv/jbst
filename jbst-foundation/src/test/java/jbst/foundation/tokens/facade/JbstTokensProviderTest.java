@@ -9,7 +9,7 @@ import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JwtToken;
-import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
+import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
@@ -43,8 +43,8 @@ class JbstTokensProviderTest {
 
     private static Stream<Arguments> jwtTokenStoragesArgs() {
         return Stream.of(
-                Arguments.of(JwtTokenStorageMethod.COOKIES),
-                Arguments.of(JwtTokenStorageMethod.HEADERS)
+                Arguments.of(JbstJwtTokenStorageMethod.COOKIES),
+                Arguments.of(JbstJwtTokenStorageMethod.HEADERS)
         );
     }
 
@@ -116,7 +116,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void createResponseAccessToken(JwtTokenStorageMethod method) {
+    void createResponseAccessToken(JbstJwtTokenStorageMethod method) {
         // Arrange
         this.mockProperties(method);
         var jwtAccessToken = new JwtAccessToken(randomString());
@@ -136,7 +136,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void createResponseRefreshToken(JwtTokenStorageMethod method) {
+    void createResponseRefreshToken(JbstJwtTokenStorageMethod method) {
         // Arrange
         this.mockProperties(method);
         var refreshAccessToken = JwtRefreshToken.random();
@@ -156,7 +156,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readCsrfToken(JwtTokenStorageMethod method) throws JbstCsrfTokenNotFoundException {
+    void readCsrfToken(JbstJwtTokenStorageMethod method) throws JbstCsrfTokenNotFoundException {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -175,7 +175,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestAccessToken(JwtTokenStorageMethod method) throws JbstAccessTokenNotFoundException {
+    void readRequestAccessToken(JbstJwtTokenStorageMethod method) throws JbstAccessTokenNotFoundException {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -194,7 +194,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestAccessTokenOnWebsocketHandshake(JwtTokenStorageMethod method) throws JbstAccessTokenNotFoundException {
+    void readRequestAccessTokenOnWebsocketHandshake(JbstJwtTokenStorageMethod method) throws JbstAccessTokenNotFoundException {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -213,7 +213,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestRefreshToken(JwtTokenStorageMethod method) throws JbstRefreshTokenNotFoundException {
+    void readRequestRefreshToken(JbstJwtTokenStorageMethod method) throws JbstRefreshTokenNotFoundException {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -232,7 +232,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestRefreshTokenOnWebsocketHandshake(JwtTokenStorageMethod method) throws JbstRefreshTokenNotFoundException {
+    void readRequestRefreshTokenOnWebsocketHandshake(JbstJwtTokenStorageMethod method) throws JbstRefreshTokenNotFoundException {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -251,7 +251,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void clearTokens(JwtTokenStorageMethod method) {
+    void clearTokens(JbstJwtTokenStorageMethod method) {
         // Arrange
         this.mockProperties(method);
         var response = mock(HttpServletResponse.class);
@@ -271,13 +271,12 @@ class JbstTokensProviderTest {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private void mockProperties(JwtTokenStorageMethod method) {
+    private void mockProperties(JbstJwtTokenStorageMethod method) {
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(
                 new SecurityJwtConfigs(
                         AuthoritiesConfigs.hardcoded(),
                         CookiesConfigs.hardcoded(),
                         EssenceConfigs.hardcoded(),
-                        IncidentsConfigs.hardcoded(),
                         new JwtTokensConfigs(
                                 "JBST",
                                 method,

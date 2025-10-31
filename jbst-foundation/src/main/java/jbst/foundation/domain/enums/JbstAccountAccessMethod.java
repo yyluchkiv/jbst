@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum AccountAccessMethod {
+public enum JbstAccountAccessMethod {
     MAGICLINK("magic link"),
     USERNAME_PASSWORD("username/password"),
     SESSION_TOKEN("session token");
@@ -24,7 +24,7 @@ public enum AccountAccessMethod {
         return SESSION_TOKEN.equals(this);
     }
 
-    public static AccountAccessMethod getMethod(UserCreationOption userCreationOption) {
+    public static JbstAccountAccessMethod getMethod(JbstUserCreationOption userCreationOption) {
         return switch (userCreationOption) {
             case STANDARD -> USERNAME_PASSWORD;
             case MAGICLINK -> MAGICLINK;

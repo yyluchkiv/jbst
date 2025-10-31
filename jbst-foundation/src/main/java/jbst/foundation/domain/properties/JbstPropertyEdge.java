@@ -1,7 +1,8 @@
 package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapEnums;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -92,11 +93,11 @@ public class JbstPropertyEdge {
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void assertOrThrow() {
-        if (this.child.isAnnotationPresent(MandatoryMapProperty.class)) {
-            var annotation = this.child.getAnnotation(MandatoryMapProperty.class);
+        if (this.child.isAnnotationPresent(MandatoryPropertyMapEnums.class)) {
+            var annotation = this.child.getAnnotation(MandatoryPropertyMapEnums.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
             var castedProperty = (Map) this.valueRAW;
-            var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
+            var size = keySetClass.getEnumConstants().length;
             //noinspection unchecked
             assertTrueOrThrow(
                     castedProperty.size() == size,
@@ -105,6 +106,19 @@ public class JbstPropertyEdge {
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
                             RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
+                    )
+            );
+        }
+        if (this.child.isAnnotationPresent(MandatoryPropertyMapMinSize.class)) {
+            var annotation = this.child.getAnnotation(MandatoryPropertyMapMinSize.class);
+            var castedProperty = (Map) this.valueRAW;
+            assertTrueOrThrow(
+                    castedProperty.size() >= annotation.minSize(),
+                    "Property %s is invalid. Entries: [%s]. Size: %s. MinSize: %s".formatted(
+                            this.name,
+                            baseJoiningRaw(castedProperty.entrySet()),
+                            castedProperty.size(),
+                            annotation.minSize()
                     )
             );
         }
