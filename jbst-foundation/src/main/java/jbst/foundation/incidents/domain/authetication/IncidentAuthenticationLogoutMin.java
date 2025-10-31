@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.domain.authetication;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.base.JbstIamIncidentType;
+import jbst.foundation.domain.enums.JbstIncidentType;
 import jbst.foundation.incidents.domain.AbstractIncident;
 import jbst.foundation.incidents.domain.Incident;
 
@@ -12,7 +12,7 @@ public record IncidentAuthenticationLogoutMin(
     @Override
     public Incident getPlainIncident() {
         return new Incident(
-                JbstIamIncidentType.AUTHENTICATION_LOGOUT_MIN,
+                JbstIncidentType.AUTHENTICATION_LOGOUT_MIN,
                 this.username
         );
     }

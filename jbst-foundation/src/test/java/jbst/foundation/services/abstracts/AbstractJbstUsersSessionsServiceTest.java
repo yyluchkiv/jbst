@@ -7,9 +7,9 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -185,14 +185,14 @@ class AbstractJbstUsersSessionsServiceTest {
 
     private static Stream<Arguments> saveUserSessionTest() {
         return Stream.of(
-                Arguments.of(JwtUser.hardcoded(UserCreationOption.STANDARD), AccountAccessMethod.USERNAME_PASSWORD),
-                Arguments.of(JwtUser.hardcoded(UserCreationOption.MAGICLINK), AccountAccessMethod.MAGICLINK)
+                Arguments.of(JwtUser.hardcoded(JbstUserCreationOption.STANDARD), JbstAccountAccessMethod.USERNAME_PASSWORD),
+                Arguments.of(JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK), JbstAccountAccessMethod.MAGICLINK)
         );
     }
 
     @ParameterizedTest
     @MethodSource("saveUserSessionTest")
-    void saveUserSessionNotNullTest(JwtUser user, AccountAccessMethod accountAccessMethod) {
+    void saveUserSessionNotNullTest(JwtUser user, JbstAccountAccessMethod accountAccessMethod) {
         // Arrange
         var ipAddr = randomIPv4();
         var httpServletRequest = mock(HttpServletRequest.class);
@@ -277,7 +277,7 @@ class AbstractJbstUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.session().id()).isNotEqualTo(actualDbUserSession.id());
         assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
-        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.USERNAME_PASSWORD);
+        assertThat(event.accountAccessMethod()).isEqualTo(JbstAccountAccessMethod.USERNAME_PASSWORD);
     }
 
     @Test
@@ -309,7 +309,7 @@ class AbstractJbstUsersSessionsServiceTest {
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.email()).isEqualTo(user.email());
         assertThat(event.session().id()).isNotEqualTo(newUserSession.id());
-        assertThat(event.accountAccessMethod()).isEqualTo(AccountAccessMethod.SESSION_TOKEN);
+        assertThat(event.accountAccessMethod()).isEqualTo(JbstAccountAccessMethod.SESSION_TOKEN);
     }
 
     @Test

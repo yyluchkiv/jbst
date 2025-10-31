@@ -32,8 +32,8 @@ import java.util.Set;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.domain.enums.AccountAccessMethod.SESSION_TOKEN;
-import static jbst.foundation.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
+import static jbst.foundation.domain.enums.JbstAccountAccessMethod.SESSION_TOKEN;
+import static jbst.foundation.domain.enums.JbstAccountAccessMethod.USERNAME_PASSWORD;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;

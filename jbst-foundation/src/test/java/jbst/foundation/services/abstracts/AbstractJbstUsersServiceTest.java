@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
@@ -106,7 +106,7 @@ class AbstractJbstUsersServiceTest {
     void safeSaveAlreadyExistsTest() {
         // Arrange
         var email = Email.hardcoded();
-        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
+        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
@@ -125,10 +125,10 @@ class AbstractJbstUsersServiceTest {
     @Test
     void safeSaveFirstIterationTest() throws JbstUsernameAlreadyExistException {
         // Arrange
-        var creationOption = UserCreationOption.MAGICLINK;
+        var creationOption = JbstUserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
         var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
-        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
+        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var username = email.getUsername();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);
@@ -149,9 +149,9 @@ class AbstractJbstUsersServiceTest {
     @Test
     void safeSaveSecondIterationTest() throws JbstUsernameAlreadyExistException {
         // Arrange
-        var creationOption = UserCreationOption.MAGICLINK;
+        var creationOption = JbstUserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
-        var user = JwtUser.hardcoded(UserCreationOption.MAGICLINK);
+        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
         var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);

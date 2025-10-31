@@ -18,8 +18,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import static jbst.foundation.domain.enums.UserTokenType.EMAIL_CONFIRMATION;
-import static jbst.foundation.domain.enums.UserTokenType.PASSWORD_RESET;
+import static jbst.foundation.domain.enums.JbstUserTokenType.EMAIL_CONFIRMATION;
+import static jbst.foundation.domain.enums.JbstUserTokenType.PASSWORD_RESET;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,7 +1,7 @@
 package jbst.foundation.validators.abtracts;
 
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -28,7 +28,7 @@ public abstract class AbstractJbstUsersTokensValidator implements JbstUsersToken
 
     @Override
     public void validateEmailConfirmationToken(String token) throws JbstUserTokenValidationException {
-        this.validateToken(token, UserTokenType.EMAIL_CONFIRMATION);
+        this.validateToken(token, JbstUserTokenType.EMAIL_CONFIRMATION);
     }
 
     @Override
@@ -47,13 +47,13 @@ public abstract class AbstractJbstUsersTokensValidator implements JbstUsersToken
     @Override
     public void validatePasswordReset(RequestUserPasswordReset request) throws JbstUserTokenValidationException {
         request.assertPasswordsOrThrow();
-        this.validateToken(request.token(), UserTokenType.PASSWORD_RESET);
+        this.validateToken(request.token(), JbstUserTokenType.PASSWORD_RESET);
     }
 
     // =================================================================================================================
     // PROTECTED METHODS
     // =================================================================================================================
-    protected void validateToken(String token, UserTokenType type) throws JbstUserTokenValidationException {
+    protected void validateToken(String token, JbstUserTokenType type) throws JbstUserTokenValidationException {
         var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(token);
         if (isNull(userToken)) {
             throw JbstUserTokenValidationException.notFound();

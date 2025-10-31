@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.domain.registration;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.base.JbstIamIncidentType;
+import jbst.foundation.domain.enums.JbstIncidentType;
 import jbst.foundation.incidents.domain.AbstractIncident;
 import jbst.foundation.incidents.domain.Incident;
 
@@ -30,7 +30,7 @@ public record IncidentRegistration1Failure(
     @Override
     public Incident getPlainIncident() {
         var incident = new Incident(
-                JbstIamIncidentType.REGISTER1_FAILURE,
+                JbstIncidentType.REGISTER1_FAILURE,
                 this.username
         );
         incident.add(EXCEPTION, this.exception);

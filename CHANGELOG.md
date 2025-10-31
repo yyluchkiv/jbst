@@ -5,3 +5,4 @@
 — Modification: "incidents-manager" include extendable "types" (map<string, boolean>)  
 — Modification: @MandatoryMapProperty -> @MandatoryPropertyMapEnums
 — Modification: @MandatoryToggleProperty -> @MandatoryPropertyToggle
+— Modification: add prefix to enums AccountAccessMethod, IncidentsManagerType, IncidentType, JwtTokenStorageMethod, UserCreationOption, UserTypeType

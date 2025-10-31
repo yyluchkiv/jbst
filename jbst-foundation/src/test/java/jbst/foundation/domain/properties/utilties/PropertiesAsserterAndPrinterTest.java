@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties.utilties;
 
+import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.properties.base.*;
 import jbst.foundation.domain.properties.configs.*;
 import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigs;
@@ -179,7 +180,7 @@ class PropertiesAsserterAndPrinterTest {
         var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
         var incidentsManager = new IncidentsManager(
                 true,
-                IncidentsManagerType.hardcoded(),
+                JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
                 Map.ofEntries(
                         entry("AUTHENTICATION_LOGIN", randomBoolean()),
@@ -208,7 +209,7 @@ class PropertiesAsserterAndPrinterTest {
     void incidentsNoSessionRefreshedFailureTest() {
         var incidentsManager = new IncidentsManager(
                 true,
-                IncidentsManagerType.hardcoded(),
+                JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
                 Map.ofEntries(
                         entry("AUTHENTICATION_LOGIN", true),
@@ -238,7 +239,7 @@ class PropertiesAsserterAndPrinterTest {
     void incidentsOnlyOneLoginFailureTest() {
         var incidentsManager = new IncidentsManager(
                 true,
-                IncidentsManagerType.hardcoded(),
+                JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
                 Map.ofEntries(
                         entry("AUTHENTICATION_LOGIN", randomBoolean()),

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.dto.requests;
 
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 
 public record RequestUserRegistrationMagicLink(
         @Email.ValidEmail Email email
@@ -22,7 +22,7 @@ public record RequestUserRegistrationMagicLink(
     public RequestUserToken asRequestUserToken() {
         return new RequestUserToken(
                 this.email,
-                UserTokenType.MAGICLINK
+                JbstUserTokenType.MAGICLINK
         );
     }
 }

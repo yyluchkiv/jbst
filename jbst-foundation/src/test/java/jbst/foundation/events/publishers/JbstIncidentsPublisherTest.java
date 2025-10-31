@@ -1,8 +1,8 @@
 package jbst.foundation.events.publishers;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.IncidentsManagerType;
-import jbst.foundation.domain.properties.base.JbstIamIncidentType;
+import jbst.foundation.domain.enums.JbstIncidentsManagerType;
+import jbst.foundation.domain.enums.JbstIncidentType;
 import jbst.foundation.domain.properties.base.RemoteServer;
 import jbst.foundation.domain.properties.configs.IncidentsManager;
 import jbst.foundation.incidents.domain.Incident;
@@ -31,7 +31,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
+import static jbst.foundation.domain.enums.JbstIncidentType.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
@@ -451,15 +451,15 @@ class JbstIncidentsPublisherTest {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static IncidentsManager incidentsManager(JbstIamIncidentType type, boolean enabled) {
-        var types = Stream.of(JbstIamIncidentType.values())
+    private static IncidentsManager incidentsManager(JbstIncidentType type, boolean enabled) {
+        var types = Stream.of(JbstIncidentType.values())
                 .collect(Collectors.toMap(
-                        JbstIamIncidentType::name,
+                        JbstIncidentType::name,
                         entry -> type.equals(entry) && enabled
                 ));
         return new IncidentsManager(
                 true,
-                IncidentsManagerType.hardcoded(),
+                JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
                 types
         );

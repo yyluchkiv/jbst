@@ -1,18 +1,18 @@
 package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.utilities.random.RandomUtility;
 
-import static jbst.foundation.domain.enums.UserTokenType.*;
+import static jbst.foundation.domain.enums.JbstUserTokenType.*;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 
 public record JbstUserToken(
         TokenId id,
         Email email,
         String value,
-        UserTokenType type,
+        JbstUserTokenType type,
         long expiryTimestamp,
         boolean used
 ) {
@@ -55,7 +55,7 @@ public record JbstUserToken(
                 TokenId.random(),
                 Email.random(),
                 RandomUtility.randomString(),
-                RandomUtility.randomEnum(UserTokenType.class),
+                RandomUtility.randomEnum(JbstUserTokenType.class),
                 RandomUtility.randomLongGreaterThanZero(),
                 RandomUtility.randomBoolean()
         );
@@ -66,7 +66,7 @@ public record JbstUserToken(
                 null,
                 Email.random(),
                 RandomUtility.randomString(),
-                RandomUtility.randomEnum(UserTokenType.class),
+                RandomUtility.randomEnum(JbstUserTokenType.class),
                 RandomUtility.randomLongGreaterThanZero(),
                 RandomUtility.randomBoolean()
         );
@@ -87,7 +87,7 @@ public record JbstUserToken(
         return isPast(this.expiryTimestamp);
     }
 
-    public boolean isInvalid(UserTokenType expected) {
+    public boolean isInvalid(JbstUserTokenType expected) {
         return !this.type.equals(expected) || this.used || this.isExpired();
     }
 }

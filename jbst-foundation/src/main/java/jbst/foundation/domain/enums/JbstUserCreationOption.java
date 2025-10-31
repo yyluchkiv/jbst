@@ -8,23 +8,23 @@ import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValue
 import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 
 @AllArgsConstructor
-public enum UserCreationOption implements EnumValue<String> {
+public enum JbstUserCreationOption implements EnumValue<String> {
     STANDARD("Standard"),
     MAGICLINK("MagicLink");
 
     private final String value;
 
-    public static UserCreationOption hardcoded() {
+    public static JbstUserCreationOption hardcoded() {
         return STANDARD;
     }
 
-    public static UserCreationOption random() {
-        return randomEnum(UserCreationOption.class);
+    public static JbstUserCreationOption random() {
+        return randomEnum(JbstUserCreationOption.class);
     }
 
     @JsonCreator
-    public static UserCreationOption find(String value) {
-        return findEnumByValueIgnoreCaseOrThrow(UserCreationOption.class, value);
+    public static JbstUserCreationOption find(String value) {
+        return findEnumByValueIgnoreCaseOrThrow(JbstUserCreationOption.class, value);
     }
 
     @JsonValue
@@ -33,7 +33,7 @@ public enum UserCreationOption implements EnumValue<String> {
         return this.value;
     }
 
-    public boolean is(UserCreationOption option) {
+    public boolean is(JbstUserCreationOption option) {
         return this.equals(option);
     }
 

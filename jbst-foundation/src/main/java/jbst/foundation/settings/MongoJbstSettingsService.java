@@ -3,7 +3,7 @@ package jbst.foundation.settings;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.UserOnInit;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
@@ -39,7 +39,7 @@ public class MongoJbstSettingsService extends JbstSettingsService {
                 map(userOnInit -> {
                     var username = userOnInit.getUsername();
                     var user = new MongoDbUser(
-                            UserCreationOption.STANDARD,
+                            JbstUserCreationOption.STANDARD,
                             username,
                             userOnInit.getPassword(),
                             true,

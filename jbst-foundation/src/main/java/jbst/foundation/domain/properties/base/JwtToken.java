@@ -1,6 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
@@ -67,7 +68,7 @@ public class JwtToken extends JbstProperty {
         );
     }
 
-    public String getKey(JwtTokenStorageMethod method) {
+    public String getKey(JbstJwtTokenStorageMethod method) {
         if (method.isCookies()) {
             return this.cookieKey;
         }

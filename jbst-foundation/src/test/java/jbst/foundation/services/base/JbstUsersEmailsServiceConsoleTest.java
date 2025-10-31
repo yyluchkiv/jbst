@@ -3,7 +3,7 @@ package jbst.foundation.services.base;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.enums.AccountAccessMethod;
+import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
@@ -176,7 +176,7 @@ class JbstUsersEmailsServiceConsoleTest {
         // Act
         this.componentUnderTest.executeAccountAccessed(
                 FunctionAccountAccessed.hardcoded(
-                        AccountAccessMethod.USERNAME_PASSWORD
+                        JbstAccountAccessMethod.USERNAME_PASSWORD
                 )
         );
 
@@ -190,7 +190,7 @@ class JbstUsersEmailsServiceConsoleTest {
         // Act
         this.componentUnderTest.executeAccountAccessed(
                 FunctionAccountAccessed.hardcoded(
-                        AccountAccessMethod.SESSION_TOKEN
+                        JbstAccountAccessMethod.SESSION_TOKEN
                 )
         );
 

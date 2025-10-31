@@ -5,8 +5,8 @@ import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
-import jbst.foundation.domain.properties.base.IncidentsManagerType;
-import jbst.foundation.domain.properties.base.JbstIamIncidentType;
+import jbst.foundation.domain.enums.JbstIncidentsManagerType;
+import jbst.foundation.domain.enums.JbstIncidentType;
 import jbst.foundation.domain.properties.base.RemoteServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ public class IncidentsManager extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
-    private IncidentsManagerType type;
+    private JbstIncidentsManagerType type;
     @MandatoryPropertyToggle
     private RemoteServer remoteServer;
     @MandatoryPropertyToggle
@@ -44,7 +44,7 @@ public class IncidentsManager extends JbstProperty {
     public static IncidentsManager hardcoded() {
         return new IncidentsManager(
                 true,
-                IncidentsManagerType.hardcoded(),
+                JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN", true),
@@ -66,9 +66,9 @@ public class IncidentsManager extends JbstProperty {
     public static IncidentsManager random() {
         return new IncidentsManager(
                 randomBoolean(),
-                IncidentsManagerType.random(),
+                JbstIncidentsManagerType.random(),
                 RemoteServer.random(),
-                getEnumMapMappedRandomBoolean(Arrays.stream(JbstIamIncidentType.values()).map(Enum::name).toArray(String[]::new))
+                getEnumMapMappedRandomBoolean(Arrays.stream(JbstIncidentType.values()).map(Enum::name).toArray(String[]::new))
         );
     }
 
@@ -99,9 +99,9 @@ public class IncidentsManager extends JbstProperty {
     public void assertProperties() {
         super.assertProperties();
         if (this.enabled) {
-            this.assertPropertiesExtended(JbstIamIncidentType.getNames());
-            var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class);
-            var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class);
+            this.assertPropertiesExtended(JbstIncidentType.getNames());
+            var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIncidentType.class);
+            var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIncidentType.class);
             if (loginFailure1 && loginFailure2) {
                 throw new IllegalArgumentException("[IncidentsManager]: one login failure feature type expected to be provided");
             }

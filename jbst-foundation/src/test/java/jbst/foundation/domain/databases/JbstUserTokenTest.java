@@ -1,7 +1,7 @@
 package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.enums.UserTokenType;
+import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.TokenId;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.enums.UserTokenType.*;
+import static jbst.foundation.domain.enums.JbstUserTokenType.*;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,7 +67,7 @@ class JbstUserTokenTest {
 
     @ParameterizedTest
     @MethodSource("isInvalidCases")
-    void isInvalidTest(UserTokenType tokenType, UserTokenType expectedType, boolean used, long expiryTimestamp, boolean expected) {
+    void isInvalidTest(JbstUserTokenType tokenType, JbstUserTokenType expectedType, boolean used, long expiryTimestamp, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
                 TokenId.hardcoded(),

@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.enums.UserCreationOption;
+import jbst.foundation.domain.enums.JbstUserCreationOption;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -21,7 +21,7 @@ class MongoDbUserTest {
     void getNotNullAttributesTest() {
         // Arrange
         var user = new MongoDbUser(
-                UserCreationOption.random(),
+                JbstUserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 true,
@@ -45,7 +45,7 @@ class MongoDbUserTest {
     void getNotNullAttributesLegacyMigrationNullPointerExceptionTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var user = new MongoDbUser(
-                UserCreationOption.random(),
+                JbstUserCreationOption.random(),
                 Username.random(),
                 Password.random(),
                 true,
