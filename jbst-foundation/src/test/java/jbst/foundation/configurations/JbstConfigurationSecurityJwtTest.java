@@ -81,7 +81,6 @@ class JbstConfigurationSecurityJwtTest {
                             ),
                             CookiesConfigs.hardcoded(),
                             EssenceConfigs.hardcoded(),
-                            IncidentsConfigs.hardcoded(),
                             JwtTokensConfigs.hardcoded(),
                             LoggingConfigs.hardcoded(),
                             SessionConfigs.hardcoded(),
