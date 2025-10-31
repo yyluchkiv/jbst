@@ -144,7 +144,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLogin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -158,7 +158,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLogin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -173,7 +173,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -187,7 +187,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -202,7 +202,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -216,7 +216,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -231,7 +231,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -245,7 +245,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -260,7 +260,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -274,7 +274,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -289,7 +289,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishSessionRefreshed(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -303,7 +303,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishSessionRefreshed(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -318,7 +318,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishSessionExpired(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -332,7 +332,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishSessionExpired(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -348,7 +348,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishRegistrationMagicLink(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         if (enabled) {
             verify(this.applicationEventPublisher).publishEvent(incident);
         }
@@ -366,7 +366,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishRegistration0(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         if (enabled) {
             verify(this.applicationEventPublisher).publishEvent(incident);
         }
@@ -384,7 +384,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishRegistration0Failure(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         if (enabled) {
             verify(this.applicationEventPublisher).publishEvent(incident);
         }
@@ -401,7 +401,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishRegistration1(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -415,7 +415,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishRegistration1(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -430,7 +430,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishRegistration1Failure(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
     }
 
     @Test
@@ -444,7 +444,7 @@ class JbstIncidentsPublisherTest {
         this.componentUnderTest.publishRegistration1Failure(incident);
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getIncidentsManager();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -454,7 +454,7 @@ class JbstIncidentsPublisherTest {
     private static IncidentsManager incidentsManager(JbstIamIncidentType type, boolean enabled) {
         var types = Stream.of(JbstIamIncidentType.values())
                 .collect(Collectors.toMap(
-                        JbstIamIncidentType::toString,
+                        JbstIamIncidentType::name,
                         entry -> type.equals(entry) && enabled
                 ));
         return new IncidentsManager(

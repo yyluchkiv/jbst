@@ -114,9 +114,10 @@ public class JbstPropertyEdge {
             var castedProperty = (Map) this.valueRAW;
             assertTrueOrThrow(
                     castedProperty.size() >= annotation.minSize(),
-                    "Property %s is invalid. Entries: [%s]. MinSize: %s".formatted(
+                    "Property %s is invalid. Entries: [%s]. Size: %s. MinSize: %s".formatted(
                             this.name,
                             baseJoiningRaw(castedProperty.entrySet()),
+                            castedProperty.size(),
                             annotation.minSize()
                     )
             );

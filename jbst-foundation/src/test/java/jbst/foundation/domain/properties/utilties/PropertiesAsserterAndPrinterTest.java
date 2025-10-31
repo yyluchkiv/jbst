@@ -210,17 +210,17 @@ class PropertiesAsserterAndPrinterTest {
                 IncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
                 Map.ofEntries(
-                        entry("AUTHENTICATION_LOGIN", randomBoolean()),
+                        entry("AUTHENTICATION_LOGIN", true),
                         entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", false),
                         entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", true),
-                        entry("AUTHENTICATION_LOGOUT", randomBoolean()),
-                        entry("AUTHENTICATION_LOGOUT_MIN", randomBoolean()),
-                        entry("SESSION_EXPIRED", randomBoolean()),
-                        entry("REGISTER_MAGICLINK", randomBoolean()),
-                        entry("REGISTER0", randomBoolean()),
-                        entry("REGISTER0_FAILURE", randomBoolean()),
-                        entry("REGISTER1", randomBoolean()),
-                        entry("REGISTER1_FAILURE", randomBoolean())
+                        entry("AUTHENTICATION_LOGOUT", true),
+                        entry("AUTHENTICATION_LOGOUT_MIN", true),
+                        entry("SESSION_EXPIRED", true),
+                        entry("REGISTER_MAGICLINK", true),
+                        entry("REGISTER0", true),
+                        entry("REGISTER0_FAILURE", true),
+                        entry("REGISTER1", true),
+                        entry("REGISTER1_FAILURE", true)
                 )
         );
 
@@ -230,7 +230,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property security-jwt-configs.incidents-configs.types-configs is invalid. Options: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired, Session Refreshed]. Required: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired]. Disjunction: [\u001B[31mSession Refreshed\u001B[0m]");
+        assertThat(throwable.getMessage()).isEqualTo("Property incidents-manager.types is invalid. Entries: [AUTHENTICATION_LOGIN=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD=false, AUTHENTICATION_LOGOUT=true, AUTHENTICATION_LOGOUT_MIN=true, REGISTER0=true, REGISTER0_FAILURE=true, REGISTER1=true, REGISTER1_FAILURE=true, REGISTER_MAGICLINK=true, SESSION_EXPIRED=true]. Size: 11. MinSize: 12");
     }
 
     @Test
