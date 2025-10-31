@@ -4,7 +4,7 @@ import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
-import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.properties.base.IncidentsManagerType;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.domain.properties.base.RemoteServer;
@@ -33,11 +33,11 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 public class IncidentsManager extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private IncidentsManagerType type;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private RemoteServer remoteServer;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     @MandatoryPropertyMapMinSize(propertyName = "incidents", minSize = 12)
     private final Map<String, Boolean> incidents;
 

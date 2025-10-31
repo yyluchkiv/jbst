@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,9 +19,9 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 public class MvcConfigs extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private String basePathPrefix;
-    @MandatoryToggleProperty
+    @MandatoryPropertyToggle
     private CorsConfigs corsConfigs;
 
     public static MvcConfigs hardcoded() {

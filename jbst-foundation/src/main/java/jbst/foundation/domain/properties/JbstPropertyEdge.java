@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapEnums;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
@@ -93,8 +93,8 @@ public class JbstPropertyEdge {
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void assertOrThrow() {
-        if (this.child.isAnnotationPresent(MandatoryMapProperty.class)) {
-            var annotation = this.child.getAnnotation(MandatoryMapProperty.class);
+        if (this.child.isAnnotationPresent(MandatoryPropertyMapEnums.class)) {
+            var annotation = this.child.getAnnotation(MandatoryPropertyMapEnums.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
             var castedProperty = (Map) this.valueRAW;
             var size = keySetClass.getEnumConstants().length;
