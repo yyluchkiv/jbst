@@ -168,17 +168,17 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void incidentManagerConfigsTest() {
         // Act
-        IncidentsManager.hardcoded().assertProperties();
+        IncidentsManagerJbstProperty.hardcoded().assertProperties();
 
         // Assert
         // no asserts
     }
 
     @Test
-    void incidentsCorrectTest() {
+    void incidentManagerJbst() {
         var loginFailureUsernamePassword = randomBoolean();
         var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
-        var incidentsManager = new IncidentsManager(
+        var incidentsManager = new IncidentsManagerJbstProperty(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
@@ -206,64 +206,19 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void incidentsNoSessionRefreshedFailureTest() {
-        var incidentsManager = new IncidentsManager(
+    void incidentManagerZero() {
+        var incidentsManager = new IncidentsManagerJbstProperty(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
-                Map.ofEntries(
-                        entry("AUTHENTICATION_LOGIN", true),
-                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", false),
-                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", true),
-                        entry("AUTHENTICATION_LOGOUT", true),
-                        entry("AUTHENTICATION_LOGOUT_MIN", true),
-                        entry("SESSION_EXPIRED", true),
-                        entry("REGISTER_MAGICLINK", true),
-                        entry("REGISTER0", true),
-                        entry("REGISTER0_FAILURE", true),
-                        entry("REGISTER1", true),
-                        entry("REGISTER1_FAILURE", true)
-                )
+                Map.ofEntries()
         );
 
         // Act
-        var throwable = catchThrowable(incidentsManager::assertProperties);
+        incidentsManager.assertProperties();
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property incidents-manager.incidents is invalid. Entries: [AUTHENTICATION_LOGIN=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD=true, AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD=false, AUTHENTICATION_LOGOUT=true, AUTHENTICATION_LOGOUT_MIN=true, REGISTER0=true, REGISTER0_FAILURE=true, REGISTER1=true, REGISTER1_FAILURE=true, REGISTER_MAGICLINK=true, SESSION_EXPIRED=true]. Size: 11. MinSize: 12");
-    }
-
-    @Test
-    void incidentsOnlyOneLoginFailureTest() {
-        var incidentsManager = new IncidentsManager(
-                true,
-                JbstIncidentsManagerType.hardcoded(),
-                RemoteServer.hardcoded(),
-                Map.ofEntries(
-                        entry("AUTHENTICATION_LOGIN", randomBoolean()),
-                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", true),
-                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", true),
-                        entry("AUTHENTICATION_LOGOUT", randomBoolean()),
-                        entry("AUTHENTICATION_LOGOUT_MIN", randomBoolean()),
-                        entry("SESSION_REFRESHED", randomBoolean()),
-                        entry("SESSION_EXPIRED", randomBoolean()),
-                        entry("REGISTER_MAGICLINK", randomBoolean()),
-                        entry("REGISTER0", randomBoolean()),
-                        entry("REGISTER0_FAILURE", randomBoolean()),
-                        entry("REGISTER1", randomBoolean()),
-                        entry("REGISTER1_FAILURE", randomBoolean())
-                )
-        );
-
-        // Act
-        var throwable = catchThrowable(incidentsManager::assertProperties);
-
-        // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("[IncidentsManager]: one login failure feature type expected to be provided");
+        // no asserts
     }
 
     @Test

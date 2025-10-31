@@ -111,16 +111,18 @@ public class JbstPropertyEdge {
         }
         if (this.child.isAnnotationPresent(MandatoryPropertyMapMinSize.class)) {
             var annotation = this.child.getAnnotation(MandatoryPropertyMapMinSize.class);
-            var castedProperty = (Map) this.valueRAW;
-            assertTrueOrThrow(
-                    castedProperty.size() >= annotation.minSize(),
-                    "Property %s is invalid. Entries: [%s]. Size: %s. MinSize: %s".formatted(
-                            this.name,
-                            baseJoiningRaw(castedProperty.entrySet()),
-                            castedProperty.size(),
-                            annotation.minSize()
-                    )
-            );
+            if (annotation.minSize() > 0) {
+                var castedProperty = (Map) this.valueRAW;
+                assertTrueOrThrow(
+                        castedProperty.size() >= annotation.minSize(),
+                        "Property %s is invalid. Entries: [%s]. Size: %s. MinSize: %s".formatted(
+                                this.name,
+                                baseJoiningRaw(castedProperty.entrySet()),
+                                castedProperty.size(),
+                                annotation.minSize()
+                        )
+                );
+            }
         }
         ConsoleAsserts.PROPERTIES_ACTIONS.entrySet().stream()
                 .filter(entry -> entry.getKey().apply(this.valueRAW.getClass()))
