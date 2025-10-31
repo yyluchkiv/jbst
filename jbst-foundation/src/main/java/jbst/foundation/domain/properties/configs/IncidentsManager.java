@@ -96,7 +96,7 @@ public class IncidentsManager extends JbstProperty {
         var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class);
         var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class);
         if (loginFailure1 && loginFailure2) {
-            throw new IllegalArgumentException("[IncidentsConfigs]: one login failure feature type expected to be provided");
+            throw new IllegalArgumentException("[IncidentsManager]: one login failure feature type expected to be provided");
         }
     }
 
