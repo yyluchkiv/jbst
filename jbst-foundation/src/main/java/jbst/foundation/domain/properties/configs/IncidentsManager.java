@@ -9,6 +9,7 @@ import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstIncidentType;
 import jbst.foundation.domain.properties.base.RemoteServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
+import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -99,7 +100,7 @@ public class IncidentsManager extends JbstProperty {
     public void assertProperties() {
         super.assertProperties();
         if (this.enabled) {
-            this.assertPropertiesExtended(JbstIncidentType.getNames());
+            this.assertPropertiesExtended(EnumUtility.getEnumNames(JbstIncidentType.class));
             var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIncidentType.class);
             var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIncidentType.class);
             if (loginFailure1 && loginFailure2) {
