@@ -277,7 +277,6 @@ class JbstTokensProviderTest {
                         AuthoritiesConfigs.hardcoded(),
                         CookiesConfigs.hardcoded(),
                         EssenceConfigs.hardcoded(),
-                        IncidentsConfigs.hardcoded(),
                         new JwtTokensConfigs(
                                 "JBST",
                                 method,

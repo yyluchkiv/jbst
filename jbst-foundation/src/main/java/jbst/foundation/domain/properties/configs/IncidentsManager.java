@@ -17,8 +17,6 @@ import java.util.Map;
 
 import static java.lang.Boolean.TRUE;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static jbst.foundation.domain.properties.base.JbstIamIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD;
-import static jbst.foundation.domain.properties.base.JbstIamIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
@@ -27,7 +25,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentsManagerConfigs extends JbstProperty {
+public class IncidentsManager extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty
@@ -38,8 +36,8 @@ public class IncidentsManagerConfigs extends JbstProperty {
     @MandatoryPropertyMapMinSize(propertyName = "types", minSize = 12)
     private final Map<String, Boolean> types;
 
-    public static IncidentsManagerConfigs hardcoded() {
-        return new IncidentsManagerConfigs(
+    public static IncidentsManager hardcoded() {
+        return new IncidentsManager(
                 true,
                 IncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
@@ -60,8 +58,8 @@ public class IncidentsManagerConfigs extends JbstProperty {
         );
     }
 
-    public static IncidentsManagerConfigs random() {
-        return new IncidentsManagerConfigs(
+    public static IncidentsManager random() {
+        return new IncidentsManager(
                 randomBoolean(),
                 IncidentsManagerType.random(),
                 RemoteServer.random(),
@@ -69,12 +67,12 @@ public class IncidentsManagerConfigs extends JbstProperty {
         );
     }
 
-    public static IncidentsManagerConfigs enabled() {
+    public static IncidentsManager enabled() {
         return hardcoded();
     }
 
-    public static IncidentsManagerConfigs disabled() {
-        return new IncidentsManagerConfigs(false, null, null, null);
+    public static IncidentsManager disabled() {
+        return new IncidentsManager(false, null, null, null);
     }
 
     @Override

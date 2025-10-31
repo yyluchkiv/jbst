@@ -1,9 +1,10 @@
 package jbst.foundation.events.publishers;
 
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.IncidentsManagerType;
 import jbst.foundation.domain.properties.base.JbstIamIncidentType;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
+import jbst.foundation.domain.properties.base.RemoteServer;
+import jbst.foundation.domain.properties.configs.IncidentsManager;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
@@ -135,8 +136,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLoginDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
@@ -149,8 +150,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLoginEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
@@ -164,8 +165,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLoginFailureUsernamePasswordDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
@@ -178,8 +179,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLoginFailureUsernamePasswordEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
@@ -193,8 +194,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLoginFailureUsernameMaskedPasswordDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
@@ -207,8 +208,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLoginFailureUsernameMaskedPasswordEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
@@ -222,8 +223,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLogoutMinDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT_MIN, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT_MIN, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
@@ -236,8 +237,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLogoutMinEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT_MIN, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT_MIN, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
@@ -251,8 +252,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLogoutFullDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
@@ -265,8 +266,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishAuthenticationLogoutFullEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
@@ -280,8 +281,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishSessionRefreshedDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_REFRESHED, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_REFRESHED, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
@@ -294,8 +295,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishSessionRefreshedEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_REFRESHED, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_REFRESHED, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
@@ -309,8 +310,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishSessionExpiredDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_EXPIRED, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_EXPIRED, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionExpired.class);
 
         // Act
@@ -323,8 +324,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishSessionExpiredEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_EXPIRED, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(SESSION_EXPIRED, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentSessionExpired.class);
 
         // Act
@@ -339,8 +340,8 @@ class JbstIncidentsPublisherTest {
     @ValueSource(booleans = { true, false })
     void publishRegistrationMagicLinkTest(boolean enabled) {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER_MAGICLINK, enabled);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER_MAGICLINK, enabled);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistrationMagicLink.class);
 
         // Act
@@ -357,8 +358,8 @@ class JbstIncidentsPublisherTest {
     @ValueSource(booleans = { true, false })
     void publishRegistration0Test(boolean enabled) {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER0, enabled);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER0, enabled);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration0.class);
 
         // Act
@@ -375,8 +376,8 @@ class JbstIncidentsPublisherTest {
     @ValueSource(booleans = { true, false })
     void publishRegistration0FailureTest(boolean enabled) {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER0_FAILURE, enabled);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER0_FAILURE, enabled);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration0Failure.class);
 
         // Act
@@ -392,8 +393,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishRegistration1DisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1.class);
 
         // Act
@@ -406,8 +407,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishRegistration1EnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1.class);
 
         // Act
@@ -421,8 +422,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishRegistration1FailureDisabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1_FAILURE, false);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1_FAILURE, false);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
@@ -435,8 +436,8 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishRegistration1FailureEnabledTest() {
         // Arrange
-        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1_FAILURE, true);
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incidentsManager = incidentsManager(REGISTER1_FAILURE, true);
+        when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
         var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
@@ -450,25 +451,17 @@ class JbstIncidentsPublisherTest {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static SecurityJwtConfigs randomSecurityJwtConfigs(JbstIamIncidentType type, boolean enabled) {
-        var typesConfigs = Stream.of(JbstIamIncidentType.values())
+    private static IncidentsManager incidentsManager(JbstIamIncidentType type, boolean enabled) {
+        var types = Stream.of(JbstIamIncidentType.values())
                 .collect(Collectors.toMap(
-                        entry -> entry,
+                        JbstIamIncidentType::toString,
                         entry -> type.equals(entry) && enabled
                 ));
-        return new SecurityJwtConfigs(
-                null,
-                null,
-                null,
-                new IncidentsConfigs(
-                        typesConfigs
-                ),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+        return new IncidentsManager(
+                true,
+                IncidentsManagerType.hardcoded(),
+                RemoteServer.hardcoded(),
+                types
         );
     }
 }

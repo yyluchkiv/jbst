@@ -49,84 +49,84 @@ public class JbstIncidentsPublisher {
     }
 
     public void publishAuthenticationLogin(IncidentAuthenticationLogin incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("AUTHENTICATION_LOGIN", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("AUTHENTICATION_LOGIN", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] login");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishAuthenticationLoginFailureUsernamePassword(IncidentAuthenticationLoginFailureUsernamePassword incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.credentials().username(), "[pub, incidents] login failure");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishAuthenticationLoginFailureUsernameMaskedPassword(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.credentials().username(), "[pub, incidents] login failure");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishAuthenticationLogoutMin(IncidentAuthenticationLogoutMin incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("AUTHENTICATION_LOGOUT_MIN", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("AUTHENTICATION_LOGOUT_MIN", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] logout");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("AUTHENTICATION_LOGOUT", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("AUTHENTICATION_LOGOUT", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] logout");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishRegistrationMagicLink(IncidentRegistrationMagicLink incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("REGISTER_MAGICLINK", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("REGISTER_MAGICLINK", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] register magiclink");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishRegistration0(IncidentRegistration0 incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("REGISTER0", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("REGISTER0", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] register0");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishRegistration0Failure(IncidentRegistration0Failure incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("REGISTER0_FAILURE", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("REGISTER0_FAILURE", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] register0 failure");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishRegistration1(IncidentRegistration1 incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("REGISTER1", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("REGISTER1", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] register1");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishRegistration1Failure(IncidentRegistration1Failure incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("REGISTER1_FAILURE", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("REGISTER1_FAILURE", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] register1 failure");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishSessionRefreshed(IncidentSessionRefreshed incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("SESSION_REFRESHED", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("SESSION_REFRESHED", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] session refreshed");
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
 
     public void publishSessionExpired(IncidentSessionExpired incident) {
-        if (this.jbstProperties.getIncidentsManagerConfigs().isEnabled("SESSION_EXPIRED", JbstIamIncidentType.class)) {
+        if (this.jbstProperties.getIncidentsManager().isEnabled("SESSION_EXPIRED", JbstIamIncidentType.class)) {
             LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] session expired");
             this.applicationEventPublisher.publishEvent(incident);
         }
