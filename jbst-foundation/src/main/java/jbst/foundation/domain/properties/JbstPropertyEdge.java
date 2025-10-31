@@ -2,6 +2,7 @@ package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -105,6 +106,18 @@ public class JbstPropertyEdge {
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
                             RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
+                    )
+            );
+        }
+        if (this.child.isAnnotationPresent(MandatoryPropertyMapMinSize.class)) {
+            var annotation = this.child.getAnnotation(MandatoryPropertyMapMinSize.class);
+            var castedProperty = (Map) this.valueRAW;
+            assertTrueOrThrow(
+                    castedProperty.size() >= annotation.minSize(),
+                    "Property %s is invalid. Entries: [%s]. MinSize: %s".formatted(
+                            this.name,
+                            baseJoiningRaw(castedProperty.entrySet()),
+                            annotation.minSize()
                     )
             );
         }

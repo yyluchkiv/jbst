@@ -7,6 +7,7 @@ import jbst.foundation.domain.properties.base.SpringServer;
 import jbst.foundation.domain.properties.configs.*;
 import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
 import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigs;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -19,20 +20,77 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 class PropertiesAsserterAndPrinterTest {
 
-    @Test
-    void notUsedPropertiesConfigsTest() {
+    @RepeatedTest(10)
+    void notUsedPropertiesConfigsMapMinSizeCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
                 new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
                 new SpringServer(8080),
-                new SpringLogging("logback-test.xml")
+                new SpringLogging("logback-test.xml"),
+                Map.ofEntries(
+                        Map.entry("AUTHENTICATION_LOGIN1", true),
+                        Map.entry("AUTHENTICATION_LOGIN2", false)
+                )
         );
 
         // Act
-        notUsedPropertiesConfigs.assertProperties();
+        var throwable = catchThrowable(notUsedPropertiesConfigs::assertProperties);
 
         // Assert
-        // no asserts
+        assertThat(throwable).isNotNull();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Property not-used-properties-configs.types is invalid. Entries: [AUTHENTICATION_LOGIN1=true, AUTHENTICATION_LOGIN2=false]. MinSize: 3");
+    }
+
+    @RepeatedTest(10)
+    void notUsedPropertiesConfigsExtendedSizeCase() {
+        // Arrange
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
+                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
+                new SpringServer(8080),
+                new SpringLogging("logback-test.xml"),
+                Map.ofEntries(
+                        Map.entry("AUTHENTICATION_LOGIN1", true),
+                        Map.entry("AUTHENTICATION_LOGIN2", false),
+                        Map.entry("AUTHENTICATION_LOGIN3", false)
+                )
+        );
+
+        // Act
+        var throwable = catchThrowable(() -> {
+            notUsedPropertiesConfigs.assertProperties();
+            notUsedPropertiesConfigs.assertPropertiesExtended(4);
+        });
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Property not-used-properties-configs.types is invalid. Entries: [AUTHENTICATION_LOGIN1=true, AUTHENTICATION_LOGIN2=false, AUTHENTICATION_LOGIN3=false]. MinSize: 4");
+    }
+
+    @RepeatedTest(10)
+    void notUsedPropertiesConfigsOK() {
+        // Arrange
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
+                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
+                new SpringServer(8080),
+                new SpringLogging("logback-test.xml"),
+                Map.ofEntries(
+                        Map.entry("AUTHENTICATION_LOGIN1", true),
+                        Map.entry("AUTHENTICATION_LOGIN2", false),
+                        Map.entry("AUTHENTICATION_LOGIN3", false),
+                        Map.entry("AUTHENTICATION_LOGIN4", false)
+                )
+        );
+
+        // Act
+        var throwable = catchThrowable(() -> {
+            notUsedPropertiesConfigs.assertProperties();
+            notUsedPropertiesConfigs.assertPropertiesExtended(4);
+        });
+
+        // Assert
+        assertThat(throwable).isNull();
     }
 
     @Test
