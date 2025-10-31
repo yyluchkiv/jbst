@@ -168,7 +168,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void incidentManagerConfigsTest() {
         // Act
-        IncidentsManagerJbstProperty.hardcoded().assertProperties();
+        JbstPropertyIncidentsManager.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -178,7 +178,7 @@ class PropertiesAsserterAndPrinterTest {
     void incidentManagerJbst() {
         var loginFailureUsernamePassword = randomBoolean();
         var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
-        var incidentsManager = new IncidentsManagerJbstProperty(
+        var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
@@ -207,7 +207,7 @@ class PropertiesAsserterAndPrinterTest {
 
     @Test
     void incidentManagerZero() {
-        var incidentsManager = new IncidentsManagerJbstProperty(
+        var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),

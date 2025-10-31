@@ -30,7 +30,7 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentsManagerJbstProperty extends JbstProperty {
+public class JbstPropertyIncidentsManager extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
@@ -41,8 +41,8 @@ public class IncidentsManagerJbstProperty extends JbstProperty {
     @MandatoryPropertyMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
 
-    public static IncidentsManagerJbstProperty hardcoded() {
-        return new IncidentsManagerJbstProperty(
+    public static JbstPropertyIncidentsManager hardcoded() {
+        return new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
@@ -63,8 +63,8 @@ public class IncidentsManagerJbstProperty extends JbstProperty {
         );
     }
 
-    public static IncidentsManagerJbstProperty random() {
-        return new IncidentsManagerJbstProperty(
+    public static JbstPropertyIncidentsManager random() {
+        return new JbstPropertyIncidentsManager(
                 randomBoolean(),
                 JbstIncidentsManagerType.random(),
                 RemoteServer.random(),
@@ -72,12 +72,12 @@ public class IncidentsManagerJbstProperty extends JbstProperty {
         );
     }
 
-    public static IncidentsManagerJbstProperty enabled() {
+    public static JbstPropertyIncidentsManager enabled() {
         return hardcoded();
     }
 
-    public static IncidentsManagerJbstProperty disabled() {
-        return new IncidentsManagerJbstProperty(false, null, null, null);
+    public static JbstPropertyIncidentsManager disabled() {
+        return new JbstPropertyIncidentsManager(false, null, null, null);
     }
 
     @Override

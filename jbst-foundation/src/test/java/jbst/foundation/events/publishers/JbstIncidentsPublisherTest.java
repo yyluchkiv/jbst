@@ -4,7 +4,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.base.RemoteServer;
-import jbst.foundation.domain.properties.configs.IncidentsManagerJbstProperty;
+import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
@@ -451,13 +451,13 @@ class JbstIncidentsPublisherTest {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static IncidentsManagerJbstProperty incidentsManager(JbstSecurityJwtIncident type, boolean enabled) {
+    private static JbstPropertyIncidentsManager incidentsManager(JbstSecurityJwtIncident type, boolean enabled) {
         var types = Stream.of(JbstSecurityJwtIncident.values())
                 .collect(Collectors.toMap(
                         JbstSecurityJwtIncident::name,
                         entry -> type.equals(entry) && enabled
                 ));
-        return new IncidentsManagerJbstProperty(
+        return new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),

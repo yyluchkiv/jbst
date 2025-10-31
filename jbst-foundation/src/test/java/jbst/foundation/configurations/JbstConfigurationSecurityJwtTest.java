@@ -4,7 +4,7 @@ import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
-import jbst.foundation.domain.properties.configs.IncidentsManagerJbstProperty;
+import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
@@ -67,7 +67,7 @@ class JbstConfigurationSecurityJwtTest {
                             )
                     )
             );
-            jbstProperties.setIncidentsManager(IncidentsManagerJbstProperty.hardcoded());
+            jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
             jbstProperties.setSecurityJwtConfigs(
                     new SecurityJwtConfigs(
                             new AuthoritiesConfigs(

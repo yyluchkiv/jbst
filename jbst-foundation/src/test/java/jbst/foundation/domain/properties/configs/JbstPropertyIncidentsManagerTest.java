@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IncidentsManagerJbstPropertyTest {
+class JbstPropertyIncidentsManagerTest {
 
     @Test
     void disabledTest() {
         // Act
-        var incidentConfigs = IncidentsManagerJbstProperty.disabled();
+        var incidentConfigs = JbstPropertyIncidentsManager.disabled();
 
         // Assert
         assertThat(incidentConfigs.isEnabled()).isFalse();
