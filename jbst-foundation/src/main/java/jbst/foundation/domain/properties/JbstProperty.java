@@ -37,9 +37,6 @@ public abstract class JbstProperty {
                 getMandatoryToggleFields(this, this.getNameNonLeaf()) :
                 getMandatoryFields(this, this.getNameNonLeaf());
         var currentParentTreeName = toKebab(this.getNameNonLeaf());
-        System.out.println("===");
-        System.out.println(fields);
-        System.out.println("===");
         fields.forEach(field -> {
             var edge = new JbstPropertyEdge(currentParentTreeName,this, field);
             assertNonNullOrThrow(edge);
