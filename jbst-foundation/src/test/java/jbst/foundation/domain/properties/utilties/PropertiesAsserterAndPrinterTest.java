@@ -262,7 +262,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("[IncidentsConfigs]: one login failure feature type expected to be provided");
+        assertThat(throwable.getMessage()).isEqualTo("[IncidentsManager]: one login failure feature type expected to be provided");
     }
 
     @Test
