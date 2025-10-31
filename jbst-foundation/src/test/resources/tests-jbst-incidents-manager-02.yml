@@ -1,0 +1,13 @@
+jbst:
+  async-configs:
+    thread-name-prefix: tps1-async
+    threads-core-pool-percentage: 25
+    threads-max-pool-percentage: 50
+
+  events-configs:
+    thread-name-prefix: tps1-events
+    threads-core-pool-percentage: 75
+    threads-max-pool-percentage: 100
+
+  incidents-manager:
+    enabled: false

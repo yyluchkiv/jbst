@@ -55,14 +55,13 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
         this.jbstProperties.getAsyncConfigs().assertProperties();
         this.jbstProperties.getEventsConfigs().assertProperties();
         this.jbstProperties.getIncidentsManager().assertProperties();
-        this.jbstProperties.getIncidentsManager().assertPropertiesExtended(12);
     }
 
     // ================================================================================================================
     // Incidents: HTTP
     // ================================================================================================================
     @Bean
-    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "true")
     JbstIncidentClientDefinition incidentClientDefinition() {
         var incidentServer = this.jbstProperties.getIncidentsManager().getRemoteServer();
         return Feign.builder()
@@ -79,7 +78,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.incidents-manager-configs.enabled", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "false", matchIfMissing = true)
     JbstIncidentClientDefinition incidentClientDefinitionSlf4j() {
         return new JbstIncidentClientDefinitionSlf4J();
     }

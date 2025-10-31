@@ -33,8 +33,8 @@ public class IncidentsManager extends JbstProperty {
     @MandatoryToggleProperty
     private RemoteServer remoteServer;
     @MandatoryToggleProperty
-    @MandatoryPropertyMapMinSize(propertyName = "types", minSize = 12)
-    private final Map<String, Boolean> types;
+    @MandatoryPropertyMapMinSize(propertyName = "incidents", minSize = 12)
+    private final Map<String, Boolean> incidents;
 
     public static IncidentsManager hardcoded() {
         return new IncidentsManager(
@@ -93,23 +93,22 @@ public class IncidentsManager extends JbstProperty {
     @Override
     public void assertProperties() {
         super.assertProperties();
-        System.out.println("=======================================================================================================================");
-        System.out.println(this.types);
-        System.out.println("=======================================================================================================================");
-
-        var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class);
-        var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class);
-        if (loginFailure1 && loginFailure2) {
-            throw new IllegalArgumentException("[IncidentsManager]: one login failure feature type expected to be provided");
+        if (this.enabled) {
+            this.assertPropertiesExtended(12);
+            var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class);
+            var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class);
+            if (loginFailure1 && loginFailure2) {
+                throw new IllegalArgumentException("[IncidentsManager]: one login failure feature type expected to be provided");
+            }
         }
     }
 
     public void assertPropertiesExtended(int size) {
         assertTrueOrThrow(
-                this.types.size() >= size,
+                this.incidents.size() >= size,
                 "Property %s is invalid. Entries: [%s]. MinSize: %s".formatted(
                         this.getNameNonLeaf() + ".types",
-                        baseJoiningRaw(this.types.entrySet()),
+                        baseJoiningRaw(this.incidents.entrySet()),
                         size
                 )
         );
@@ -118,7 +117,7 @@ public class IncidentsManager extends JbstProperty {
     public <E extends Enum<E>> boolean isEnabled(String type, Class<E> enumClass) {
         try {
             E enumValue = Enum.valueOf(enumClass, type);
-            return TRUE.equals(this.types.get(enumValue.name()));
+            return TRUE.equals(this.incidents.get(enumValue.name()));
         } catch (IllegalArgumentException ex) {
             // fallback: type not found in enum
             return false;
