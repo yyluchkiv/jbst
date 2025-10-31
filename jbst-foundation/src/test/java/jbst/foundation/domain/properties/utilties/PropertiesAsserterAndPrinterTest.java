@@ -34,7 +34,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property not-used-properties-configs.types is invalid. Entries: [AUTHENTICATION_LOGIN1=true, AUTHENTICATION_LOGIN2=false]. MinSize: 3");
+        assertThat(throwable.getMessage()).isEqualTo("Property not-used-properties-configs.types is invalid. Entries: [AUTHENTICATION_LOGIN1=true, AUTHENTICATION_LOGIN2=false]. Size: 2. MinSize: 3");
     }
 
     @RepeatedTest(10)
