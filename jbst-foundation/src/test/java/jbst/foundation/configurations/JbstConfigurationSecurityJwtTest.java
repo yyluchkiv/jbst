@@ -4,6 +4,7 @@ import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
+import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
@@ -51,8 +52,8 @@ class JbstConfigurationSecurityJwtTest {
 
         @Bean
         public JbstProperties jbstProperties() {
-            var properties = new JbstProperties();
-            properties.setMvcConfigs(
+            var jbstProperties = new JbstProperties();
+            jbstProperties.setMvcConfigs(
                     new MvcConfigs(
                             true,
                             "/jbst/security",
@@ -66,7 +67,8 @@ class JbstConfigurationSecurityJwtTest {
                             )
                     )
             );
-            properties.setSecurityJwtConfigs(
+            jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
+            jbstProperties.setSecurityJwtConfigs(
                     new SecurityJwtConfigs(
                             new AuthoritiesConfigs(
                                     "jbst.foundation.tests.enums",
@@ -89,7 +91,7 @@ class JbstConfigurationSecurityJwtTest {
                             UsersTokensConfigs.hardcoded()
                     )
             );
-            return properties;
+            return jbstProperties;
         }
 
         @Bean

@@ -2,7 +2,7 @@ package jbst.foundation.incidents.domain.registration;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
-import jbst.foundation.domain.enums.JbstIncidentType;
+import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.incidents.domain.AbstractIncident;
 import jbst.foundation.incidents.domain.Incident;
 
@@ -17,7 +17,7 @@ public record IncidentRegistrationMagicLink(
     @Override
     public Incident getPlainIncident() {
         return new Incident(
-                JbstIncidentType.REGISTER_MAGICLINK,
+                JbstSecurityJwtIncident.REGISTER_MAGICLINK,
                 this.username
         );
     }

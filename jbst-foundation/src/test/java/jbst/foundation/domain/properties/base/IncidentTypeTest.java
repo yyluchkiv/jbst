@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.enums.JbstIncidentType;
+import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tuples.Tuple1;
@@ -12,8 +12,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.enums.JbstIncidentType.AUTHENTICATION_LOGIN;
-import static jbst.foundation.domain.enums.JbstIncidentType.REGISTER1;
+import static jbst.foundation.domain.enums.JbstSecurityJwtIncident.AUTHENTICATION_LOGIN;
+import static jbst.foundation.domain.enums.JbstSecurityJwtIncident.REGISTER1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentTypeTest extends AbstractFolderSerializationRunner {
@@ -32,7 +32,7 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    void serialize(Tuple1<JbstIncidentType> tuple1, String fileName) {
+    void serialize(Tuple1<JbstSecurityJwtIncident> tuple1, String fileName) {
         // Act
         var json = this.writeValueAsString(tuple1);
 
@@ -43,10 +43,10 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeTest")
-    void deserializeTest(Tuple1<JbstIncidentType> tuple1, String fileName) {
+    void deserializeTest(Tuple1<JbstSecurityJwtIncident> tuple1, String fileName) {
         // Arrange
         var json = TestsIOUtils.readFile(this.getFolder(), fileName);
-        var typeReference = new TypeReference<Tuple1<JbstIncidentType>>() {};
+        var typeReference = new TypeReference<Tuple1<JbstSecurityJwtIncident>>() {};
 
         // Act
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);

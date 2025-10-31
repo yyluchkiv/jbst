@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.enums.JbstIncidentType;
+import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -47,28 +47,28 @@ public class Incident {
         this.setType(type);
     }
 
-    public Incident(JbstIncidentType type) {
+    public Incident(JbstSecurityJwtIncident type) {
         this(type.getValue());
     }
 
-    public Incident(JbstIncidentType type, Username username) {
+    public Incident(JbstSecurityJwtIncident type, Username username) {
         this(type);
         this.addUsername(username);
     }
 
-    public Incident(JbstIncidentType type, UsernamePasswordCredentials credentials) {
+    public Incident(JbstSecurityJwtIncident type, UsernamePasswordCredentials credentials) {
         this(type);
         this.addUsername(credentials.username());
         this.addPassword(credentials.password());
     }
 
-    public Incident(JbstIncidentType type, Username username, UserRequestMetadata userRequestMetadata) {
+    public Incident(JbstSecurityJwtIncident type, Username username, UserRequestMetadata userRequestMetadata) {
         this(type);
         this.addUsername(username);
         this.addUserRequestMetadata(userRequestMetadata);
     }
 
-    public Incident(JbstIncidentType type, UsernamePasswordCredentials credentials, UserRequestMetadata userRequestMetadata) {
+    public Incident(JbstSecurityJwtIncident type, UsernamePasswordCredentials credentials, UserRequestMetadata userRequestMetadata) {
         this(type, credentials);
         this.addUserRequestMetadata(userRequestMetadata);
     }

@@ -1,6 +1,6 @@
 package jbst.server.ops.services;
 
-import jbst.foundation.domain.enums.JbstIncidentType;
+import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -47,7 +47,7 @@ public class IncidentsService {
     private final ServerProperties serverProperties;
 
     // IncidentType <-> HTML template name
-    private static final Map<String, OpsIncidentHTML> TEMPLATES_MAPPINGS = Arrays.stream(JbstIncidentType.values())
+    private static final Map<String, OpsIncidentHTML> TEMPLATES_MAPPINGS = Arrays.stream(JbstSecurityJwtIncident.values())
             .map(type -> new Tuple2<>(type.toString(), opsAnyIncident()))
             .collect(Collectors.toMap(Tuple2::a, Tuple2::b));
 

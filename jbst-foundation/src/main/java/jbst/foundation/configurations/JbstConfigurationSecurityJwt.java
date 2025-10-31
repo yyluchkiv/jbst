@@ -3,12 +3,14 @@ package jbst.foundation.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.filters.jwt.JbstTokensFilter;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
 import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
 import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
+import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +111,17 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @PostConstruct
     public void init() {
+        // incidents
+        var incidentsManager = this.jbstProperties.getIncidentsManager();
+        if (incidentsManager.isEnabled()) {
+            incidentsManager.assertPropertiesExtended(EnumUtility.getEnumNames(JbstSecurityJwtIncident.class));
+            var loginFailure1 = incidentsManager.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstSecurityJwtIncident.class);
+            var loginFailure2 = incidentsManager.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstSecurityJwtIncident.class);
+            if (loginFailure1 && loginFailure2) {
+                throw new IllegalArgumentException("[IncidentsManager]: one login failure feature type expected to be provided");
+            }
+        }
+        // security
         this.jbstProperties.getSecurityJwtConfigs().assertProperties();
     }
 

@@ -2,9 +2,9 @@ package jbst.foundation.events.publishers;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
-import jbst.foundation.domain.enums.JbstIncidentType;
+import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.base.RemoteServer;
-import jbst.foundation.domain.properties.configs.IncidentsManager;
+import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
@@ -31,7 +31,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.enums.JbstIncidentType.*;
+import static jbst.foundation.domain.enums.JbstSecurityJwtIncident.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
@@ -451,13 +451,13 @@ class JbstIncidentsPublisherTest {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static IncidentsManager incidentsManager(JbstIncidentType type, boolean enabled) {
-        var types = Stream.of(JbstIncidentType.values())
+    private static JbstPropertyIncidentsManager incidentsManager(JbstSecurityJwtIncident type, boolean enabled) {
+        var types = Stream.of(JbstSecurityJwtIncident.values())
                 .collect(Collectors.toMap(
-                        JbstIncidentType::name,
+                        JbstSecurityJwtIncident::name,
                         entry -> type.equals(entry) && enabled
                 ));
-        return new IncidentsManager(
+        return new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 RemoteServer.hardcoded(),
