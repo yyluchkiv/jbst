@@ -39,7 +39,7 @@ public class IncidentsManager extends JbstProperty {
     @MandatoryPropertyToggle
     private RemoteServer remoteServer;
     @MandatoryPropertyToggle
-    @MandatoryPropertyMapMinSize(propertyName = "incidents", minSize = 12)
+    @MandatoryPropertyMapMinSize(minSize = 12)
     private final Map<String, Boolean> incidents;
 
     public static IncidentsManager hardcoded() {

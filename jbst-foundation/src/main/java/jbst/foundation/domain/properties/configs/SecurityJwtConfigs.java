@@ -35,8 +35,6 @@ public class SecurityJwtConfigs extends JbstProperty {
     private final CookiesConfigs cookiesConfigs;
     @MandatoryProperty
     private final EssenceConfigs essenceConfigs;
-//    @MandatoryProperty
-//    private final IncidentsConfigs incidentsConfigs;
     @MandatoryProperty
     private final JwtTokensConfigs jwtTokensConfigs;
     @MandatoryProperty

@@ -33,7 +33,7 @@ public class NotUsedPropertiesConfigs extends JbstProperty {
     @MandatoryProperty
     private final SpringLogging springLogging;
     @MandatoryProperty
-    @MandatoryPropertyMapMinSize(propertyName = "types", minSize = 3)
+    @MandatoryPropertyMapMinSize(minSize = 3)
     private final Map<String, Boolean> types;
 
     @Override
