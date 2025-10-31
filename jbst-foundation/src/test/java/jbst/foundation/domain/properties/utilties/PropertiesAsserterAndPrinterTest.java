@@ -7,6 +7,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.Map.entry;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
@@ -54,13 +55,13 @@ class PropertiesAsserterAndPrinterTest {
         // Act
         var throwable = catchThrowable(() -> {
             notUsedPropertiesConfigs.assertProperties();
-            notUsedPropertiesConfigs.assertPropertiesExtended(4);
+            notUsedPropertiesConfigs.assertPropertiesExtended(Set.of("AUTHENTICATION_LOGIN1", "AUTHENTICATION_LOGIN2", "AUTHENTICATION_LOGIN3", "EXTENDED_LOGIN"));
         });
 
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property not-used-properties-configs.types is invalid. Entries: [AUTHENTICATION_LOGIN1=true, AUTHENTICATION_LOGIN2=false, AUTHENTICATION_LOGIN3=false]. MinSize: 4");
+        assertThat(throwable.getMessage()).isEqualTo("Property not-used-properties-configs.types is invalid. Options: [AUTHENTICATION_LOGIN1=true, AUTHENTICATION_LOGIN2=false, AUTHENTICATION_LOGIN3=false]. Required: [AUTHENTICATION_LOGIN1, AUTHENTICATION_LOGIN2, AUTHENTICATION_LOGIN3, EXTENDED_LOGIN]. Disjunction: [[31mEXTENDED_LOGIN[0m]");
     }
 
     @RepeatedTest(10)
@@ -74,14 +75,14 @@ class PropertiesAsserterAndPrinterTest {
                         Map.entry("AUTHENTICATION_LOGIN1", true),
                         Map.entry("AUTHENTICATION_LOGIN2", false),
                         Map.entry("AUTHENTICATION_LOGIN3", false),
-                        Map.entry("AUTHENTICATION_LOGIN4", false)
+                        Map.entry("EXTENDED_LOGIN", false)
                 )
         );
 
         // Act
         var throwable = catchThrowable(() -> {
             notUsedPropertiesConfigs.assertProperties();
-            notUsedPropertiesConfigs.assertPropertiesExtended(4);
+            notUsedPropertiesConfigs.assertPropertiesExtended(Set.of("AUTHENTICATION_LOGIN1", "AUTHENTICATION_LOGIN2", "AUTHENTICATION_LOGIN3", "EXTENDED_LOGIN"));
         });
 
         // Assert

@@ -6,15 +6,19 @@ import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize
 import jbst.foundation.domain.properties.base.ScheduledJob;
 import jbst.foundation.domain.properties.base.SpringLogging;
 import jbst.foundation.domain.properties.base.SpringServer;
+import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Map;
+import java.util.Set;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -47,13 +51,14 @@ public class NotUsedPropertiesConfigs extends JbstProperty {
     }
 
     // TODO [YYL] collection<string>
-    public void assertPropertiesExtended(int size) {
+    public void assertPropertiesExtended(Set<String> keys) {
         assertTrueOrThrow(
-                this.types.size() >= size,
-                "Property %s is invalid. Entries: [%s]. MinSize: %s".formatted(
+                this.types.size() >= keys.size(),
+                "Property %s is invalid. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
                         "not-used-properties-configs.types",
                         baseJoiningRaw(this.types.entrySet()),
-                        size
+                        baseJoiningRaw(keys),
+                        RED_TEXT.format(CollectionUtility.baseJoiningRaw(disjunction(this.types.keySet(), keys)))
                 )
         );
     }
