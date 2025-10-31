@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
 
 env:
-  MAVEN_DEPLOYMENT_ENABLED: 'true'
+  MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IMAGE_SERVER_IAM: tech1-agency/jbst-server-iam
   DOCKER_IMAGE_SERVER_OPS: tech1-agency/jbst-server-ops
-  DOCKER_VERSION: '1.32'
-  DOCKER_PUSH_ENABLED: 'true'
+  DOCKER_VERSION: '1.33-SNAPSHOT'
+  DOCKER_PUSH_ENABLED: 'false'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
