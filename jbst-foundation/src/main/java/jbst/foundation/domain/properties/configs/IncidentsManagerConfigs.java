@@ -17,6 +17,8 @@ import java.util.Map;
 
 import static java.lang.Boolean.TRUE;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
@@ -88,6 +90,16 @@ public class IncidentsManagerConfigs extends JbstProperty {
     @Override
     public String getNameNonLeaf() {
         return "incidents-manager-configs";
+    }
+
+    @Override
+    public void assertPropertiesAsLeaf(String parentTreeName) {
+        super.assertPropertiesAsLeaf(parentTreeName);
+        var loginFailure1 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstIamIncidentType.class);
+        var loginFailure2 = this.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstIamIncidentType.class);
+        if (loginFailure1 && loginFailure2) {
+            throw new IllegalArgumentException("[IncidentsConfigs]: one login failure feature type expected to be provided");
+        }
     }
 
     public void assertPropertiesExtended(int size) {
