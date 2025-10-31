@@ -1,11 +1,7 @@
 package jbst.foundation.domain.properties.utilties;
 
-import jbst.foundation.domain.properties.base.ScheduledJob;
-import jbst.foundation.domain.properties.base.SchedulerConfiguration;
-import jbst.foundation.domain.properties.base.SpringLogging;
-import jbst.foundation.domain.properties.base.SpringServer;
+import jbst.foundation.domain.properties.base.*;
 import jbst.foundation.domain.properties.configs.*;
-import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
 import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigs;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -13,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static java.util.Map.entry;
-import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -178,6 +173,98 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
+    void incidentsCorrectTest() {
+        var loginFailureUsernamePassword = randomBoolean();
+        var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
+        var incidentsManager = new IncidentsManager(
+                true,
+                IncidentsManagerType.hardcoded(),
+                RemoteServer.hardcoded(),
+                Map.ofEntries(
+                        entry("AUTHENTICATION_LOGIN", randomBoolean()),
+                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", loginFailureUsernamePassword),
+                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", loginFailureUsernameMaskedPassword),
+                        entry("AUTHENTICATION_LOGOUT", randomBoolean()),
+                        entry("AUTHENTICATION_LOGOUT_MIN", randomBoolean()),
+                        entry("SESSION_REFRESHED", randomBoolean()),
+                        entry("SESSION_EXPIRED", randomBoolean()),
+                        entry("REGISTER_MAGICLINK", randomBoolean()),
+                        entry("REGISTER0", randomBoolean()),
+                        entry("REGISTER0_FAILURE", randomBoolean()),
+                        entry("REGISTER1", randomBoolean()),
+                        entry("REGISTER1_FAILURE", randomBoolean())
+                )
+        );
+
+        // Act
+        incidentsManager.assertProperties();
+
+        // Assert
+        // no asserts
+    }
+
+    @Test
+    void incidentsNoSessionRefreshedFailureTest() {
+        var incidentsManager = new IncidentsManager(
+                true,
+                IncidentsManagerType.hardcoded(),
+                RemoteServer.hardcoded(),
+                Map.ofEntries(
+                        entry("AUTHENTICATION_LOGIN", randomBoolean()),
+                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", false),
+                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", true),
+                        entry("AUTHENTICATION_LOGOUT", randomBoolean()),
+                        entry("AUTHENTICATION_LOGOUT_MIN", randomBoolean()),
+                        entry("SESSION_EXPIRED", randomBoolean()),
+                        entry("REGISTER_MAGICLINK", randomBoolean()),
+                        entry("REGISTER0", randomBoolean()),
+                        entry("REGISTER0_FAILURE", randomBoolean()),
+                        entry("REGISTER1", randomBoolean()),
+                        entry("REGISTER1_FAILURE", randomBoolean())
+                )
+        );
+
+        // Act
+        var throwable = catchThrowable(incidentsManager::assertProperties);
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Property security-jwt-configs.incidents-configs.types-configs is invalid. Options: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired, Session Refreshed]. Required: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired]. Disjunction: [\u001B[31mSession Refreshed\u001B[0m]");
+    }
+
+    @Test
+    void incidentsOnlyOneLoginFailureTest() {
+        var incidentsManager = new IncidentsManager(
+                true,
+                IncidentsManagerType.hardcoded(),
+                RemoteServer.hardcoded(),
+                Map.ofEntries(
+                        entry("AUTHENTICATION_LOGIN", randomBoolean()),
+                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", true),
+                        entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", true),
+                        entry("AUTHENTICATION_LOGOUT", randomBoolean()),
+                        entry("AUTHENTICATION_LOGOUT_MIN", randomBoolean()),
+                        entry("SESSION_REFRESHED", randomBoolean()),
+                        entry("SESSION_EXPIRED", randomBoolean()),
+                        entry("REGISTER_MAGICLINK", randomBoolean()),
+                        entry("REGISTER0", randomBoolean()),
+                        entry("REGISTER0_FAILURE", randomBoolean()),
+                        entry("REGISTER1", randomBoolean()),
+                        entry("REGISTER1_FAILURE", randomBoolean())
+                )
+        );
+
+        // Act
+        var throwable = catchThrowable(incidentsManager::assertProperties);
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("[IncidentsConfigs]: one login failure feature type expected to be provided");
+    }
+
+    @Test
     void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
         // Act
         var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
@@ -199,125 +286,6 @@ class PropertiesAsserterAndPrinterTest {
 
         // Assert
         // no asserts
-    }
-
-    @Test
-    void securityJwtConfigsIncidentsCorrectTest() {
-        var loginFailureUsernamePassword = randomBoolean();
-        var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
-        var incidentConfigs = new IncidentsConfigs(
-                Map.ofEntries(
-                        entry(AUTHENTICATION_LOGIN, randomBoolean()),
-                        entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, loginFailureUsernamePassword),
-                        entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, loginFailureUsernameMaskedPassword),
-                        entry(AUTHENTICATION_LOGOUT, randomBoolean()),
-                        entry(AUTHENTICATION_LOGOUT_MIN, randomBoolean()),
-                        entry(SESSION_REFRESHED, randomBoolean()),
-                        entry(SESSION_EXPIRED, randomBoolean()),
-                        entry(REGISTER_MAGICLINK, randomBoolean()),
-                        entry(REGISTER0, randomBoolean()),
-                        entry(REGISTER0_FAILURE, randomBoolean()),
-                        entry(REGISTER1, randomBoolean()),
-                        entry(REGISTER1_FAILURE, randomBoolean())
-                )
-        );
-        var securityJwtConfigs = new SecurityJwtConfigs(
-                SecurityJwtConfigs.hardcoded().getAuthoritiesConfigs(),
-                SecurityJwtConfigs.hardcoded().getCookiesConfigs(),
-                SecurityJwtConfigs.hardcoded().getEssenceConfigs(),
-                incidentConfigs,
-                SecurityJwtConfigs.hardcoded().getJwtTokensConfigs(),
-                SecurityJwtConfigs.hardcoded().getLoggingConfigs(),
-                SecurityJwtConfigs.hardcoded().getSessionConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs(),
-                SecurityJwtConfigs.hardcoded().getWebsocketsConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersTokensConfigs()
-        );
-
-        // Act
-        securityJwtConfigs.assertProperties();
-
-        // Assert
-        // no asserts
-    }
-
-    @Test
-    void securityJwtConfigsIncidentsNoSessionRefreshedFailureTest() {
-        var incidentConfigs = new IncidentsConfigs(
-                Map.ofEntries(
-                    entry(AUTHENTICATION_LOGIN, randomBoolean()),
-                    entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false),
-                    entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true),
-                    entry(AUTHENTICATION_LOGOUT, randomBoolean()),
-                    entry(AUTHENTICATION_LOGOUT_MIN, randomBoolean()),
-                    entry(SESSION_EXPIRED, randomBoolean()),
-                    entry(REGISTER_MAGICLINK, randomBoolean()),
-                    entry(REGISTER0, randomBoolean()),
-                    entry(REGISTER0_FAILURE, randomBoolean()),
-                    entry(REGISTER1, randomBoolean()),
-                    entry(REGISTER1_FAILURE, randomBoolean())
-                )
-        );
-        var securityJwtConfigs = new SecurityJwtConfigs(
-                SecurityJwtConfigs.hardcoded().getAuthoritiesConfigs(),
-                SecurityJwtConfigs.hardcoded().getCookiesConfigs(),
-                SecurityJwtConfigs.hardcoded().getEssenceConfigs(),
-                incidentConfigs,
-                SecurityJwtConfigs.hardcoded().getJwtTokensConfigs(),
-                SecurityJwtConfigs.hardcoded().getLoggingConfigs(),
-                SecurityJwtConfigs.hardcoded().getSessionConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs(),
-                SecurityJwtConfigs.hardcoded().getWebsocketsConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersTokensConfigs()
-        );
-
-        // Act
-        var throwable = catchThrowable(securityJwtConfigs::assertProperties);
-
-        // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Property security-jwt-configs.incidents-configs.types-configs is invalid. Options: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired, Session Refreshed]. Required: [Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register MagicLink, Register0, Register0 Failure, Register1, Register1 Failure, Session Expired]. Disjunction: [\u001B[31mSession Refreshed\u001B[0m]");
-    }
-
-    @Test
-    void securityJwtConfigsIncidentsOnlyOneLoginFailureTest() {
-        var incidentConfigs = new IncidentsConfigs(
-                Map.ofEntries(
-                    entry(AUTHENTICATION_LOGIN, randomBoolean()),
-                    entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true),
-                    entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true),
-                    entry(AUTHENTICATION_LOGOUT, randomBoolean()),
-                    entry(AUTHENTICATION_LOGOUT_MIN, randomBoolean()),
-                    entry(SESSION_REFRESHED, randomBoolean()),
-                    entry(SESSION_EXPIRED, randomBoolean()),
-                    entry(REGISTER_MAGICLINK, randomBoolean()),
-                    entry(REGISTER0, randomBoolean()),
-                    entry(REGISTER0_FAILURE, randomBoolean()),
-                    entry(REGISTER1, randomBoolean()),
-                    entry(REGISTER1_FAILURE, randomBoolean())
-                )
-        );
-        var securityJwtConfigs = new SecurityJwtConfigs(
-                SecurityJwtConfigs.hardcoded().getAuthoritiesConfigs(),
-                SecurityJwtConfigs.hardcoded().getCookiesConfigs(),
-                SecurityJwtConfigs.hardcoded().getEssenceConfigs(),
-                incidentConfigs,
-                SecurityJwtConfigs.hardcoded().getJwtTokensConfigs(),
-                SecurityJwtConfigs.hardcoded().getLoggingConfigs(),
-                SecurityJwtConfigs.hardcoded().getSessionConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs(),
-                SecurityJwtConfigs.hardcoded().getWebsocketsConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersTokensConfigs()
-        );
-
-        // Act
-        var throwable = catchThrowable(securityJwtConfigs::assertProperties);
-
-        // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("[IncidentsConfigs]: one login failure feature type expected to be provided");
     }
 
     @Test

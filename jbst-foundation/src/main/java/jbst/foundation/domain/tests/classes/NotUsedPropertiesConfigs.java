@@ -46,6 +46,7 @@ public class NotUsedPropertiesConfigs extends JbstProperty {
         return "not-used-properties-configs";
     }
 
+    // TODO [YYL] collection<string>
     public void assertPropertiesExtended(int size) {
         assertTrueOrThrow(
                 this.types.size() >= size,

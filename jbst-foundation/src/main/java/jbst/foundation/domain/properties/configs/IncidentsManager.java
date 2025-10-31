@@ -87,7 +87,7 @@ public class IncidentsManager extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "incidents-manager-configs";
+        return "incidents-manager";
     }
 
     @Override
