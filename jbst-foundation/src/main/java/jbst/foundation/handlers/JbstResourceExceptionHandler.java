@@ -7,7 +7,7 @@ import jbst.foundation.domain.exceptions.authentication.JbstRegistrationExceptio
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.domain.exceptions.cookies.JbstCookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package jbst.server.iam.configurations;
 
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import jbst.foundation.utils.JbstEnvUtils;
 import jbst.server.iam.base.services.UsersService;

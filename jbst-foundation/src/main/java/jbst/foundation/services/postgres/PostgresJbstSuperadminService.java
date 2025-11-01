@@ -1,6 +1,6 @@
 package jbst.foundation.services.postgres;
 
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;

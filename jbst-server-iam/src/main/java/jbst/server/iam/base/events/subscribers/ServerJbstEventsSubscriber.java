@@ -1,7 +1,7 @@
 package jbst.server.iam.base.events.subscribers;
 
 import jbst.foundation.domain.events.EventAuthenticationLogin;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.JbstEventsSubscriber;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;

@@ -14,7 +14,7 @@ import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstRateLimitsService;

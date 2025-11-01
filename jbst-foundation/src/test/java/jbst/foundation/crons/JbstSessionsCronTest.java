@@ -5,7 +5,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import lombok.RequiredArgsConstructor;

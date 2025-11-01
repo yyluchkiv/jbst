@@ -6,7 +6,7 @@ import feign.RequestLine;
 import feign.RetryableException;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

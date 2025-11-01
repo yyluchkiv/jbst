@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;

@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;

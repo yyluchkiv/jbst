@@ -1,7 +1,7 @@
 package jbst.foundation.crons;
 
 import jbst.foundation.domain.properties.base.Cron;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -1,4 +1,4 @@
-package jbst.foundation.events.publishers;
+package jbst.foundation.incidents.services;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;

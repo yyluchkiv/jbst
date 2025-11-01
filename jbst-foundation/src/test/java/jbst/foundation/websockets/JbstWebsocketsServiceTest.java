@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfCon
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

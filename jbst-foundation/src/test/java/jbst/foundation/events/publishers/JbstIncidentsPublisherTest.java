@@ -12,6 +12,7 @@ import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
