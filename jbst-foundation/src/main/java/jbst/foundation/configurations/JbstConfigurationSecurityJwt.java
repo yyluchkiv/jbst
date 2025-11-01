@@ -56,8 +56,8 @@ import static org.springframework.http.HttpMethod.*;
  * </a>
  */
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling
-@SuppressWarnings("deprecation")
 // TODO [YYL, deprecation] fixme
+@SuppressWarnings({"deprecation", "SpringJavaInjectionPointsAutowiringInspection"})
 @Configuration
 @EnableConfigurationProperties({
         JbstProperties.class
@@ -66,7 +66,6 @@ import static org.springframework.http.HttpMethod.*;
         "jbst.foundation.assistants.utils",
         "jbst.foundation.crons",
         "jbst.foundation.events.publishers",
-        "jbst.foundation.events.subscribers",
         "jbst.foundation.handlers",
         "jbst.foundation.handshakes",
         "jbst.foundation.resources",
@@ -91,7 +90,6 @@ import static org.springframework.http.HttpMethod.*;
 public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
     // Assistants
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final JbstJwtUserDetailsService jwtUserDetailsService;
     // Passwords
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -104,7 +102,6 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     private final JbstCsrfInterceptorHandshake csrfInterceptorHandshake;
     private final JbstSecurityHandshakeHandler securityHandshakeHandler;
     // Configurer
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final AbstractJbstSecurityJwtConfigurer abstractJbstSecurityJwtConfigurer;
     // Properties
     private final JbstProperties jbstProperties;
@@ -235,8 +232,6 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 .withSockJS();
     }
 
-    // TODO [YYL, deprecation] fixme
-    @SuppressWarnings("deprecation")
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
         if (!this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().isEnabled()) {
