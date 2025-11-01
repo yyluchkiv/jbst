@@ -2,7 +2,7 @@ package jbst.foundation.crons;
 
 import jbst.foundation.domain.crons.AbstractBaseCron;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import lombok.RequiredArgsConstructor;

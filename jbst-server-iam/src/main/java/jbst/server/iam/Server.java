@@ -2,7 +2,7 @@ package jbst.server.iam;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.startup.JbstStartupEventListener;
 import jbst.server.iam.configurations.ConfigurationServer;

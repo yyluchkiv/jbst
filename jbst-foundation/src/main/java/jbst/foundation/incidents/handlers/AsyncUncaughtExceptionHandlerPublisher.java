@@ -1,6 +1,6 @@
 package jbst.foundation.incidents.handlers;
 
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.Incident;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

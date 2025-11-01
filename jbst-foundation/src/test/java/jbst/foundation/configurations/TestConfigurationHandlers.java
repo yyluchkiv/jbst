@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.utils.JbstHttpUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

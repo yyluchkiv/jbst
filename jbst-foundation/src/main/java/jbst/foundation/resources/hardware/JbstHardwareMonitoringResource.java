@@ -5,7 +5,7 @@ import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.extern.slf4j.Slf4j;

@@ -5,7 +5,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTab
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
-import jbst.foundation.events.publishers.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.RequiredArgsConstructor;
