@@ -8,6 +8,7 @@ public abstract class AbstractBaseCron {
 
     public abstract void processException(Exception ex);
 
+    @SuppressWarnings("unused")
     public void executeCron(JbstPropertyCron cron, AbstractCronAction action) {
         this.executeCron(
                 cron.isEnabled(),
