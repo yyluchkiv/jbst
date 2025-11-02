@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.UserOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
@@ -34,7 +34,7 @@ public class PostgresJbstSettingsService extends JbstSettingsService {
     }
 
     @Override
-    public long initUsers(List<UserOnInit> usersOnInit) {
+    public long initUsers(List<JbstPropertyUserOnInit> usersOnInit) {
         var users = usersOnInit.stream().
                 map(userOnInit -> {
                     var username = userOnInit.getUsername();
@@ -58,7 +58,7 @@ public class PostgresJbstSettingsService extends JbstSettingsService {
     }
 
     @Override
-    public void initInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
+    public void initInvitations(JbstPropertyUserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
         var invitations = IntStream.range(0, 10)
                 .mapToObj(i ->
                         new PostgresDbInvitation(

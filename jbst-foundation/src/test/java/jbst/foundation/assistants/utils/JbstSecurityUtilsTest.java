@@ -7,7 +7,7 @@ import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenCreationParams;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import jbst.foundation.tests.enums.TestAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,15 +51,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JbstSecurityUtilsTest {
     private static Stream<Arguments> createJwtTokenTest() {
         return Stream.of(
-                Arguments.of(new TimeAmount(1L, HOURS)),
-                Arguments.of(new TimeAmount(10L, HOURS)),
-                Arguments.of(new TimeAmount(100L, HOURS)),
-                Arguments.of(new TimeAmount(1L, MINUTES)),
-                Arguments.of(new TimeAmount(10L, MINUTES)),
-                Arguments.of(new TimeAmount(100L, MINUTES)),
-                Arguments.of(new TimeAmount(1L, SECONDS)),
-                Arguments.of(new TimeAmount(10L, SECONDS)),
-                Arguments.of(new TimeAmount(100L, SECONDS))
+                Arguments.of(new JbstPropertyTimeAmount(1L, HOURS)),
+                Arguments.of(new JbstPropertyTimeAmount(10L, HOURS)),
+                Arguments.of(new JbstPropertyTimeAmount(100L, HOURS)),
+                Arguments.of(new JbstPropertyTimeAmount(1L, MINUTES)),
+                Arguments.of(new JbstPropertyTimeAmount(10L, MINUTES)),
+                Arguments.of(new JbstPropertyTimeAmount(100L, MINUTES)),
+                Arguments.of(new JbstPropertyTimeAmount(1L, SECONDS)),
+                Arguments.of(new JbstPropertyTimeAmount(10L, SECONDS)),
+                Arguments.of(new JbstPropertyTimeAmount(100L, SECONDS))
         );
     }
 
@@ -189,7 +189,7 @@ class JbstSecurityUtilsTest {
 
     @ParameterizedTest
     @MethodSource("createJwtTokenTest")
-    void createJwtTokenTest(TimeAmount timeAmount) {
+    void createJwtTokenTest(JbstPropertyTimeAmount timeAmount) {
         // Arrange
         var creationParams = new JwtTokenCreationParams(Username.hardcoded(), getSimpleGrantedAuthorities("user"), randomZoneId());
 

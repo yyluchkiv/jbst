@@ -20,28 +20,28 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JwtToken extends JbstProperty {
+public class JbstPropertyJwtToken extends JbstProperty {
     @MandatoryProperty
-    private final TimeAmount expiration;
+    private final JbstPropertyTimeAmount expiration;
     @NonMandatoryProperty
     private String cookieKey;
     @NonMandatoryProperty
     private String headerKey;
 
-    public static JwtToken hardcoded() {
-        return new JwtToken(new TimeAmount(12L, HOURS), "cookieJWT", null);
+    public static JbstPropertyJwtToken hardcoded() {
+        return new JbstPropertyJwtToken(new JbstPropertyTimeAmount(12L, HOURS), "cookieJWT", null);
     }
 
-    public static JwtToken random() {
+    public static JbstPropertyJwtToken random() {
         return randomBoolean() ? randomCookieBasedToken() : randomHeaderBasedToken();
     }
 
-    public static JwtToken randomCookieBasedToken() {
-        return new JwtToken(TimeAmount.random(), randomString(), null);
+    public static JbstPropertyJwtToken randomCookieBasedToken() {
+        return new JbstPropertyJwtToken(JbstPropertyTimeAmount.random(), randomString(), null);
     }
 
-    public static JwtToken randomHeaderBasedToken() {
-        return new JwtToken(TimeAmount.random(), null, randomString());
+    public static JbstPropertyJwtToken randomHeaderBasedToken() {
+        return new JbstPropertyJwtToken(JbstPropertyTimeAmount.random(), null, randomString());
     }
 
     @Override

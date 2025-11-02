@@ -4,9 +4,9 @@ import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
-import jbst.foundation.domain.properties.base.ScheduledJob;
-import jbst.foundation.domain.properties.base.SpringLogging;
-import jbst.foundation.domain.properties.base.SpringServer;
+import jbst.foundation.domain.properties.base.JbstPropertyScheduledJob;
+import jbst.foundation.domain.properties.base.JbstPropertySpringLogging;
+import jbst.foundation.domain.properties.base.JbstPropertySpringServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,11 +27,11 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @EqualsAndHashCode(callSuper = true)
 public class NotUsedPropertiesConfigs extends JbstProperty {
     @MandatoryProperty
-    private final ScheduledJob scheduledJob;
+    private final JbstPropertyScheduledJob scheduledJob;
     @MandatoryProperty
-    private final SpringServer springServer;
+    private final JbstPropertySpringServer springServer;
     @MandatoryProperty
-    private final SpringLogging springLogging;
+    private final JbstPropertySpringLogging springLogging;
     @MandatoryProperty
     @MandatoryPropertyMapMinSize(minSize = 3)
     private final Map<String, Boolean> types;

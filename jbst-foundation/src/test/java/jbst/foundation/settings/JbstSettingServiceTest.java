@@ -2,7 +2,7 @@ package jbst.foundation.settings;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.UserOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstSettingsRepository;
@@ -86,13 +86,13 @@ class JbstSettingServiceTest {
                     this.jbstProperties()
             ) {
                 @Override
-                public long initUsers(List<UserOnInit> usersOnInit) {
+                public long initUsers(List<JbstPropertyUserOnInit> usersOnInit) {
                     abstractMockService().executeInheritedMethod();
                     return 0;
                 }
 
                 @Override
-                public void initInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
+                public void initInvitations(JbstPropertyUserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
                     abstractMockService().executeInheritedMethod();
                 }
             };

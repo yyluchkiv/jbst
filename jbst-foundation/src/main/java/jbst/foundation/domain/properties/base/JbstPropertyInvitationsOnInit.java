@@ -8,21 +8,30 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
+// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Authority extends JbstProperty {
+public class JbstPropertyInvitationsOnInit extends JbstProperty {
     @MandatoryProperty
-    private final String value;
+    private final boolean enabled;
 
-    public static Authority hardcoded() {
-        return new Authority("user");
+    public static JbstPropertyInvitationsOnInit hardcoded() {
+        return new JbstPropertyInvitationsOnInit(true);
     }
 
-    public static Authority random() {
-        return new Authority(randomString());
+    public static JbstPropertyInvitationsOnInit random() {
+        return randomBoolean() ? enabled() : disabled();
+    }
+
+    public static JbstPropertyInvitationsOnInit enabled() {
+        return hardcoded();
+    }
+
+    public static JbstPropertyInvitationsOnInit disabled() {
+        return new JbstPropertyInvitationsOnInit(false);
     }
 
     @Override
@@ -32,16 +41,11 @@ public class Authority extends JbstProperty {
 
     @Override
     public boolean isToggle() {
-        return false;
+        return this.enabled;
     }
 
     @Override
     public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
-    }
-
-    @Override
-    public String toString() {
-        return this.value;
     }
 }

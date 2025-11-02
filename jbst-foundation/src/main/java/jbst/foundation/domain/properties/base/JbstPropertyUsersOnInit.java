@@ -22,17 +22,17 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UsersOnInit extends JbstProperty {
+public class JbstPropertyUsersOnInit extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
-    private List<UserOnInit> users;
+    private List<JbstPropertyUserOnInit> users;
 
-    public static UsersOnInit hardcoded() {
-        return new UsersOnInit(
+    public static JbstPropertyUsersOnInit hardcoded() {
+        return new JbstPropertyUsersOnInit(
                 true,
                 List.of(
-                        new UserOnInit(
+                        new JbstPropertyUserOnInit(
                                 Username.of("admin12"),
                                 Password.of("password12"),
                                 ZoneId.systemDefault(),
@@ -44,16 +44,16 @@ public class UsersOnInit extends JbstProperty {
         );
     }
 
-    public static UsersOnInit random() {
+    public static JbstPropertyUsersOnInit random() {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static UsersOnInit enabled() {
+    public static JbstPropertyUsersOnInit enabled() {
         return hardcoded();
     }
 
-    public static UsersOnInit disabled() {
-        return new UsersOnInit(false, new ArrayList<>());
+    public static JbstPropertyUsersOnInit disabled() {
+        return new JbstPropertyUsersOnInit(false, new ArrayList<>());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class UsersOnInit extends JbstProperty {
 
     public final Set<String> getAuthorities() {
         if (nonNull(this.users)) {
-            return this.users.stream().map(UserOnInit::getAuthorities)
+            return this.users.stream().map(JbstPropertyUserOnInit::getAuthorities)
                     .filter(Objects::nonNull)
                     .flatMap(Set::stream)
                     .collect(Collectors.toSet());
@@ -85,7 +85,7 @@ public class UsersOnInit extends JbstProperty {
     public final Set<Username> getUsernames() {
         if (nonNull(this.users)) {
             return this.users.stream()
-                    .map(UserOnInit::getUsername)
+                    .map(JbstPropertyUserOnInit::getUsername)
                     .collect(Collectors.toSet());
         } else {
             return Collections.emptySet();

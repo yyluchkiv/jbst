@@ -2,8 +2,8 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.InvitationsOnInit;
-import jbst.foundation.domain.properties.base.UsersOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyInvitationsOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,21 +15,21 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class EssenceConfigs extends JbstProperty {
     @MandatoryProperty
-    private final UsersOnInit usersOnInit;
+    private final JbstPropertyUsersOnInit usersOnInit;
     @MandatoryProperty
-    private final InvitationsOnInit invitationsOnInit;
+    private final JbstPropertyInvitationsOnInit invitationsOnInit;
 
     public static EssenceConfigs hardcoded() {
         return new EssenceConfigs(
-                UsersOnInit.hardcoded(),
-                InvitationsOnInit.hardcoded()
+                JbstPropertyUsersOnInit.hardcoded(),
+                JbstPropertyInvitationsOnInit.hardcoded()
         );
     }
 
     public static EssenceConfigs random() {
         return new EssenceConfigs(
-                UsersOnInit.random(),
-                InvitationsOnInit.random()
+                JbstPropertyUsersOnInit.random(),
+                JbstPropertyInvitationsOnInit.random()
         );
     }
 

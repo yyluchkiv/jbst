@@ -17,18 +17,18 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreate
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TimeAmount extends JbstProperty {
+public class JbstPropertyTimeAmount extends JbstProperty {
     @MandatoryProperty
     private final long amount;
     @MandatoryProperty
     private final ChronoUnit unit;
 
-    public static TimeAmount hardcoded() {
-        return new TimeAmount(12L, HOURS);
+    public static JbstPropertyTimeAmount hardcoded() {
+        return new JbstPropertyTimeAmount(12L, HOURS);
     }
 
-    public static TimeAmount random() {
-        return new TimeAmount(randomIntegerGreaterThanZeroByBounds(1, 10), randomChronoUnit());
+    public static JbstPropertyTimeAmount random() {
+        return new JbstPropertyTimeAmount(randomIntegerGreaterThanZeroByBounds(1, 10), randomChronoUnit());
     }
 
     @Override

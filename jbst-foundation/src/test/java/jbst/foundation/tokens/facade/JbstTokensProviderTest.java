@@ -8,9 +8,9 @@ import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundExceptio
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.JwtToken;
+import jbst.foundation.domain.properties.base.JbstPropertyJwtToken;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
-import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
@@ -281,8 +281,8 @@ class JbstTokensProviderTest {
                         new JwtTokensConfigs(
                                 "JBST",
                                 method,
-                                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
-                                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
+                                new JbstPropertyJwtToken(new JbstPropertyTimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
+                                new JbstPropertyJwtToken(new JbstPropertyTimeAmount(12L, HOURS), "rjwt", "T-RJWT")
                         ),
                         LoggingConfigs.hardcoded(),
                         SessionConfigs.hardcoded(),

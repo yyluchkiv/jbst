@@ -23,7 +23,7 @@ class UserOnInitTest {
     @Test
     void getEmailTest() {
         // Arrange
-        var users = entity(UserOnInit.class);
+        var users = entity(JbstPropertyUserOnInit.class);
 
         // Act
         var email = users.getEmailOrNull();

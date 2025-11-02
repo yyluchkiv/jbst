@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.Cron;
+import jbst.foundation.domain.properties.base.JbstPropertyCron;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,21 +16,21 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 @EqualsAndHashCode(callSuper = true)
 public class SessionConfigs extends JbstProperty {
     @MandatoryProperty
-    private final Cron cleanSessionsByExpiredRefreshTokensCron;
+    private final JbstPropertyCron cleanSessionsByExpiredRefreshTokensCron;
     @MandatoryProperty
-    private final Cron enableSessionsMetadataRenewCron;
+    private final JbstPropertyCron enableSessionsMetadataRenewCron;
 
     public static SessionConfigs hardcoded() {
         return new SessionConfigs(
-                Cron.enabled("*/30 * * * * *", UKRAINE.getId()),
-                Cron.enabled("*/15 * * * * *", UKRAINE.getId())
+                JbstPropertyCron.enabled("*/30 * * * * *", UKRAINE.getId()),
+                JbstPropertyCron.enabled("*/15 * * * * *", UKRAINE.getId())
         );
     }
 
     public static SessionConfigs random() {
         return new SessionConfigs(
-                Cron.random(),
-                Cron.random()
+                JbstPropertyCron.random(),
+                JbstPropertyCron.random()
         );
     }
 

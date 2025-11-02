@@ -3,38 +3,25 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
+import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ScheduledJob extends JbstProperty {
+public class JbstPropertySpringServer extends JbstProperty {
     @MandatoryProperty
-    private final boolean enabled;
-    @MandatoryPropertyToggle
-    private SchedulerConfiguration configuration;
+    private final Integer port;
 
-    public static ScheduledJob hardcoded() {
-        return new ScheduledJob(true, SchedulerConfiguration.hardcoded());
+    public static JbstPropertySpringServer hardcoded() {
+        return new JbstPropertySpringServer(8080);
     }
 
-    public static ScheduledJob random() {
-        return randomBoolean() ? enabled() : disabled();
-    }
-
-    public static ScheduledJob enabled() {
-        return hardcoded();
-    }
-
-
-    public static ScheduledJob disabled() {
-        return new ScheduledJob(false, null);
+    public static JbstPropertySpringServer random() {
+        return new JbstPropertySpringServer(RandomUtility.randomIntegerGreaterThanZeroByBounds(8000, 8100));
     }
 
     @Override
@@ -44,7 +31,7 @@ public class ScheduledJob extends JbstProperty {
 
     @Override
     public boolean isToggle() {
-        return this.enabled;
+        return false;
     }
 
     @Override

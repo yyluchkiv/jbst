@@ -2,7 +2,7 @@ package jbst.foundation.settings;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.UserOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
@@ -94,7 +94,7 @@ class MongoJbstSettingsServiceTest {
     @Test
     void initUsers() {
         // Arrange
-        var users = list345(UserOnInit.class);
+        var users = list345(JbstPropertyUserOnInit.class);
 
         // Act
         var actual = this.componentUnderTest.initUsers(users);
@@ -111,7 +111,7 @@ class MongoJbstSettingsServiceTest {
     @Test
     void initInvitations() {
         // Arrange
-        var user = entity(UserOnInit.class);
+        var user = entity(JbstPropertyUserOnInit.class);
         var authorities = set345(SimpleGrantedAuthority.class);
 
         // Act

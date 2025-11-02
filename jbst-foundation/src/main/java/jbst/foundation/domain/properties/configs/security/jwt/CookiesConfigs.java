@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,14 +20,14 @@ public class CookiesConfigs extends JbstProperty {
     @MandatoryProperty
     private final String domain;
     @MandatoryProperty
-    private final TimeAmount jwtAccessTokenCookieCreationLatency;
+    private final JbstPropertyTimeAmount jwtAccessTokenCookieCreationLatency;
 
     public static CookiesConfigs hardcoded() {
-        return new CookiesConfigs(JbstConstants.Domains.HARDCODED, new TimeAmount(5L, SECONDS));
+        return new CookiesConfigs(JbstConstants.Domains.HARDCODED, new JbstPropertyTimeAmount(5L, SECONDS));
     }
 
     public static CookiesConfigs random() {
-        return new CookiesConfigs(randomString(), TimeAmount.random());
+        return new CookiesConfigs(randomString(), JbstPropertyTimeAmount.random());
     }
 
     @Override

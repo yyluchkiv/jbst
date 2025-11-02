@@ -21,18 +21,18 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RemoteServer extends JbstProperty {
+public class JbstPropertyRemoteServer extends JbstProperty {
     @MandatoryProperty
     private final String baseURL;
     @MandatoryProperty
     private final UsernamePasswordCredentials credentials;
 
-    public static RemoteServer hardcoded() {
-        return new RemoteServer("localhost", UsernamePasswordCredentials.hardcoded());
+    public static JbstPropertyRemoteServer hardcoded() {
+        return new JbstPropertyRemoteServer("localhost", UsernamePasswordCredentials.hardcoded());
     }
 
-    public static RemoteServer random() {
-        return new RemoteServer(randomIPv4(), UsernamePasswordCredentials.hardcoded());
+    public static JbstPropertyRemoteServer random() {
+        return new JbstPropertyRemoteServer(randomIPv4(), UsernamePasswordCredentials.hardcoded());
     }
 
     @Override

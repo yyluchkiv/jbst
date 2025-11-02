@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.Authority;
+import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,18 +24,18 @@ public class AuthoritiesConfigs extends JbstProperty {
     @MandatoryProperty
     private final String packageName;
     @MandatoryProperty
-    private final Set<Authority> authorities;
+    private final Set<JbstPropertyAuthority> authorities;
 
     public static AuthoritiesConfigs hardcoded() {
         return new AuthoritiesConfigs(
                 "jbst.foundation",
                 Set.of(
-                        new Authority(AbstractAuthority.SUPERADMIN),
-                        new Authority(AbstractAuthority.INVITATIONS_READ),
-                        new Authority(AbstractAuthority.INVITATIONS_WRITE),
-                        new Authority(AbstractAuthority.PROMETHEUS_READ),
-                        new Authority("admin"),
-                        new Authority("user")
+                        new JbstPropertyAuthority(AbstractAuthority.SUPERADMIN),
+                        new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_READ),
+                        new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_WRITE),
+                        new JbstPropertyAuthority(AbstractAuthority.PROMETHEUS_READ),
+                        new JbstPropertyAuthority("admin"),
+                        new JbstPropertyAuthority("user")
                 )
         );
     }
@@ -43,7 +43,7 @@ public class AuthoritiesConfigs extends JbstProperty {
     public static AuthoritiesConfigs random() {
         return new AuthoritiesConfigs(
                 randomString(),
-                randomStringsAsSet(3).stream().map(Authority::new).collect(Collectors.toSet())
+                randomStringsAsSet(3).stream().map(JbstPropertyAuthority::new).collect(Collectors.toSet())
         );
     }
 
@@ -63,12 +63,12 @@ public class AuthoritiesConfigs extends JbstProperty {
     }
 
     public Set<String> getAllAuthoritiesValues() {
-        return this.authorities.stream().map(Authority::getValue).collect(Collectors.toSet());
+        return this.authorities.stream().map(JbstPropertyAuthority::getValue).collect(Collectors.toSet());
     }
 
     public Set<String> getAvailableAuthorities() {
         return this.authorities.stream()
-                .map(Authority::getValue)
+                .map(JbstPropertyAuthority::getValue)
                 .filter(authority -> !AbstractAuthority.SUPERADMIN.equals(authority))
                 .collect(Collectors.toSet());
     }

@@ -22,9 +22,9 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsMapMinSizeCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
-                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
-                new SpringServer(8080),
-                new SpringLogging("logback-test.xml"),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertySpringServer(8080),
+                new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN1", true),
                         Map.entry("AUTHENTICATION_LOGIN2", false)
@@ -44,9 +44,9 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsExtendedSizeCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
-                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
-                new SpringServer(8080),
-                new SpringLogging("logback-test.xml"),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertySpringServer(8080),
+                new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN1", true),
                         Map.entry("AUTHENTICATION_LOGIN2", false),
@@ -70,9 +70,9 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsOK() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
-                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
-                new SpringServer(8080),
-                new SpringLogging("logback-test.xml"),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertySpringServer(8080),
+                new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN1", true),
                         Map.entry("AUTHENTICATION_LOGIN2", false),
@@ -182,7 +182,7 @@ class PropertiesAsserterAndPrinterTest {
         var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
-                RemoteServer.hardcoded(),
+                JbstPropertyRemoteServer.hardcoded(),
                 Map.ofEntries(
                         entry("AUTHENTICATION_LOGIN", randomBoolean()),
                         entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", loginFailureUsernamePassword),
@@ -211,7 +211,7 @@ class PropertiesAsserterAndPrinterTest {
         var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
-                RemoteServer.hardcoded(),
+                JbstPropertyRemoteServer.hardcoded(),
                 Map.ofEntries()
         );
 

@@ -2,9 +2,9 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.JwtToken;
+import jbst.foundation.domain.properties.base.JbstPropertyJwtToken;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
-import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,16 +29,16 @@ public class JwtTokensConfigs extends JbstProperty {
     @MandatoryProperty
     private final JbstJwtTokenStorageMethod storageMethod;
     @MandatoryProperty
-    private final JwtToken accessToken;
+    private final JbstPropertyJwtToken accessToken;
     @MandatoryProperty
-    private final JwtToken refreshToken;
+    private final JbstPropertyJwtToken refreshToken;
 
     public static JwtTokensConfigs hardcoded() {
         return new JwtTokensConfigs(
                 "nbVwWebIpNnZ1rsNZFmkAQGiOZAijWtSt5X6FZx/qHA=",
                 JbstJwtTokenStorageMethod.COOKIES,
-                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", null),
-                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", null)
+                new JbstPropertyJwtToken(new JbstPropertyTimeAmount(30L, SECONDS), "ajwt", null),
+                new JbstPropertyJwtToken(new JbstPropertyTimeAmount(12L, HOURS), "rjwt", null)
         );
     }
 
@@ -46,8 +46,8 @@ public class JwtTokensConfigs extends JbstProperty {
         return new JwtTokensConfigs(
                 randomString(),
                 randomEnum(JbstJwtTokenStorageMethod.class),
-                JwtToken.random(),
-                JwtToken.random()
+                JbstPropertyJwtToken.random(),
+                JbstPropertyJwtToken.random()
         );
     }
 

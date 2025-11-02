@@ -1,7 +1,7 @@
 package jbst.server.ops.properties;
 
-import jbst.foundation.domain.properties.base.RemoteServer;
-import jbst.foundation.domain.properties.base.SpringLogging;
+import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
+import jbst.foundation.domain.properties.base.JbstPropertySpringLogging;
 import jbst.server.ops.domain.incidents.OpsIncidentEnv;
 import jbst.server.ops.properties.configs.RecipientsConfigs;
 import jbst.server.ops.properties.configs.ServersConfigs;
@@ -17,9 +17,9 @@ import org.springframework.core.PriorityOrdered;
 )
 @Data
 public class ServerProperties implements PriorityOrdered {
-    private SpringLogging logging;
+    private JbstPropertySpringLogging logging;
     // WARNING: create new class to avoid using dedicated leaf(s) as root-based property
-    private RemoteServer serverConfigs;
+    private JbstPropertyRemoteServer serverConfigs;
     private SlacksConfigs slacksConfigs;
     private ServersConfigs serversConfigs;
     // WARNING: create new class to avoid using dedicated leaf(s) as root-based property

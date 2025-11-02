@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomTimeUnit;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SchedulerConfiguration extends JbstProperty {
+public class JbstPropertySchedulerConfiguration extends JbstProperty {
     @MandatoryProperty
     private final Long initialDelay;
     @MandatoryProperty
@@ -25,12 +25,12 @@ public class SchedulerConfiguration extends JbstProperty {
     @MandatoryProperty
     private final TimeUnit unit;
 
-    public static SchedulerConfiguration hardcoded() {
-        return new SchedulerConfiguration(30L, 30L, SECONDS);
+    public static JbstPropertySchedulerConfiguration hardcoded() {
+        return new JbstPropertySchedulerConfiguration(30L, 30L, SECONDS);
     }
 
-    public static SchedulerConfiguration random() {
-        return new SchedulerConfiguration(
+    public static JbstPropertySchedulerConfiguration random() {
+        return new JbstPropertySchedulerConfiguration(
                 randomLongGreaterThanZeroByBounds(15, 45),
                 randomLongGreaterThanZeroByBounds(15, 45),
                 randomTimeUnit()

@@ -8,22 +8,29 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SpringLogging extends JbstProperty {
+public class JbstPropertyCheckbox extends JbstProperty {
     @MandatoryProperty
-    private final String config;
+    private final boolean enabled;
 
-    public static SpringLogging hardcoded() {
-        return new SpringLogging("logback-test.xml");
+    public static JbstPropertyCheckbox hardcoded() {
+        return new JbstPropertyCheckbox(true);
     }
 
-    public static SpringLogging random() {
-        return new SpringLogging(randomString());
+    public static JbstPropertyCheckbox random() {
+        return randomBoolean() ? enabled() : disabled();
+    }
+
+    public static JbstPropertyCheckbox enabled() {
+        return hardcoded();
+    }
+
+    public static JbstPropertyCheckbox disabled() {
+        return new JbstPropertyCheckbox(false);
     }
 
     @Override
@@ -33,7 +40,7 @@ public class SpringLogging extends JbstProperty {
 
     @Override
     public boolean isToggle() {
-        return false;
+        return this.enabled;
     }
 
     @Override

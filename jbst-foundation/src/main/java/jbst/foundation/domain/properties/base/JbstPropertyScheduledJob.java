@@ -9,38 +9,32 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Cron extends JbstProperty {
+public class JbstPropertyScheduledJob extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
-    private String expression;
-    @MandatoryPropertyToggle
-    private String zoneId;
+    private JbstPropertySchedulerConfiguration configuration;
 
-    public static Cron hardcoded() {
-        return new Cron(true, "*/30 * * * * *", UKRAINE.getId());
+    public static JbstPropertyScheduledJob hardcoded() {
+        return new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded());
     }
 
-    public static Cron enabled(String expression, String zoneId) {
-        return new Cron(true, expression, zoneId);
+    public static JbstPropertyScheduledJob random() {
+        return randomBoolean() ? enabled() : disabled();
     }
 
-    public static Cron enabled() {
+    public static JbstPropertyScheduledJob enabled() {
         return hardcoded();
     }
 
-    public static Cron disabled() {
-        return new Cron(false, null, null);
-    }
 
-    public static Cron random() {
-        return randomBoolean() ? enabled() : disabled();
+    public static JbstPropertyScheduledJob disabled() {
+        return new JbstPropertyScheduledJob(false, null);
     }
 
     @Override

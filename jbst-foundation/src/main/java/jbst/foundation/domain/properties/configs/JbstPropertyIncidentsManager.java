@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
-import jbst.foundation.domain.properties.base.RemoteServer;
+import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,7 +36,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     @MandatoryPropertyToggle
     private JbstIncidentsManagerType type;
     @MandatoryPropertyToggle
-    private RemoteServer remoteServer;
+    private JbstPropertyRemoteServer remoteServer;
     @MandatoryPropertyToggle
     @MandatoryPropertyMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
@@ -45,7 +45,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
         return new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
-                RemoteServer.hardcoded(),
+                JbstPropertyRemoteServer.hardcoded(),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN", true),
                         Map.entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", false),
@@ -67,7 +67,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
         return new JbstPropertyIncidentsManager(
                 randomBoolean(),
                 JbstIncidentsManagerType.random(),
-                RemoteServer.random(),
+                JbstPropertyRemoteServer.random(),
                 getEnumMapMappedRandomBoolean(Arrays.stream(JbstSecurityJwtIncident.values()).map(Enum::name).toArray(String[]::new))
         );
     }

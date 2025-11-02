@@ -3,7 +3,7 @@ package jbst.foundation.configurations;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.Authority;
+import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
@@ -74,12 +74,12 @@ class JbstConfigurationSecurityJwtTest {
                             new AuthoritiesConfigs(
                                     "jbst.foundation.tests.enums",
                                     Set.of(
-                                            new Authority(AbstractAuthority.SUPERADMIN),
-                                            new Authority(AbstractAuthority.INVITATIONS_READ),
-                                            new Authority(AbstractAuthority.INVITATIONS_WRITE),
-                                            new Authority(AbstractAuthority.PROMETHEUS_READ),
-                                            new Authority("admin"),
-                                            new Authority("user")
+                                            new JbstPropertyAuthority(AbstractAuthority.SUPERADMIN),
+                                            new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_READ),
+                                            new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_WRITE),
+                                            new JbstPropertyAuthority(AbstractAuthority.PROMETHEUS_READ),
+                                            new JbstPropertyAuthority("admin"),
+                                            new JbstPropertyAuthority("user")
                                     )
                             ),
                             CookiesConfigs.hardcoded(),

@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.properties.base.Checkbox;
+import jbst.foundation.domain.properties.base.JbstPropertyCheckbox;
 import jbst.foundation.domain.properties.configs.security.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
 import lombok.AllArgsConstructor;
@@ -101,9 +101,9 @@ public class SecurityJwtConfigs extends JbstProperty {
                 null,
                 new UsersEmailsConfigs(
                         "[jbst]",
-                        Checkbox.disabled(),
-                        Checkbox.disabled(),
-                        Checkbox.disabled()
+                        JbstPropertyCheckbox.disabled(),
+                        JbstPropertyCheckbox.disabled(),
+                        JbstPropertyCheckbox.disabled()
                 ),
                 null,
                 null

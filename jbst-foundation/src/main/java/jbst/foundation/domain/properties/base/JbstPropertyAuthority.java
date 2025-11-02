@@ -3,25 +3,26 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SpringServer extends JbstProperty {
+public class JbstPropertyAuthority extends JbstProperty {
     @MandatoryProperty
-    private final Integer port;
+    private final String value;
 
-    public static SpringServer hardcoded() {
-        return new SpringServer(8080);
+    public static JbstPropertyAuthority hardcoded() {
+        return new JbstPropertyAuthority("user");
     }
 
-    public static SpringServer random() {
-        return new SpringServer(RandomUtility.randomIntegerGreaterThanZeroByBounds(8000, 8100));
+    public static JbstPropertyAuthority random() {
+        return new JbstPropertyAuthority(randomString());
     }
 
     @Override
@@ -37,5 +38,10 @@ public class SpringServer extends JbstProperty {
     @Override
     public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
+    }
+
+    @Override
+    public String toString() {
+        return this.value;
     }
 }

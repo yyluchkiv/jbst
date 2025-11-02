@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.Checkbox;
+import jbst.foundation.domain.properties.base.JbstPropertyCheckbox;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,27 +22,27 @@ public class UsersEmailsConfigs extends JbstProperty {
     @MandatoryProperty
     private final String subjectPrefix;
     @MandatoryProperty
-    private final Checkbox accountAccessedMagicLink;
+    private final JbstPropertyCheckbox accountAccessedMagicLink;
     @MandatoryProperty
-    private final Checkbox accountAccessedUsernamePassword;
+    private final JbstPropertyCheckbox accountAccessedUsernamePassword;
     @MandatoryProperty
-    private final Checkbox accountAccessedSessionToken;
+    private final JbstPropertyCheckbox accountAccessedSessionToken;
 
     public static UsersEmailsConfigs hardcoded() {
         return new UsersEmailsConfigs(
                 "[jbst.com]",
-                Checkbox.enabled(),
-                Checkbox.enabled(),
-                Checkbox.enabled()
+                JbstPropertyCheckbox.enabled(),
+                JbstPropertyCheckbox.enabled(),
+                JbstPropertyCheckbox.enabled()
         );
     }
 
     public static UsersEmailsConfigs random() {
         return new UsersEmailsConfigs(
                 randomString(),
-                Checkbox.enabled(),
-                Checkbox.enabled(),
-                Checkbox.enabled()
+                JbstPropertyCheckbox.enabled(),
+                JbstPropertyCheckbox.enabled(),
+                JbstPropertyCheckbox.enabled()
         );
     }
 

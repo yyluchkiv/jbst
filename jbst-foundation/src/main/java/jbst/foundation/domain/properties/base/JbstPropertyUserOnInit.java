@@ -26,7 +26,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserOnInit extends JbstProperty {
+public class JbstPropertyUserOnInit extends JbstProperty {
     @MandatoryProperty
     private final Username username;
     @MandatoryProperty
@@ -40,8 +40,8 @@ public class UserOnInit extends JbstProperty {
     @MandatoryProperty
     private final Set<String> authorities;
 
-    public static UserOnInit hardcoded() {
-        return new UserOnInit(
+    public static JbstPropertyUserOnInit hardcoded() {
+        return new JbstPropertyUserOnInit(
                 Username.hardcoded(),
                 Password.hardcoded(),
                 UKRAINE,
@@ -51,8 +51,8 @@ public class UserOnInit extends JbstProperty {
         );
     }
 
-    public static UserOnInit random() {
-        return new UserOnInit(
+    public static JbstPropertyUserOnInit random() {
+        return new JbstPropertyUserOnInit(
                 Username.random(),
                 Password.random(),
                 RandomUtility.randomZoneId(),
