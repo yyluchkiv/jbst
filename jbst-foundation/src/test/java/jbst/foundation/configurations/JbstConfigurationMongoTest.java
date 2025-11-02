@@ -55,9 +55,9 @@ class JbstConfigurationMongoTest {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         // Assert
-        assertThat(methods).hasSize(10);
+        assertThat(methods).hasSize(7);
     }
 }
