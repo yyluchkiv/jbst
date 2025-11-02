@@ -14,20 +14,22 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyCSRF extends JbstProperty {
+public class JbstPropertyWebsocketsMessageBrokerRegistry extends JbstProperty {
+    // INFO: spring support list of prefixes as varargs
     @MandatoryProperty
-    private final String headerName;
+    private final String applicationDestinationPrefix;
+    // INFO: spring support list of destinations as varargs
     @MandatoryProperty
-    private final String parameterName;
+    private final String simpleDestination;
     @MandatoryProperty
-    private final String tokenKey;
+    private final String userDestinationPrefix;
 
-    public static JbstPropertyCSRF hardcoded() {
-        return new JbstPropertyCSRF("csrf-header", "_csrf", "csrf-token-key");
+    public static JbstPropertyWebsocketsMessageBrokerRegistry hardcoded() {
+        return new JbstPropertyWebsocketsMessageBrokerRegistry("/app", "/queue", "/user");
     }
 
-    public static JbstPropertyCSRF random() {
-        return new JbstPropertyCSRF(randomString(), randomString(), randomString());
+    public static JbstPropertyWebsocketsMessageBrokerRegistry random() {
+        return new JbstPropertyWebsocketsMessageBrokerRegistry(randomString(), randomString(), randomString());
     }
 
     @Override

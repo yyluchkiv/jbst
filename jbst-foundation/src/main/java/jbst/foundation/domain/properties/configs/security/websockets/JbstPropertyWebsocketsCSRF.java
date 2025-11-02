@@ -14,17 +14,20 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyStompEndpointRegistry extends JbstProperty {
-    // Spring support list of endpoints as varargs
+public class JbstPropertyWebsocketsCSRF extends JbstProperty {
     @MandatoryProperty
-    private final String endpoint;
+    private final String headerName;
+    @MandatoryProperty
+    private final String parameterName;
+    @MandatoryProperty
+    private final String tokenKey;
 
-    public static JbstPropertyStompEndpointRegistry hardcoded() {
-        return new JbstPropertyStompEndpointRegistry("/endpoint");
+    public static JbstPropertyWebsocketsCSRF hardcoded() {
+        return new JbstPropertyWebsocketsCSRF("csrf-header", "_csrf", "csrf-token-key");
     }
 
-    public static JbstPropertyStompEndpointRegistry random() {
-        return new JbstPropertyStompEndpointRegistry(randomString());
+    public static JbstPropertyWebsocketsCSRF random() {
+        return new JbstPropertyWebsocketsCSRF(randomString(), randomString(), randomString());
     }
 
     @Override

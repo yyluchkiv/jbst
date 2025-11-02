@@ -3,9 +3,9 @@ package jbst.foundation.domain.properties.configs.security;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
-import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyCSRF;
-import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyMessageBrokerRegistry;
-import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyStompEndpointRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsCSRF;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsMessageBrokerRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsStompEndpointRegistry;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsFeatures;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
@@ -17,34 +17,34 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsConfigs extends JbstProperty {
+public class JbstPropertyWebsockets extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
-    private final JbstPropertyCSRF csrfConfigs;
+    private final JbstPropertyWebsocketsCSRF csrfConfigs;
     @MandatoryPropertyToggle
-    private final JbstPropertyStompEndpointRegistry stompConfigs;
+    private final JbstPropertyWebsocketsStompEndpointRegistry stompConfigs;
     @MandatoryPropertyToggle
-    private final JbstPropertyMessageBrokerRegistry brokerConfigs;
+    private final JbstPropertyWebsocketsMessageBrokerRegistry brokerConfigs;
     @MandatoryPropertyToggle
     private JbstPropertyWebsocketsFeatures featuresConfigs;
 
-    public static WebsocketsConfigs hardcoded() {
-        return new WebsocketsConfigs(
+    public static JbstPropertyWebsockets hardcoded() {
+        return new JbstPropertyWebsockets(
                 true,
-                JbstPropertyCSRF.hardcoded(),
-                JbstPropertyStompEndpointRegistry.hardcoded(),
-                JbstPropertyMessageBrokerRegistry.hardcoded(),
+                JbstPropertyWebsocketsCSRF.hardcoded(),
+                JbstPropertyWebsocketsStompEndpointRegistry.hardcoded(),
+                JbstPropertyWebsocketsMessageBrokerRegistry.hardcoded(),
                 JbstPropertyWebsocketsFeatures.hardcoded()
         );
     }
 
-    public static WebsocketsConfigs random() {
-        return new WebsocketsConfigs(
+    public static JbstPropertyWebsockets random() {
+        return new JbstPropertyWebsockets(
                 RandomUtility.randomBoolean(),
-                JbstPropertyCSRF.random(),
-                JbstPropertyStompEndpointRegistry.random(),
-                JbstPropertyMessageBrokerRegistry.random(),
+                JbstPropertyWebsocketsCSRF.random(),
+                JbstPropertyWebsocketsStompEndpointRegistry.random(),
+                JbstPropertyWebsocketsMessageBrokerRegistry.random(),
                 JbstPropertyWebsocketsFeatures.random()
         );
     }

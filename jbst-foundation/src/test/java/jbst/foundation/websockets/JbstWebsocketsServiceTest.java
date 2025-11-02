@@ -4,10 +4,10 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
-import jbst.foundation.domain.properties.configs.security.WebsocketsConfigs;
-import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyCSRF;
-import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyMessageBrokerRegistry;
-import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyStompEndpointRegistry;
+import jbst.foundation.domain.properties.configs.security.JbstPropertyWebsockets;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsCSRF;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsMessageBrokerRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsStompEndpointRegistry;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsFeatures;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
@@ -123,11 +123,11 @@ class JbstWebsocketsServiceTest {
         // Assert
         var securityJwtConfigs = mock(JbstPropertySecurity.class);
         when(securityJwtConfigs.getWebsocketsConfigs()).thenReturn(
-                new WebsocketsConfigs(
+                new JbstPropertyWebsockets(
                         enabled,
-                        JbstPropertyCSRF.hardcoded(),
-                        JbstPropertyStompEndpointRegistry.hardcoded(),
-                        JbstPropertyMessageBrokerRegistry.hardcoded(),
+                        JbstPropertyWebsocketsCSRF.hardcoded(),
+                        JbstPropertyWebsocketsStompEndpointRegistry.hardcoded(),
+                        JbstPropertyWebsocketsMessageBrokerRegistry.hardcoded(),
                         JbstPropertyWebsocketsFeatures.hardcoded()
                 )
         );
