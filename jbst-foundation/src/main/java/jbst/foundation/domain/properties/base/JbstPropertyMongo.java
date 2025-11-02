@@ -24,7 +24,7 @@ public class JbstPropertyMongo extends JbstProperty {
     @MandatoryProperty
     private final Integer port;
     @MandatoryProperty
-    private final String database;
+    private final String name;
     @NonMandatoryProperty
     private Username username;
     @NonMandatoryProperty
@@ -44,9 +44,9 @@ public class JbstPropertyMongo extends JbstProperty {
 
     public final String connectionString() {
         if (isAuthenticationRequired()) {
-            return "mongodb://" + this.username.value() + ":" + this.password.value() + "@" + this.host + ":" + this.port + "/" + this.database;
+            return "mongodb://" + this.username.value() + ":" + this.password.value() + "@" + this.host + ":" + this.port + "/" + this.name;
         } else {
-            return "mongodb://" + this.host + ":" + this.port + "/" + this.database;
+            return "mongodb://" + this.host + ":" + this.port + "/" + this.name;
         }
     }
 

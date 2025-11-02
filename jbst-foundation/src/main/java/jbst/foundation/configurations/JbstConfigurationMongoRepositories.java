@@ -81,7 +81,7 @@ public class JbstConfigurationMongoRepositories {
     public MongoDatabaseFactory jbstMongoDatabaseFactory() {
         return new SimpleMongoClientDatabaseFactory(
                 this.jbstMongoClient(),
-                this.jbstProperties.getDatabases().getMongo().getDatabase().getDatabase()
+                this.jbstProperties.getDatabases().getMongo().getDatabase().getName()
         );
     }
 

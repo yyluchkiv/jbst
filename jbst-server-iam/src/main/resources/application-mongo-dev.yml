@@ -8,4 +8,4 @@ jbst:
       database:
         host: 127.0.0.1
         port: 3004
-        database: jbst
+        name: jbst

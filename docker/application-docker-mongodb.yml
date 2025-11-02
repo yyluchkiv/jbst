@@ -84,8 +84,10 @@ jbst:
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
       invitations-on-init:
         enabled: true
-  mongodb-security-jwt-configs:
-    mongodb:
-      host: jbst-mongodb
-      port: 27017
-      database: jbst
+  databases:
+    mongo:
+      enabled: true
+      database:
+        host: jbst-mongodb
+        port: 27017
+        name: jbst
