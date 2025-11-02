@@ -2,8 +2,10 @@
 
 # jbst
 jbst:
-  mongodb-security-jwt-configs:
-    mongodb:
-      host: 127.0.0.1
-      port: 3004
-      database: jbst
+  databases:
+    mongo:
+      enabled: true
+      database:
+        host: 127.0.0.1
+        port: 3004
+        database: jbst

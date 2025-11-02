@@ -8,6 +8,7 @@ import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
+import jbst.foundation.domain.properties.configs.security.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
 import jbst.foundation.filters.jwt.JbstTokensFilter;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;

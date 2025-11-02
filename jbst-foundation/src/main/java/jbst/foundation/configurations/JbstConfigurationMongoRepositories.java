@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.mongo.*;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,11 @@ public class JbstConfigurationMongoRepositories {
     // Properties
     private final JbstProperties jbstProperties;
 
+    @PostConstruct
+    public void init() {
+        this.jbstProperties.getDatabases().getMongo().assertProperties();
+    }
+
     @Bean
     public JbstMongoRepositories jbstMongoRepositories(
             MongoJbstSettingsRepository settingsRepository,
@@ -64,8 +70,7 @@ public class JbstConfigurationMongoRepositories {
 
     @Bean
     public MongoClient jbstMongoClient() {
-        var mongodb = this.jbstProperties.getMongodbSecurityJwtConfigs().getMongodb();
-        var connectionString = new ConnectionString(mongodb.connectionString());
+        var connectionString = new ConnectionString(this.jbstProperties.getDatabases().getMongo().getDatabase().connectionString());
         var mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
                 .build();
@@ -76,7 +81,7 @@ public class JbstConfigurationMongoRepositories {
     public MongoDatabaseFactory jbstMongoDatabaseFactory() {
         return new SimpleMongoClientDatabaseFactory(
                 this.jbstMongoClient(),
-                this.jbstProperties.getMongodbSecurityJwtConfigs().getMongodb().getDatabase()
+                this.jbstProperties.getDatabases().getMongo().getDatabase().getDatabase()
         );
     }
 

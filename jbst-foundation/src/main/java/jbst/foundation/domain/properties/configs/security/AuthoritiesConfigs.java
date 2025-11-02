@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs.security.jwt;
+package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.constants.JbstConstants;

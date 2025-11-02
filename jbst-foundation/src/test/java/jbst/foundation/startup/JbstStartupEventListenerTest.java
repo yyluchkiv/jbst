@@ -6,7 +6,7 @@ import jbst.foundation.domain.properties.base.InvitationsOnInit;
 import jbst.foundation.domain.properties.base.UsersOnInit;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
+import jbst.foundation.domain.properties.configs.security.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;

@@ -12,6 +12,7 @@ import jbst.foundation.domain.properties.base.JwtToken;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.security.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
 import jbst.foundation.tokens.providers.JbstTokenCookiesProvider;
 import jbst.foundation.tokens.providers.JbstTokenHeadersProvider;
