@@ -1,2 +1,2 @@
 ### Changelog [v1.34]
-— TBD
+— Modification: MongodbSecurityJwtConfigs properties under "security-jwt-configs.mongo"

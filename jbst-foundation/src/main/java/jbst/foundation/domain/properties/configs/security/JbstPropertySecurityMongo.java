@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs;
+package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
@@ -12,18 +12,18 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MongodbSecurityJwtConfigs extends JbstProperty {
+public class JbstPropertySecurityMongo extends JbstProperty {
     @MandatoryProperty
     private final Mongodb mongodb;
 
-    public static MongodbSecurityJwtConfigs hardcoded() {
-        return new MongodbSecurityJwtConfigs(
+    public static JbstPropertySecurityMongo hardcoded() {
+        return new JbstPropertySecurityMongo(
                 Mongodb.hardcoded()
         );
     }
 
-    public static MongodbSecurityJwtConfigs random() {
-        return new MongodbSecurityJwtConfigs(
+    public static JbstPropertySecurityMongo random() {
+        return new JbstPropertySecurityMongo(
                 Mongodb.random()
         );
     }

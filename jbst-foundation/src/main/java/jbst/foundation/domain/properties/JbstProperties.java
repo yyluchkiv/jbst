@@ -1,6 +1,7 @@
 package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.properties.configs.*;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityMongo;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,7 @@ public class JbstProperties implements PriorityOrdered {
     private EmailConfigs emailConfigs;
     private JbstPropertyIncidentsManager incidentsManager;
     private SecurityJwtConfigs securityJwtConfigs;
-    private MongodbSecurityJwtConfigs mongodbSecurityJwtConfigs;
+    private JbstPropertySecurityMongo mongodbSecurityJwtConfigs;
 
     public static JbstProperties hardcoded() {
         var properties = new JbstProperties();
@@ -36,7 +37,7 @@ public class JbstProperties implements PriorityOrdered {
         properties.setEmailConfigs(EmailConfigs.hardcoded());
         properties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
         properties.setSecurityJwtConfigs(SecurityJwtConfigs.hardcoded());
-        properties.setMongodbSecurityJwtConfigs(MongodbSecurityJwtConfigs.hardcoded());
+        properties.setMongodbSecurityJwtConfigs(JbstPropertySecurityMongo.hardcoded());
         return properties;
     }
 

@@ -5,6 +5,7 @@ import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityMongo;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,6 +48,8 @@ public class SecurityJwtConfigs extends JbstProperty {
     private final WebsocketsConfigs websocketsConfigs;
     @NonMandatoryProperty
     private final UsersTokensConfigs usersTokensConfigs;
+    @NonMandatoryProperty
+    private final JbstPropertySecurityMongo mongo;
 
     public static SecurityJwtConfigs hardcoded() {
         return new SecurityJwtConfigs(
@@ -58,7 +61,8 @@ public class SecurityJwtConfigs extends JbstProperty {
                 SessionConfigs.hardcoded(),
                 UsersEmailsConfigs.hardcoded(),
                 WebsocketsConfigs.hardcoded(),
-                UsersTokensConfigs.hardcoded()
+                UsersTokensConfigs.hardcoded(),
+                JbstPropertySecurityMongo.hardcoded()
         );
     }
 
@@ -69,6 +73,7 @@ public class SecurityJwtConfigs extends JbstProperty {
                 null,
                 null,
                 loggingConfigs,
+                null,
                 null,
                 null,
                 null,
@@ -84,6 +89,7 @@ public class SecurityJwtConfigs extends JbstProperty {
                 null,
                 null,
                 sessionConfigs,
+                null,
                 null,
                 null,
                 null
@@ -104,6 +110,7 @@ public class SecurityJwtConfigs extends JbstProperty {
                         Checkbox.disabled(),
                         Checkbox.disabled()
                 ),
+                null,
                 null,
                 null
         );

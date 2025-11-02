@@ -3,6 +3,7 @@ package jbst.foundation.domain.properties.utilties;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.properties.base.*;
 import jbst.foundation.domain.properties.configs.*;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityMongo;
 import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigs;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -248,7 +249,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mongodbSecurityJwtConfigsTest() {
         // Act
-        MongodbSecurityJwtConfigs.hardcoded().assertProperties();
+        JbstPropertySecurityMongo.hardcoded().assertProperties();
 
         // Assert
         // no asserts
