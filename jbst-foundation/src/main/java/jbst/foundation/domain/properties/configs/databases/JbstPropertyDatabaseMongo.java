@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs.databases;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
-import jbst.foundation.domain.properties.base.Mongodb;
+import jbst.foundation.domain.properties.base.JbstPropertyMongo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,19 +19,19 @@ public class JbstPropertyDatabaseMongo extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
-    private final Mongodb database;
+    private final JbstPropertyMongo database;
 
     public static JbstPropertyDatabaseMongo hardcoded() {
         return new JbstPropertyDatabaseMongo(
                 true,
-                Mongodb.hardcoded()
+                JbstPropertyMongo.hardcoded()
         );
     }
 
     public static JbstPropertyDatabaseMongo random() {
         return new JbstPropertyDatabaseMongo(
                 randomBoolean(),
-                Mongodb.random()
+                JbstPropertyMongo.random()
         );
     }
 

@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MongodbTest {
+class JbstPropertyMongoTest {
 
     private static Stream<Arguments> noAuthenticationTest() {
         return Stream.of(
@@ -25,12 +25,12 @@ class MongodbTest {
     @MethodSource("noAuthenticationTest")
     void noAuthenticationTest(String host, int port, String database, Username username, Password password) {
         // Arrange
-        var mongodb = Mongodb.noSecurity(host, port, database);
-        mongodb.setUsername(username);
-        mongodb.setPassword(password);
+        var mongo = JbstPropertyMongo.noSecurity(host, port, database);
+        mongo.setUsername(username);
+        mongo.setPassword(password);
 
         // Act
-        var actual = mongodb.connectionString();
+        var actual = mongo.connectionString();
 
         // Assert
         assertThat(actual).isEqualTo("mongodb://127.0.0.1:27017/jbst");
@@ -39,10 +39,10 @@ class MongodbTest {
     @Test
     void authenticationPresentTest() {
         // Arrange
-        var mongodb = new Mongodb("127.0.0.1", 27017, "jbst", Username.of("admin"), Password.of("Password123!"));
+        var mongo = new JbstPropertyMongo("127.0.0.1", 27017, "jbst", Username.of("admin"), Password.of("Password123!"));
 
         // Act
-        var actual = mongodb.connectionString();
+        var actual = mongo.connectionString();
 
         // Assert
         assertThat(actual).isEqualTo("mongodb://admin:Password123!@127.0.0.1:27017/jbst");

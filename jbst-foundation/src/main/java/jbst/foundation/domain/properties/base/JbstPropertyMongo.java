@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.*;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Mongodb extends JbstProperty {
+public class JbstPropertyMongo extends JbstProperty {
     @MandatoryProperty
     private final String host;
     @MandatoryProperty
@@ -30,16 +30,16 @@ public class Mongodb extends JbstProperty {
     @NonMandatoryProperty
     private Password password;
 
-    public static Mongodb hardcoded() {
-        return Mongodb.noSecurity("127.0.0.1", 27017, "jbst");
+    public static JbstPropertyMongo hardcoded() {
+        return JbstPropertyMongo.noSecurity("127.0.0.1", 27017, "jbst");
     }
 
-    public static Mongodb random() {
-        return Mongodb.noSecurity(randomIPv4(), randomIntegerGreaterThanZeroByBounds(26000, 30000), randomString());
+    public static JbstPropertyMongo random() {
+        return JbstPropertyMongo.noSecurity(randomIPv4(), randomIntegerGreaterThanZeroByBounds(26000, 30000), randomString());
     }
 
-    public static Mongodb noSecurity(String host, int port, String database) {
-        return new Mongodb(host, port, database, null, null);
+    public static JbstPropertyMongo noSecurity(String host, int port, String database) {
+        return new JbstPropertyMongo(host, port, database, null, null);
     }
 
     public final String connectionString() {
