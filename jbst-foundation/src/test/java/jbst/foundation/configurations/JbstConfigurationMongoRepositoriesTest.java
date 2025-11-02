@@ -50,7 +50,7 @@ class JbstConfigurationMongoRepositoriesTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(13)
+                .hasSize(14)
                 .contains("jbstMongoRepositories")
                 .contains("jbstMongoClient")
                 .contains("jbstMongoDatabaseFactory")
