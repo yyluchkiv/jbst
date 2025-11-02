@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs;
+package jbst.foundation.domain.properties.configs.server;
 
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.maven.MavenDetails;
