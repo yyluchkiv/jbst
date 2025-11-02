@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
-import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
+import jbst.foundation.domain.properties.configs.mvc.JbstPropertyCORS;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ class JbstConfigurationWebMVC3Test {
             var mvcConfigs = new MvcConfigs(
                     true,
                     "/jbst/security",
-                    new CorsConfigs(
+                    new JbstPropertyCORS(
                             "/api/**",
                             new String[] { "http://localhost:8080", "http://localhost:8081" },
                             new String[] { "GET", "POST" },

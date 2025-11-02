@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs.security.jwt.websockets;
+package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
@@ -8,26 +8,30 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CsrfConfigs extends JbstProperty {
+public class LoggingConfigs extends JbstProperty {
     @MandatoryProperty
-    private final String headerName;
-    @MandatoryProperty
-    private final String parameterName;
-    @MandatoryProperty
-    private final String tokenKey;
+    private final Boolean advancedRequestLoggingEnabled;
 
-    public static CsrfConfigs hardcoded() {
-        return new CsrfConfigs("csrf-header", "_csrf", "csrf-token-key");
+    public static LoggingConfigs random() {
+        return randomBoolean() ? enabled() : disabled();
     }
 
-    public static CsrfConfigs random() {
-        return new CsrfConfigs(randomString(), randomString(), randomString());
+    public static LoggingConfigs hardcoded() {
+        return LoggingConfigs.enabled();
+    }
+
+    public static LoggingConfigs enabled() {
+        return new LoggingConfigs(true);
+    }
+
+    public static LoggingConfigs disabled() {
+        return new LoggingConfigs(false);
     }
 
     @Override
@@ -43,5 +47,9 @@ public class CsrfConfigs extends JbstProperty {
     @Override
     public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
+    }
+
+    public boolean isAdvancedRequestLoggingEnabled() {
+        return this.advancedRequestLoggingEnabled;
     }
 }

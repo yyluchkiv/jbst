@@ -5,8 +5,7 @@ import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.JbstPropertyCheckbox;
-import jbst.foundation.domain.properties.configs.security.AuthoritiesConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.*;
+import jbst.foundation.domain.properties.configs.security.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +30,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @EqualsAndHashCode(callSuper = true)
 public class SecurityJwtConfigs extends JbstProperty {
     @MandatoryProperty
-    private final AuthoritiesConfigs authoritiesConfigs;
+    private final JbstPropertyAuthorities authoritiesConfigs;
     @MandatoryProperty
     private final CookiesConfigs cookiesConfigs;
     @MandatoryProperty
@@ -51,7 +50,7 @@ public class SecurityJwtConfigs extends JbstProperty {
 
     public static SecurityJwtConfigs hardcoded() {
         return new SecurityJwtConfigs(
-                AuthoritiesConfigs.hardcoded(),
+                JbstPropertyAuthorities.hardcoded(),
                 CookiesConfigs.hardcoded(),
                 EssenceConfigs.hardcoded(),
                 JwtTokensConfigs.hardcoded(),

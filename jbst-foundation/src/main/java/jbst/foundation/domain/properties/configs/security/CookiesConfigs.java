@@ -1,40 +1,38 @@
-package jbst.foundation.domain.properties.configs.security.jwt.websockets;
+package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MessageBrokerRegistryConfigs extends JbstProperty {
-    // INFO: spring support list of prefixes as varargs
+public class CookiesConfigs extends JbstProperty {
     @MandatoryProperty
-    private final String applicationDestinationPrefix;
-    // INFO: spring support list of destinations as varargs
+    private final String domain;
     @MandatoryProperty
-    private final String simpleDestination;
-    @MandatoryProperty
-    private final String userDestinationPrefix;
+    private final JbstPropertyTimeAmount jwtAccessTokenCookieCreationLatency;
 
-    public static MessageBrokerRegistryConfigs hardcoded() {
-        return new MessageBrokerRegistryConfigs("/app", "/queue", "/user");
+    public static CookiesConfigs hardcoded() {
+        return new CookiesConfigs(JbstConstants.Domains.HARDCODED, new JbstPropertyTimeAmount(5L, SECONDS));
     }
 
-    public static MessageBrokerRegistryConfigs random() {
-        return new MessageBrokerRegistryConfigs(randomString(), randomString(), randomString());
+    public static CookiesConfigs random() {
+        return new CookiesConfigs(randomString(), JbstPropertyTimeAmount.random());
     }
 
     @Override
     public JbstPropertyNodeType getNodeType() {
-        return JbstPropertyNodeType.LEAF;
+        return JbstPropertyNodeType.BRANCH;
     }
 
     @Override
@@ -44,6 +42,6 @@ public class MessageBrokerRegistryConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return JbstConstants.Symbols.DASH;
+        return "cookies-configs";
     }
 }

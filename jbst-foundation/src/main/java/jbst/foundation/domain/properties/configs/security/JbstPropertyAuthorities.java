@@ -20,14 +20,14 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthoritiesConfigs extends JbstProperty {
+public class JbstPropertyAuthorities extends JbstProperty {
     @MandatoryProperty
     private final String packageName;
     @MandatoryProperty
     private final Set<JbstPropertyAuthority> authorities;
 
-    public static AuthoritiesConfigs hardcoded() {
-        return new AuthoritiesConfigs(
+    public static JbstPropertyAuthorities hardcoded() {
+        return new JbstPropertyAuthorities(
                 "jbst.foundation",
                 Set.of(
                         new JbstPropertyAuthority(AbstractAuthority.SUPERADMIN),
@@ -40,8 +40,8 @@ public class AuthoritiesConfigs extends JbstProperty {
         );
     }
 
-    public static AuthoritiesConfigs random() {
-        return new AuthoritiesConfigs(
+    public static JbstPropertyAuthorities random() {
+        return new JbstPropertyAuthorities(
                 randomString(),
                 randomStringsAsSet(3).stream().map(JbstPropertyAuthority::new).collect(Collectors.toSet())
         );

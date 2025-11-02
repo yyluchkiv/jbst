@@ -9,7 +9,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundExceptio
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.security.jwt.JwtTokensConfigs;
+import jbst.foundation.domain.properties.configs.security.JwtTokensConfigs;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

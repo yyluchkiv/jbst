@@ -4,11 +4,11 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.WebsocketsConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
+import jbst.foundation.domain.properties.configs.security.WebsocketsConfigs;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyCSRF;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyMessageBrokerRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyStompEndpointRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsFeatures;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -125,10 +125,10 @@ class JbstWebsocketsServiceTest {
         when(securityJwtConfigs.getWebsocketsConfigs()).thenReturn(
                 new WebsocketsConfigs(
                         enabled,
-                        CsrfConfigs.hardcoded(),
-                        StompEndpointRegistryConfigs.hardcoded(),
-                        MessageBrokerRegistryConfigs.hardcoded(),
-                        WebsocketsFeaturesConfigs.hardcoded()
+                        JbstPropertyCSRF.hardcoded(),
+                        JbstPropertyStompEndpointRegistry.hardcoded(),
+                        JbstPropertyMessageBrokerRegistry.hardcoded(),
+                        JbstPropertyWebsocketsFeatures.hardcoded()
                 )
         );
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);

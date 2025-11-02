@@ -7,9 +7,8 @@ import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
-import jbst.foundation.domain.properties.configs.security.AuthoritiesConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.*;
+import jbst.foundation.domain.properties.configs.mvc.JbstPropertyCORS;
+import jbst.foundation.domain.properties.configs.security.*;
 import jbst.foundation.filters.jwt.JbstTokensFilter;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
@@ -58,7 +57,7 @@ class JbstConfigurationSecurityJwtTest {
                     new MvcConfigs(
                             true,
                             "/jbst/security",
-                            new CorsConfigs(
+                            new JbstPropertyCORS(
                                     "/api/**",
                                     new String[] { "http://localhost:1234" },
                                     new String[] { "GET", "POST" },
@@ -71,7 +70,7 @@ class JbstConfigurationSecurityJwtTest {
             jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
             jbstProperties.setSecurityJwtConfigs(
                     new SecurityJwtConfigs(
-                            new AuthoritiesConfigs(
+                            new JbstPropertyAuthorities(
                                     "jbst.foundation.tests.enums",
                                     Set.of(
                                             new JbstPropertyAuthority(AbstractAuthority.SUPERADMIN),

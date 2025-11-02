@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
-import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
+import jbst.foundation.domain.properties.configs.mvc.JbstPropertyCORS;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,13 +22,13 @@ public class MvcConfigs extends JbstProperty {
     @MandatoryPropertyToggle
     private String basePathPrefix;
     @MandatoryPropertyToggle
-    private CorsConfigs corsConfigs;
+    private JbstPropertyCORS corsConfigs;
 
     public static MvcConfigs hardcoded() {
         return new MvcConfigs(
                 true,
                 "/jbst/security",
-                CorsConfigs.hardcoded()
+                JbstPropertyCORS.hardcoded()
         );
     }
 
@@ -36,7 +36,7 @@ public class MvcConfigs extends JbstProperty {
         return new MvcConfigs(
                 randomBoolean(),
                 randomString(),
-                CorsConfigs.random()
+                JbstPropertyCORS.random()
         );
     }
 
@@ -48,7 +48,7 @@ public class MvcConfigs extends JbstProperty {
         return new MvcConfigs(
                 false,
                 randomString(),
-                CorsConfigs.random()
+                JbstPropertyCORS.random()
         );
     }
 

@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs.security.jwt.websockets;
+package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
@@ -14,17 +14,22 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class StompEndpointRegistryConfigs extends JbstProperty {
-    // Spring support list of endpoints as varargs
+public class JbstPropertyMessageBrokerRegistry extends JbstProperty {
+    // INFO: spring support list of prefixes as varargs
     @MandatoryProperty
-    private final String endpoint;
+    private final String applicationDestinationPrefix;
+    // INFO: spring support list of destinations as varargs
+    @MandatoryProperty
+    private final String simpleDestination;
+    @MandatoryProperty
+    private final String userDestinationPrefix;
 
-    public static StompEndpointRegistryConfigs hardcoded() {
-        return new StompEndpointRegistryConfigs("/endpoint");
+    public static JbstPropertyMessageBrokerRegistry hardcoded() {
+        return new JbstPropertyMessageBrokerRegistry("/app", "/queue", "/user");
     }
 
-    public static StompEndpointRegistryConfigs random() {
-        return new StompEndpointRegistryConfigs(randomString());
+    public static JbstPropertyMessageBrokerRegistry random() {
+        return new JbstPropertyMessageBrokerRegistry(randomString(), randomString(), randomString());
     }
 
     @Override

@@ -9,7 +9,7 @@ import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.http.cache.CachedBodyServletInputStream;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
+import jbst.foundation.domain.properties.configs.security.LoggingConfigs;
 import jbst.foundation.utils.JbstHttpUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

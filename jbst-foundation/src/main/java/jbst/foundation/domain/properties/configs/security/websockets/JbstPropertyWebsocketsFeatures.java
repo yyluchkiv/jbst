@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs.security.jwt.websockets;
+package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
@@ -11,23 +11,23 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsFeaturesConfigs extends JbstProperty {
+public class JbstPropertyWebsocketsFeatures extends JbstProperty {
     @NonMandatoryProperty
-    private WebsocketsFeatureConfigs hardwareConfigs;
+    private JbstPropertyWebsocketsFeature hardwareConfigs;
     @NonMandatoryProperty
-    private WebsocketsFeatureConfigs resetServerConfigs;
+    private JbstPropertyWebsocketsFeature resetServerConfigs;
 
-    public static WebsocketsFeaturesConfigs hardcoded() {
-        return new WebsocketsFeaturesConfigs(
-                WebsocketsFeatureConfigs.hardcoded(),
-                WebsocketsFeatureConfigs.hardcoded()
+    public static JbstPropertyWebsocketsFeatures hardcoded() {
+        return new JbstPropertyWebsocketsFeatures(
+                JbstPropertyWebsocketsFeature.hardcoded(),
+                JbstPropertyWebsocketsFeature.hardcoded()
         );
     }
 
-    public static WebsocketsFeaturesConfigs random() {
-        return new WebsocketsFeaturesConfigs(
-                WebsocketsFeatureConfigs.random(),
-                WebsocketsFeatureConfigs.random()
+    public static JbstPropertyWebsocketsFeatures random() {
+        return new JbstPropertyWebsocketsFeatures(
+                JbstPropertyWebsocketsFeature.random(),
+                JbstPropertyWebsocketsFeature.random()
         );
     }
 

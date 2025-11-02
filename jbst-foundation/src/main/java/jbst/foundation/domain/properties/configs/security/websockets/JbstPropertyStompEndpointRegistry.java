@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs.security.jwt;
+package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
@@ -8,30 +8,23 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LoggingConfigs extends JbstProperty {
+public class JbstPropertyStompEndpointRegistry extends JbstProperty {
+    // Spring support list of endpoints as varargs
     @MandatoryProperty
-    private final Boolean advancedRequestLoggingEnabled;
+    private final String endpoint;
 
-    public static LoggingConfigs random() {
-        return randomBoolean() ? enabled() : disabled();
+    public static JbstPropertyStompEndpointRegistry hardcoded() {
+        return new JbstPropertyStompEndpointRegistry("/endpoint");
     }
 
-    public static LoggingConfigs hardcoded() {
-        return LoggingConfigs.enabled();
-    }
-
-    public static LoggingConfigs enabled() {
-        return new LoggingConfigs(true);
-    }
-
-    public static LoggingConfigs disabled() {
-        return new LoggingConfigs(false);
+    public static JbstPropertyStompEndpointRegistry random() {
+        return new JbstPropertyStompEndpointRegistry(randomString());
     }
 
     @Override
@@ -47,9 +40,5 @@ public class LoggingConfigs extends JbstProperty {
     @Override
     public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
-    }
-
-    public boolean isAdvancedRequestLoggingEnabled() {
-        return this.advancedRequestLoggingEnabled;
     }
 }

@@ -1,12 +1,12 @@
-package jbst.foundation.domain.properties.configs.security.jwt;
+package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyCSRF;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyMessageBrokerRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyStompEndpointRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsFeatures;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,31 +21,31 @@ public class WebsocketsConfigs extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
-    private final CsrfConfigs csrfConfigs;
+    private final JbstPropertyCSRF csrfConfigs;
     @MandatoryPropertyToggle
-    private final StompEndpointRegistryConfigs stompConfigs;
+    private final JbstPropertyStompEndpointRegistry stompConfigs;
     @MandatoryPropertyToggle
-    private final MessageBrokerRegistryConfigs brokerConfigs;
+    private final JbstPropertyMessageBrokerRegistry brokerConfigs;
     @MandatoryPropertyToggle
-    private WebsocketsFeaturesConfigs featuresConfigs;
+    private JbstPropertyWebsocketsFeatures featuresConfigs;
 
     public static WebsocketsConfigs hardcoded() {
         return new WebsocketsConfigs(
                 true,
-                CsrfConfigs.hardcoded(),
-                StompEndpointRegistryConfigs.hardcoded(),
-                MessageBrokerRegistryConfigs.hardcoded(),
-                WebsocketsFeaturesConfigs.hardcoded()
+                JbstPropertyCSRF.hardcoded(),
+                JbstPropertyStompEndpointRegistry.hardcoded(),
+                JbstPropertyMessageBrokerRegistry.hardcoded(),
+                JbstPropertyWebsocketsFeatures.hardcoded()
         );
     }
 
     public static WebsocketsConfigs random() {
         return new WebsocketsConfigs(
                 RandomUtility.randomBoolean(),
-                CsrfConfigs.random(),
-                StompEndpointRegistryConfigs.random(),
-                MessageBrokerRegistryConfigs.random(),
-                WebsocketsFeaturesConfigs.random()
+                JbstPropertyCSRF.random(),
+                JbstPropertyStompEndpointRegistry.random(),
+                JbstPropertyMessageBrokerRegistry.random(),
+                JbstPropertyWebsocketsFeatures.random()
         );
     }
 

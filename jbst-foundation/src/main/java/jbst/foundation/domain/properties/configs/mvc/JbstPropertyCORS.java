@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CorsConfigs extends JbstProperty {
+public class JbstPropertyCORS extends JbstProperty {
     @NonMandatoryProperty
     private String pathPattern;
     @NonMandatoryProperty
@@ -32,8 +32,8 @@ public class CorsConfigs extends JbstProperty {
     @NonMandatoryProperty
     private String[] exposedHeaders;
 
-    public static CorsConfigs hardcoded() {
-        return new CorsConfigs(
+    public static JbstPropertyCORS hardcoded() {
+        return new JbstPropertyCORS(
                 "/api/**",
                 new String[] { "http://localhost:8080", "http://localhost:8081" },
                 new String[] { "GET", "POST" },
@@ -43,8 +43,8 @@ public class CorsConfigs extends JbstProperty {
         );
     }
 
-    public static CorsConfigs random() {
-        return new CorsConfigs(
+    public static JbstPropertyCORS random() {
+        return new JbstPropertyCORS(
                 randomString(),
                 new String[] { randomString(), randomString() },
                 new String[] { RandomUtility.randomElement(Set.of("GET", "POST", "PUT", "DELETE")) },

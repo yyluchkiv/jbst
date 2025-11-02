@@ -1,38 +1,38 @@
-package jbst.foundation.domain.properties.configs.security.jwt;
+package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CookiesConfigs extends JbstProperty {
+public class JbstPropertyCSRF extends JbstProperty {
     @MandatoryProperty
-    private final String domain;
+    private final String headerName;
     @MandatoryProperty
-    private final JbstPropertyTimeAmount jwtAccessTokenCookieCreationLatency;
+    private final String parameterName;
+    @MandatoryProperty
+    private final String tokenKey;
 
-    public static CookiesConfigs hardcoded() {
-        return new CookiesConfigs(JbstConstants.Domains.HARDCODED, new JbstPropertyTimeAmount(5L, SECONDS));
+    public static JbstPropertyCSRF hardcoded() {
+        return new JbstPropertyCSRF("csrf-header", "_csrf", "csrf-token-key");
     }
 
-    public static CookiesConfigs random() {
-        return new CookiesConfigs(randomString(), JbstPropertyTimeAmount.random());
+    public static JbstPropertyCSRF random() {
+        return new JbstPropertyCSRF(randomString(), randomString(), randomString());
     }
 
     @Override
     public JbstPropertyNodeType getNodeType() {
-        return JbstPropertyNodeType.BRANCH;
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override
@@ -42,6 +42,6 @@ public class CookiesConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "cookies-configs";
+        return JbstConstants.Symbols.DASH;
     }
 }

@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs.security.jwt.websockets;
+package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
@@ -16,26 +16,26 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsFeatureConfigs extends JbstProperty {
+public class JbstPropertyWebsocketsFeature extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
     private String userDestination;
 
-    public static WebsocketsFeatureConfigs hardcoded() {
-        return new WebsocketsFeatureConfigs(true, "/accounts");
+    public static JbstPropertyWebsocketsFeature hardcoded() {
+        return new JbstPropertyWebsocketsFeature(true, "/accounts");
     }
 
-    public static WebsocketsFeatureConfigs random() {
-        return new WebsocketsFeatureConfigs(randomBoolean(), randomString());
+    public static JbstPropertyWebsocketsFeature random() {
+        return new JbstPropertyWebsocketsFeature(randomBoolean(), randomString());
     }
 
-    public static WebsocketsFeatureConfigs enabled() {
+    public static JbstPropertyWebsocketsFeature enabled() {
         return hardcoded();
     }
 
-    public static WebsocketsFeatureConfigs disabled() {
-        return new WebsocketsFeatureConfigs(false, null);
+    public static JbstPropertyWebsocketsFeature disabled() {
+        return new JbstPropertyWebsocketsFeature(false, null);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.configs.security.jwt;
+package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
