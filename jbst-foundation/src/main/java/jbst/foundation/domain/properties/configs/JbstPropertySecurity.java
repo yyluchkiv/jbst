@@ -32,37 +32,37 @@ public class JbstPropertySecurity extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyAuthorities authoritiesConfigs;
     @MandatoryProperty
-    private final CookiesConfigs cookiesConfigs;
+    private final JbstPropertySecurityCookies cookiesConfigs;
     @MandatoryProperty
-    private final EssenceConfigs essenceConfigs;
+    private final JbstPropertySecurityEssence essenceConfigs;
     @MandatoryProperty
-    private final JwtTokensConfigs jwtTokensConfigs;
+    private final JbstPropertySecurityJWT jwtTokensConfigs;
     @MandatoryProperty
-    private final LoggingConfigs loggingConfigs;
+    private final JbstPropertySecurityLogging loggingConfigs;
     @MandatoryProperty
-    private final SessionConfigs sessionConfigs;
+    private final JbstPropertySecuritySessions sessionConfigs;
     @MandatoryProperty
-    private final UsersEmailsConfigs usersEmailsConfigs;
+    private final JbstPropertySecurityUsersEmails usersEmailsConfigs;
     @MandatoryProperty
     private final JbstPropertyWebsockets websocketsConfigs;
     @NonMandatoryProperty
-    private final UsersTokensConfigs usersTokensConfigs;
+    private final JbstPropertySecurityUsersTokens usersTokensConfigs;
 
     public static JbstPropertySecurity hardcoded() {
         return new JbstPropertySecurity(
                 JbstPropertyAuthorities.hardcoded(),
-                CookiesConfigs.hardcoded(),
-                EssenceConfigs.hardcoded(),
-                JwtTokensConfigs.hardcoded(),
-                LoggingConfigs.hardcoded(),
-                SessionConfigs.hardcoded(),
-                UsersEmailsConfigs.hardcoded(),
+                JbstPropertySecurityCookies.hardcoded(),
+                JbstPropertySecurityEssence.hardcoded(),
+                JbstPropertySecurityJWT.hardcoded(),
+                JbstPropertySecurityLogging.hardcoded(),
+                JbstPropertySecuritySessions.hardcoded(),
+                JbstPropertySecurityUsersEmails.hardcoded(),
                 JbstPropertyWebsockets.hardcoded(),
-                UsersTokensConfigs.hardcoded()
+                JbstPropertySecurityUsersTokens.hardcoded()
         );
     }
 
-    public static JbstPropertySecurity of(LoggingConfigs loggingConfigs) {
+    public static JbstPropertySecurity of(JbstPropertySecurityLogging loggingConfigs) {
         return new JbstPropertySecurity(
                 null,
                 null,
@@ -76,7 +76,7 @@ public class JbstPropertySecurity extends JbstProperty {
         );
     }
 
-    public static JbstPropertySecurity of(SessionConfigs sessionConfigs) {
+    public static JbstPropertySecurity of(JbstPropertySecuritySessions sessionConfigs) {
         return new JbstPropertySecurity(
                 null,
                 null,
@@ -98,7 +98,7 @@ public class JbstPropertySecurity extends JbstProperty {
                 null,
                 null,
                 null,
-                new UsersEmailsConfigs(
+                new JbstPropertySecurityUsersEmails(
                         "[jbst]",
                         JbstPropertyCheckbox.disabled(),
                         JbstPropertyCheckbox.disabled(),

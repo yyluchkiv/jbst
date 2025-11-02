@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UsersEmailsConfigs extends JbstProperty {
+public class JbstPropertySecurityUsersEmails extends JbstProperty {
     @MandatoryProperty
     private final String subjectPrefix;
     @MandatoryProperty
@@ -28,8 +28,8 @@ public class UsersEmailsConfigs extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyCheckbox accountAccessedSessionToken;
 
-    public static UsersEmailsConfigs hardcoded() {
-        return new UsersEmailsConfigs(
+    public static JbstPropertySecurityUsersEmails hardcoded() {
+        return new JbstPropertySecurityUsersEmails(
                 "[jbst.com]",
                 JbstPropertyCheckbox.enabled(),
                 JbstPropertyCheckbox.enabled(),
@@ -37,8 +37,8 @@ public class UsersEmailsConfigs extends JbstProperty {
         );
     }
 
-    public static UsersEmailsConfigs random() {
-        return new UsersEmailsConfigs(
+    public static JbstPropertySecurityUsersEmails random() {
+        return new JbstPropertySecurityUsersEmails(
                 randomString(),
                 JbstPropertyCheckbox.enabled(),
                 JbstPropertyCheckbox.enabled(),

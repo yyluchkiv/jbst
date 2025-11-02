@@ -275,19 +275,19 @@ class JbstTokensProviderTest {
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(
                 new JbstPropertySecurity(
                         JbstPropertyAuthorities.hardcoded(),
-                        CookiesConfigs.hardcoded(),
-                        EssenceConfigs.hardcoded(),
-                        new JwtTokensConfigs(
+                        JbstPropertySecurityCookies.hardcoded(),
+                        JbstPropertySecurityEssence.hardcoded(),
+                        new JbstPropertySecurityJWT(
                                 "JBST",
                                 method,
                                 new JbstPropertyJwtToken(new JbstPropertyTimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
                                 new JbstPropertyJwtToken(new JbstPropertyTimeAmount(12L, HOURS), "rjwt", "T-RJWT")
                         ),
-                        LoggingConfigs.hardcoded(),
-                        SessionConfigs.hardcoded(),
-                        UsersEmailsConfigs.hardcoded(),
+                        JbstPropertySecurityLogging.hardcoded(),
+                        JbstPropertySecuritySessions.hardcoded(),
+                        JbstPropertySecurityUsersEmails.hardcoded(),
                         JbstPropertyWebsockets.hardcoded(),
-                        UsersTokensConfigs.hardcoded()
+                        JbstPropertySecurityUsersTokens.hardcoded()
                 )
         );
     }

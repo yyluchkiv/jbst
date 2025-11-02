@@ -13,7 +13,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UsersTokensConfigs extends JbstProperty {
+public class JbstPropertySecurityUsersTokens extends JbstProperty {
     @NonMandatoryProperty
     private String webclientMagicLinkPath;
     @NonMandatoryProperty
@@ -21,16 +21,16 @@ public class UsersTokensConfigs extends JbstProperty {
     @NonMandatoryProperty
     private String webclientPasswordResetPath;
 
-    public static UsersTokensConfigs hardcoded() {
-        return new UsersTokensConfigs(
+    public static JbstPropertySecurityUsersTokens hardcoded() {
+        return new JbstPropertySecurityUsersTokens(
                 "/magic-link",
                 "/email-confirmation",
                 "/password-reset"
         );
     }
 
-    public static UsersTokensConfigs random() {
-        return new UsersTokensConfigs(
+    public static JbstPropertySecurityUsersTokens random() {
+        return new JbstPropertySecurityUsersTokens(
                 randomString(),
                 randomString(),
                 randomString()

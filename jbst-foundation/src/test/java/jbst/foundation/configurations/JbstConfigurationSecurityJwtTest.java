@@ -81,14 +81,14 @@ class JbstConfigurationSecurityJwtTest {
                                             new JbstPropertyAuthority("user")
                                     )
                             ),
-                            CookiesConfigs.hardcoded(),
-                            EssenceConfigs.hardcoded(),
-                            JwtTokensConfigs.hardcoded(),
-                            LoggingConfigs.hardcoded(),
-                            SessionConfigs.hardcoded(),
-                            UsersEmailsConfigs.hardcoded(),
+                            JbstPropertySecurityCookies.hardcoded(),
+                            JbstPropertySecurityEssence.hardcoded(),
+                            JbstPropertySecurityJWT.hardcoded(),
+                            JbstPropertySecurityLogging.hardcoded(),
+                            JbstPropertySecuritySessions.hardcoded(),
+                            JbstPropertySecurityUsersEmails.hardcoded(),
                             JbstPropertyWebsockets.hardcoded(),
-                            UsersTokensConfigs.hardcoded()
+                            JbstPropertySecurityUsersTokens.hardcoded()
                     )
             );
             return jbstProperties;

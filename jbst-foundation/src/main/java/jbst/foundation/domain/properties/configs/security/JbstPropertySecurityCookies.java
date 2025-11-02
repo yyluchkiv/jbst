@@ -16,18 +16,18 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CookiesConfigs extends JbstProperty {
+public class JbstPropertySecurityCookies extends JbstProperty {
     @MandatoryProperty
     private final String domain;
     @MandatoryProperty
     private final JbstPropertyTimeAmount jwtAccessTokenCookieCreationLatency;
 
-    public static CookiesConfigs hardcoded() {
-        return new CookiesConfigs(JbstConstants.Domains.HARDCODED, new JbstPropertyTimeAmount(5L, SECONDS));
+    public static JbstPropertySecurityCookies hardcoded() {
+        return new JbstPropertySecurityCookies(JbstConstants.Domains.HARDCODED, new JbstPropertyTimeAmount(5L, SECONDS));
     }
 
-    public static CookiesConfigs random() {
-        return new CookiesConfigs(randomString(), JbstPropertyTimeAmount.random());
+    public static JbstPropertySecurityCookies random() {
+        return new JbstPropertySecurityCookies(randomString(), JbstPropertyTimeAmount.random());
     }
 
     @Override

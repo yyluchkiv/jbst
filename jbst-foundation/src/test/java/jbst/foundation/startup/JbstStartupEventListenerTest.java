@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.JbstPropertyServer;
 import jbst.foundation.domain.properties.configs.security.JbstPropertyAuthorities;
-import jbst.foundation.domain.properties.configs.security.EssenceConfigs;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityEssence;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -98,7 +98,7 @@ class JbstStartupEventListenerTest {
                         )
                 ),
                 null,
-                new EssenceConfigs(
+                new JbstPropertySecurityEssence(
                         new JbstPropertyUsersOnInit(
                                 isUsersEnabled,
                                 new ArrayList<>()

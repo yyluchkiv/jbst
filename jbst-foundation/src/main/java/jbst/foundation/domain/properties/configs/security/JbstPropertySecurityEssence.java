@@ -13,21 +13,21 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EssenceConfigs extends JbstProperty {
+public class JbstPropertySecurityEssence extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyUsersOnInit usersOnInit;
     @MandatoryProperty
     private final JbstPropertyInvitationsOnInit invitationsOnInit;
 
-    public static EssenceConfigs hardcoded() {
-        return new EssenceConfigs(
+    public static JbstPropertySecurityEssence hardcoded() {
+        return new JbstPropertySecurityEssence(
                 JbstPropertyUsersOnInit.hardcoded(),
                 JbstPropertyInvitationsOnInit.hardcoded()
         );
     }
 
-    public static EssenceConfigs random() {
-        return new EssenceConfigs(
+    public static JbstPropertySecurityEssence random() {
+        return new JbstPropertySecurityEssence(
                 JbstPropertyUsersOnInit.random(),
                 JbstPropertyInvitationsOnInit.random()
         );

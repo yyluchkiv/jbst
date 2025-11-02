@@ -14,21 +14,21 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SessionConfigs extends JbstProperty {
+public class JbstPropertySecuritySessions extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyCron cleanSessionsByExpiredRefreshTokensCron;
     @MandatoryProperty
     private final JbstPropertyCron enableSessionsMetadataRenewCron;
 
-    public static SessionConfigs hardcoded() {
-        return new SessionConfigs(
+    public static JbstPropertySecuritySessions hardcoded() {
+        return new JbstPropertySecuritySessions(
                 JbstPropertyCron.enabled("*/30 * * * * *", UKRAINE.getId()),
                 JbstPropertyCron.enabled("*/15 * * * * *", UKRAINE.getId())
         );
     }
 
-    public static SessionConfigs random() {
-        return new SessionConfigs(
+    public static JbstPropertySecuritySessions random() {
+        return new JbstPropertySecuritySessions(
                 JbstPropertyCron.random(),
                 JbstPropertyCron.random()
         );

@@ -14,24 +14,24 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LoggingConfigs extends JbstProperty {
+public class JbstPropertySecurityLogging extends JbstProperty {
     @MandatoryProperty
     private final Boolean advancedRequestLoggingEnabled;
 
-    public static LoggingConfigs random() {
+    public static JbstPropertySecurityLogging random() {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static LoggingConfigs hardcoded() {
-        return LoggingConfigs.enabled();
+    public static JbstPropertySecurityLogging hardcoded() {
+        return JbstPropertySecurityLogging.enabled();
     }
 
-    public static LoggingConfigs enabled() {
-        return new LoggingConfigs(true);
+    public static JbstPropertySecurityLogging enabled() {
+        return new JbstPropertySecurityLogging(true);
     }
 
-    public static LoggingConfigs disabled() {
-        return new LoggingConfigs(false);
+    public static JbstPropertySecurityLogging disabled() {
+        return new JbstPropertySecurityLogging(false);
     }
 
     @Override

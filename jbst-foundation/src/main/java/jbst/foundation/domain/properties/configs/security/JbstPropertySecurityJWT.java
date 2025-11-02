@@ -23,7 +23,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JwtTokensConfigs extends JbstProperty {
+public class JbstPropertySecurityJWT extends JbstProperty {
     @MandatoryProperty
     private final String secretKey;
     @MandatoryProperty
@@ -33,8 +33,8 @@ public class JwtTokensConfigs extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyJwtToken refreshToken;
 
-    public static JwtTokensConfigs hardcoded() {
-        return new JwtTokensConfigs(
+    public static JbstPropertySecurityJWT hardcoded() {
+        return new JbstPropertySecurityJWT(
                 "nbVwWebIpNnZ1rsNZFmkAQGiOZAijWtSt5X6FZx/qHA=",
                 JbstJwtTokenStorageMethod.COOKIES,
                 new JbstPropertyJwtToken(new JbstPropertyTimeAmount(30L, SECONDS), "ajwt", null),
@@ -42,8 +42,8 @@ public class JwtTokensConfigs extends JbstProperty {
         );
     }
 
-    public static JwtTokensConfigs random() {
-        return new JwtTokensConfigs(
+    public static JbstPropertySecurityJWT random() {
+        return new JbstPropertySecurityJWT(
                 randomString(),
                 randomEnum(JbstJwtTokenStorageMethod.class),
                 JbstPropertyJwtToken.random(),
