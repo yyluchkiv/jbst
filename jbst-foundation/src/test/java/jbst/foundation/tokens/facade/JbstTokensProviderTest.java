@@ -11,7 +11,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyJwtToken;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.security.*;
 import jbst.foundation.tokens.providers.JbstTokenCookiesProvider;
 import jbst.foundation.tokens.providers.JbstTokenHeadersProvider;
@@ -273,7 +273,7 @@ class JbstTokensProviderTest {
     // =================================================================================================================
     private void mockProperties(JbstJwtTokenStorageMethod method) {
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(
-                new SecurityJwtConfigs(
+                new JbstPropertySecurity(
                         JbstPropertyAuthorities.hardcoded(),
                         CookiesConfigs.hardcoded(),
                         EssenceConfigs.hardcoded(),

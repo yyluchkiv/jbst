@@ -14,11 +14,11 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends JbstProperty {
+public class JbstPropertyServer extends JbstProperty {
     @MandatoryProperty
     private final ServerName name;
     @MandatoryProperty
-    private final MavenConfigs mavenConfigs;
+    private final JbstPropertyMaven mavenConfigs;
     @MandatoryProperty
     private final Boolean springdocEnabled;
     @NonMandatoryProperty
@@ -26,10 +26,10 @@ public class ServerConfigs extends JbstProperty {
     @NonMandatoryProperty
     private String webclientURL;
 
-    public static ServerConfigs hardcoded() {
-        return new ServerConfigs(
+    public static JbstPropertyServer hardcoded() {
+        return new JbstPropertyServer(
                 ServerName.hardcoded(),
-                new MavenConfigs("jbst", "jbst", Version.hardcoded()),
+                new JbstPropertyMaven("jbst", "jbst", Version.hardcoded()),
                 true,
                 "http://127.0.0.1:3002",
                 "http://127.0.0.1:3000"

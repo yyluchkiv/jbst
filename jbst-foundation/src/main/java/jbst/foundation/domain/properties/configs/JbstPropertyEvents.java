@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AsyncConfigs extends JbstProperty {
+public class JbstPropertyEvents extends JbstProperty {
     @MandatoryProperty
     private final String threadNamePrefix;
     @MandatoryProperty
@@ -25,12 +25,12 @@ public class AsyncConfigs extends JbstProperty {
     @MandatoryProperty
     private final BigDecimal threadsMaxPoolPercentage;
 
-    public static AsyncConfigs hardcoded() {
-        return new AsyncConfigs("jbst-async", new BigDecimal("25"), HUNDRED);
+    public static JbstPropertyEvents hardcoded() {
+        return new JbstPropertyEvents("jbst-events", new BigDecimal("75"), HUNDRED);
     }
 
-    public static AsyncConfigs random() {
-        return new AsyncConfigs(randomString(), new BigDecimal("25"), HUNDRED);
+    public static JbstPropertyEvents random() {
+        return new JbstPropertyEvents(randomString(), new BigDecimal("25"), HUNDRED);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AsyncConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "async-configs";
+        return "events-configs";
     }
 
     public TuplePercentage asThreadsCorePoolTuplePercentage() {

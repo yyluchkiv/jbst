@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EmailConfigs extends JbstProperty {
+public class JbstPropertyEmail extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
@@ -28,8 +28,8 @@ public class EmailConfigs extends JbstProperty {
     @MandatoryPropertyToggle
     private Password password;
 
-    public static EmailConfigs hardcoded() {
-        return new EmailConfigs(
+    public static JbstPropertyEmail hardcoded() {
+        return new JbstPropertyEmail(
                 true,
                 "smtp.gmail.com",
                 587,
@@ -39,17 +39,17 @@ public class EmailConfigs extends JbstProperty {
         );
     }
 
-    public static EmailConfigs disabled() {
-        return new EmailConfigs(false, null, 0, null, null, null);
+    public static JbstPropertyEmail disabled() {
+        return new JbstPropertyEmail(false, null, 0, null, null, null);
     }
 
-    public static EmailConfigs enabled(String from) {
-        return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.hardcoded(), Password.hardcoded());
+    public static JbstPropertyEmail enabled(String from) {
+        return new JbstPropertyEmail(true, "smtp.gmail.com", 587, from, Username.hardcoded(), Password.hardcoded());
     }
 
     @SuppressWarnings("unused")
-    public static EmailConfigs gmail(String from, Username username, Password password) {
-        return new EmailConfigs(true, "smtp.gmail.com", 587, from, username, password);
+    public static JbstPropertyEmail gmail(String from, Username username, Password password) {
+        return new JbstPropertyEmail(true, "smtp.gmail.com", 587, from, username, password);
     }
 
     @Override

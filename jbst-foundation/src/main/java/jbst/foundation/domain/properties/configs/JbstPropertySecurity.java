@@ -28,7 +28,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityJwtConfigs extends JbstProperty {
+public class JbstPropertySecurity extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyAuthorities authoritiesConfigs;
     @MandatoryProperty
@@ -48,8 +48,8 @@ public class SecurityJwtConfigs extends JbstProperty {
     @NonMandatoryProperty
     private final UsersTokensConfigs usersTokensConfigs;
 
-    public static SecurityJwtConfigs hardcoded() {
-        return new SecurityJwtConfigs(
+    public static JbstPropertySecurity hardcoded() {
+        return new JbstPropertySecurity(
                 JbstPropertyAuthorities.hardcoded(),
                 CookiesConfigs.hardcoded(),
                 EssenceConfigs.hardcoded(),
@@ -62,8 +62,8 @@ public class SecurityJwtConfigs extends JbstProperty {
         );
     }
 
-    public static SecurityJwtConfigs of(LoggingConfigs loggingConfigs) {
-        return new SecurityJwtConfigs(
+    public static JbstPropertySecurity of(LoggingConfigs loggingConfigs) {
+        return new JbstPropertySecurity(
                 null,
                 null,
                 null,
@@ -76,8 +76,8 @@ public class SecurityJwtConfigs extends JbstProperty {
         );
     }
 
-    public static SecurityJwtConfigs of(SessionConfigs sessionConfigs) {
-        return new SecurityJwtConfigs(
+    public static JbstPropertySecurity of(SessionConfigs sessionConfigs) {
+        return new JbstPropertySecurity(
                 null,
                 null,
                 null,
@@ -90,8 +90,8 @@ public class SecurityJwtConfigs extends JbstProperty {
         );
     }
 
-    public static SecurityJwtConfigs disabledUsersEmailsConfigs() {
-        return new SecurityJwtConfigs(
+    public static JbstPropertySecurity disabledUsersEmailsConfigs() {
+        return new JbstPropertySecurity(
                 null,
                 null,
                 null,

@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MavenConfigs extends JbstProperty {
+public class JbstPropertyMaven extends JbstProperty {
     @MandatoryProperty
     private final String groupId;
     @MandatoryProperty
@@ -21,8 +21,8 @@ public class MavenConfigs extends JbstProperty {
     @MandatoryProperty
     private final Version version;
 
-    public static MavenConfigs hardcoded() {
-        return new MavenConfigs("jbst", "jbst", Version.hardcoded());
+    public static JbstPropertyMaven hardcoded() {
+        return new JbstPropertyMaven("jbst", "jbst", Version.hardcoded());
     }
 
     @Override

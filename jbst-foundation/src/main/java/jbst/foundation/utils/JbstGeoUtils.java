@@ -27,9 +27,9 @@ import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.utilities.GeoCountryFlagsConfigs;
-import jbst.foundation.domain.properties.configs.utilities.GeoLocationsConfigs;
-import jbst.foundation.domain.properties.configs.utilities.UserAgentConfigs;
+import jbst.foundation.domain.properties.configs.utilities.JbstPropertyGeoCountryFlags;
+import jbst.foundation.domain.properties.configs.utilities.JbstPropertyGeoLocations;
+import jbst.foundation.domain.properties.configs.utilities.JbstPropertyUserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -61,7 +61,7 @@ public class JbstGeoUtils {
     // CLASSES: FLAGS
     // ================================================================================================================
     private record GeoFlags(
-            GeoCountryFlagsConfigs configs,
+            JbstPropertyGeoCountryFlags configs,
             Map<String, GeoCountryFlag> names,
             Map<String, GeoCountryFlag> codes
     ) {
@@ -105,12 +105,12 @@ public class JbstGeoUtils {
     // ================================================================================================================
     // CLASSES: MINDMAX
     // ================================================================================================================
-    private record GeoMindMax(GeoLocationsConfigs configs, DatabaseReader databaseReader) {}
+    private record GeoMindMax(JbstPropertyGeoLocations configs, DatabaseReader databaseReader) {}
 
     // ================================================================================================================
     // CLASSES: User Agent Details
     // ================================================================================================================
-    private record GeoUserAgentDetails(UserAgentConfigs configs, boolean configured, UserAgentParser userAgentParser, String exception) {
+    private record GeoUserAgentDetails(JbstPropertyUserAgent configs, boolean configured, UserAgentParser userAgentParser, String exception) {
         public UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
             if (!configs.isEnabled() || !this.configured) {
                 return UserAgentDetails.unknown(this.exception);

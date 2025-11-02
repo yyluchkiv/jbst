@@ -6,7 +6,7 @@ import jakarta.mail.internet.MimeMultipart;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.EmailConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertyEmail;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.emails.EmailPlainAttachment;
 import jbst.foundation.services.JbstEmailService;
@@ -113,7 +113,7 @@ class JbstEmailServiceEnabledTest {
         var to = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = EmailConfigs.disabled();
+        var emailConfigs = JbstPropertyEmail.disabled();
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -130,7 +130,7 @@ class JbstEmailServiceEnabledTest {
         var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = EmailConfigs.enabled(from);
+        var emailConfigs = JbstPropertyEmail.enabled(from);
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -154,7 +154,7 @@ class JbstEmailServiceEnabledTest {
         var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = EmailConfigs.enabled(from);
+        var emailConfigs = JbstPropertyEmail.enabled(from);
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -178,7 +178,7 @@ class JbstEmailServiceEnabledTest {
         var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = EmailConfigs.enabled(from);
+        var emailConfigs = JbstPropertyEmail.enabled(from);
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -199,7 +199,7 @@ class JbstEmailServiceEnabledTest {
     void sendPlainAttachmentDisabledTest() {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
-        var emailConfigs = EmailConfigs.disabled();
+        var emailConfigs = JbstPropertyEmail.disabled();
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -214,7 +214,7 @@ class JbstEmailServiceEnabledTest {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
         var from = Email.random().value();
-        var emailConfigs = EmailConfigs.enabled(from);
+        var emailConfigs = JbstPropertyEmail.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
         doThrow(new MessagingException()).when(mimeMessage).setFrom(from);
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
@@ -242,7 +242,7 @@ class JbstEmailServiceEnabledTest {
                 "attachment-message1"
         );
         var from = Email.random().value();
-        var emailConfigs = EmailConfigs.enabled(from);
+        var emailConfigs = JbstPropertyEmail.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
@@ -274,7 +274,7 @@ class JbstEmailServiceEnabledTest {
     void sendHTMLDisabledTest() {
         // Arrange
         var emailHTML = entity(EmailHTML.class);
-        var emailConfigs = EmailConfigs.disabled();
+        var emailConfigs = JbstPropertyEmail.disabled();
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -300,7 +300,7 @@ class JbstEmailServiceEnabledTest {
                 "template1",
                 templateVariables
         );
-        var emailConfigs = EmailConfigs.enabled(from);
+        var emailConfigs = JbstPropertyEmail.enabled(from);
         when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
         var message = mock(MimeMessage.class);
         when(this.javaMailSender.createMimeMessage()).thenReturn(message);

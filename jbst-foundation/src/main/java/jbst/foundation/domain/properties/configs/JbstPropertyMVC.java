@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MvcConfigs extends JbstProperty {
+public class JbstPropertyMVC extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
@@ -24,28 +24,28 @@ public class MvcConfigs extends JbstProperty {
     @MandatoryPropertyToggle
     private JbstPropertyCORS corsConfigs;
 
-    public static MvcConfigs hardcoded() {
-        return new MvcConfigs(
+    public static JbstPropertyMVC hardcoded() {
+        return new JbstPropertyMVC(
                 true,
                 "/jbst/security",
                 JbstPropertyCORS.hardcoded()
         );
     }
 
-    public static MvcConfigs random() {
-        return new MvcConfigs(
+    public static JbstPropertyMVC random() {
+        return new JbstPropertyMVC(
                 randomBoolean(),
                 randomString(),
                 JbstPropertyCORS.random()
         );
     }
 
-    public static MvcConfigs enabled() {
+    public static JbstPropertyMVC enabled() {
         return hardcoded();
     }
 
-    public static MvcConfigs disabled() {
-        return new MvcConfigs(
+    public static JbstPropertyMVC disabled() {
+        return new JbstPropertyMVC(
                 false,
                 randomString(),
                 JbstPropertyCORS.random()

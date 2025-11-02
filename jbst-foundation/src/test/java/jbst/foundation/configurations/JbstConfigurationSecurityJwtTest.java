@@ -5,8 +5,8 @@ import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
-import jbst.foundation.domain.properties.configs.MvcConfigs;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.mvc.JbstPropertyCORS;
 import jbst.foundation.domain.properties.configs.security.*;
 import jbst.foundation.filters.jwt.JbstTokensFilter;
@@ -54,7 +54,7 @@ class JbstConfigurationSecurityJwtTest {
         public JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
             jbstProperties.setMvcConfigs(
-                    new MvcConfigs(
+                    new JbstPropertyMVC(
                             true,
                             "/jbst/security",
                             new JbstPropertyCORS(
@@ -69,7 +69,7 @@ class JbstConfigurationSecurityJwtTest {
             );
             jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
             jbstProperties.setSecurityJwtConfigs(
-                    new SecurityJwtConfigs(
+                    new JbstPropertySecurity(
                             new JbstPropertyAuthorities(
                                     "jbst.foundation.tests.enums",
                                     Set.of(

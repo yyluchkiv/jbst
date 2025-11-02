@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.MvcConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
 import jbst.foundation.domain.properties.configs.mvc.JbstPropertyCORS;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class JbstConfigurationWebMVC1Test {
         @Bean
         JbstProperties jbstProperties() {
             var jbstProperties = mock(JbstProperties.class);
-            var mvcConfigs = new MvcConfigs(
+            var mvcConfigs = new JbstPropertyMVC(
                     false,
                     "/jbst/security",
                     new JbstPropertyCORS(

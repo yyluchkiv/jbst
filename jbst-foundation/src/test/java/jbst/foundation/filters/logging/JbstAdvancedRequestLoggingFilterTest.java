@@ -8,7 +8,7 @@ import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.http.cache.CachedBodyServletInputStream;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.security.LoggingConfigs;
 import jbst.foundation.utils.JbstHttpUtils;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +85,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void multipartRequestEndpointTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.random()));
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(LoggingConfigs.random()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -109,7 +109,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void disabledLoggingCachedEndpointTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.disabled()));
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(LoggingConfigs.disabled()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -132,7 +132,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void enabledLoggingEmptyPayloadTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.enabled()));
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(LoggingConfigs.enabled()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -159,7 +159,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void enabledLoggingTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.enabled()));
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(LoggingConfigs.enabled()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);

@@ -3,7 +3,7 @@ package jbst.foundation.settings;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstSettingsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -148,7 +148,7 @@ class JbstSettingServiceTest {
     @MethodSource("usersPresenceTest")
     void initUsers(long count) {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.hardcoded());
         when(this.usersRepository.count()).thenReturn(count);
 
         // Act
@@ -166,7 +166,7 @@ class JbstSettingServiceTest {
     @MethodSource("usersPresenceTest")
     void initInvitations(long count) {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.hardcoded());
         var username = Username.of("admin12");
         when(this.invitationsRepository.countByOwner(username)).thenReturn(count);
 

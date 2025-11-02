@@ -6,10 +6,10 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.EmailConfigs;
-import jbst.foundation.domain.properties.configs.MvcConfigs;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.ServerConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertyEmail;
+import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
+import jbst.foundation.domain.properties.configs.JbstPropertyServer;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.concurrent.SleepUtility;
@@ -50,11 +50,11 @@ class JbstUsersEmailsServiceConsoleTest {
         @Bean
         JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
-            jbstProperties.setServerConfigs(ServerConfigs.hardcoded());
-            jbstProperties.setMvcConfigs(MvcConfigs.hardcoded());
-            jbstProperties.setSecurityJwtConfigs(SecurityJwtConfigs.hardcoded());
+            jbstProperties.setServerConfigs(JbstPropertyServer.hardcoded());
+            jbstProperties.setMvcConfigs(JbstPropertyMVC.hardcoded());
+            jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
             jbstProperties.setEmailConfigs(
-                    new EmailConfigs(
+                    new JbstPropertyEmail(
                             true,
                             "smtp.gmail.com",
                             587,

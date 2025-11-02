@@ -4,8 +4,8 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.base.JbstPropertyInvitationsOnInit;
 import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.ServerConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
+import jbst.foundation.domain.properties.configs.JbstPropertyServer;
 import jbst.foundation.domain.properties.configs.security.JbstPropertyAuthorities;
 import jbst.foundation.domain.properties.configs.security.EssenceConfigs;
 import jbst.foundation.settings.JbstSettingsService;
@@ -89,7 +89,7 @@ class JbstStartupEventListenerTest {
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isUsersEnabled, boolean isInvitationsEnabled) {
         // Arrange
-        var securityJwtConfigs = new SecurityJwtConfigs(
+        var securityJwtConfigs = new JbstPropertySecurity(
                 new JbstPropertyAuthorities(
                         "jbst",
                         Set.of(
@@ -114,7 +114,7 @@ class JbstStartupEventListenerTest {
                 null,
                 null
         );
-        when(this.jbstProperties.getServerConfigs()).thenReturn(ServerConfigs.hardcoded());
+        when(this.jbstProperties.getServerConfigs()).thenReturn(JbstPropertyServer.hardcoded());
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
 
         // Act

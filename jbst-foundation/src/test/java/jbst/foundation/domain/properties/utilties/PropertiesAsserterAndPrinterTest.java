@@ -94,7 +94,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void serverConfigsTest() {
         // Act
-        ServerConfigs.hardcoded().assertProperties();
+        JbstPropertyServer.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -103,7 +103,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilitiesConfigsTest() {
         // Act
-        UtilsConfigs.hardcoded().assertProperties();
+        JbstPropertyUtils.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -112,7 +112,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void asyncConfigsTest() {
         // Act
-        AsyncConfigs.hardcoded().assertProperties();
+        JbstPropertyAsync.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -121,7 +121,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void eventsConfigsTest() {
         // Act
-        EventsConfigs.hardcoded().assertProperties();
+        JbstPropertyEvents.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -130,7 +130,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsDisabledTest() {
         // Arrange
-        var mvcConfigs = new MvcConfigs(false, null, null);
+        var mvcConfigs = new JbstPropertyMVC(false, null, null);
 
         // Act
         mvcConfigs.assertProperties();
@@ -142,7 +142,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsTest() {
         // Act
-        MvcConfigs.hardcoded().assertProperties();
+        JbstPropertyMVC.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -151,7 +151,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsDisabledTest() {
         // Act
-        EmailConfigs.disabled().assertProperties();
+        JbstPropertyEmail.disabled().assertProperties();
 
         // Assert
         // no asserts
@@ -160,7 +160,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsTest() {
         // Act
-        EmailConfigs.hardcoded().assertProperties();
+        JbstPropertyEmail.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -225,7 +225,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
         // Act
-        var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
+        var securityJwtConfigs = JbstPropertySecurity.disabledUsersEmailsConfigs();
 
         // Act
         var throwable = catchThrowable(securityJwtConfigs::assertProperties);
@@ -240,7 +240,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtConfigsTest() {
         // Act
-        SecurityJwtConfigs.hardcoded().assertProperties();
+        JbstPropertySecurity.hardcoded().assertProperties();
 
         // Assert
         // no asserts
