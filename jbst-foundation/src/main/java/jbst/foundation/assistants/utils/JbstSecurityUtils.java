@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jbst.foundation.domain.jwt.*;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -78,7 +78,7 @@ public class JbstSecurityUtils {
         return new JwtRefreshToken(jwtToken);
     }
 
-    public final String createJwtToken(JwtTokenCreationParams creationParams, TimeAmount timeAmount) {
+    public final String createJwtToken(JwtTokenCreationParams creationParams, JbstPropertyTimeAmount timeAmount) {
         var claims = Jwts.claims().subject(creationParams.username().value());
         claims.add("authorities", creationParams.authorities());
         var zoneId = creationParams.zoneId();

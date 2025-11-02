@@ -3,6 +3,7 @@ package jbst.foundation.domain.properties.utilties;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.properties.base.*;
 import jbst.foundation.domain.properties.configs.*;
+import jbst.foundation.domain.properties.configs.databases.JbstPropertyDatabaseMongo;
 import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigs;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -21,9 +22,9 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsMapMinSizeCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
-                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
-                new SpringServer(8080),
-                new SpringLogging("logback-test.xml"),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertySpringServer(8080),
+                new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN1", true),
                         Map.entry("AUTHENTICATION_LOGIN2", false)
@@ -43,9 +44,9 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsExtendedSizeCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
-                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
-                new SpringServer(8080),
-                new SpringLogging("logback-test.xml"),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertySpringServer(8080),
+                new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN1", true),
                         Map.entry("AUTHENTICATION_LOGIN2", false),
@@ -69,9 +70,9 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsOK() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
-                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
-                new SpringServer(8080),
-                new SpringLogging("logback-test.xml"),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertySpringServer(8080),
+                new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN1", true),
                         Map.entry("AUTHENTICATION_LOGIN2", false),
@@ -93,7 +94,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void serverConfigsTest() {
         // Act
-        ServerConfigs.hardcoded().assertProperties();
+        JbstPropertyServer.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -102,7 +103,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilitiesConfigsTest() {
         // Act
-        UtilsConfigs.hardcoded().assertProperties();
+        JbstPropertyUtils.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -111,7 +112,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void asyncConfigsTest() {
         // Act
-        AsyncConfigs.hardcoded().assertProperties();
+        JbstPropertyAsync.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -120,7 +121,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void eventsConfigsTest() {
         // Act
-        EventsConfigs.hardcoded().assertProperties();
+        JbstPropertyEvents.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -129,7 +130,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsDisabledTest() {
         // Arrange
-        var mvcConfigs = new MvcConfigs(false, null, null);
+        var mvcConfigs = new JbstPropertyMVC(false, null, null);
 
         // Act
         mvcConfigs.assertProperties();
@@ -141,7 +142,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsTest() {
         // Act
-        MvcConfigs.hardcoded().assertProperties();
+        JbstPropertyMVC.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -150,7 +151,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsDisabledTest() {
         // Act
-        EmailConfigs.disabled().assertProperties();
+        JbstPropertyEmail.disabled().assertProperties();
 
         // Assert
         // no asserts
@@ -159,7 +160,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsTest() {
         // Act
-        EmailConfigs.hardcoded().assertProperties();
+        JbstPropertyEmail.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -181,7 +182,7 @@ class PropertiesAsserterAndPrinterTest {
         var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
-                RemoteServer.hardcoded(),
+                JbstPropertyRemoteServer.hardcoded(),
                 Map.ofEntries(
                         entry("AUTHENTICATION_LOGIN", randomBoolean()),
                         entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", loginFailureUsernamePassword),
@@ -210,7 +211,7 @@ class PropertiesAsserterAndPrinterTest {
         var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
-                RemoteServer.hardcoded(),
+                JbstPropertyRemoteServer.hardcoded(),
                 Map.ofEntries()
         );
 
@@ -224,7 +225,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
         // Act
-        var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
+        var securityJwtConfigs = JbstPropertySecurity.disabledUsersEmailsConfigs();
 
         // Act
         var throwable = catchThrowable(securityJwtConfigs::assertProperties);
@@ -239,7 +240,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtConfigsTest() {
         // Act
-        SecurityJwtConfigs.hardcoded().assertProperties();
+        JbstPropertySecurity.hardcoded().assertProperties();
 
         // Assert
         // no asserts
@@ -248,7 +249,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mongodbSecurityJwtConfigsTest() {
         // Act
-        MongodbSecurityJwtConfigs.hardcoded().assertProperties();
+        JbstPropertyDatabaseMongo.hardcoded().assertProperties();
 
         // Assert
         // no asserts

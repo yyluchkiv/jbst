@@ -1,6 +1,6 @@
 package jbst.server.ops.jobs;
 
-import jbst.foundation.domain.properties.base.SchedulerConfiguration;
+import jbst.foundation.domain.properties.base.JbstPropertySchedulerConfiguration;
 import jbst.server.ops.services.MonitoringService;
 import jbst.server.ops.services.NotificationsService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ServersJob {
-    private static final SchedulerConfiguration SC = new SchedulerConfiguration(0L, 30L, SECONDS);
+    private static final JbstPropertySchedulerConfiguration SC = new JbstPropertySchedulerConfiguration(0L, 30L, SECONDS);
 
     // Services
     private final MonitoringService monitoringService;

@@ -1,6 +1,5 @@
 package jbst.foundation.configurations;
 
-import jakarta.annotation.PostConstruct;
 import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
@@ -38,11 +37,6 @@ public class JbstConfigurationMongo {
     private final MongoJbstUsersSessionsRepository mongoUsersSessionsRepository;
     // Properties
     private final JbstProperties jbstProperties;
-
-    @PostConstruct
-    public void init() {
-        this.jbstProperties.getMongodbSecurityJwtConfigs().assertProperties();
-    }
 
     @Bean
     MongoJbstSettingsService mongoJbstSettingsService() {

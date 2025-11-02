@@ -1,13 +1,13 @@
 package jbst.foundation.startup;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.Authority;
-import jbst.foundation.domain.properties.base.InvitationsOnInit;
-import jbst.foundation.domain.properties.base.UsersOnInit;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.ServerConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
+import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
+import jbst.foundation.domain.properties.base.JbstPropertyInvitationsOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
+import jbst.foundation.domain.properties.configs.JbstPropertyServer;
+import jbst.foundation.domain.properties.configs.security.JbstPropertyAuthorities;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityEssence;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -89,21 +89,21 @@ class JbstStartupEventListenerTest {
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isUsersEnabled, boolean isInvitationsEnabled) {
         // Arrange
-        var securityJwtConfigs = new SecurityJwtConfigs(
-                new AuthoritiesConfigs(
+        var securityJwtConfigs = new JbstPropertySecurity(
+                new JbstPropertyAuthorities(
                         "jbst",
                         Set.of(
-                                new Authority("admin"),
-                                new Authority("user")
+                                new JbstPropertyAuthority("admin"),
+                                new JbstPropertyAuthority("user")
                         )
                 ),
                 null,
-                new EssenceConfigs(
-                        new UsersOnInit(
+                new JbstPropertySecurityEssence(
+                        new JbstPropertyUsersOnInit(
                                 isUsersEnabled,
                                 new ArrayList<>()
                         ),
-                        new InvitationsOnInit(
+                        new JbstPropertyInvitationsOnInit(
                                 isInvitationsEnabled
                         )
                 ),
@@ -114,7 +114,7 @@ class JbstStartupEventListenerTest {
                 null,
                 null
         );
-        when(this.jbstProperties.getServerConfigs()).thenReturn(ServerConfigs.hardcoded());
+        when(this.jbstProperties.getServerConfigs()).thenReturn(JbstPropertyServer.hardcoded());
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
 
         // Act

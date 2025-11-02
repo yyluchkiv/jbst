@@ -3,12 +3,12 @@ package jbst.foundation.websockets;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.WebsocketsConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.CsrfConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityWebsockets;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsCSRF;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsMessageBrokerRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsStompEndpointRegistry;
+import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsFeatures;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -100,7 +100,7 @@ class JbstWebsocketsServiceTest {
     @Test
     void convertAndSendToUserThrowExceptionTest() {
         // Assert
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.hardcoded());
         var username = Username.random();
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
@@ -121,14 +121,14 @@ class JbstWebsocketsServiceTest {
     @MethodSource("convertAndSendToUserTestArgs")
     void convertAndSendToUserTest(boolean enabled, boolean expectedSend) {
         // Assert
-        var securityJwtConfigs = mock(SecurityJwtConfigs.class);
+        var securityJwtConfigs = mock(JbstPropertySecurity.class);
         when(securityJwtConfigs.getWebsocketsConfigs()).thenReturn(
-                new WebsocketsConfigs(
+                new JbstPropertySecurityWebsockets(
                         enabled,
-                        CsrfConfigs.hardcoded(),
-                        StompEndpointRegistryConfigs.hardcoded(),
-                        MessageBrokerRegistryConfigs.hardcoded(),
-                        WebsocketsFeaturesConfigs.hardcoded()
+                        JbstPropertyWebsocketsCSRF.hardcoded(),
+                        JbstPropertyWebsocketsStompEndpointRegistry.hardcoded(),
+                        JbstPropertyWebsocketsMessageBrokerRegistry.hardcoded(),
+                        JbstPropertyWebsocketsFeatures.hardcoded()
                 )
         );
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);

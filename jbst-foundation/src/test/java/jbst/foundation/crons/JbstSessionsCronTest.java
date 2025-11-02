@@ -2,9 +2,9 @@ package jbst.foundation.crons;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.Cron;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
+import jbst.foundation.domain.properties.base.JbstPropertyCron;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecuritySessions;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -35,8 +35,8 @@ class JbstSessionsCronTest {
 
     public static Stream<Arguments> cronArgs() {
         return Stream.of(
-                Arguments.of(Cron.enabled()),
-                Arguments.of(Cron.disabled())
+                Arguments.of(JbstPropertyCron.enabled()),
+                Arguments.of(JbstPropertyCron.disabled())
         );
     }
 
@@ -114,13 +114,13 @@ class JbstSessionsCronTest {
 
     @ParameterizedTest
     @MethodSource("cronArgs")
-    void cleanByExpiredRefreshTokensTest(Cron cron) {
+    void cleanByExpiredRefreshTokensTest(JbstPropertyCron cron) {
         // Arrange
         var usernames = set345(Username.class);
         if (cron.isEnabled()) {
             when(this.sessionRegistry.getActiveSessionsUsernames()).thenReturn(usernames);
         }
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(new SessionConfigs(cron, Cron.random())));
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(new JbstPropertySecuritySessions(cron, JbstPropertyCron.random())));
 
         // Act
         this.componentUnderTest.cleanByExpiredRefreshTokens();
@@ -135,8 +135,8 @@ class JbstSessionsCronTest {
 
     @ParameterizedTest
     @MethodSource("cronArgs")
-    void enableSessionsMetadataRenewTest(Cron cron) {
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(new SessionConfigs(Cron.random(), cron)));
+    void enableSessionsMetadataRenewTest(JbstPropertyCron cron) {
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(new JbstPropertySecuritySessions(JbstPropertyCron.random(), cron)));
 
         // Act
         this.componentUnderTest.enableSessionsMetadataRenew();

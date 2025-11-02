@@ -8,11 +8,11 @@ import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundExceptio
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.JwtToken;
+import jbst.foundation.domain.properties.base.JbstPropertyJwtToken;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
-import jbst.foundation.domain.properties.base.TimeAmount;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.*;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
+import jbst.foundation.domain.properties.configs.security.*;
 import jbst.foundation.tokens.providers.JbstTokenCookiesProvider;
 import jbst.foundation.tokens.providers.JbstTokenHeadersProvider;
 import lombok.RequiredArgsConstructor;
@@ -273,21 +273,21 @@ class JbstTokensProviderTest {
     // =================================================================================================================
     private void mockProperties(JbstJwtTokenStorageMethod method) {
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(
-                new SecurityJwtConfigs(
-                        AuthoritiesConfigs.hardcoded(),
-                        CookiesConfigs.hardcoded(),
-                        EssenceConfigs.hardcoded(),
-                        new JwtTokensConfigs(
+                new JbstPropertySecurity(
+                        JbstPropertyAuthorities.hardcoded(),
+                        JbstPropertySecurityCookies.hardcoded(),
+                        JbstPropertySecurityEssence.hardcoded(),
+                        new JbstPropertySecurityJWT(
                                 "JBST",
                                 method,
-                                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
-                                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
+                                new JbstPropertyJwtToken(new JbstPropertyTimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
+                                new JbstPropertyJwtToken(new JbstPropertyTimeAmount(12L, HOURS), "rjwt", "T-RJWT")
                         ),
-                        LoggingConfigs.hardcoded(),
-                        SessionConfigs.hardcoded(),
-                        UsersEmailsConfigs.hardcoded(),
-                        WebsocketsConfigs.hardcoded(),
-                        UsersTokensConfigs.hardcoded()
+                        JbstPropertySecurityLogging.hardcoded(),
+                        JbstPropertySecuritySessions.hardcoded(),
+                        JbstPropertySecurityUsersEmails.hardcoded(),
+                        JbstPropertySecurityWebsockets.hardcoded(),
+                        JbstPropertySecurityUsersTokens.hardcoded()
                 )
         );
     }

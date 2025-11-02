@@ -1,0 +1,60 @@
+package jbst.foundation.domain.properties.base;
+
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.JbstProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
+
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class JbstPropertyCron extends JbstProperty {
+    @MandatoryProperty
+    private final boolean enabled;
+    @MandatoryPropertyToggle
+    private String expression;
+    @MandatoryPropertyToggle
+    private String zoneId;
+
+    public static JbstPropertyCron hardcoded() {
+        return new JbstPropertyCron(true, "*/30 * * * * *", UKRAINE.getId());
+    }
+
+    public static JbstPropertyCron enabled(String expression, String zoneId) {
+        return new JbstPropertyCron(true, expression, zoneId);
+    }
+
+    public static JbstPropertyCron enabled() {
+        return hardcoded();
+    }
+
+    public static JbstPropertyCron disabled() {
+        return new JbstPropertyCron(false, null, null);
+    }
+
+    public static JbstPropertyCron random() {
+        return randomBoolean() ? enabled() : disabled();
+    }
+
+    @Override
+    public JbstPropertyNodeType getNodeType() {
+        return JbstPropertyNodeType.LEAF;
+    }
+
+    @Override
+    public boolean isToggle() {
+        return this.enabled;
+    }
+
+    @Override
+    public String getNameNonLeaf() {
+        return JbstConstants.Symbols.DASH;
+    }
+}

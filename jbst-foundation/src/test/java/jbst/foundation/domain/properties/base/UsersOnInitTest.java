@@ -21,14 +21,14 @@ class UsersOnInitTest {
                 Arguments.of(null, emptySet()),
                 Arguments.of(
                         List.of(
-                                new UserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, null)
+                                new JbstPropertyUserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, null)
                         ),
                         emptySet()
                 ),
                 Arguments.of(
                         List.of(
-                                new UserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, Set.of("user")),
-                                new UserOnInit(Username.of("user2"), Password.of("pass2"), systemDefault(), null, false, Set.of("admin", "user"))
+                                new JbstPropertyUserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, Set.of("user")),
+                                new JbstPropertyUserOnInit(Username.of("user2"), Password.of("pass2"), systemDefault(), null, false, Set.of("admin", "user"))
                         ),
                         Set.of("user", "admin")
                 )
@@ -37,9 +37,9 @@ class UsersOnInitTest {
 
     @ParameterizedTest
     @MethodSource("getAuthoritiesTest")
-    void getAuthoritiesTest(List<UserOnInit> users, Set<String> expected) {
+    void getAuthoritiesTest(List<JbstPropertyUserOnInit> users, Set<String> expected) {
         // Act
-       var actual = new UsersOnInit(true, users).getAuthorities();
+       var actual = new JbstPropertyUsersOnInit(true, users).getAuthorities();
 
         // Assert
         assertThat(actual).isEqualTo(expected);

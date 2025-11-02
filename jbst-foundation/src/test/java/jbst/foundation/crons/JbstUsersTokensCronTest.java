@@ -1,6 +1,6 @@
 package jbst.foundation.crons;
 
-import jbst.foundation.domain.properties.base.Cron;
+import jbst.foundation.domain.properties.base.JbstPropertyCron;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class JbstUsersTokensCronTest {
 
     public static Stream<Arguments> cronArgs() {
         return Stream.of(
-                Arguments.of(Cron.enabled()),
-                Arguments.of(Cron.disabled())
+                Arguments.of(JbstPropertyCron.enabled()),
+                Arguments.of(JbstPropertyCron.disabled())
         );
     }
 
@@ -93,7 +93,7 @@ public class JbstUsersTokensCronTest {
     @SuppressWarnings("unused")
     @ParameterizedTest
     @MethodSource("cronArgs")
-    void cleanupTest(Cron cron) {
+    void cleanupTest(JbstPropertyCron cron) {
         // Act
         this.componentUnderTest.cleanup();
 

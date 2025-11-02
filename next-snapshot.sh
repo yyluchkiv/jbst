@@ -3,7 +3,7 @@
 PREFIX="[NextSnapshot]"
 GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
 CHANGELOG_PATH="CHANGELOG.md"
-DOCKER_COMPOSE_MONGODB_PATH="docker/docker-compose.mongodb.yml"
+DOCKER_COMPOSE_MONGODB_PATH="docker/docker-compose.mongo.yml"
 DOCKER_COMPOSE_POSTGRES_PATH="docker/docker-compose.postgres.yml"
 
 MAJOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $1}')

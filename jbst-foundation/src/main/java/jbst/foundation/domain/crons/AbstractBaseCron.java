@@ -1,6 +1,6 @@
 package jbst.foundation.domain.crons;
 
-import jbst.foundation.domain.properties.base.Cron;
+import jbst.foundation.domain.properties.base.JbstPropertyCron;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -8,7 +8,8 @@ public abstract class AbstractBaseCron {
 
     public abstract void processException(Exception ex);
 
-    public void executeCron(Cron cron, AbstractCronAction action) {
+    @SuppressWarnings("unused")
+    public void executeCron(JbstPropertyCron cron, AbstractCronAction action) {
         this.executeCron(
                 cron.isEnabled(),
                 action

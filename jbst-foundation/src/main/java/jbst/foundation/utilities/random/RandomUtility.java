@@ -6,7 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.random.JbstIllegalEnumException;
-import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;
@@ -376,7 +376,7 @@ public class RandomUtility {
     public static Claims validClaims() {
         var claims = Jwts.claims();
         claims.subject(Username.hardcoded().value());
-        var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
+        var timeAmount = new JbstPropertyTimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.issuedAt(new Date());
         claims.expiration(expiration);

@@ -3,7 +3,7 @@ package jbst.foundation.events.publishers;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
-import jbst.foundation.domain.properties.base.RemoteServer;
+import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.authetication.*;
@@ -461,7 +461,7 @@ class JbstIncidentsPublisherTest {
         return new JbstPropertyIncidentsManager(
                 true,
                 JbstIncidentsManagerType.hardcoded(),
-                RemoteServer.hardcoded(),
+                JbstPropertyRemoteServer.hardcoded(),
                 types
         );
     }

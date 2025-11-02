@@ -16,27 +16,27 @@ import org.springframework.core.PriorityOrdered;
 )
 @Data
 public class JbstProperties implements PriorityOrdered {
-    private ServerConfigs serverConfigs;
-    private UtilsConfigs utilsConfigs;
-    private AsyncConfigs asyncConfigs;
-    private EventsConfigs eventsConfigs;
-    private MvcConfigs mvcConfigs;
-    private EmailConfigs emailConfigs;
+    private JbstPropertyServer serverConfigs;
+    private JbstPropertyUtils utilsConfigs;
+    private JbstPropertyAsync asyncConfigs;
+    private JbstPropertyEvents eventsConfigs;
+    private JbstPropertyMVC mvcConfigs;
+    private JbstPropertyEmail emailConfigs;
     private JbstPropertyIncidentsManager incidentsManager;
-    private SecurityJwtConfigs securityJwtConfigs;
-    private MongodbSecurityJwtConfigs mongodbSecurityJwtConfigs;
+    private JbstPropertySecurity securityJwtConfigs;
+    private JbstPropertyDatabases databases;
 
     public static JbstProperties hardcoded() {
         var properties = new JbstProperties();
-        properties.setServerConfigs(ServerConfigs.hardcoded());
-        properties.setUtilsConfigs(UtilsConfigs.hardcoded());
-        properties.setAsyncConfigs(AsyncConfigs.hardcoded());
-        properties.setEventsConfigs(EventsConfigs.hardcoded());
-        properties.setMvcConfigs(MvcConfigs.hardcoded());
-        properties.setEmailConfigs(EmailConfigs.hardcoded());
+        properties.setServerConfigs(JbstPropertyServer.hardcoded());
+        properties.setUtilsConfigs(JbstPropertyUtils.hardcoded());
+        properties.setAsyncConfigs(JbstPropertyAsync.hardcoded());
+        properties.setEventsConfigs(JbstPropertyEvents.hardcoded());
+        properties.setMvcConfigs(JbstPropertyMVC.hardcoded());
+        properties.setEmailConfigs(JbstPropertyEmail.hardcoded());
         properties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
-        properties.setSecurityJwtConfigs(SecurityJwtConfigs.hardcoded());
-        properties.setMongodbSecurityJwtConfigs(MongodbSecurityJwtConfigs.hardcoded());
+        properties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
+        properties.setDatabases(JbstPropertyDatabases.hardcoded());
         return properties;
     }
 

@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.UserOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstSettingsRepository;
@@ -45,8 +45,8 @@ public abstract class JbstSettingsService {
         this.settingsAR = new AtomicReference<>();
     }
 
-    abstract public long initUsers(List<UserOnInit> usersOnInit);
-    abstract public void initInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities);
+    abstract public long initUsers(List<JbstPropertyUserOnInit> usersOnInit);
+    abstract public void initInvitations(JbstPropertyUserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities);
 
     // ================================================================================================================
     // Settings: [jbst_setting] table/collection

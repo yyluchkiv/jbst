@@ -3,12 +3,12 @@ package jbst.foundation.configurations;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.Authority;
+import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
-import jbst.foundation.domain.properties.configs.MvcConfigs;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.*;
+import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
+import jbst.foundation.domain.properties.configs.mvc.JbstPropertyCORS;
+import jbst.foundation.domain.properties.configs.security.*;
 import jbst.foundation.filters.jwt.JbstTokensFilter;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
@@ -54,10 +54,10 @@ class JbstConfigurationSecurityJwtTest {
         public JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
             jbstProperties.setMvcConfigs(
-                    new MvcConfigs(
+                    new JbstPropertyMVC(
                             true,
                             "/jbst/security",
-                            new CorsConfigs(
+                            new JbstPropertyCORS(
                                     "/api/**",
                                     new String[] { "http://localhost:1234" },
                                     new String[] { "GET", "POST" },
@@ -69,26 +69,26 @@ class JbstConfigurationSecurityJwtTest {
             );
             jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
             jbstProperties.setSecurityJwtConfigs(
-                    new SecurityJwtConfigs(
-                            new AuthoritiesConfigs(
+                    new JbstPropertySecurity(
+                            new JbstPropertyAuthorities(
                                     "jbst.foundation.tests.enums",
                                     Set.of(
-                                            new Authority(AbstractAuthority.SUPERADMIN),
-                                            new Authority(AbstractAuthority.INVITATIONS_READ),
-                                            new Authority(AbstractAuthority.INVITATIONS_WRITE),
-                                            new Authority(AbstractAuthority.PROMETHEUS_READ),
-                                            new Authority("admin"),
-                                            new Authority("user")
+                                            new JbstPropertyAuthority(AbstractAuthority.SUPERADMIN),
+                                            new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_READ),
+                                            new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_WRITE),
+                                            new JbstPropertyAuthority(AbstractAuthority.PROMETHEUS_READ),
+                                            new JbstPropertyAuthority("admin"),
+                                            new JbstPropertyAuthority("user")
                                     )
                             ),
-                            CookiesConfigs.hardcoded(),
-                            EssenceConfigs.hardcoded(),
-                            JwtTokensConfigs.hardcoded(),
-                            LoggingConfigs.hardcoded(),
-                            SessionConfigs.hardcoded(),
-                            UsersEmailsConfigs.hardcoded(),
-                            WebsocketsConfigs.hardcoded(),
-                            UsersTokensConfigs.hardcoded()
+                            JbstPropertySecurityCookies.hardcoded(),
+                            JbstPropertySecurityEssence.hardcoded(),
+                            JbstPropertySecurityJWT.hardcoded(),
+                            JbstPropertySecurityLogging.hardcoded(),
+                            JbstPropertySecuritySessions.hardcoded(),
+                            JbstPropertySecurityUsersEmails.hardcoded(),
+                            JbstPropertySecurityWebsockets.hardcoded(),
+                            JbstPropertySecurityUsersTokens.hardcoded()
                     )
             );
             return jbstProperties;

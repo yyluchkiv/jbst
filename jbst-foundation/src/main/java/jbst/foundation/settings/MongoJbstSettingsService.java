@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.UserOnInit;
+import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
 import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
@@ -34,7 +34,7 @@ public class MongoJbstSettingsService extends JbstSettingsService {
     }
 
     @Override
-    public long initUsers(List<UserOnInit> usersOnInit) {
+    public long initUsers(List<JbstPropertyUserOnInit> usersOnInit) {
         var users = usersOnInit.stream().
                 map(userOnInit -> {
                     var username = userOnInit.getUsername();
@@ -58,7 +58,7 @@ public class MongoJbstSettingsService extends JbstSettingsService {
     }
 
     @Override
-    public void initInvitations(UserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
+    public void initInvitations(JbstPropertyUserOnInit userOnInit, Set<SimpleGrantedAuthority> authorities) {
         var invitations = IntStream.range(0, 10)
                 .mapToObj(i ->
                         new MongoDbInvitation(

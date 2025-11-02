@@ -1,7 +1,7 @@
 package jbst.server.ops.domain.incidents;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.domain.properties.base.RemoteServer;
+import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -21,7 +21,7 @@ public class OpsIncidentEnv {
     }
 
     @SneakyThrows
-    public static OpsIncidentEnv of(RemoteServer remoteServer) {
+    public static OpsIncidentEnv of(JbstPropertyRemoteServer remoteServer) {
         return new OpsIncidentEnv(new URL(remoteServer.getBaseURL()).getHost());
     }
 }

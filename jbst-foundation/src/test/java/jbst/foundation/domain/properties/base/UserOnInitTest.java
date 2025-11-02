@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.base;
 
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import org.junit.jupiter.api.Test;
 
 import static jbst.foundation.utilities.random.EntityUtility.entity;
@@ -11,7 +11,7 @@ class UserOnInitTest {
     @Test
     void getEmailNullTest() {
         // Arrange
-        var users = SecurityJwtConfigs.hardcoded().getEssenceConfigs().getUsersOnInit();
+        var users = JbstPropertySecurity.hardcoded().getEssenceConfigs().getUsersOnInit();
 
         // Act
         var email = users.getUsers().get(0).getEmailOrNull();
@@ -23,7 +23,7 @@ class UserOnInitTest {
     @Test
     void getEmailTest() {
         // Arrange
-        var users = entity(UserOnInit.class);
+        var users = entity(JbstPropertyUserOnInit.class);
 
         // Act
         var email = users.getEmailOrNull();
