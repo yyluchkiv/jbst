@@ -87,7 +87,7 @@ class JbstConfigurationSecurityJwtTest {
                             JbstPropertySecurityLogging.hardcoded(),
                             JbstPropertySecuritySessions.hardcoded(),
                             JbstPropertySecurityUsersEmails.hardcoded(),
-                            JbstPropertyWebsockets.hardcoded(),
+                            JbstPropertySecurityWebsockets.hardcoded(),
                             JbstPropertySecurityUsersTokens.hardcoded()
                     )
             );

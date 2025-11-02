@@ -44,7 +44,7 @@ public class JbstPropertySecurity extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertySecurityUsersEmails usersEmailsConfigs;
     @MandatoryProperty
-    private final JbstPropertyWebsockets websocketsConfigs;
+    private final JbstPropertySecurityWebsockets websocketsConfigs;
     @NonMandatoryProperty
     private final JbstPropertySecurityUsersTokens usersTokensConfigs;
 
@@ -57,7 +57,7 @@ public class JbstPropertySecurity extends JbstProperty {
                 JbstPropertySecurityLogging.hardcoded(),
                 JbstPropertySecuritySessions.hardcoded(),
                 JbstPropertySecurityUsersEmails.hardcoded(),
-                JbstPropertyWebsockets.hardcoded(),
+                JbstPropertySecurityWebsockets.hardcoded(),
                 JbstPropertySecurityUsersTokens.hardcoded()
         );
     }

@@ -17,7 +17,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyWebsockets extends JbstProperty {
+public class JbstPropertySecurityWebsockets extends JbstProperty {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryPropertyToggle
@@ -29,8 +29,8 @@ public class JbstPropertyWebsockets extends JbstProperty {
     @MandatoryPropertyToggle
     private JbstPropertyWebsocketsFeatures featuresConfigs;
 
-    public static JbstPropertyWebsockets hardcoded() {
-        return new JbstPropertyWebsockets(
+    public static JbstPropertySecurityWebsockets hardcoded() {
+        return new JbstPropertySecurityWebsockets(
                 true,
                 JbstPropertyWebsocketsCSRF.hardcoded(),
                 JbstPropertyWebsocketsStompEndpointRegistry.hardcoded(),
@@ -39,8 +39,8 @@ public class JbstPropertyWebsockets extends JbstProperty {
         );
     }
 
-    public static JbstPropertyWebsockets random() {
-        return new JbstPropertyWebsockets(
+    public static JbstPropertySecurityWebsockets random() {
+        return new JbstPropertySecurityWebsockets(
                 RandomUtility.randomBoolean(),
                 JbstPropertyWebsocketsCSRF.random(),
                 JbstPropertyWebsocketsStompEndpointRegistry.random(),

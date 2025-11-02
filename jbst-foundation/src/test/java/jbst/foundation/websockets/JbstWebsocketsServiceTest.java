@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
-import jbst.foundation.domain.properties.configs.security.JbstPropertyWebsockets;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityWebsockets;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsCSRF;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsMessageBrokerRegistry;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsStompEndpointRegistry;
@@ -123,7 +123,7 @@ class JbstWebsocketsServiceTest {
         // Assert
         var securityJwtConfigs = mock(JbstPropertySecurity.class);
         when(securityJwtConfigs.getWebsocketsConfigs()).thenReturn(
-                new JbstPropertyWebsockets(
+                new JbstPropertySecurityWebsockets(
                         enabled,
                         JbstPropertyWebsocketsCSRF.hardcoded(),
                         JbstPropertyWebsocketsStompEndpointRegistry.hardcoded(),
