@@ -30,7 +30,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurity extends JbstProperty {
     @MandatoryProperty
-    private final JbstPropertyAuthorities authoritiesConfigs;
+    private final JbstPropertySecurityAuthorities authoritiesConfigs;
     @MandatoryProperty
     private final JbstPropertySecurityCookies cookiesConfigs;
     @MandatoryProperty
@@ -50,7 +50,7 @@ public class JbstPropertySecurity extends JbstProperty {
 
     public static JbstPropertySecurity hardcoded() {
         return new JbstPropertySecurity(
-                JbstPropertyAuthorities.hardcoded(),
+                JbstPropertySecurityAuthorities.hardcoded(),
                 JbstPropertySecurityCookies.hardcoded(),
                 JbstPropertySecurityEssence.hardcoded(),
                 JbstPropertySecurityJWT.hardcoded(),

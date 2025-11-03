@@ -6,7 +6,7 @@ import jbst.foundation.domain.properties.base.JbstPropertyInvitationsOnInit;
 import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.JbstPropertyServer;
-import jbst.foundation.domain.properties.configs.security.JbstPropertyAuthorities;
+import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityAuthorities;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityEssence;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -90,7 +90,7 @@ class JbstStartupEventListenerTest {
     void onStartupTest(boolean isUsersEnabled, boolean isInvitationsEnabled) {
         // Arrange
         var securityJwtConfigs = new JbstPropertySecurity(
-                new JbstPropertyAuthorities(
+                new JbstPropertySecurityAuthorities(
                         "jbst",
                         Set.of(
                                 new JbstPropertyAuthority("admin"),

@@ -1,2 +1,2 @@
 ### Changelog [v1.35]
-— TBD
+— Modification: rename JbstPropertyAuthorities -> JbstPropertySecurityAuthorities

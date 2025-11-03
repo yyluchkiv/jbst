@@ -70,7 +70,7 @@ class JbstConfigurationSecurityJwtTest {
             jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
             jbstProperties.setSecurityJwtConfigs(
                     new JbstPropertySecurity(
-                            new JbstPropertyAuthorities(
+                            new JbstPropertySecurityAuthorities(
                                     "jbst.foundation.tests.enums",
                                     Set.of(
                                             new JbstPropertyAuthority(AbstractAuthority.SUPERADMIN),

@@ -274,7 +274,7 @@ class JbstTokensProviderTest {
     private void mockProperties(JbstJwtTokenStorageMethod method) {
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(
                 new JbstPropertySecurity(
-                        JbstPropertyAuthorities.hardcoded(),
+                        JbstPropertySecurityAuthorities.hardcoded(),
                         JbstPropertySecurityCookies.hardcoded(),
                         JbstPropertySecurityEssence.hardcoded(),
                         new JbstPropertySecurityJWT(
