@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.properties.configs.mvc.JbstPropertyCORS;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyMVC extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final boolean enabled;
     @MandatoryPropertyToggle
     private String basePathPrefix;

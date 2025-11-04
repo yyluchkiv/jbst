@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.base.JbstPropertyCron;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +15,9 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecuritySessions extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyCron cleanSessionsByExpiredRefreshTokensCron;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyCron enableSessionsMetadataRenewCron;
 
     public static JbstPropertySecuritySessions hardcoded() {

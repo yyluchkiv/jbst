@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,11 +18,11 @@ import static jbst.foundation.utilities.random.RandomUtility.randomTimeUnit;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySchedulerConfiguration extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Long initialDelay;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Long delay;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final TimeUnit unit;
 
     public static JbstPropertySchedulerConfiguration hardcoded() {

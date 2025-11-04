@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsCSRF;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsMessageBrokerRegistry;
@@ -18,7 +18,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityWebsockets extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final boolean enabled;
     @MandatoryPropertyToggle
     private final JbstPropertyWebsocketsCSRF csrfConfigs;

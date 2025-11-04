@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,11 +18,11 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyAsync extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String threadNamePrefix;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final BigDecimal threadsCorePoolPercentage;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final BigDecimal threadsMaxPoolPercentage;
 
     public static JbstPropertyAsync hardcoded() {

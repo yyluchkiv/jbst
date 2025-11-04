@@ -1,7 +1,7 @@
 package jbst.server.ops.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.server.ops.domain.servers.Team;
 import jbst.server.ops.properties.base.SlackConfigs;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SlacksConfigs extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final List<SlackConfigs> values;
 
     @Override

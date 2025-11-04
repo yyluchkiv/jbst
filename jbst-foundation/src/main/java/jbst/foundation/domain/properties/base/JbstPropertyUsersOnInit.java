@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +23,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyUsersOnInit extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final boolean enabled;
     @MandatoryPropertyToggle
     private List<JbstPropertyUserOnInit> users;

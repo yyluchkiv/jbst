@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,9 +17,9 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityCookies extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String domain;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyTimeAmount jwtAccessTokenCookieCreationLatency;
 
     public static JbstPropertySecurityCookies hardcoded() {

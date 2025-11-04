@@ -2,7 +2,7 @@ package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,13 +20,13 @@ import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ServersMonitoringConfigs extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final ZoneId zoneId;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Boolean hideIP;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final BigDecimal fileSystemFilter;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final BigDecimal fileSystemThreshold;
 
     @Override

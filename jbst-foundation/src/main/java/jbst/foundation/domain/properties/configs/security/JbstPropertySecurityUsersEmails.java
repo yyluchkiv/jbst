@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.base.JbstPropertyCheckbox;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +19,13 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityUsersEmails extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String subjectPrefix;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyCheckbox accountAccessedMagicLink;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyCheckbox accountAccessedUsernamePassword;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyCheckbox accountAccessedSessionToken;
 
     public static JbstPropertySecurityUsersEmails hardcoded() {

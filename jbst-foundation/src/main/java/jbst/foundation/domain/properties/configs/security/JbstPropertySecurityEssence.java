@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.base.JbstPropertyInvitationsOnInit;
 import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
 import lombok.AllArgsConstructor;
@@ -14,9 +14,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityEssence extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyUsersOnInit usersOnInit;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyInvitationsOnInit invitationsOnInit;
 
     public static JbstPropertySecurityEssence hardcoded() {

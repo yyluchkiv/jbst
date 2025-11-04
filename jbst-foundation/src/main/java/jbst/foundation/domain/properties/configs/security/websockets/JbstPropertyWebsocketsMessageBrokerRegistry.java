@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,12 +16,12 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyWebsocketsMessageBrokerRegistry extends JbstProperty {
     // INFO: spring support list of prefixes as varargs
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String applicationDestinationPrefix;
     // INFO: spring support list of destinations as varargs
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String simpleDestination;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String userDestinationPrefix;
 
     public static JbstPropertyWebsocketsMessageBrokerRegistry hardcoded() {

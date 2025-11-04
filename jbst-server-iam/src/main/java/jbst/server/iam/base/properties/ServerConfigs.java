@@ -1,7 +1,7 @@
 package jbst.server.iam.base.properties;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.server.iam.base.domain.enums.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +13,11 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ServerConfigs extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String targetAttribute1;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final long targetAttribute2;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final UserAuthority targetAuthority;
 
     @Override

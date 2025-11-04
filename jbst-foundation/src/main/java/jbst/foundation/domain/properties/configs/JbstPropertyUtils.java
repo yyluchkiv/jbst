@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.configs.utilities.JbstPropertyGeoCountryFlags;
 import jbst.foundation.domain.properties.configs.utilities.JbstPropertyGeoLocations;
 import jbst.foundation.domain.properties.configs.utilities.JbstPropertyUserAgent;
@@ -15,11 +15,11 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyUtils extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyGeoLocations geoLocationsConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyGeoCountryFlags geoCountryFlagsConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyUserAgent userAgentConfigs;
 
     public static JbstPropertyUtils hardcoded() {

@@ -2,7 +2,7 @@ package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.server.ops.domain.servers.Team;
 import lombok.AllArgsConstructor;
@@ -21,17 +21,17 @@ import static java.lang.Boolean.TRUE;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SlackConfigs extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Team team;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Boolean main;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String botToken;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String appToken;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Mode mode;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String mainCommunicationId;
     @NonMandatoryProperty
     private final List<SlackTeamCommunication> teamsCommunications;

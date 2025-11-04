@@ -4,7 +4,7 @@ import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
@@ -33,7 +33,7 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyIncidentsManager extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final boolean enabled;
     @MandatoryPropertyToggle
     private JbstIncidentsManagerType type;

@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.JbstPropertyCheckbox;
 import jbst.foundation.domain.properties.configs.security.*;
@@ -29,21 +29,21 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurity extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecurityAuthorities authoritiesConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecurityCookies cookiesConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecurityEssence essenceConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecurityJWT jwtTokensConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecurityLogging loggingConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecuritySessions sessionConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecurityUsersEmails usersEmailsConfigs;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertySecurityWebsockets websocketsConfigs;
     @NonMandatoryProperty
     private final JbstPropertySecurityUsersTokens usersTokensConfigs;
