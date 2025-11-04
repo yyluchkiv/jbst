@@ -1,12 +1,13 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.annotations.JbstModificationBeta;
+import jbst.foundation.domain.enums.JbstIncidentsManagerType;
+import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
-import jbst.foundation.domain.enums.JbstIncidentsManagerType;
-import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
+import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
@@ -37,7 +39,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     private JbstIncidentsManagerType type;
     @MandatoryPropertyToggle
     private JbstPropertyRemoteServer remoteServer;
-    @MandatoryPropertyToggle
+    @NonMandatoryProperty
     @MandatoryPropertyMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
 
@@ -109,11 +111,15 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     }
 
     public <E extends Enum<E>> boolean isEnabled(String type, Class<E> enumClass) {
-        try {
-            E enumValue = Enum.valueOf(enumClass, type);
-            return TRUE.equals(this.incidents.get(enumValue.name()));
-        } catch (IllegalArgumentException ex) {
-            // fallback: type not found in enum
+        if (nonNull(this.incidents)) {
+            try {
+                E enumValue = Enum.valueOf(enumClass, type);
+                return TRUE.equals(this.incidents.get(enumValue.name()));
+            } catch (IllegalArgumentException ex) {
+                // fallback: type not found in enum
+                return false;
+            }
+        } else {
             return false;
         }
     }

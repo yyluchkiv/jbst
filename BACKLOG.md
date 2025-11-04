@@ -7,4 +7,6 @@
 - Plan Payments (Stripe)
 
 ##### Minor
+- PropertiesAnnotation: MandatoryPropertyMapEnums + MandatoryPropertyMapMinSize -> MetadataJbstPropertyMapEnums
+- PropertiesAnnotation: MandatoryProperty -> JbstPropertyMandatory + everything else
 - Properties: remove naming "-configs" naming
