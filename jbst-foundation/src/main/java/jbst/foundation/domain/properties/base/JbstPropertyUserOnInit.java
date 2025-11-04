@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,9 +33,9 @@ public class JbstPropertyUserOnInit extends JbstProperty {
     private final Password password;
     @JbstPropertyMandatory
     private final ZoneId zoneId;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String email;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private final Boolean passwordChangeRequired;
     @JbstPropertyMandatory
     private final Set<String> authorities;

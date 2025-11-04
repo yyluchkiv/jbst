@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.base.JbstPropertyCheckbox;
 import jbst.foundation.domain.properties.configs.security.*;
 import lombok.AllArgsConstructor;
@@ -45,7 +45,7 @@ public class JbstPropertySecurity extends JbstProperty {
     private final JbstPropertySecurityUsersEmails usersEmailsConfigs;
     @JbstPropertyMandatory
     private final JbstPropertySecurityWebsockets websocketsConfigs;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private final JbstPropertySecurityUsersTokens usersTokensConfigs;
 
     public static JbstPropertySecurity hardcoded() {

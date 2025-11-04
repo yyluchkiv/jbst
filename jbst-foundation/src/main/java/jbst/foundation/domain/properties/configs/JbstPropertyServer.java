@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.configs.server.JbstPropertyMaven;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +22,9 @@ public class JbstPropertyServer extends JbstProperty {
     private final JbstPropertyMaven mavenConfigs;
     @JbstPropertyMandatory
     private final Boolean springdocEnabled;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String serverURL;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String webclientURL;
 
     public static JbstPropertyServer hardcoded() {

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.configs.databases.JbstPropertyDatabaseMongo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyDatabases extends JbstProperty {
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private final JbstPropertyDatabaseMongo mongo;
 
     public static JbstPropertyDatabases hardcoded() {

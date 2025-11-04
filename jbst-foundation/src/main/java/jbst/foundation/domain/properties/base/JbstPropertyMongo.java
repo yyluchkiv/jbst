@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,9 +25,9 @@ public class JbstPropertyMongo extends JbstProperty {
     private final Integer port;
     @JbstPropertyMandatory
     private final String name;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private Username username;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private Password password;
 
     public static JbstPropertyMongo hardcoded() {

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,11 +14,11 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityUsersTokens extends JbstProperty {
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String webclientMagicLinkPath;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String webclientEmailConfirmationRedirectPath;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String webclientPasswordResetPath;
 
     public static JbstPropertySecurityUsersTokens hardcoded() {

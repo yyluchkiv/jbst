@@ -3,7 +3,7 @@ package jbst.server.ops.properties.base;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.server.ops.domain.servers.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +33,7 @@ public class SlackConfigs extends JbstProperty {
     private final Mode mode;
     @JbstPropertyMandatory
     private final String mainCommunicationId;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private final List<SlackTeamCommunication> teamsCommunications;
 
     @Override

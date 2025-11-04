@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     private JbstIncidentsManagerType type;
     @JbstPropertyMandatoryOnToggleEnabled
     private JbstPropertyRemoteServer remoteServer;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     @JbstPropertyMetadataMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
 

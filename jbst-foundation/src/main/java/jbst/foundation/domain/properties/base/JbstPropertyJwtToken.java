@@ -4,7 +4,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,9 +23,9 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 public class JbstPropertyJwtToken extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertyTimeAmount expiration;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String cookieKey;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String headerKey;
 
     public static JbstPropertyJwtToken hardcoded() {

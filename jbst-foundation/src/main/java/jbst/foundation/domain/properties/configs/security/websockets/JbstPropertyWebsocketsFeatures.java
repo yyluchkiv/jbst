@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,9 +12,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyWebsocketsFeatures extends JbstProperty {
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private JbstPropertyWebsocketsFeature hardwareConfigs;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private JbstPropertyWebsocketsFeature resetServerConfigs;
 
     public static JbstPropertyWebsocketsFeatures hardcoded() {
