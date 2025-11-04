@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface MandatoryPropertyMapEnums {
+public @interface JbstPropertyMetadataMapEnums {
     Class<? extends Enum<?>> keySetClass();
 }
