@@ -25,7 +25,7 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NotUsedPropertiesConfigs extends JbstProperty {
+public class NotUsedPropertiesConfigsMinSize3 extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyScheduledJob scheduledJob;
     @MandatoryProperty
