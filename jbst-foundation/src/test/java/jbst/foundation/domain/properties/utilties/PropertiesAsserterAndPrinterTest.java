@@ -4,7 +4,7 @@ import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.properties.base.*;
 import jbst.foundation.domain.properties.configs.*;
 import jbst.foundation.domain.properties.configs.databases.JbstPropertyDatabaseMongo;
-import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigsMinSize3;
+import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigsIncidentsMinSize3;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ class PropertiesAsserterAndPrinterTest {
     @RepeatedTest(10)
     void notUsedPropertiesConfigsMapMinSizeCase() {
         // Arrange
-        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsMinSize3(
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
                 new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
@@ -43,7 +43,7 @@ class PropertiesAsserterAndPrinterTest {
     @RepeatedTest(10)
     void notUsedPropertiesConfigsExtendedSizeCase() {
         // Arrange
-        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsMinSize3(
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
                 new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
@@ -69,7 +69,7 @@ class PropertiesAsserterAndPrinterTest {
     @RepeatedTest(10)
     void notUsedPropertiesConfigsOK() {
         // Arrange
-        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsMinSize3(
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
                 new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),

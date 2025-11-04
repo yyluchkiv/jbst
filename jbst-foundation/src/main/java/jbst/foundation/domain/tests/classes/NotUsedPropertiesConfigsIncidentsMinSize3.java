@@ -1,6 +1,5 @@
 package jbst.foundation.domain.tests.classes;
 
-import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
@@ -25,7 +24,7 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NotUsedPropertiesConfigsMinSize3 extends JbstProperty {
+public class NotUsedPropertiesConfigsIncidentsMinSize3 extends JbstProperty {
     @MandatoryProperty
     private final JbstPropertyScheduledJob scheduledJob;
     @MandatoryProperty
@@ -51,7 +50,6 @@ public class NotUsedPropertiesConfigsMinSize3 extends JbstProperty {
         return "not-used-properties-configs";
     }
 
-    @JbstModificationBeta(releaseVersion = "v1.31")
     public void assertPropertiesExtended(Set<String> keys) {
         assertTrueOrThrow(
                 this.types.size() >= keys.size(),
