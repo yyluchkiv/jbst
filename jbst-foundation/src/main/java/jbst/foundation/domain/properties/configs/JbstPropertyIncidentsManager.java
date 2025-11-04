@@ -6,7 +6,7 @@ import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
@@ -35,9 +35,9 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 public class JbstPropertyIncidentsManager extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private JbstIncidentsManagerType type;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private JbstPropertyRemoteServer remoteServer;
     @NonMandatoryProperty
     @JbstPropertyMetadataMapMinSize(minSize = 0)

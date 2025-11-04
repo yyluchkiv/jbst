@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import lombok.experimental.UtilityClass;
 
@@ -22,11 +22,11 @@ public class JbstPropertiesUtility {
 
     public static List<Field> getMandatoryToggleFields(Object property, String propertyName) {
         assertNonNullOrThrow(property, propertyName);
-        return getFields(property, Set.of(JbstPropertyMandatory.class, MandatoryPropertyToggle.class));
+        return getFields(property, Set.of(JbstPropertyMandatory.class, JbstPropertyMandatoryOnToggleEnabled.class));
     }
 
     public static List<Field> getMandatoryBasedFields(Object property, String propertyName) {
         assertNonNullOrThrow(property, propertyName);
-        return getFields(property, Set.of(NonMandatoryProperty.class, JbstPropertyMandatory.class, MandatoryPropertyToggle.class));
+        return getFields(property, Set.of(NonMandatoryProperty.class, JbstPropertyMandatory.class, JbstPropertyMandatoryOnToggleEnabled.class));
     }
 }
