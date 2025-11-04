@@ -38,13 +38,13 @@ mvn clean verify
 The IAM module supports both MongoDB and PostgreSQL. Use the appropriate profile:
 ```bash
 # Run with MongoDB
-./jbst-server-iam/run-mongodb.sh
+./jbst-server-iam/run-mongo.sh
 
 # Run with PostgreSQL  
 ./jbst-server-iam/run-postgres.sh
 
 # Docker setup
-./docker/run-mongodb.sh
+./docker/run-mongo.sh
 ./docker/run-postgres.sh
 ```
 

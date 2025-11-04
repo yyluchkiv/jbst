@@ -3,7 +3,7 @@
 PREFIX="[NextSnapshot]"
 GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
 CHANGELOG_PATH="CHANGELOG.md"
-DOCKER_COMPOSE_MONGODB_PATH="docker/docker-compose.mongo.yml"
+DOCKER_COMPOSE_MONGO_PATH="docker/docker-compose.mongo.yml"
 DOCKER_COMPOSE_POSTGRES_PATH="docker/docker-compose.postgres.yml"
 
 MAJOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $1}')
@@ -58,7 +58,7 @@ echo "$PREFIX docker-compose started"
 
 CURRENT_RELEASE_IMAGE="    image: ghcr.io\/tech1-agency\/jbst-server-iam:$CURRENT_RELEASE_CHANGELOG_VERSION"
 
-sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_MONGODB_PATH"
+sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_MONGO_PATH"
 sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_POSTGRES_PATH"
 
 echo "$PREFIX docker-compose has been completed"
