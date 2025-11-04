@@ -1,2 +1,2 @@
 ### Changelog [v1.36]
-— TBD
+— Modification: MandatoryPropertyMapMinSize -> JbstPropertyMetadataMapMinSize

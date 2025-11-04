@@ -2,7 +2,7 @@ package jbst.foundation.domain.tests.classes;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.JbstPropertyScheduledJob;
 import jbst.foundation.domain.properties.base.JbstPropertySpringLogging;
@@ -26,7 +26,7 @@ public class NotUsedPropertiesConfigsIncidentsMinSize0Nullable extends JbstPrope
     @MandatoryProperty
     private final JbstPropertySpringLogging springLogging;
     @NonMandatoryProperty
-    @MandatoryPropertyMapMinSize(minSize = 0)
+    @JbstPropertyMetadataMapMinSize(minSize = 0)
     private final Map<String, Boolean> types;
 
     @Override

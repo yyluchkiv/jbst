@@ -5,7 +5,7 @@ import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
@@ -40,7 +40,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     @MandatoryPropertyToggle
     private JbstPropertyRemoteServer remoteServer;
     @NonMandatoryProperty
-    @MandatoryPropertyMapMinSize(minSize = 0)
+    @JbstPropertyMetadataMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
 
     public static JbstPropertyIncidentsManager hardcoded() {
