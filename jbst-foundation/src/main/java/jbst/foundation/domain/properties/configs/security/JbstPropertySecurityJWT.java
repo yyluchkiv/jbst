@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.base.JbstPropertyJwtToken;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
@@ -24,13 +24,13 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityJWT extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String secretKey;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstJwtTokenStorageMethod storageMethod;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyJwtToken accessToken;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final JbstPropertyJwtToken refreshToken;
 
     public static JbstPropertySecurityJWT hardcoded() {

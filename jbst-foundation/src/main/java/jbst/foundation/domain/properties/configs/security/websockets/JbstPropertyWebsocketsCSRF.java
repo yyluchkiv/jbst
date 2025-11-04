@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,11 +15,11 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyWebsocketsCSRF extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String headerName;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String parameterName;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String tokenKey;
 
     public static JbstPropertyWebsocketsCSRF hardcoded() {

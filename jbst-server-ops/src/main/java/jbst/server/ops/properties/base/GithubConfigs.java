@@ -2,7 +2,7 @@ package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,13 +13,13 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class GithubConfigs extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String token;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String owner;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String repo;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String content;
 
     @Override

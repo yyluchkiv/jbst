@@ -4,10 +4,10 @@ import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
@@ -33,14 +33,14 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyIncidentsManager extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final boolean enabled;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private JbstIncidentsManagerType type;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private JbstPropertyRemoteServer remoteServer;
-    @NonMandatoryProperty
-    @MandatoryPropertyMapMinSize(minSize = 0)
+    @JbstPropertyOptional
+    @JbstPropertyMetadataMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
 
     public static JbstPropertyIncidentsManager hardcoded() {

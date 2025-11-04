@@ -5,8 +5,8 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,17 +27,17 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyUserOnInit extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Username username;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Password password;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final ZoneId zoneId;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String email;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private final Boolean passwordChangeRequired;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Set<String> authorities;
 
     public static JbstPropertyUserOnInit hardcoded() {

@@ -3,8 +3,8 @@ package jbst.foundation.domain.properties.configs;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,17 +15,17 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyEmail extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final boolean enabled;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private String host;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private Integer port;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private String from;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private Username username;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private Password password;
 
     public static JbstPropertyEmail hardcoded() {

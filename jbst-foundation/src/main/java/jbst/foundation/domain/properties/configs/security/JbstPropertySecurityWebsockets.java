@@ -1,8 +1,8 @@
 package jbst.foundation.domain.properties.configs.security;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyToggle;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsCSRF;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsMessageBrokerRegistry;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsStompEndpointRegistry;
@@ -18,15 +18,15 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityWebsockets extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final boolean enabled;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private final JbstPropertyWebsocketsCSRF csrfConfigs;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private final JbstPropertyWebsocketsStompEndpointRegistry stompConfigs;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private final JbstPropertyWebsocketsMessageBrokerRegistry brokerConfigs;
-    @MandatoryPropertyToggle
+    @JbstPropertyMandatoryOnToggleEnabled
     private JbstPropertyWebsocketsFeatures featuresConfigs;
 
     public static JbstPropertySecurityWebsockets hardcoded() {

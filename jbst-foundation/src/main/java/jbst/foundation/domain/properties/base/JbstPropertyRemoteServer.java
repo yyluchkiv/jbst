@@ -8,7 +8,7 @@ import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,9 +22,9 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyRemoteServer extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String baseURL;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final UsernamePasswordCredentials credentials;
 
     public static JbstPropertyRemoteServer hardcoded() {

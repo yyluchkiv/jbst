@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.security.websockets;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyWebsocketsStompEndpointRegistry extends JbstProperty {
     // Spring support list of endpoints as varargs
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String endpoint;
 
     public static JbstPropertyWebsocketsStompEndpointRegistry hardcoded() {

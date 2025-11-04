@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs.server;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.maven.MavenDetails;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,11 +14,11 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyMaven extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String groupId;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String artifactId;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Version version;
 
     public static JbstPropertyMaven hardcoded() {

@@ -1,8 +1,8 @@
 package jbst.foundation.domain.properties;
 
 import jbst.foundation.domain.asserts.ConsoleAsserts;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapEnums;
-import jbst.foundation.domain.properties.annotations.MandatoryPropertyMapMinSize;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapEnums;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -93,8 +93,8 @@ public class JbstPropertyEdge {
 
     @SuppressWarnings({"rawtypes", "DataFlowIssue"})
     public void assertOrThrow() {
-        if (this.child.isAnnotationPresent(MandatoryPropertyMapEnums.class)) {
-            var annotation = this.child.getAnnotation(MandatoryPropertyMapEnums.class);
+        if (this.child.isAnnotationPresent(JbstPropertyMetadataMapEnums.class)) {
+            var annotation = this.child.getAnnotation(JbstPropertyMetadataMapEnums.class);
             Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
             var castedProperty = (Map) this.valueRAW;
             var size = keySetClass.getEnumConstants().length;
@@ -109,8 +109,8 @@ public class JbstPropertyEdge {
                     )
             );
         }
-        if (this.child.isAnnotationPresent(MandatoryPropertyMapMinSize.class)) {
-            var annotation = this.child.getAnnotation(MandatoryPropertyMapMinSize.class);
+        if (this.child.isAnnotationPresent(JbstPropertyMetadataMapMinSize.class)) {
+            var annotation = this.child.getAnnotation(JbstPropertyMetadataMapMinSize.class);
             if (annotation.minSize() > 0) {
                 var castedProperty = (Map) this.valueRAW;
                 assertTrueOrThrow(

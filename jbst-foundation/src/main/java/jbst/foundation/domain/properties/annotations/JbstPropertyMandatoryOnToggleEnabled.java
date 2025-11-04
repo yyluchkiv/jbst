@@ -7,6 +7,5 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface MandatoryPropertyMapMinSize {
-    int minSize();
+public @interface JbstPropertyMandatoryOnToggleEnabled {
 }

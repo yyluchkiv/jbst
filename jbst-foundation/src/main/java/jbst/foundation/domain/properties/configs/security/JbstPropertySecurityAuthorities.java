@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs.security;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +21,9 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurityAuthorities extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String packageName;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Set<JbstPropertyAuthority> authorities;
 
     public static JbstPropertySecurityAuthorities hardcoded() {

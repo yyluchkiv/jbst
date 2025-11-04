@@ -1,8 +1,8 @@
 package jbst.server.ops.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.MandatoryProperty;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.server.ops.properties.base.GithubConfigs;
 import jbst.server.ops.properties.base.ServersMonitoringConfigs;
 import lombok.AllArgsConstructor;
@@ -15,13 +15,13 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ServersConfigs extends JbstProperty {
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final Mode mode;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final String rsaKeysBaseLocation;
-    @MandatoryProperty
+    @JbstPropertyMandatory
     private final ServersMonitoringConfigs monitoringConfigs;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private final GithubConfigs githubConfigs;
 
     @Override

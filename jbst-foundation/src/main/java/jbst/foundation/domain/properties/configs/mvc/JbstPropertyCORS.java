@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.configs.mvc;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
-import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,17 +19,17 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyCORS extends JbstProperty {
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String pathPattern;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String[] allowedOrigins;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String[] allowedMethods;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String[] allowedHeaders;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private boolean allowCredentials;
-    @NonMandatoryProperty
+    @JbstPropertyOptional
     private String[] exposedHeaders;
 
     public static JbstPropertyCORS hardcoded() {
