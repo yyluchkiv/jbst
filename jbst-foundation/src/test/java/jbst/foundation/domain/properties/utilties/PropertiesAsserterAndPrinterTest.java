@@ -4,7 +4,8 @@ import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.properties.base.*;
 import jbst.foundation.domain.properties.configs.*;
 import jbst.foundation.domain.properties.configs.databases.JbstPropertyDatabaseMongo;
-import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigs;
+import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigsIncidentsMinSize0Nullable;
+import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigsIncidentsMinSize3;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +20,25 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 class PropertiesAsserterAndPrinterTest {
 
     @RepeatedTest(10)
+    void notUsedPropertiesConfigsMapMinSizeNullableCase() {
+        // Arrange
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize0Nullable(
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertySpringServer(8080),
+                new JbstPropertySpringLogging("logback-test.xml"),
+                null
+        );
+
+        // Act
+        var throwable = catchThrowable(notUsedPropertiesConfigs::assertProperties);
+
+        // Assert
+        assertThat(throwable).isNull();
+    }
+    @RepeatedTest(10)
     void notUsedPropertiesConfigsMapMinSizeCase() {
         // Arrange
-        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
                 new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
@@ -43,7 +60,7 @@ class PropertiesAsserterAndPrinterTest {
     @RepeatedTest(10)
     void notUsedPropertiesConfigsExtendedSizeCase() {
         // Arrange
-        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
                 new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
@@ -69,7 +86,7 @@ class PropertiesAsserterAndPrinterTest {
     @RepeatedTest(10)
     void notUsedPropertiesConfigsOK() {
         // Arrange
-        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
                 new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
