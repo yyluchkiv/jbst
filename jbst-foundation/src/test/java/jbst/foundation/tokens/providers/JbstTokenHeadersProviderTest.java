@@ -83,7 +83,7 @@ class JbstTokenHeadersProviderTest {
     @Test
     void readCsrfToken() throws JbstCsrfTokenNotFoundException {
         // Arrange
-        var csrfConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurity().getWebsocketsConfigs().getCsrfConfigs();
         var header = randomString();
         var request = mock(HttpServletRequest.class);
         when(request.getParameter(csrfConfigs.getTokenKey())).thenReturn(header);
@@ -256,6 +256,6 @@ class JbstTokenHeadersProviderTest {
     // PRIVATE METHODS
     // =================================================================================================================
     private JbstPropertySecurityJWT jwtTokensConfigs() {
-        return this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
+        return this.jbstProperties.getSecurity().getJwtTokensConfigs();
     }
 }

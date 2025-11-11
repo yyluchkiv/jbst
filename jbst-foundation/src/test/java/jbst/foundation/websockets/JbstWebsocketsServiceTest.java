@@ -100,7 +100,7 @@ class JbstWebsocketsServiceTest {
     @Test
     void convertAndSendToUserThrowExceptionTest() {
         // Assert
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.hardcoded());
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.hardcoded());
         var username = Username.random();
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
@@ -111,7 +111,7 @@ class JbstWebsocketsServiceTest {
         this.componentUnderTest.sendEventToUser(username, destination, websocketEvent);
 
         // Assert
-        verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
+        verify(this.jbstProperties, times(2)).getSecurity();
         verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
         verify(this.incidentsPublisher).publishThrowable(ex);
         verifyNoMoreInteractions(this.simpMessagingTemplate);
@@ -131,7 +131,7 @@ class JbstWebsocketsServiceTest {
                         JbstPropertyWebsocketsFeatures.hardcoded()
                 )
         );
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurity()).thenReturn(securityJwtConfigs);
         var username = Username.random();
         var destination = randomString();
         var websocketEvent = mock(WebsocketEvent.class);
@@ -141,11 +141,11 @@ class JbstWebsocketsServiceTest {
 
         // Assert
         if (expectedSend) {
-            verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
+            verify(this.jbstProperties, times(2)).getSecurity();
             verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
             verifyNoMoreInteractions(this.simpMessagingTemplate);
         } else {
-            verify(this.jbstProperties).getSecurityJwtConfigs();
+            verify(this.jbstProperties).getSecurity();
         }
     }
 }

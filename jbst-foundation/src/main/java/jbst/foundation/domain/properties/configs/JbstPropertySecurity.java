@@ -121,7 +121,7 @@ public class JbstPropertySecurity extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "security-jwt-configs";
+        return "security";
     }
 
     @Override

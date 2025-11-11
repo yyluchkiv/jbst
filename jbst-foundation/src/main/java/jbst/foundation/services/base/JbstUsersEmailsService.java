@@ -45,7 +45,7 @@ public class JbstUsersEmailsService {
     }
 
     public final void executeAccountAccessed(FunctionAccountAccessed function) {
-        if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().isEnabled(function.accountAccessMethod())) {
+        if (!this.jbstProperties.getSecurity().getUsersEmailsConfigs().isEnabled(function.accountAccessMethod())) {
             return;
         }
         this.emailService.sendHTML(this.getAccountAccessedHTML(function));
@@ -128,7 +128,7 @@ public class JbstUsersEmailsService {
     // =================================================================================================================
     protected String getSubjectV1(@NotNull String subject) {
         return "%s %s | %s".formatted(
-                this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix(),
+                this.jbstProperties.getSecurity().getUsersEmailsConfigs().getSubjectPrefix(),
                 subject,
                 LocalDateTime.now(UTC).format(DTF11) + " (UTC)"
         );

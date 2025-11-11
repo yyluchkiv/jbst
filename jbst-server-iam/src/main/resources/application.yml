@@ -52,7 +52,7 @@ jbst:
         - Cache-Control
         - Content-Type
       allow-credentials: true
-  security-jwt-configs:
+  security:
     authorities-configs:
       authorities:
         - value: "superadmin"

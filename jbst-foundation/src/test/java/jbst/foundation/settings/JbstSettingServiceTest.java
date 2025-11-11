@@ -148,14 +148,14 @@ class JbstSettingServiceTest {
     @MethodSource("usersPresenceTest")
     void initUsers(long count) {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.hardcoded());
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.hardcoded());
         when(this.usersRepository.count()).thenReturn(count);
 
         // Act
         this.componentUnderTest.initUsers();
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurity();
         verify(this.usersRepository).count();
         if (count == 0) {
             verify(this.abstractMockService).executeInheritedMethod();
@@ -166,7 +166,7 @@ class JbstSettingServiceTest {
     @MethodSource("usersPresenceTest")
     void initInvitations(long count) {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.hardcoded());
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.hardcoded());
         var username = Username.of("admin12");
         when(this.invitationsRepository.countByOwner(username)).thenReturn(count);
 
@@ -174,7 +174,7 @@ class JbstSettingServiceTest {
         this.componentUnderTest.initInvitations();
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurity();
         verify(this.invitationsRepository).countByOwner(username);
         if (count == 0) {
             verify(this.abstractMockService).executeInheritedMethod();

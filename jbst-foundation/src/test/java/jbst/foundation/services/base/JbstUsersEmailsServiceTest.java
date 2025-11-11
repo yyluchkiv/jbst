@@ -188,14 +188,14 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeAuthenticationLoginDisabled() {
         // Arrange
-        this.jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.disabledUsersEmailsConfigs());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmailsConfigs());
 
         // Act
         this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
 
         // Assert
         // no actions + revert
-        this.jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.hardcoded());
     }
 
     @Test
@@ -225,14 +225,14 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeSessionRefreshedDisabled() {
         // Arrange
-        this.jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.disabledUsersEmailsConfigs());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmailsConfigs());
 
         // Act
         this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
         // no actions + revert
-        this.jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.hardcoded());
     }
 
     @Test

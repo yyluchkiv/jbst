@@ -65,7 +65,7 @@ public abstract class JbstSettingsService {
 
     @SuppressWarnings("LoggingSimilarMessage")
     public void initUsers() {
-        var essenceConfigs = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs();
+        var essenceConfigs = this.jbstProperties.getSecurity().getEssenceConfigs();
         assertTrueOrThrow(
                 essenceConfigs.getUsersOnInit().isEnabled(),
                 invalidAttribute("essence-configs.users-on-init.enabled == true")
@@ -79,13 +79,13 @@ public abstract class JbstSettingsService {
     }
 
     public void initInvitations() {
-        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
-        var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
+        var security = this.jbstProperties.getSecurity();
+        var essenceConfigs = security.getEssenceConfigs();
         assertTrueOrThrow(
                 essenceConfigs.getInvitationsOnInit().isEnabled(),
                 invalidAttribute("essence-configs.invitations-on-init.enabled == true")
         );
-        var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());
+        var authorities = getSimpleGrantedAuthorities(security.getAuthoritiesConfigs().getAvailableAuthorities());
         essenceConfigs.getUsersOnInit().getUsers().forEach(userOnInit -> {
             var username = userOnInit.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {

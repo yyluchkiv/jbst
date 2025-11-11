@@ -63,7 +63,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
         // Arrange
         var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
-        var authorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
+        var authorities = this.jbstProperties.getSecurity().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitations = list345(ResponseInvitation.class);
         var responseInvitations = new ResponseInvitations(authorities, invitations);
         when(this.invitationsService.findByOwner(owner)).thenReturn(responseInvitations);

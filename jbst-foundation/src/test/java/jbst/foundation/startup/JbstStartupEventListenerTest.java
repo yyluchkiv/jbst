@@ -115,13 +115,13 @@ class JbstStartupEventListenerTest {
                 null
         );
         when(this.jbstProperties.getApp()).thenReturn(JbstPropertyApp.hardcoded());
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurity()).thenReturn(securityJwtConfigs);
 
         // Act
         this.componentUnderTest.onStartup();
 
         // Assert
-        verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
+        verify(this.jbstProperties, times(2)).getSecurity();
         if (isUsersEnabled) {
             verify(this.settingsService).initUsers();
         }

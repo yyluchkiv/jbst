@@ -46,7 +46,7 @@ jbst:
         - http://localhost:3003
         - http://localhost:8686
         - http://localhost:8787
-  security-jwt-configs:
+  security:
     cookies-configs:
       domain: localhost
     jwt-tokens-configs:

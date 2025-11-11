@@ -107,6 +107,6 @@ public class JbstTokensProvider {
     // PRIVATE METHODS
     // =================================================================================================================
     public boolean isCookiesProviderEnabled() {
-        return this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getStorageMethod().isCookies();
+        return this.jbstProperties.getSecurity().getJwtTokensConfigs().getStorageMethod().isCookies();
     }
 }

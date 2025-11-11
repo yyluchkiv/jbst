@@ -30,19 +30,19 @@ public class JbstTokenHeadersProvider implements JbstTokenProvider {
 
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
-        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken().getHeaderKey();
         response.addHeader(headerKey, jwtAccessToken.value());
     }
 
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
-        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         response.addHeader(headerKey, jwtRefreshToken.value());
     }
 
     @Override
     public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws JbstCsrfTokenNotFoundException {
-        var csrfConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurity().getWebsocketsConfigs().getCsrfConfigs();
         // WARNING: development workaround to read request query parameters instead of request headers
         var header = request.getParameter(csrfConfigs.getTokenKey());
         if (nonNull(header)) {
@@ -54,7 +54,7 @@ public class JbstTokenHeadersProvider implements JbstTokenProvider {
 
     @Override
     public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws JbstAccessTokenNotFoundException {
-        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken().getHeaderKey();
         var header = request.getHeader(headerKey);
         if (nonNull(header)) {
             return new RequestAccessToken(header);
@@ -65,7 +65,7 @@ public class JbstTokenHeadersProvider implements JbstTokenProvider {
 
     @Override
     public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstAccessTokenNotFoundException {
-        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken().getHeaderKey();
         // WARNING: development workaround to read request query parameters instead of request headers
         var header = request.getParameter(headerKey);
         if (nonNull(header)) {
@@ -77,7 +77,7 @@ public class JbstTokenHeadersProvider implements JbstTokenProvider {
 
     @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws JbstRefreshTokenNotFoundException {
-        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = request.getHeader(headerKey);
         if (nonNull(header)) {
             return new RequestRefreshToken(header);
@@ -88,7 +88,7 @@ public class JbstTokenHeadersProvider implements JbstTokenProvider {
 
     @Override
     public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstRefreshTokenNotFoundException {
-        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = request.getParameter(headerKey);
         if (nonNull(header)) {
             return new RequestRefreshToken(header);

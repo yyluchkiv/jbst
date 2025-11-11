@@ -32,7 +32,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
 
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
-        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
+        var securityJwtConfigs = this.jbstProperties.getSecurity();
         var accessTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
         var jwtAccessTokenCookieCreationLatency = securityJwtConfigs.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
         var maxAge = accessTokenConfiguration.getExpiration().getTimeAmount().toSeconds() - jwtAccessTokenCookieCreationLatency.getTimeAmount().toSeconds();
@@ -50,7 +50,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
 
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
-        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
+        var securityJwtConfigs = this.jbstProperties.getSecurity();
         var refreshTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();
 
         var cookie = createCookie(
@@ -67,7 +67,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws JbstCsrfTokenNotFoundException {
         try {
-            var csrfConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getCsrfConfigs();
+            var csrfConfigs = this.jbstProperties.getSecurity().getWebsocketsConfigs().getCsrfConfigs();
             // WARNING: security concerns? based on https://github.com/sockjs/sockjs-node#authorisation
             // GitHub issue: https://github.com/sockjs/sockjs-client/issues/196
             var csrfCookie = readCookie(request, csrfConfigs.getTokenKey());
@@ -80,7 +80,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws JbstAccessTokenNotFoundException {
         try {
-            var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+            var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
             var cookie = readCookie(request, accessToken.getCookieKey());
             return new RequestAccessToken(cookie);
         } catch (JbstCookieNotFoundException ex) {
@@ -96,7 +96,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws JbstRefreshTokenNotFoundException {
         try {
-            var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+            var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
             var cookie = readCookie(request, refreshToken.getCookieKey());
             return new RequestRefreshToken(cookie);
         } catch (JbstCookieNotFoundException ex) {
@@ -111,10 +111,10 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
 
     @Override
     public void clearTokens(HttpServletResponse response) {
-        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
-        var cookiesConfigs = securityJwtConfigs.getCookiesConfigs();
-        var accessToken = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
-        var refreshToken = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();
+        var security = this.jbstProperties.getSecurity();
+        var cookiesConfigs = security.getCookiesConfigs();
+        var accessToken = security.getJwtTokensConfigs().getAccessToken();
+        var refreshToken = security.getJwtTokensConfigs().getRefreshToken();
 
         response.addCookie(createNullCookie(accessToken.getCookieKey(), cookiesConfigs.getDomain()));
         response.addCookie(createNullCookie(refreshToken.getCookieKey(), cookiesConfigs.getDomain()));

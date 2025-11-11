@@ -23,7 +23,7 @@ public class JbstProperties implements PriorityOrdered {
     private JbstPropertyMVC mvc;
     private JbstPropertyEmails emails;
     private JbstPropertyIncidentsManager incidentsManager;
-    private JbstPropertySecurity securityJwtConfigs;
+    private JbstPropertySecurity security;
     private JbstPropertyDatabases databases;
 
     public static JbstProperties hardcoded() {
@@ -35,7 +35,7 @@ public class JbstProperties implements PriorityOrdered {
         properties.setMvc(JbstPropertyMVC.hardcoded());
         properties.setEmails(JbstPropertyEmails.hardcoded());
         properties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
-        properties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
+        properties.setSecurity(JbstPropertySecurity.hardcoded());
         properties.setDatabases(JbstPropertyDatabases.hardcoded());
         return properties;
     }
@@ -51,7 +51,7 @@ public class JbstProperties implements PriorityOrdered {
     public final String getMagicLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
                 this.app.getWebclientURL(),
-                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientMagicLinkPath(),
+                this.security.getUsersTokensConfigs().getWebclientMagicLinkPath(),
                 token
         );
     }
@@ -59,7 +59,7 @@ public class JbstProperties implements PriorityOrdered {
     public final String getEmailConfirmationRedirectLink() {
         return "%s%s".formatted(
                 this.app.getWebclientURL(),
-                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath()
+                this.security.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath()
         );
     }
 
@@ -74,7 +74,7 @@ public class JbstProperties implements PriorityOrdered {
     public final String getPasswordResetLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
                 this.app.getWebclientURL(),
-                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),
+                this.security.getUsersTokensConfigs().getWebclientPasswordResetPath(),
                 token
         );
     }
