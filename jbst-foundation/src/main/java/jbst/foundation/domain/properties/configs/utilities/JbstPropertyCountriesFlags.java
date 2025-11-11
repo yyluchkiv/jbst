@@ -13,24 +13,24 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyGeoLocations extends JbstProperty {
+public class JbstPropertyCountriesFlags extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
 
-    public static JbstPropertyGeoLocations hardcoded() {
-        return new JbstPropertyGeoLocations(true);
+    public static JbstPropertyCountriesFlags hardcoded() {
+        return new JbstPropertyCountriesFlags(true);
     }
 
-    public static JbstPropertyGeoLocations random() {
+    public static JbstPropertyCountriesFlags random() {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static JbstPropertyGeoLocations enabled() {
+    public static JbstPropertyCountriesFlags enabled() {
         return hardcoded();
     }
 
-    public static JbstPropertyGeoLocations disabled() {
-        return new JbstPropertyGeoLocations(false);
+    public static JbstPropertyCountriesFlags disabled() {
+        return new JbstPropertyCountriesFlags(false);
     }
 
     @Override

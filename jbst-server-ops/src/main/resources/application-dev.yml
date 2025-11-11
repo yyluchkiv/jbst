@@ -12,9 +12,9 @@ jbst:
     password: "<?>"
     from: "<?>"
   utils:
-    geo-country-flags-configs:
+    countries-flags:
       enabled: false
-    user-agent-configs:
+    users-agents:
       enabled: false
 
 # server

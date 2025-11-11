@@ -11,11 +11,11 @@ jbst:
     server-url: http://localhost:3002
     webclient-url: http://localhost:3000
   utils:
-    geo-locations-configs:
+    geolocations:
       enabled: false
-    geo-country-flags-configs:
+    countries-flags:
       enabled: false
-    user-agent-configs:
+    users-agents:
       enabled: false
   email-configs:
     enabled: false

@@ -28,7 +28,7 @@ jbst:
       artifact-id: @project.artifactId@
       version: v@project.version@
   utils:
-    geo-locations-configs:
+    geolocations:
       enabled: false
   async-configs:
     thread-name-prefix: "jbstops-async"
