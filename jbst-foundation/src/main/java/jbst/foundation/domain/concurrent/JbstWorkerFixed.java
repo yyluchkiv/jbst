@@ -21,9 +21,9 @@ public abstract class JbstWorkerFixed extends JbstWorker {
         this.future = SES.scheduleWithFixedDelay(() -> {
             this.onTick();
             this.elapsedSeconds += this.interval.toSeconds();
-            if (this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds()) {
+            if (this.isCompleted()) {
                 this.onComplete();
-                this.cancelFuture();
+                this.stop();
             }
         }, this.interval.initialDelay(), this.interval.delay(), this.interval.unit());
     }

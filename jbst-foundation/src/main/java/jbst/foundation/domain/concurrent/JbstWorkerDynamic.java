@@ -10,7 +10,10 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
     }
 
     public abstract Duration getDelay();
-    public abstract void onError(Exception ex);
+
+    public void onError(Exception ex) {
+        this.stop();
+    }
 
     @Override
     public void start() {
@@ -38,23 +41,20 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
         if (!this.state.isOperative()) {
             return;
         }
+        var delaySeconds = this.getDelay().toSeconds();
         this.future = SES.schedule(() -> {
             try {
                 this.onTick();
-                this.elapsedSeconds += this.getDelay().toSeconds();
-
-                // Stop when duration reached
-                if (this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds()) {
+                this.elapsedSeconds += delaySeconds;
+                if (this.isCompleted()) {
                     this.onComplete();
                     this.stop();
                     return;
                 }
-
-                // Continue scheduling dynamically
                 this.scheduleNext();
             } catch (Exception ex) {
                 this.onError(ex);
             }
-        }, this.getDelay().toSeconds(), TimeUnit.SECONDS);
+        }, delaySeconds, TimeUnit.SECONDS);
     }
 }

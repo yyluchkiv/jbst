@@ -27,6 +27,7 @@ class JbstWorkerDynamicTest {
 
         @Override
         public void onError(Exception ex) {
+            super.onError(ex);
             LOGGER.warn("JbstWorkerDynamicConsole onError()", ex);
         }
 

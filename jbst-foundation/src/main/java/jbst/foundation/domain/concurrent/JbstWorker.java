@@ -86,8 +86,13 @@ public abstract class JbstWorker {
     }
 
     // =================================================================================================================
-    // PRIVATE METHODS
+    // PROTECTED METHODS
     // =================================================================================================================
+    protected final boolean isCompleted() {
+
+        return !this.duration.isZero() && this.elapsedSeconds >= this.duration.toSeconds();
+    }
+
     protected final void cancelFuture() {
         if (nonNull(this.future) && !this.future.isCancelled()) {
             this.future.cancel(false);
