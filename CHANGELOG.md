@@ -7,6 +7,7 @@
 — Modification @ jbst: property "utils-configs.user-agent-configs" -> "utils.users-agents"
 — Modification @ jbst: property "async-configs" -> "async"
 — Modification @ jbst: property "events-configs" -> "event"
+— Modification @ jbst: property "mvc-configs" -> "mvc"
 — Modification @ server-hardware-monitoring: property "server-configs" -> "server"
 — Modification @ server-ops: property "server-configs" -> "server"
 — Modification @ server-iam: property "server-configs" -> "example"

@@ -53,7 +53,7 @@ class JbstConfigurationSecurityJwtTest {
         @Bean
         public JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
-            jbstProperties.setMvcConfigs(
+            jbstProperties.setMvc(
                     new JbstPropertyMVC(
                             true,
                             "/jbst/security",

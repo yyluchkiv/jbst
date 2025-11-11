@@ -26,14 +26,14 @@ public class JbstConfigurationWebMVC implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getMvcConfigs().assertProperties();
+        this.jbstProperties.getMvc().assertProperties();
     }
 
     @Override
     public void addCorsMappings(@NotNull CorsRegistry corsRegistry) {
-        var mvcConfigs = this.jbstProperties.getMvcConfigs();
-        if (mvcConfigs.isEnabled()) {
-            var corsConfigs = mvcConfigs.getCorsConfigs();
+        var mvc = this.jbstProperties.getMvc();
+        if (mvc.isEnabled()) {
+            var corsConfigs = mvc.getCorsConfigs();
 
             var pathPattern = corsConfigs.getPathPattern();
             var corsRegistration = corsRegistry.addMapping(pathPattern);

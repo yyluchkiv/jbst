@@ -20,7 +20,7 @@ public class JbstConfigurationSecurityJwtWebMVC extends JbstConfigurationWebMVC 
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
+        var basePathPrefix = this.jbstProperties.getMvc().getBasePathPrefix();
         configurer.addPathPrefix(basePathPrefix, resource -> resource.isAnnotationPresent(JbstResource.class));
     }
 }

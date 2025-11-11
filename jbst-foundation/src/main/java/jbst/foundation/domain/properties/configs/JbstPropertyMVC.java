@@ -64,6 +64,6 @@ public class JbstPropertyMVC extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "mvc-configs";
+        return "mvc";
     }
 }

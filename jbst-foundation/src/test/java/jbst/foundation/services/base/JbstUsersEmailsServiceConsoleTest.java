@@ -51,7 +51,7 @@ class JbstUsersEmailsServiceConsoleTest {
         JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
             jbstProperties.setApp(JbstPropertyApp.hardcoded());
-            jbstProperties.setMvcConfigs(JbstPropertyMVC.hardcoded());
+            jbstProperties.setMvc(JbstPropertyMVC.hardcoded());
             jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
             jbstProperties.setEmailConfigs(
                     new JbstPropertyEmail(

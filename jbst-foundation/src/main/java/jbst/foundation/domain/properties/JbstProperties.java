@@ -20,7 +20,7 @@ public class JbstProperties implements PriorityOrdered {
     private JbstPropertyUtils utils;
     private JbstPropertyAsync async;
     private JbstPropertyEvents events;
-    private JbstPropertyMVC mvcConfigs;
+    private JbstPropertyMVC mvc;
     private JbstPropertyEmail emailConfigs;
     private JbstPropertyIncidentsManager incidentsManager;
     private JbstPropertySecurity securityJwtConfigs;
@@ -32,7 +32,7 @@ public class JbstProperties implements PriorityOrdered {
         properties.setUtils(JbstPropertyUtils.hardcoded());
         properties.setAsync(JbstPropertyAsync.hardcoded());
         properties.setEvents(JbstPropertyEvents.hardcoded());
-        properties.setMvcConfigs(JbstPropertyMVC.hardcoded());
+        properties.setMvc(JbstPropertyMVC.hardcoded());
         properties.setEmailConfigs(JbstPropertyEmail.hardcoded());
         properties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
         properties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
@@ -66,7 +66,7 @@ public class JbstProperties implements PriorityOrdered {
     public final String getEmailConfirmationLink(@NotNull ServerProperties serverProperties, @NotNull String token) {
         return "%s%s/tokens/email/confirm?token=%s".formatted(
                 this.app.getServerURL() + serverProperties.getServlet().getContextPath(),
-                this.mvcConfigs.getBasePathPrefix(),
+                this.mvc.getBasePathPrefix(),
                 token
         );
     }

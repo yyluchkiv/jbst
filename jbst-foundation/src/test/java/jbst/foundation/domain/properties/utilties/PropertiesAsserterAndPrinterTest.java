@@ -145,12 +145,12 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void mvcConfigsDisabledTest() {
+    void mvcDisabledTest() {
         // Arrange
-        var mvcConfigs = new JbstPropertyMVC(false, null, null);
+        var mvc = new JbstPropertyMVC(false, null, null);
 
         // Act
-        mvcConfigs.assertProperties();
+        mvc.assertProperties();
 
         // Assert
         // no asserts

@@ -31,7 +31,7 @@ class JbstConfigurationWebMVC1Test {
         @Bean
         JbstProperties jbstProperties() {
             var jbstProperties = mock(JbstProperties.class);
-            var mvcConfigs = new JbstPropertyMVC(
+            var mvc = new JbstPropertyMVC(
                     false,
                     "/jbst/security",
                     new JbstPropertyCORS(
@@ -43,7 +43,7 @@ class JbstConfigurationWebMVC1Test {
                             null
                     )
             );
-            when(jbstProperties.getMvcConfigs()).thenReturn(mvcConfigs);
+            when(jbstProperties.getMvc()).thenReturn(mvc);
             return jbstProperties;
         }
 

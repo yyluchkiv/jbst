@@ -40,7 +40,7 @@ jbst:
       REGISTER0_FAILURE: true
       REGISTER1: true
       REGISTER1_FAILURE: true
-  mvc-configs:
+  mvc:
     cors-configs:
       allowed-origins:
         - http://localhost:3003

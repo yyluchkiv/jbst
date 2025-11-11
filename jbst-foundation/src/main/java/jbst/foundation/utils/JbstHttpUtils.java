@@ -53,7 +53,7 @@ public class JbstHttpUtils {
     // PRIVATE METHODS
     // =================================================================================================================
     private boolean isEndpoint(HttpServletRequest request, String requestMapping) {
-        var requestURI = this.contextPath + this.jbstProperties.getMvcConfigs().getBasePathPrefix() + requestMapping;
+        var requestURI = this.contextPath + this.jbstProperties.getMvc().getBasePathPrefix() + requestMapping;
         return requestURI.equals(request.getRequestURI());
     }
 }

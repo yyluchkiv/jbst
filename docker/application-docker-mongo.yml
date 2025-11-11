@@ -37,7 +37,7 @@ jbst:
       REGISTER1_FAILURE: true
   email-configs:
     enabled: false
-  mvc-configs:
+  mvc:
     cors-configs:
       allowed-origins:
         - http://localhost:3003

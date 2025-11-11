@@ -152,7 +152,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
+        var basePathPrefix = this.jbstProperties.getMvc().getBasePathPrefix();
 
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -226,7 +226,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
             return;
         }
         registry.addEndpoint(this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getStompConfigs().getEndpoint())
-                .setAllowedOrigins(this.jbstProperties.getMvcConfigs().getCorsConfigs().getAllowedOrigins())
+                .setAllowedOrigins(this.jbstProperties.getMvc().getCorsConfigs().getAllowedOrigins())
                 .setHandshakeHandler(this.securityHandshakeHandler)
                 .addInterceptors(this.csrfInterceptorHandshake)
                 .withSockJS();
