@@ -52,6 +52,9 @@ public abstract class JbstWorker {
     protected Future<?> future = null;
     protected volatile JbstWorkerState state;
     protected long elapsedSeconds;
+    /**
+     * Duration.ZERO == FOREVER: (this.duration.toSeconds() > 0)
+     */
     protected final Duration duration;
 
     protected JbstWorker(Duration duration) {
@@ -89,8 +92,7 @@ public abstract class JbstWorker {
     // PROTECTED METHODS
     // =================================================================================================================
     protected final boolean isCompleted() {
-
-        return !this.duration.isZero() && this.elapsedSeconds >= this.duration.toSeconds();
+        return this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds();
     }
 
     protected final void cancelFuture() {
