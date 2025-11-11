@@ -38,7 +38,7 @@ public class JbstPropertySecurity extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertySecurityJWT jwt;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityLogging loggingConfigs;
+    private final JbstPropertySecurityLogging logging;
     @JbstPropertyMandatory
     private final JbstPropertySecuritySessions sessionConfigs;
     @JbstPropertyMandatory

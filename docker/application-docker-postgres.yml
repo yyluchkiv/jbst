@@ -66,7 +66,7 @@ jbst:
         expiration:
           amount: 60
           unit: MINUTES # @java.time.temporal.ChronoUnit
-    logging-configs:
+    logging:
       advanced-request-logging-enabled: false
     session-configs:
       clean-sessions-by-expired-refresh-tokens-cron:
