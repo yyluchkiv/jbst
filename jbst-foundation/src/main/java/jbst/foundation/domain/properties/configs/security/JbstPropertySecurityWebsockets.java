@@ -21,13 +21,13 @@ public class JbstPropertySecurityWebsockets extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
     @JbstPropertyMandatoryOnToggleEnabled
-    private final JbstPropertyWebsocketsCSRF csrfConfigs;
+    private final JbstPropertyWebsocketsCSRF csrf;
     @JbstPropertyMandatoryOnToggleEnabled
-    private final JbstPropertyWebsocketsStompEndpointRegistry stompConfigs;
+    private final JbstPropertyWebsocketsStompEndpointRegistry stomp;
     @JbstPropertyMandatoryOnToggleEnabled
-    private final JbstPropertyWebsocketsMessageBrokerRegistry brokerConfigs;
+    private final JbstPropertyWebsocketsMessageBrokerRegistry brokerRegistry;
     @JbstPropertyMandatoryOnToggleEnabled
-    private JbstPropertyWebsocketsFeatures featuresConfigs;
+    private final JbstPropertyWebsocketsFeatures features;
 
     public static JbstPropertySecurityWebsockets hardcoded() {
         return new JbstPropertySecurityWebsockets(
@@ -61,6 +61,6 @@ public class JbstPropertySecurityWebsockets extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "websockets-configs";
+        return "websockets";
     }
 }

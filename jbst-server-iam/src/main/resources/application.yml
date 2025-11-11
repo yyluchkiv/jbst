@@ -67,21 +67,21 @@ jbst:
         cookie-key: "rjwt"
     websockets:
       enabled: true
-      csrf-configs:
+      csrf:
         header-name: "t-csrf-header"
         parameter-name: "_csrf"
         token-key: "t-csrf-token"
-      stomp-configs:
+      stomp:
         endpoint: "/jbst-server-websockets"
-      broker-configs:
+      broker-registry:
         application-destination-prefix: "/app"
         simple-destination: "/queue"
         user-destination-prefix: "/user"
-      features-configs:
-        hardware-configs:
+      features:
+        hardware:
           enabled: true
           user-destination: "/accounts"
-        reset-server-configs:
+        reset-server:
           enabled: true
           user-destination: "/accounts"
     users-emails:

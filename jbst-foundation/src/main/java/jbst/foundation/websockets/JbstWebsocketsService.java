@@ -34,7 +34,7 @@ public class JbstWebsocketsService {
     }
 
     public final void sendHardwareMonitoring(Set<Username> usernames, HardwareMonitoringDatapointTableView tableView) {
-        var hardwareConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeaturesConfigs().getHardwareConfigs();
+        var hardwareConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeatures().getHardware();
         if (!hardwareConfigs.isEnabled()) {
             return;
         }
@@ -42,7 +42,7 @@ public class JbstWebsocketsService {
     }
 
     public final void sendResetServerStatus(Set<Username> usernames, ResetServerStatus status) {
-        var resetServerConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeaturesConfigs().getResetServerConfigs();
+        var resetServerConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeatures().getResetServerConfigs();
         if (!resetServerConfigs.isEnabled()) {
             return;
         }
@@ -56,7 +56,7 @@ public class JbstWebsocketsService {
         if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        var brokerConfigs = this.jbstProperties.getSecurity().getWebsockets().getBrokerConfigs();
+        var brokerConfigs = this.jbstProperties.getSecurity().getWebsockets().getBrokerRegistry();
         try {
             this.messagingTemplate.convertAndSendToUser(
                     username.value(),

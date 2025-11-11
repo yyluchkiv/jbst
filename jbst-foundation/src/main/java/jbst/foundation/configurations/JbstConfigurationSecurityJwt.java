@@ -143,7 +143,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
             // WARNING: You are asking Spring Security to ignore Ant [pattern='/**/**'].
             // This is not recommended: please use permitAll via HttpSecurity#authorizeHttpRequests instead
             if (this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
-                var endpoint = this.jbstProperties.getSecurity().getWebsockets().getStompConfigs().getEndpoint();
+                var endpoint = this.jbstProperties.getSecurity().getWebsockets().getStomp().getEndpoint();
                 web.ignoring().requestMatchers(endpoint + "/**");
             }
             this.abstractJbstSecurityJwtConfigurer.configure(web);
@@ -225,7 +225,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
         if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        registry.addEndpoint(this.jbstProperties.getSecurity().getWebsockets().getStompConfigs().getEndpoint())
+        registry.addEndpoint(this.jbstProperties.getSecurity().getWebsockets().getStomp().getEndpoint())
                 .setAllowedOrigins(this.jbstProperties.getMvc().getCors().getAllowedOrigins())
                 .setHandshakeHandler(this.securityHandshakeHandler)
                 .addInterceptors(this.csrfInterceptorHandshake)
@@ -245,7 +245,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
         if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        var broker = this.jbstProperties.getSecurity().getWebsockets().getBrokerConfigs();
+        var broker = this.jbstProperties.getSecurity().getWebsockets().getBrokerRegistry();
         registry.setApplicationDestinationPrefixes(broker.getApplicationDestinationPrefix());
         registry.enableSimpleBroker(broker.getSimpleDestination());
         registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());
