@@ -1,8 +1,16 @@
 package jbst.foundation.domain.concurrent;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.time.TimeAmount;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+
+import static java.util.Objects.nonNull;
+import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
 public abstract class JbstWorker {
 
@@ -24,6 +32,7 @@ public abstract class JbstWorker {
             return this.value;
         }
 
+        @SuppressWarnings("unused")
         public JbstWorkerPermissions getPermissions() {
             return new JbstWorkerPermissions(
                     CREATED.equals(this) || STOPPED.equals(this),
@@ -36,10 +45,55 @@ public abstract class JbstWorker {
         }
     }
 
-    public record JbstWorkerPermissions(boolean start, boolean stop) { }
+    public record JbstWorkerPermissions(boolean start, boolean stop) {}
+
+    private final Object lock = new Object();
+
+    protected static final ScheduledExecutorService SES = newSingleThreadScheduledExecutor();
+    protected Future<?> future = null;
+    protected volatile JbstWorkerState state;
+    protected long elapsedSeconds;
+    protected final SchedulerConfiguration interval;
+    protected final TimeAmount duration;
+
+    protected JbstWorker(SchedulerConfiguration interval, TimeAmount duration) {
+        this.interval = interval;
+        this.duration = duration;
+        this.elapsedSeconds = 0L;
+        this.state = JbstWorkerState.CREATED;
+    }
 
     public abstract void onTick();
     public abstract void onComplete();
     public abstract void start();
     public abstract void stop();
+
+    public final Object getLock() {
+        return this.lock;
+    }
+
+    @SuppressWarnings("unused")
+    public final long getRemainingSeconds() {
+        return this.duration.toSeconds() - this.elapsedSeconds;
+    }
+
+    @SuppressWarnings("unused")
+    public final void switchState() {
+        synchronized (this.getLock()) {
+            if (this.state.isOperative()) {
+                this.stop();
+            } else {
+                this.start();
+            }
+        }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    protected final void cancelFuture() {
+        if (nonNull(this.future) && !this.future.isCancelled()) {
+            this.future.cancel(false);
+        }
+    }
 }

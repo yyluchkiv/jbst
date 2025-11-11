@@ -27,3 +27,6 @@
 — Modification @ server-ops: property "server-configs" -> "server"
 — Modification @ server-iam: property "server-configs" -> "example"
 — WARNING: cleanup/deletion users sessions in database
+— Addition: JbstWorker, JbstWorkerFixed
+— Deletion @ Scheduled: TimerTask(s) codebase
+

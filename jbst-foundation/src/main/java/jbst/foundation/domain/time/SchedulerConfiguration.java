@@ -41,4 +41,8 @@ public record SchedulerConfiguration(
         var delay = randomLongGreaterThanZeroByBounds(lowerBound * delaySeconds, upperBound * delaySeconds) / 100;
         return new SchedulerConfiguration(initialDelay, delay, TimeUnit.SECONDS);
     }
+
+    public long toSeconds() {
+        return this.unit.toSeconds(this.delay);
+    }
 }
