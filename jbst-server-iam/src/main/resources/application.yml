@@ -84,7 +84,7 @@ jbst:
         reset-server-configs:
           enabled: true
           user-destination: "/accounts"
-    users-emails-configs:
+    users-emails:
       account-accessed-magiclink:
         enabled: true
       account-accessed-username-password:

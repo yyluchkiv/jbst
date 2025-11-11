@@ -87,5 +87,5 @@ jbst:
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
       invitations-on-init:
         enabled: true
-    users-emails-configs:
+    users-emails:
       subject-prefix: "[jbst.com]"
