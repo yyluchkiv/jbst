@@ -39,7 +39,7 @@ public class ConfigurationServer {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertProperties();
+        this.serverProperties.getServer().assertProperties();
     }
 
     @Bean
@@ -54,7 +54,7 @@ public class ConfigurationServer {
 
     @Bean
     public HardwareMonitoringClient.HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition() {
-        var serverConfigs = this.serverProperties.getServerConfigs();
+        var serverConfigs = this.serverProperties.getServer();
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())

@@ -11,5 +11,5 @@ jbst:
 
 # server
 jbst-server-hardware-monitoring:
-  server-configs:
+  server:
     target-url: http://localhost:3002

@@ -11,19 +11,19 @@ import org.springframework.core.PriorityOrdered;
 )
 @Data
 public class ServerProperties implements PriorityOrdered {
-    private ServerConfigs serverConfigs;
+    private JbstPropertyServer server;
 
     @SuppressWarnings("unused")
     public static ServerProperties hardcoded() {
         var properties = new ServerProperties();
-        properties.setServerConfigs(ServerConfigs.hardcoded());
+        properties.setServer(JbstPropertyServer.hardcoded());
         return properties;
     }
 
     @SuppressWarnings("unused")
     public static ServerProperties random() {
         var properties = new ServerProperties();
-        properties.setServerConfigs(ServerConfigs.random());
+        properties.setServer(JbstPropertyServer.random());
         return properties;
     }
 

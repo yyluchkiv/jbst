@@ -13,18 +13,18 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends JbstProperty {
+public class JbstPropertyServer extends JbstProperty {
     @JbstPropertyMandatory
     private final String targetURL;
 
-    public static ServerConfigs hardcoded() {
-        return new ServerConfigs(
+    public static JbstPropertyServer hardcoded() {
+        return new JbstPropertyServer(
                 "http://localhost:8484"
         );
     }
 
-    public static ServerConfigs random() {
-        return new ServerConfigs(
+    public static JbstPropertyServer random() {
+        return new JbstPropertyServer(
                 randomIPv4()
         );
     }
