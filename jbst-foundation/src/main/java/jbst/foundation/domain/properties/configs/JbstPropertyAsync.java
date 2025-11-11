@@ -45,7 +45,7 @@ public class JbstPropertyAsync extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "async-configs";
+        return "async";
     }
 
     public TuplePercentage asThreadsCorePoolTuplePercentage() {

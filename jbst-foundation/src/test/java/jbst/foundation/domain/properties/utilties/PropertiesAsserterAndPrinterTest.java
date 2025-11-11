@@ -109,7 +109,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void serverConfigsTest() {
+    void appTest() {
         // Act
         JbstPropertyApp.hardcoded().assertProperties();
 
@@ -118,7 +118,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void utilitiesConfigsTest() {
+    void utilsTest() {
         // Act
         JbstPropertyUtils.hardcoded().assertProperties();
 
@@ -127,7 +127,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void asyncConfigsTest() {
+    void asyncTest() {
         // Act
         JbstPropertyAsync.hardcoded().assertProperties();
 
@@ -136,7 +136,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void eventsConfigsTest() {
+    void eventsTest() {
         // Act
         JbstPropertyEvents.hardcoded().assertProperties();
 

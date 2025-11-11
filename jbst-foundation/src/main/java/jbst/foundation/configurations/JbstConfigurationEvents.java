@@ -26,17 +26,17 @@ public class JbstConfigurationEvents {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getEventsConfigs().assertProperties();
+        this.jbstProperties.getEvents().assertProperties();
     }
 
     @SuppressWarnings("DuplicatedCode")
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-        var eventsConfigs = this.jbstProperties.getEventsConfigs();
+        var events = this.jbstProperties.getEvents();
         var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(eventsConfigs.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(eventsConfigs.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(eventsConfigs.asThreadsMaxPoolTuplePercentage()));
+        taskExecutor.setThreadNamePrefix(events.getThreadNamePrefix());
+        taskExecutor.setCorePoolSize(getNumOfCores(events.asThreadsCorePoolTuplePercentage()));
+        taskExecutor.setMaxPoolSize(getNumOfCores(events.asThreadsMaxPoolTuplePercentage()));
         taskExecutor.initialize();
         var eventMulticaster = new SimpleApplicationEventMulticaster();
         eventMulticaster.setTaskExecutor(taskExecutor);

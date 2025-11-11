@@ -24,10 +24,10 @@ jbst:
     springdoc-enabled: false
   async:
     thread-name-prefix: jbstshm-async
-    threadsCorePoolPercentage: 50
-    threadsMaxPoolPercentage: 100
-  events-configs:
+    threads-core-pool-percentage: 50
+    threads-max-pool-percentage: 100
+  events:
     thread-name-prefix: jbstshm-events
-    threadsCorePoolPercentage: 25
-    threadsMaxPoolPercentage: 50
+    threads-core-pool-percentage: 25
+    threads-max-pool-percentage: 50
 
