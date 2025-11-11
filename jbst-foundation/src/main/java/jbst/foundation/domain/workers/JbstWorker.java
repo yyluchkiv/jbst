@@ -80,12 +80,16 @@ public abstract class JbstWorker {
     @SuppressWarnings("unused")
     public final void switchState() {
         synchronized (this.getLock()) {
-            if (this.state.isOperative()) {
+            if (this.isOperative()) {
                 this.stop();
             } else {
                 this.start();
             }
         }
+    }
+
+    public final boolean isOperative() {
+        return this.state.isOperative();
     }
 
     // =================================================================================================================

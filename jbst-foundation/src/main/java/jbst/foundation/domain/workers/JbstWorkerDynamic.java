@@ -17,7 +17,7 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
 
     @Override
     public void start() {
-        if (this.state.isOperative()) {
+        if (this.isOperative()) {
             return;
         }
         this.state = JbstWorkerState.OPERATIVE;
@@ -26,7 +26,7 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
 
     @Override
     public void stop() {
-        if (!this.state.isOperative()) {
+        if (!this.isOperative()) {
             return;
         }
         this.state = JbstWorkerState.STOPPED;
@@ -38,7 +38,7 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
     // PRIVATE METHODS
     // =================================================================================================================
     private void scheduleNext() {
-        if (!this.state.isOperative()) {
+        if (!this.isOperative()) {
             return;
         }
         var delaySeconds = this.getDelay().toSeconds();

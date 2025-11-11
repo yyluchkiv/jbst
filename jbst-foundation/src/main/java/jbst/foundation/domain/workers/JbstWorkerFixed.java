@@ -14,7 +14,7 @@ public abstract class JbstWorkerFixed extends JbstWorker {
     }
 
     public void start() {
-        if (this.state.isOperative()) {
+        if (this.isOperative()) {
             return;
         }
         this.state = JbstWorkerState.OPERATIVE;
@@ -29,7 +29,7 @@ public abstract class JbstWorkerFixed extends JbstWorker {
     }
 
     public void stop() {
-        if (!this.state.isOperative()) {
+        if (!this.isOperative()) {
             return;
         }
         this.state = JbstWorkerState.STOPPED;
