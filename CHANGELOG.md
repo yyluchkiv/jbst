@@ -28,5 +28,6 @@
 — Modification @ server-iam: property "server-configs" -> "example"
 — WARNING: cleanup/deletion users sessions in database
 — Addition: JbstWorker, JbstWorkerFixed
+— Modification: RateLimiter -> JbstRateLimiter
 — Deletion @ Scheduled: TimerTask(s) codebase
 

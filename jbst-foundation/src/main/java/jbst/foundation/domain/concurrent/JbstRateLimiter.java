@@ -9,15 +9,11 @@ import java.time.Duration;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("UnstableApiUsage")
-public class RateLimiter<T> {
+public class JbstRateLimiter<T> {
 
     private final LoadingCache<T, com.google.common.util.concurrent.RateLimiter> cache;
 
-    public RateLimiter(
-            int requests,
-            Duration duration,
-            Duration cacheDuration
-    ) {
+    public JbstRateLimiter(int requests, Duration duration, Duration cacheDuration) {
         var permitsPerSecond = calculatePermitsPerSecond(requests, duration);
         this.cache = Caffeine.newBuilder()
                 .expireAfterWrite(cacheDuration)

@@ -7,4 +7,4 @@
 — Users + Plans
 
 ##### Minor
-— TDB
+— Deletion: AbstractTimerTask, AbstractInfiniteTimerTask etc. 

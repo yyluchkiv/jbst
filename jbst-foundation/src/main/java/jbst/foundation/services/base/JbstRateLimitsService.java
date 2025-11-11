@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.concurrent.RateLimiter;
+import jbst.foundation.domain.concurrent.JbstRateLimiter;
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
 import jbst.foundation.domain.jwt.JwtUser;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ import java.time.Duration;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstRateLimitsService {
-    private final RateLimiter<Email> magicLinkRL = new RateLimiter<>(5, Duration.ofMinutes(1), Duration.ofMinutes(10));
-    private final RateLimiter<Username> emailConfirmationRL = new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofHours(1));
+    private final JbstRateLimiter<Email> magicLinkRL = new JbstRateLimiter<>(5, Duration.ofMinutes(1), Duration.ofMinutes(10));
+    private final JbstRateLimiter<Username> emailConfirmationRL = new JbstRateLimiter<>(1, Duration.ofMinutes(1), Duration.ofHours(1));
 
     public final void acquireMagicLinkOrThrow(Email email) throws JbstTooManyRequestsException {
         this.magicLinkRL.acquire(email);

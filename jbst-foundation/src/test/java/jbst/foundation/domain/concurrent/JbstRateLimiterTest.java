@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-class RateLimiterTest {
+class JbstRateLimiterTest {
 
     private static Stream<Arguments> calculatePermitsPerSecondTest() {
         return Stream.of(
@@ -58,7 +58,7 @@ class RateLimiterTest {
     @MethodSource("calculatePermitsPerSecondTest")
     void calculatePermitsPerSecondTest(int requests, Duration duration, double permitsPerSecond) {
         // Act
-        var actual = RateLimiter.calculatePermitsPerSecond(requests, duration);
+        var actual = JbstRateLimiter.calculatePermitsPerSecond(requests, duration);
 
         // Assert
         assertThat(actual).isEqualTo(permitsPerSecond);
@@ -68,7 +68,7 @@ class RateLimiterTest {
     @MethodSource("tryAcquireTest")
     void tryAcquireTest(int requests, Duration duration, long timeout, boolean expected) {
         // Arrange
-        var componentUnderTest = new RateLimiter<String>(requests, duration, duration.multipliedBy(2));
+        var componentUnderTest = new JbstRateLimiter<String>(requests, duration, duration.multipliedBy(2));
         var key = RandomUtility.randomString();
 
         // Act
@@ -84,7 +84,7 @@ class RateLimiterTest {
     @MethodSource("acquireTest")
     void acquireTest(int requests, Duration duration, long timeout, boolean exceptionally) {
         // Arrange
-        var componentUnderTest = new RateLimiter<String>(requests, duration, duration.multipliedBy(2));
+        var componentUnderTest = new JbstRateLimiter<String>(requests, duration, duration.multipliedBy(2));
         var key = RandomUtility.randomString();
 
         // Act
