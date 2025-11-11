@@ -7,7 +7,7 @@ import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertyApp;
-import jbst.foundation.domain.properties.configs.JbstPropertyEmail;
+import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
 import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.services.JbstEmailService;
@@ -54,7 +54,7 @@ class JbstUsersEmailsServiceConsoleTest {
             jbstProperties.setMvc(JbstPropertyMVC.hardcoded());
             jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
             jbstProperties.setEmailConfigs(
-                    new JbstPropertyEmail(
+                    new JbstPropertyEmails(
                             true,
                             "smtp.gmail.com",
                             587,

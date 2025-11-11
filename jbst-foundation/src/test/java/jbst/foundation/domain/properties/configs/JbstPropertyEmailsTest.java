@@ -9,12 +9,12 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreate
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JbstPropertyEmailTest {
+class JbstPropertyEmailsTest {
 
     @Test
     void constructorTest() {
         // Act
-        var emailConfigs = new JbstPropertyEmail(
+        var emailConfigs = new JbstPropertyEmails(
                 true,
                 randomString(),
                 randomIntegerGreaterThanZero(),
@@ -35,7 +35,7 @@ class JbstPropertyEmailTest {
     @Test
     void disabledTest() {
         // Act
-        var emailConfigs = JbstPropertyEmail.disabled();
+        var emailConfigs = JbstPropertyEmails.disabled();
 
         // Assert
         assertThat(emailConfigs.isEnabled()).isFalse();
@@ -52,7 +52,7 @@ class JbstPropertyEmailTest {
         var from = Email.random().value();
 
         // Act
-        var emailConfigs = JbstPropertyEmail.enabled(from);
+        var emailConfigs = JbstPropertyEmails.enabled(from);
 
         // Assert
         assertThat(emailConfigs.isEnabled()).isTrue();

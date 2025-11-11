@@ -168,7 +168,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsDisabledTest() {
         // Act
-        JbstPropertyEmail.disabled().assertProperties();
+        JbstPropertyEmails.disabled().assertProperties();
 
         // Assert
         // no asserts
@@ -177,7 +177,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsTest() {
         // Act
-        JbstPropertyEmail.hardcoded().assertProperties();
+        JbstPropertyEmails.hardcoded().assertProperties();
 
         // Assert
         // no asserts

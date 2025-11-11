@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.JbstPropertyEmail;
+import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
 import jbst.foundation.domain.properties.configs.JbstPropertyUtils;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
@@ -47,7 +47,7 @@ class JbstEmailServiceConsoleTest {
         JbstProperties jbstProperties() {
             var applicationFrameworkProperties = new JbstProperties();
             applicationFrameworkProperties.setEmailConfigs(
-                    new JbstPropertyEmail(
+                    new JbstPropertyEmails(
                             true,
                             "smtp.gmail.com",
                             587,
