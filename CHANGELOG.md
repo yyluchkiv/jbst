@@ -23,6 +23,7 @@
 — Modification @ jbst: property "security-jwt-configs.websockets-configs" -> "security.websockets"
 — Modification @ jbst: property "security-jwt-configs.websockets-configs.(config)-configs" -> "security.websockets.(config)"
 — Modification @ server-hardware-monitoring: property "server-configs" -> "server"
+— Modification @ jbst: property "security-jwt-configs.users-tokens-configs" -> "security.users-tokens"
 — Modification @ server-ops: property "server-configs" -> "server"
 — Modification @ server-iam: property "server-configs" -> "example"
 — WARNING: cleanup/deletion users sessions in database

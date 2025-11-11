@@ -43,10 +43,10 @@ public class JbstPropertySecurity extends JbstProperty {
     private final JbstPropertySecuritySessions sessions;
     @JbstPropertyMandatory
     private final JbstPropertySecurityUsersEmails usersEmails;
+    @JbstPropertyOptional
+    private final JbstPropertySecurityUsersTokens usersTokens;
     @JbstPropertyMandatory
     private final JbstPropertySecurityWebsockets websockets;
-    @JbstPropertyOptional
-    private final JbstPropertySecurityUsersTokens usersTokensConfigs;
 
     public static JbstPropertySecurity hardcoded() {
         return new JbstPropertySecurity(
@@ -57,18 +57,18 @@ public class JbstPropertySecurity extends JbstProperty {
                 JbstPropertySecurityLogging.hardcoded(),
                 JbstPropertySecuritySessions.hardcoded(),
                 JbstPropertySecurityUsersEmails.hardcoded(),
-                JbstPropertySecurityWebsockets.hardcoded(),
-                JbstPropertySecurityUsersTokens.hardcoded()
+                JbstPropertySecurityUsersTokens.hardcoded(),
+                JbstPropertySecurityWebsockets.hardcoded()
         );
     }
 
-    public static JbstPropertySecurity of(JbstPropertySecurityLogging loggingConfigs) {
+    public static JbstPropertySecurity of(JbstPropertySecurityLogging logging) {
         return new JbstPropertySecurity(
                 null,
                 null,
                 null,
                 null,
-                loggingConfigs,
+                logging,
                 null,
                 null,
                 null,
@@ -76,21 +76,21 @@ public class JbstPropertySecurity extends JbstProperty {
         );
     }
 
-    public static JbstPropertySecurity of(JbstPropertySecuritySessions sessionConfigs) {
+    public static JbstPropertySecurity of(JbstPropertySecuritySessions sessions) {
         return new JbstPropertySecurity(
                 null,
                 null,
                 null,
                 null,
                 null,
-                sessionConfigs,
+                sessions,
                 null,
                 null,
                 null
         );
     }
 
-    public static JbstPropertySecurity disabledUsersEmailsConfigs() {
+    public static JbstPropertySecurity disabledUsersEmails() {
         return new JbstPropertySecurity(
                 null,
                 null,

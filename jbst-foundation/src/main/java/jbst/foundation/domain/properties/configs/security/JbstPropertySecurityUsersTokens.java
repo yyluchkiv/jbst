@@ -49,6 +49,6 @@ public class JbstPropertySecurityUsersTokens extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "users-tokens-configs";
+        return "users-tokens";
     }
 }

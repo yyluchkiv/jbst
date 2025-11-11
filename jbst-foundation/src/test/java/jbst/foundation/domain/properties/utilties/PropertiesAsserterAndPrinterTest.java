@@ -242,7 +242,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityDisabledUsersEmailsConfigsTest() {
         // Act
-        var security = JbstPropertySecurity.disabledUsersEmailsConfigs();
+        var security = JbstPropertySecurity.disabledUsersEmails();
 
         // Act
         var throwable = catchThrowable(security::assertProperties);

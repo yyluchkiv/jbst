@@ -188,7 +188,7 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeAuthenticationLoginDisabled() {
         // Arrange
-        this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmailsConfigs());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmails());
 
         // Act
         this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
@@ -225,7 +225,7 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeSessionRefreshedDisabled() {
         // Arrange
-        this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmailsConfigs());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmails());
 
         // Act
         this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));

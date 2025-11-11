@@ -91,7 +91,7 @@ jbst:
         enabled: true
       account-accessed-session-token:
         enabled: true
-    users-tokens-configs:
+    users-tokens:
       webclient-magic-link-path: "/magic-link"
       webclient-email-confirmation-redirect-path: "/email-confirmation"
       webclient-password-reset-path: "/password-reset"
