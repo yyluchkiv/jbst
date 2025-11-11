@@ -33,32 +33,32 @@ public class JbstConfigurationWebMVC implements WebMvcConfigurer {
     public void addCorsMappings(@NotNull CorsRegistry corsRegistry) {
         var mvc = this.jbstProperties.getMvc();
         if (mvc.isEnabled()) {
-            var corsConfigs = mvc.getCorsConfigs();
+            var cors = mvc.getCors();
 
-            var pathPattern = corsConfigs.getPathPattern();
+            var pathPattern = cors.getPathPattern();
             var corsRegistration = corsRegistry.addMapping(pathPattern);
 
-            var allowedOrigins = corsConfigs.getAllowedOrigins();
+            var allowedOrigins = cors.getAllowedOrigins();
             if (nonNull(allowedOrigins)) {
                 corsRegistration.allowedOrigins(allowedOrigins);
             }
 
-            var allowedMethods = corsConfigs.getAllowedMethods();
+            var allowedMethods = cors.getAllowedMethods();
             if (nonNull(allowedMethods)) {
                 corsRegistration.allowedMethods(allowedMethods);
             }
 
-            var allowedHeaders = corsConfigs.getAllowedHeaders();
+            var allowedHeaders = cors.getAllowedHeaders();
             if (nonNull(allowedHeaders)) {
                 corsRegistration.allowedHeaders(allowedHeaders);
             }
 
-            var exposedHeaders = corsConfigs.getExposedHeaders();
+            var exposedHeaders = cors.getExposedHeaders();
             if (nonNull(exposedHeaders)) {
                 corsRegistration.exposedHeaders(exposedHeaders);
             }
 
-            var allowCredentials = corsConfigs.isAllowCredentials();
+            var allowCredentials = cors.isAllowCredentials();
             corsRegistration.allowCredentials(allowCredentials);
         }
     }

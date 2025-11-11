@@ -38,7 +38,7 @@ jbst:
   email-configs:
     enabled: false
   mvc:
-    cors-configs:
+    cors:
       allowed-origins:
         - http://localhost:3003
         - http://localhost:8686

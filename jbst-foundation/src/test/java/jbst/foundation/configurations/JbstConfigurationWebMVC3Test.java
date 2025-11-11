@@ -44,7 +44,7 @@ class JbstConfigurationWebMVC3Test {
                             null
                     )
             );
-            mvc.getCorsConfigs().setExposedHeaders(new String[] { "Content-Type" });
+            mvc.getCors().setExposedHeaders(new String[] { "Content-Type" });
             when(jbstProperties.getMvc()).thenReturn(mvc);
             return jbstProperties;
         }

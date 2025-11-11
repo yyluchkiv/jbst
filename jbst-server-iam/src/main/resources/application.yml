@@ -41,7 +41,7 @@ jbst:
   mvc:
     enabled: true
     base-path-prefix: /jbst/security
-    cors-configs:
+    cors:
       path-pattern: /**
       allowed-methods:
         - DELETE

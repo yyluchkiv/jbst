@@ -226,7 +226,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
             return;
         }
         registry.addEndpoint(this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getStompConfigs().getEndpoint())
-                .setAllowedOrigins(this.jbstProperties.getMvc().getCorsConfigs().getAllowedOrigins())
+                .setAllowedOrigins(this.jbstProperties.getMvc().getCors().getAllowedOrigins())
                 .setHandshakeHandler(this.securityHandshakeHandler)
                 .addInterceptors(this.csrfInterceptorHandshake)
                 .withSockJS();

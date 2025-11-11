@@ -8,6 +8,7 @@
 — Modification @ jbst: property "async-configs" -> "async"
 — Modification @ jbst: property "events-configs" -> "event"
 — Modification @ jbst: property "mvc-configs" -> "mvc"
+— Modification @ jbst: property "mvc-configs.cors-configs" -> "mvc.cors"
 — Modification @ server-hardware-monitoring: property "server-configs" -> "server"
 — Modification @ server-ops: property "server-configs" -> "server"
 — Modification @ server-iam: property "server-configs" -> "example"
