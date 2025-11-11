@@ -13,6 +13,7 @@ public abstract class JbstWorkerFixed extends JbstWorker {
         this.interval = interval;
     }
 
+    @Override
     public void start() {
         if (this.isOperative()) {
             return;
@@ -26,14 +27,5 @@ public abstract class JbstWorkerFixed extends JbstWorker {
                 this.stop();
             }
         }, this.interval.initialDelay(), this.interval.delay(), this.interval.unit());
-    }
-
-    public void stop() {
-        if (!this.isOperative()) {
-            return;
-        }
-        this.state = JbstWorkerState.STOPPED;
-        this.cancelFuture();
-        this.elapsedSeconds = 0L;
     }
 }

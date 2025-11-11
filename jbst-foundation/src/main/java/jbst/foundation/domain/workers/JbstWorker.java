@@ -66,15 +66,9 @@ public abstract class JbstWorker {
     public abstract void onTick();
     public abstract void onComplete();
     public abstract void start();
-    public abstract void stop();
 
     public final Object getLock() {
         return this.lock;
-    }
-
-    @SuppressWarnings("unused")
-    public final long getRemainingSeconds() {
-        return this.duration.toSeconds() - this.elapsedSeconds;
     }
 
     @SuppressWarnings("unused")
@@ -88,8 +82,22 @@ public abstract class JbstWorker {
         }
     }
 
+    public void stop() {
+        if (!this.isOperative()) {
+            return;
+        }
+        this.state = JbstWorkerState.STOPPED;
+        this.cancelFuture();
+        this.elapsedSeconds = 0L;
+    }
+
     public final boolean isOperative() {
         return this.state.isOperative();
+    }
+
+    @SuppressWarnings("unused")
+    public final long getRemainingSeconds() {
+        return this.duration.toSeconds() - this.elapsedSeconds;
     }
 
     // =================================================================================================================

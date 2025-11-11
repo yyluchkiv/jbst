@@ -24,16 +24,6 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
         this.scheduleNext();
     }
 
-    @Override
-    public void stop() {
-        if (!this.isOperative()) {
-            return;
-        }
-        this.state = JbstWorkerState.STOPPED;
-        this.cancelFuture();
-        this.elapsedSeconds = 0L;
-    }
-
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
