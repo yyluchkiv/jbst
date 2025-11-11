@@ -15,7 +15,7 @@
 — Modification @ jbst: property "security-jwt-configs.authorities-configs.authorities" -> "security.authorities"
 — Modification @ jbst: property "security-jwt-configs.authorities-configs.authorities" -> "security.authorities.values"
 — Modification @ jbst: property "security-jwt-configs.cookies-configs" -> "security.cookies"
-— Modification @ jbst: property "security-jwt-configs.essense-configs" -> "security.essense"
+— Modification @ jbst: property "security-jwt-configs.essense-configs" -> "security.essence"
 — Modification @ jbst: property "security-jwt-configs.jwt-tokens-configs" -> "security.jwt"
 — Modification @ jbst: property "security-jwt-configs.logging-configs" -> "security.logging"
 — Modification @ jbst: property "security-jwt-configs.session-configs" -> "security.sessions"
