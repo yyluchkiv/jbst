@@ -5,7 +5,7 @@ import jbst.foundation.domain.time.TimeAmount;
 
 public abstract class JbstWorkerFixed extends JbstWorker {
 
-    protected JbstWorkerFixed(SchedulerConfiguration interval, TimeAmount duration) {
+    public JbstWorkerFixed(SchedulerConfiguration interval, TimeAmount duration) {
         super(interval, duration);
     }
 
@@ -19,7 +19,7 @@ public abstract class JbstWorkerFixed extends JbstWorker {
             this.elapsedSeconds += this.interval.toSeconds();
             if (this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds()) {
                 this.onComplete();
-                this.future.cancel(false);
+                this.cancelFuture();
             }
         }, this.interval.initialDelay(), this.interval.delay(), this.interval.unit());
     }
