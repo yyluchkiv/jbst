@@ -39,16 +39,16 @@ import org.springframework.web.client.RestTemplate;
 })
 @EnableScheduling
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationBeans {
+public class JbstServerConfigurationBeans {
 
     private final ServerProperties serverProperties;
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertProperties();
-        this.serverProperties.getServersConfigs().assertProperties();
-        this.serverProperties.getSlacksConfigs().assertProperties();
-        this.serverProperties.getRecipientsConfigs().assertProperties();
+        this.serverProperties.getServer().assertProperties();
+        this.serverProperties.getServers().assertProperties();
+        this.serverProperties.getSlacks().assertProperties();
+        this.serverProperties.getRecipients().assertProperties();
     }
 
     @SuppressWarnings("deprecation")

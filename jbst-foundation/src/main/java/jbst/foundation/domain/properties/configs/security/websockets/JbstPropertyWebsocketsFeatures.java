@@ -13,9 +13,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertyWebsocketsFeatures extends JbstProperty {
     @JbstPropertyOptional
-    private JbstPropertyWebsocketsFeature hardwareConfigs;
+    private JbstPropertyWebsocketsFeature hardware;
     @JbstPropertyOptional
-    private JbstPropertyWebsocketsFeature resetServerConfigs;
+    private JbstPropertyWebsocketsFeature resetServer;
 
     public static JbstPropertyWebsocketsFeatures hardcoded() {
         return new JbstPropertyWebsocketsFeatures(

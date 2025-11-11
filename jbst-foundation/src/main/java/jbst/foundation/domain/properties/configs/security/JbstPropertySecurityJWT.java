@@ -63,7 +63,7 @@ public class JbstPropertySecurityJWT extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "jwt-tokens-configs";
+        return "jwt";
     }
 
     @Override

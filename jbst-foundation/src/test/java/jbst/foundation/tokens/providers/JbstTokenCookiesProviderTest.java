@@ -78,9 +78,9 @@ class JbstTokenCookiesProviderTest {
         var jwtAccessToken = JwtAccessToken.random();
         var response = mock(HttpServletResponse.class);
 
-        var cookiesConfigs = this.jbstProperties.getSecurityJwtConfigs().getCookiesConfigs();
-        var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
-        var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookiesConfigs.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
+        var cookies = this.jbstProperties.getSecurity().getCookies();
+        var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
+        var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookies.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
 
         // Act
         this.componentUnderTest.createResponseAccessToken(jwtAccessToken, response);
@@ -91,7 +91,7 @@ class JbstTokenCookiesProviderTest {
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(accessToken.getCookieKey());
         assertThat(cookie.getValue()).isEqualTo(jwtAccessToken.value());
-        assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
+        assertThat(cookie.getDomain()).isEqualTo(cookies.getDomain());
         assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(maxAge);
         verifyNoMoreInteractions(response);
@@ -103,8 +103,8 @@ class JbstTokenCookiesProviderTest {
         var refreshAccessToken = JwtRefreshToken.random();
         var response = mock(HttpServletResponse.class);
 
-        var cookiesConfigs = this.jbstProperties.getSecurityJwtConfigs().getCookiesConfigs();
-        var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+        var cookies = this.jbstProperties.getSecurity().getCookies();
+        var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
 
         // Act
         this.componentUnderTest.createResponseRefreshToken(refreshAccessToken, response);
@@ -115,7 +115,7 @@ class JbstTokenCookiesProviderTest {
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(refreshToken.getCookieKey());
         assertThat(cookie.getValue()).isEqualTo(refreshAccessToken.value());
-        assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
+        assertThat(cookie.getDomain()).isEqualTo(cookies.getDomain());
         assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(refreshToken.getExpiration().getTimeAmount().toSeconds());
         verifyNoMoreInteractions(response);
@@ -124,7 +124,7 @@ class JbstTokenCookiesProviderTest {
     @Test
     void readCsrfToken() throws JbstCsrfTokenNotFoundException {
         // Arrange
-        var csrfConfigs = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurity().getWebsockets().getCsrf();
         var cookie = mock(Cookie.class);
         var cookieValue = randomString();
         when(cookie.getName()).thenReturn(csrfConfigs.getTokenKey());
@@ -164,7 +164,7 @@ class JbstTokenCookiesProviderTest {
     @MethodSource("readRequestAccessTokenArgs")
     void readRequestAccessToken(boolean rest, boolean websocket) throws JbstAccessTokenNotFoundException {
         // Arrange
-        var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+        var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn(accessToken.getCookieKey());
         var request = mock(HttpServletRequest.class);
@@ -205,7 +205,7 @@ class JbstTokenCookiesProviderTest {
     @MethodSource("readRequestRefreshTokenArgs")
     void readRequestRefreshToken(boolean rest, boolean websocket) throws JbstRefreshTokenNotFoundException {
         // Arrange
-        var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+        var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn(refreshToken.getCookieKey());
         var request = mock(HttpServletRequest.class);
@@ -245,9 +245,9 @@ class JbstTokenCookiesProviderTest {
     void clearTokens() {
         // Arrange
         var response = mock(HttpServletResponse.class);
-        var domain = this.jbstProperties.getSecurityJwtConfigs().getCookiesConfigs().getDomain();
-        var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
-        var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+        var domain = this.jbstProperties.getSecurity().getCookies().getDomain();
+        var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
+        var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
 
         // Act
         this.componentUnderTest.clearTokens(response);

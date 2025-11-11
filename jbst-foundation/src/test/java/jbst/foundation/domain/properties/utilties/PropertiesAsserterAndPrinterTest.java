@@ -109,16 +109,16 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void serverConfigsTest() {
+    void appTest() {
         // Act
-        JbstPropertyServer.hardcoded().assertProperties();
+        JbstPropertyApp.hardcoded().assertProperties();
 
         // Assert
         // no asserts
     }
 
     @Test
-    void utilitiesConfigsTest() {
+    void utilsTest() {
         // Act
         JbstPropertyUtils.hardcoded().assertProperties();
 
@@ -127,7 +127,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void asyncConfigsTest() {
+    void asyncTest() {
         // Act
         JbstPropertyAsync.hardcoded().assertProperties();
 
@@ -136,7 +136,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void eventsConfigsTest() {
+    void eventsTest() {
         // Act
         JbstPropertyEvents.hardcoded().assertProperties();
 
@@ -145,19 +145,19 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void mvcConfigsDisabledTest() {
+    void mvcDisabledTest() {
         // Arrange
-        var mvcConfigs = new JbstPropertyMVC(false, null, null);
+        var mvc = new JbstPropertyMVC(false, null, null);
 
         // Act
-        mvcConfigs.assertProperties();
+        mvc.assertProperties();
 
         // Assert
         // no asserts
     }
 
     @Test
-    void mvcConfigsTest() {
+    void mvcTest() {
         // Act
         JbstPropertyMVC.hardcoded().assertProperties();
 
@@ -166,25 +166,25 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void emailConfigsDisabledTest() {
+    void emailsDisabledTest() {
         // Act
-        JbstPropertyEmail.disabled().assertProperties();
+        JbstPropertyEmails.disabled().assertProperties();
 
         // Assert
         // no asserts
     }
 
     @Test
-    void emailConfigsTest() {
+    void emailsTest() {
         // Act
-        JbstPropertyEmail.hardcoded().assertProperties();
+        JbstPropertyEmails.hardcoded().assertProperties();
 
         // Assert
         // no asserts
     }
 
     @Test
-    void incidentManagerConfigsTest() {
+    void incidentManagerTest() {
         // Act
         JbstPropertyIncidentsManager.hardcoded().assertProperties();
 
@@ -240,12 +240,12 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
+    void securityDisabledUsersEmailsConfigsTest() {
         // Act
-        var securityJwtConfigs = JbstPropertySecurity.disabledUsersEmailsConfigs();
+        var security = JbstPropertySecurity.disabledUsersEmails();
 
         // Act
-        var throwable = catchThrowable(securityJwtConfigs::assertProperties);
+        var throwable = catchThrowable(security::assertProperties);
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -255,7 +255,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void securityJwtConfigsTest() {
+    void securityTest() {
         // Act
         JbstPropertySecurity.hardcoded().assertProperties();
 
@@ -264,7 +264,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void mongodbSecurityJwtConfigsTest() {
+    void databaseMongoTest() {
         // Act
         JbstPropertyDatabaseMongo.hardcoded().assertProperties();
 

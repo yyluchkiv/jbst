@@ -14,7 +14,7 @@ import jbst.server.ops.domain.configs.ssh.SshRsaKey;
 import jbst.server.ops.domain.servers.Server;
 import jbst.server.ops.domain.servers.ServerFileSystemMetadata;
 import jbst.server.ops.domain.servers.Team;
-import jbst.server.ops.properties.base.ServersMonitoringConfigs;
+import jbst.server.ops.properties.base.JbstPropertyOpsServersMonitoring;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -82,7 +82,7 @@ public class ServerInfinityTimerTask {
 
     // Configs [base]
     private final ServerConfigs serverConfigs;
-    private final ServersMonitoringConfigs serversMonitoringConfigs;
+    private final JbstPropertyOpsServersMonitoring serversMonitoringConfigs;
     private final ServerInfinityTimerTaskSpringBeans beans;
     private final Team mainTeam;
 
@@ -111,7 +111,7 @@ public class ServerInfinityTimerTask {
 
     public ServerInfinityTimerTask(
             ServerConfigs serverConfigs,
-            ServersMonitoringConfigs serversMonitoringConfigs,
+            JbstPropertyOpsServersMonitoring serversMonitoringConfigs,
             ServerInfinityTimerTaskSpringBeans beans,
             String rsaKeysBaseLocation,
             Map<String, SshRsaKey> mappedSshKeys,

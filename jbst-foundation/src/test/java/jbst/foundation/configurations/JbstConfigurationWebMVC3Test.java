@@ -32,7 +32,7 @@ class JbstConfigurationWebMVC3Test {
         @Bean
         JbstProperties jbstProperties() {
             var jbstProperties = mock(JbstProperties.class);
-            var mvcConfigs = new JbstPropertyMVC(
+            var mvc = new JbstPropertyMVC(
                     true,
                     "/jbst/security",
                     new JbstPropertyCORS(
@@ -44,8 +44,8 @@ class JbstConfigurationWebMVC3Test {
                             null
                     )
             );
-            mvcConfigs.getCorsConfigs().setExposedHeaders(new String[] { "Content-Type" });
-            when(jbstProperties.getMvcConfigs()).thenReturn(mvcConfigs);
+            mvc.getCors().setExposedHeaders(new String[] { "Content-Type" });
+            when(jbstProperties.getMvc()).thenReturn(mvc);
             return jbstProperties;
         }
 

@@ -1,4 +1,4 @@
-package jbst.server.ops.properties.configs;
+package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
@@ -8,28 +8,23 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import java.util.List;
-
-@SuppressWarnings("unused")
+// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RecipientsConfigs extends JbstProperty {
+public class JbstPropertyOpsGithub extends JbstProperty {
     @JbstPropertyMandatory
-    private final List<String> to;
-
-    public static RecipientsConfigs hardcoded() {
-        return new RecipientsConfigs(
-                List.of(
-                        "test1@" + JbstConstants.Domains.HARDCODED,
-                        "test2@" + JbstConstants.Domains.HARDCODED
-                )
-        );
-    }
+    private final String token;
+    @JbstPropertyMandatory
+    private final String owner;
+    @JbstPropertyMandatory
+    private final String repo;
+    @JbstPropertyMandatory
+    private final String content;
 
     @Override
     public JbstPropertyNodeType getNodeType() {
-        return JbstPropertyNodeType.ROOT;
+        return JbstPropertyNodeType.LEAF;
     }
 
     @Override
@@ -39,6 +34,6 @@ public class RecipientsConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "recipients-configs";
+        return JbstConstants.Symbols.DASH;
     }
 }

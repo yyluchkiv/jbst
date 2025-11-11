@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyEmail extends JbstProperty {
+public class JbstPropertyEmails extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
     @JbstPropertyMandatoryOnToggleEnabled
@@ -28,8 +28,8 @@ public class JbstPropertyEmail extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private Password password;
 
-    public static JbstPropertyEmail hardcoded() {
-        return new JbstPropertyEmail(
+    public static JbstPropertyEmails hardcoded() {
+        return new JbstPropertyEmails(
                 true,
                 "smtp.gmail.com",
                 587,
@@ -39,17 +39,17 @@ public class JbstPropertyEmail extends JbstProperty {
         );
     }
 
-    public static JbstPropertyEmail disabled() {
-        return new JbstPropertyEmail(false, null, 0, null, null, null);
+    public static JbstPropertyEmails disabled() {
+        return new JbstPropertyEmails(false, null, 0, null, null, null);
     }
 
-    public static JbstPropertyEmail enabled(String from) {
-        return new JbstPropertyEmail(true, "smtp.gmail.com", 587, from, Username.hardcoded(), Password.hardcoded());
+    public static JbstPropertyEmails enabled(String from) {
+        return new JbstPropertyEmails(true, "smtp.gmail.com", 587, from, Username.hardcoded(), Password.hardcoded());
     }
 
     @SuppressWarnings("unused")
-    public static JbstPropertyEmail gmail(String from, Username username, Password password) {
-        return new JbstPropertyEmail(true, "smtp.gmail.com", 587, from, username, password);
+    public static JbstPropertyEmails gmail(String from, Username username, Password password) {
+        return new JbstPropertyEmails(true, "smtp.gmail.com", 587, from, username, password);
     }
 
     @Override
@@ -64,6 +64,6 @@ public class JbstPropertyEmail extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "email-configs";
+        return "emails";
     }
 }

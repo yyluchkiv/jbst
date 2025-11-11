@@ -11,7 +11,7 @@ class UserOnInitTest {
     @Test
     void getEmailNullTest() {
         // Arrange
-        var users = JbstPropertySecurity.hardcoded().getEssenceConfigs().getUsersOnInit();
+        var users = JbstPropertySecurity.hardcoded().getEssence().getUsersOnInit();
 
         // Act
         var email = users.getUsers().get(0).getEmailOrNull();

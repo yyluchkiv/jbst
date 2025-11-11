@@ -52,8 +52,8 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertProperties();
-        this.jbstProperties.getEventsConfigs().assertProperties();
+        this.jbstProperties.getAsync().assertProperties();
+        this.jbstProperties.getEvents().assertProperties();
         this.jbstProperties.getIncidentsManager().assertProperties();
     }
 
@@ -111,11 +111,11 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @Override
     public Executor getAsyncExecutor() {
-        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
+        var async = this.jbstProperties.getAsync();
         var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(asyncConfigs.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
+        taskExecutor.setThreadNamePrefix(async.getThreadNamePrefix());
+        taskExecutor.setCorePoolSize(getNumOfCores(async.asThreadsCorePoolTuplePercentage()));
+        taskExecutor.setMaxPoolSize(getNumOfCores(async.asThreadsMaxPoolTuplePercentage()));
         taskExecutor.setRejectedExecutionHandler(this.rejectedExecutionHandler());
         taskExecutor.initialize();
         return taskExecutor;
@@ -137,11 +137,11 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     @SuppressWarnings("DuplicatedCode")
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-        var eventsConfigs = this.jbstProperties.getEventsConfigs();
+        var events = this.jbstProperties.getEvents();
         var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(eventsConfigs.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(eventsConfigs.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(eventsConfigs.asThreadsMaxPoolTuplePercentage()));
+        taskExecutor.setThreadNamePrefix(events.getThreadNamePrefix());
+        taskExecutor.setCorePoolSize(getNumOfCores(events.asThreadsCorePoolTuplePercentage()));
+        taskExecutor.setMaxPoolSize(getNumOfCores(events.asThreadsMaxPoolTuplePercentage()));
         taskExecutor.initialize();
         var eventMulticaster = new SimpleApplicationEventMulticaster();
         eventMulticaster.setTaskExecutor(taskExecutor);

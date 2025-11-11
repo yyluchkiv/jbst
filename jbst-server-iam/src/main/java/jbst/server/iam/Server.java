@@ -41,14 +41,14 @@ public class Server extends JbstStartupEventListener {
         var springApplication = new SpringApplication(Server.class);
         var applicationContext = springApplication.run(args);
         var jbstProperties = applicationContext.getBean(JbstProperties.class);
-        LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getServerConfigs(), COMPLETED));
+        LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getApp(), COMPLETED));
     }
 
     @Override
     public void onStartup() {
         try {
             super.onStartup();
-            LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
+            LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), COMPLETED));
         } catch (RuntimeException ex) {
             this.incidentsPublisher.publishThrowable(ex);
         }

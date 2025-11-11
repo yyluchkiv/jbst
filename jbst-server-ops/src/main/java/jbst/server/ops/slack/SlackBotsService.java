@@ -32,7 +32,7 @@ public class SlackBotsService {
     private final Map<Team, SlackBot> bots = new ConcurrentHashMap<>();
 
     public final void initialize() {
-        var slacksConfigs = this.serverProperties.getSlacksConfigs().getValues();
+        var slacksConfigs = this.serverProperties.getSlacks().getValues();
         slacksConfigs.forEach(sc -> {
             var bot = new SlackBot(sc, this.slackCommandsService, Slack.getInstance().methods(sc.getBotToken()));
             bot.initialize();

@@ -30,23 +30,23 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurity extends JbstProperty {
     @JbstPropertyMandatory
-    private final JbstPropertySecurityAuthorities authoritiesConfigs;
+    private final JbstPropertySecurityAuthorities authorities;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityCookies cookiesConfigs;
+    private final JbstPropertySecurityCookies cookies;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityEssence essenceConfigs;
+    private final JbstPropertySecurityEssence essence;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityJWT jwtTokensConfigs;
+    private final JbstPropertySecurityJWT jwt;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityLogging loggingConfigs;
+    private final JbstPropertySecurityLogging logging;
     @JbstPropertyMandatory
-    private final JbstPropertySecuritySessions sessionConfigs;
+    private final JbstPropertySecuritySessions sessions;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityUsersEmails usersEmailsConfigs;
-    @JbstPropertyMandatory
-    private final JbstPropertySecurityWebsockets websocketsConfigs;
+    private final JbstPropertySecurityUsersEmails usersEmails;
     @JbstPropertyOptional
-    private final JbstPropertySecurityUsersTokens usersTokensConfigs;
+    private final JbstPropertySecurityUsersTokens usersTokens;
+    @JbstPropertyMandatory
+    private final JbstPropertySecurityWebsockets websockets;
 
     public static JbstPropertySecurity hardcoded() {
         return new JbstPropertySecurity(
@@ -57,18 +57,18 @@ public class JbstPropertySecurity extends JbstProperty {
                 JbstPropertySecurityLogging.hardcoded(),
                 JbstPropertySecuritySessions.hardcoded(),
                 JbstPropertySecurityUsersEmails.hardcoded(),
-                JbstPropertySecurityWebsockets.hardcoded(),
-                JbstPropertySecurityUsersTokens.hardcoded()
+                JbstPropertySecurityUsersTokens.hardcoded(),
+                JbstPropertySecurityWebsockets.hardcoded()
         );
     }
 
-    public static JbstPropertySecurity of(JbstPropertySecurityLogging loggingConfigs) {
+    public static JbstPropertySecurity of(JbstPropertySecurityLogging logging) {
         return new JbstPropertySecurity(
                 null,
                 null,
                 null,
                 null,
-                loggingConfigs,
+                logging,
                 null,
                 null,
                 null,
@@ -76,21 +76,21 @@ public class JbstPropertySecurity extends JbstProperty {
         );
     }
 
-    public static JbstPropertySecurity of(JbstPropertySecuritySessions sessionConfigs) {
+    public static JbstPropertySecurity of(JbstPropertySecuritySessions sessions) {
         return new JbstPropertySecurity(
                 null,
                 null,
                 null,
                 null,
                 null,
-                sessionConfigs,
+                sessions,
                 null,
                 null,
                 null
         );
     }
 
-    public static JbstPropertySecurity disabledUsersEmailsConfigs() {
+    public static JbstPropertySecurity disabledUsersEmails() {
         return new JbstPropertySecurity(
                 null,
                 null,
@@ -121,7 +121,7 @@ public class JbstPropertySecurity extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "security-jwt-configs";
+        return "security";
     }
 
     @Override
@@ -129,13 +129,13 @@ public class JbstPropertySecurity extends JbstProperty {
         super.assertProperties();
 
         // Requirements: availableAuthorities vs. configuredAuthorities
-        var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();
-        var configuredAuthorities = this.essenceConfigs.getUsersOnInit().getAuthorities();
+        var expectedAuthorities = this.authorities.getValues();
+        var configuredAuthorities = this.essence.getUsersOnInit().getAuthorities();
         var containsAll = expectedAuthorities.containsAll(configuredAuthorities);
         assertTrueOrThrow(containsAll, "Please verify `users-on-init.users.authorities`. Configuration provide unauthorized authority");
 
         // Requirements: availableAuthorities vs. required enum values
-        var authorityClasses = this.getAbstractAuthorityClasses(this.authoritiesConfigs.getPackageName());
+        var authorityClasses = this.getAbstractAuthorityClasses(this.authorities.getPackageName());
         var size = authorityClasses.size();
         assertTrueOrThrow(size == 1, "Please verify AbstractAuthority.class has only one sub enum. Found: `" + size + "`");
         var authorityClass = authorityClasses.iterator().next();

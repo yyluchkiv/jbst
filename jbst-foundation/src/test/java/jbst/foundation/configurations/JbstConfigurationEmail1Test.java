@@ -23,15 +23,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
         properties = {
-                "jbst.async-configs.thread-name-prefix=tps1-async",
-                "jbst.async-configs.threads-core-pool-percentage=25",
-                "jbst.async-configs.threads-max-pool-percentage=50",
-                "jbst.email-configs.enabled=true",
-                "jbst.email-configs.host=smtp.gmail.com",
-                "jbst.email-configs.port=587",
-                "jbst.email-configs.from=jbst",
-                "jbst.email-configs.username=jbst",
-                "jbst.email-configs.password=jbst"
+                "jbst.async.thread-name-prefix=tps1-async",
+                "jbst.async.threads-core-pool-percentage=25",
+                "jbst.async.threads-max-pool-percentage=50",
+                "jbst.emails.enabled=true",
+                "jbst.emails.host=smtp.gmail.com",
+                "jbst.emails.port=587",
+                "jbst.emails.from=jbst",
+                "jbst.emails.username=jbst",
+                "jbst.emails.password=jbst"
         }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -72,11 +72,11 @@ class JbstConfigurationEmail1Test {
         var javaMailSender = (JavaMailSenderImpl) this.componentUnderTest.javaMailSender();
 
         // Assert
-        var emailConfigs = this.jbstProperties.getEmailConfigs();
-        assertThat(javaMailSender.getHost()).isEqualTo(emailConfigs.getHost());
-        assertThat(javaMailSender.getPort()).isEqualTo(emailConfigs.getPort());
-        assertThat(javaMailSender.getUsername()).isEqualTo(emailConfigs.getUsername().value());
-        assertThat(javaMailSender.getPassword()).isEqualTo(emailConfigs.getPassword().value());
+        var emails = this.jbstProperties.getEmails();
+        assertThat(javaMailSender.getHost()).isEqualTo(emails.getHost());
+        assertThat(javaMailSender.getPort()).isEqualTo(emails.getPort());
+        assertThat(javaMailSender.getUsername()).isEqualTo(emails.getUsername().value());
+        assertThat(javaMailSender.getPassword()).isEqualTo(emails.getPassword().value());
         assertThat(javaMailSender.getJavaMailProperties()).hasSize(4);
         assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.transport.protocol", "smtp");
         assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.smtp.auth", "true");

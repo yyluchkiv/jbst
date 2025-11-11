@@ -55,7 +55,7 @@ class JbstConfigurationAsyncTest {
     @Test
     void getAsyncExecutorTest() {
         // Arrange
-        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
+        var async = this.jbstProperties.getAsync();
 
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();
@@ -64,9 +64,9 @@ class JbstConfigurationAsyncTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getClass()).isEqualTo(ThreadPoolTaskExecutor.class);
         var threadPoolTaskExecutor = (ThreadPoolTaskExecutor) actual;
-        assertThat(threadPoolTaskExecutor.getThreadNamePrefix()).isEqualTo(asyncConfigs.getThreadNamePrefix());
-        assertThat(threadPoolTaskExecutor.getCorePoolSize()).isEqualTo(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
-        assertThat(threadPoolTaskExecutor.getMaxPoolSize()).isEqualTo(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
+        assertThat(threadPoolTaskExecutor.getThreadNamePrefix()).isEqualTo(async.getThreadNamePrefix());
+        assertThat(threadPoolTaskExecutor.getCorePoolSize()).isEqualTo(getNumOfCores(async.asThreadsCorePoolTuplePercentage()));
+        assertThat(threadPoolTaskExecutor.getMaxPoolSize()).isEqualTo(getNumOfCores(async.asThreadsMaxPoolTuplePercentage()));
     }
 
     @Test

@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationSecurity {
+public class JbstServerConfigurationSecurity {
 
     // Filters
     private final AuthenticationIncidentFilter authenticationIncidentFilter;
@@ -45,7 +45,7 @@ public class ConfigurationSecurity {
             authorizeHttpRequests
                     .requestMatchers(this.contextPath + "/incidents/**").permitAll()
                     .requestMatchers("/actuator/**").hasRole(Username.ops().value());
-            if (this.jbstProperties.getServerConfigs().isSpringdocEnabled()) {
+            if (this.jbstProperties.getApp().isSpringdocEnabled()) {
                 authorizeHttpRequests.requestMatchers(JbstConstants.Swagger.ENDPOINTS.toArray(new String[0])).permitAll();
             }
             authorizeHttpRequests.anyRequest().authenticated();
@@ -61,7 +61,7 @@ public class ConfigurationSecurity {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsManager(BCryptPasswordEncoder passwordEncoder) {
-        var remoteServer = this.serverProperties.getServerConfigs();
+        var remoteServer = this.serverProperties.getServer();
         var credentials = remoteServer.getCredentials();
         return new InMemoryUserDetailsManager(
                 User.withUsername(credentials.username().value())

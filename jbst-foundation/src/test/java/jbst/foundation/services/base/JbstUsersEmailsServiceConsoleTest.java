@@ -6,10 +6,10 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.JbstPropertyEmail;
+import jbst.foundation.domain.properties.configs.JbstPropertyApp;
+import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
 import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
-import jbst.foundation.domain.properties.configs.JbstPropertyServer;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.concurrent.SleepUtility;
@@ -50,11 +50,11 @@ class JbstUsersEmailsServiceConsoleTest {
         @Bean
         JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
-            jbstProperties.setServerConfigs(JbstPropertyServer.hardcoded());
-            jbstProperties.setMvcConfigs(JbstPropertyMVC.hardcoded());
-            jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
-            jbstProperties.setEmailConfigs(
-                    new JbstPropertyEmail(
+            jbstProperties.setApp(JbstPropertyApp.hardcoded());
+            jbstProperties.setMvc(JbstPropertyMVC.hardcoded());
+            jbstProperties.setSecurity(JbstPropertySecurity.hardcoded());
+            jbstProperties.setEmails(
+                    new JbstPropertyEmails(
                             true,
                             "smtp.gmail.com",
                             587,
@@ -68,14 +68,14 @@ class JbstUsersEmailsServiceConsoleTest {
 
         @Bean
         public JavaMailSender javaMailSender() {
-            var emailConfigs = this.jbstProperties().getEmailConfigs();
+            var emails = this.jbstProperties().getEmails();
 
             var mailSender = new JavaMailSenderImpl();
-            mailSender.setHost(emailConfigs.getHost());
-            mailSender.setPort(emailConfigs.getPort());
+            mailSender.setHost(emails.getHost());
+            mailSender.setPort(emails.getPort());
 
-            mailSender.setUsername(emailConfigs.getUsername().value());
-            mailSender.setPassword(emailConfigs.getPassword().value());
+            mailSender.setUsername(emails.getUsername().value());
+            mailSender.setPassword(emails.getPassword().value());
 
             var props = mailSender.getJavaMailProperties();
             props.put("mail.transport.protocol", "smtp");

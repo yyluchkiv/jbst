@@ -24,7 +24,7 @@ public class JbstActuatorResource implements InfoContributor {
     public void contribute(Info.Builder builder) {
         Map<String, Object> details = new HashMap<>();
         details.put("activeProfile", this.envUtils.getOneActiveProfileOrDash());
-        details.put("maven", this.jbstProperties.getServerConfigs().getMavenConfigs().asMavenDetails());
+        details.put("maven", this.jbstProperties.getApp().getMaven().asMavenDetails());
         builder.withDetails(details);
     }
 }

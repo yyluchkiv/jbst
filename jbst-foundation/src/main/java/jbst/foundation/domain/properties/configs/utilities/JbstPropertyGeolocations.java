@@ -1,4 +1,4 @@
-package jbst.foundation.domain.properties.base;
+package jbst.foundation.domain.properties.configs.utilities;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
@@ -8,21 +8,29 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyAuthority extends JbstProperty {
+public class JbstPropertyGeolocations extends JbstProperty {
     @JbstPropertyMandatory
-    private final String value;
+    private final boolean enabled;
 
-    public static JbstPropertyAuthority hardcoded() {
-        return new JbstPropertyAuthority("user");
+    public static JbstPropertyGeolocations hardcoded() {
+        return new JbstPropertyGeolocations(true);
     }
 
-    public static JbstPropertyAuthority random() {
-        return new JbstPropertyAuthority(randomString());
+    public static JbstPropertyGeolocations random() {
+        return randomBoolean() ? enabled() : disabled();
+    }
+
+    public static JbstPropertyGeolocations enabled() {
+        return hardcoded();
+    }
+
+    public static JbstPropertyGeolocations disabled() {
+        return new JbstPropertyGeolocations(false);
     }
 
     @Override
@@ -32,16 +40,11 @@ public class JbstPropertyAuthority extends JbstProperty {
 
     @Override
     public boolean isToggle() {
-        return false;
+        return this.enabled;
     }
 
     @Override
     public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
-    }
-
-    @Override
-    public String toString() {
-        return this.value;
     }
 }

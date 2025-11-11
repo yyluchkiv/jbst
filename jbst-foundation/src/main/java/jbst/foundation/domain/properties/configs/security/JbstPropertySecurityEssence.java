@@ -45,6 +45,6 @@ public class JbstPropertySecurityEssence extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "essence-configs";
+        return "essence";
     }
 }

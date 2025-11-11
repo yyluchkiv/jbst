@@ -65,7 +65,7 @@ public abstract class JbstSettingsService {
 
     @SuppressWarnings("LoggingSimilarMessage")
     public void initUsers() {
-        var essenceConfigs = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs();
+        var essenceConfigs = this.jbstProperties.getSecurity().getEssence();
         assertTrueOrThrow(
                 essenceConfigs.getUsersOnInit().isEnabled(),
                 invalidAttribute("essence-configs.users-on-init.enabled == true")
@@ -79,14 +79,14 @@ public abstract class JbstSettingsService {
     }
 
     public void initInvitations() {
-        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
-        var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
+        var security = this.jbstProperties.getSecurity();
+        var essence = security.getEssence();
         assertTrueOrThrow(
-                essenceConfigs.getInvitationsOnInit().isEnabled(),
+                essence.getInvitationsOnInit().isEnabled(),
                 invalidAttribute("essence-configs.invitations-on-init.enabled == true")
         );
-        var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());
-        essenceConfigs.getUsersOnInit().getUsers().forEach(userOnInit -> {
+        var authorities = getSimpleGrantedAuthorities(security.getAuthorities().getAvailableAuthorities());
+        essence.getUsersOnInit().getUsers().forEach(userOnInit -> {
             var username = userOnInit.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {
                 LOGGER.info("{} essence 'invitations-on-init' — add invitations, username: {}", PREFIX, username);

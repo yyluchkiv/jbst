@@ -1,33 +1,28 @@
-package jbst.server.hm.properties;
+package jbst.server.ops.properties.configs;
 
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
+import jbst.server.ops.properties.base.JbstPropertyOpsGithub;
+import jbst.server.ops.properties.base.JbstPropertyOpsServersMonitoring;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
-
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends JbstProperty {
+public class JbstPropertyOpsServers extends JbstProperty {
     @JbstPropertyMandatory
-    private final String targetURL;
-
-    public static ServerConfigs hardcoded() {
-        return new ServerConfigs(
-                "http://localhost:8484"
-        );
-    }
-
-    public static ServerConfigs random() {
-        return new ServerConfigs(
-                randomIPv4()
-        );
-    }
+    private final Mode mode;
+    @JbstPropertyMandatory
+    private final String rsaKeysBaseLocation;
+    @JbstPropertyMandatory
+    private final JbstPropertyOpsServersMonitoring monitoring;
+    @JbstPropertyOptional
+    private final JbstPropertyOpsGithub github;
 
     @Override
     public JbstPropertyNodeType getNodeType() {
@@ -41,6 +36,11 @@ public class ServerConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "server-configs";
+        return "servers";
+    }
+
+    public enum Mode {
+        RESOURCES,
+        GITHUB
     }
 }

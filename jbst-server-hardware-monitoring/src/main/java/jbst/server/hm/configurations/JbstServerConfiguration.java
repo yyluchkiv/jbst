@@ -32,14 +32,14 @@ import org.springframework.security.web.SecurityFilterChain;
         JbstConfigurationSpringBootServer.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationServer {
+public class JbstServerConfiguration {
 
     // Properties
     private final ServerProperties serverProperties;
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertProperties();
+        this.serverProperties.getServer().assertProperties();
     }
 
     @Bean
@@ -54,7 +54,7 @@ public class ConfigurationServer {
 
     @Bean
     public HardwareMonitoringClient.HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition() {
-        var serverConfigs = this.serverProperties.getServerConfigs();
+        var serverConfigs = this.serverProperties.getServer();
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())

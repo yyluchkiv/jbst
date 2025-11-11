@@ -6,10 +6,10 @@ logging:
 
 # jbst
 jbst:
-  server-configs:
+  app:
     name: jbstshm-dev
 
 # server
 jbst-server-hardware-monitoring:
-  server-configs:
+  server:
     target-url: http://localhost:3002

@@ -11,7 +11,7 @@ import com.slack.api.methods.request.files.FilesUploadV2Request;
 import com.slack.api.model.event.AppMentionEvent;
 import com.slack.api.model.event.MessageEvent;
 import jbst.server.ops.domain.servers.Team;
-import jbst.server.ops.properties.base.SlackConfigs;
+import jbst.server.ops.properties.base.JbstPropertyOpsSlack;
 import jbst.server.ops.slack.SlackCommandsService;
 import jbst.server.ops.utilities.MessagesUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 public record SlackBot(
-        SlackConfigs configs,
+        JbstPropertyOpsSlack configs,
         SlackCommandsService slackCommandsService,
         MethodsClient methodsClient
 ) {

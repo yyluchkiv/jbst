@@ -27,7 +27,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClient
 public class JbstAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     // Publishers
-    private final JbstEventsPublisher securityJwtPublisher;
+    private final JbstEventsPublisher eventsPublisher;
     // Utilities
     private final JbstHttpUtils httpUtils;
     // JSONs
@@ -46,7 +46,7 @@ public class JbstAuthenticationEntryPoint implements AuthenticationEntryPoint {
                     RequestUserLogin.class
             );
 
-            this.securityJwtPublisher.publishAuthenticationLoginFailure(
+            this.eventsPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(
                             requestUserLogin.username(),
                             requestUserLogin.password(),

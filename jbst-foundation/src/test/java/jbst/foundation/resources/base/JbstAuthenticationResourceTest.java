@@ -99,7 +99,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     // Utilities
     private final JbstSecurityUtils securityUtils;
     // Publishers
-    private final JbstEventsPublisher securityJwtPublisher;
+    private final JbstEventsPublisher eventsPublisher;
 
     // Resource
     private final JbstAuthenticationResource componentUnderTest;
@@ -121,7 +121,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.tokensProvider,
                 this.authenticationRequestsValidator,
                 this.securityUtils,
-                this.securityJwtPublisher
+                this.eventsPublisher
         );
     }
 
@@ -141,7 +141,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                 this.tokensProvider,
                 this.authenticationRequestsValidator,
                 this.securityUtils,
-                this.securityJwtPublisher
+                this.eventsPublisher
         );
     }
 
@@ -272,7 +272,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.authenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(authenticationToken);
-        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(any(EventAuthenticationLoginFailure.class));
+        verify(this.eventsPublisher).publishAuthenticationLoginFailure(any(EventAuthenticationLoginFailure.class));
     }
 
     @Test

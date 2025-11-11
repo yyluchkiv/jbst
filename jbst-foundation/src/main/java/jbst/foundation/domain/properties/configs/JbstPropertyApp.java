@@ -15,11 +15,11 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyServer extends JbstProperty {
+public class JbstPropertyApp extends JbstProperty {
     @JbstPropertyMandatory
     private final ServerName name;
     @JbstPropertyMandatory
-    private final JbstPropertyMaven mavenConfigs;
+    private final JbstPropertyMaven maven;
     @JbstPropertyMandatory
     private final Boolean springdocEnabled;
     @JbstPropertyOptional
@@ -27,8 +27,8 @@ public class JbstPropertyServer extends JbstProperty {
     @JbstPropertyOptional
     private String webclientURL;
 
-    public static JbstPropertyServer hardcoded() {
-        return new JbstPropertyServer(
+    public static JbstPropertyApp hardcoded() {
+        return new JbstPropertyApp(
                 ServerName.hardcoded(),
                 new JbstPropertyMaven("jbst", "jbst", Version.hardcoded()),
                 true,
@@ -49,7 +49,7 @@ public class JbstPropertyServer extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "server-configs";
+        return "app";
     }
 
     public boolean isSpringdocEnabled() {

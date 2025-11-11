@@ -4,7 +4,7 @@ import com.diogonunes.jcolor.AnsiFormat;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.properties.configs.JbstPropertyServer;
+import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -78,11 +78,11 @@ public class JbstConstants {
         // =================================================================================================================
         // Server
         // =================================================================================================================
-        public static String getServerContainer(JbstPropertyServer serverConfigs, Status status) {
+        public static String getServerContainer(JbstPropertyApp serverConfigs, Status status) {
             return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " container/server: " + status.asANSI();
         }
 
-        public static String getServerStartup(JbstPropertyServer serverConfigs, Status status) {
+        public static String getServerStartup(JbstPropertyApp serverConfigs, Status status) {
             return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " startup listener: " + status.asANSI();
         }
 

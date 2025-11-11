@@ -43,7 +43,7 @@ public class JbstAdvancedRequestLoggingFilter extends OncePerRequestFilter {
             var cachedRequest = new CachedBodyHttpServletRequest(request);
             this.httpUtils.cachePayload(cachedRequest);
 
-            if (this.jbstProperties.getSecurityJwtConfigs().getLoggingConfigs().isAdvancedRequestLoggingEnabled()) {
+            if (this.jbstProperties.getSecurity().getLogging().isAdvancedRequestLoggingEnabled()) {
                 LOGGER.info("============================================================================================");
                 LOGGER.info("Method: (@" + cachedRequest.getMethod() + ", " + cachedRequest.getServletPath() + ")");
                 LOGGER.info("Current User: " + this.securityUtils.getAuthenticatedUsernameOrUnexpected());

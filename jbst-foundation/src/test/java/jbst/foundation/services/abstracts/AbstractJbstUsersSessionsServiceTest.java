@@ -8,8 +8,8 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
-import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
+import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -99,7 +99,7 @@ class AbstractJbstUsersSessionsServiceTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        JbstEventsPublisher securityJwtPublisher() {
+        JbstEventsPublisher eventsPublisher() {
             return mock(JbstEventsPublisher.class);
         }
 
@@ -123,7 +123,7 @@ class AbstractJbstUsersSessionsServiceTest {
         @Bean
         AbstractJbstUsersSessionsService abstractTokensContextThrowerService() {
             return new AbstractJbstUsersSessionsService(
-                    this.securityJwtPublisher(),
+                    this.eventsPublisher(),
                     this.usersSessionsRepository(),
                     this.geoUtils(),
                     this.securityUtils()

@@ -16,26 +16,26 @@ import org.springframework.core.PriorityOrdered;
 )
 @Data
 public class JbstProperties implements PriorityOrdered {
-    private JbstPropertyServer serverConfigs;
-    private JbstPropertyUtils utilsConfigs;
-    private JbstPropertyAsync asyncConfigs;
-    private JbstPropertyEvents eventsConfigs;
-    private JbstPropertyMVC mvcConfigs;
-    private JbstPropertyEmail emailConfigs;
+    private JbstPropertyApp app;
+    private JbstPropertyUtils utils;
+    private JbstPropertyAsync async;
+    private JbstPropertyEvents events;
+    private JbstPropertyMVC mvc;
+    private JbstPropertyEmails emails;
     private JbstPropertyIncidentsManager incidentsManager;
-    private JbstPropertySecurity securityJwtConfigs;
+    private JbstPropertySecurity security;
     private JbstPropertyDatabases databases;
 
     public static JbstProperties hardcoded() {
         var properties = new JbstProperties();
-        properties.setServerConfigs(JbstPropertyServer.hardcoded());
-        properties.setUtilsConfigs(JbstPropertyUtils.hardcoded());
-        properties.setAsyncConfigs(JbstPropertyAsync.hardcoded());
-        properties.setEventsConfigs(JbstPropertyEvents.hardcoded());
-        properties.setMvcConfigs(JbstPropertyMVC.hardcoded());
-        properties.setEmailConfigs(JbstPropertyEmail.hardcoded());
+        properties.setApp(JbstPropertyApp.hardcoded());
+        properties.setUtils(JbstPropertyUtils.hardcoded());
+        properties.setAsync(JbstPropertyAsync.hardcoded());
+        properties.setEvents(JbstPropertyEvents.hardcoded());
+        properties.setMvc(JbstPropertyMVC.hardcoded());
+        properties.setEmails(JbstPropertyEmails.hardcoded());
         properties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
-        properties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
+        properties.setSecurity(JbstPropertySecurity.hardcoded());
         properties.setDatabases(JbstPropertyDatabases.hardcoded());
         return properties;
     }
@@ -50,31 +50,31 @@ public class JbstProperties implements PriorityOrdered {
     // ================================================================================================================
     public final String getMagicLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
-                this.serverConfigs.getWebclientURL(),
-                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientMagicLinkPath(),
+                this.app.getWebclientURL(),
+                this.security.getUsersTokens().getWebclientMagicLinkPath(),
                 token
         );
     }
 
     public final String getEmailConfirmationRedirectLink() {
         return "%s%s".formatted(
-                this.serverConfigs.getWebclientURL(),
-                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath()
+                this.app.getWebclientURL(),
+                this.security.getUsersTokens().getWebclientEmailConfirmationRedirectPath()
         );
     }
 
     public final String getEmailConfirmationLink(@NotNull ServerProperties serverProperties, @NotNull String token) {
         return "%s%s/tokens/email/confirm?token=%s".formatted(
-                this.serverConfigs.getServerURL() + serverProperties.getServlet().getContextPath(),
-                this.mvcConfigs.getBasePathPrefix(),
+                this.app.getServerURL() + serverProperties.getServlet().getContextPath(),
+                this.mvc.getBasePathPrefix(),
                 token
         );
     }
 
     public final String getPasswordResetLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
-                this.serverConfigs.getWebclientURL(),
-                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),
+                this.app.getWebclientURL(),
+                this.security.getUsersTokens().getWebclientPasswordResetPath(),
                 token
         );
     }

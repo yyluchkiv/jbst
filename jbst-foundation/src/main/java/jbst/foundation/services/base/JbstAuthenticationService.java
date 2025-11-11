@@ -57,7 +57,7 @@ public class JbstAuthenticationService {
     // Utilities
     private final JbstSecurityUtils securityUtils;
     // Publishers
-    private final JbstEventsPublisher securityJwtPublisher;
+    private final JbstEventsPublisher eventsPublisher;
 
     public final Username asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
         try {
@@ -69,7 +69,7 @@ public class JbstAuthenticationService {
             );
             return credentials.username();
         } catch (BadCredentialsException ex) {
-            this.securityJwtPublisher.publishAuthenticationLoginFailure(
+            this.eventsPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(
                             credentials.username(),
                             credentials.password(),
@@ -93,7 +93,7 @@ public class JbstAuthenticationService {
             );
             return credentials.username();
         } catch (BadCredentialsException ex) {
-            this.securityJwtPublisher.publishAuthenticationLoginMagicLinkFailure(
+            this.eventsPublisher.publishAuthenticationLoginMagicLinkFailure(
                     new EventAuthenticationMagicLinkFailure(
                             magicLinkUserCredentials.userToken(),
                             getClientIpAddr(httpRequest),

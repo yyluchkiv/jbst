@@ -120,13 +120,13 @@ class JbstSessionsCronTest {
         if (cron.isEnabled()) {
             when(this.sessionRegistry.getActiveSessionsUsernames()).thenReturn(usernames);
         }
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(new JbstPropertySecuritySessions(cron, JbstPropertyCron.random())));
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.of(new JbstPropertySecuritySessions(cron, JbstPropertyCron.random())));
 
         // Act
         this.componentUnderTest.cleanByExpiredRefreshTokens();
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurity();
         if (cron.isEnabled()) {
             verify(this.sessionRegistry).getActiveSessionsUsernames();
             verify(this.sessionRegistry).cleanByExpiredRefreshTokens(usernames);
@@ -136,13 +136,13 @@ class JbstSessionsCronTest {
     @ParameterizedTest
     @MethodSource("cronArgs")
     void enableSessionsMetadataRenewTest(JbstPropertyCron cron) {
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(new JbstPropertySecuritySessions(JbstPropertyCron.random(), cron)));
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.of(new JbstPropertySecuritySessions(JbstPropertyCron.random(), cron)));
 
         // Act
         this.componentUnderTest.enableSessionsMetadataRenew();
 
         // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurity();
         if (cron.isEnabled()) {
             verify(this.usersSessionsService).enableUserRequestMetadataRenewCron();
         }

@@ -1,36 +1,29 @@
-package jbst.foundation.domain.properties.configs.utilities;
+package jbst.server.ops.properties.base;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.server.ops.domain.servers.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-
+// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyGeoLocations extends JbstProperty {
+public class JbstPropertyOpsSlackTeamCommunication extends JbstProperty {
     @JbstPropertyMandatory
-    private final boolean enabled;
+    private final Team team;
+    @JbstPropertyMandatory
+    private final Mode mode;
+    @JbstPropertyMandatory
+    private final String id;
 
-    public static JbstPropertyGeoLocations hardcoded() {
-        return new JbstPropertyGeoLocations(true);
-    }
-
-    public static JbstPropertyGeoLocations random() {
-        return randomBoolean() ? enabled() : disabled();
-    }
-
-    public static JbstPropertyGeoLocations enabled() {
-        return hardcoded();
-    }
-
-    public static JbstPropertyGeoLocations disabled() {
-        return new JbstPropertyGeoLocations(false);
+    public enum Mode {
+        DISABLED,
+        OPERATIONAL
     }
 
     @Override
@@ -40,11 +33,15 @@ public class JbstPropertyGeoLocations extends JbstProperty {
 
     @Override
     public boolean isToggle() {
-        return this.enabled;
+        return false;
     }
 
     @Override
     public String getNameNonLeaf() {
         return JbstConstants.Symbols.DASH;
+    }
+
+    public boolean isOperationalMode() {
+        return Mode.OPERATIONAL.equals(this.mode);
     }
 }

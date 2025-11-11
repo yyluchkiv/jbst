@@ -31,16 +31,16 @@ public class JbstConfigurationAsync implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.jbstProperties.getAsyncConfigs().assertProperties();
+        this.jbstProperties.getAsync().assertProperties();
     }
 
     @Override
     public Executor getAsyncExecutor() {
-        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
+        var async = this.jbstProperties.getAsync();
         var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(asyncConfigs.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
+        taskExecutor.setThreadNamePrefix(async.getThreadNamePrefix());
+        taskExecutor.setCorePoolSize(getNumOfCores(async.asThreadsCorePoolTuplePercentage()));
+        taskExecutor.setMaxPoolSize(getNumOfCores(async.asThreadsMaxPoolTuplePercentage()));
         taskExecutor.initialize();
         return taskExecutor;
     }

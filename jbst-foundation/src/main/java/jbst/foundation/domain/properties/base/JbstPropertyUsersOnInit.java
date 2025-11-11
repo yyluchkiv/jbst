@@ -36,9 +36,9 @@ public class JbstPropertyUsersOnInit extends JbstProperty {
                                 Username.of("admin12"),
                                 Password.of("password12"),
                                 ZoneId.systemDefault(),
+                                Set.of("admin"),
                                 null,
-                                false,
-                                Set.of("admin")
+                                false
                         )
                 )
         );

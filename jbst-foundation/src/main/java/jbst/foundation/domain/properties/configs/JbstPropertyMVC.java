@@ -22,7 +22,7 @@ public class JbstPropertyMVC extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private String basePathPrefix;
     @JbstPropertyMandatoryOnToggleEnabled
-    private JbstPropertyCORS corsConfigs;
+    private JbstPropertyCORS cors;
 
     public static JbstPropertyMVC hardcoded() {
         return new JbstPropertyMVC(
@@ -64,6 +64,6 @@ public class JbstPropertyMVC extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "mvc-configs";
+        return "mvc";
     }
 }

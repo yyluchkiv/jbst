@@ -24,7 +24,7 @@ public abstract class AbstractJbstInvitationsService implements JbstInvitationsS
         var invitations = this.invitationsRepository.findResponseCodesByOwner(owner);
         invitations.sort(ResponseInvitation.INVITATION);
         return new ResponseInvitations(
-                this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
+                this.jbstProperties.getSecurity().getAuthorities().getAvailableAuthorities(),
                 invitations
         );
     }

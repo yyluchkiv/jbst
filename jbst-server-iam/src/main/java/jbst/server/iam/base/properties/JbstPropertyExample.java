@@ -1,9 +1,8 @@
-package jbst.server.ops.properties.base;
+package jbst.server.iam.base.properties;
 
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.server.ops.domain.servers.Team;
+import jbst.server.iam.base.domain.enums.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,22 +12,17 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlackTeamCommunication extends JbstProperty {
+public class JbstPropertyExample extends JbstProperty {
     @JbstPropertyMandatory
-    private final Team team;
+    private final String targetAttribute1;
     @JbstPropertyMandatory
-    private final Mode mode;
+    private final long targetAttribute2;
     @JbstPropertyMandatory
-    private final String id;
-
-    public enum Mode {
-        DISABLED,
-        OPERATIONAL
-    }
+    private final UserAuthority targetAuthority;
 
     @Override
     public JbstPropertyNodeType getNodeType() {
-        return JbstPropertyNodeType.LEAF;
+        return JbstPropertyNodeType.ROOT;
     }
 
     @Override
@@ -38,10 +32,6 @@ public class SlackTeamCommunication extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return JbstConstants.Symbols.DASH;
-    }
-
-    public boolean isOperationalMode() {
-        return Mode.OPERATIONAL.equals(this.mode);
+        return "example";
     }
 }

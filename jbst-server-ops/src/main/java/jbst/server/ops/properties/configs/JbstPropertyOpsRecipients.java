@@ -1,24 +1,31 @@
-package jbst.server.iam.base.properties;
+package jbst.server.ops.properties.configs;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.server.iam.base.domain.enums.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-// Lombok (property-based)
+import java.util.List;
+
+@SuppressWarnings("unused")
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends JbstProperty {
+public class JbstPropertyOpsRecipients extends JbstProperty {
     @JbstPropertyMandatory
-    private final String targetAttribute1;
-    @JbstPropertyMandatory
-    private final long targetAttribute2;
-    @JbstPropertyMandatory
-    private final UserAuthority targetAuthority;
+    private final List<String> to;
+
+    public static JbstPropertyOpsRecipients hardcoded() {
+        return new JbstPropertyOpsRecipients(
+                List.of(
+                        "test1@" + JbstConstants.Domains.HARDCODED,
+                        "test2@" + JbstConstants.Domains.HARDCODED
+                )
+        );
+    }
 
     @Override
     public JbstPropertyNodeType getNodeType() {
@@ -32,6 +39,6 @@ public class ServerConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "server-configs";
+        return "recipients";
     }
 }

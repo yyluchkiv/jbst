@@ -58,7 +58,7 @@ public class JbstPropertySecurityUsersEmails extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "users-emails-configs";
+        return "users-emails";
     }
 
     public boolean isEnabled(JbstAccountAccessMethod method) {
@@ -75,7 +75,7 @@ public class JbstPropertySecurityUsersEmails extends JbstProperty {
             return true;
         }
         // fallback
-        LOGGER.warn("Please double-check users-emails-configs to verify required {AccountAccessMethod + enable} configuration");
+        LOGGER.warn("Please double-check users-emails to verify required {AccountAccessMethod + enable} configuration");
         return false;
     }
 }

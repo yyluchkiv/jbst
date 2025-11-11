@@ -6,18 +6,18 @@ logging:
 
 # jbst
 jbst:
-  server-configs:
+  app:
     springdoc-enabled: true
     server-url: http://localhost:3002
     webclient-url: http://localhost:3000
-  utils-configs:
-    geo-locations-configs:
+  utils:
+    geolocations:
       enabled: false
-    geo-country-flags-configs:
+    countries-flags:
       enabled: false
-    user-agent-configs:
+    users-agents:
       enabled: false
-  email-configs:
+  emails:
     enabled: false
   incidents-manager:
     enabled: true
@@ -40,16 +40,16 @@ jbst:
       REGISTER0_FAILURE: true
       REGISTER1: true
       REGISTER1_FAILURE: true
-  mvc-configs:
-    cors-configs:
+  mvc:
+    cors:
       allowed-origins:
         - http://localhost:3003
         - http://localhost:8686
         - http://localhost:8787
-  security-jwt-configs:
-    cookies-configs:
+  security:
+    cookies:
       domain: localhost
-    jwt-tokens-configs:
+    jwt:
       secret-key: ENC(GbnDNQVCspqW74HYwR6XePbdG6dmo7l/rIPe+hL7uHSnj+5kkUQsj0ZPegUGytLpx/5pdLO7vdQ=)
       storage-method: COOKIES
       access-token:
@@ -60,9 +60,9 @@ jbst:
         expiration:
           amount: 60
           unit: MINUTES # @java.time.temporal.ChronoUnit
-    logging-configs:
+    logging:
       advanced-request-logging-enabled: false
-    session-configs:
+    sessions:
       clean-sessions-by-expired-refresh-tokens-cron:
         enabled: false
         expression: "*/30 * * * * *"
@@ -71,21 +71,21 @@ jbst:
         enabled: false
         expression: "*/30 * * * * *"
         zone-id: "Europe/Kyiv"
-    essence-configs:
+    essence:
       users-on-init:
         enabled: true
         users:
           - username: admin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
-            password-change-required: false
             authorities: [ "admin", "invitations:write" ]
+            password-change-required: false
           - username: superadmin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
-            password-change-required: false
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
+            password-change-required: false
       invitations-on-init:
         enabled: true
-    users-emails-configs:
+    users-emails:
       subject-prefix: "[jbst.com]"

@@ -25,7 +25,7 @@ public abstract class AbstractJbstInvitationsValidator implements JbstInvitation
 
     @Override
     public void validateCreateNewInvitation(RequestNewInvitationParams request) {
-        var availableAuthorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
+        var availableAuthorities = this.jbstProperties.getSecurity().getAuthorities().getAvailableAuthorities();
         assertTrueOrThrow(
                 availableAuthorities.containsAll(request.authorities()),
                 "Authorities must contains: [%s]".formatted(baseJoiningRaw(availableAuthorities))

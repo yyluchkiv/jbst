@@ -11,11 +11,11 @@ import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
@@ -142,7 +142,7 @@ class JbstEventsSubscriberTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        JbstIncidentsPublisher securityJwtIncidentPublisher() {
+        JbstIncidentsPublisher jbstIncidentsPublisher() {
             return mock(JbstIncidentsPublisher.class);
         }
 
@@ -169,7 +169,7 @@ class JbstEventsSubscriberTest {
         @Bean
         JbstEventsSubscriber eventsSubscriber() {
             return new JbstEventsSubscriber(
-                    this.securityJwtIncidentPublisher(),
+                    this.jbstIncidentsPublisher(),
                     this.baseUsersTokensService(),
                     this.userEmailService(),
                     this.usersSessionsService(),

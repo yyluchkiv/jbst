@@ -1,11 +1,10 @@
 package jbst.foundation.startup;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.base.JbstPropertyInvitationsOnInit;
 import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
+import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
-import jbst.foundation.domain.properties.configs.JbstPropertyServer;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityAuthorities;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityEssence;
 import jbst.foundation.settings.JbstSettingsService;
@@ -89,12 +88,12 @@ class JbstStartupEventListenerTest {
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isUsersEnabled, boolean isInvitationsEnabled) {
         // Arrange
-        var securityJwtConfigs = new JbstPropertySecurity(
+        var security = new JbstPropertySecurity(
                 new JbstPropertySecurityAuthorities(
                         "jbst",
                         Set.of(
-                                new JbstPropertyAuthority("admin"),
-                                new JbstPropertyAuthority("user")
+                                "admin",
+                                "user"
                         )
                 ),
                 null,
@@ -114,14 +113,14 @@ class JbstStartupEventListenerTest {
                 null,
                 null
         );
-        when(this.jbstProperties.getServerConfigs()).thenReturn(JbstPropertyServer.hardcoded());
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getApp()).thenReturn(JbstPropertyApp.hardcoded());
+        when(this.jbstProperties.getSecurity()).thenReturn(security);
 
         // Act
         this.componentUnderTest.onStartup();
 
         // Assert
-        verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
+        verify(this.jbstProperties, times(2)).getSecurity();
         if (isUsersEnabled) {
             verify(this.settingsService).initUsers();
         }

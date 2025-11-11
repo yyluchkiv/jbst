@@ -4,9 +4,9 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
@@ -69,7 +69,7 @@ public class TestConfigurationResources {
                 this.usersTokensRepository(),
                 this.tokensProvider(),
                 this.securityUtils(),
-                this.securityJwtEventsPublisher()
+                this.eventsPublisher()
         );
     }
 
@@ -156,7 +156,7 @@ public class TestConfigurationResources {
     // Publishers
     // =================================================================================================================
     @Bean
-    JbstEventsPublisher securityJwtEventsPublisher() {
+    JbstEventsPublisher eventsPublisher() {
         return mock(JbstEventsPublisher.class);
     }
 

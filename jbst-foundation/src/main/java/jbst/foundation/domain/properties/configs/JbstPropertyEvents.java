@@ -45,7 +45,7 @@ public class JbstPropertyEvents extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "events-configs";
+        return "events";
     }
 
     public TuplePercentage asThreadsCorePoolTuplePercentage() {

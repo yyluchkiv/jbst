@@ -7,11 +7,12 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.utilities.spring.SpringAuthoritiesUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
 import java.util.Set;
@@ -19,8 +20,6 @@ import java.util.Set;
 import static java.lang.Boolean.TRUE;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -33,32 +32,21 @@ public class JbstPropertyUserOnInit extends JbstProperty {
     private final Password password;
     @JbstPropertyMandatory
     private final ZoneId zoneId;
+    @JbstPropertyMandatory
+    private final Set<String> authorities;
     @JbstPropertyOptional
     private String email;
     @JbstPropertyOptional
-    private final Boolean passwordChangeRequired;
-    @JbstPropertyMandatory
-    private final Set<String> authorities;
+    private Boolean passwordChangeRequired;
 
     public static JbstPropertyUserOnInit hardcoded() {
         return new JbstPropertyUserOnInit(
                 Username.hardcoded(),
                 Password.hardcoded(),
                 UKRAINE,
+                Set.of("user", "admin"),
                 Email.hardcoded().value(),
-                false,
-                Set.of("user", "admin")
-        );
-    }
-
-    public static JbstPropertyUserOnInit random() {
-        return new JbstPropertyUserOnInit(
-                Username.random(),
-                Password.random(),
-                RandomUtility.randomZoneId(),
-                Email.random().value(),
-                randomBoolean(),
-                randomStringsAsSet(3)
+                false
         );
     }
 
@@ -83,5 +71,9 @@ public class JbstPropertyUserOnInit extends JbstProperty {
 
     public boolean isPasswordChangeRequired() {
         return TRUE.equals(this.passwordChangeRequired);
+    }
+
+    public Set<SimpleGrantedAuthority> getSimpleGrantedAuthorities() {
+        return SpringAuthoritiesUtility.getSimpleGrantedAuthorities(this.authorities);
     }
 }

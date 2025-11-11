@@ -53,7 +53,7 @@ public class HardwareMonitoringClient extends AbstractInfiniteTimerTask {
     public void onTick() {
         try {
             var metadata = new HardwareMonitoringMetadata(
-                    this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion(),
+                    this.jbstProperties.getApp().getMaven().getVersion(),
                     HardwareUtility.getSystemMemories()
             );
             var status = Status.STARTED;

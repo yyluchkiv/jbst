@@ -46,18 +46,18 @@ public class Server {
         var springApplication = new SpringApplication(Server.class);
         var applicationContext = springApplication.run(args);
         var jbstProperties = applicationContext.getBean(JbstProperties.class);
-        LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getServerConfigs(), COMPLETED));
+        LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getApp(), COMPLETED));
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void start() {
         try {
-            LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
+            LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), STARTED));
             this.slackBotsService.initialize();
             this.monitoringService.initialize();
             this.serversJob.scheduleAnyChangesNotification();
             this.incidentsService.configureCleanCronJob();
-            LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
+            LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), COMPLETED));
         } catch (RuntimeException ex) {
             LOGGER.error("Server startup failure", ex);
         }

@@ -85,7 +85,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void multipartRequestEndpointTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.random()));
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.random()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -109,7 +109,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void disabledLoggingCachedEndpointTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.disabled()));
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.disabled()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -132,7 +132,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void enabledLoggingEmptyPayloadTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.enabled()));
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.enabled()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -159,7 +159,7 @@ class JbstAdvancedRequestLoggingFilterTest {
     @Test
     void enabledLoggingTest() throws ServletException, IOException {
         // Arrange
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.enabled()));
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.of(JbstPropertySecurityLogging.enabled()));
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);

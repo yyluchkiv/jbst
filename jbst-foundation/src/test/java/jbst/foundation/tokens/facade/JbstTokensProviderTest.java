@@ -106,7 +106,7 @@ class JbstTokensProviderTest {
 
     @AfterEach
     void afterEach() {
-        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurity();
         verifyNoMoreInteractions(
                 this.tokensCookiesProvider,
                 this.tokensHeadersProvider,
@@ -272,7 +272,7 @@ class JbstTokensProviderTest {
     // PRIVATE METHODS
     // =================================================================================================================
     private void mockProperties(JbstJwtTokenStorageMethod method) {
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(
+        when(this.jbstProperties.getSecurity()).thenReturn(
                 new JbstPropertySecurity(
                         JbstPropertySecurityAuthorities.hardcoded(),
                         JbstPropertySecurityCookies.hardcoded(),
@@ -286,8 +286,8 @@ class JbstTokensProviderTest {
                         JbstPropertySecurityLogging.hardcoded(),
                         JbstPropertySecuritySessions.hardcoded(),
                         JbstPropertySecurityUsersEmails.hardcoded(),
-                        JbstPropertySecurityWebsockets.hardcoded(),
-                        JbstPropertySecurityUsersTokens.hardcoded()
+                        JbstPropertySecurityUsersTokens.hardcoded(),
+                        JbstPropertySecurityWebsockets.hardcoded()
                 )
         );
     }

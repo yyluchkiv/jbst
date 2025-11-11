@@ -3,7 +3,6 @@ package jbst.foundation.configurations;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
@@ -53,7 +52,7 @@ class JbstConfigurationSecurityJwtTest {
         @Bean
         public JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
-            jbstProperties.setMvcConfigs(
+            jbstProperties.setMvc(
                     new JbstPropertyMVC(
                             true,
                             "/jbst/security",
@@ -68,17 +67,17 @@ class JbstConfigurationSecurityJwtTest {
                     )
             );
             jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
-            jbstProperties.setSecurityJwtConfigs(
+            jbstProperties.setSecurity(
                     new JbstPropertySecurity(
                             new JbstPropertySecurityAuthorities(
                                     "jbst.foundation.tests.enums",
                                     Set.of(
-                                            new JbstPropertyAuthority(AbstractAuthority.SUPERADMIN),
-                                            new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_READ),
-                                            new JbstPropertyAuthority(AbstractAuthority.INVITATIONS_WRITE),
-                                            new JbstPropertyAuthority(AbstractAuthority.PROMETHEUS_READ),
-                                            new JbstPropertyAuthority("admin"),
-                                            new JbstPropertyAuthority("user")
+                                            AbstractAuthority.SUPERADMIN,
+                                            AbstractAuthority.INVITATIONS_READ,
+                                            AbstractAuthority.INVITATIONS_WRITE,
+                                            AbstractAuthority.PROMETHEUS_READ,
+                                            "admin",
+                                            "user"
                                     )
                             ),
                             JbstPropertySecurityCookies.hardcoded(),
@@ -87,8 +86,8 @@ class JbstConfigurationSecurityJwtTest {
                             JbstPropertySecurityLogging.hardcoded(),
                             JbstPropertySecuritySessions.hardcoded(),
                             JbstPropertySecurityUsersEmails.hardcoded(),
-                            JbstPropertySecurityWebsockets.hardcoded(),
-                            JbstPropertySecurityUsersTokens.hardcoded()
+                            JbstPropertySecurityUsersTokens.hardcoded(),
+                            JbstPropertySecurityWebsockets.hardcoded()
                     )
             );
             return jbstProperties;

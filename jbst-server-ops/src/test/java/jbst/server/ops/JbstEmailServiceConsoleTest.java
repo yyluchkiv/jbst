@@ -4,13 +4,13 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.JbstPropertyEmail;
+import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
 import jbst.foundation.domain.properties.configs.JbstPropertyUtils;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.utils.JbstGeoUtils;
-import jbst.server.ops.properties.configs.RecipientsConfigs;
+import jbst.server.ops.properties.configs.JbstPropertyOpsRecipients;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -46,8 +46,8 @@ class JbstEmailServiceConsoleTest {
         @Bean
         JbstProperties jbstProperties() {
             var applicationFrameworkProperties = new JbstProperties();
-            applicationFrameworkProperties.setEmailConfigs(
-                    new JbstPropertyEmail(
+            applicationFrameworkProperties.setEmails(
+                    new JbstPropertyEmails(
                             true,
                             "smtp.gmail.com",
                             587,
@@ -56,20 +56,20 @@ class JbstEmailServiceConsoleTest {
                             Password.of("<?>")
                     )
             );
-            applicationFrameworkProperties.setUtilsConfigs(JbstPropertyUtils.hardcoded());
+            applicationFrameworkProperties.setUtils(JbstPropertyUtils.hardcoded());
             return applicationFrameworkProperties;
         }
 
         @Bean
         public JavaMailSender javaMailSender() {
-            var emailConfigs = this.jbstProperties().getEmailConfigs();
+            var emails = this.jbstProperties().getEmails();
 
             var mailSender = new JavaMailSenderImpl();
-            mailSender.setHost(emailConfigs.getHost());
-            mailSender.setPort(emailConfigs.getPort());
+            mailSender.setHost(emails.getHost());
+            mailSender.setPort(emails.getPort());
 
-            mailSender.setUsername(emailConfigs.getUsername().value());
-            mailSender.setPassword(emailConfigs.getPassword().value());
+            mailSender.setUsername(emails.getUsername().value());
+            mailSender.setPassword(emails.getPassword().value());
 
             var props = mailSender.getJavaMailProperties();
             props.put("mail.transport.protocol", "smtp");
@@ -169,6 +169,6 @@ class JbstEmailServiceConsoleTest {
     // ================================================================================================================
     // WARNING: change to real emails
     private Set<String> getTo() {
-        return new HashSet<>(RecipientsConfigs.hardcoded().getTo());
+        return new HashSet<>(JbstPropertyOpsRecipients.hardcoded().getTo());
     }
 }

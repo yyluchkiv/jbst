@@ -31,12 +31,12 @@ public class JbstSessionsCron extends AbstractBaseCron {
     }
 
     @Scheduled(
-            cron = "${jbst.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.expression}",
-            zone = "${jbst.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.zone-id}"
+            cron = "${jbst.security.sessions.clean-sessions-by-expired-refresh-tokens-cron.expression}",
+            zone = "${jbst.security.sessions.clean-sessions-by-expired-refresh-tokens-cron.zone-id}"
     )
     public void cleanByExpiredRefreshTokens() {
         this.executeCron(
-                this.jbstProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled(),
+                this.jbstProperties.getSecurity().getSessions().getCleanSessionsByExpiredRefreshTokensCron().isEnabled(),
                 () -> {
                     var usernames = this.sessionRegistry.getActiveSessionsUsernames();
                     LOGGER.info("Sessions cleanup by expired JWT refresh tokens executed. Active sessions usernames count: {}", usernames.size());
@@ -46,12 +46,12 @@ public class JbstSessionsCron extends AbstractBaseCron {
     }
 
     @Scheduled(
-            cron = "${jbst.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.expression}",
-            zone = "${jbst.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.zone-id}"
+            cron = "${jbst.security.sessions.enable-sessions-metadata-renew-cron.expression}",
+            zone = "${jbst.security.sessions.enable-sessions-metadata-renew-cron.zone-id}"
     )
     public void enableSessionsMetadataRenew() {
         this.executeCron(
-                this.jbstProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled(),
+                this.jbstProperties.getSecurity().getSessions().getEnableSessionsMetadataRenewCron().isEnabled(),
                 this.usersSessionsService::enableUserRequestMetadataRenewCron
         );
     }

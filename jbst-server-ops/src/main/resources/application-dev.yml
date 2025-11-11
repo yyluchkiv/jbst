@@ -6,25 +6,25 @@ logging:
 
 # jbst
 jbst:
-  email-configs:
+  utils:
+    countries-flags:
+      enabled: false
+    users-agents:
+      enabled: false
+  emails:
     enabled: true
     username: "<?>"
     password: "<?>"
     from: "<?>"
-  utils-configs:
-    geo-country-flags-configs:
-      enabled: false
-    user-agent-configs:
-      enabled: false
 
 # server
 jbst-server-ops:
-  server-configs:
+  server:
     base-url: "http://localhost:8973"
     credentials:
       username: "admin"
       password: "admin"
-  slacks-configs:
+  slacks:
     values:
       - team: "TECH1"
         main: true
@@ -42,9 +42,9 @@ jbst-server-ops:
         bot-token: "<?>"
         mode: "READONLY"
         main-communication-id: "<?>"
-  servers-configs:
+  servers:
     mode: "RESOURCES"
     rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
-  recipients-configs:
+  recipients:
     to:
       - "<?>"

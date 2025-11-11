@@ -119,7 +119,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
             }
         }
         // security
-        this.jbstProperties.getSecurityJwtConfigs().assertProperties();
+        this.jbstProperties.getSecurity().assertProperties();
     }
 
     @Autowired
@@ -137,13 +137,13 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
-            if (this.jbstProperties.getServerConfigs().isSpringdocEnabled()) {
+            if (this.jbstProperties.getApp().isSpringdocEnabled()) {
                 web.ignoring().requestMatchers(JbstConstants.Swagger.ENDPOINTS.toArray(new String[0]));
             }
             // WARNING: You are asking Spring Security to ignore Ant [pattern='/**/**'].
             // This is not recommended: please use permitAll via HttpSecurity#authorizeHttpRequests instead
-            if (this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().isEnabled()) {
-                var endpoint = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getStompConfigs().getEndpoint();
+            if (this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
+                var endpoint = this.jbstProperties.getSecurity().getWebsockets().getStomp().getEndpoint();
                 web.ignoring().requestMatchers(endpoint + "/**");
             }
             this.abstractJbstSecurityJwtConfigurer.configure(web);
@@ -152,7 +152,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
+        var basePathPrefix = this.jbstProperties.getMvc().getBasePathPrefix();
 
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -194,7 +194,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                             .requestMatchers(POST, basePathPrefix + "/tokens/password/reset").denyAll()
                             .requestMatchers(PATCH, basePathPrefix + "/tokens/password/reset").denyAll();
 
-                    if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationsOnInit().isEnabled()) {
+                    if (this.jbstProperties.getSecurity().getEssence().getInvitationsOnInit().isEnabled()) {
                         authorizeHttpRequests
                                 .requestMatchers(GET, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_READ)
                                 .requestMatchers(POST, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_WRITE)
@@ -222,11 +222,11 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     // =================================================================================================================
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        if (!this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        registry.addEndpoint(this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getStompConfigs().getEndpoint())
-                .setAllowedOrigins(this.jbstProperties.getMvcConfigs().getCorsConfigs().getAllowedOrigins())
+        registry.addEndpoint(this.jbstProperties.getSecurity().getWebsockets().getStomp().getEndpoint())
+                .setAllowedOrigins(this.jbstProperties.getMvc().getCors().getAllowedOrigins())
                 .setHandshakeHandler(this.securityHandshakeHandler)
                 .addInterceptors(this.csrfInterceptorHandshake)
                 .withSockJS();
@@ -234,7 +234,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
-        if (!this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
         registry.anyMessage().authenticated();
@@ -242,10 +242,10 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @Override
     public void configureMessageBroker(@NotNull MessageBrokerRegistry registry) {
-        if (!this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        var broker = this.jbstProperties.getSecurityJwtConfigs().getWebsocketsConfigs().getBrokerConfigs();
+        var broker = this.jbstProperties.getSecurity().getWebsockets().getBrokerRegistry();
         registry.setApplicationDestinationPrefixes(broker.getApplicationDestinationPrefix());
         registry.enableSimpleBroker(broker.getSimpleDestination());
         registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());

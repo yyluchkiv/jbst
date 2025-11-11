@@ -49,7 +49,7 @@ public class AuthenticationIncidentFilter extends OncePerRequestFilter {
                     Username.of(values[0]),
                     Password.of(values[1])
             );
-            var server = this.serverProperties.getServerConfigs();
+            var server = this.serverProperties.getServer();
             if (!server.containsCredentials(credentials)) {
                 var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
                         credentials,

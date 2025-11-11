@@ -13,24 +13,24 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyUserAgent extends JbstProperty {
+public class JbstPropertyUsersAgents extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
 
-    public static JbstPropertyUserAgent hardcoded() {
-        return new JbstPropertyUserAgent(true);
+    public static JbstPropertyUsersAgents hardcoded() {
+        return new JbstPropertyUsersAgents(true);
     }
 
-    public static JbstPropertyUserAgent random() {
+    public static JbstPropertyUsersAgents random() {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static JbstPropertyUserAgent enabled() {
+    public static JbstPropertyUsersAgents enabled() {
         return hardcoded();
     }
 
-    public static JbstPropertyUserAgent disabled() {
-        return new JbstPropertyUserAgent(false);
+    public static JbstPropertyUsersAgents disabled() {
+        return new JbstPropertyUsersAgents(false);
     }
 
     @Override
