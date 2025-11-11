@@ -53,7 +53,7 @@ class JbstUsersEmailsServiceConsoleTest {
             jbstProperties.setApp(JbstPropertyApp.hardcoded());
             jbstProperties.setMvc(JbstPropertyMVC.hardcoded());
             jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
-            jbstProperties.setEmailConfigs(
+            jbstProperties.setEmails(
                     new JbstPropertyEmails(
                             true,
                             "smtp.gmail.com",
@@ -68,14 +68,14 @@ class JbstUsersEmailsServiceConsoleTest {
 
         @Bean
         public JavaMailSender javaMailSender() {
-            var emailConfigs = this.jbstProperties().getEmailConfigs();
+            var emails = this.jbstProperties().getEmails();
 
             var mailSender = new JavaMailSenderImpl();
-            mailSender.setHost(emailConfigs.getHost());
-            mailSender.setPort(emailConfigs.getPort());
+            mailSender.setHost(emails.getHost());
+            mailSender.setPort(emails.getPort());
 
-            mailSender.setUsername(emailConfigs.getUsername().value());
-            mailSender.setPassword(emailConfigs.getPassword().value());
+            mailSender.setUsername(emails.getUsername().value());
+            mailSender.setPassword(emails.getPassword().value());
 
             var props = mailSender.getJavaMailProperties();
             props.put("mail.transport.protocol", "smtp");

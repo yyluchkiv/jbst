@@ -35,7 +35,7 @@ jbst:
       REGISTER0_FAILURE: true
       REGISTER1: true
       REGISTER1_FAILURE: true
-  email-configs:
+  emails:
     enabled: false
   mvc:
     cors:

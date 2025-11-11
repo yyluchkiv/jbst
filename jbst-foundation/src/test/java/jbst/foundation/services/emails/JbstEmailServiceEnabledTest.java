@@ -113,14 +113,14 @@ class JbstEmailServiceEnabledTest {
         var to = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = JbstPropertyEmails.disabled();
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        var emails = JbstPropertyEmails.disabled();
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
         this.componentUnderTest.sendPlain(new String[] { to }, subject, message);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
     }
 
     @Test
@@ -130,14 +130,14 @@ class JbstEmailServiceEnabledTest {
         var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = JbstPropertyEmails.enabled(from);
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        var emails = JbstPropertyEmails.enabled(from);
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
         this.componentUnderTest.sendPlain(new String[] { to }, subject, message);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
         var mailMessageAC = ArgumentCaptor.forClass(SimpleMailMessage.class);
         verify(this.javaMailSender).send(mailMessageAC.capture());
         var simpleMailMessage = mailMessageAC.getValue();
@@ -154,14 +154,14 @@ class JbstEmailServiceEnabledTest {
         var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = JbstPropertyEmails.enabled(from);
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        var emails = JbstPropertyEmails.enabled(from);
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
         this.componentUnderTest.sendPlain(List.of(to), subject, message);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
         var mailMessageAC = ArgumentCaptor.forClass(SimpleMailMessage.class);
         verify(this.javaMailSender).send(mailMessageAC.capture());
         var simpleMailMessage = mailMessageAC.getValue();
@@ -178,14 +178,14 @@ class JbstEmailServiceEnabledTest {
         var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = JbstPropertyEmails.enabled(from);
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        var emails = JbstPropertyEmails.enabled(from);
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
         this.componentUnderTest.sendPlain(Set.of(to), subject, message);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
         var mailMessageAC = ArgumentCaptor.forClass(SimpleMailMessage.class);
         verify(this.javaMailSender).send(mailMessageAC.capture());
         var simpleMailMessage = mailMessageAC.getValue();
@@ -199,14 +199,14 @@ class JbstEmailServiceEnabledTest {
     void sendPlainAttachmentDisabledTest() {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
-        var emailConfigs = JbstPropertyEmails.disabled();
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        var emails = JbstPropertyEmails.disabled();
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
         this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
     }
 
     @Test
@@ -214,17 +214,17 @@ class JbstEmailServiceEnabledTest {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
         var from = Email.random().value();
-        var emailConfigs = JbstPropertyEmails.enabled(from);
+        var emails = JbstPropertyEmails.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
         doThrow(new MessagingException()).when(mimeMessage).setFrom(from);
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         // Act
         this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
         verify(this.javaMailSender).createMimeMessage();
     }
 
@@ -242,16 +242,16 @@ class JbstEmailServiceEnabledTest {
                 "attachment-message1"
         );
         var from = Email.random().value();
-        var emailConfigs = JbstPropertyEmails.enabled(from);
+        var emails = JbstPropertyEmails.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         // Act
         this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
         verify(this.javaMailSender).createMimeMessage();
         verify(mimeMessage).setFrom(from);
         verify(mimeMessage).setSubject("subject1");
@@ -274,14 +274,14 @@ class JbstEmailServiceEnabledTest {
     void sendHTMLDisabledTest() {
         // Arrange
         var emailHTML = entity(EmailHTML.class);
-        var emailConfigs = JbstPropertyEmails.disabled();
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        var emails = JbstPropertyEmails.disabled();
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
         this.componentUnderTest.sendHTML(emailHTML);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
     }
 
     @Test
@@ -300,8 +300,8 @@ class JbstEmailServiceEnabledTest {
                 "template1",
                 templateVariables
         );
-        var emailConfigs = JbstPropertyEmails.enabled(from);
-        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        var emails = JbstPropertyEmails.enabled(from);
+        when(this.jbstProperties.getEmails()).thenReturn(emails);
         var message = mock(MimeMessage.class);
         when(this.javaMailSender.createMimeMessage()).thenReturn(message);
 
@@ -309,7 +309,7 @@ class JbstEmailServiceEnabledTest {
         this.componentUnderTest.sendHTML(emailHTML);
 
         // Assert
-        verify(this.jbstProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmails();
         ArgumentCaptor<MimeMessage> messageAC = ArgumentCaptor.forClass(MimeMessage.class);
         verify(this.javaMailSender).createMimeMessage();
         verify(this.javaMailSender).send(messageAC.capture());

@@ -157,7 +157,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void mvcConfigsTest() {
+    void mvcTest() {
         // Act
         JbstPropertyMVC.hardcoded().assertProperties();
 
@@ -166,7 +166,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void emailConfigsDisabledTest() {
+    void emailsDisabledTest() {
         // Act
         JbstPropertyEmails.disabled().assertProperties();
 
@@ -175,7 +175,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void emailConfigsTest() {
+    void emailsTest() {
         // Act
         JbstPropertyEmails.hardcoded().assertProperties();
 
@@ -184,7 +184,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void incidentManagerConfigsTest() {
+    void incidentManagerTest() {
         // Act
         JbstPropertyIncidentsManager.hardcoded().assertProperties();
 

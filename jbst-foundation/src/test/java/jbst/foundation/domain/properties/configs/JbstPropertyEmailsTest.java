@@ -14,7 +14,7 @@ class JbstPropertyEmailsTest {
     @Test
     void constructorTest() {
         // Act
-        var emailConfigs = new JbstPropertyEmails(
+        var emails = new JbstPropertyEmails(
                 true,
                 randomString(),
                 randomIntegerGreaterThanZero(),
@@ -24,26 +24,26 @@ class JbstPropertyEmailsTest {
         );
 
         // Assert
-        assertThat(emailConfigs.isEnabled()).isTrue();
-        assertThat(emailConfigs.getHost()).isNotNull();
-        assertThat(emailConfigs.getPort()).isNotZero();
-        assertThat(emailConfigs.getFrom()).isNotNull();
-        assertThat(emailConfigs.getUsername()).isNotNull();
-        assertThat(emailConfigs.getPassword()).isNotNull();
+        assertThat(emails.isEnabled()).isTrue();
+        assertThat(emails.getHost()).isNotNull();
+        assertThat(emails.getPort()).isNotZero();
+        assertThat(emails.getFrom()).isNotNull();
+        assertThat(emails.getUsername()).isNotNull();
+        assertThat(emails.getPassword()).isNotNull();
     }
 
     @Test
     void disabledTest() {
         // Act
-        var emailConfigs = JbstPropertyEmails.disabled();
+        var emails = JbstPropertyEmails.disabled();
 
         // Assert
-        assertThat(emailConfigs.isEnabled()).isFalse();
-        assertThat(emailConfigs.getHost()).isNull();
-        assertThat(emailConfigs.getPort()).isZero();
-        assertThat(emailConfigs.getFrom()).isNull();
-        assertThat(emailConfigs.getUsername()).isNull();
-        assertThat(emailConfigs.getPassword()).isNull();
+        assertThat(emails.isEnabled()).isFalse();
+        assertThat(emails.getHost()).isNull();
+        assertThat(emails.getPort()).isZero();
+        assertThat(emails.getFrom()).isNull();
+        assertThat(emails.getUsername()).isNull();
+        assertThat(emails.getPassword()).isNull();
     }
 
     @Test
@@ -52,14 +52,14 @@ class JbstPropertyEmailsTest {
         var from = Email.random().value();
 
         // Act
-        var emailConfigs = JbstPropertyEmails.enabled(from);
+        var emails = JbstPropertyEmails.enabled(from);
 
         // Assert
-        assertThat(emailConfigs.isEnabled()).isTrue();
-        assertThat(emailConfigs.getHost()).isNotNull();
-        assertThat(emailConfigs.getPort()).isEqualTo(587);
-        assertThat(emailConfigs.getFrom()).isEqualTo(from);
-        assertThat(emailConfigs.getUsername()).isEqualTo(Username.hardcoded());
-        assertThat(emailConfigs.getPassword()).isEqualTo(Password.hardcoded());
+        assertThat(emails.isEnabled()).isTrue();
+        assertThat(emails.getHost()).isNotNull();
+        assertThat(emails.getPort()).isEqualTo(587);
+        assertThat(emails.getFrom()).isEqualTo(from);
+        assertThat(emails.getUsername()).isEqualTo(Username.hardcoded());
+        assertThat(emails.getPassword()).isEqualTo(Password.hardcoded());
     }
 }

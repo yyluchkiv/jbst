@@ -32,19 +32,19 @@ public class JbstConfigurationEmail {
     @PostConstruct
     public void init() {
         this.jbstProperties.getAsync().assertProperties();
-        this.jbstProperties.getEmailConfigs().assertProperties();
+        this.jbstProperties.getEmails().assertProperties();
     }
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.email-configs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "jbst.emails.enabled", havingValue = "true")
     public JavaMailSender javaMailSender() {
-        var emailConfigs = this.jbstProperties.getEmailConfigs();
+        var emails = this.jbstProperties.getEmails();
 
         var mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(emailConfigs.getHost());
-        mailSender.setPort(emailConfigs.getPort());
-        mailSender.setUsername(emailConfigs.getUsername().value());
-        mailSender.setPassword(emailConfigs.getPassword().value());
+        mailSender.setHost(emails.getHost());
+        mailSender.setPort(emails.getPort());
+        mailSender.setUsername(emails.getUsername().value());
+        mailSender.setPassword(emails.getPassword().value());
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -56,7 +56,7 @@ public class JbstConfigurationEmail {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.email-configs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "jbst.emails.enabled", havingValue = "true")
     public SpringTemplateEngine springTemplateEngine() {
         var templateEngine = new SpringTemplateEngine();
         templateEngine.addTemplateResolver(this.htmlTemplateResolver());
@@ -64,7 +64,7 @@ public class JbstConfigurationEmail {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.email-configs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "jbst.emails.enabled", havingValue = "true")
     public SpringResourceTemplateResolver htmlTemplateResolver() {
         var emailTemplateResolver = new SpringResourceTemplateResolver();
         emailTemplateResolver.setPrefix("classpath:/email-templates/");
@@ -75,7 +75,7 @@ public class JbstConfigurationEmail {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.email-configs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "jbst.emails.enabled", havingValue = "true")
     public JbstEmailService emailService() {
         return new JbstEmailServiceEnabled(
                 this.javaMailSender(),
@@ -85,7 +85,7 @@ public class JbstConfigurationEmail {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "jbst.email-configs.enabled", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(value = "jbst.emails.enabled", havingValue = "false", matchIfMissing = true)
     public JbstEmailService emailServiceSlf4j() {
         return new JbstEmailServiceDisabled();
     }

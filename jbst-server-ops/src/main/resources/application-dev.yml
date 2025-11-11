@@ -6,7 +6,7 @@ logging:
 
 # jbst
 jbst:
-  email-configs:
+  emails:
     enabled: true
     username: "<?>"
     password: "<?>"

@@ -64,6 +64,6 @@ public class JbstPropertyEmails extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "email-configs";
+        return "emails";
     }
 }

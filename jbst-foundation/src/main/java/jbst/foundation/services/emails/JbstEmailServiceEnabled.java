@@ -37,10 +37,10 @@ public class JbstEmailServiceEnabled implements JbstEmailService {
 
     @Override
     public void sendPlain(String[] to, String subject, String message) {
-        var emailConfigs = this.jbstProperties.getEmailConfigs();
-        if (emailConfigs.isEnabled()) {
+        var emails = this.jbstProperties.getEmails();
+        if (emails.isEnabled()) {
             var mailMessage = new SimpleMailMessage();
-            mailMessage.setFrom(emailConfigs.getFrom());
+            mailMessage.setFrom(emails.getFrom());
             mailMessage.setTo(to);
             mailMessage.setSubject(subject);
             mailMessage.setText(message);
@@ -60,8 +60,8 @@ public class JbstEmailServiceEnabled implements JbstEmailService {
 
     @Override
     public void sendPlainAttachment(EmailPlainAttachment emailPlainAttachment) {
-        var emailConfigs = this.jbstProperties.getEmailConfigs();
-        if (emailConfigs.isEnabled()) {
+        var emails = this.jbstProperties.getEmails();
+        if (emails.isEnabled()) {
             try {
                 var message = this.javaMailSender.createMimeMessage();
                 var multipart = new MimeMultipart();
@@ -76,7 +76,7 @@ public class JbstEmailServiceEnabled implements JbstEmailService {
                 part2.setFileName(emailPlainAttachment.attachmentFileName());
                 multipart.addBodyPart(part2);
 
-                message.setFrom(emailConfigs.getFrom());
+                message.setFrom(emails.getFrom());
                 for (var to : emailPlainAttachment.to()) {
                     message.addRecipients(TO, to);
                 }
@@ -92,12 +92,12 @@ public class JbstEmailServiceEnabled implements JbstEmailService {
 
     @Override
     public void sendHTML(EmailHTML emailHTML) {
-        var emailConfigs = this.jbstProperties.getEmailConfigs();
-        if (emailConfigs.isEnabled()) {
+        var emails = this.jbstProperties.getEmails();
+        if (emails.isEnabled()) {
             try {
                 var message = this.javaMailSender.createMimeMessage();
                 var messageHelper = new MimeMessageHelper(message, MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
-                messageHelper.setFrom(emailConfigs.getFrom());
+                messageHelper.setFrom(emails.getFrom());
                 messageHelper.setTo(emailHTML.to().toArray(new String[0]));
                 messageHelper.setSubject(emailHTML.subject());
                 var context = new Context();

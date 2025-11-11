@@ -21,7 +21,7 @@ public class JbstProperties implements PriorityOrdered {
     private JbstPropertyAsync async;
     private JbstPropertyEvents events;
     private JbstPropertyMVC mvc;
-    private JbstPropertyEmails emailConfigs;
+    private JbstPropertyEmails emails;
     private JbstPropertyIncidentsManager incidentsManager;
     private JbstPropertySecurity securityJwtConfigs;
     private JbstPropertyDatabases databases;
@@ -33,7 +33,7 @@ public class JbstProperties implements PriorityOrdered {
         properties.setAsync(JbstPropertyAsync.hardcoded());
         properties.setEvents(JbstPropertyEvents.hardcoded());
         properties.setMvc(JbstPropertyMVC.hardcoded());
-        properties.setEmailConfigs(JbstPropertyEmails.hardcoded());
+        properties.setEmails(JbstPropertyEmails.hardcoded());
         properties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
         properties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
         properties.setDatabases(JbstPropertyDatabases.hardcoded());

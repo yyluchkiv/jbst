@@ -17,7 +17,7 @@ jbst:
       enabled: false
     users-agents:
       enabled: false
-  email-configs:
+  emails:
     enabled: false
   incidents-manager:
     enabled: true
