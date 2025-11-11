@@ -45,5 +45,4 @@ class JbstWorkerFixedTest {
         // Assert
         // no asserts
     }
-
 }
