@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-
 public class MongoJbstSettingsService extends JbstSettingsService {
 
     protected final MongoJbstInvitationsRepository invitationsRepository;
@@ -44,7 +42,7 @@ public class MongoJbstSettingsService extends JbstSettingsService {
                             userOnInit.getPassword(),
                             true,
                             userOnInit.getZoneId(),
-                            getSimpleGrantedAuthorities(userOnInit.getAuthorities()),
+                            userOnInit.getSimpleGrantedAuthorities(),
                             null,
                             userOnInit.isPasswordChangeRequired(),
                             JbstUserEmailDetails.unnecessary()
