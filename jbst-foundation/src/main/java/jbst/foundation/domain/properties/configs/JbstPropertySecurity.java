@@ -32,7 +32,7 @@ public class JbstPropertySecurity extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertySecurityAuthorities authorities;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityCookies cookiesConfigs;
+    private final JbstPropertySecurityCookies cookies;
     @JbstPropertyMandatory
     private final JbstPropertySecurityEssence essenceConfigs;
     @JbstPropertyMandatory

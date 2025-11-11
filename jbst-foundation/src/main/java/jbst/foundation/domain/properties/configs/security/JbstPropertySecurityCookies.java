@@ -42,6 +42,6 @@ public class JbstPropertySecurityCookies extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "cookies-configs";
+        return "cookies";
     }
 }

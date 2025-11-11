@@ -53,7 +53,7 @@ jbst:
         - http://localhost:8686
         - http://localhost:8787
   security:
-    cookies-configs:
+    cookies:
       domain: localhost
     jwt-tokens-configs:
       secret-key: ENC(GbnDNQVCspqW74HYwR6XePbdG6dmo7l/rIPe+hL7uHSnj+5kkUQsj0ZPegUGytLpx/5pdLO7vdQ=)

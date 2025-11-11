@@ -62,7 +62,7 @@ jbst:
         - value: "user"
         - value: "admin"
       package-name: "jbst.server.iam.base.domain.enums"
-    cookies-configs:
+    cookies:
       jwt-access-token-cookie-creation-latency:
         unit: SECONDS
         amount: 5

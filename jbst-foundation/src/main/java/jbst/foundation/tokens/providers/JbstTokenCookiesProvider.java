@@ -34,13 +34,13 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
         var security = this.jbstProperties.getSecurity();
         var accessToken = security.getJwtTokensConfigs().getAccessToken();
-        var jwtAccessTokenCookieCreationLatency = security.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
+        var jwtAccessTokenCookieCreationLatency = security.getCookies().getJwtAccessTokenCookieCreationLatency();
         var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - jwtAccessTokenCookieCreationLatency.getTimeAmount().toSeconds();
 
         var cookie = createCookie(
                 accessToken.getCookieKey(),
                 jwtAccessToken.value(),
-                security.getCookiesConfigs().getDomain(),
+                security.getCookies().getDomain(),
                 true,
                 toIntExactOrZeroOnOverflow(maxAge)
         );
@@ -56,7 +56,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
         var cookie = createCookie(
                 refreshTokenConfiguration.getCookieKey(),
                 jwtRefreshToken.value(),
-                security.getCookiesConfigs().getDomain(),
+                security.getCookies().getDomain(),
                 true,
                 toIntExactOrZeroOnOverflow(refreshTokenConfiguration.getExpiration().getTimeAmount().toSeconds())
         );
@@ -112,11 +112,11 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public void clearTokens(HttpServletResponse response) {
         var security = this.jbstProperties.getSecurity();
-        var cookiesConfigs = security.getCookiesConfigs();
+        var cookies = security.getCookies();
         var accessToken = security.getJwtTokensConfigs().getAccessToken();
         var refreshToken = security.getJwtTokensConfigs().getRefreshToken();
 
-        response.addCookie(createNullCookie(accessToken.getCookieKey(), cookiesConfigs.getDomain()));
-        response.addCookie(createNullCookie(refreshToken.getCookieKey(), cookiesConfigs.getDomain()));
+        response.addCookie(createNullCookie(accessToken.getCookieKey(), cookies.getDomain()));
+        response.addCookie(createNullCookie(refreshToken.getCookieKey(), cookies.getDomain()));
     }
 }

@@ -78,9 +78,9 @@ class JbstTokenCookiesProviderTest {
         var jwtAccessToken = JwtAccessToken.random();
         var response = mock(HttpServletResponse.class);
 
-        var cookiesConfigs = this.jbstProperties.getSecurity().getCookiesConfigs();
+        var cookies = this.jbstProperties.getSecurity().getCookies();
         var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
-        var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookiesConfigs.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
+        var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookies.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
 
         // Act
         this.componentUnderTest.createResponseAccessToken(jwtAccessToken, response);
@@ -91,7 +91,7 @@ class JbstTokenCookiesProviderTest {
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(accessToken.getCookieKey());
         assertThat(cookie.getValue()).isEqualTo(jwtAccessToken.value());
-        assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
+        assertThat(cookie.getDomain()).isEqualTo(cookies.getDomain());
         assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(maxAge);
         verifyNoMoreInteractions(response);
@@ -103,7 +103,7 @@ class JbstTokenCookiesProviderTest {
         var refreshAccessToken = JwtRefreshToken.random();
         var response = mock(HttpServletResponse.class);
 
-        var cookiesConfigs = this.jbstProperties.getSecurity().getCookiesConfigs();
+        var cookies = this.jbstProperties.getSecurity().getCookies();
         var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
 
         // Act
@@ -115,7 +115,7 @@ class JbstTokenCookiesProviderTest {
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(refreshToken.getCookieKey());
         assertThat(cookie.getValue()).isEqualTo(refreshAccessToken.value());
-        assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
+        assertThat(cookie.getDomain()).isEqualTo(cookies.getDomain());
         assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(refreshToken.getExpiration().getTimeAmount().toSeconds());
         verifyNoMoreInteractions(response);
@@ -245,7 +245,7 @@ class JbstTokenCookiesProviderTest {
     void clearTokens() {
         // Arrange
         var response = mock(HttpServletResponse.class);
-        var domain = this.jbstProperties.getSecurity().getCookiesConfigs().getDomain();
+        var domain = this.jbstProperties.getSecurity().getCookies().getDomain();
         var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
         var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
 
