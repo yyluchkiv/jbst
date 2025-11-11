@@ -286,8 +286,8 @@ class JbstTokensProviderTest {
                         JbstPropertySecurityLogging.hardcoded(),
                         JbstPropertySecuritySessions.hardcoded(),
                         JbstPropertySecurityUsersEmails.hardcoded(),
-                        JbstPropertySecurityWebsockets.hardcoded(),
-                        JbstPropertySecurityUsersTokens.hardcoded()
+                        JbstPropertySecurityUsersTokens.hardcoded(),
+                        JbstPropertySecurityWebsockets.hardcoded()
                 )
         );
     }

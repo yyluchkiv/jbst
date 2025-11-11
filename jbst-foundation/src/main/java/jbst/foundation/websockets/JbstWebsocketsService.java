@@ -42,7 +42,7 @@ public class JbstWebsocketsService {
     }
 
     public final void sendResetServerStatus(Set<Username> usernames, ResetServerStatus status) {
-        var resetServerConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeatures().getResetServerConfigs();
+        var resetServerConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeatures().getResetServer();
         if (!resetServerConfigs.isEnabled()) {
             return;
         }
