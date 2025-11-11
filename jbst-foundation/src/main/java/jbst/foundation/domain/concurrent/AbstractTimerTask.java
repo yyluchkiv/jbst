@@ -1,5 +1,6 @@
 package jbst.foundation.domain.concurrent;
 
+import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.domain.time.TimeAmount;
@@ -10,6 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
+@JbstDeletionScheduled(version = "1.38")
 public abstract class AbstractTimerTask {
     @Getter
     protected volatile TimerTaskState state;

@@ -1,7 +1,7 @@
 package jbst.foundation.resources.hardware;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
+import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
@@ -23,7 +23,7 @@ import static jbst.foundation.utilities.hardware.HardwareUtility.getHeapMemory;
 @Slf4j
 @RestController
 @RequestMapping("/hardware/monitoring")
-public class JbstHardwareMonitoringResource extends AbstractInfiniteTimerTask {
+public class JbstHardwareMonitoringResource extends JbstWorkerFixedInfinity {
 
     // Sessions
     private final JbstSessionRegistry sessionRegistry;

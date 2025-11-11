@@ -8,7 +8,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.JbstConfigurationAsync;
 import jbst.foundation.configurations.JbstConfigurationEvents;
 import jbst.foundation.configurations.JbstConfigurationSpringBootServer;
-import jbst.server.hm.client.HardwareMonitoringClient;
+import jbst.server.hm.client.JbstHardwareMonitoringClient;
 import jbst.server.hm.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,12 +53,12 @@ public class JbstServerConfiguration {
     }
 
     @Bean
-    public HardwareMonitoringClient.HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition() {
+    public JbstHardwareMonitoringClient.HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition() {
         var serverConfigs = this.serverProperties.getServer();
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(HardwareMonitoringClient.HardwareMonitoringClientDefinition.class, serverConfigs.getTargetURL());
+                .target(JbstHardwareMonitoringClient.HardwareMonitoringClientDefinition.class, serverConfigs.getTargetURL());
     }
 }

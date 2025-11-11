@@ -3,7 +3,7 @@ package jbst.server.hm.client;
 import feign.FeignException;
 import feign.Headers;
 import feign.RequestLine;
-import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
+import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -21,14 +21,14 @@ import static jbst.foundation.domain.tuples.TuplePercentage.progressTuplePercent
 
 @Slf4j
 @Component
-public class HardwareMonitoringClient extends AbstractInfiniteTimerTask {
+public class JbstHardwareMonitoringClient extends JbstWorkerFixedInfinity {
 
     // State
     private final AtomicLong successes = new AtomicLong(0);
     private final AtomicLong failures = new AtomicLong(0);
 
     @Autowired
-    public HardwareMonitoringClient(HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition, JbstProperties jbstProperties) {
+    public JbstHardwareMonitoringClient(HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition, JbstProperties jbstProperties) {
         super(
                 new SchedulerConfiguration(0L, 30L, SECONDS)
         );

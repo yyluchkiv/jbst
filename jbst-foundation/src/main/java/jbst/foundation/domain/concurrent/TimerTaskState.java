@@ -1,9 +1,11 @@
 package jbst.foundation.domain.concurrent;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
+@JbstDeletionScheduled(version = "1.38")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TimerTaskState {
     CREATED("Created"),

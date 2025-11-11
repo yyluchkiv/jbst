@@ -12,6 +12,7 @@ public record SchedulerConfiguration(
         TimeUnit unit
 ) {
     public static final SchedulerConfiguration EVERY_250_MILLISECONDS = new SchedulerConfiguration(250L, 250L, MILLISECONDS);
+    public static final SchedulerConfiguration EVERY_1_SECOND = new SchedulerConfiguration(1L, 1L, SECONDS);
     public static final SchedulerConfiguration EVERY_5_SECONDS = new SchedulerConfiguration(5L, 5L, SECONDS);
     public static final SchedulerConfiguration EVERY_15_SECONDS = new SchedulerConfiguration(15L, 15L, SECONDS);
     public static final SchedulerConfiguration EVERY_30_SECONDS = new SchedulerConfiguration(30L, 30L, SECONDS);
@@ -40,5 +41,9 @@ public record SchedulerConfiguration(
         var initialDelay = randomLongGreaterThanZeroByBounds(lowerBound * initialDelayAsSeconds, upperBound * initialDelayAsSeconds) / 100;
         var delay = randomLongGreaterThanZeroByBounds(lowerBound * delaySeconds, upperBound * delaySeconds) / 100;
         return new SchedulerConfiguration(initialDelay, delay, TimeUnit.SECONDS);
+    }
+
+    public long toSeconds() {
+        return this.unit.toSeconds(this.delay);
     }
 }
