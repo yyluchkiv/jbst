@@ -4,7 +4,7 @@ logging:
 
 # jbst
 jbst:
-  server-configs:
+  app:
     springdoc-enabled: true
     webclient-url: http://localhost:3000
   utils-configs:

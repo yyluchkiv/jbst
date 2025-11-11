@@ -15,7 +15,7 @@ jasypt:
 
 # jbst
 jbst:
-  server-configs:
+  app:
     maven-configs:
       group-id: @project.groupId@
       artifact-id: @project.artifactId@

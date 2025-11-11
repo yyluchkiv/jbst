@@ -27,6 +27,6 @@ public class Server {
         var springApplication = new SpringApplication(Server.class);
         var applicationContext = springApplication.run(args);
         var jbstProperties = applicationContext.getBean(JbstProperties.class);
-        LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getServerConfigs(), COMPLETED));
+        LOGGER.info(JbstConstants.Logs.getServerContainer(jbstProperties.getApp(), COMPLETED));
     }
 }

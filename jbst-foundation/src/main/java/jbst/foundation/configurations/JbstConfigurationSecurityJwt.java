@@ -137,7 +137,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
-            if (this.jbstProperties.getServerConfigs().isSpringdocEnabled()) {
+            if (this.jbstProperties.getApp().isSpringdocEnabled()) {
                 web.ignoring().requestMatchers(JbstConstants.Swagger.ENDPOINTS.toArray(new String[0]));
             }
             // WARNING: You are asking Spring Security to ignore Ant [pattern='/**/**'].

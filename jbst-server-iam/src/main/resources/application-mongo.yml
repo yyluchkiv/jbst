@@ -2,5 +2,5 @@
 
 # jbst
 jbst:
-  server-configs:
+  app:
     name: jbst-server-iam-mongo

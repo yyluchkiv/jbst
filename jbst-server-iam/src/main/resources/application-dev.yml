@@ -6,7 +6,7 @@ logging:
 
 # jbst
 jbst:
-  server-configs:
+  app:
     springdoc-enabled: true
     server-url: http://localhost:3002
     webclient-url: http://localhost:3000

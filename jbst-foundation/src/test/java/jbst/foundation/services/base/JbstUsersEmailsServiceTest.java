@@ -133,7 +133,7 @@ class JbstUsersEmailsServiceTest {
         assertThat(emailHTML.templateName()).isEqualTo("jbst-magic-link");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
-                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
+                .containsEntry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion())
                 .containsEntry("email", userToken.email().value())
                 .containsEntry("magicLink", "http://127.0.0.1:3000/magic-link?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
@@ -156,7 +156,7 @@ class JbstUsersEmailsServiceTest {
         assertThat(emailHTML.templateName()).isEqualTo("jbst-email-confirmation");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
-                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
+                .containsEntry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion())
                 .containsEntry("email", userToken.email().value())
                 .containsEntry("emailConfirmationLink", "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
@@ -179,7 +179,7 @@ class JbstUsersEmailsServiceTest {
         assertThat(emailHTML.templateName()).isEqualTo("jbst-password-reset");
         assertThat(emailHTML.templateVariables())
                 .hasSize(4)
-                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
+                .containsEntry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion())
                 .containsEntry("email", userToken.email().value())
                 .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + userToken.value())
                 .containsEntry("year", now(UTC).getYear());
@@ -212,7 +212,7 @@ class JbstUsersEmailsServiceTest {
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
-                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
+                .containsEntry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion())
                 .containsEntry("year", now(UTC).getYear())
                 .containsEntry("username", Username.hardcoded().value())
                 .containsEntry("accessMethod", USERNAME_PASSWORD.getValue())
@@ -249,7 +249,7 @@ class JbstUsersEmailsServiceTest {
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
-                .containsEntry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion())
+                .containsEntry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion())
                 .containsEntry("year", now(UTC).getYear())
                 .containsEntry("username", Username.hardcoded().value())
                 .containsEntry("accessMethod", SESSION_TOKEN.getValue())

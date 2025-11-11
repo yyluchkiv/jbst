@@ -16,7 +16,7 @@ import org.springframework.core.PriorityOrdered;
 )
 @Data
 public class JbstProperties implements PriorityOrdered {
-    private JbstPropertyApp serverConfigs;
+    private JbstPropertyApp app;
     private JbstPropertyUtils utilsConfigs;
     private JbstPropertyAsync asyncConfigs;
     private JbstPropertyEvents eventsConfigs;
@@ -28,7 +28,7 @@ public class JbstProperties implements PriorityOrdered {
 
     public static JbstProperties hardcoded() {
         var properties = new JbstProperties();
-        properties.setServerConfigs(JbstPropertyApp.hardcoded());
+        properties.setApp(JbstPropertyApp.hardcoded());
         properties.setUtilsConfigs(JbstPropertyUtils.hardcoded());
         properties.setAsyncConfigs(JbstPropertyAsync.hardcoded());
         properties.setEventsConfigs(JbstPropertyEvents.hardcoded());
@@ -50,7 +50,7 @@ public class JbstProperties implements PriorityOrdered {
     // ================================================================================================================
     public final String getMagicLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
-                this.serverConfigs.getWebclientURL(),
+                this.app.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientMagicLinkPath(),
                 token
         );
@@ -58,14 +58,14 @@ public class JbstProperties implements PriorityOrdered {
 
     public final String getEmailConfirmationRedirectLink() {
         return "%s%s".formatted(
-                this.serverConfigs.getWebclientURL(),
+                this.app.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath()
         );
     }
 
     public final String getEmailConfirmationLink(@NotNull ServerProperties serverProperties, @NotNull String token) {
         return "%s%s/tokens/email/confirm?token=%s".formatted(
-                this.serverConfigs.getServerURL() + serverProperties.getServlet().getContextPath(),
+                this.app.getServerURL() + serverProperties.getServlet().getContextPath(),
                 this.mvcConfigs.getBasePathPrefix(),
                 token
         );
@@ -73,7 +73,7 @@ public class JbstProperties implements PriorityOrdered {
 
     public final String getPasswordResetLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
-                this.serverConfigs.getWebclientURL(),
+                this.app.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),
                 token
         );

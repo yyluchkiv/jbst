@@ -6,7 +6,7 @@ logging:
 
 # jbst
 jbst:
-  server-configs:
+  app:
     name: jbstshm-dev
 
 # server

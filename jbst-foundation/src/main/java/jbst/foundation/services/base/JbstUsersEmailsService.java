@@ -60,14 +60,14 @@ public class JbstUsersEmailsService {
                 this.getSubjectV1("Account Accessed"),
                 function.getTemplateName(this.getTemplateNameFNC()),
                 Map.ofEntries(
-                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("username", function.username().value()),
                         Map.entry("accessMethod", function.accountAccessMethod().getValue()),
                         Map.entry("where", function.userRequestMetadata().getGeoLocation().getWhere()),
                         Map.entry("what", function.userRequestMetadata().getUserAgentDetails().getWhat()),
                         Map.entry("ipAddress", function.userRequestMetadata().getGeoLocation().getIpAddr()),
-                        Map.entry("webclientURL", this.jbstProperties.getServerConfigs().getWebclientURL())
+                        Map.entry("webclientURL", this.jbstProperties.getApp().getWebclientURL())
                 )
         );
     }
@@ -81,7 +81,7 @@ public class JbstUsersEmailsService {
                         "jbst-magic-link"
                 )),
                 Map.ofEntries(
-                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("email", userToken.email().value()),
                         Map.entry("magicLink", this.jbstProperties.getMagicLink(userToken.value()))
@@ -98,7 +98,7 @@ public class JbstUsersEmailsService {
                         "jbst-email-confirmation"
                 )),
                 Map.ofEntries(
-                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("email", userToken.email().value()),
                         Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, userToken.value()))
@@ -115,7 +115,7 @@ public class JbstUsersEmailsService {
                         "jbst-password-reset"
                 )),
                 Map.ofEntries(
-                        Map.entry("version", this.jbstProperties.getServerConfigs().getMavenConfigs().getVersion()),
+                        Map.entry("version", this.jbstProperties.getApp().getMavenConfigs().getVersion()),
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("email", userToken.email().value()),
                         Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(userToken.value()))

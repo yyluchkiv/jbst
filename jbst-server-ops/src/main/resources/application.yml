@@ -20,7 +20,7 @@ jasypt:
 
 # jbst
 jbst:
-  server-configs:
+  app:
     name: "ops-server"
     springdoc-enabled: false
     maven-configs:
