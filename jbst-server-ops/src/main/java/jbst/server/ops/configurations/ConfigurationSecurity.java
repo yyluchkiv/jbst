@@ -61,7 +61,7 @@ public class ConfigurationSecurity {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsManager(BCryptPasswordEncoder passwordEncoder) {
-        var remoteServer = this.serverProperties.getServerConfigs();
+        var remoteServer = this.serverProperties.getServer();
         var credentials = remoteServer.getCredentials();
         return new InMemoryUserDetailsManager(
                 User.withUsername(credentials.username().value())

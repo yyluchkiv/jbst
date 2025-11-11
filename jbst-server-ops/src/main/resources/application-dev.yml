@@ -19,7 +19,7 @@ jbst:
 
 # server
 jbst-server-ops:
-  server-configs:
+  server:
     base-url: "http://localhost:8973"
     credentials:
       username: "admin"

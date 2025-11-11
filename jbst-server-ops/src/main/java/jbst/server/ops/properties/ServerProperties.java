@@ -19,7 +19,7 @@ import org.springframework.core.PriorityOrdered;
 public class ServerProperties implements PriorityOrdered {
     private JbstPropertySpringLogging logging;
     // WARNING: create new class to avoid using dedicated leaf(s) as root-based property
-    private JbstPropertyRemoteServer serverConfigs;
+    private JbstPropertyRemoteServer server;
     private SlacksConfigs slacksConfigs;
     private ServersConfigs serversConfigs;
     // WARNING: create new class to avoid using dedicated leaf(s) as root-based property
@@ -31,6 +31,6 @@ public class ServerProperties implements PriorityOrdered {
     }
 
     public OpsIncidentEnv getOpsIncidentEnv() {
-        return OpsIncidentEnv.of(this.serverConfigs);
+        return OpsIncidentEnv.of(this.server);
     }
 }

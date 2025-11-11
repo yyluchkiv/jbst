@@ -45,7 +45,7 @@ public class ConfigurationBeans {
 
     @PostConstruct
     public void init() {
-        this.serverProperties.getServerConfigs().assertProperties();
+        this.serverProperties.getServer().assertProperties();
         this.serverProperties.getServersConfigs().assertProperties();
         this.serverProperties.getSlacksConfigs().assertProperties();
         this.serverProperties.getRecipientsConfigs().assertProperties();
