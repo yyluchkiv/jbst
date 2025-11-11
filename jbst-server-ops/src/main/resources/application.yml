@@ -30,7 +30,7 @@ jbst:
   utils:
     geolocations:
       enabled: false
-  async-configs:
+  async:
     thread-name-prefix: "jbstops-async"
     threadsCorePoolPercentage: 50
     threadsMaxPoolPercentage: 100

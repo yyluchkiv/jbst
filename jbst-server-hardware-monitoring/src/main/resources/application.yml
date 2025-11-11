@@ -22,7 +22,7 @@ jbst:
       version: v@project.version@
     # omitted behaviour, no spring security, port-forwarding security
     springdoc-enabled: false
-  async-configs:
+  async:
     thread-name-prefix: jbstshm-async
     threadsCorePoolPercentage: 50
     threadsMaxPoolPercentage: 100

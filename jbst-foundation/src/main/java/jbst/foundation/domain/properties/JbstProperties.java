@@ -18,7 +18,7 @@ import org.springframework.core.PriorityOrdered;
 public class JbstProperties implements PriorityOrdered {
     private JbstPropertyApp app;
     private JbstPropertyUtils utils;
-    private JbstPropertyAsync asyncConfigs;
+    private JbstPropertyAsync async;
     private JbstPropertyEvents eventsConfigs;
     private JbstPropertyMVC mvcConfigs;
     private JbstPropertyEmail emailConfigs;
@@ -30,7 +30,7 @@ public class JbstProperties implements PriorityOrdered {
         var properties = new JbstProperties();
         properties.setApp(JbstPropertyApp.hardcoded());
         properties.setUtils(JbstPropertyUtils.hardcoded());
-        properties.setAsyncConfigs(JbstPropertyAsync.hardcoded());
+        properties.setAsync(JbstPropertyAsync.hardcoded());
         properties.setEventsConfigs(JbstPropertyEvents.hardcoded());
         properties.setMvcConfigs(JbstPropertyMVC.hardcoded());
         properties.setEmailConfigs(JbstPropertyEmail.hardcoded());
