@@ -15,6 +15,7 @@
 — Modification @ jbst: property "security-jwt-configs.authorities-configs.authorities" -> "security.authorities"
 — Modification @ jbst: property "security-jwt-configs.authorities-configs.authorities" -> "security.authorities.values"
 — Modification @ jbst: property "security-jwt-configs.cookies-configs" -> "security.cookies"
+— Modification @ jbst: property "security-jwt-configs.essense-configs" -> "security.essense"
 — Modification @ server-hardware-monitoring: property "server-configs" -> "server"
 — Modification @ server-ops: property "server-configs" -> "server"
 — Modification @ server-iam: property "server-configs" -> "example"

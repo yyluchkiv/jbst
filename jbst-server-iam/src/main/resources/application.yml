@@ -53,15 +53,9 @@ jbst:
         - Content-Type
       allow-credentials: true
   security:
-    authorities-configs:
-      authorities:
-        - value: "superadmin"
-        - value: "invitations:read"
-        - value: "invitations:write"
-        - value: "prometheus:read"
-        - value: "user"
-        - value: "admin"
+    authorities:
       package-name: "jbst.server.iam.base.domain.enums"
+      values: ["superadmin", "invitations:read", "invitations:write", "prometheus:read", "user", "admin"]
     cookies:
       jwt-access-token-cookie-creation-latency:
         unit: SECONDS

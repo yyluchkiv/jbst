@@ -194,7 +194,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                             .requestMatchers(POST, basePathPrefix + "/tokens/password/reset").denyAll()
                             .requestMatchers(PATCH, basePathPrefix + "/tokens/password/reset").denyAll();
 
-                    if (this.jbstProperties.getSecurity().getEssenceConfigs().getInvitationsOnInit().isEnabled()) {
+                    if (this.jbstProperties.getSecurity().getEssence().getInvitationsOnInit().isEnabled()) {
                         authorizeHttpRequests
                                 .requestMatchers(GET, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_READ)
                                 .requestMatchers(POST, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_WRITE)

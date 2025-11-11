@@ -32,14 +32,14 @@ public class JbstStartupEventListener {
         this.settingsService.initSettings();
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), PROGRESS_33));
 
-        var users = this.jbstProperties.getSecurity().getEssenceConfigs().getUsersOnInit();
+        var users = this.jbstProperties.getSecurity().getEssence().getUsersOnInit();
         LOGGER.info("{} essence 'users-on-init' — {}", PREFIX, Status.of(users.isEnabled()).asANSI());
         if (users.isEnabled()) {
             this.settingsService.initUsers();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), PROGRESS_66));
 
-        var invitations = this.jbstProperties.getSecurity().getEssenceConfigs().getInvitationsOnInit();
+        var invitations = this.jbstProperties.getSecurity().getEssence().getInvitationsOnInit();
         LOGGER.info("{} essence 'invitations-on-init' — {}", PREFIX, Status.of(invitations.isEnabled()).asANSI());
         if (invitations.isEnabled()) {
             this.settingsService.initInvitations();

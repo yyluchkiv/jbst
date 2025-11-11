@@ -68,7 +68,7 @@ jbst:
         enabled: true
         expression: "*/30 * * * * *"
         zone-id: "Europe/Kyiv"
-    essence-configs:
+    essense:
       users-on-init:
         enabled: true
         users:

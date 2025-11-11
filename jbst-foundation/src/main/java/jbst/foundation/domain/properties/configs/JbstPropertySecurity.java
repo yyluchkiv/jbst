@@ -34,7 +34,7 @@ public class JbstPropertySecurity extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertySecurityCookies cookies;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityEssence essenceConfigs;
+    private final JbstPropertySecurityEssence essence;
     @JbstPropertyMandatory
     private final JbstPropertySecurityJWT jwtTokensConfigs;
     @JbstPropertyMandatory
@@ -130,7 +130,7 @@ public class JbstPropertySecurity extends JbstProperty {
 
         // Requirements: availableAuthorities vs. configuredAuthorities
         var expectedAuthorities = this.authorities.getValues();
-        var configuredAuthorities = this.essenceConfigs.getUsersOnInit().getAuthorities();
+        var configuredAuthorities = this.essence.getUsersOnInit().getAuthorities();
         var containsAll = expectedAuthorities.containsAll(configuredAuthorities);
         assertTrueOrThrow(containsAll, "Please verify `users-on-init.users.authorities`. Configuration provide unauthorized authority");
 
