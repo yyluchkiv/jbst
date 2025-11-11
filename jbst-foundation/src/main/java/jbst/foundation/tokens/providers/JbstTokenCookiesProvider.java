@@ -33,7 +33,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
         var security = this.jbstProperties.getSecurity();
-        var accessToken = security.getJwtTokensConfigs().getAccessToken();
+        var accessToken = security.getJwt().getAccessToken();
         var jwtAccessTokenCookieCreationLatency = security.getCookies().getJwtAccessTokenCookieCreationLatency();
         var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - jwtAccessTokenCookieCreationLatency.getTimeAmount().toSeconds();
 
@@ -51,7 +51,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
         var security = this.jbstProperties.getSecurity();
-        var refreshTokenConfiguration = security.getJwtTokensConfigs().getRefreshToken();
+        var refreshTokenConfiguration = security.getJwt().getRefreshToken();
 
         var cookie = createCookie(
                 refreshTokenConfiguration.getCookieKey(),
@@ -80,7 +80,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws JbstAccessTokenNotFoundException {
         try {
-            var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
+            var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
             var cookie = readCookie(request, accessToken.getCookieKey());
             return new RequestAccessToken(cookie);
         } catch (JbstCookieNotFoundException ex) {
@@ -96,7 +96,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws JbstRefreshTokenNotFoundException {
         try {
-            var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
+            var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
             var cookie = readCookie(request, refreshToken.getCookieKey());
             return new RequestRefreshToken(cookie);
         } catch (JbstCookieNotFoundException ex) {
@@ -113,8 +113,8 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     public void clearTokens(HttpServletResponse response) {
         var security = this.jbstProperties.getSecurity();
         var cookies = security.getCookies();
-        var accessToken = security.getJwtTokensConfigs().getAccessToken();
-        var refreshToken = security.getJwtTokensConfigs().getRefreshToken();
+        var accessToken = security.getJwt().getAccessToken();
+        var refreshToken = security.getJwt().getRefreshToken();
 
         response.addCookie(createNullCookie(accessToken.getCookieKey(), cookies.getDomain()));
         response.addCookie(createNullCookie(refreshToken.getCookieKey(), cookies.getDomain()));

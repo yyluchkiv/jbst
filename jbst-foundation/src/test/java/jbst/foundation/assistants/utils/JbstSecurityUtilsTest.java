@@ -157,7 +157,7 @@ class JbstSecurityUtilsTest {
         var validatedClaims = this.componentUnderTest.validate(accessToken);
         assertThat(validatedClaims.username()).isEqualTo(username);
         var zoneId = creationParams.zoneId();
-        var timeAmount = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken().getExpiration();
+        var timeAmount = this.jbstProperties.getSecurity().getJwt().getAccessToken().getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
@@ -179,7 +179,7 @@ class JbstSecurityUtilsTest {
         var validatedClaims = this.componentUnderTest.validate(refreshToken);
         assertThat(validatedClaims.username()).isEqualTo(expectedUsername);
         var zoneId = creationParams.zoneId();
-        var timeAmount = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken().getExpiration();
+        var timeAmount = this.jbstProperties.getSecurity().getJwt().getRefreshToken().getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId

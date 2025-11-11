@@ -256,6 +256,6 @@ class JbstTokenHeadersProviderTest {
     // PRIVATE METHODS
     // =================================================================================================================
     private JbstPropertySecurityJWT jwtTokensConfigs() {
-        return this.jbstProperties.getSecurity().getJwtTokensConfigs();
+        return this.jbstProperties.getSecurity().getJwt();
     }
 }

@@ -60,7 +60,7 @@ jbst:
       jwt-access-token-cookie-creation-latency:
         unit: SECONDS
         amount: 5
-    jwt-tokens-configs:
+    jwt:
       access-token:
         cookie-key: "ajwt"
       refreshToken:

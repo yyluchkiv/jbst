@@ -49,7 +49,7 @@ jbst:
   security:
     cookies:
       domain: localhost
-    jwt-tokens-configs:
+    jwt:
       secret-key: ENC(GbnDNQVCspqW74HYwR6XePbdG6dmo7l/rIPe+hL7uHSnj+5kkUQsj0ZPegUGytLpx/5pdLO7vdQ=)
       storage-method: COOKIES
       access-token:

@@ -79,7 +79,7 @@ class JbstTokenCookiesProviderTest {
         var response = mock(HttpServletResponse.class);
 
         var cookies = this.jbstProperties.getSecurity().getCookies();
-        var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
+        var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
         var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookies.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
 
         // Act
@@ -104,7 +104,7 @@ class JbstTokenCookiesProviderTest {
         var response = mock(HttpServletResponse.class);
 
         var cookies = this.jbstProperties.getSecurity().getCookies();
-        var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
+        var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
 
         // Act
         this.componentUnderTest.createResponseRefreshToken(refreshAccessToken, response);
@@ -164,7 +164,7 @@ class JbstTokenCookiesProviderTest {
     @MethodSource("readRequestAccessTokenArgs")
     void readRequestAccessToken(boolean rest, boolean websocket) throws JbstAccessTokenNotFoundException {
         // Arrange
-        var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
+        var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn(accessToken.getCookieKey());
         var request = mock(HttpServletRequest.class);
@@ -205,7 +205,7 @@ class JbstTokenCookiesProviderTest {
     @MethodSource("readRequestRefreshTokenArgs")
     void readRequestRefreshToken(boolean rest, boolean websocket) throws JbstRefreshTokenNotFoundException {
         // Arrange
-        var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
+        var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn(refreshToken.getCookieKey());
         var request = mock(HttpServletRequest.class);
@@ -246,8 +246,8 @@ class JbstTokenCookiesProviderTest {
         // Arrange
         var response = mock(HttpServletResponse.class);
         var domain = this.jbstProperties.getSecurity().getCookies().getDomain();
-        var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
-        var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
+        var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
+        var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
 
         // Act
         this.componentUnderTest.clearTokens(response);

@@ -32,7 +32,7 @@ public class JbstSecurityUtils {
     @Autowired
     public JbstSecurityUtils(JbstProperties jbstProperties) {
         this.jbstProperties = jbstProperties;
-        var jwtTokensConfigs = this.jbstProperties.getSecurity().getJwtTokensConfigs();
+        var jwtTokensConfigs = this.jbstProperties.getSecurity().getJwt();
         jwtTokensConfigs.assertProperties();
         // WARNING: consider using Base64 encoded key in properties, and decode it here
         // https://www.baeldung.com/spring-security-sign-jwt-token#1-using-key-instance
@@ -67,13 +67,13 @@ public class JbstSecurityUtils {
     }
 
     public final JwtAccessToken createJwtAccessToken(JwtTokenCreationParams creationParams) {
-        var accessToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getAccessToken();
+        var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
         var jwtToken = this.createJwtToken(creationParams, accessToken.getExpiration());
         return new JwtAccessToken(jwtToken);
     }
 
     public final JwtRefreshToken createJwtRefreshToken(JwtTokenCreationParams creationParams) {
-        var refreshToken = this.jbstProperties.getSecurity().getJwtTokensConfigs().getRefreshToken();
+        var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
         var jwtToken = this.createJwtToken(creationParams, refreshToken.getExpiration());
         return new JwtRefreshToken(jwtToken);
     }
