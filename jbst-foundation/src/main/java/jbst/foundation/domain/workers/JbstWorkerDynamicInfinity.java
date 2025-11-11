@@ -14,6 +14,6 @@ public abstract class JbstWorkerDynamicInfinity extends JbstWorkerDynamic {
 
     @Override
     public void onComplete() {
-        // ignored on infinite timer task
+        // ignored on infinity worker
     }
 }

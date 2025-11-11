@@ -12,6 +12,6 @@ public abstract class JbstWorkerFixedInfinity extends JbstWorkerFixed {
 
     @Override
     public void onComplete() {
-        // ignored on infinite timer task
+        // ignored on infinity worker
     }
 }
