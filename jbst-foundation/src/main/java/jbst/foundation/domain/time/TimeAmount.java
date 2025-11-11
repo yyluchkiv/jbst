@@ -5,7 +5,6 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
-import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,7 +16,6 @@ import java.util.Set;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 
-// TODO [YYL] re-use Duration where it is possible
 public record TimeAmount(long amount, ChronoUnit unit) {
 
     public static TimeAmount hardcoded() {
