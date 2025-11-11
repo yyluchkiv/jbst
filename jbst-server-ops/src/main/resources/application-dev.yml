@@ -6,16 +6,16 @@ logging:
 
 # jbst
 jbst:
-  emails:
-    enabled: true
-    username: "<?>"
-    password: "<?>"
-    from: "<?>"
   utils:
     countries-flags:
       enabled: false
     users-agents:
       enabled: false
+  emails:
+    enabled: true
+    username: "<?>"
+    password: "<?>"
+    from: "<?>"
 
 # server
 jbst-server-ops:
