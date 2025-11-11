@@ -78,13 +78,13 @@ jbst:
           - username: admin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
-            password-change-required: false
             authorities: [ "admin", "invitations:write" ]
+            password-change-required: false
           - username: superadmin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
-            password-change-required: false
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
+            password-change-required: false
       invitations-on-init:
         enabled: true
     users-emails:
