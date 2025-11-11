@@ -6,6 +6,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -45,6 +46,7 @@ public record Timestamp(long value) {
         return this.value;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return String.valueOf(this.value);

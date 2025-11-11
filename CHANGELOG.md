@@ -30,4 +30,5 @@
 — Addition: JbstWorker, JbstWorkerFixed, JbstWorkerDynamic, JbstWorker***Infinity, JbstWorkerActionStrategy
 — Modification: RateLimiter -> JbstRateLimiter
 — Deletion @ Scheduled: TimerTask(s) codebase
+— Addition: TimestampUtility - getFutureTimestamp(Duration), getPastTimestamp(Duration)
 
