@@ -19,7 +19,7 @@ public class JbstPropertyApp extends JbstProperty {
     @JbstPropertyMandatory
     private final ServerName name;
     @JbstPropertyMandatory
-    private final JbstPropertyMaven mavenConfigs;
+    private final JbstPropertyMaven maven;
     @JbstPropertyMandatory
     private final Boolean springdocEnabled;
     @JbstPropertyOptional

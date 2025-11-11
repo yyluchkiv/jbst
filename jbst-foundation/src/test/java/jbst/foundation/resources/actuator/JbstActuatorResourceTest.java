@@ -92,6 +92,6 @@ class JbstActuatorResourceTest {
         assertThat(details)
                 .hasSize(2)
                 .containsEntry("activeProfile", activeProfile)
-                .containsEntry("maven", this.jbstProperties.getApp().getMavenConfigs().asMavenDetails());
+                .containsEntry("maven", this.jbstProperties.getApp().getMaven().asMavenDetails());
     }
 }
