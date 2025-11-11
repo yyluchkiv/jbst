@@ -129,7 +129,7 @@ public class JbstPropertySecurity extends JbstProperty {
         super.assertProperties();
 
         // Requirements: availableAuthorities vs. configuredAuthorities
-        var expectedAuthorities = this.authorities.getAllAuthoritiesValues();
+        var expectedAuthorities = this.authorities.getValues();
         var configuredAuthorities = this.essenceConfigs.getUsersOnInit().getAuthorities();
         var containsAll = expectedAuthorities.containsAll(configuredAuthorities);
         assertTrueOrThrow(containsAll, "Please verify `users-on-init.users.authorities`. Configuration provide unauthorized authority");
