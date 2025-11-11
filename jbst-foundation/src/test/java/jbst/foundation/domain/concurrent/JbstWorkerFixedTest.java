@@ -1,6 +1,7 @@
 package jbst.foundation.domain.concurrent;
 
 import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.workers.JbstWorkerFixed;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

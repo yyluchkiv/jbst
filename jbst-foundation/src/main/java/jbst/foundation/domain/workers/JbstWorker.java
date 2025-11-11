@@ -1,4 +1,4 @@
-package jbst.foundation.domain.concurrent;
+package jbst.foundation.domain.workers;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AccessLevel;

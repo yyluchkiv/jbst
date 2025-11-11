@@ -1,7 +1,7 @@
 package jbst.foundation.resources.hardware;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.foundation.domain.concurrent.JbstWorkerFixedInfinity;
+import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;

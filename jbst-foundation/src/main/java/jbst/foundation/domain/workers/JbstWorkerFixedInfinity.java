@@ -1,4 +1,4 @@
-package jbst.foundation.domain.concurrent;
+package jbst.foundation.domain.workers;
 
 import jbst.foundation.domain.time.SchedulerConfiguration;
 

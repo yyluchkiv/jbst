@@ -3,7 +3,7 @@ package jbst.server.hm.client;
 import feign.FeignException;
 import feign.Headers;
 import feign.RequestLine;
-import jbst.foundation.domain.concurrent.JbstWorkerFixedInfinity;
+import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
