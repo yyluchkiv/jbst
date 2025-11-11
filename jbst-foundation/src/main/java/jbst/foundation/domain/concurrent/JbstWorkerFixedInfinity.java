@@ -1,12 +1,14 @@
 package jbst.foundation.domain.concurrent;
 
 import jbst.foundation.domain.time.SchedulerConfiguration;
-import jbst.foundation.domain.time.TimeAmount;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 public abstract class JbstWorkerFixedInfinity extends JbstWorkerFixed {
 
     protected JbstWorkerFixedInfinity(SchedulerConfiguration interval) {
-        super(TimeAmount.forever(), interval);
+        super(Duration.of(1L, ChronoUnit.FOREVER), interval);
     }
 
     @Override

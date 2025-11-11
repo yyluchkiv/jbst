@@ -1,10 +1,10 @@
 package jbst.foundation.domain.concurrent;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import jbst.foundation.domain.time.TimeAmount;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
+import java.time.Duration;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -52,9 +52,9 @@ public abstract class JbstWorker {
     protected Future<?> future = null;
     protected volatile JbstWorkerState state;
     protected long elapsedSeconds;
-    protected final TimeAmount duration;
+    protected final Duration duration;
 
-    protected JbstWorker(TimeAmount duration) {
+    protected JbstWorker(Duration duration) {
         this.duration = duration;
         this.elapsedSeconds = 0L;
         this.state = JbstWorkerState.CREATED;

@@ -1,11 +1,10 @@
 package jbst.foundation.domain.concurrent;
 
 import jbst.foundation.domain.time.SchedulerConfiguration;
-import jbst.foundation.domain.time.TimeAmount;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.time.temporal.ChronoUnit;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static jbst.foundation.utilities.concurrent.SleepUtility.sleep;
@@ -15,7 +14,7 @@ class JbstWorkerFixedTest {
 
     public static class JbstWorkerFixedConsole extends JbstWorkerFixed {
 
-        public JbstWorkerFixedConsole(TimeAmount duration, SchedulerConfiguration interval) {
+        public JbstWorkerFixedConsole(Duration duration, SchedulerConfiguration interval) {
             super(duration, interval);
         }
 
@@ -34,7 +33,7 @@ class JbstWorkerFixedTest {
     void console() {
         // Arrange
         var worker = new JbstWorkerFixedConsole(
-                new TimeAmount(30, ChronoUnit.SECONDS),
+                Duration.ofSeconds(30),
                 SchedulerConfiguration.EVERY_5_SECONDS
         );
 

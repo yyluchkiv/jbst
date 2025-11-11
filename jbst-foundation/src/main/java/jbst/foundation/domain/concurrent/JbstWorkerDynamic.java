@@ -1,13 +1,11 @@
 package jbst.foundation.domain.concurrent;
 
-import jbst.foundation.domain.time.TimeAmount;
-
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public abstract class JbstWorkerDynamic extends JbstWorker {
 
-    public JbstWorkerDynamic(TimeAmount duration) {
+    public JbstWorkerDynamic(Duration duration) {
         super(duration);
     }
 

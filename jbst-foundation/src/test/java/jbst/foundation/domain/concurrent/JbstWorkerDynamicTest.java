@@ -1,11 +1,9 @@
 package jbst.foundation.domain.concurrent;
 
-import jbst.foundation.domain.time.TimeAmount;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 import static jbst.foundation.utilities.concurrent.SleepUtility.sleep;
@@ -16,7 +14,7 @@ class JbstWorkerDynamicTest {
     public static class JbstWorkerDynamicConsole extends JbstWorkerDynamic {
         private long delay = 1;
 
-        public JbstWorkerDynamicConsole(TimeAmount duration) {
+        public JbstWorkerDynamicConsole(Duration duration) {
             super(duration);
         }
 
@@ -47,7 +45,7 @@ class JbstWorkerDynamicTest {
     void console() {
         // Arrange
         var worker = new JbstWorkerDynamicConsole(
-                new TimeAmount(60, ChronoUnit.SECONDS)
+                Duration.ofSeconds(60)
         );
 
         // Act
