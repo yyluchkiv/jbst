@@ -46,6 +46,6 @@ public class JbstPropertySecuritySessions extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "session-configs";
+        return "sessions";
     }
 }

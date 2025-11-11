@@ -62,7 +62,7 @@ jbst:
           unit: MINUTES # @java.time.temporal.ChronoUnit
     logging:
       advanced-request-logging-enabled: false
-    session-configs:
+    sessions:
       clean-sessions-by-expired-refresh-tokens-cron:
         enabled: false
         expression: "*/30 * * * * *"
