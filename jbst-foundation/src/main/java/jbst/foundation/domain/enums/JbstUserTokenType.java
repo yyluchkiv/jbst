@@ -1,9 +1,8 @@
 package jbst.foundation.domain.enums;
 
-import jbst.foundation.domain.time.TimeAmount;
+import java.time.Duration;
 
-import static java.time.temporal.ChronoUnit.*;
-import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
+import static jbst.foundation.utilities.time.TimestampUtility.getFutureTimestamp;
 
 public enum JbstUserTokenType {
     EMAIL_CONFIRMATION,
@@ -28,12 +27,12 @@ public enum JbstUserTokenType {
 
     public long getExpiryTimestamp() {
         if (this.isEmailConfirmationOrPasswordReset()) {
-            return getFutureRange(new TimeAmount(24, HOURS)).to();
+            return getFutureTimestamp(Duration.ofHours(24L)).value();
         }
         if (this.isMagicLink()) {
-            return getFutureRange(new TimeAmount(10, MINUTES)).to();
+            return getFutureTimestamp(Duration.ofMinutes(10L)).value();
         }
         // fallback
-        return getFutureRange(new TimeAmount(1, SECONDS)).to();
+        return getFutureTimestamp(Duration.ofSeconds(1L)).value();
     }
 }

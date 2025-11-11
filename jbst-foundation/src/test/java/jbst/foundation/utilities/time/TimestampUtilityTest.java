@@ -7,10 +7,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.time.Duration;
 import java.util.stream.Stream;
 
 import static java.time.ZoneOffset.UTC;
-import static java.time.temporal.ChronoUnit.*;
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
@@ -18,11 +19,11 @@ import static jbst.foundation.utilities.time.TimestampUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimestampUtilityTest {
-    private static final Long _2_HOUR_AGO = getPastRange(new TimeAmount(2L, HOURS)).from();
-    private static final Long _5_MINUTES_AGO = getPastRange(new TimeAmount(5L, MINUTES)).from();
-    private static final Long _1_MINUTE_AGO = getPastRange(new TimeAmount(1L, MINUTES)).from();
-    private static final Long _2_MINUTES_FUTURE = getFutureRange(new TimeAmount(2L, MINUTES)).to();
-    private static final Long _1_HOUR_FUTURE = getFutureRange(new TimeAmount(1L, HOURS)).to();
+    private static final Long _2_HOUR_AGO = getPastTimestamp(Duration.ofHours(2L)).value();
+    private static final Long _5_MINUTES_AGO = getPastTimestamp(Duration.ofMinutes(5)).value();
+    private static final Long _1_MINUTE_AGO = getPastTimestamp(Duration.ofMinutes(1L)).value();
+    private static final Long _2_MINUTES_FUTURE = getFutureTimestamp(Duration.ofMinutes(2L)).value();
+    private static final Long _1_HOUR_FUTURE = getFutureTimestamp(Duration.ofHours(1L)).value();
 
     private static final long _5_SECONDS = new TimeAmount(5L, SECONDS).toMillis();
 

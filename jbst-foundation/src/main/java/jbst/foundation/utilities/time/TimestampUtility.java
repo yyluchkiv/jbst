@@ -1,9 +1,11 @@
 package jbst.foundation.utilities.time;
 
+import jbst.foundation.domain.base.Timestamp;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -59,13 +61,21 @@ public class TimestampUtility {
         );
     }
 
+    public static Timestamp getPastTimestamp(Duration duration) {
+        return new Timestamp(getCurrentTimestamp() - duration.toMillis());
+    }
+
     public static TupleRange<Long> getPastRange(TimeAmount timeAmount) {
         return getPastRange(getCurrentTimestamp(), timeAmount);
     }
 
-    static TupleRange<Long> getPastRange(long timestamp, TimeAmount timeAmount) {
+    public static TupleRange<Long> getPastRange(long timestamp, TimeAmount timeAmount) {
         var past = timestamp - timeAmount.toMillis();
         return new TupleRange<>(past, timestamp);
+    }
+
+    public static Timestamp getFutureTimestamp(Duration duration) {
+        return new Timestamp(getCurrentTimestamp() + duration.toMillis());
     }
 
     public static TupleRange<Long> getFutureRange(TimeAmount timeAmount) {

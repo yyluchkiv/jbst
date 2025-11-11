@@ -11,7 +11,6 @@ import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetExcepti
 import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.validators.JbstUsersTokensValidator;
@@ -31,7 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.time.temporal.ChronoUnit;
+import java.time.Duration;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
@@ -75,9 +74,9 @@ class AbstractJbstUsersTokensValidatorTest {
     }
 
     private static Stream<Arguments> validateEmailConfirmationTokenTest() {
-        var oneDay = new TimeAmount(24, ChronoUnit.HOURS);
-        var expiredTimestamp = TimestampUtility.getPastRange(oneDay).from();
-        var validTimestamp = TimestampUtility.getFutureRange(oneDay).to();
+        var oneDay = Duration.ofHours(24L);
+        var expiredTimestamp = TimestampUtility.getPastTimestamp(oneDay).value();
+        var validTimestamp = TimestampUtility.getFutureTimestamp(oneDay).value();
         return Stream.of(
                 Arguments.of(
                         null,
@@ -164,9 +163,9 @@ class AbstractJbstUsersTokensValidatorTest {
     }
 
     private static Stream<Arguments> validatePasswordResetTest() {
-        var oneDay = new TimeAmount(24, ChronoUnit.HOURS);
-        var expiredTimestamp = TimestampUtility.getPastRange(oneDay).from();
-        var validTimestamp = TimestampUtility.getFutureRange(oneDay).to();
+        var oneDay = Duration.ofHours(24L);
+        var expiredTimestamp = TimestampUtility.getPastTimestamp(oneDay).value();
+        var validTimestamp = TimestampUtility.getFutureTimestamp(oneDay).value();
         return Stream.of(
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
