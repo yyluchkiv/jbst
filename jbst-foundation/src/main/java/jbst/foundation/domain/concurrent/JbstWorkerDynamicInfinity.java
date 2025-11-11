@@ -3,10 +3,11 @@ package jbst.foundation.domain.concurrent;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.domain.time.TimeAmount;
 
-public abstract class JbstWorkerFixedInfinity extends JbstWorkerFixed {
+@SuppressWarnings("unused")
+public abstract class JbstWorkerDynamicInfinity extends JbstWorkerDynamic {
 
-    protected JbstWorkerFixedInfinity(SchedulerConfiguration interval) {
-        super(TimeAmount.forever(), interval);
+    protected JbstWorkerDynamicInfinity(SchedulerConfiguration interval) {
+        super(TimeAmount.forever());
     }
 
     @Override

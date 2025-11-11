@@ -15,8 +15,8 @@ class JbstWorkerFixedTest {
 
     public static class JbstWorkerFixedConsole extends JbstWorkerFixed {
 
-        public JbstWorkerFixedConsole(SchedulerConfiguration interval, TimeAmount duration) {
-            super(interval, duration);
+        public JbstWorkerFixedConsole(TimeAmount duration, SchedulerConfiguration interval) {
+            super(duration, interval);
         }
 
         @Override
@@ -34,8 +34,8 @@ class JbstWorkerFixedTest {
     void console() {
         // Arrange
         var worker = new JbstWorkerFixedConsole(
-                SchedulerConfiguration.EVERY_5_SECONDS,
-                new TimeAmount(30, ChronoUnit.SECONDS)
+                new TimeAmount(30, ChronoUnit.SECONDS),
+                SchedulerConfiguration.EVERY_5_SECONDS
         );
 
         // Act

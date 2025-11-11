@@ -1,10 +1,10 @@
 package jbst.foundation.domain.concurrent;
 
-import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.domain.time.TimeAmount;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
@@ -16,15 +16,15 @@ class JbstWorkerDynamicTest {
     public static class JbstWorkerDynamicConsole extends JbstWorkerDynamic {
         private long delay = 1;
 
-        public JbstWorkerDynamicConsole(SchedulerConfiguration interval, TimeAmount duration) {
-            super(interval, duration);
+        public JbstWorkerDynamicConsole(TimeAmount duration) {
+            super(duration);
         }
 
         @Override
-        public long nextDelaySeconds() {
-            long current = this.delay;
+        public Duration getDelay() {
+            var current = this.delay;
             this.delay = Math.min(this.delay * 2, 30); // exponential backoff up to 30s
-            return current;
+            return Duration.ofSeconds(current);
         }
 
         @Override
@@ -47,7 +47,6 @@ class JbstWorkerDynamicTest {
     void console() {
         // Arrange
         var worker = new JbstWorkerDynamicConsole(
-                SchedulerConfiguration.EVERY_1_SECOND,
                 new TimeAmount(60, ChronoUnit.SECONDS)
         );
 

@@ -1,7 +1,6 @@
 package jbst.foundation.domain.concurrent;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.domain.time.TimeAmount;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -53,11 +52,9 @@ public abstract class JbstWorker {
     protected Future<?> future = null;
     protected volatile JbstWorkerState state;
     protected long elapsedSeconds;
-    protected final SchedulerConfiguration interval;
     protected final TimeAmount duration;
 
-    protected JbstWorker(SchedulerConfiguration interval, TimeAmount duration) {
-        this.interval = interval;
+    protected JbstWorker(TimeAmount duration) {
         this.duration = duration;
         this.elapsedSeconds = 0L;
         this.state = JbstWorkerState.CREATED;

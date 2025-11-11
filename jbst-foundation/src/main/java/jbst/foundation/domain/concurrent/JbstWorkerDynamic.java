@@ -1,21 +1,17 @@
 package jbst.foundation.domain.concurrent;
 
-import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.domain.time.TimeAmount;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public abstract class JbstWorkerDynamic extends JbstWorker {
 
-    public JbstWorkerDynamic(SchedulerConfiguration interval, TimeAmount duration) {
-        super(interval, duration);
+    public JbstWorkerDynamic(TimeAmount duration) {
+        super(duration);
     }
 
-    /**
-     * Must return the next delay in SECONDS before the next tick.
-     * Implementations can adjust this value dynamically each cycle.
-     */
-    public abstract long nextDelaySeconds();
+    public abstract Duration getDelay();
     public abstract void onError(Exception ex);
 
     @Override
@@ -44,12 +40,10 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
         if (!this.state.isOperative()) {
             return;
         }
-        var delay = Math.max(1, this.nextDelaySeconds());
-
         this.future = SES.schedule(() -> {
             try {
                 this.onTick();
-                this.elapsedSeconds += delay;
+                this.elapsedSeconds += this.getDelay().toSeconds();
 
                 // Stop when duration reached
                 if (this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds()) {
@@ -63,6 +57,6 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
             } catch (Exception ex) {
                 this.onError(ex);
             }
-        }, delay, TimeUnit.SECONDS);
+        }, this.getDelay().toSeconds(), TimeUnit.SECONDS);
     }
 }

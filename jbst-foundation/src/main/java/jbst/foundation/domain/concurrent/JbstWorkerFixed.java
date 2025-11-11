@@ -5,8 +5,11 @@ import jbst.foundation.domain.time.TimeAmount;
 
 public abstract class JbstWorkerFixed extends JbstWorker {
 
-    public JbstWorkerFixed(SchedulerConfiguration interval, TimeAmount duration) {
-        super(interval, duration);
+    protected final SchedulerConfiguration interval;
+
+    public JbstWorkerFixed(TimeAmount duration, SchedulerConfiguration interval) {
+        super(duration);
+        this.interval = interval;
     }
 
     public void start() {
