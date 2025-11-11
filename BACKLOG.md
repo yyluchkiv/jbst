@@ -1,10 +1,10 @@
 ### Backlog
 
 ##### Major
-- Migration - Java21
-- Users <-> GitHub OAuth Registration
-- Users + Plans
-- Plan Payments (Stripe)
+— Migration @ Java21
+— Users, Registration @ GitHub
+— Users @ Payments (Stripe)
+— Users + Plans
 
 ##### Minor
-- Timers: add jbst prefix + add modifiable tick timer
+— TDB
