@@ -16,6 +16,7 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
      * Implementations can adjust this value dynamically each cycle.
      */
     protected abstract long nextDelaySeconds();
+    protected abstract void onError(Exception ex);
 
     @Override
     public void start() {
@@ -59,8 +60,8 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
 
                 // Continue scheduling dynamically
                 this.scheduleNext();
-            } catch (Exception e) {
-                this.stop();
+            } catch (Exception ex) {
+                this.onError(ex);
             }
         }, delay, TimeUnit.SECONDS);
     }
