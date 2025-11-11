@@ -5,7 +5,7 @@ import jbst.foundation.domain.properties.base.JbstPropertyAuthority;
 import jbst.foundation.domain.properties.base.JbstPropertyInvitationsOnInit;
 import jbst.foundation.domain.properties.base.JbstPropertyUsersOnInit;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
-import jbst.foundation.domain.properties.configs.JbstPropertyServer;
+import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityAuthorities;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityEssence;
 import jbst.foundation.settings.JbstSettingsService;
@@ -114,7 +114,7 @@ class JbstStartupEventListenerTest {
                 null,
                 null
         );
-        when(this.jbstProperties.getServerConfigs()).thenReturn(JbstPropertyServer.hardcoded());
+        when(this.jbstProperties.getServerConfigs()).thenReturn(JbstPropertyApp.hardcoded());
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
 
         // Act

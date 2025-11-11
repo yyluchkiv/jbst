@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertyEmail;
 import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
-import jbst.foundation.domain.properties.configs.JbstPropertyServer;
+import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.concurrent.SleepUtility;
@@ -50,7 +50,7 @@ class JbstUsersEmailsServiceConsoleTest {
         @Bean
         JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
-            jbstProperties.setServerConfigs(JbstPropertyServer.hardcoded());
+            jbstProperties.setServerConfigs(JbstPropertyApp.hardcoded());
             jbstProperties.setMvcConfigs(JbstPropertyMVC.hardcoded());
             jbstProperties.setSecurityJwtConfigs(JbstPropertySecurity.hardcoded());
             jbstProperties.setEmailConfigs(

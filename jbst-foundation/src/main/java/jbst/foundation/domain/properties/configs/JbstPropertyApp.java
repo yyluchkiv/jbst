@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JbstPropertyServer extends JbstProperty {
+public class JbstPropertyApp extends JbstProperty {
     @JbstPropertyMandatory
     private final ServerName name;
     @JbstPropertyMandatory
@@ -27,8 +27,8 @@ public class JbstPropertyServer extends JbstProperty {
     @JbstPropertyOptional
     private String webclientURL;
 
-    public static JbstPropertyServer hardcoded() {
-        return new JbstPropertyServer(
+    public static JbstPropertyApp hardcoded() {
+        return new JbstPropertyApp(
                 ServerName.hardcoded(),
                 new JbstPropertyMaven("jbst", "jbst", Version.hardcoded()),
                 true,

@@ -1,2 +1,2 @@
 ### Changelog [v1.37]
-— TBD
+— Modification: property "server-configs" -> "app"

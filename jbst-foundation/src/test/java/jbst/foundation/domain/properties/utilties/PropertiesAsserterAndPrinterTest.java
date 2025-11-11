@@ -111,7 +111,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void serverConfigsTest() {
         // Act
-        JbstPropertyServer.hardcoded().assertProperties();
+        JbstPropertyApp.hardcoded().assertProperties();
 
         // Assert
         // no asserts
