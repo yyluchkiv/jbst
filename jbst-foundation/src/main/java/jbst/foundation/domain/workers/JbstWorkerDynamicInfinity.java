@@ -16,9 +16,4 @@ public abstract class JbstWorkerDynamicInfinity extends JbstWorkerDynamic {
     public void onComplete() {
         // ignored on infinite timer task
     }
-
-    public static void main(String[] args) {
-        System.out.println(Duration.ZERO);
-        System.out.println(Duration.of(1, ChronoUnit.FOREVER));
-    }
 }
