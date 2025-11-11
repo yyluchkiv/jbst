@@ -30,7 +30,7 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @EqualsAndHashCode(callSuper = true)
 public class JbstPropertySecurity extends JbstProperty {
     @JbstPropertyMandatory
-    private final JbstPropertySecurityAuthorities authoritiesConfigs;
+    private final JbstPropertySecurityAuthorities authorities;
     @JbstPropertyMandatory
     private final JbstPropertySecurityCookies cookiesConfigs;
     @JbstPropertyMandatory
@@ -129,13 +129,13 @@ public class JbstPropertySecurity extends JbstProperty {
         super.assertProperties();
 
         // Requirements: availableAuthorities vs. configuredAuthorities
-        var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();
+        var expectedAuthorities = this.authorities.getAllAuthoritiesValues();
         var configuredAuthorities = this.essenceConfigs.getUsersOnInit().getAuthorities();
         var containsAll = expectedAuthorities.containsAll(configuredAuthorities);
         assertTrueOrThrow(containsAll, "Please verify `users-on-init.users.authorities`. Configuration provide unauthorized authority");
 
         // Requirements: availableAuthorities vs. required enum values
-        var authorityClasses = this.getAbstractAuthorityClasses(this.authoritiesConfigs.getPackageName());
+        var authorityClasses = this.getAbstractAuthorityClasses(this.authorities.getPackageName());
         var size = authorityClasses.size();
         assertTrueOrThrow(size == 1, "Please verify AbstractAuthority.class has only one sub enum. Found: `" + size + "`");
         var authorityClass = authorityClasses.iterator().next();

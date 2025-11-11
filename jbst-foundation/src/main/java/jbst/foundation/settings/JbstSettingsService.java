@@ -85,7 +85,7 @@ public abstract class JbstSettingsService {
                 essenceConfigs.getInvitationsOnInit().isEnabled(),
                 invalidAttribute("essence-configs.invitations-on-init.enabled == true")
         );
-        var authorities = getSimpleGrantedAuthorities(security.getAuthoritiesConfigs().getAvailableAuthorities());
+        var authorities = getSimpleGrantedAuthorities(security.getAuthorities().getAvailableAuthorities());
         essenceConfigs.getUsersOnInit().getUsers().forEach(userOnInit -> {
             var username = userOnInit.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {

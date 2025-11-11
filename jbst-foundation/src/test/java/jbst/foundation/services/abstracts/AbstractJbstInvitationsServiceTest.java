@@ -110,7 +110,7 @@ class AbstractJbstInvitationsServiceTest {
                 invitation2.value(),
                 invitation5.value()
         );
-        assertThat(responseInvitations.authorities()).isEqualTo(this.jbstProperties.getSecurity().getAuthoritiesConfigs().getAvailableAuthorities());
+        assertThat(responseInvitations.authorities()).isEqualTo(this.jbstProperties.getSecurity().getAuthorities().getAvailableAuthorities());
     }
 
     @Test
