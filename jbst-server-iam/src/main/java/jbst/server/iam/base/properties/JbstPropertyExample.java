@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends JbstProperty {
+public class JbstPropertyExample extends JbstProperty {
     @JbstPropertyMandatory
     private final String targetAttribute1;
     @JbstPropertyMandatory
@@ -32,6 +32,6 @@ public class ServerConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "server-configs";
+        return "example";
     }
 }

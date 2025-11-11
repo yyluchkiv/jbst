@@ -104,7 +104,7 @@ jbst:
 
 # server
 jbst-server-iam:
-  server-configs:
+  example:
     target-attribute1: "value1"
     target-attribute2: 10
     target-authority: "USER"

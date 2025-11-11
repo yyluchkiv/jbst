@@ -11,7 +11,7 @@ import org.springframework.core.PriorityOrdered;
 )
 @Data
 public class ServerProperties implements PriorityOrdered {
-    private ServerConfigs serverConfigs;
+    private JbstPropertyExample example;
 
     @Override
     public int getOrder() {
