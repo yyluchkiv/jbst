@@ -25,12 +25,12 @@ public class TestConfigurationPostgresValidators {
     // Publishers
     // =================================================================================================================
     @Bean
-    JbstEventsPublisher securityJwtPublisher() {
+    JbstEventsPublisher eventsPublisher() {
         return mock(JbstEventsPublisher.class);
     }
 
     @Bean
-    JbstIncidentsPublisher securityJwtIncidentPublisher() {
+    JbstIncidentsPublisher incidentsPublisher() {
         return mock(JbstIncidentsPublisher.class);
     }
 

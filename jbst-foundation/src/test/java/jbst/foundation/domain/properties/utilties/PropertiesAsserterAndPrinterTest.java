@@ -240,12 +240,12 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
+    void securityDisabledUsersEmailsConfigsTest() {
         // Act
-        var securityJwtConfigs = JbstPropertySecurity.disabledUsersEmailsConfigs();
+        var security = JbstPropertySecurity.disabledUsersEmailsConfigs();
 
         // Act
-        var throwable = catchThrowable(securityJwtConfigs::assertProperties);
+        var throwable = catchThrowable(security::assertProperties);
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -255,7 +255,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void securityJwtConfigsTest() {
+    void securityTest() {
         // Act
         JbstPropertySecurity.hardcoded().assertProperties();
 
@@ -264,7 +264,7 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    void mongodbSecurityJwtConfigsTest() {
+    void databaseMongoTest() {
         // Act
         JbstPropertyDatabaseMongo.hardcoded().assertProperties();
 

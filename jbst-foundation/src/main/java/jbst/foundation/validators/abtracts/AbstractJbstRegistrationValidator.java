@@ -24,8 +24,8 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 public abstract class AbstractJbstRegistrationValidator implements JbstRegistrationValidator {
 
     // Publishers
-    protected final JbstEventsPublisher securityJwtPublisher;
-    protected final JbstIncidentsPublisher securityJwtIncidentPublisher;
+    protected final JbstEventsPublisher eventsPublisher;
+    protected final JbstIncidentsPublisher incidentsPublisher;
     // Repositories
     protected final JbstInvitationsRepository invitationsRepository;
     protected final JbstUsersRepository usersRepository;
@@ -41,14 +41,14 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         var existsByUsername = this.usersRepository.existsByUsername(request.username());
         if (existsByUsername) {
             var message = entityAlreadyUsed("Username", request.username().value());
-            this.securityJwtPublisher.publishRegistration0Failure(
+            this.eventsPublisher.publishRegistration0Failure(
                     new EventRegistration0Failure(
                             request.email(),
                             request.username(),
                             message
                     )
             );
-            this.securityJwtIncidentPublisher.publishRegistration0Failure(
+            this.incidentsPublisher.publishRegistration0Failure(
                     new IncidentRegistration0Failure(
                             request.email(),
                             request.username(),
@@ -60,14 +60,14 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         var existsByEmail = this.usersRepository.existsByEmail(request.email());
         if (existsByEmail) {
             var message = entityAlreadyUsed("Email", request.email().value());
-            this.securityJwtPublisher.publishRegistration0Failure(
+            this.eventsPublisher.publishRegistration0Failure(
                     new EventRegistration0Failure(
                             request.email(),
                             request.username(),
                             message
                     )
             );
-            this.securityJwtIncidentPublisher.publishRegistration0Failure(
+            this.incidentsPublisher.publishRegistration0Failure(
                     new IncidentRegistration0Failure(
                             request.email(),
                             request.username(),
@@ -84,14 +84,14 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         var user = this.usersRepository.findByUsernameAsJwtUserOrNull(request.username());
         if (nonNull(user)) {
             var message = entityAlreadyUsed("Username", request.username().value());
-            this.securityJwtPublisher.publishRegistration1Failure(
+            this.eventsPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             request.username(),
                             request.code(),
                             message
                     )
             );
-            this.securityJwtIncidentPublisher.publishRegistration1Failure(
+            this.incidentsPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
                             request.username(),
                             request.code(),
@@ -105,7 +105,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         if (nonNull(invitation)) {
             if (nonNull(invitation.invited())) {
                 var message = entityAlreadyUsed("Code", invitation.code());
-                this.securityJwtPublisher.publishRegistration1Failure(
+                this.eventsPublisher.publishRegistration1Failure(
                         new EventRegistration1Failure(
                                 request.username(),
                                 request.code(),
@@ -113,7 +113,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
                                 message
                         )
                 );
-                this.securityJwtIncidentPublisher.publishRegistration1Failure(
+                this.incidentsPublisher.publishRegistration1Failure(
                         new IncidentRegistration1Failure(
                                 request.username(),
                                 request.code(),
@@ -125,14 +125,14 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
             }
         } else {
             var exception = entityNotFound("Code", request.code());
-            this.securityJwtPublisher.publishRegistration1Failure(
+            this.eventsPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             request.username(),
                             request.code(),
                             exception
                     )
             );
-            this.securityJwtIncidentPublisher.publishRegistration1Failure(
+            this.incidentsPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
                             request.username(),
                             request.code(),

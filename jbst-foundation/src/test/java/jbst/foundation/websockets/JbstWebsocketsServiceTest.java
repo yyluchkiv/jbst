@@ -121,8 +121,8 @@ class JbstWebsocketsServiceTest {
     @MethodSource("convertAndSendToUserTestArgs")
     void convertAndSendToUserTest(boolean enabled, boolean expectedSend) {
         // Assert
-        var securityJwtConfigs = mock(JbstPropertySecurity.class);
-        when(securityJwtConfigs.getWebsocketsConfigs()).thenReturn(
+        var security = mock(JbstPropertySecurity.class);
+        when(security.getWebsocketsConfigs()).thenReturn(
                 new JbstPropertySecurityWebsockets(
                         enabled,
                         JbstPropertyWebsocketsCSRF.hardcoded(),
@@ -131,7 +131,7 @@ class JbstWebsocketsServiceTest {
                         JbstPropertyWebsocketsFeatures.hardcoded()
                 )
         );
-        when(this.jbstProperties.getSecurity()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurity()).thenReturn(security);
         var username = Username.random();
         var destination = randomString();
         var websocketEvent = mock(WebsocketEvent.class);

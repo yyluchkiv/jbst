@@ -15,7 +15,7 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstHttpUtils {
-    protected static final String CACHED_PAYLOAD_ATTRIBUTE = "jbst-security-jwt-cached-payload-attribute";
+    protected static final String CACHED_PAYLOAD_ATTRIBUTE = "jbst-security-cached-payload";
 
     // Properties
     private final JbstProperties jbstProperties;

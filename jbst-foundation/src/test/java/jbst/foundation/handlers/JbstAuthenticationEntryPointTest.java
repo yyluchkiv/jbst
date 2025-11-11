@@ -49,7 +49,7 @@ class JbstAuthenticationEntryPointTest {
 
     }
 
-    private final JbstEventsPublisher securityJwtPublisher;
+    private final JbstEventsPublisher eventsPublisher;
     private final JbstHttpUtils httpUtils;
     private final ObjectMapper objectMapper;
 
@@ -58,7 +58,7 @@ class JbstAuthenticationEntryPointTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.securityJwtPublisher,
+                this.eventsPublisher,
                 this.httpUtils
         );
     }
@@ -66,7 +66,7 @@ class JbstAuthenticationEntryPointTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.securityJwtPublisher,
+                this.eventsPublisher,
                 this.httpUtils
         );
     }
@@ -151,7 +151,7 @@ class JbstAuthenticationEntryPointTest {
         verify(this.httpUtils).isCachedEndpoint(request);
         verify(this.httpUtils).getCachedPayload(request);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLoginFailure.class);
-        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eventAC.capture());
+        verify(this.eventsPublisher).publishAuthenticationLoginFailure(eventAC.capture());
         assertThat(eventAC.getValue().username()).isEqualTo(Username.hardcoded());
         assertThat(eventAC.getValue().password()).isEqualTo(Password.hardcoded());
         assertThat(eventAC.getValue().ipAddress()).isEqualTo(IPAddress.localhost());

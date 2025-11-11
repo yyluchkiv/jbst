@@ -17,12 +17,12 @@ import static org.mockito.Mockito.mock;
 public class TestConfigurationHandlers {
 
     @Bean
-    JbstEventsPublisher securityJwtEventsPublisher() {
+    JbstEventsPublisher eventsPublisher() {
         return mock(JbstEventsPublisher.class);
     }
 
     @Bean
-    JbstIncidentsPublisher securityJwtIncidentsPublisher() {
+    JbstIncidentsPublisher incidentsPublisher() {
         return mock(JbstIncidentsPublisher.class);
     }
 

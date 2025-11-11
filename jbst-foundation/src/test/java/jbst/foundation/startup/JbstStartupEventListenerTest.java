@@ -89,7 +89,7 @@ class JbstStartupEventListenerTest {
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isUsersEnabled, boolean isInvitationsEnabled) {
         // Arrange
-        var securityJwtConfigs = new JbstPropertySecurity(
+        var security = new JbstPropertySecurity(
                 new JbstPropertySecurityAuthorities(
                         "jbst",
                         Set.of(
@@ -115,7 +115,7 @@ class JbstStartupEventListenerTest {
                 null
         );
         when(this.jbstProperties.getApp()).thenReturn(JbstPropertyApp.hardcoded());
-        when(this.jbstProperties.getSecurity()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurity()).thenReturn(security);
 
         // Act
         this.componentUnderTest.onStartup();

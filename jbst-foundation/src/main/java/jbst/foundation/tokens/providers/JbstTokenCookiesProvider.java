@@ -32,15 +32,15 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
 
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
-        var securityJwtConfigs = this.jbstProperties.getSecurity();
-        var accessTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
-        var jwtAccessTokenCookieCreationLatency = securityJwtConfigs.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
-        var maxAge = accessTokenConfiguration.getExpiration().getTimeAmount().toSeconds() - jwtAccessTokenCookieCreationLatency.getTimeAmount().toSeconds();
+        var security = this.jbstProperties.getSecurity();
+        var accessToken = security.getJwtTokensConfigs().getAccessToken();
+        var jwtAccessTokenCookieCreationLatency = security.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
+        var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - jwtAccessTokenCookieCreationLatency.getTimeAmount().toSeconds();
 
         var cookie = createCookie(
-                accessTokenConfiguration.getCookieKey(),
+                accessToken.getCookieKey(),
                 jwtAccessToken.value(),
-                securityJwtConfigs.getCookiesConfigs().getDomain(),
+                security.getCookiesConfigs().getDomain(),
                 true,
                 toIntExactOrZeroOnOverflow(maxAge)
         );
@@ -50,13 +50,13 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
 
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
-        var securityJwtConfigs = this.jbstProperties.getSecurity();
-        var refreshTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();
+        var security = this.jbstProperties.getSecurity();
+        var refreshTokenConfiguration = security.getJwtTokensConfigs().getRefreshToken();
 
         var cookie = createCookie(
                 refreshTokenConfiguration.getCookieKey(),
                 jwtRefreshToken.value(),
-                securityJwtConfigs.getCookiesConfigs().getDomain(),
+                security.getCookiesConfigs().getDomain(),
                 true,
                 toIntExactOrZeroOnOverflow(refreshTokenConfiguration.getExpiration().getTimeAmount().toSeconds())
         );

@@ -42,7 +42,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessionsService {
 
     // Publishers
-    protected final JbstEventsPublisher securityJwtPublisher;
+    protected final JbstEventsPublisher eventsPublisher;
     // Repositories
     protected final JbstUsersSessionsRepository usersSessionsRepository;
     // Utils
@@ -81,7 +81,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
             session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
         session = this.usersSessionsRepository.saveAs(session);
-        this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
+        this.eventsPublisher.publishSessionUserRequestMetadataAdd(
                 new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
@@ -98,7 +98,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
         var username = user.username();
         var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
-        this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
+        this.eventsPublisher.publishSessionUserRequestMetadataAdd(
                 new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
@@ -183,7 +183,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     @Override
     public void renewUserRequestMetadata(JbstUserSession session, HttpServletRequest httpServletRequest) {
         if (session.isRenewRequired()) {
-            this.securityJwtPublisher.publishSessionUserRequestMetadataRenew(
+            this.eventsPublisher.publishSessionUserRequestMetadataRenew(
                     new EventSessionUserRequestMetadataRenew(
                             session.username(),
                             session,
