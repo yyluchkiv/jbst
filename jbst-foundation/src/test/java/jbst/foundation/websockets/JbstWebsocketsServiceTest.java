@@ -122,7 +122,7 @@ class JbstWebsocketsServiceTest {
     void convertAndSendToUserTest(boolean enabled, boolean expectedSend) {
         // Assert
         var security = mock(JbstPropertySecurity.class);
-        when(security.getWebsocketsConfigs()).thenReturn(
+        when(security.getWebsockets()).thenReturn(
                 new JbstPropertySecurityWebsockets(
                         enabled,
                         JbstPropertyWebsocketsCSRF.hardcoded(),

@@ -42,7 +42,7 @@ public class JbstTokenHeadersProvider implements JbstTokenProvider {
 
     @Override
     public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws JbstCsrfTokenNotFoundException {
-        var csrfConfigs = this.jbstProperties.getSecurity().getWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurity().getWebsockets().getCsrfConfigs();
         // WARNING: development workaround to read request query parameters instead of request headers
         var header = request.getParameter(csrfConfigs.getTokenKey());
         if (nonNull(header)) {

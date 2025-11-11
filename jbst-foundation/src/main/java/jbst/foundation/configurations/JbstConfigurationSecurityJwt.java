@@ -142,8 +142,8 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
             }
             // WARNING: You are asking Spring Security to ignore Ant [pattern='/**/**'].
             // This is not recommended: please use permitAll via HttpSecurity#authorizeHttpRequests instead
-            if (this.jbstProperties.getSecurity().getWebsocketsConfigs().isEnabled()) {
-                var endpoint = this.jbstProperties.getSecurity().getWebsocketsConfigs().getStompConfigs().getEndpoint();
+            if (this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
+                var endpoint = this.jbstProperties.getSecurity().getWebsockets().getStompConfigs().getEndpoint();
                 web.ignoring().requestMatchers(endpoint + "/**");
             }
             this.abstractJbstSecurityJwtConfigurer.configure(web);
@@ -222,10 +222,10 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     // =================================================================================================================
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        if (!this.jbstProperties.getSecurity().getWebsocketsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        registry.addEndpoint(this.jbstProperties.getSecurity().getWebsocketsConfigs().getStompConfigs().getEndpoint())
+        registry.addEndpoint(this.jbstProperties.getSecurity().getWebsockets().getStompConfigs().getEndpoint())
                 .setAllowedOrigins(this.jbstProperties.getMvc().getCors().getAllowedOrigins())
                 .setHandshakeHandler(this.securityHandshakeHandler)
                 .addInterceptors(this.csrfInterceptorHandshake)
@@ -234,7 +234,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
-        if (!this.jbstProperties.getSecurity().getWebsocketsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
         registry.anyMessage().authenticated();
@@ -242,10 +242,10 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
 
     @Override
     public void configureMessageBroker(@NotNull MessageBrokerRegistry registry) {
-        if (!this.jbstProperties.getSecurity().getWebsocketsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        var broker = this.jbstProperties.getSecurity().getWebsocketsConfigs().getBrokerConfigs();
+        var broker = this.jbstProperties.getSecurity().getWebsockets().getBrokerConfigs();
         registry.setApplicationDestinationPrefixes(broker.getApplicationDestinationPrefix());
         registry.enableSimpleBroker(broker.getSimpleDestination());
         registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());

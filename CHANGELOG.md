@@ -20,6 +20,7 @@
 — Modification @ jbst: property "security-jwt-configs.logging-configs" -> "security.logging"
 — Modification @ jbst: property "security-jwt-configs.session-configs" -> "security.sessions"
 — Modification @ jbst: property "security-jwt-configs.users-emails-configs" -> "security.users-emails"
+— Modification @ jbst: property "security-jwt-configs.websockets-configs" -> "security.websockets"
 — Modification @ server-hardware-monitoring: property "server-configs" -> "server"
 — Modification @ server-ops: property "server-configs" -> "server"
 — Modification @ server-iam: property "server-configs" -> "example"

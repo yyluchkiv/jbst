@@ -124,7 +124,7 @@ class JbstTokenCookiesProviderTest {
     @Test
     void readCsrfToken() throws JbstCsrfTokenNotFoundException {
         // Arrange
-        var csrfConfigs = this.jbstProperties.getSecurity().getWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurity().getWebsockets().getCsrfConfigs();
         var cookie = mock(Cookie.class);
         var cookieValue = randomString();
         when(cookie.getName()).thenReturn(csrfConfigs.getTokenKey());

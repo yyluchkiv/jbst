@@ -44,7 +44,7 @@ public class JbstPropertySecurity extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertySecurityUsersEmails usersEmails;
     @JbstPropertyMandatory
-    private final JbstPropertySecurityWebsockets websocketsConfigs;
+    private final JbstPropertySecurityWebsockets websockets;
     @JbstPropertyOptional
     private final JbstPropertySecurityUsersTokens usersTokensConfigs;
 

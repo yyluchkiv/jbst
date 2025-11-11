@@ -67,7 +67,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     @Override
     public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws JbstCsrfTokenNotFoundException {
         try {
-            var csrfConfigs = this.jbstProperties.getSecurity().getWebsocketsConfigs().getCsrfConfigs();
+            var csrfConfigs = this.jbstProperties.getSecurity().getWebsockets().getCsrfConfigs();
             // WARNING: security concerns? based on https://github.com/sockjs/sockjs-node#authorisation
             // GitHub issue: https://github.com/sockjs/sockjs-client/issues/196
             var csrfCookie = readCookie(request, csrfConfigs.getTokenKey());

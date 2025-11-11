@@ -65,7 +65,7 @@ jbst:
         cookie-key: "ajwt"
       refreshToken:
         cookie-key: "rjwt"
-    websockets-configs:
+    websockets:
       enabled: true
       csrf-configs:
         header-name: "t-csrf-header"
