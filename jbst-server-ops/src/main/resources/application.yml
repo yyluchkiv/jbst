@@ -23,11 +23,11 @@ jbst:
   app:
     name: "ops-server"
     springdoc-enabled: false
-    maven-configs:
+    maven:
       group-id: @project.groupId@
       artifact-id: @project.artifactId@
       version: v@project.version@
-  utils-configs:
+  utils:
     geo-locations-configs:
       enabled: false
   async-configs:

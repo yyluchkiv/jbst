@@ -50,6 +50,6 @@ public class JbstPropertyUtils extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "utils-configs";
+        return "utils";
     }
 }

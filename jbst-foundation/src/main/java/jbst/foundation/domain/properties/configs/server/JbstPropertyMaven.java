@@ -37,7 +37,7 @@ public class JbstPropertyMaven extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "maven-configs";
+        return "maven";
     }
 
     public MavenDetails asMavenDetails() {

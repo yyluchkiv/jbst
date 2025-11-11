@@ -207,7 +207,7 @@ public class JbstGeoUtils {
     // METHODS (atomic): MINDMAX
     // ================================================================================================================
     protected final GeoLocation getGeoLocationMindMax(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
-        if (!this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getUtils().getGeoLocationsConfigs().isEnabled()) {
             return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
         try {
@@ -236,7 +236,7 @@ public class JbstGeoUtils {
     // INITIALIZERS: FLAGS
     // ================================================================================================================
     private GeoFlags initFlags(ResourceLoader resourceLoader) {
-        var enabled = this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs().isEnabled();
+        var enabled = this.jbstProperties.getUtils().getGeoCountryFlagsConfigs().isEnabled();
         LOGGER.info(CONFIGURATION_LOG_FLAGS, Status.of(enabled).asANSI());
         if (enabled) {
             try {
@@ -246,7 +246,7 @@ public class JbstGeoUtils {
                 var geoCountryFlags = objectMapper.readValue(resource.getInputStream(), typeReference);
                 LOGGER.info(CONFIGURATION_LOG_FLAGS, SUCCESS.asANSI());
                 return new GeoFlags(
-                        this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs(),
+                        this.jbstProperties.getUtils().getGeoCountryFlagsConfigs(),
                         geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.name().toLowerCase(), identity())),
                         geoCountryFlags.stream().collect(toUnmodifiableMap(item -> item.code().toLowerCase(), identity()))
                 );
@@ -257,7 +257,7 @@ public class JbstGeoUtils {
             }
         } else {
             return new GeoFlags(
-                    this.jbstProperties.getUtilsConfigs().getGeoCountryFlagsConfigs(),
+                    this.jbstProperties.getUtils().getGeoCountryFlagsConfigs(),
                     unmodifiableMap(new HashMap<>()),
                     unmodifiableMap(new HashMap<>())
             );
@@ -268,7 +268,7 @@ public class JbstGeoUtils {
     // INITIALIZERS: MINDMAX
     // ================================================================================================================
     private GeoMindMax initMindMax(ResourceLoader resourceLoader) {
-        var enabled = this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs().isEnabled();
+        var enabled = this.jbstProperties.getUtils().getGeoLocationsConfigs().isEnabled();
         LOGGER.info(CONFIGURATION_LOG_MINDMAX, Status.of(enabled).asANSI());
         if (enabled) {
             try {
@@ -276,7 +276,7 @@ public class JbstGeoUtils {
                 var inputStream = resource.getInputStream();
                 LOGGER.info(CONFIGURATION_LOG_MINDMAX, SUCCESS.asANSI());
                 return new GeoMindMax(
-                        this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs(),
+                        this.jbstProperties.getUtils().getGeoLocationsConfigs(),
                         new DatabaseReader.Builder(inputStream).build()
                 );
             } catch (IOException | RuntimeException ex) {
@@ -286,7 +286,7 @@ public class JbstGeoUtils {
             }
         } else {
             return new GeoMindMax(
-                    this.jbstProperties.getUtilsConfigs().getGeoLocationsConfigs(),
+                    this.jbstProperties.getUtils().getGeoLocationsConfigs(),
                     null
             );
         }
@@ -296,13 +296,13 @@ public class JbstGeoUtils {
     // INITIALIZERS: User Agent Details
     // ================================================================================================================
     private GeoUserAgentDetails initUserAgentDetails() {
-        var enabled = this.jbstProperties.getUtilsConfigs().getUserAgentConfigs().isEnabled();
+        var enabled = this.jbstProperties.getUtils().getUserAgentConfigs().isEnabled();
         LOGGER.info(CONFIGURATION_LOG_USER_AGENT_DETAILS, Status.of(enabled).asANSI());
         if (enabled) {
             try {
                 LOGGER.info(CONFIGURATION_LOG_USER_AGENT_DETAILS, SUCCESS);
                 return new GeoUserAgentDetails(
-                        this.jbstProperties.getUtilsConfigs().getUserAgentConfigs(),
+                        this.jbstProperties.getUtils().getUserAgentConfigs(),
                         true,
                         new UserAgentService().loadParser(
                                 List.of(
@@ -319,7 +319,7 @@ public class JbstGeoUtils {
             }
         } else {
             return new GeoUserAgentDetails(
-                    this.jbstProperties.getUtilsConfigs().getUserAgentConfigs(),
+                    this.jbstProperties.getUtils().getUserAgentConfigs(),
                     false,
                     null,
                     contactDevelopmentTeam("User agent configuration failure")

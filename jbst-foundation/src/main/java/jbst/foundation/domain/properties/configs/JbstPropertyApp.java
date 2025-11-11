@@ -49,7 +49,7 @@ public class JbstPropertyApp extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "server-configs";
+        return "app";
     }
 
     public boolean isSpringdocEnabled() {

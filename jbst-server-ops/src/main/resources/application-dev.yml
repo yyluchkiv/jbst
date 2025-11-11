@@ -11,7 +11,7 @@ jbst:
     username: "<?>"
     password: "<?>"
     from: "<?>"
-  utils-configs:
+  utils:
     geo-country-flags-configs:
       enabled: false
     user-agent-configs:

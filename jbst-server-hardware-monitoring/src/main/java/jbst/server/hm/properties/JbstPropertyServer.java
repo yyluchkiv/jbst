@@ -41,6 +41,6 @@ public class JbstPropertyServer extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "server-configs";
+        return "server";
     }
 }

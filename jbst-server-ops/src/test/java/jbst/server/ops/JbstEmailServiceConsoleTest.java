@@ -56,7 +56,7 @@ class JbstEmailServiceConsoleTest {
                             Password.of("<?>")
                     )
             );
-            applicationFrameworkProperties.setUtilsConfigs(JbstPropertyUtils.hardcoded());
+            applicationFrameworkProperties.setUtils(JbstPropertyUtils.hardcoded());
             return applicationFrameworkProperties;
         }
 

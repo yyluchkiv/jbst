@@ -16,8 +16,8 @@ import org.springframework.core.env.Environment;
 // Swagger
 @OpenAPIDefinition(
         info = @Info(
-                title = "${jbst.server-configs.name}",
-                version = "${jbst.server-configs.maven-configs.version}"
+                title = "${jbst.app.name}",
+                version = "${jbst.app.maven.version}"
         )
 )
 // Spring
