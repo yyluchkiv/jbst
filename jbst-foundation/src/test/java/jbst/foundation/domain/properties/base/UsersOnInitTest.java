@@ -21,14 +21,14 @@ class UsersOnInitTest {
                 Arguments.of(null, emptySet()),
                 Arguments.of(
                         List.of(
-                                new JbstPropertyUserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, null)
+                                new JbstPropertyUserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, null, false)
                         ),
                         emptySet()
                 ),
                 Arguments.of(
                         List.of(
-                                new JbstPropertyUserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), null, false, Set.of("user")),
-                                new JbstPropertyUserOnInit(Username.of("user2"), Password.of("pass2"), systemDefault(), null, false, Set.of("admin", "user"))
+                                new JbstPropertyUserOnInit(Username.of("user1"), Password.of("pass1"), systemDefault(), Set.of("user"), null, false),
+                                new JbstPropertyUserOnInit(Username.of("user2"), Password.of("pass2"), systemDefault(), Set.of("admin", "user"), null, false)
                         ),
                         Set.of("user", "admin")
                 )
