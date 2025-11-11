@@ -15,8 +15,8 @@ public abstract class JbstWorkerDynamic extends JbstWorker {
      * Must return the next delay in SECONDS before the next tick.
      * Implementations can adjust this value dynamically each cycle.
      */
-    protected abstract long nextDelaySeconds();
-    protected abstract void onError(Exception ex);
+    public abstract long nextDelaySeconds();
+    public abstract void onError(Exception ex);
 
     @Override
     public void start() {

@@ -9,7 +9,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 import static jbst.foundation.utilities.concurrent.SleepUtility.sleep;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class JbstWorkerDynamicTest {
@@ -22,10 +21,15 @@ class JbstWorkerDynamicTest {
         }
 
         @Override
-        protected long nextDelaySeconds() {
+        public long nextDelaySeconds() {
             long current = this.delay;
             this.delay = Math.min(this.delay * 2, 30); // exponential backoff up to 30s
             return current;
+        }
+
+        @Override
+        public void onError(Exception ex) {
+            LOGGER.warn("JbstWorkerDynamicConsole onError()", ex);
         }
 
         @Override
