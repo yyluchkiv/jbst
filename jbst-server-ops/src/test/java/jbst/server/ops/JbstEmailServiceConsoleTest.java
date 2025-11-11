@@ -10,7 +10,7 @@ import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.foundation.utils.JbstGeoUtils;
-import jbst.server.ops.properties.configs.RecipientsConfigs;
+import jbst.server.ops.properties.configs.JbstPropertyOpsRecipients;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -169,6 +169,6 @@ class JbstEmailServiceConsoleTest {
     // ================================================================================================================
     // WARNING: change to real emails
     private Set<String> getTo() {
-        return new HashSet<>(RecipientsConfigs.hardcoded().getTo());
+        return new HashSet<>(JbstPropertyOpsRecipients.hardcoded().getTo());
     }
 }

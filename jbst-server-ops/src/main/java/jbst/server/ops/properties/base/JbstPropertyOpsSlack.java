@@ -20,7 +20,7 @@ import static java.lang.Boolean.TRUE;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlackConfigs extends JbstProperty {
+public class JbstPropertyOpsSlack extends JbstProperty {
     @JbstPropertyMandatory
     private final Team team;
     @JbstPropertyMandatory
@@ -34,7 +34,7 @@ public class SlackConfigs extends JbstProperty {
     @JbstPropertyMandatory
     private final String mainCommunicationId;
     @JbstPropertyOptional
-    private final List<SlackTeamCommunication> teamsCommunications;
+    private final List<JbstPropertyOpsSlackTeamCommunication> teamsCommunications;
 
     @Override
     public JbstPropertyNodeType getNodeType() {
@@ -59,7 +59,7 @@ public class SlackConfigs extends JbstProperty {
         return Mode.READONLY.equals(this.mode);
     }
 
-    public Optional<SlackTeamCommunication> getTeamCommunication(@NotNull Team team) {
+    public Optional<JbstPropertyOpsSlackTeamCommunication> getTeamCommunication(@NotNull Team team) {
         return this.teamsCommunications.stream()
                 .filter(tc -> tc.getTeam().equals(team))
                 .findFirst();

@@ -39,8 +39,8 @@ import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 import static jbst.server.ops.domain.servers.ServerType.SERVER_AS_FULL_SPRING_BOOT;
-import static jbst.server.ops.properties.configs.ServersConfigs.Mode.GITHUB;
-import static jbst.server.ops.properties.configs.ServersConfigs.Mode.RESOURCES;
+import static jbst.server.ops.properties.configs.JbstPropertyOpsServers.Mode.GITHUB;
+import static jbst.server.ops.properties.configs.JbstPropertyOpsServers.Mode.RESOURCES;
 import static org.apache.commons.io.FileUtils.copyURLToFile;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -146,10 +146,10 @@ public class MonitoringService {
         return OpsIncident.of(
                 incident,
                 nonNull(server) ? server.name() : ServerName.dash(),
-                nonNull(server) ? server.team() : this.serverProperties.getSlacksConfigs().getMainTeam(),
+                nonNull(server) ? server.team() : this.serverProperties.getSlacks().getMainTeam(),
                 nonNull(server) ? server.ipAddress() : "[unknown]",
                 opsIncidentEnv,
-                this.serverProperties.getRecipientsConfigs()
+                this.serverProperties.getRecipients()
         );
     }
 
@@ -176,11 +176,11 @@ public class MonitoringService {
                         .map(serverConfigs ->
                                 new ServerInfinityTimerTask(
                                         serverConfigs,
-                                        this.serverProperties.getServersConfigs().getMonitoringConfigs(),
+                                        this.serverProperties.getServers().getMonitoring(),
                                         this.serverInfinityTimerTaskSpringBeans,
-                                        this.serverProperties.getServersConfigs().getRsaKeysBaseLocation(),
+                                        this.serverProperties.getServers().getRsaKeysBaseLocation(),
                                         this.opsConfigs.getMappedSshKeys(),
-                                        this.serverProperties.getSlacksConfigs().getMainTeam()
+                                        this.serverProperties.getSlacks().getMainTeam()
                                 )
                         ).collect(Collectors.toList())
         );
@@ -188,10 +188,10 @@ public class MonitoringService {
 
     private OpsConfigs readOpsConfigs() {
         try {
-            if (GITHUB.equals(this.serverProperties.getServersConfigs().getMode())) {
+            if (GITHUB.equals(this.serverProperties.getServers().getMode())) {
                 var configuration = createTempFile("github-", "-contents");
                 configuration.deleteOnExit();
-                var gc = this.serverProperties.getServersConfigs().getGithubConfigs();
+                var gc = this.serverProperties.getServers().getGithub();
                 copyURLToFile(
                         new URL(
                                 this.githubClient.getContents(
@@ -208,7 +208,7 @@ public class MonitoringService {
                 var json = readFileToString(configuration, defaultCharset());
                 return this.objectMapper.readValue(json, OpsConfigs.class);
             }
-            if (RESOURCES.equals(this.serverProperties.getServersConfigs().getMode())) {
+            if (RESOURCES.equals(this.serverProperties.getServers().getMode())) {
                 var resource = this.resourceLoader.getResource("classpath:ops-server-configs.json");
                 var json = new String(resource.getInputStream().readAllBytes(), UTF_8);
                 return this.objectMapper.readValue(json, OpsConfigs.class);

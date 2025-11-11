@@ -24,7 +24,7 @@ jbst-server-ops:
     credentials:
       username: "admin"
       password: "admin"
-  slacks-configs:
+  slacks:
     values:
       - team: "TECH1"
         main: true
@@ -42,9 +42,9 @@ jbst-server-ops:
         bot-token: "<?>"
         mode: "READONLY"
         main-communication-id: "<?>"
-  servers-configs:
+  servers:
     mode: "RESOURCES"
     rsa-keys-base-location: "~/Dropbox/Tech1/rsa-keys"
-  recipients-configs:
+  recipients:
     to:
       - "<?>"

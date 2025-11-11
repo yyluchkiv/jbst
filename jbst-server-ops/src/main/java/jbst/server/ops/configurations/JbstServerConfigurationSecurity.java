@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationSecurity {
+public class JbstServerConfigurationSecurity {
 
     // Filters
     private final AuthenticationIncidentFilter authenticationIncidentFilter;

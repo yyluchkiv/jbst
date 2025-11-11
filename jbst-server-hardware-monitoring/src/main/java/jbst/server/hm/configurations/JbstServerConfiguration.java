@@ -32,7 +32,7 @@ import org.springframework.security.web.SecurityFilterChain;
         JbstConfigurationSpringBootServer.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationServer {
+public class JbstServerConfiguration {
 
     // Properties
     private final ServerProperties serverProperties;

@@ -34,7 +34,7 @@ public class NotificationsService {
 
     public final void notifyStatusOnTeams(Servers servers) {
         var mappedServers = servers.getMappedValues();
-        var sc = this.serverProperties.getSlacksConfigs().getMainSlackConfig();
+        var sc = this.serverProperties.getSlacks().getMainSlackConfig();
         sc.getTeamsCommunications().forEach(tc -> {
             if (tc.isOperationalMode()) {
                 var teamServers = mappedServers.get(tc.getTeam());
@@ -60,7 +60,7 @@ public class NotificationsService {
     }
 
     public final void notifyIncident(OpsIncident opsIncident) {
-        if (opsIncident.getTeam().equals(this.serverProperties.getSlacksConfigs().getMainTeam())) {
+        if (opsIncident.getTeam().equals(this.serverProperties.getSlacks().getMainTeam())) {
             this.slackBotsService.sendMainTeamIncident(opsIncident);
         } else {
             this.slackBotsService.sendIncident(opsIncident);

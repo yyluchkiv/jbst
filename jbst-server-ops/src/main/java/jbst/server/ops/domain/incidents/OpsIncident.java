@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.IncidentAttributes;
 import jbst.server.ops.domain.servers.Team;
-import jbst.server.ops.properties.configs.RecipientsConfigs;
+import jbst.server.ops.properties.configs.JbstPropertyOpsRecipients;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -81,7 +81,7 @@ public class OpsIncident {
             Team team,
             String serverURL,
             OpsIncidentEnv env,
-            RecipientsConfigs recipientsConfigs
+            JbstPropertyOpsRecipients recipientsConfigs
     ) {
         var incidentType = incident.getType();
         var username = incident.getUsername();

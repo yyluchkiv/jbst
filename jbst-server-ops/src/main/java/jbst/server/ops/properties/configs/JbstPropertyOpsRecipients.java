@@ -1,28 +1,31 @@
 package jbst.server.ops.properties.configs;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
-import jbst.server.ops.properties.base.GithubConfigs;
-import jbst.server.ops.properties.base.ServersMonitoringConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-// Lombok (property-based)
+import java.util.List;
+
+@SuppressWarnings("unused")
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServersConfigs extends JbstProperty {
+public class JbstPropertyOpsRecipients extends JbstProperty {
     @JbstPropertyMandatory
-    private final Mode mode;
-    @JbstPropertyMandatory
-    private final String rsaKeysBaseLocation;
-    @JbstPropertyMandatory
-    private final ServersMonitoringConfigs monitoringConfigs;
-    @JbstPropertyOptional
-    private final GithubConfigs githubConfigs;
+    private final List<String> to;
+
+    public static JbstPropertyOpsRecipients hardcoded() {
+        return new JbstPropertyOpsRecipients(
+                List.of(
+                        "test1@" + JbstConstants.Domains.HARDCODED,
+                        "test2@" + JbstConstants.Domains.HARDCODED
+                )
+        );
+    }
 
     @Override
     public JbstPropertyNodeType getNodeType() {
@@ -36,11 +39,6 @@ public class ServersConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "servers-configs";
-    }
-
-    public enum Mode {
-        RESOURCES,
-        GITHUB
+        return "recipients";
     }
 }

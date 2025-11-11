@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlackTeamCommunication extends JbstProperty {
+public class JbstPropertyOpsSlackTeamCommunication extends JbstProperty {
     @JbstPropertyMandatory
     private final Team team;
     @JbstPropertyMandatory

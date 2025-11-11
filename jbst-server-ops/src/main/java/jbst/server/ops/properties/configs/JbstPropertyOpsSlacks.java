@@ -3,7 +3,7 @@ package jbst.server.ops.properties.configs;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.server.ops.domain.servers.Team;
-import jbst.server.ops.properties.base.SlackConfigs;
+import jbst.server.ops.properties.base.JbstPropertyOpsSlack;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,9 +17,9 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SlacksConfigs extends JbstProperty {
+public class JbstPropertyOpsSlacks extends JbstProperty {
     @JbstPropertyMandatory
-    private final List<SlackConfigs> values;
+    private final List<JbstPropertyOpsSlack> values;
 
     @Override
     public JbstPropertyNodeType getNodeType() {
@@ -33,22 +33,22 @@ public class SlacksConfigs extends JbstProperty {
 
     @Override
     public String getNameNonLeaf() {
-        return "slack-configs";
+        return "slack";
     }
 
     @Override
     public void assertProperties() {
         super.assertProperties();
         assertTrueOrThrow(
-                this.values.stream().map(SlackConfigs::isMain).filter(Boolean::booleanValue).count() == 1,
+                this.values.stream().map(JbstPropertyOpsSlack::isMain).filter(Boolean::booleanValue).count() == 1,
                 "Slacks configs must have one main team"
         );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public SlackConfigs getMainSlackConfig() {
+    public JbstPropertyOpsSlack getMainSlackConfig() {
         return this.values.stream()
-                .filter(SlackConfigs::isMain)
+                .filter(JbstPropertyOpsSlack::isMain)
                 .findFirst()
                 .get();
     }

@@ -44,8 +44,8 @@ jbst:
 
 # server
 jbst-server-ops:
-  servers-configs:
-    monitoring-configs:
+  servers:
+    monitoring:
       zone-id: "Europe/Kyiv"
       hide-ip: false
       file-system-filter: 25

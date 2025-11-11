@@ -19,7 +19,7 @@ import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServersMonitoringConfigs extends JbstProperty {
+public class JbstPropertyOpsServersMonitoring extends JbstProperty {
     @JbstPropertyMandatory
     private final ZoneId zoneId;
     @JbstPropertyMandatory
@@ -49,7 +49,7 @@ public class ServersMonitoringConfigs extends JbstProperty {
         super.assertPropertiesAsLeaf(parentTreeName);
         assertTrueOrThrow(
                 is(this.fileSystemThreshold, ">", this.fileSystemFilter),
-                "[ServersMonitoringConfigs]: file-system-threshold is expected to be greater than file-system-filter"
+                "[JbstPropertyOpsServersMonitoring]: file-system-threshold is expected to be greater than file-system-filter"
         );
     }
 
