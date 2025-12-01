@@ -4,6 +4,7 @@ import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.concurrent.SleepUtility;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +19,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+
+@Slf4j
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 class SlackClientTest {
@@ -31,8 +35,8 @@ class SlackClientTest {
 
     }
 
-    private static final String SLACK_TOKEN = "<?>";
-    private static final String SLACK_CHAT = "<?>";
+    private static final String SLACK_TOKEN = "-";
+    private static final String SLACK_CHANNEL = "C09QRRJAE1F";
 
 
     private final SlackClient slackClient;
@@ -40,48 +44,66 @@ class SlackClientTest {
     @Autowired
     public SlackClientTest(SlackClient slackClient) {
         this.slackClient = slackClient;
-        this.slackClient.configure(new TimeAmount(250, ChronoUnit.MILLIS));
+        this.slackClient.configure(new SlackClient.JbstSlackConfiguration(
+                SLACK_TOKEN,
+                new TimeAmount(250, ChronoUnit.MILLIS)
+        ));
     }
 
     @Disabled
     @Test
-    void sendMessage() {
+    void sendMessage() throws SlackClient.JbstSlackException {
         // Arrange
-        var message = new SlackClient.SlackMessageRequest(
-                SLACK_TOKEN,
-                SLACK_CHAT,
-                "<@username> <b>text</b>"
+        var message = new SlackClient.JbstSlackChatMessage(
+                SLACK_CHANNEL,
+                "<@username> <b>text</b>, timestamp: " + getCurrentTimestamp()
         );
 
         // Act
-        this.slackClient.sendMessage(message);
+        var ts = this.slackClient.sendMessage(message);
 
         // Assert
-        // no asserts
+        LOGGER.info("slack-client ts@send: {}@", ts);
     }
 
+    @Disabled
+    @Test
+    void editMessage() throws SlackClient.JbstSlackException {
+        // Arrange
+        var ts = new SlackClient.JbstSlackMessageTs("1764601641.615379");
+        var message = new SlackClient.JbstSlackChatMessage(
+                SLACK_CHANNEL,
+                "<@username> <b>text</b>, timestamp: (edited)"
+        );
+
+        // Act
+        ts = this.slackClient.editMessage(ts, message);
+
+        // Assert
+        LOGGER.info("slack-client ts@edit: {}", ts);
+    }
 
     @Disabled
     @Test
     void submitMessagesBackpressure() {
         // Arrange
         var messages1 = IntStream.range(0, 20)
-                .mapToObj(i -> new SlackClient.SlackMessageRequest(
-                        SLACK_TOKEN,
-                        SLACK_CHAT,
+                .mapToObj(i -> new SlackClient.JbstSlackChatMessage(
+                        SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
                 ))
                 .toList();
         var messages2 = IntStream.range(20, 40)
-                .mapToObj(i -> new SlackClient.SlackMessageRequest(
-                        SLACK_TOKEN,
-                        SLACK_CHAT,
+                .mapToObj(i -> new SlackClient.JbstSlackChatMessage(
+                        SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
                 ))
                 .toList();
 
         // Act
-        messages1.forEach(this.slackClient::submitMessage);
+        for (var req : messages1) {
+            this.slackClient.submitMessage(req);
+        }
         this.slackClient.submitMessages(messages2);
 
         // Assert
