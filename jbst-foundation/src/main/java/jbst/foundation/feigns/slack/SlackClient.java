@@ -171,6 +171,7 @@ public class SlackClient {
         try {
             this.assertConfigured();
         } catch (JbstSlackException ex) {
+            this.incidentsPublisher.publishThrowable(ex);
             return;
         }
         var success = this.queue.offer(req);
