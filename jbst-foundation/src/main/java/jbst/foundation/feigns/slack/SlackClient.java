@@ -163,9 +163,6 @@ public class SlackClient {
             var reqBody = req.getReqBody();
             reqBody.put("ts", ts);
             var res = this.definition.chatUpdate(this.token.get(), reqBody);
-            System.out.println("===");
-            System.out.println(res);
-            System.out.println("===");
             res.assertOK();
             return res.ts;
         } catch (RetryableException ex) {
