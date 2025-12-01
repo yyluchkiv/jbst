@@ -4,7 +4,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
@@ -39,10 +42,16 @@ public class JbstTokensFilter extends OncePerRequestFilter {
     private final JbstTokensProvider tokensProvider;
     // Handlers
     private final JbstAccessDeniedHandler accessDeniedHandler;
+    // Utils
+    private final JbstSecurityUtils securityUtils;
+    // Properties
+    private final JbstProperties jbstProperties;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest req, @NotNull HttpServletResponse res, @NotNull FilterChain chain) throws ServletException, IOException {
         try {
+            this.print(req);
+
             var cookieAccessToken = this.tokensProvider.readRequestAccessToken(req);
             var cookieRefreshToken = this.tokensProvider.readRequestRefreshToken(req);
             var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
@@ -75,6 +84,18 @@ public class JbstTokensFilter extends OncePerRequestFilter {
             LOGGER.debug("JWT forbidden request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
             this.accessDeniedHandler.handle(req, res, new AccessDeniedException(ex.getMessage()));
+        }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    public void print(HttpServletRequest req) {
+        if (this.jbstProperties.getSecurity().getLogging().isAdvancedRequestLoggingEnabled()) {
+            LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
+            LOGGER.info("User: {}", this.securityUtils.getAuthenticatedUsernameOrUnexpected());
+            LOGGER.info("Method: @{} → {}", req.getMethod(), req.getServletPath());
+            LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         }
     }
 }

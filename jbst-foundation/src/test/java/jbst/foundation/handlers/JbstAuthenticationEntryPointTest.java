@@ -5,12 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.configurations.TestConfigurationHandlers;
-import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.utils.JbstHttpUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +46,6 @@ class JbstAuthenticationEntryPointTest {
     }
 
     private final JbstEventsPublisher eventsPublisher;
-    private final JbstHttpUtils httpUtils;
     private final ObjectMapper objectMapper;
 
     private final JbstAuthenticationEntryPoint componentUnderTest;
@@ -58,16 +53,14 @@ class JbstAuthenticationEntryPointTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.eventsPublisher,
-                this.httpUtils
+                this.eventsPublisher
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.eventsPublisher,
-                this.httpUtils
+                this.eventsPublisher
         );
     }
 
@@ -102,7 +95,6 @@ class JbstAuthenticationEntryPointTest {
         var request = mock(HttpServletRequest.class);
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpUtils.isCachedEndpoint(request)).thenReturn(false);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
@@ -114,7 +106,6 @@ class JbstAuthenticationEntryPointTest {
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpUtils).isCachedEndpoint(request);
     }
 
     @Test
@@ -127,34 +118,17 @@ class JbstAuthenticationEntryPointTest {
         when(request.getHeader("X-Forwarded-For")).thenReturn(IPAddress.localhost().value());
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpUtils.isCachedEndpoint(request)).thenReturn(true);
-        var payload = objectMapper.writeValueAsString(
-                Map.of(
-                        "username", Username.hardcoded().value(),
-                        "password", Password.hardcoded().value()
-                )
-        );
-        when(this.httpUtils.getCachedPayload(request)).thenReturn(payload);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
 
         // Assert
-        verify(request).getHeader("X-Forwarded-For");
-        verify(request).getHeader("User-Agent");
         assertAndVerifyBasicCommence(
                 request,
                 response,
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpUtils).isCachedEndpoint(request);
-        verify(this.httpUtils).getCachedPayload(request);
-        var eventAC = ArgumentCaptor.forClass(EventAuthenticationLoginFailure.class);
-        verify(this.eventsPublisher).publishAuthenticationLoginFailure(eventAC.capture());
-        assertThat(eventAC.getValue().username()).isEqualTo(Username.hardcoded());
-        assertThat(eventAC.getValue().password()).isEqualTo(Password.hardcoded());
-        assertThat(eventAC.getValue().ipAddress()).isEqualTo(IPAddress.localhost());
 
     }
 

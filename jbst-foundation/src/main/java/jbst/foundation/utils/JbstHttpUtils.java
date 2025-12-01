@@ -1,6 +1,7 @@
 package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +24,19 @@ public class JbstHttpUtils {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
+    @JbstDevelopmentOnly
     public final boolean isCachedEndpoint(HttpServletRequest request) {
         return this.isAuthenticationAuthenticateStandardEndpoint(request) || this.isAuthenticationAuthenticateMagicLinkEndpoint(request);
     }
 
+    @JbstDevelopmentOnly
     public final void cachePayload(CachedBodyHttpServletRequest cachedRequest) {
         if (this.isCachedEndpoint(cachedRequest)) {
             cachedRequest.setAttribute(CACHED_PAYLOAD_ATTRIBUTE, cachedRequest.getCachedPayload().value());
         }
     }
 
+    @JbstDevelopmentOnly
     public final String getCachedPayload(HttpServletRequest request) {
         return (String) request.getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
     }

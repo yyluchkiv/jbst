@@ -23,7 +23,7 @@ public class JbstPropertySecurityLogging extends JbstProperty {
     }
 
     public static JbstPropertySecurityLogging hardcoded() {
-        return JbstPropertySecurityLogging.enabled();
+        return JbstPropertySecurityLogging.disabled();
     }
 
     public static JbstPropertySecurityLogging enabled() {

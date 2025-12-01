@@ -3,11 +3,14 @@ package jbst.foundation.filters.jwt;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.assistants.utils.JbstSecurityUtils;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
@@ -26,6 +29,7 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
@@ -53,7 +57,13 @@ class JbstTokensFilterTest {
     }
 
     @Configuration
+    @Import({
+            TestJbstConfigurationPropertiesHardcoded.class
+    })
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        private final JbstProperties jbstProperties;
+
         @Bean
         JbstSessionRegistry sessionRegistry() {
             return mock(JbstSessionRegistry.class);
@@ -80,13 +90,20 @@ class JbstTokensFilterTest {
         }
 
         @Bean
+        JbstSecurityUtils securityUtils() {
+            return mock(JbstSecurityUtils.class);
+        }
+
+        @Bean
         JbstTokensFilter jwtAccessTokenFilter() {
             return new JbstTokensFilter(
                     this.sessionRegistry(),
                     this.extensionService(),
                     this.tokenService(),
                     this.tokensProvider(),
-                    this.accessDeniedHandler()
+                    this.accessDeniedHandler(),
+                    this.securityUtils(),
+                    this.jbstProperties
             );
         }
     }
@@ -101,6 +118,8 @@ class JbstTokensFilterTest {
     private final JbstTokensProvider tokensProvider;
     // Handlers
     private final JbstAccessDeniedHandler accessDeniedHandler;
+    // Utils
+    private final JbstSecurityUtils securityUtils;
 
     private final JbstTokensFilter componentUnderTest;
 
@@ -111,7 +130,8 @@ class JbstTokensFilterTest {
                 this.extensionService,
                 this.tokensService,
                 this.tokensProvider,
-                this.accessDeniedHandler
+                this.accessDeniedHandler,
+                this.securityUtils
         );
     }
 
@@ -122,7 +142,8 @@ class JbstTokensFilterTest {
                 this.extensionService,
                 this.tokensService,
                 this.tokensProvider,
-                this.accessDeniedHandler
+                this.accessDeniedHandler,
+                this.securityUtils
         );
     }
 

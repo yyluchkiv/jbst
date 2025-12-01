@@ -5,8 +5,8 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -31,6 +32,9 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @EqualsAndHashCode
 @ToString
 public class Incident {
+    private static final Comparator<Map.Entry<String, Object>> PRINT_COMPARATOR = Comparator.<Map.Entry<String, Object>, Boolean>comparing(element -> !element.getKey().equals(TYPE))
+            .thenComparing(Map.Entry::getKey);
+
     private final Map<String, Object> attributes;
 
     public Incident() {
@@ -76,20 +80,20 @@ public class Incident {
     public Incident(Throwable throwable) {
         this(IncidentAttributes.IncidentsTypes.THROWABLE);
 
-        this.add(IncidentAttributes.Keys.EXCEPTION, throwable.getClass());
-        this.add(IncidentAttributes.Keys.TRACE, getTrace(throwable));
-        this.add(IncidentAttributes.Keys.MESSAGE, throwable.getMessage());
+        this.add(EXCEPTION, throwable.getClass());
+        this.add(TRACE, getTrace(throwable));
+        this.add(MESSAGE, throwable.getMessage());
     }
 
     public Incident(Throwable throwable, Method method, List<Object> params) {
         this(throwable);
 
         if (nonNull(method)) {
-            this.add(IncidentAttributes.Keys.METHOD, method.toString());
+            this.add(METHOD, method.toString());
         }
 
         if (!isEmpty(params)) {
-            this.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(JbstConstants.Symbols.COLLECTORS_COMMA_SPACE)));
+            this.add(PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(JbstConstants.Symbols.COLLECTORS_COMMA_SPACE)));
         }
     }
 
@@ -126,21 +130,21 @@ public class Incident {
     public void print() {
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         this.attributes.entrySet().stream()
-                .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
+                .sorted(PRINT_COMPARATOR)
                 .forEach(entry -> LOGGER.info("{} — {}", entry.getKey(), entry.getValue()));
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 
     public void setType(String type) {
-        this.add(IncidentAttributes.Keys.TYPE, type);
+        this.add(TYPE, type);
     }
 
     public void addUsername(Username username) {
-        this.add(IncidentAttributes.Keys.USERNAME, username);
+        this.add(USERNAME, username);
     }
 
     public void addPassword(Password password) {
-        this.add(IncidentAttributes.Keys.PASSWORD, password);
+        this.add(PASSWORD, password);
     }
 
     public void addUserRequestMetadata(UserRequestMetadata userRequestMetadata) {
@@ -161,21 +165,13 @@ public class Incident {
 
     @JsonIgnore
     public String getType() {
-        var attribute = this.attributes.get(IncidentAttributes.Keys.TYPE);
-        if (nonNull(attribute)) {
-            return attribute.toString();
-        } else {
-            return JbstConstants.Strings.UNKNOWN;
-        }
+        var attribute = this.attributes.get(TYPE);
+        return nonNull(attribute) ? attribute.toString() : JbstConstants.Strings.UNKNOWN;
     }
 
     @JsonIgnore
     public Username getUsername() {
-        var attribute = this.attributes.get(IncidentAttributes.Keys.USERNAME);
-        if (nonNull(attribute)) {
-            return Username.of(attribute.toString());
-        } else {
-            return Username.unknown();
-        }
+        var attribute = this.attributes.get(USERNAME);
+        return nonNull(attribute) ? Username.of(attribute.toString()) : Username.unknown();
     }
 }
