@@ -39,8 +39,16 @@ public class JbstAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(this.objectMapper.writeValueAsString(new ExceptionEntity(exception)));
 
+        System.out.println("=======================================================================================");
+        System.out.println("ENDPOINT: " + this.httpUtils.isCachedEndpoint(request));
+        System.out.println("JSON: " + this.objectMapper.writeValueAsString(new ExceptionEntity(exception)));
+        System.out.println("=======================================================================================");
+
         // in case of another endpoint to cache - extract methods like: isLoginEndpoint or isLogoutEndpoint
         if (exception instanceof BadCredentialsException && this.httpUtils.isCachedEndpoint(request)) {
+            System.out.println("=======================================================================================");
+            System.out.println("REQ: " + this.httpUtils.getCachedPayload(request));
+            System.out.println("=======================================================================================");
             var requestUserLogin = this.objectMapper.readValue(
                     this.httpUtils.getCachedPayload(request),
                     RequestUserLogin.class

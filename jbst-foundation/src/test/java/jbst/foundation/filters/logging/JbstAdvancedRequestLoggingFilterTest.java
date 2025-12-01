@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import jbst.foundation.domain.http.cache.CachedBodyServletInputStream;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityLogging;
@@ -136,7 +135,7 @@ class JbstAdvancedRequestLoggingFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(request.getInputStream()).thenReturn(new CachedBodyServletInputStream("".getBytes()));
+        when(request.getInputStream()).thenReturn(new CachedBodyHttpServletRequest.CachedBodyServletInputStream("".getBytes()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -163,7 +162,7 @@ class JbstAdvancedRequestLoggingFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(request.getInputStream()).thenReturn(new CachedBodyServletInputStream("{}".getBytes()));
+        when(request.getInputStream()).thenReturn(new CachedBodyHttpServletRequest.CachedBodyServletInputStream("{}".getBytes()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);

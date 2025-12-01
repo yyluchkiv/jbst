@@ -3,7 +3,6 @@ package jbst.foundation.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import jbst.foundation.domain.http.cache.CachedPayload;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -119,7 +118,7 @@ class JbstHttpUtilsTest {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn("POST");
-        when(cachedRequest.getCachedPayload()).thenReturn(CachedPayload.hardcoded());
+        when(cachedRequest.getCachedPayload()).thenReturn(CachedBodyHttpServletRequest.CachedPayload.hardcoded());
         when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/login/standard");
 
         // Act
