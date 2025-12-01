@@ -30,7 +30,7 @@ public class JbstAdvancedRequestLoggingFilter extends OncePerRequestFilter {
     // Properties
     private final JbstProperties jbstProperties;
 
-    @SuppressWarnings({"LoggingSimilarMessage", "StringConcatenationArgumentToLogCall"})
+    @SuppressWarnings({"LoggingSimilarMessage"})
     @Override
     protected void doFilterInternal(
             @NotNull HttpServletRequest request,
@@ -42,19 +42,6 @@ public class JbstAdvancedRequestLoggingFilter extends OncePerRequestFilter {
         } else {
             var cachedRequest = new CachedBodyHttpServletRequest(request);
             this.httpUtils.cachePayload(cachedRequest);
-
-            if (this.jbstProperties.getSecurity().getLogging().isAdvancedRequestLoggingEnabled()) {
-                LOGGER.info("============================================================================================");
-                LOGGER.info("Method: (@" + cachedRequest.getMethod() + ", " + cachedRequest.getServletPath() + ")");
-                LOGGER.info("Current User: " + this.securityUtils.getAuthenticatedUsernameOrUnexpected());
-                var payload = cachedRequest.getCachedPayload();
-                if (!payload.value().isBlank()) {
-                    LOGGER.info("Payload: \n" + payload);
-                } else {
-                    LOGGER.info("No Payload");
-                }
-                LOGGER.info("============================================================================================");
-            }
 
             filterChain.doFilter(cachedRequest, response);
         }

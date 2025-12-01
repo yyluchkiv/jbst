@@ -1,6 +1,7 @@
 package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class JbstHttpUtils {
         }
     }
 
+    @JbstDevelopmentOnly
     public final String getCachedPayload(HttpServletRequest request) {
         return (String) request.getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
     }
