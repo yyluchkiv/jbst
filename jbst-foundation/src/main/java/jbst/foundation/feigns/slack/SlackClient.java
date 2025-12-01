@@ -141,7 +141,7 @@ public class SlackClient {
     }
 
     @JbstDevelopmentOnly
-    public final void configureDevMode(String token) {
+    public final void configureHardcodedSleepDelay(String token) {
         this.configure(new JbstSlackConfiguration(token, new TimeAmount(500, ChronoUnit.MILLIS)));
     }
 
