@@ -1,4 +1,2 @@
-### Changelog [v1.39]
-— Addition: Printer.printTable()
-— Deletion Scheduled: Printer.printTableV138()
-— Addition: slack client create/edit API
+### Changelog [v1.40]
+— TBD
