@@ -6,6 +6,7 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import feign.RetryableException;
+import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +138,11 @@ public class SlackClient {
         }, "jbst-slack-client");
         worker.setDaemon(true);
         worker.start();
+    }
+
+    @JbstDevelopmentOnly
+    public final void configureDevMode(String token) {
+        this.configure(new JbstSlackConfiguration(token, new TimeAmount(500, ChronoUnit.MILLIS)));
     }
 
     public final JbstSlackMessageTs sendMessage(JbstSlackChatMessage req) throws JbstSlackException {
