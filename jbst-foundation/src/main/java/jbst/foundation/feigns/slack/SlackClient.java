@@ -32,10 +32,17 @@ public class SlackClient {
                         "Content-Type: " + MediaType.APPLICATION_JSON_VALUE
                 }
         )
-        void sendMessage(
+        SlackSendMessageResponse sendMessage(
                 @Param("token") String token,
                 @RequestBody Map<String, Object> requestBody
         );
+    }
+
+    // Classes: Exception
+    public static class SlackConfigurationException extends Exception {
+        public SlackConfigurationException(String message) {
+            super(message);
+        }
     }
 
     // Classes: Requests
@@ -52,6 +59,14 @@ public class SlackClient {
             );
         }
     }
+
+    // Classes: Responses
+    public record SlackSendMessageResponse(
+            boolean ok,
+            String channel,
+            String ts,
+            Map<String, Object> message
+    ) {}
 
     private final AtomicBoolean configured = new AtomicBoolean(false);
     private final BlockingQueue<SlackMessageRequest> queue = new LinkedBlockingQueue<>();
@@ -71,12 +86,12 @@ public class SlackClient {
             while (true) {
                 try {
                     var request = this.queue.take();
-                    sendMessage(request);
+                    this.sendMessage(request);
                     Thread.sleep(timeAmount.toMillis());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;
-                } catch (RuntimeException ex) {
+                } catch (SlackConfigurationException | RuntimeException ex) {
                     this.incidentsPublisher.publishThrowable(ex);
                 }
             }
@@ -85,11 +100,8 @@ public class SlackClient {
         worker.start();
     }
 
-    public final void sendMessage(SlackMessageRequest request) {
-        if (!this.configured.get()) {
-            this.logConfigurationFailure();
-            return;
-        }
+    public final void sendMessage(SlackMessageRequest request) throws SlackConfigurationException {
+        this.assertConfigured();
         try {
             this.definition.sendMessage(
                     request.token(),
@@ -97,26 +109,20 @@ public class SlackClient {
             );
         } catch (RetryableException ex) {
             LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "Slack", ex.getMessage());
-            throw new IllegalArgumentException(ex);
+            throw new SlackConfigurationException(ex.getMessage());
         }
     }
 
-    public final void submitMessage(SlackMessageRequest request) {
-        if (!this.configured.get()) {
-            this.logConfigurationFailure();
-            return;
-        }
+    public final void submitMessage(SlackMessageRequest request) throws SlackConfigurationException {
+        this.assertConfigured();
         var success = this.queue.offer(request);
         if (!success) {
             this.incidentsPublisher.publishThrowable(new IllegalStateException("jbst-slack-client queue is full"));
         }
     }
 
-    public final void submitMessages(List<SlackMessageRequest> requests) {
-        if (!this.configured.get()) {
-            this.logConfigurationFailure();
-            return;
-        }
+    public final void submitMessages(List<SlackMessageRequest> requests) throws SlackConfigurationException {
+        this.assertConfigured();
         for (var request : requests) {
             this.submitMessage(request);
         }
@@ -125,7 +131,11 @@ public class SlackClient {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private void logConfigurationFailure() {
-        LOGGER.warn("Please configure jbst-slack-client");
+    private void assertConfigured() throws SlackConfigurationException {
+        if (!this.configured.get()) {
+            var message = "Please configure jbst-slack-client";
+            LOGGER.warn(message);
+            throw new SlackConfigurationException(message);
+        }
     }
 }

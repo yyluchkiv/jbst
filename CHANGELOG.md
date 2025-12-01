@@ -1,2 +1,2 @@
 ### Changelog [v1.39]
-— TBD
+— Addition: slack client create/edit API
