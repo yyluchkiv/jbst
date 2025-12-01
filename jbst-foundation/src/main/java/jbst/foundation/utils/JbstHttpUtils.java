@@ -24,10 +24,12 @@ public class JbstHttpUtils {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
+    @JbstDevelopmentOnly
     public final boolean isCachedEndpoint(HttpServletRequest request) {
         return this.isAuthenticationAuthenticateStandardEndpoint(request) || this.isAuthenticationAuthenticateMagicLinkEndpoint(request);
     }
 
+    @JbstDevelopmentOnly
     public final void cachePayload(CachedBodyHttpServletRequest cachedRequest) {
         if (this.isCachedEndpoint(cachedRequest)) {
             cachedRequest.setAttribute(CACHED_PAYLOAD_ATTRIBUTE, cachedRequest.getCachedPayload().value());

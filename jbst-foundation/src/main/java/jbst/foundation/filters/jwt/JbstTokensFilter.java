@@ -94,7 +94,7 @@ public class JbstTokensFilter extends OncePerRequestFilter {
         if (this.jbstProperties.getSecurity().getLogging().isAdvancedRequestLoggingEnabled()) {
             LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
             LOGGER.info("User: {}", this.securityUtils.getAuthenticatedUsernameOrUnexpected());
-            LOGGER.info("Method: (@{}, {})", req.getMethod(), req.getServletPath());
+            LOGGER.info("Method: @{} → {}", req.getMethod(), req.getServletPath());
             LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         }
     }

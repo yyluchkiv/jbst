@@ -5,8 +5,8 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -166,20 +166,12 @@ public class Incident {
     @JsonIgnore
     public String getType() {
         var attribute = this.attributes.get(TYPE);
-        if (nonNull(attribute)) {
-            return attribute.toString();
-        } else {
-            return JbstConstants.Strings.UNKNOWN;
-        }
+        return nonNull(attribute) ? attribute.toString() : JbstConstants.Strings.UNKNOWN;
     }
 
     @JsonIgnore
     public Username getUsername() {
         var attribute = this.attributes.get(USERNAME);
-        if (nonNull(attribute)) {
-            return Username.of(attribute.toString());
-        } else {
-            return Username.unknown();
-        }
+        return nonNull(attribute) ? Username.of(attribute.toString()) : Username.unknown();
     }
 }

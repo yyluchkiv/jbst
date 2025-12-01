@@ -6,6 +6,7 @@ import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.StreamUtils;
 
@@ -14,6 +15,7 @@ import java.io.*;
 import static java.nio.charset.Charset.defaultCharset;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
+@JbstDevelopmentOnly
 public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
     public static class CachedBodyServletInputStream extends ServletInputStream {
