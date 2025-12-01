@@ -38,7 +38,6 @@ class SlackClientTest {
     private static final String SLACK_TOKEN = "-";
     private static final String SLACK_CHANNEL = "-";
 
-
     private final SlackClient slackClient;
 
     @Autowired
