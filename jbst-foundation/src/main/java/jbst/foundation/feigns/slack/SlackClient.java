@@ -167,16 +167,19 @@ public class SlackClient {
         }
     }
 
-    public final void submitMessage(JbstSlackChatMessage req) throws JbstSlackException {
-        this.assertConfigured();
+    public final void submitMessage(JbstSlackChatMessage req) {
+        try {
+            this.assertConfigured();
+        } catch (JbstSlackException ex) {
+            return;
+        }
         var success = this.queue.offer(req);
         if (!success) {
             this.incidentsPublisher.publishThrowable(new IllegalStateException("jbst-slack-client queue is full"));
         }
     }
 
-    public final void submitMessages(List<JbstSlackChatMessage> reqs) throws JbstSlackException {
-        this.assertConfigured();
+    public final void submitMessages(List<JbstSlackChatMessage> reqs) {
         for (var request : reqs) {
             this.submitMessage(request);
         }

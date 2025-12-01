@@ -4,7 +4,6 @@ import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.concurrent.SleepUtility;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -84,7 +83,6 @@ class SlackClientTest {
         LOGGER.info("slack-client ts@edit: {}", ts);
     }
 
-    @SneakyThrows
     @Disabled
     @Test
     void submitMessagesBackpressure() {
