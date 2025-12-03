@@ -2,7 +2,7 @@ package jbst.foundation.domain.concurrent;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
-import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 
 import java.time.Duration;
 
@@ -25,9 +25,9 @@ public class JbstRateLimiter<T> {
         return nonNull(rateLimiter) && rateLimiter.tryAcquire();
     }
 
-    public void acquire(T key) throws JbstTooManyRequestsException {
+    public void acquire(T key) throws JbstExceptions.TooManyRequests {
         if (!this.tryAcquire(key)) {
-            throw new JbstTooManyRequestsException();
+            throw new JbstExceptions.TooManyRequests();
         }
     }
 

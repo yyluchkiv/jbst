@@ -1,9 +1,9 @@
 package jbst.foundation.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
-import jbst.foundation.tokens.facade.JbstTokensProvider;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.random.JbstRandomEntities;
+import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,7 +70,7 @@ class JbstCsrfInterceptorHandshakeTest {
     }
 
     @Test
-    void beforeHandshakeRuntimeExceptionTest() throws JbstCsrfTokenNotFoundException {
+    void beforeHandshakeRuntimeExceptionTest() throws JbstExceptions.CsrfTokenNotFound {
         // Arrange
         var request = mock(ServletServerHttpRequest.class);
         var httpRequest = mock(HttpServletRequest.class);
@@ -96,7 +96,7 @@ class JbstCsrfInterceptorHandshakeTest {
     }
 
     @Test
-    void beforeHandshakeNoTokenExceptionTest() throws JbstCsrfTokenNotFoundException {
+    void beforeHandshakeNoTokenExceptionTest() throws JbstExceptions.CsrfTokenNotFound {
         // Arrange
         var request = mock(ServletServerHttpRequest.class);
         var httpRequest = mock(HttpServletRequest.class);
@@ -104,7 +104,7 @@ class JbstCsrfInterceptorHandshakeTest {
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
         when(request.getServletRequest()).thenReturn(httpRequest);
-        when(this.tokensProvider.readCsrfToken(httpRequest)).thenThrow(new JbstCsrfTokenNotFoundException());
+        when(this.tokensProvider.readCsrfToken(httpRequest)).thenThrow(new JbstExceptions.CsrfTokenNotFound());
 
         // Act
         var actual = this.componentUnderTest.beforeHandshake(request, response, wsHandler, attributes);
@@ -122,7 +122,7 @@ class JbstCsrfInterceptorHandshakeTest {
     }
 
     @Test
-    void beforeHandshakeTest() throws JbstCsrfTokenNotFoundException {
+    void beforeHandshakeTest() throws JbstExceptions.CsrfTokenNotFound {
         // Arrange
         var request = mock(ServletServerHttpRequest.class);
         var httpRequest = mock(HttpServletRequest.class);

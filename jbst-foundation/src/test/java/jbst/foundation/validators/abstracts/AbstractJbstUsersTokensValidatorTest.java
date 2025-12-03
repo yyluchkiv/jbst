@@ -7,12 +7,11 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
-import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.domain.time.TimestampUtility;
+import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.validators.JbstUsersTokensValidator;
 import jbst.foundation.validators.abtracts.AbstractJbstUsersTokensValidator;
 import lombok.RequiredArgsConstructor;
@@ -80,7 +79,7 @@ class AbstractJbstUsersTokensValidatorTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        JbstUserTokenValidationException.notFound()
+                        JbstExceptions.UserTokenValidation.notFound()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -91,7 +90,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 validTimestamp,
                                 true
                         ),
-                        JbstUserTokenValidationException.used()
+                        JbstExceptions.UserTokenValidation.used()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -102,7 +101,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 expiredTimestamp,
                                 false
                         ),
-                        JbstUserTokenValidationException.expired()
+                        JbstExceptions.UserTokenValidation.expired()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -113,7 +112,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 validTimestamp,
                                 false
                         ),
-                        JbstUserTokenValidationException.invalidType()
+                        JbstExceptions.UserTokenValidation.invalidType()
                 ),
                 Arguments.of(
                         new JbstUserToken(
@@ -133,7 +132,7 @@ class AbstractJbstUsersTokensValidatorTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        JbstPasswordResetException.userNotFound()
+                        JbstExceptions.PasswordReset.userNotFound()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.unnecessary()),
@@ -141,7 +140,7 @@ class AbstractJbstUsersTokensValidatorTest {
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.required()),
-                        JbstPasswordResetException.emailNotConfirmed()
+                        JbstExceptions.PasswordReset.emailNotConfirmed()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.confirmed()),
@@ -149,15 +148,15 @@ class AbstractJbstUsersTokensValidatorTest {
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, JbstUserEmailDetails.unnecessary()),
-                        JbstPasswordResetException.emailMissing()
+                        JbstExceptions.PasswordReset.emailMissing()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, JbstUserEmailDetails.required()),
-                        JbstPasswordResetException.emailMissing()
+                        JbstExceptions.PasswordReset.emailMissing()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, JbstUserEmailDetails.confirmed()),
-                        JbstPasswordResetException.emailMissing()
+                        JbstExceptions.PasswordReset.emailMissing()
                 )
         );
     }
@@ -170,7 +169,7 @@ class AbstractJbstUsersTokensValidatorTest {
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
                         null,
-                        JbstUserTokenValidationException.notFound()
+                        JbstExceptions.UserTokenValidation.notFound()
                 ),
                 Arguments.of(
                         new RequestUserPasswordReset(
@@ -192,7 +191,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 validTimestamp,
                                 true
                         ),
-                        JbstUserTokenValidationException.used()
+                        JbstExceptions.UserTokenValidation.used()
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
@@ -204,7 +203,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 expiredTimestamp,
                                 false
                         ),
-                        JbstUserTokenValidationException.expired()
+                        JbstExceptions.UserTokenValidation.expired()
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
@@ -216,7 +215,7 @@ class AbstractJbstUsersTokensValidatorTest {
                                 validTimestamp,
                                 false
                         ),
-                        JbstUserTokenValidationException.invalidType()
+                        JbstExceptions.UserTokenValidation.invalidType()
                 ),
                 Arguments.of(
                         RequestUserPasswordReset.hardcoded(),
@@ -287,7 +286,7 @@ class AbstractJbstUsersTokensValidatorTest {
     @MethodSource("validateEmailConfirmationTokenTest")
     void validateEmailConfirmationTokenTest(
             JbstUserToken userToken,
-            JbstUserTokenValidationException expected
+            JbstExceptions.UserTokenValidation expected
     ) {
         // Arrange
         var token = randomStringLetterOrNumbersOnly(255);
@@ -300,7 +299,7 @@ class AbstractJbstUsersTokensValidatorTest {
         verify(this.usersTokensRepository).findByValueAsAnyOrNull(token);
         if (nonNull(expected)) {
             assertThat(actual)
-                    .isInstanceOf(JbstUserTokenValidationException.class)
+                    .isInstanceOf(JbstExceptions.UserTokenValidation.class)
                     .hasMessage(expected.getMessage());
         } else {
             assertThat(actual).isNull();
@@ -309,13 +308,13 @@ class AbstractJbstUsersTokensValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateExecuteResetPasswordTest")
-    void validateExecuteResetPasswordTest(JwtUser user, JbstPasswordResetException expected) {
+    void validateExecuteResetPasswordTest(JwtUser user, JbstExceptions.PasswordReset expected) {
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.validateExecuteResetPassword(user));
 
         if (nonNull(expected)) {
             assertThat(actual)
-                    .isInstanceOf(JbstPasswordResetException.class)
+                    .isInstanceOf(JbstExceptions.PasswordReset.class)
                     .hasMessage(expected.getMessage());
         } else {
             assertThat(actual).isNull();
@@ -337,7 +336,7 @@ class AbstractJbstUsersTokensValidatorTest {
         var actual = catchThrowable(() -> this.componentUnderTest.validatePasswordReset(request));
 
         // Assert
-        if (expected instanceof JbstUserTokenValidationException) {
+        if (expected instanceof JbstExceptions.UserTokenValidation) {
             verify(this.usersTokensRepository).findByValueAsAnyOrNull(token);
             assertThat(actual).hasMessage(expected.getMessage());
         } else if (expected instanceof IllegalArgumentException) {

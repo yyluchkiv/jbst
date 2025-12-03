@@ -2,14 +2,12 @@ package jbst.foundation.tokens.facade;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
+import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyJwtToken;
-import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.security.*;
@@ -156,7 +154,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readCsrfToken(JbstJwtTokenStorageMethod method) throws JbstCsrfTokenNotFoundException {
+    void readCsrfToken(JbstJwtTokenStorageMethod method) throws JbstExceptions.CsrfTokenNotFound {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -175,7 +173,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestAccessToken(JbstJwtTokenStorageMethod method) throws JbstAccessTokenNotFoundException {
+    void readRequestAccessToken(JbstJwtTokenStorageMethod method) throws JbstExceptions.AccessTokenNotFound {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -194,7 +192,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestAccessTokenOnWebsocketHandshake(JbstJwtTokenStorageMethod method) throws JbstAccessTokenNotFoundException {
+    void readRequestAccessTokenOnWebsocketHandshake(JbstJwtTokenStorageMethod method) throws JbstExceptions.AccessTokenNotFound {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -213,7 +211,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestRefreshToken(JbstJwtTokenStorageMethod method) throws JbstRefreshTokenNotFoundException {
+    void readRequestRefreshToken(JbstJwtTokenStorageMethod method) throws JbstExceptions.RefreshTokenNotFound {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);
@@ -232,7 +230,7 @@ class JbstTokensProviderTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
-    void readRequestRefreshTokenOnWebsocketHandshake(JbstJwtTokenStorageMethod method) throws JbstRefreshTokenNotFoundException {
+    void readRequestRefreshTokenOnWebsocketHandshake(JbstJwtTokenStorageMethod method) throws JbstExceptions.RefreshTokenNotFound {
         // Arrange
         this.mockProperties(method);
         var request = mock(HttpServletRequest.class);

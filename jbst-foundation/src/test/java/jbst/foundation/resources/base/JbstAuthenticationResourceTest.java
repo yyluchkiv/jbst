@@ -17,12 +17,8 @@ import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
-import jbst.foundation.domain.exceptions.ExceptionEntity;
-import jbst.foundation.domain.exceptions.ExceptionEntityType;
-import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenDbNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenExpiredException;
-import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenInvalidException;
-import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
+import jbst.foundation.domain.exceptions.JbstExceptionResponse;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
@@ -69,10 +65,10 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
     private static Stream<Arguments> refreshTokenThrowCookieUnauthorizedExceptionsTest() {
         return Stream.of(
-                Arguments.of(new JbstRefreshTokenNotFoundException()),
-                Arguments.of(new JbstRefreshTokenInvalidException()),
-                Arguments.of(new JbstRefreshTokenExpiredException(Username.random())),
-                Arguments.of(new JbstRefreshTokenDbNotFoundException(Username.random()))
+                Arguments.of(new JbstExceptions.RefreshTokenNotFound()),
+                Arguments.of(new JbstExceptions.RefreshTokenInvalid()),
+                Arguments.of(new JbstExceptions.RefreshTokenExpired(Username.random())),
+                Arguments.of(new JbstExceptions.RefreshTokenDbNotFound(Username.random()))
         );
     }
 
@@ -251,8 +247,8 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var password = request.password();
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
         var exception = new BadCredentialsException("Bad credentials");
-        var exceptionEntity = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
+        var exceptionEntity = new JbstExceptionResponse(
+                JbstExceptionResponse.Type.ERROR,
                 exception.getMessage(),
                 exception.getMessage()
         );

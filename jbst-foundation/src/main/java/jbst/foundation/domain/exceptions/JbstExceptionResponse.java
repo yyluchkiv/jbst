@@ -1,8 +1,8 @@
 package jbst.foundation.domain.exceptions;
 
 import jakarta.validation.constraints.NotNull;
-import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.strings.JbstStrings;
+import jbst.foundation.domain.tuples.Tuple2;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -20,23 +20,24 @@ import static org.springframework.util.StringUtils.capitalize;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class ExceptionEntity {
+public class JbstExceptionResponse {
     private static final String ATTRIBUTE_SHORT_MESSAGE = "shortMessage";
     private static final String ATTRIBUTE_FULL_MESSAGE = "fullMessage";
+    // TODO [YYL] add new V2 attributes, avoid migration issues
 
-    private final ExceptionEntityType exceptionEntityType;
+    private final Type exceptionEntityType;
     private final Map<String, Object> attributes;
     private final long timestamp;
 
-    public ExceptionEntity(@NotNull ExceptionEntityType exceptionEntityType, Map<String, Object> attributes) {
-        this.exceptionEntityType = exceptionEntityType;
+    public JbstExceptionResponse(@NotNull JbstExceptionResponse.Type type, Map<String, Object> attributes) {
+        this.exceptionEntityType = type;
         this.attributes = new HashMap<>(attributes);
         this.timestamp = getCurrentTimestamp();
     }
 
-    public ExceptionEntity(ExceptionEntityType exceptionEntityType, String shortMessage, String fullMessage) {
+    public JbstExceptionResponse(Type type, String shortMessage, String fullMessage) {
         this(
-                exceptionEntityType,
+                type,
                 Map.of(
                         ATTRIBUTE_SHORT_MESSAGE, shortMessage,
                         ATTRIBUTE_FULL_MESSAGE, fullMessage
@@ -44,8 +45,8 @@ public class ExceptionEntity {
         );
     }
 
-    public ExceptionEntity(MethodArgumentNotValidException exception) {
-        this.exceptionEntityType = ExceptionEntityType.ERROR;
+    public JbstExceptionResponse(MethodArgumentNotValidException exception) {
+        this.exceptionEntityType = Type.ERROR;
         var message = exception.getBindingResult().getFieldErrors().stream()
                 .map(item -> {
                     // E.G. "bollingerBands.numberOfPeriods" -> "Bollinger bands Number of periods"
@@ -66,9 +67,9 @@ public class ExceptionEntity {
         this.timestamp = getCurrentTimestamp();
     }
 
-    public ExceptionEntity(Exception exception) {
+    public JbstExceptionResponse(Exception exception) {
         this(
-                ExceptionEntityType.ERROR,
+                Type.ERROR,
                 exception.getMessage(),
                 exception.getMessage()
         );
@@ -76,5 +77,12 @@ public class ExceptionEntity {
 
     public void addAttribute(String attributeKey, Object value) {
         this.attributes.put(attributeKey, value);
+    }
+
+    // =================================================================================================================
+    // CLASSES
+    // =================================================================================================================
+    public enum Type {
+        PARTIALLY, WARNING, ERROR
     }
 }

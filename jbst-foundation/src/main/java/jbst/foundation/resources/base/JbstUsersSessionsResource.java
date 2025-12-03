@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.services.JbstUsersSessionsService;
@@ -34,13 +34,13 @@ public class JbstUsersSessionsResource {
     private final JbstTokensProvider tokensProvider;
 
     @GetMapping
-    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
+    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
     @GetMapping("/current")
-    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
+    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         var user = this.currentSessionAssistant.getCurrentClientUser();
         var session = this.currentSessionAssistant.getCurrentUserSession(httpRequest);
         this.usersSessionsService.renewUserRequestMetadata(session, httpRequest);
@@ -64,7 +64,7 @@ public class JbstUsersSessionsResource {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
+    public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         var username = this.currentSessionAssistant.getCurrentUsername();
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         this.usersSessionsService.deleteAllExceptCurrent(username, cookie);

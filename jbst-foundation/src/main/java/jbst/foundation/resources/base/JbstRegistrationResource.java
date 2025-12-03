@@ -9,14 +9,13 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0;
 import jbst.foundation.domain.events.EventRegistration1;
 import jbst.foundation.domain.events.EventRegistrationMagicLink;
-import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
-import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistrationMagicLink;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstRegistrationService;
 import jbst.foundation.services.base.JbstRateLimitsService;
 import jbst.foundation.validators.JbstRegistrationValidator;
@@ -49,7 +48,7 @@ public class JbstRegistrationResource {
 
     @PostMapping("/register-magiclink")
     @ResponseStatus(HttpStatus.OK)
-    public void registerMagicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws JbstTooManyRequestsException {
+    public void registerMagicLink(@RequestBody @Valid RequestUserRegistrationMagicLink request) throws JbstExceptions.TooManyRequests {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         this.registrationValidator.validateRegistrationRequestMagicLink(request);
         this.registrationService.registerMagicLink(request);
@@ -60,7 +59,7 @@ public class JbstRegistrationResource {
 
     @PostMapping("/register0")
     @ResponseStatus(HttpStatus.OK)
-    public void register0(@RequestBody @Valid RequestUserRegistration0 request) throws JbstRegistrationException {
+    public void register0(@RequestBody @Valid RequestUserRegistration0 request) throws JbstExceptions.Registration {
         request = request.createReworkedUkraineZoneId();
         this.registrationValidator.validateRegistrationRequest0(request);
         this.registrationService.register0(request);
@@ -71,7 +70,7 @@ public class JbstRegistrationResource {
 
     @PostMapping("/register1")
     @ResponseStatus(HttpStatus.OK)
-    public void register1(@RequestBody @Valid RequestUserRegistration1 request) throws JbstRegistrationException {
+    public void register1(@RequestBody @Valid RequestUserRegistration1 request) throws JbstExceptions.Registration {
         request = request.createReworkedUkraineZoneId();
         this.registrationValidator.validateRegistrationRequest1(request);
         this.registrationService.register1(request);

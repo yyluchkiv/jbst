@@ -6,14 +6,13 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
-import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
-import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.random.JbstRandom;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
-import jbst.foundation.domain.random.JbstRandom;
 import jbst.foundation.validators.JbstUsersTokensValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -41,10 +40,10 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     private static Stream<Arguments> confirmEmailTest() {
         return Stream.of(
                 Arguments.of(
-                        JbstUserTokenValidationException.expired(), null, null, 0
+                        JbstExceptions.UserTokenValidation.expired(), null, null, 0
                 ),
                 Arguments.of(
-                        null, JbstUserEmailConfirmException.tokenNotFound(), null, 0
+                        null, new JbstExceptions.UserEmailConfirmation(), null, 0
                 ),
                 Arguments.of(
                         null, null, new IllegalArgumentException(), 0
@@ -121,8 +120,8 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     @ParameterizedTest
     @MethodSource("confirmEmailTest")
     void confirmEmailTest(
-            JbstUserTokenValidationException validationException,
-            JbstUserEmailConfirmException confirmException,
+            JbstExceptions.UserTokenValidation validationException,
+            JbstExceptions.UserEmailConfirmation confirmException,
             RuntimeException runtimeException,
             int code
     ) throws Exception {

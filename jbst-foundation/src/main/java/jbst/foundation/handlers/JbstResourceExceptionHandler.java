@@ -1,12 +1,7 @@
 package jbst.foundation.handlers;
 
-import jbst.foundation.domain.exceptions.ExceptionEntity;
-import jbst.foundation.domain.exceptions.ExceptionEntityType;
-import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
-import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
-import jbst.foundation.domain.exceptions.cookies.JbstCookieNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptionResponse;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +33,12 @@ public class JbstResourceExceptionHandler {
     // DEDICATED EXCEPTIONS
     // =================================================================================================================
     @ExceptionHandler({
-            JbstLoginException.class
+            JbstExceptions.Login.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> handleLoginException(JbstLoginException ex) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
+    public ResponseEntity<JbstExceptionResponse> handleLoginException(JbstExceptions.Login ex) {
+        var response = new JbstExceptionResponse(
+                JbstExceptionResponse.Type.ERROR,
                 ex.getMessage(),
                 ex.getMessage()
         );
@@ -51,12 +46,12 @@ public class JbstResourceExceptionHandler {
     }
 
     @ExceptionHandler({
-            JbstRegistrationException.class
+            JbstExceptions.Registration.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> registerException(JbstRegistrationException ex) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
+    public ResponseEntity<JbstExceptionResponse> registerException(JbstExceptions.Registration ex) {
+        var response = new JbstExceptionResponse(
+                JbstExceptionResponse.Type.ERROR,
                 contactDevelopmentTeam("Registration Failure"),
                 ex.getMessage()
         );
@@ -64,12 +59,12 @@ public class JbstResourceExceptionHandler {
     }
 
     @ExceptionHandler({
-            JbstUserTokenValidationException.class
+            JbstExceptions.UserTokenValidation.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> userEmailTokenValidationException(JbstUserTokenValidationException ex) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
+    public ResponseEntity<JbstExceptionResponse> userEmailTokenValidationException(JbstExceptions.UserTokenValidation ex) {
+        var response = new JbstExceptionResponse(
+                JbstExceptionResponse.Type.ERROR,
                 contactDevelopmentTeam("Token Validation Failure"),
                 ex.getMessage()
         );
@@ -80,17 +75,17 @@ public class JbstResourceExceptionHandler {
             MethodArgumentNotValidException.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<JbstExceptionResponse> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        return new ResponseEntity<>(new JbstExceptionResponse(ex), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({
-            JbstTooManyRequestsException.class
+            JbstExceptions.TooManyRequests.class
     })
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
-    public ResponseEntity<ExceptionEntity> tooManyRequestsException(JbstTooManyRequestsException ignoredEx) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
+    public ResponseEntity<JbstExceptionResponse> tooManyRequestsException(JbstExceptions.TooManyRequests ignoredEx) {
+        var response = new JbstExceptionResponse(
+                JbstExceptionResponse.Type.ERROR,
                 "Too many requests, please wait",
                 "Too many requests, please wait"
         );
@@ -102,37 +97,37 @@ public class JbstResourceExceptionHandler {
     // =================================================================================================================
 
     @ExceptionHandler({
-            JbstCookieNotFoundException.class,
-            JbstAccessTokenNotFoundException.class,
-            JbstAccessTokenInvalidException.class,
-            JbstAccessTokenExpiredException.class,
-            JbstAccessTokenDbNotFoundException.class,
-            JbstRefreshTokenNotFoundException.class,
-            JbstRefreshTokenInvalidException.class,
-            JbstRefreshTokenExpiredException.class,
-            JbstRefreshTokenDbNotFoundException.class,
-            JbstTokenUnauthorizedException.class
+            JbstExceptions.CookieNotFound.class,
+            JbstExceptions.AccessTokenNotFound.class,
+            JbstExceptions.AccessTokenInvalid.class,
+            JbstExceptions.AccessTokenExpired.class,
+            JbstExceptions.AccessTokenDbNotFound.class,
+            JbstExceptions.RefreshTokenNotFound.class,
+            JbstExceptions.RefreshTokenInvalid.class,
+            JbstExceptions.RefreshTokenExpired.class,
+            JbstExceptions.RefreshTokenDbNotFound.class,
+            JbstExceptions.Unauthorized.class
     })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<ExceptionEntity> unauthorizedExceptions(Exception ex) {
-        return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<JbstExceptionResponse> unauthorizedExceptions(Exception ex) {
+        return new ResponseEntity<>(new JbstExceptionResponse(ex), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({
             AccessDeniedException.class
     })
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ExceptionEntity> forbiddenExceptions(Exception ex) {
-        return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.FORBIDDEN);
+    public ResponseEntity<JbstExceptionResponse> forbiddenExceptions(Exception ex) {
+        return new ResponseEntity<>(new JbstExceptionResponse(ex), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler({
             HttpMessageConversionException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ExceptionEntity> badRequestExceptions(Exception ex) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
+    public ResponseEntity<JbstExceptionResponse> badRequestExceptions(Exception ex) {
+        var response = new JbstExceptionResponse(
+                JbstExceptionResponse.Type.ERROR,
                 contactDevelopmentTeam("Malformed request syntax"),
                 ex.getMessage()
         );
@@ -143,26 +138,26 @@ public class JbstResourceExceptionHandler {
             IllegalArgumentException.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> internalServerError(Exception ex) {
-        return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<JbstExceptionResponse> internalServerError(Exception ex) {
+        return new ResponseEntity<>(new JbstExceptionResponse(ex), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({
             Exception.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> generalException(Exception ex) {
+    public ResponseEntity<JbstExceptionResponse> generalException(Exception ex) {
         if (isNull(ex) || isNull(ex.getMessage())) {
-            var response = new ExceptionEntity(
-                    ExceptionEntityType.ERROR,
+            var response = new JbstExceptionResponse(
+                    JbstExceptionResponse.Type.ERROR,
                     unexpectedErrorOccurred(),
                     unexpectedErrorOccurred()
             );
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             LOGGER.error("Unexpected error occurred", ex);
-            var response = new ExceptionEntity(
-                    ExceptionEntityType.ERROR,
+            var response = new JbstExceptionResponse(
+                    JbstExceptionResponse.Type.ERROR,
                     unexpectedErrorOccurred(),
                     ex.getMessage()
             );

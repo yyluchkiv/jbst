@@ -2,10 +2,10 @@ package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
+import jbst.foundation.domain.random.JbstRandom;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.domain.random.JbstRandom;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +37,7 @@ class AbstractJbstUsersTokensServiceTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        JbstUserEmailConfirmException.tokenNotFound()
+                        new JbstExceptions.UserEmailConfirmation()
                 ),
                 Arguments.of(
                         JbstUserToken.random(),
@@ -95,7 +95,7 @@ class AbstractJbstUsersTokensServiceTest {
     @MethodSource("confirmEmailTest")
     void confirmEmailTest(
             JbstUserToken userToken,
-            JbstUserEmailConfirmException exception
+            JbstExceptions.UserEmailConfirmation exception
     ) {
         // Arrange
         var token = JbstRandom.randomStringLetterOrNumbersOnly(36);
@@ -109,7 +109,7 @@ class AbstractJbstUsersTokensServiceTest {
         verify(this.usersTokensRepository).findByValueAsAnyOrNull(token);
         if (nonNull(exception)) {
             assertThat(actual)
-                    .isInstanceOf(JbstUserEmailConfirmException.class)
+                    .isInstanceOf(JbstExceptions.UserEmailConfirmation.class)
                     .hasMessage(exception.getMessage());
         } else {
             verify(this.usersRepository).confirmEmail(email);

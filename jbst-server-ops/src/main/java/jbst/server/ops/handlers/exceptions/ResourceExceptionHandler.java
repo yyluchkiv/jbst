@@ -1,7 +1,6 @@
 package jbst.server.ops.handlers.exceptions;
 
-import jbst.foundation.domain.exceptions.ExceptionEntity;
-import jbst.foundation.domain.exceptions.ExceptionEntityType;
+import jbst.foundation.domain.exceptions.JbstExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,17 +25,17 @@ public class ResourceExceptionHandler {
             AccessDeniedException.class
     })
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ExceptionEntity> forbiddenExceptions(Exception ex) {
-        return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.FORBIDDEN);
+    public ResponseEntity<JbstExceptionResponse> forbiddenExceptions(Exception ex) {
+        return new ResponseEntity<>(new JbstExceptionResponse(ex), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler({
             HttpMessageConversionException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ExceptionEntity> badRequestExceptions(Exception ex) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
+    public ResponseEntity<JbstExceptionResponse> badRequestExceptions(Exception ex) {
+        var response = new JbstExceptionResponse(
+                JbstExceptionResponse.Type.ERROR,
                 contactDevelopmentTeam("Malformed request syntax"),
                 ex.getMessage()
         );
@@ -47,18 +46,18 @@ public class ResourceExceptionHandler {
             Exception.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> generalException(Exception ex) {
+    public ResponseEntity<JbstExceptionResponse> generalException(Exception ex) {
         LOGGER.error("Unexpected error occurred", ex);
         if (isNull(ex) || isNull(ex.getMessage())) {
-            var response = new ExceptionEntity(
-                    ExceptionEntityType.ERROR,
+            var response = new JbstExceptionResponse(
+                    JbstExceptionResponse.Type.ERROR,
                     unexpectedErrorOccurred(),
                     unexpectedErrorOccurred()
             );
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            var response = new ExceptionEntity(
-                    ExceptionEntityType.ERROR,
+            var response = new JbstExceptionResponse(
+                    JbstExceptionResponse.Type.ERROR,
                     unexpectedErrorOccurred(),
                     ex.getMessage()
             );

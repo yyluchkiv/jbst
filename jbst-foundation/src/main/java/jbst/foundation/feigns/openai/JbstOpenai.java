@@ -14,7 +14,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OpenaiClient {
+public class JbstOpenai {
 
     // Classes: Definitions
     public interface OpenaiDefinition {

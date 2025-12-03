@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -122,7 +122,7 @@ class AbstractJbstUsersServiceTest {
     }
 
     @Test
-    void safeSaveFirstIterationTest() throws JbstUsernameAlreadyExistException {
+    void safeSaveFirstIterationTest() throws JbstExceptions.UsernameAlreadyExist {
         // Arrange
         var creationOption = JbstUserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
@@ -146,7 +146,7 @@ class AbstractJbstUsersServiceTest {
     }
 
     @Test
-    void safeSaveSecondIterationTest() throws JbstUsernameAlreadyExistException {
+    void safeSaveSecondIterationTest() throws JbstExceptions.UsernameAlreadyExist {
         // Arrange
         var creationOption = JbstUserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
@@ -155,7 +155,7 @@ class AbstractJbstUsersServiceTest {
         var finalUsername = new Username(baseUsername.value() + "0");
         var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
-        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(UKRAINE))).thenThrow(new JbstUsernameAlreadyExistException(baseUsername));
+        when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(UKRAINE))).thenThrow(new JbstExceptions.UsernameAlreadyExist(baseUsername));
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);
 
         // Act

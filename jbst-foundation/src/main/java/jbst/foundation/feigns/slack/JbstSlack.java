@@ -30,7 +30,7 @@ import static jbst.foundation.domain.concurrent.JbstSleep.sleepMilliseconds;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SlackClient {
+public class JbstSlack {
 
     // Classes: Definitions
     public interface SlackDefinition {
@@ -140,6 +140,7 @@ public class SlackClient {
         worker.start();
     }
 
+    @SuppressWarnings("unused")
     @JbstDevelopmentOnly
     public final void configureHardcodedSleepDelay(String token) {
         this.configure(new JbstSlackConfiguration(token, new TimeAmount(500, ChronoUnit.MILLIS)));

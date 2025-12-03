@@ -7,14 +7,14 @@ import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstTokensContextThrowerService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +30,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static jbst.foundation.domain.databases.JbstUserSession.randomPersistedSession;
-import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.random.JbstRandom.validClaims;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -126,7 +126,7 @@ class JbstTokensServiceTest {
     }
 
     @Test
-    void getJwtUserByAccessTokenOrThrowTest() throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenDbNotFoundException {
+    void getJwtUserByAccessTokenOrThrowTest() throws JbstExceptions.AccessTokenInvalid, JbstExceptions.RefreshTokenInvalid, JbstExceptions.AccessTokenExpired, JbstExceptions.AccessTokenDbNotFound {
         // Arrange
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
@@ -152,7 +152,7 @@ class JbstTokensServiceTest {
     }
 
     @Test
-    void refreshSessionOrThrowTest() throws JbstRefreshTokenNotFoundException, JbstRefreshTokenInvalidException, JbstRefreshTokenExpiredException, JbstRefreshTokenDbNotFoundException {
+    void refreshSessionOrThrowTest() throws JbstExceptions.RefreshTokenNotFound, JbstExceptions.RefreshTokenInvalid, JbstExceptions.RefreshTokenExpired, JbstExceptions.RefreshTokenDbNotFound {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);

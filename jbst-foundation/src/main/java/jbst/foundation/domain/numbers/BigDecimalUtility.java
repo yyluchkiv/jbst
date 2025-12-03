@@ -1,6 +1,6 @@
 package jbst.foundation.domain.numbers;
 
-import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +48,7 @@ public class BigDecimalUtility {
                 assertNonNullOrThrow(number2);
                 yield number1.compareTo(number2) <= 0;
             }
-            default -> throw new JbstUnreachableCodeException();
+            default -> throw new JbstExceptions.UnreachableCode();
         };
     }
 

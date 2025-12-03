@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TelegramClient {
+public class JbstTelegram {
 
     // Classes: Definitions
     public interface TelegramDefinition {

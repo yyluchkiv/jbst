@@ -2,10 +2,10 @@ package jbst.server.ops.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.domain.base.ServerName;
-import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
-import jbst.foundation.feigns.github.GithubClient;
+import jbst.foundation.domain.exceptions.JbstExceptions;
+import jbst.foundation.feigns.github.JbstGithub;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.server.ops.domain.computed.ServerInfinityTimerTask;
+import jbst.server.ops.domain.computed.ServerInfinityWorker;
 import jbst.server.ops.domain.computed.ServerInfinityTimerTaskSpringBeans;
 import jbst.server.ops.domain.computed.ServerInfinityTimerTasks;
 import jbst.server.ops.domain.configs.OpsConfigs;
@@ -54,7 +54,7 @@ public class MonitoringService {
     // Computing
     private final ServerInfinityTimerTaskSpringBeans serverInfinityTimerTaskSpringBeans;
     // Clients
-    private final GithubClient githubClient;
+    private final JbstGithub github;
     // Spring
     private final ResourceLoader resourceLoader;
     private final ObjectMapper objectMapper;
@@ -73,14 +73,14 @@ public class MonitoringService {
     @SuppressWarnings("unused")
     public final boolean isConfigured() {
         return this.servers.values().stream()
-                .filter(ServerInfinityTimerTask::isSshRequired)
+                .filter(ServerInfinityWorker::isSshRequired)
                 .allMatch(server -> nonNull(server.getFileSystemMetadata()));
     }
 
     public final Servers getServers() {
         return new Servers(
                 this.servers.values().stream()
-                        .map(ServerInfinityTimerTask::getServer)
+                        .map(ServerInfinityWorker::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -88,8 +88,8 @@ public class MonitoringService {
     public final Servers getServersAnyChanges() {
         return new Servers(
                 this.servers.values().stream()
-                        .filter(ServerInfinityTimerTask::isAnyChanges)
-                        .map(ServerInfinityTimerTask::getServer)
+                        .filter(ServerInfinityWorker::isAnyChanges)
+                        .map(ServerInfinityWorker::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -98,7 +98,7 @@ public class MonitoringService {
         return new Servers(
                 this.servers.values().stream()
                         .filter(server -> server.getServerConfigs().type().equals(SERVER_AS_FULL_SPRING_BOOT))
-                        .map(ServerInfinityTimerTask::getServer)
+                        .map(ServerInfinityWorker::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -106,8 +106,8 @@ public class MonitoringService {
     public final Servers getServersSshRequired() {
         return new Servers(
                 this.servers.values().stream()
-                        .filter(ServerInfinityTimerTask::isSshRequired)
-                        .map(ServerInfinityTimerTask::getServer)
+                        .filter(ServerInfinityWorker::isSshRequired)
+                        .map(ServerInfinityWorker::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -115,9 +115,9 @@ public class MonitoringService {
     public final Servers getServersSshRequiredAnyProblemsOnFsMetadata() {
         return new Servers(
                 this.servers.values().stream()
-                        .filter(ServerInfinityTimerTask::isSshRequired)
-                        .filter(ServerInfinityTimerTask::fileSystemMetadataProblems)
-                        .map(ServerInfinityTimerTask::getServer)
+                        .filter(ServerInfinityWorker::isSshRequired)
+                        .filter(ServerInfinityWorker::fileSystemMetadataProblems)
+                        .map(ServerInfinityWorker::getServer)
                         .collect(Collectors.toList())
         );
     }
@@ -174,7 +174,7 @@ public class MonitoringService {
         return new ServerInfinityTimerTasks(
                 this.opsConfigs.serversConfigs().stream()
                         .map(serverConfigs ->
-                                new ServerInfinityTimerTask(
+                                new ServerInfinityWorker(
                                         serverConfigs,
                                         this.serverProperties.getServers().getMonitoring(),
                                         this.serverInfinityTimerTaskSpringBeans,
@@ -194,8 +194,8 @@ public class MonitoringService {
                 var gc = this.serverProperties.getServers().getGithub();
                 copyURLToFile(
                         new URL(
-                                this.githubClient.getContents(
-                                        new GithubClient.GithubRepoContentsRequest(
+                                this.github.getContents(
+                                        new JbstGithub.GithubRepoContentsRequest(
                                                 gc.getToken(),
                                                 gc.getOwner(),
                                                 gc.getRepo(),
@@ -216,6 +216,6 @@ public class MonitoringService {
         } catch (IOException ex) {
             LOGGER.error("Failure reading ops configs", ex);
         }
-        throw new JbstUnreachableCodeException();
+        throw new JbstExceptions.UnreachableCode();
     }
 }

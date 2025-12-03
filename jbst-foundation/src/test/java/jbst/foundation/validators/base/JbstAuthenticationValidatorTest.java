@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
-import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -156,7 +156,7 @@ class JbstAuthenticationValidatorTest {
         verify(this.usersTokensRepository).findByValueAsAnyOrNull(request.value());
         if (nonNull(exceptionMessage)) {
             assertThat(throwable)
-                    .isInstanceOf(JbstLoginException.class)
+                    .isInstanceOf(JbstExceptions.Login.class)
                     .hasMessage(exceptionMessage);
         } else {
             assertThat(throwable).isNull();

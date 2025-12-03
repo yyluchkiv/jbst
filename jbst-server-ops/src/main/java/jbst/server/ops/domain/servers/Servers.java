@@ -3,7 +3,7 @@ package jbst.server.ops.domain.servers;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.collections.JbstPartitions;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.feigns.spring.SpringBootClient;
+import jbst.foundation.feigns.spring.JbstSpringBoot;
 import jbst.server.ops.domain.slack.messages.SlackMessageFileSystemTable;
 import jbst.server.ops.domain.slack.messages.SlackMessageServerTable;
 import jbst.server.ops.domain.slack.messages.SlackMessageServersSpringActuatorsTable;
@@ -31,7 +31,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 public class Servers {
     private final List<Server> values;
     private final Map<Team, List<Server>> mappedValues;
-    private final List<Tuple2<ServerName, SpringBootClient.SpringBootActuatorInfo>> mappedActuatorsResponses;
+    private final List<Tuple2<ServerName, JbstSpringBoot.SpringBootActuatorInfo>> mappedActuatorsResponses;
     private final boolean anyPresent;
     private final boolean anyChanges;
     private final boolean anyProblems;

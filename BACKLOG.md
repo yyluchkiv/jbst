@@ -7,4 +7,4 @@
 — Users + Plans
 
 ##### Minor
-— Deletion: AbstractTimerTask, AbstractInfiniteTimerTask etc. 
+— Modification: JbstExceptionResponse JSON V2

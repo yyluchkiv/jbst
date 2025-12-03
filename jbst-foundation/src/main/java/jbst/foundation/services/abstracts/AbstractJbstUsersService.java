@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -57,7 +57,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
                             credentials.zoneId()
                     );
                     created = true;
-                } catch (JbstUsernameAlreadyExistException ex) {
+                } catch (JbstExceptions.UsernameAlreadyExist ex) {
                     index++;
                 }
             }

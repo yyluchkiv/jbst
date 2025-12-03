@@ -5,7 +5,7 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.feigns.slack.SlackClient;
+import jbst.foundation.feigns.slack.JbstSlack;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +21,13 @@ public class JbstConfigurationFeignClientSlack {
     private final JbstIncidentsPublisher incidentsPublisher;
 
     @Bean
-    SlackClient slackClient() {
+    JbstSlack slackClient() {
         var slackDefinition = Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(SlackClient.SlackDefinition.class, "https://slack.com/api");
-        return new SlackClient(
+                .target(JbstSlack.SlackDefinition.class, "https://slack.com/api");
+        return new JbstSlack(
                 slackDefinition,
                 this.incidentsPublisher
         );

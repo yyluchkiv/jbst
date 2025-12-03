@@ -2,7 +2,7 @@ package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersTokensService;
@@ -21,10 +21,10 @@ public abstract class AbstractJbstUsersTokensService implements JbstUsersTokensS
     private final JbstUsersRepository usersRepository;
 
     @Override
-    public void confirmEmail(String token) throws JbstUserEmailConfirmException {
+    public void confirmEmail(String token) throws JbstExceptions.UserEmailConfirmation {
         var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(token);
         if (isNull(userToken)) {
-            throw JbstUserEmailConfirmException.tokenNotFound();
+            throw new JbstExceptions.UserEmailConfirmation();
         }
         this.usersRepository.confirmEmail(userToken.email());
         userToken = userToken.withUsed(true);

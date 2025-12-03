@@ -8,7 +8,7 @@ import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.sessions.Session;
@@ -38,8 +38,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -50,9 +50,9 @@ class JbstTokensFilterTest {
 
     private static Stream<Arguments> clearCookieTest() {
         return Stream.of(
-                Arguments.of(new JbstAccessTokenInvalidException()),
-                Arguments.of(new JbstRefreshTokenInvalidException()),
-                Arguments.of(new JbstAccessTokenDbNotFoundException(Username.hardcoded()))
+                Arguments.of(new JbstExceptions.AccessTokenInvalid()),
+                Arguments.of(new JbstExceptions.RefreshTokenInvalid()),
+                Arguments.of(new JbstExceptions.AccessTokenDbNotFound(Username.hardcoded()))
         );
     }
 
@@ -153,7 +153,7 @@ class JbstTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenThrow(new JbstAccessTokenNotFoundException());
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenThrow(new JbstExceptions.AccessTokenNotFound());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -178,7 +178,7 @@ class JbstTokensFilterTest {
         var requestRefreshToken = RequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new JbstAccessTokenExpiredException(Username.hardcoded()));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new JbstExceptions.AccessTokenExpired(Username.hardcoded()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -203,7 +203,7 @@ class JbstTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var requestAccessToken = RequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenThrow(new JbstRefreshTokenNotFoundException());
+        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenThrow(new JbstExceptions.RefreshTokenNotFound());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -292,7 +292,7 @@ class JbstTokensFilterTest {
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
-        doThrow(new JbstTokenExtensionUnauthorizedException(randomString())).when(this.extensionService).doFilter(request);
+        doThrow(new JbstExceptions.ExtensionTokenUnauthorized(randomString())).when(this.extensionService).doFilter(request);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -325,7 +325,7 @@ class JbstTokensFilterTest {
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
-        var exception = new JbstTokenExtensionAccessDeniedException(randomString());
+        var exception = new JbstExceptions.ExtensionTokenAccessDenied(randomString());
         doThrow(exception).when(this.extensionService).doFilter(request);
 
         // Act
