@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
-import static jbst.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
+import static jbst.foundation.domain.reflection.JbstReflections.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MongoDbUserTest {

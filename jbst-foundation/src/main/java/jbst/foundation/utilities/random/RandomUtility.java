@@ -29,7 +29,7 @@ import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.systemDefault;
 import static java.time.ZoneOffset.UTC;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 

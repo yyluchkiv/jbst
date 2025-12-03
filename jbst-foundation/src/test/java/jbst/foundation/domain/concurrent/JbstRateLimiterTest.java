@@ -1,7 +1,6 @@
 package jbst.foundation.domain.concurrent;
 
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
-import jbst.foundation.utilities.concurrent.SleepUtility;
 import jbst.foundation.utilities.random.RandomUtility;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -73,7 +72,7 @@ class JbstRateLimiterTest {
 
         // Act
         componentUnderTest.tryAcquire(key);
-        SleepUtility.sleepMilliseconds(timeout);
+        JbstSleep.sleepMilliseconds(timeout);
         var actual = componentUnderTest.tryAcquire(key);
 
         // Assert
@@ -89,7 +88,7 @@ class JbstRateLimiterTest {
 
         // Act
         componentUnderTest.tryAcquire(key);
-        SleepUtility.sleepMilliseconds(timeout);
+        JbstSleep.sleepMilliseconds(timeout);
         var actual = catchThrowable(() -> componentUnderTest.acquire(key));
 
         // Assert

@@ -12,7 +12,7 @@ import jbst.foundation.domain.properties.configs.JbstPropertyMVC;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
-import jbst.foundation.utilities.concurrent.SleepUtility;
+import jbst.foundation.domain.concurrent.JbstSleep;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -143,7 +143,7 @@ class JbstUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        SleepUtility.sleep(5, TimeUnit.SECONDS);
+        JbstSleep.sleep(5, TimeUnit.SECONDS);
     }
 
     @Disabled
@@ -155,7 +155,7 @@ class JbstUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        SleepUtility.sleep(5, TimeUnit.SECONDS);
+        JbstSleep.sleep(5, TimeUnit.SECONDS);
     }
 
     @Disabled
@@ -167,7 +167,7 @@ class JbstUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        SleepUtility.sleep(5, TimeUnit.SECONDS);
+        JbstSleep.sleep(5, TimeUnit.SECONDS);
     }
 
     @Disabled
@@ -181,7 +181,7 @@ class JbstUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        SleepUtility.sleep(5, TimeUnit.SECONDS);
+        JbstSleep.sleep(5, TimeUnit.SECONDS);
     }
 
     @Disabled
@@ -195,6 +195,6 @@ class JbstUsersEmailsServiceConsoleTest {
         );
 
         // Assert
-        SleepUtility.sleep(5, TimeUnit.SECONDS);
+        JbstSleep.sleep(5, TimeUnit.SECONDS);
     }
 }

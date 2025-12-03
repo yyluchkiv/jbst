@@ -15,7 +15,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
-import static jbst.foundation.utilities.hardware.JbstCPU.getNumOfCores;
+import static jbst.foundation.domain.hardware.JbstCPU.getNumOfCores;
 
 @Configuration
 @EnableConfigurationProperties({

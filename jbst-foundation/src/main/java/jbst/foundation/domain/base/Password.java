@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
+import static jbst.foundation.domain.http.JbstHttpRequestFields.containsCamelCaseLettersAndNumbers;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.springframework.util.StringUtils.hasLength;
 

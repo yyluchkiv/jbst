@@ -3,7 +3,7 @@ package jbst.foundation.domain.tests.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.enums.EnumValue;
-import jbst.foundation.utilities.enums.EnumCreatorUtility;
+import jbst.foundation.domain.enums.JbstEnumsCreator;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -15,7 +15,7 @@ public enum EnumValue1 implements EnumValue<String> {
 
     @JsonCreator
     public static EnumValue1 findBotType(String value) {
-        return EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow(EnumValue1.class, value);
+        return JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow(EnumValue1.class, value);
     }
 
     @JsonValue

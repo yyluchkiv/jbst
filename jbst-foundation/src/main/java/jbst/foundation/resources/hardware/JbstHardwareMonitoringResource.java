@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
 
-import static jbst.foundation.utilities.hardware.JbstHardware.getHeapMemory;
+import static jbst.foundation.domain.hardware.JbstHardware.getHeapMemory;
 
 // Swagger
 @Tag(name = "[jbst] Hardware API")

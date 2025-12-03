@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 import static jbst.foundation.domain.enums.Status.FAILURE;
-import static jbst.foundation.utilities.concurrent.SleepUtility.sleepMilliseconds;
+import static jbst.foundation.domain.concurrent.JbstSleep.sleepMilliseconds;
 
 @Slf4j
 @Getter

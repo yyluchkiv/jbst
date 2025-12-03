@@ -8,7 +8,7 @@ import jbst.foundation.domain.states.classic.AbstractClassicStateManager;
 import jbst.foundation.domain.states.classic.ClassicState;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.feigns.spring.SpringBootClient;
-import jbst.foundation.utilities.ssh.SshUtility;
+import jbst.foundation.domain.ssh.JbstSSH;
 import jbst.server.ops.domain.configs.servers.ServerConfigs;
 import jbst.server.ops.domain.configs.ssh.SshRsaKey;
 import jbst.server.ops.domain.servers.Server;
@@ -45,7 +45,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
-import static jbst.foundation.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
+import static jbst.foundation.domain.cryptography.JbstEncoding.getBasicAuthenticationHeader;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
@@ -340,10 +340,10 @@ public class ServerInfinityTimerTask {
 
     private void ssh() throws JbstSshSessionException {
         LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.asANSI());
-        var sshSession = SshUtility.getSession(this.sshConnectionConfigs);
+        var sshSession = JbstSSH.getSession(this.sshConnectionConfigs);
         if (sshSession.getSession().present()) {
             this.sshLastUpdatedAt = getCurrentTimestamp();
-            var lines = SshUtility.executeCmd(sshSession.getSession().value(), "df -h");
+            var lines = JbstSSH.executeCmd(sshSession.getSession().value(), "df -h");
             var rows = lines.stream()
                     .skip(1)
                     .map(line -> new ServerFileSystemMetadata.FileSystemMetadataRow(this.getName(), this.getTimeOrDash(this.sshLastUpdatedAt), line))

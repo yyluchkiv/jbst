@@ -7,7 +7,7 @@ import jbst.foundation.domain.base.Email;
 import java.time.ZoneId;
 
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.utilities.zones.JbstZones.reworkUkraineZoneId;
+import static jbst.foundation.domain.zones.JbstZones.reworkUkraineZoneId;
 
 public record RequestUserUpdate1(
         @Schema(type = "string") @NotNull ZoneId zoneId,

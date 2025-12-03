@@ -6,7 +6,7 @@ import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.utilities.reflections.ReflectionUtility.getGetters;
+import static jbst.foundation.domain.reflection.JbstReflections.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResetServerStatusTest extends AbstractFolderSerializationRunner {

@@ -19,7 +19,7 @@ import java.util.*;
 import static jbst.foundation.domain.base.AbstractAuthority.*;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.*;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
 public record JwtUser(
         UserId id,

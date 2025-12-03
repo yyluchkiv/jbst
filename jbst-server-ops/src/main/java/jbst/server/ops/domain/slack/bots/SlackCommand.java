@@ -1,6 +1,6 @@
 package jbst.server.ops.domain.slack.bots;
 
-import jbst.foundation.utilities.slack.SlackUtility;
+import jbst.foundation.domain.slack.JbstSlack;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -37,7 +37,7 @@ public enum SlackCommand {
                 sb.append(NEWLINE);
             }
         }
-        return SlackUtility.getSlackMessage(sb.toString());
+        return JbstSlack.getSlackMessage(sb.toString());
     }
 
     private final String value;

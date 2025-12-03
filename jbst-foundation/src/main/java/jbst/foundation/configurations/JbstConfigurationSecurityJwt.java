@@ -10,7 +10,7 @@ import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.handlers.JbstAuthenticationEntryPoint;
 import jbst.foundation.handshakes.JbstCsrfInterceptorHandshake;
 import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
-import jbst.foundation.utilities.enums.EnumUtility;
+import jbst.foundation.domain.enums.JbstEnums;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +111,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
         // incidents
         var incidentsManager = this.jbstProperties.getIncidentsManager();
         if (incidentsManager.isEnabled()) {
-            incidentsManager.assertPropertiesExtended(EnumUtility.getEnumNames(JbstSecurityJwtIncident.class));
+            incidentsManager.assertPropertiesExtended(JbstEnums.getEnumNames(JbstSecurityJwtIncident.class));
             var loginFailure1 = incidentsManager.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", JbstSecurityJwtIncident.class);
             var loginFailure2 = incidentsManager.isEnabled("AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD", JbstSecurityJwtIncident.class);
             if (loginFailure1 && loginFailure2) {

@@ -10,8 +10,8 @@ import lombok.AllArgsConstructor;
 import java.util.Comparator;
 import java.util.Set;
 
-import static jbst.foundation.utilities.colors.AnsiUtility.getBoldHexAnsiFormat;
-import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
+import static jbst.foundation.domain.colors.JbstANSI.getBoldHexAnsiFormat;
+import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow;
 
 @AllArgsConstructor
 public enum ClassicState implements EnumValue<String> {

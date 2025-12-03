@@ -7,7 +7,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.utilities.http.HttpRequestFieldsUtility;
+import jbst.foundation.domain.http.JbstHttpRequestFields;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
@@ -74,7 +74,7 @@ public record Email(@NotNull String value) {
             if (!hasLength(email.value)) {
                 return false;
             }
-            return HttpRequestFieldsUtility.isEmail(email);
+            return JbstHttpRequestFields.isEmail(email);
         }
     }
 }

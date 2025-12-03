@@ -34,7 +34,7 @@ import java.util.Set;
 import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
 import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 

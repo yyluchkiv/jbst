@@ -15,7 +15,7 @@ import java.util.function.Function;
 
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
-import static jbst.foundation.utilities.collections.JbstCollections.baseJoiningRaw;
+import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @UtilityClass

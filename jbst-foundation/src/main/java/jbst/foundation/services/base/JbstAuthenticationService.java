@@ -33,7 +33,7 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.getUserProcess;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
-import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
 
 @Slf4j
 @Service

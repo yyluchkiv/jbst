@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.collections.JbstCollections.emptyQueue;
+import static jbst.foundation.domain.collections.JbstCollections.emptyQueue;
 
 @SuppressWarnings({ "unchecked" })
 @UtilityClass

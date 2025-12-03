@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static jbst.foundation.utilities.reflections.ReflectionUtility.getGetters;
+import static jbst.foundation.domain.reflection.JbstReflections.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

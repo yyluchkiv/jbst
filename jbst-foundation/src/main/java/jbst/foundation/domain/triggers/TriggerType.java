@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.enums.EnumValue;
 import lombok.AllArgsConstructor;
 
-import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
+import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow;
 
 @AllArgsConstructor
 public enum TriggerType implements EnumValue<String> {

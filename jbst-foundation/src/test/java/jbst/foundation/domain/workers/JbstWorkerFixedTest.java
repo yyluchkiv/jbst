@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-import static jbst.foundation.utilities.concurrent.SleepUtility.sleep;
+import static jbst.foundation.domain.concurrent.JbstSleep.sleep;
 
 @Disabled
 @Slf4j

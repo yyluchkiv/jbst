@@ -53,7 +53,7 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.databases.JbstUserSession.randomPersistedSession;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;

@@ -3,7 +3,7 @@ package jbst.foundation.feigns.slack;
 import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.utilities.concurrent.SleepUtility;
+import jbst.foundation.domain.concurrent.JbstSleep;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -106,6 +106,6 @@ class SlackClientTest {
         this.slackClient.submitMessages(messages2);
 
         // Assert
-        SleepUtility.sleep(45, TimeUnit.SECONDS);
+        JbstSleep.sleep(45, TimeUnit.SECONDS);
     }
 }
