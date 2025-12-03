@@ -10,7 +10,7 @@ import lombok.Getter;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.*;
-import static jbst.foundation.utilities.strings.StringUtility.isNullOrBlank;
+import static jbst.foundation.domain.strings.JbstStrings.isNullOrBlank;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok

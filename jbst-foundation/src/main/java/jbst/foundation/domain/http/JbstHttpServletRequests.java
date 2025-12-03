@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static jbst.foundation.utilities.strings.StringUtility.hasLength;
+import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 
 @UtilityClass
 public class JbstHttpServletRequests {

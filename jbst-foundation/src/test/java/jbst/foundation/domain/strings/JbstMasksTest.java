@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.strings;
+package jbst.foundation.domain.strings;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -7,11 +7,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
-import static jbst.foundation.utilities.strings.MaskUtility.*;
+import static jbst.foundation.domain.strings.JbstMasks.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-class MaskUtilityTest {
+class JbstMasksTest {
 
     private static Stream<Arguments> maskTests() {
         return Stream.of(

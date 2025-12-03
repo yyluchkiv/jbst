@@ -27,7 +27,7 @@ import static jbst.foundation.domain.properties.JbstPropertiesUtility.getMandato
 import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
 import static jbst.foundation.domain.enums.JbstEnums.baseJoining;
 import static jbst.foundation.domain.enums.JbstEnums.baseJoiningWildcard;
-import static jbst.foundation.utilities.strings.StringUtility.toKebab;
+import static jbst.foundation.domain.strings.JbstStrings.toKebab;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j

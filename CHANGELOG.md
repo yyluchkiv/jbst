@@ -16,3 +16,4 @@
 — Modification: slack utilities -> jbst domain
 — Modification: spring utilities -> jbst domain
 — Modification: ssh utilities -> jbst domain
+— Modification: string utilities -> jbst domain

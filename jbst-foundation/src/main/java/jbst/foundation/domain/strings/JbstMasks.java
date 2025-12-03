@@ -1,9 +1,9 @@
-package jbst.foundation.utilities.strings;
+package jbst.foundation.domain.strings;
 
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class MaskUtility {
+public class JbstMasks {
 
     public static String mask5(String value) {
         return mask(value, 5);

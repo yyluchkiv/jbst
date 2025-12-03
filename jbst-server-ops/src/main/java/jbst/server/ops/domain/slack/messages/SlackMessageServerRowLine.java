@@ -7,8 +7,8 @@ import lombok.ToString;
 
 import java.util.List;
 
-import static jbst.foundation.utilities.strings.StringUtility.getShortenValueOrUndefined;
-import static jbst.foundation.utilities.strings.StringUtility.toObjectsArray;
+import static jbst.foundation.domain.strings.JbstStrings.getShortenValueOrUndefined;
+import static jbst.foundation.domain.strings.JbstStrings.toObjectsArray;
 
 // Lombok
 @Getter

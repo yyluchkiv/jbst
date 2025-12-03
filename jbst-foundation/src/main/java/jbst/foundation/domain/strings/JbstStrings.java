@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.strings;
+package jbst.foundation.domain.strings;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import lombok.experimental.UtilityClass;
@@ -6,11 +6,12 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+import static java.lang.Character.isUpperCase;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @UtilityClass
-public class StringUtility {
+public class JbstStrings {
 
     public static Object[] toObjectsArray(List<String> values) {
         return values.toArray(new String[0]);
@@ -50,7 +51,7 @@ public class StringUtility {
         int j = value.length();
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
-            if (Character.isUpperCase(c) && i > 0) {
+            if (isUpperCase(c) && i > 0) {
                 j = i;
                 break;
             }
@@ -67,7 +68,7 @@ public class StringUtility {
                 splitFormat.append(restElements);
                 break;
             }
-            if (Character.isUpperCase(c)) {
+            if (isUpperCase(c)) {
                 restElements.insert(0, " ");
                 splitFormat.append(restElements);
                 restElements.setLength(0);

@@ -2,7 +2,7 @@ package jbst.foundation.domain.jwt;
 
 import io.jsonwebtoken.Claims;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.utilities.strings.StringUtility;
+import jbst.foundation.domain.strings.JbstStrings;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.*;
@@ -54,7 +54,7 @@ public record JwtTokenValidatedClaims(
                                     .replace("authority=", "")
                                     .split(",")
                     )
-                    .filter(StringUtility::hasLength)
+                    .filter(JbstStrings::hasLength)
                     .map(rawUserRole -> new SimpleGrantedAuthority(rawUserRole.trim()))
                     .toList();
         } else {

@@ -9,8 +9,8 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
-import static jbst.foundation.utilities.strings.StringUtility.getShortenValueOrUndefined;
-import static jbst.foundation.utilities.strings.StringUtility.toObjectsArray;
+import static jbst.foundation.domain.strings.JbstStrings.getShortenValueOrUndefined;
+import static jbst.foundation.domain.strings.JbstStrings.toObjectsArray;
 
 // Lombok
 @Getter

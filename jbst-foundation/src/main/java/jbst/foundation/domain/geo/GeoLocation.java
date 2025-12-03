@@ -14,7 +14,7 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.strings.StringUtility.hasLength;
+import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 
 // Lombok
 @Getter
