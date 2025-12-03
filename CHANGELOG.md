@@ -7,3 +7,4 @@
 — Addition + Deletion: HardwareUtility -> JbstHardware
 — Addition + Deletion: ProcessorsUtility -> JbstCPU
 — Addition + Deletion: JacocoUtility -> JbstJacoco
+— Addition + ScheduledDeletion: CollectionUtility, CollectorUtility

@@ -7,7 +7,6 @@ import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.experimental.UtilityClass;
 
 import java.lang.annotation.Annotation;
@@ -30,6 +29,7 @@ import java.util.stream.Stream;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.collections.JbstCollections.emptyQueue;
 
 @SuppressWarnings({ "unchecked" })
 @UtilityClass
@@ -71,7 +71,7 @@ public class EntityUtility {
 
         addClassRule(List.class::equals, parameterClass -> emptyList());
         addClassRule(Set.class::equals, parameterClass -> emptySet());
-        addClassRule(Queue.class::equals, parameterClass -> CollectionUtility.emptyQueue());
+        addClassRule(Queue.class::equals, parameterClass -> emptyQueue());
 
         addClassRule(Date.class::equals, parameterClass -> RandomUtility.randomDate());
         addClassRule(LocalDate.class::equals, parameterClass -> RandomUtility.randomLocalDate());

@@ -6,7 +6,6 @@ import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinS
 import jbst.foundation.domain.properties.base.JbstPropertyScheduledJob;
 import jbst.foundation.domain.properties.base.JbstPropertySpringLogging;
 import jbst.foundation.domain.properties.base.JbstPropertySpringServer;
-import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +16,7 @@ import java.util.Set;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
-import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static jbst.foundation.utilities.collections.JbstCollections.baseJoiningRaw;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
@@ -57,7 +56,7 @@ public class NotUsedPropertiesConfigsIncidentsMinSize3 extends JbstProperty {
                         "not-used-properties-configs.types",
                         baseJoiningRaw(this.types.entrySet()),
                         baseJoiningRaw(keys),
-                        RED_TEXT.format(CollectionUtility.baseJoiningRaw(disjunction(this.types.keySet(), keys)))
+                        RED_TEXT.format(baseJoiningRaw(disjunction(this.types.keySet(), keys)))
                 )
         );
     }

@@ -24,7 +24,7 @@ import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_T
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.properties.JbstPropertiesUtility.getMandatoryBasedFields;
-import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static jbst.foundation.utilities.collections.JbstCollections.baseJoiningRaw;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
 import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
 import static jbst.foundation.utilities.strings.StringUtility.toKebab;
