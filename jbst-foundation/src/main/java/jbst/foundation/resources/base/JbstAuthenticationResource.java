@@ -9,9 +9,7 @@ import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
-import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstTokenUnauthorizedException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.services.base.JbstAuthenticationService;
@@ -45,7 +43,7 @@ public class JbstAuthenticationResource {
             @RequestBody @Valid RequestUserLogin request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
-    ) throws JbstLoginException {
+    ) throws JbstExceptions.Login {
         var credentials = this.authenticationRequestsValidator.validateLoginStandard(request);
         var username = this.authenticationService.asStandard(credentials, httpRequest, httpResponse);
         this.extensionService.authenticateAsStandard(username, httpRequest, httpResponse);
@@ -58,7 +56,7 @@ public class JbstAuthenticationResource {
             @RequestBody @Valid RequestMagicLinkToken request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
-    ) throws JbstLoginException {
+    ) throws JbstExceptions.Login {
         request = request.createReworkedUkraineZoneId();
         var credentials = this.authenticationRequestsValidator.validateLoginMagicLink(request);
         var username = this.authenticationService.asMagicLink(credentials, httpRequest, httpResponse);
@@ -68,13 +66,13 @@ public class JbstAuthenticationResource {
 
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
-    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException {
+    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.AccessTokenNotFound {
         this.authenticationService.logout(httpRequest, httpResponse);
     }
 
     @PostMapping("/refreshToken")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException {
+    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Unauthorized {
         return this.authenticationService.refreshToken(httpRequest, httpResponse);
     }
 }

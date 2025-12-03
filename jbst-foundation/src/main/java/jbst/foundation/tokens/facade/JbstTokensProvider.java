@@ -4,9 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -55,7 +53,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws JbstCsrfTokenNotFoundException {
+    public final DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws JbstExceptions.CsrfTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readCsrfToken(httpRequest);
         } else {
@@ -63,7 +61,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
+    public final RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestAccessToken(httpRequest);
         } else {
@@ -71,7 +69,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstAccessTokenNotFoundException {
+    public final RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestAccessTokenOnWebsocketHandshake(httpRequest);
         } else {
@@ -79,7 +77,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException {
+    public final RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws JbstExceptions.RefreshTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestRefreshToken(httpRequest);
         } else {
@@ -87,7 +85,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstRefreshTokenNotFoundException {
+    public final RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstExceptions.RefreshTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestRefreshTokenOnWebsocketHandshake(httpRequest);
         } else {

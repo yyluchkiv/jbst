@@ -9,10 +9,7 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
-import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
-import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
-import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
-import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
@@ -54,7 +51,7 @@ public class JbstUsersTokensResource {
 
     @PostMapping("/email/confirm")
     @ResponseStatus(HttpStatus.OK)
-    public void executeConfirmEmail() throws JbstTooManyRequestsException {
+    public void executeConfirmEmail() throws JbstExceptions.TooManyRequests {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.usersTokensValidator.validateExecuteConfirmEmail(user);
         this.rateLimitsService.acquireEmailConfirmationOrThrow(user);
@@ -74,7 +71,7 @@ public class JbstUsersTokensResource {
             this.usersTokensService.confirmEmail(token);
             redirectAttributes.addAttribute("code", 1);
             return redirectView;
-        } catch (JbstUserTokenValidationException | JbstUserEmailConfirmException ex) {
+        } catch (JbstExceptions.UserTokenValidation | JbstExceptions.UserEmailConfirmation ex) {
             redirectAttributes.addAttribute("code", 0);
             return redirectView;
         } catch (RuntimeException ex) {
@@ -92,14 +89,14 @@ public class JbstUsersTokensResource {
             this.usersTokensValidator.validateExecuteResetPassword(user);
             var userToken = this.usersTokensService.findOrCreate(user.getRequestUserTokenAsPasswordReset());
             this.usersEmailsService.executePasswordReset(userToken);
-        } catch (JbstPasswordResetException ex) {
+        } catch (JbstExceptions.PasswordReset ex) {
             // ignored
         }
     }
 
     @PatchMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
-    public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws JbstUserTokenValidationException {
+    public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws JbstExceptions.UserTokenValidation {
         this.usersTokensValidator.validatePasswordReset(request);
         this.usersService.resetPassword(request);
     }

@@ -3,7 +3,7 @@ package jbst.foundation.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -126,7 +126,7 @@ class JbstGeoUtilsTest {
 
     @Disabled
     @Test
-    void australiaTest() throws JbstGeoLocationNotFoundException {
+    void australiaTest() throws JbstExceptions.GeoLocationNotFound {
         // Act
         var geoLocation = this.componentUnderTest.getGeoLocationIPAPI(new IPAddress("1.1.1.1"));
 
@@ -136,7 +136,7 @@ class JbstGeoUtilsTest {
 
     @Disabled
     @Test
-    void localhostTest() throws JbstGeoLocationNotFoundException {
+    void localhostTest() throws JbstExceptions.GeoLocationNotFound {
         // Act
         var geoLocation = this.componentUnderTest.getGeoLocationIPAPI(new IPAddress("127.0.0.1"));
 

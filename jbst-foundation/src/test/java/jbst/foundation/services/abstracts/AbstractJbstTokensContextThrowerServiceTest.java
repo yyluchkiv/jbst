@@ -3,7 +3,7 @@ package jbst.foundation.services.abstracts;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
@@ -29,9 +29,9 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.invalid;
 import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.valid;
-import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.expiredClaims;
 import static jbst.foundation.domain.random.JbstRandom.validClaims;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -111,7 +111,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     }
 
     @Test
-    void verifyValidityAccessTokenTest() throws JbstAccessTokenInvalidException {
+    void verifyValidityAccessTokenTest() throws JbstExceptions.AccessTokenInvalid {
         // Arrange
         var accessToken = JwtAccessToken.random();
         var validatedClaims = valid(accessToken, validClaims());
@@ -137,12 +137,12 @@ class AbstractJbstTokensContextThrowerServiceTest {
         // Assert
         verify(this.securityUtils).validate(jwtAccessToken);
         assertThat(throwable)
-                .isInstanceOf(JbstAccessTokenInvalidException.class)
+                .isInstanceOf(JbstExceptions.AccessTokenInvalid.class)
                 .hasMessageContaining("JWT access token is invalid");
     }
 
     @Test
-    void verifyValidityRefreshTokenTest() throws JbstRefreshTokenInvalidException {
+    void verifyValidityRefreshTokenTest() throws JbstExceptions.RefreshTokenInvalid {
         // Arrange
         var refreshToken = JwtRefreshToken.random();
         var validatedClaims = valid(refreshToken, validClaims());
@@ -168,7 +168,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
         // Assert
         verify(this.securityUtils).validate(refreshToken);
         assertThat(throwable)
-                .isInstanceOf(JbstRefreshTokenInvalidException.class)
+                .isInstanceOf(JbstExceptions.RefreshTokenInvalid.class)
                 .hasMessageContaining("JWT refresh token is invalid");
     }
 
@@ -181,7 +181,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
         // Assert
         if (throwableFlag) {
             assertThat(throwable)
-                    .isInstanceOf(JbstAccessTokenExpiredException.class)
+                    .isInstanceOf(JbstExceptions.AccessTokenExpired.class)
                     .hasMessageContaining("JWT access token is expired. Username: " + validatedClaims.username());
         }
     }
@@ -195,13 +195,13 @@ class AbstractJbstTokensContextThrowerServiceTest {
         // Assert
         if (throwableFlag) {
             assertThat(throwable)
-                    .isInstanceOf(JbstRefreshTokenExpiredException.class)
+                    .isInstanceOf(JbstExceptions.RefreshTokenExpired.class)
                     .hasMessageContaining("JWT refresh token is expired. Username: " + validatedClaims.username());
         }
     }
 
     @Test
-    void verifyAccessTokenDbPresenceTest() throws JbstAccessTokenDbNotFoundException {
+    void verifyAccessTokenDbPresenceTest() throws JbstExceptions.AccessTokenDbNotFound {
         // Arrange
         var accessToken = JwtAccessToken.random();
         var validatedClaims = valid(accessToken, validClaims());
@@ -227,12 +227,12 @@ class AbstractJbstTokensContextThrowerServiceTest {
         // Assert
         verify(this.usersSessionsRepository).isPresent(accessToken);
         assertThat(throwable)
-                .isInstanceOf(JbstAccessTokenDbNotFoundException.class)
+                .isInstanceOf(JbstExceptions.AccessTokenDbNotFound.class)
                 .hasMessageContaining("JWT access token is not present in database. Username: " + validatedClaims.username());
     }
 
     @Test
-    void verifyRefreshTokenDbPresenceTest() throws JbstRefreshTokenDbNotFoundException {
+    void verifyRefreshTokenDbPresenceTest() throws JbstExceptions.RefreshTokenDbNotFound {
         // Arrange
         var refreshToken = JwtRefreshToken.random();
         var validatedClaims = valid(refreshToken, validClaims());
@@ -264,7 +264,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
         // Assert
         verify(this.usersSessionsRepository).isPresent(refreshToken);
         assertThat(throwable)
-                .isInstanceOf(JbstRefreshTokenDbNotFoundException.class)
+                .isInstanceOf(JbstExceptions.RefreshTokenDbNotFound.class)
                 .hasMessageContaining("JWT refresh token is not present in database. Username: " + validatedClaims.username());
     }
 }

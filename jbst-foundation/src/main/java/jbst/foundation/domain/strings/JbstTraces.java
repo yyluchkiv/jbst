@@ -1,6 +1,6 @@
 package jbst.foundation.domain.strings;
 
-import jbst.foundation.domain.exceptions.ThrowableTrace;
+import jbst.foundation.domain.exceptions.JbstThrowableTrace;
 import lombok.experimental.UtilityClass;
 
 import java.io.PrintWriter;
@@ -9,10 +9,10 @@ import java.io.StringWriter;
 @UtilityClass
 public class JbstTraces {
 
-    public static ThrowableTrace getTrace(Throwable throwable) {
+    public static JbstThrowableTrace getTrace(Throwable throwable) {
         var sw = new StringWriter();
         var pw = new PrintWriter(sw);
         throwable.printStackTrace(pw);
-        return new ThrowableTrace(sw.toString());
+        return new JbstThrowableTrace(sw.toString());
     }
 }

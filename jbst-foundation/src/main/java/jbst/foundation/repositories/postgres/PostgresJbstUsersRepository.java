@@ -11,7 +11,7 @@ import jbst.foundation.domain.databases.postgres.projections.PostgresDbUserProje
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -32,8 +32,8 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.SpringAuthorities.SUPERADMIN;
-import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
 
 @SuppressWarnings({"JpaQlInspection", "SqlNoDataSourceInspection"})
 public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUser, String>, JpaSpecificationExecutor<PostgresDbUser>, JbstUsersRepository {
@@ -129,10 +129,10 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         return entity.userId();
     }
 
-    default JwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstUsernameAlreadyExistException {
+    default JwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstExceptions.UsernameAlreadyExist {
         var exist = this.existsByUsername(username);
         if (exist) {
-            throw new JbstUsernameAlreadyExistException(username);
+            throw new JbstExceptions.UsernameAlreadyExist(username);
         } else {
             return this.save(
                     new PostgresDbUser(

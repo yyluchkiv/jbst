@@ -10,7 +10,7 @@ import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.exceptions.base.JbstUsernameAlreadyExistException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.UserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.SpringAuthorities.SUPERADMIN;
-import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
 
 public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, String>, JbstUsersRepository {
     // ================================================================================================================
@@ -124,10 +124,10 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         return entity.userId();
     }
 
-    default JwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstUsernameAlreadyExistException {
+    default JwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstExceptions.UsernameAlreadyExist {
         var exist = this.existsByUsername(username);
         if (exist) {
-            throw new JbstUsernameAlreadyExistException(username);
+            throw new JbstExceptions.UsernameAlreadyExist(username);
         } else {
             return this.save(
                     new MongoDbUser(

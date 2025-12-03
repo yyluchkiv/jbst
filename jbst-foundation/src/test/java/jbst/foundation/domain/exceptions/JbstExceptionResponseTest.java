@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static jbst.foundation.domain.exceptions.ExceptionEntityType.ERROR;
+import static jbst.foundation.domain.exceptions.JbstExceptionResponse.Type.ERROR;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ExceptionEntityTest extends AbstractObjectMapperRunner {
+class JbstExceptionResponseTest extends AbstractObjectMapperRunner {
 
     @SuppressWarnings("unchecked")
     @SneakyThrows
@@ -21,7 +21,7 @@ class ExceptionEntityTest extends AbstractObjectMapperRunner {
         // Arrange
         var exceptionMessage = randomString();
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
-        var arrangedExceptionEntity = new ExceptionEntity(new NullPointerException(exceptionMessage));
+        var arrangedExceptionEntity = new JbstExceptionResponse(new NullPointerException(exceptionMessage));
         arrangedExceptionEntity.addAttribute("externalAttribute", randomString());
 
         // Act

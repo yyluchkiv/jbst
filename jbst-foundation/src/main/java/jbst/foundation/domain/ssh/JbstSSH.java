@@ -4,7 +4,7 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import jbst.foundation.domain.exceptions.ssh.JbstSshSessionException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +49,7 @@ public class JbstSSH {
         return SshSession.failure(new JSchException(String.format("Unexpected SSH config for host: %s", connectionConfigs.getHost())));
     }
 
-    public static List<String> executeCmd(Session session, String cmd) throws JbstSshSessionException {
+    public static List<String> executeCmd(Session session, String cmd) throws JbstExceptions.SshSession {
         try {
             var execChannel = (ChannelExec) session.openChannel("exec");
             execChannel.setErrStream(System.err);
@@ -72,7 +72,7 @@ public class JbstSSH {
             LOGGER.debug("Jsch {exec} channel: Disconnect");
             return lines;
         } catch (JSchException | IOException ex) {
-            throw new JbstSshSessionException(ex);
+            throw new JbstExceptions.SshSession(ex);
         }
     }
 

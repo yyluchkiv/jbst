@@ -7,10 +7,10 @@ import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstTokensContextThrowerService;
+import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class JbstTokensService {
     public final JwtUser getJwtUserByAccessTokenOrThrow(
             RequestAccessToken requestAccessToken,
             RequestRefreshToken requestRefreshToken
-    ) throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenDbNotFoundException {
+    ) throws JbstExceptions.AccessTokenInvalid, JbstExceptions.RefreshTokenInvalid, JbstExceptions.AccessTokenExpired, JbstExceptions.AccessTokenDbNotFound {
         var accessToken = requestAccessToken.getJwtAccessToken();
         var refreshToken = requestRefreshToken.getJwtRefreshToken();
 
@@ -54,7 +54,7 @@ public class JbstTokensService {
     public final ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws JbstRefreshTokenNotFoundException, JbstRefreshTokenInvalidException, JbstRefreshTokenExpiredException, JbstRefreshTokenDbNotFoundException {
+    ) throws JbstExceptions.RefreshTokenNotFound, JbstExceptions.RefreshTokenInvalid, JbstExceptions.RefreshTokenExpired, JbstExceptions.RefreshTokenDbNotFound {
         var oldRefreshToken = this.tokensProvider.readRequestRefreshToken(request).getJwtRefreshToken();
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);

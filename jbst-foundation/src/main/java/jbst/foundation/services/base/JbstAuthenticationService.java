@@ -10,8 +10,7 @@ import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
 import jbst.foundation.domain.events.EventAuthenticationMagicLinkFailure;
-import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.Session;
@@ -59,7 +58,7 @@ public class JbstAuthenticationService {
     // Publishers
     private final JbstEventsPublisher eventsPublisher;
 
-    public final Username asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+    public final Username asStandard(UsernamePasswordCredentials credentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Login {
         try {
             this.asAuthentication(
                     JbstUserCreationOption.STANDARD,
@@ -77,11 +76,11 @@ public class JbstAuthenticationService {
                             new UserAgentHeader(httpRequest)
                     )
             );
-            throw new JbstLoginException(ex.getMessage());
+            throw new JbstExceptions.Login(ex.getMessage());
         }
     }
 
-    public final Username asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstLoginException {
+    public final Username asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Login {
         try {
             var credentials = this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
             this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
@@ -100,11 +99,11 @@ public class JbstAuthenticationService {
                             new UserAgentHeader(httpRequest)
                     )
             );
-            throw new JbstLoginException(ex.getMessage());
+            throw new JbstExceptions.Login(ex.getMessage());
         }
     }
 
-    public final void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstAccessTokenNotFoundException {
+    public final void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.AccessTokenNotFound {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         if (nonNull(cookie.value())) {
             var accessToken = cookie.getJwtAccessToken();
@@ -123,17 +122,17 @@ public class JbstAuthenticationService {
         }
     }
 
-    public final ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstTokenUnauthorizedException {
+    public final ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Unauthorized {
         try {
             return this.tokensService.refreshSessionOrThrow(httpRequest, httpResponse);
         } catch (
-                JbstRefreshTokenNotFoundException |
-                JbstRefreshTokenInvalidException |
-                JbstRefreshTokenExpiredException |
-                JbstRefreshTokenDbNotFoundException ex
+                JbstExceptions.RefreshTokenNotFound |
+                JbstExceptions.RefreshTokenInvalid |
+                JbstExceptions.RefreshTokenExpired |
+                JbstExceptions.RefreshTokenDbNotFound ex
         ) {
             this.tokensProvider.clearTokens(httpResponse);
-            throw new JbstTokenUnauthorizedException(ex.getMessage());
+            throw new JbstExceptions.Unauthorized(ex.getMessage());
         }
     }
 

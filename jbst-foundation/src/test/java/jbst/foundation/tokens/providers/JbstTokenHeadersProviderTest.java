@@ -3,9 +3,7 @@ package jbst.foundation.tokens.providers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.foundation.domain.exceptions.tokens.JbstAccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.JbstRefreshTokenNotFoundException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -81,7 +79,7 @@ class JbstTokenHeadersProviderTest {
     }
 
     @Test
-    void readCsrfToken() throws JbstCsrfTokenNotFoundException {
+    void readCsrfToken() throws JbstExceptions.CsrfTokenNotFound {
         // Arrange
         var csrfConfigs = this.jbstProperties.getSecurity().getWebsockets().getCsrf();
         var header = randomString();
@@ -108,12 +106,12 @@ class JbstTokenHeadersProviderTest {
 
         // Assert
         assertThat(throwable)
-                .isInstanceOf(JbstCsrfTokenNotFoundException.class)
+                .isInstanceOf(JbstExceptions.CsrfTokenNotFound.class)
                 .hasMessageContaining("Csrf token not found");
     }
 
     @Test
-    void readRequestAccessToken() throws JbstAccessTokenNotFoundException {
+    void readRequestAccessToken() throws JbstExceptions.AccessTokenNotFound {
         // Arrange
         var headerKey = this.jwt().getAccessToken().getHeaderKey();
         var header = JbstRandom.randomString();
@@ -140,12 +138,12 @@ class JbstTokenHeadersProviderTest {
         // Assert
         verify(request).getHeader(headerKey);
         assertThat(throwable)
-                .isInstanceOf(JbstAccessTokenNotFoundException.class)
+                .isInstanceOf(JbstExceptions.AccessTokenNotFound.class)
                 .hasMessageContaining("JWT access token not found");
     }
 
     @Test
-    void readRequestAccessTokenOnWebsocketHandshake() throws JbstAccessTokenNotFoundException {
+    void readRequestAccessTokenOnWebsocketHandshake() throws JbstExceptions.AccessTokenNotFound {
         // Arrange
         var headerKey = this.jwt().getAccessToken().getHeaderKey();
         var header = JbstRandom.randomString();
@@ -172,12 +170,12 @@ class JbstTokenHeadersProviderTest {
         // Assert
         verify(request).getParameter(headerKey);
         assertThat(throwable)
-                .isInstanceOf(JbstAccessTokenNotFoundException.class)
+                .isInstanceOf(JbstExceptions.AccessTokenNotFound.class)
                 .hasMessageContaining("JWT access token not found");
     }
 
     @Test
-    void readRequestRefreshToken() throws JbstRefreshTokenNotFoundException {
+    void readRequestRefreshToken() throws JbstExceptions.RefreshTokenNotFound {
         // Arrange
         var headerKey = this.jwt().getRefreshToken().getHeaderKey();
         var header = JbstRandom.randomString();
@@ -204,12 +202,12 @@ class JbstTokenHeadersProviderTest {
         // Assert
         verify(request).getHeader(headerKey);
         assertThat(throwable)
-                .isInstanceOf(JbstRefreshTokenNotFoundException.class)
+                .isInstanceOf(JbstExceptions.RefreshTokenNotFound.class)
                 .hasMessageContaining("JWT refresh token not found");
     }
 
     @Test
-    void readRequestRefreshTokenOnWebsocketHandshake() throws JbstRefreshTokenNotFoundException {
+    void readRequestRefreshTokenOnWebsocketHandshake() throws JbstExceptions.RefreshTokenNotFound {
         // Arrange
         var headerKey = this.jwt().getRefreshToken().getHeaderKey();
         var header = JbstRandom.randomString();
@@ -236,7 +234,7 @@ class JbstTokenHeadersProviderTest {
         // Assert
         verify(request).getParameter(headerKey);
         assertThat(throwable)
-                .isInstanceOf(JbstRefreshTokenNotFoundException.class)
+                .isInstanceOf(JbstExceptions.RefreshTokenNotFound.class)
                 .hasMessageContaining("JWT refresh token not found");
     }
 

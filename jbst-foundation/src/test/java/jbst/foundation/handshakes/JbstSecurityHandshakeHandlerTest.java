@@ -5,7 +5,7 @@ import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
@@ -44,9 +44,9 @@ class JbstSecurityHandshakeHandlerTest {
 
     private static Stream<Arguments> determineUserExceptionTest() {
         return Stream.of(
-                Arguments.of(new JbstAccessTokenInvalidException()),
-                Arguments.of(new JbstRefreshTokenInvalidException()),
-                Arguments.of(new JbstAccessTokenExpiredException(Username.random()))
+                Arguments.of(new JbstExceptions.AccessTokenInvalid()),
+                Arguments.of(new JbstExceptions.RefreshTokenInvalid()),
+                Arguments.of(new JbstExceptions.AccessTokenExpired(Username.random()))
         );
     }
 
@@ -101,7 +101,7 @@ class JbstSecurityHandshakeHandlerTest {
 
     @ParameterizedTest
     @MethodSource("determineUserExceptionTest")
-    void determineUserExceptionTest(Exception exception) throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenNotFoundException, JbstRefreshTokenNotFoundException, JbstAccessTokenDbNotFoundException {
+    void determineUserExceptionTest(Exception exception) throws JbstExceptions.AccessTokenInvalid, JbstExceptions.RefreshTokenInvalid, JbstExceptions.AccessTokenExpired, JbstExceptions.AccessTokenNotFound, JbstExceptions.RefreshTokenNotFound, JbstExceptions.AccessTokenDbNotFound {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);
@@ -127,7 +127,7 @@ class JbstSecurityHandshakeHandlerTest {
     }
 
     @Test
-    void determineUserTest() throws JbstAccessTokenInvalidException, JbstRefreshTokenInvalidException, JbstAccessTokenExpiredException, JbstAccessTokenNotFoundException, JbstRefreshTokenNotFoundException, JbstAccessTokenDbNotFoundException {
+    void determineUserTest() throws JbstExceptions.AccessTokenInvalid, JbstExceptions.RefreshTokenInvalid, JbstExceptions.AccessTokenExpired, JbstExceptions.AccessTokenNotFound, JbstExceptions.RefreshTokenNotFound, JbstExceptions.AccessTokenDbNotFound {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);

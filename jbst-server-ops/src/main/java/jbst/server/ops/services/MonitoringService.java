@@ -2,7 +2,7 @@ package jbst.server.ops.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.domain.base.ServerName;
-import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.feigns.github.GithubClient;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.server.ops.domain.computed.ServerInfinityTimerTask;
@@ -216,6 +216,6 @@ public class MonitoringService {
         } catch (IOException ex) {
             LOGGER.error("Failure reading ops configs", ex);
         }
-        throw new JbstUnreachableCodeException();
+        throw new JbstExceptions.UnreachableCode();
     }
 }

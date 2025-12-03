@@ -19,7 +19,7 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.geo.GeoCountryFlag;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
@@ -152,10 +152,10 @@ public class JbstGeoUtils {
     public final GeoLocation getGeoLocation(IPAddress ipAddress) {
         try {
             return this.getGeoLocationIPAPI(ipAddress);
-        } catch (JbstGeoLocationNotFoundException ex1) {
+        } catch (JbstExceptions.GeoLocationNotFound ex1) {
             try {
                 return this.getGeoLocationMindMax(ipAddress);
-            } catch (JbstGeoLocationNotFoundException ex2) {
+            } catch (JbstExceptions.GeoLocationNotFound ex2) {
                 return GeoLocation.unknown(ipAddress, ex2.getMessage());
             }
         }
@@ -182,7 +182,7 @@ public class JbstGeoUtils {
     // ================================================================================================================
     // METHODS (atomic): IPAPI
     // ================================================================================================================
-    protected final GeoLocation getGeoLocationIPAPI(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
+    protected final GeoLocation getGeoLocationIPAPI(IPAddress ipAddress) throws JbstExceptions.GeoLocationNotFound {
         try {
             var queryResponse = this.ipapi.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {
@@ -196,17 +196,17 @@ public class JbstGeoUtils {
                         queryResponse.city()
                 );
             } else {
-                throw new JbstGeoLocationNotFoundException(queryResponse.message());
+                throw new JbstExceptions.GeoLocationNotFound(queryResponse.message());
             }
         } catch (RuntimeException throwable) {
-            throw new JbstGeoLocationNotFoundException(throwable.getMessage());
+            throw new JbstExceptions.GeoLocationNotFound(throwable.getMessage());
         }
     }
 
     // ================================================================================================================
     // METHODS (atomic): MINDMAX
     // ================================================================================================================
-    protected final GeoLocation getGeoLocationMindMax(IPAddress ipAddress) throws JbstGeoLocationNotFoundException {
+    protected final GeoLocation getGeoLocationMindMax(IPAddress ipAddress) throws JbstExceptions.GeoLocationNotFound {
         if (!this.jbstProperties.getUtils().getGeolocations().isEnabled()) {
             return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
@@ -221,7 +221,7 @@ public class JbstGeoUtils {
                     response.getCity().getName()
             );
         } catch (IOException | GeoIp2Exception ex) {
-            throw new JbstGeoLocationNotFoundException(ex.getMessage());
+            throw new JbstExceptions.GeoLocationNotFound(ex.getMessage());
         }
     }
 

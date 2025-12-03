@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ThrowableTraceTest extends AbstractSerializationDeserializationRunner {
-    private static final ThrowableTrace TRACE = new ThrowableTrace("java.lang.NullPointerException: jbst at jbst.domain.exceptions.ThrowableTraceTest.main(ThrowableTraceTest.java:20)");
+class JbstThrowableTraceTest extends AbstractSerializationDeserializationRunner {
+    private static final JbstThrowableTrace TRACE = new JbstThrowableTrace("java.lang.NullPointerException: jbst at jbst.domain.exceptions.ThrowableTraceTest.main(ThrowableTraceTest.java:20)");
 
     @Override
     protected String getFolder() {
@@ -34,7 +34,7 @@ class ThrowableTraceTest extends AbstractSerializationDeserializationRunner {
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<ThrowableTrace>() {};
+        var typeReference = new TypeReference<JbstThrowableTrace>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);

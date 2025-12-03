@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.exceptions.authentication.JbstLoginException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +29,10 @@ public class JbstAuthenticationValidator {
         return new UsernamePasswordCredentials(request.username(), request.password());
     }
 
-    public final MagicLinkUserCredentials validateLoginMagicLink(RequestMagicLinkToken request) throws JbstLoginException {
+    public final MagicLinkUserCredentials validateLoginMagicLink(RequestMagicLinkToken request) throws JbstExceptions.Login {
         var userToken = this.usersTokensRepository.findByValueAsAnyOrNull(request.value());
         if (isNull(userToken) || userToken.isInvalid(JbstUserTokenType.MAGICLINK)) {
-            throw new JbstLoginException("Invalid magic link token: %s".formatted(request.value()));
+            throw new JbstExceptions.Login("Invalid magic link token: %s".formatted(request.value()));
         }
         return new MagicLinkUserCredentials(
                 userToken,

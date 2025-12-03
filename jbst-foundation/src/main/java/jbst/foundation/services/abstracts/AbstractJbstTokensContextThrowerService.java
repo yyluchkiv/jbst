@@ -3,7 +3,7 @@ package jbst.foundation.services.abstracts;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
@@ -26,58 +26,58 @@ public abstract class AbstractJbstTokensContextThrowerService implements JbstTok
     protected final JbstSecurityUtils securityUtils;
 
     @Override
-    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws JbstAccessTokenInvalidException {
+    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws JbstExceptions.AccessTokenInvalid {
         var validatedClaims = this.securityUtils.validate(accessToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
-            throw new JbstAccessTokenInvalidException();
+            throw new JbstExceptions.AccessTokenInvalid();
         }
         return validatedClaims;
     }
 
     @Override
-    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws JbstRefreshTokenInvalidException {
+    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws JbstExceptions.RefreshTokenInvalid {
         var validatedClaims = this.securityUtils.validate(refreshToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
-            throw new JbstRefreshTokenInvalidException();
+            throw new JbstExceptions.RefreshTokenInvalid();
         }
         return validatedClaims;
     }
 
     @Override
-    public void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstAccessTokenExpiredException {
+    public void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.AccessTokenExpired {
         if (validatedClaims.isExpired() && validatedClaims.isAccess()) {
             SecurityContextHolder.clearContext();
-            throw new JbstAccessTokenExpiredException(validatedClaims.username());
+            throw new JbstExceptions.AccessTokenExpired(validatedClaims.username());
         }
     }
 
     @Override
-    public void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstRefreshTokenExpiredException {
+    public void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.RefreshTokenExpired {
         if (validatedClaims.isExpired() && validatedClaims.isRefresh()) {
             SecurityContextHolder.clearContext();
-            throw new JbstRefreshTokenExpiredException(validatedClaims.username());
+            throw new JbstExceptions.RefreshTokenExpired(validatedClaims.username());
         }
     }
 
     @Override
-    public void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws JbstAccessTokenDbNotFoundException {
+    public void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.AccessTokenDbNotFound {
         var username = validatedClaims.username();
         var databasePresence = this.usersSessionsRepository.isPresent(accessToken);
         if (!databasePresence.present()) {
             SecurityContextHolder.clearContext();
-            throw new JbstAccessTokenDbNotFoundException(username);
+            throw new JbstExceptions.AccessTokenDbNotFound(username);
         }
     }
 
     @Override
-    public Tuple2<JwtUser, JbstUserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws JbstRefreshTokenDbNotFoundException {
+    public Tuple2<JwtUser, JbstUserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.RefreshTokenDbNotFound {
         var username = validatedClaims.username();
         var databasePresence = this.usersSessionsRepository.isPresent(refreshToken);
         if (!databasePresence.present()) {
             SecurityContextHolder.clearContext();
-            throw new JbstRefreshTokenDbNotFoundException(username);
+            throw new JbstExceptions.RefreshTokenDbNotFound(username);
         }
         var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
         return new Tuple2<>(user, databasePresence.value());

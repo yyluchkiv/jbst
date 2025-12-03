@@ -1,6 +1,5 @@
 package jbst.foundation.domain.collections;
 
-import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import lombok.experimental.UtilityClass;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,7 +7,6 @@ import java.util.stream.Collector;
 
 import static java.util.stream.Collectors.toCollection;
 
-@JbstDeletionScheduled(version = "v1.41")
 @UtilityClass
 public class JbstCollectors {
 

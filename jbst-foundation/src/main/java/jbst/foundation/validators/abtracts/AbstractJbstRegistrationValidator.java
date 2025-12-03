@@ -5,11 +5,11 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.EventRegistration0Failure;
 import jbst.foundation.domain.events.EventRegistration1Failure;
-import jbst.foundation.domain.exceptions.authentication.JbstRegistrationException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.JbstRegistrationValidator;
@@ -36,7 +36,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
     }
 
     @Override
-    public void validateRegistrationRequest0(RequestUserRegistration0 request) throws JbstRegistrationException {
+    public void validateRegistrationRequest0(RequestUserRegistration0 request) throws JbstExceptions.Registration {
         request.assertPasswordsOrThrow();
         var existsByUsername = this.usersRepository.existsByUsername(request.username());
         if (existsByUsername) {
@@ -55,7 +55,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
                             message
                     )
             );
-            throw new JbstRegistrationException(message);
+            throw new JbstExceptions.Registration(message);
         }
         var existsByEmail = this.usersRepository.existsByEmail(request.email());
         if (existsByEmail) {
@@ -74,12 +74,12 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
                             message
                     )
             );
-            throw new JbstRegistrationException(message);
+            throw new JbstExceptions.Registration(message);
         }
     }
 
     @Override
-    public void validateRegistrationRequest1(RequestUserRegistration1 request) throws JbstRegistrationException {
+    public void validateRegistrationRequest1(RequestUserRegistration1 request) throws JbstExceptions.Registration {
         request.assertPasswordsOrThrow();
         var user = this.usersRepository.findByUsernameAsJwtUserOrNull(request.username());
         if (nonNull(user)) {
@@ -98,7 +98,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
                             message
                     )
             );
-            throw new JbstRegistrationException(message);
+            throw new JbstExceptions.Registration(message);
         }
 
         var invitation = this.invitationsRepository.findByCodeAsAny(request.code());
@@ -121,7 +121,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
                                 message
                         )
                 );
-                throw new JbstRegistrationException(message);
+                throw new JbstExceptions.Registration(message);
             }
         } else {
             var exception = entityNotFound("Code", request.code());
@@ -139,7 +139,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
                             exception
                     )
             );
-            throw new JbstRegistrationException(exception);
+            throw new JbstExceptions.Registration(exception);
         }
     }
 }

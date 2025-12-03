@@ -1,6 +1,6 @@
 package jbst.foundation.handshakes;
 
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -37,10 +37,10 @@ public class JbstSecurityHandshakeHandler extends DefaultHandshakeHandler {
             var cookieRefreshToken = this.tokensProvider.readRequestRefreshTokenOnWebsocketHandshake(request);
             var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
             return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        } catch (JbstAccessTokenNotFoundException | JbstRefreshTokenNotFoundException |
-                 JbstAccessTokenInvalidException |
-                 JbstRefreshTokenInvalidException | JbstAccessTokenExpiredException |
-                 JbstAccessTokenDbNotFoundException ex) {
+        } catch (JbstExceptions.AccessTokenNotFound | JbstExceptions.RefreshTokenNotFound |
+                 JbstExceptions.AccessTokenInvalid |
+                 JbstExceptions.RefreshTokenInvalid | JbstExceptions.AccessTokenExpired |
+                 JbstExceptions.AccessTokenDbNotFound ex) {
             throw new IllegalArgumentException("WebSocket user not determined. Exception: " + ex.getMessage());
         }
     }

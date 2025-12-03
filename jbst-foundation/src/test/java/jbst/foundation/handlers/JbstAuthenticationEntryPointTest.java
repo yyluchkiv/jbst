@@ -27,7 +27,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static jbst.foundation.domain.exceptions.ExceptionEntityType.ERROR;
+import static jbst.foundation.domain.exceptions.JbstExceptionResponse.Type.ERROR;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.random;
 
 import feign.Request;
-import jbst.foundation.domain.exceptions.random.JbstIllegalEnumException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.tests.enums.EnumOneValueUnderTests;
 import jbst.foundation.domain.tests.enums.EnumUnderTests;
 import lombok.extern.slf4j.Slf4j;
@@ -652,8 +652,8 @@ class JbstRandomTest {
         var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
 
         // Assert
-        assertThat(throwable1).isInstanceOf(JbstIllegalEnumException.class);
-        assertThat(throwable2).isInstanceOf(JbstIllegalEnumException.class);
+        assertThat(throwable1).isInstanceOf(JbstExceptions.IllegalEnum.class);
+        assertThat(throwable2).isInstanceOf(JbstExceptions.IllegalEnum.class);
         var message = "Please check enum: class jbst.foundation.domain.tests.enums.EnumOneValueUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
@@ -716,8 +716,8 @@ class JbstRandomTest {
         var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(clazz, allPossibleEnumValues));
 
         // Assert
-        assertThat(throwable1).isInstanceOf(JbstIllegalEnumException.class);
-        assertThat(throwable2).isInstanceOf(JbstIllegalEnumException.class);
+        assertThat(throwable1).isInstanceOf(JbstExceptions.IllegalEnum.class);
+        assertThat(throwable2).isInstanceOf(JbstExceptions.IllegalEnum.class);
         var message = "Please check enum: class jbst.foundation.domain.tests.enums.EnumUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);

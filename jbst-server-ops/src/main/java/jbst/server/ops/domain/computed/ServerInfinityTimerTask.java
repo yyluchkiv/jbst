@@ -2,13 +2,13 @@ package jbst.server.ops.domain.computed;
 
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.exceptions.ssh.JbstSshSessionException;
+import jbst.foundation.domain.exceptions.JbstExceptions;
+import jbst.foundation.domain.ssh.JbstSSH;
 import jbst.foundation.domain.ssh.SshConnectionConfigs;
 import jbst.foundation.domain.states.classic.AbstractClassicStateManager;
 import jbst.foundation.domain.states.classic.ClassicState;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.feigns.spring.SpringBootClient;
-import jbst.foundation.domain.ssh.JbstSSH;
 import jbst.server.ops.domain.configs.servers.ServerConfigs;
 import jbst.server.ops.domain.configs.ssh.SshRsaKey;
 import jbst.server.ops.domain.servers.Server;
@@ -42,13 +42,13 @@ import static java.util.concurrent.CompletableFuture.runAsync;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static jbst.foundation.domain.constants.JbstConstants.Strings.UNDEFINED;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
+import static jbst.foundation.domain.cryptography.JbstEncoding.getBasicAuthenticationHeader;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
-import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
-import static jbst.foundation.domain.cryptography.JbstEncoding.getBasicAuthenticationHeader;
 import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
 import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 
@@ -333,12 +333,12 @@ public class ServerInfinityTimerTask {
             if (this.sshRequired) {
                 this.ssh();
             }
-        } catch (JbstSshSessionException | RuntimeException ex) {
+        } catch (JbstExceptions.SshSession | RuntimeException ex) {
             this.fileSystemMetadata = ServerFileSystemMetadata.failure(ex);
         }
     }
 
-    private void ssh() throws JbstSshSessionException {
+    private void ssh() throws JbstExceptions.SshSession {
         LOGGER.info(PREFIX + " SSH into server {}. Status: {}", this.getName(), STARTED.asANSI());
         var sshSession = JbstSSH.getSession(this.sshConnectionConfigs);
         if (sshSession.getSession().present()) {

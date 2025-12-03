@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.sessions.Session;
 import jbst.foundation.extension.JbstExtensionService;
@@ -65,22 +65,22 @@ public class JbstTokensFilter extends OncePerRequestFilter {
 
             chain.doFilter(req, res);
         } catch (
-                JbstAccessTokenNotFoundException |
-                JbstAccessTokenExpiredException ex
+                JbstExceptions.AccessTokenNotFound |
+                JbstExceptions.AccessTokenExpired ex
         ) {
             // distinguish authenticated vs. anonymous/permitAll endpoints
             chain.doFilter(req, res);
         } catch (
-                JbstRefreshTokenNotFoundException |
-                JbstAccessTokenInvalidException |
-                JbstRefreshTokenInvalidException |
-                JbstAccessTokenDbNotFoundException |
-                JbstTokenExtensionUnauthorizedException ex
+                JbstExceptions.RefreshTokenNotFound |
+                JbstExceptions.AccessTokenInvalid |
+                JbstExceptions.RefreshTokenInvalid |
+                JbstExceptions.AccessTokenDbNotFound |
+                JbstExceptions.ExtensionTokenUnauthorized ex
         ) {
             LOGGER.debug("JWT unauthorized request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
             res.sendError(HttpStatus.UNAUTHORIZED.value());
-        } catch (JbstTokenExtensionAccessDeniedException ex) {
+        } catch (JbstExceptions.ExtensionTokenAccessDenied ex) {
             LOGGER.debug("JWT forbidden request → clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(res);
             this.accessDeniedHandler.handle(req, res, new AccessDeniedException(ex.getMessage()));
