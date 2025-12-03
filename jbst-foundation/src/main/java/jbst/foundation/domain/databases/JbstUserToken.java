@@ -3,7 +3,7 @@ package jbst.foundation.domain.databases;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 
 import static jbst.foundation.domain.enums.JbstUserTokenType.*;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
@@ -54,10 +54,10 @@ public record JbstUserToken(
         return new JbstUserToken(
                 TokenId.random(),
                 Email.random(),
-                RandomUtility.randomString(),
-                RandomUtility.randomEnum(JbstUserTokenType.class),
-                RandomUtility.randomLongGreaterThanZero(),
-                RandomUtility.randomBoolean()
+                JbstRandom.randomString(),
+                JbstRandom.randomEnum(JbstUserTokenType.class),
+                JbstRandom.randomLongGreaterThanZero(),
+                JbstRandom.randomBoolean()
         );
     }
 
@@ -65,10 +65,10 @@ public record JbstUserToken(
         return new JbstUserToken(
                 null,
                 Email.random(),
-                RandomUtility.randomString(),
-                RandomUtility.randomEnum(JbstUserTokenType.class),
-                RandomUtility.randomLongGreaterThanZero(),
-                RandomUtility.randomBoolean()
+                JbstRandom.randomString(),
+                JbstRandom.randomEnum(JbstUserTokenType.class),
+                JbstRandom.randomLongGreaterThanZero(),
+                JbstRandom.randomBoolean()
         );
     }
 

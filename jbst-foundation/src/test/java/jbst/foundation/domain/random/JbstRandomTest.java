@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.random;
+package jbst.foundation.domain.random;
 
 import feign.Request;
 import jbst.foundation.domain.exceptions.random.JbstIllegalEnumException;
@@ -28,12 +28,12 @@ import static java.util.Arrays.asList;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.enums.EnumUnderTests.*;
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 @Slf4j
-class RandomUtilityTest {
+class JbstRandomTest {
 
     private static Stream<Arguments> oneTest() {
         return Stream.of(

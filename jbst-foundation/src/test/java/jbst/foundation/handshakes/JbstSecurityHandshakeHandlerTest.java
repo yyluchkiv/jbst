@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;

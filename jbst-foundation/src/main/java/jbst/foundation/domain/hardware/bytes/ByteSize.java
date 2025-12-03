@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 import static jbst.foundation.domain.constants.JbstConstants.MemoryUnits.*;
 import static jbst.foundation.domain.hardware.bytes.ByteUnit.*;
 import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZeroByBounds;
 
 // Lombok
 @Getter

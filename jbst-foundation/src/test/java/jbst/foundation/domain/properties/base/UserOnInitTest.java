@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserOnInitTest {

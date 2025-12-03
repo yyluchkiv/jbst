@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.configs.mvc;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,8 +11,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Set;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -47,7 +47,7 @@ public class JbstPropertyCORS extends JbstProperty {
         return new JbstPropertyCORS(
                 randomString(),
                 new String[] { randomString(), randomString() },
-                new String[] { RandomUtility.randomElement(Set.of("GET", "POST", "PUT", "DELETE")) },
+                new String[] { JbstRandom.randomElement(Set.of("GET", "POST", "PUT", "DELETE")) },
                 new String[] { randomString() },
                 randomBoolean(),
                 new String[] { randomString() }

@@ -30,7 +30,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Set;
 
-import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

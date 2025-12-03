@@ -1,16 +1,16 @@
-package jbst.foundation.utilities.random;
+package jbst.foundation.domain.random;
 
 import jbst.foundation.domain.tests.classes.*;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static jbst.foundation.utilities.random.EntityUtility.*;
-import static jbst.foundation.utilities.random.RandomUtility.one;
+import static jbst.foundation.domain.random.JbstRandomEntities.*;
+import static jbst.foundation.domain.random.JbstRandom.one;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-class EntityUtilityTest {
+class JbstRandomEntitiesTest {
 
     @Test
     void listDefaultConstructorTest() {

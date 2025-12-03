@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.beans.Transient;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 
 // WARNING: used in postgre as jsonb → use @Transient + @JsonIgnore
 @Data

@@ -16,7 +16,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Arrays;
 
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

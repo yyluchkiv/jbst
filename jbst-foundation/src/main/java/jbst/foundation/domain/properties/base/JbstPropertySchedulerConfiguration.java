@@ -11,8 +11,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
-import static jbst.foundation.utilities.random.RandomUtility.randomTimeUnit;
+import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomTimeUnit;
 
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data

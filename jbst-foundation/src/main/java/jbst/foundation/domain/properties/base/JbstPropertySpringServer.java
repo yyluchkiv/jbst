@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +21,7 @@ public class JbstPropertySpringServer extends JbstProperty {
     }
 
     public static JbstPropertySpringServer random() {
-        return new JbstPropertySpringServer(RandomUtility.randomIntegerGreaterThanZeroByBounds(8000, 8100));
+        return new JbstPropertySpringServer(JbstRandom.randomIntegerGreaterThanZeroByBounds(8000, 8100));
     }
 
     @Override

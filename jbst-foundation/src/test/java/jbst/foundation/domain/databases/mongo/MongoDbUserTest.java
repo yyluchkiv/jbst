@@ -10,8 +10,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.reflection.JbstReflections.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 

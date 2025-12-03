@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.random.EntityUtility.set345;
+import static jbst.foundation.domain.random.JbstRandomEntities.set345;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

@@ -25,9 +25,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
-import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

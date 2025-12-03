@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.Duration;
 import java.util.List;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getPastTimestamp;
 

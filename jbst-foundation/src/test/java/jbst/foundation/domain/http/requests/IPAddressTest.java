@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
+import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IPAddressTest {

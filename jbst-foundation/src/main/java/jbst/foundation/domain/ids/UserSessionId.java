@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 public record UserSessionId(@NotNull String value) {
 

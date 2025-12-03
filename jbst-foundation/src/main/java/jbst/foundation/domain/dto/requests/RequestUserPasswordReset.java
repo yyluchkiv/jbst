@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jbst.foundation.domain.base.Password;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
 
 public record RequestUserPasswordReset(
         @NotNull @NotEmpty String token,

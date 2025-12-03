@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.random;
+package jbst.foundation.domain.random;
 
 import feign.FeignException;
 import feign.Request;
@@ -34,7 +34,7 @@ import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @UtilityClass
-public class RandomUtility {
+public class JbstRandom {
 
     private static final String LETTERS_OR_NUMBERS = "AaBbCcDdEeFfGgHgIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
     private static final SecureRandom RND = new SecureRandom();
@@ -42,12 +42,12 @@ public class RandomUtility {
     private static final Map<Class<?>, Supplier<?>> PRIMITIVE_WRAPPERS = Map.of(
             // NOTE: classes should be considered/double-checked in future releases
             // NOTE: classes - Byte, Character, CharSequence, Float, check Number inheritance tree)
-            Short.class, RandomUtility::randomShort,
-            Boolean.class, RandomUtility::randomBoolean,
-            Integer.class, RandomUtility::randomInteger,
-            Long.class, RandomUtility::randomLong,
-            Double.class, RandomUtility::randomDouble,
-            BigDecimal.class, RandomUtility::randomBigDecimal
+            Short.class, JbstRandom::randomShort,
+            Boolean.class, JbstRandom::randomBoolean,
+            Integer.class, JbstRandom::randomInteger,
+            Long.class, JbstRandom::randomLong,
+            Double.class, JbstRandom::randomDouble,
+            BigDecimal.class, JbstRandom::randomBigDecimal
     );
 
     public static Number one(Class<? extends Number> clazz) {
@@ -231,7 +231,7 @@ public class RandomUtility {
         if (availableOptions.isEmpty()) {
             return null;
         }
-        return RandomUtility.randomElement(availableOptions);
+        return JbstRandom.randomElement(availableOptions);
     }
 
     public static LocalDate randomLocalDate() {

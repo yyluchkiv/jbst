@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
 
 public record ResponseInvitation(
         InvitationId id,

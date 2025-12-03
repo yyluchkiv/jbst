@@ -7,7 +7,7 @@ import jbst.foundation.domain.properties.configs.security.websockets.JbstPropert
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsMessageBrokerRegistry;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsStompEndpointRegistry;
 import jbst.foundation.domain.properties.configs.security.websockets.JbstPropertyWebsocketsFeatures;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,7 +41,7 @@ public class JbstPropertySecurityWebsockets extends JbstProperty {
 
     public static JbstPropertySecurityWebsockets random() {
         return new JbstPropertySecurityWebsockets(
-                RandomUtility.randomBoolean(),
+                JbstRandom.randomBoolean(),
                 JbstPropertyWebsocketsCSRF.random(),
                 JbstPropertyWebsocketsStompEndpointRegistry.random(),
                 JbstPropertyWebsocketsMessageBrokerRegistry.random(),

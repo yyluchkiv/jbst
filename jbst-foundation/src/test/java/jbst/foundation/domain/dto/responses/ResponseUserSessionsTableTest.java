@@ -15,7 +15,7 @@ import java.util.List;
 
 import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UK;
 import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.USA;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 

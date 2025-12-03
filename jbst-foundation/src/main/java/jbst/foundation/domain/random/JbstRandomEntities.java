@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.random;
+package jbst.foundation.domain.random;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
@@ -33,21 +33,21 @@ import static jbst.foundation.domain.collections.JbstCollections.emptyQueue;
 
 @SuppressWarnings({ "unchecked" })
 @UtilityClass
-public class EntityUtility {
+public class JbstRandomEntities {
 
     private static final Map<Class<?>, Function<Class<?>, Object>> CONSTRUCTORS_RULES = new HashMap<>();
 
     private static final Deque<Function<Class<?>, Optional<?>>> RANDOM_TYPES_RULES = new LinkedList<>();
 
     static {
-        addConstructorRule(BigDecimal.class, clazz -> RandomUtility.randomBigDecimal());
-        addConstructorRule(BigInteger.class, clazz -> RandomUtility.randomBigInteger());
-        addConstructorRule(Long.class, clazz -> RandomUtility.randomLong());
-        addConstructorRule(Integer.class, clazz -> RandomUtility.randomInteger());
-        addConstructorRule(Double.class, clazz -> RandomUtility.randomDouble());
+        addConstructorRule(BigDecimal.class, clazz -> JbstRandom.randomBigDecimal());
+        addConstructorRule(BigInteger.class, clazz -> JbstRandom.randomBigInteger());
+        addConstructorRule(Long.class, clazz -> JbstRandom.randomLong());
+        addConstructorRule(Integer.class, clazz -> JbstRandom.randomInteger());
+        addConstructorRule(Double.class, clazz -> JbstRandom.randomDouble());
 
-        addConstructorRule(ZoneId.class, clazz -> RandomUtility.randomZoneId());
-        addConstructorRule(TimeZone.class, clazz -> RandomUtility.randomTimeZone());
+        addConstructorRule(ZoneId.class, clazz -> JbstRandom.randomZoneId());
+        addConstructorRule(TimeZone.class, clazz -> JbstRandom.randomTimeZone());
         addConstructorRule(Username.class, clazz -> Username.random());
         addConstructorRule(Password.class, clazz -> Password.random());
         addConstructorRule(Email.class, clazz -> Email.random());
@@ -58,53 +58,53 @@ public class EntityUtility {
         addConstructorRule(UserRequestMetadata.class, clazz -> UserRequestMetadata.random());
 
         addClassRule(parameterClass -> {
-                    var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !RandomUtility.containsPrimitiveWrapper(parameterClass);
+                    var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !JbstRandom.containsPrimitiveWrapper(parameterClass);
                     var isNotEnum = !Enum.class.isAssignableFrom(parameterClass);
                     var isNotAnnotation = !Annotation.class.isAssignableFrom(parameterClass);
                     var isNotInterface = !parameterClass.isInterface();
                     return isNotPrimitiveOrWrapper && isNotEnum && isNotAnnotation && isNotInterface;
                 },
-                EntityUtility::entity
+                JbstRandomEntities::entity
         );
 
-        addClassRule(Class::isEnum, RandomUtility::randomEnumWildcard);
+        addClassRule(Class::isEnum, JbstRandom::randomEnumWildcard);
 
         addClassRule(List.class::equals, parameterClass -> emptyList());
         addClassRule(Set.class::equals, parameterClass -> emptySet());
         addClassRule(Queue.class::equals, parameterClass -> emptyQueue());
 
-        addClassRule(Date.class::equals, parameterClass -> RandomUtility.randomDate());
-        addClassRule(LocalDate.class::equals, parameterClass -> RandomUtility.randomLocalDate());
-        addClassRule(LocalDateTime.class::equals, parameterClass -> RandomUtility.randomLocalDateTime());
+        addClassRule(Date.class::equals, parameterClass -> JbstRandom.randomDate());
+        addClassRule(LocalDate.class::equals, parameterClass -> JbstRandom.randomLocalDate());
+        addClassRule(LocalDateTime.class::equals, parameterClass -> JbstRandom.randomLocalDateTime());
 
-        addClassRule(BigDecimal.class::equals, parameterClass -> RandomUtility.randomBigDecimal());
+        addClassRule(BigDecimal.class::equals, parameterClass -> JbstRandom.randomBigDecimal());
 
-        addClassRule(BigInteger.class::equals, parameterClass -> RandomUtility.randomBigInteger());
+        addClassRule(BigInteger.class::equals, parameterClass -> JbstRandom.randomBigInteger());
 
-        addClassRule(Double.class::equals, parameterClass -> RandomUtility.randomDouble());
-        addClassRule(double.class::equals, parameterClass -> RandomUtility.randomDouble());
+        addClassRule(Double.class::equals, parameterClass -> JbstRandom.randomDouble());
+        addClassRule(double.class::equals, parameterClass -> JbstRandom.randomDouble());
 
-        addClassRule(Long.class::equals, parameterClass -> RandomUtility.randomLong());
-        addClassRule(long.class::equals, parameterClass -> RandomUtility.randomLong());
+        addClassRule(Long.class::equals, parameterClass -> JbstRandom.randomLong());
+        addClassRule(long.class::equals, parameterClass -> JbstRandom.randomLong());
 
-        addClassRule(Integer.class::equals, parameterClass -> RandomUtility.randomInteger());
-        addClassRule(int.class::equals, parameterClass -> RandomUtility.randomInteger());
+        addClassRule(Integer.class::equals, parameterClass -> JbstRandom.randomInteger());
+        addClassRule(int.class::equals, parameterClass -> JbstRandom.randomInteger());
 
-        addClassRule(String.class::equals, parameterClass -> RandomUtility.randomString());
+        addClassRule(String.class::equals, parameterClass -> JbstRandom.randomString());
 
-        addClassRule(Short.class::equals, parameterClass -> RandomUtility.randomShort());
-        addClassRule(short.class::equals, parameterClass -> RandomUtility.randomShort());
+        addClassRule(Short.class::equals, parameterClass -> JbstRandom.randomShort());
+        addClassRule(short.class::equals, parameterClass -> JbstRandom.randomShort());
 
-        addClassRule(Boolean.class::equals, parameterClass -> RandomUtility.randomBoolean());
-        addClassRule(boolean.class::equals, parameterClass -> RandomUtility.randomBoolean());
+        addClassRule(Boolean.class::equals, parameterClass -> JbstRandom.randomBoolean());
+        addClassRule(boolean.class::equals, parameterClass -> JbstRandom.randomBoolean());
 
-        addClassRule(ZoneId.class::equals, parameterClass -> RandomUtility.randomZoneId());
-        addClassRule(TimeZone.class::equals, parameterClass -> RandomUtility.randomTimeZone());
+        addClassRule(ZoneId.class::equals, parameterClass -> JbstRandom.randomZoneId());
+        addClassRule(TimeZone.class::equals, parameterClass -> JbstRandom.randomTimeZone());
         addClassRule(Username.class::equals, parameterClass -> Username.random());
         addClassRule(Password.class::equals, parameterClass -> Password.random());
         addClassRule(Email.class::equals, parameterClass -> Email.random());
-        addClassRule(TimeUnit.class::equals, parameterClass -> RandomUtility.randomTimeUnit());
-        addClassRule(ChronoUnit.class::equals, parameterClass -> RandomUtility.randomChronoUnit());
+        addClassRule(TimeUnit.class::equals, parameterClass -> JbstRandom.randomTimeUnit());
+        addClassRule(ChronoUnit.class::equals, parameterClass -> JbstRandom.randomChronoUnit());
 
         addClassRule(IPAddress.class::equals, parameterClass -> IPAddress.random());
         addClassRule(GeoLocation.class::equals, parameterClass -> GeoLocation.random());
@@ -153,7 +153,7 @@ public class EntityUtility {
     }
 
     public static <T> List<T> list345(Class<? extends T> type) {
-        return list(type, RandomUtility.randomIntegerGreaterThanZeroByBounds(2, 5));
+        return list(type, JbstRandom.randomIntegerGreaterThanZeroByBounds(2, 5));
     }
 
     public static <T> Set<T> set(Class<? extends T> type, int size) {
@@ -161,7 +161,7 @@ public class EntityUtility {
     }
 
     public static <T> Set<T> set345(Class<? extends T> type) {
-        return set(type, RandomUtility.randomIntegerGreaterThanZeroByBounds(2, 5));
+        return set(type, JbstRandom.randomIntegerGreaterThanZeroByBounds(2, 5));
     }
 
     // =================================================================================================================
@@ -218,7 +218,7 @@ public class EntityUtility {
         }
         var constructor = constructors[0];
         var args = Stream.of(constructor.getParameterTypes())
-                .map(EntityUtility::getRandomValueByClass)
+                .map(JbstRandomEntities::getRandomValueByClass)
                 .toArray();
         var instance = (T) constructor.newInstance(args);
         setObjectFields(instance);
@@ -229,7 +229,7 @@ public class EntityUtility {
         var constructor = type.getDeclaredConstructors()[0];
         constructor.setAccessible(true);
         var args = Stream.of(constructor.getParameterTypes())
-                .map(EntityUtility::getRandomValueByClass)
+                .map(JbstRandomEntities::getRandomValueByClass)
                 .toArray();
         // ignored setObjectFields() -> @Data constructor construct immutable object
         return (T) constructor.newInstance(args);

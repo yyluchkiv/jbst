@@ -23,8 +23,8 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
-import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.domain.random.JbstRandom.getEnumMapMappedRandomBoolean;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)

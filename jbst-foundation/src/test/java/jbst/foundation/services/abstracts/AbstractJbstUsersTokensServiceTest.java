@@ -5,7 +5,7 @@ import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.exceptions.tokens.JbstUserEmailConfirmException;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -98,7 +98,7 @@ class AbstractJbstUsersTokensServiceTest {
             JbstUserEmailConfirmException exception
     ) {
         // Arrange
-        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        var token = JbstRandom.randomStringLetterOrNumbersOnly(36);
         when(this.usersTokensRepository.findByValueAsAnyOrNull(token)).thenReturn(userToken);
         var email = nonNull(userToken) ? userToken.email() : null;
 

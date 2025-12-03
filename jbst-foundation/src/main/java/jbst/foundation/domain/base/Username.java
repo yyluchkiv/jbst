@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.springframework.util.StringUtils.hasLength;
 
 public record Username(@NotNull String value) {

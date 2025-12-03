@@ -54,9 +54,9 @@ import static jbst.foundation.domain.databases.JbstUserSession.randomPersistedSe
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;

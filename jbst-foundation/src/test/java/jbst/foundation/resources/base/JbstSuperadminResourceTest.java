@@ -21,8 +21,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.EntityUtility.list345;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandomEntities.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;

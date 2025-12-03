@@ -26,8 +26,8 @@ import static jbst.foundation.domain.jwt.JwtAccessToken.accessTokens;
 import static jbst.foundation.tests.converters.MongoUserConverter.toAccessTokensAsStrings2;
 import static jbst.foundation.tests.converters.MongoUserConverter.toUsernamesAsStrings2;
 import static jbst.foundation.tests.converters.MongoUserSessionConverter.toMetadataRenewCron;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.RandomUtility.randomElement;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandom.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 

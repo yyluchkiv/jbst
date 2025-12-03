@@ -1,7 +1,7 @@
 package jbst.foundation.domain.concurrent;
 
 import jbst.foundation.domain.exceptions.base.JbstTooManyRequestsException;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -68,7 +68,7 @@ class JbstRateLimiterTest {
     void tryAcquireTest(int requests, Duration duration, long timeout, boolean expected) {
         // Arrange
         var componentUnderTest = new JbstRateLimiter<String>(requests, duration, duration.multipliedBy(2));
-        var key = RandomUtility.randomString();
+        var key = JbstRandom.randomString();
 
         // Act
         componentUnderTest.tryAcquire(key);
@@ -84,7 +84,7 @@ class JbstRateLimiterTest {
     void acquireTest(int requests, Duration duration, long timeout, boolean exceptionally) {
         // Arrange
         var componentUnderTest = new JbstRateLimiter<String>(requests, duration, duration.multipliedBy(2));
-        var key = RandomUtility.randomString();
+        var key = JbstRandom.randomString();
 
         // Act
         componentUnderTest.tryAcquire(key);

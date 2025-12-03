@@ -5,8 +5,8 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZero;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZero;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstPropertyEmailsTest {

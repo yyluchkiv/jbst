@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.http.JbstHttpServletRequests.getBaseURL;
 import static jbst.foundation.domain.http.JbstHttpServletRequests.getFullURL;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.mock;

@@ -34,7 +34,7 @@ import java.time.Duration;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;

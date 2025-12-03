@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.tests.enums.EnumValue2.UNKNOWN;
 import static jbst.foundation.domain.enums.JbstEnumsCreator.*;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 

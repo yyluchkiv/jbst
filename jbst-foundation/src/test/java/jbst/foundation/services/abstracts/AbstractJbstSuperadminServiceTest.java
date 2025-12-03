@@ -31,8 +31,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Set;
 
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.EntityUtility.list345;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandomEntities.list345;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

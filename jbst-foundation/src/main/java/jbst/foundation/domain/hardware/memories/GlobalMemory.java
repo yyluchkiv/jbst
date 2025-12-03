@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import static jbst.foundation.domain.constants.JbstConstants.MemoryUnits.BYTES_IN_MEGABYTE;
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZeroByBounds;
 
 // Lombok
 @Getter

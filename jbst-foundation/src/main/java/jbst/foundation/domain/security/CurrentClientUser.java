@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 
 // Lombok
 @Data

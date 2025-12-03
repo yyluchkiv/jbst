@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Map.entry;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 

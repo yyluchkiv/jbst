@@ -9,7 +9,7 @@ import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.integration.postgres.configs.PostgresBeforeAllCallback;
 import jbst.foundation.integration.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,8 +20,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import static jbst.foundation.domain.enums.JbstUserTokenType.EMAIL_CONFIRMATION;
 import static jbst.foundation.domain.enums.JbstUserTokenType.PASSWORD_RESET;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.RandomUtility.randomElement;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandom.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
@@ -51,7 +51,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         var saved = this.usersTokensRepository.saveAll(PostgresDbUserToken.dummies1());
 
         var notExistentTokenId = entity(TokenId.class);
-        var notExistentToken = RandomUtility.randomString();
+        var notExistentToken = JbstRandom.randomString();
 
         var savedToken = saved.get(0);
         var existentTokenId = savedToken.tokenId();

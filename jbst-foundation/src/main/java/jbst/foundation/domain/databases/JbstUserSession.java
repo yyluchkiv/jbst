@@ -6,8 +6,8 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 public record JbstUserSession(

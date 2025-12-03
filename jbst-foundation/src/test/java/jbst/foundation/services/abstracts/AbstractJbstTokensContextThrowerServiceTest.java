@@ -29,9 +29,9 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.invalid;
 import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.valid;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
-import static jbst.foundation.utilities.random.RandomUtility.expiredClaims;
-import static jbst.foundation.utilities.random.RandomUtility.validClaims;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
+import static jbst.foundation.domain.random.JbstRandom.expiredClaims;
+import static jbst.foundation.domain.random.JbstRandom.validClaims;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;

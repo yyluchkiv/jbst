@@ -47,7 +47,7 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.domain.cryptography.JbstEncoding.getBasicAuthenticationHeader;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
-import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
+import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;

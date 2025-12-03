@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
 import java.time.temporal.ChronoUnit;
 import java.util.Set;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomElement;
-import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomElement;
+import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 
 public record TimeAmount(long amount, ChronoUnit unit) {
 

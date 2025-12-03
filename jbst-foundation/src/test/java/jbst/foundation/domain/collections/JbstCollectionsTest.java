@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static jbst.foundation.domain.collections.JbstCollections.*;
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 

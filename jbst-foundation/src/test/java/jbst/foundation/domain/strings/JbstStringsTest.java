@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 import static jbst.foundation.domain.strings.JbstStrings.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

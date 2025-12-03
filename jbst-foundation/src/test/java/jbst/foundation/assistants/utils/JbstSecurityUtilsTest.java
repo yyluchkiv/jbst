@@ -39,7 +39,7 @@ import static java.util.Objects.nonNull;
 import static java.util.TimeZone.getTimeZone;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
-import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;

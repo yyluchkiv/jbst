@@ -1,6 +1,6 @@
 package jbst.foundation.domain.enums;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
+import static jbst.foundation.domain.random.JbstRandom.randomEnum;
 
 public enum JbstIncidentsManagerType {
     SERVER;

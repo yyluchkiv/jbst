@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.nonNull;
 import static java.util.function.Function.identity;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 
 // Lombok
 @Getter

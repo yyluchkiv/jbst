@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 import static jbst.foundation.domain.jsons.JbstJsons.getJsonNodeFieldValueAsBigDecimalOrZero;
 import static jbst.foundation.domain.jsons.JbstJsons.getJsonNodeValueAsBigDecimalOrZero;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

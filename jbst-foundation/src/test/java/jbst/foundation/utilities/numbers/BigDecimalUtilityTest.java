@@ -17,8 +17,8 @@ import static java.math.BigDecimal.ZERO;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.TWO;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
-import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalGreaterThanZero;
-import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalLessThanZero;
+import static jbst.foundation.domain.random.JbstRandom.randomBigDecimalGreaterThanZero;
+import static jbst.foundation.domain.random.JbstRandom.randomBigDecimalLessThanZero;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 

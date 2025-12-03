@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.cryptography.JbstEncryption.decryptAes128;
 import static jbst.foundation.domain.cryptography.JbstEncryption.encryptAes128;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 

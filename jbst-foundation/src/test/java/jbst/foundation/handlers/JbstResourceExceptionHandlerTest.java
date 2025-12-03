@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.exceptions.ExceptionEntityType.ERROR;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })

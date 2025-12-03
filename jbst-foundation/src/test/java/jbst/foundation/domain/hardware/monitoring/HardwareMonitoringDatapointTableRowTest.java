@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HardwareMonitoringDatapointTableRowTest {
