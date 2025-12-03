@@ -43,6 +43,7 @@ public class JbstTime {
     // =================================================================================================================
     // BLOCK: TimeUnit
     // =================================================================================================================
+    @SuppressWarnings("unused")
     public static TimeUnit toTimeUnit(ChronoUnit chronoUnit) {
         if (chronoUnit == ChronoUnit.NANOS) {
             return TimeUnit.NANOSECONDS;

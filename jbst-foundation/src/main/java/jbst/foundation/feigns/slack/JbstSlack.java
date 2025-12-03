@@ -140,6 +140,7 @@ public class JbstSlack {
         worker.start();
     }
 
+    @SuppressWarnings("unused")
     @JbstDevelopmentOnly
     public final void configureHardcodedSleepDelay(String token) {
         this.configure(new JbstSlackConfiguration(token, new TimeAmount(500, ChronoUnit.MILLIS)));

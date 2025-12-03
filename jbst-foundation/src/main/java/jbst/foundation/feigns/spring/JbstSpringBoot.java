@@ -169,6 +169,7 @@ public abstract class JbstSpringBoot {
 
     public abstract ServerName getServerName();
 
+    @SuppressWarnings("unused")
     public final boolean isAlive() {
         var info = this.info();
         return nonNull(info) && !SpringBootActuatorInfo.offline().equals(info);
@@ -192,10 +193,12 @@ public abstract class JbstSpringBoot {
         }
     }
 
+    @SuppressWarnings("unused")
     public final Tuple2<ServerName, SpringBootActuatorInfo> serverNameInfo() {
         return new Tuple2<>(this.getServerName(), this.info());
     }
 
+    @SuppressWarnings("unused")
     public final Tuple2<ServerName, SpringBootActuatorHealth> serverNameHealth() {
         return new Tuple2<>(this.getServerName(), this.health());
     }
