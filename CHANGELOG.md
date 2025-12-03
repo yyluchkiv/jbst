@@ -1,6 +1,2 @@
-### Changelog [v1.43]
-— Modification: create facade JbstExceptions and migrate everything
-— Deletion: Printer.printTableV138()
-— Modification: ExceptionEntity -> JbstExceptionResponse + type as nested enum
-— Modification: TimeUnitUtility -> JbstTime
-— Modification: feigns-client(s) add prefix Jbst
+### Changelog [v1.44]
+— TBD
