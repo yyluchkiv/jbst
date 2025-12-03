@@ -4,3 +4,4 @@
 — Addition: PluralsSet
 — Deletion: AbstractTimerTask dependencies
 — Addition + Deletion: ZonesUtility -> JbstZones
+— Addition + Deletion: HardwareUtility -> JbstHardware
