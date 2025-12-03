@@ -155,7 +155,7 @@ class JbstTokenCookiesProviderTest {
         assertThat(request.getCookies()).isEmpty();
         assertThat(throwable)
                 .isInstanceOf(JbstExceptions.CsrfTokenNotFound.class)
-                .hasMessageContaining("Csrf token not found");
+                .hasMessageContaining("CSRF token not found");
     }
 
     @ParameterizedTest

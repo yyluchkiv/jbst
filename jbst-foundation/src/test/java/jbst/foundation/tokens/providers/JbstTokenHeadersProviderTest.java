@@ -107,7 +107,7 @@ class JbstTokenHeadersProviderTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(JbstExceptions.CsrfTokenNotFound.class)
-                .hasMessageContaining("Csrf token not found");
+                .hasMessageContaining("CSRF token not found");
     }
 
     @Test
