@@ -25,10 +25,8 @@ import java.util.stream.Stream;
 
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Arrays.asList;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static jbst.foundation.domain.tests.enums.EnumUnderTests.*;
 import static jbst.foundation.domain.random.JbstRandom.*;
+import static jbst.foundation.domain.tests.enums.EnumUnderTests.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
@@ -115,7 +113,7 @@ class JbstRandomTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomIntegerGreaterThanZeroTest() {
         // Act
         var actual = randomIntegerGreaterThanZero();
@@ -124,7 +122,7 @@ class JbstRandomTest {
         assertThat(actual).isPositive();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomIntegerLessThanZeroTest() {
         // Act
         var actual = randomIntegerLessThanZero();
@@ -133,7 +131,7 @@ class JbstRandomTest {
         assertThat(actual).isNegative();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomIntegerGreaterThanZeroByBounds(50, 75);
@@ -157,7 +155,7 @@ class JbstRandomTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomLongGreaterThanZeroTest() {
         // Act
         var actual = randomLongGreaterThanZero();
@@ -166,7 +164,7 @@ class JbstRandomTest {
         assertThat(actual).isPositive();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomLongLessThanZeroTest() {
         // Act
         var actual = randomLongLessThanZero();
@@ -175,7 +173,7 @@ class JbstRandomTest {
         assertThat(actual).isNegative();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomLongGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -199,7 +197,7 @@ class JbstRandomTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigDecimalGreaterThanZeroTest() {
         // Act
         var actual = randomBigDecimalGreaterThanZero();
@@ -208,7 +206,7 @@ class JbstRandomTest {
         assertThat(actual).isGreaterThan(BigDecimal.ZERO);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigDecimalLessThanZeroTest() {
         // Act
         var actual = randomBigDecimalLessThanZero();
@@ -217,7 +215,7 @@ class JbstRandomTest {
         assertThat(actual).isLessThan(BigDecimal.ZERO);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigDecimalGreaterThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -232,7 +230,7 @@ class JbstRandomTest {
                 .isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigDecimalLessThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -247,7 +245,7 @@ class JbstRandomTest {
                 .isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(BigDecimal.ONE.negate()));
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigDecimalByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -271,7 +269,7 @@ class JbstRandomTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigIntegerGreaterThanZeroTest() {
         // Act
         var actual = randomBigIntegerGreaterThanZero();
@@ -280,7 +278,7 @@ class JbstRandomTest {
         assertThat(actual).isGreaterThan(BigInteger.ZERO);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigIntegerLessThanZeroTestt() {
         // Act
         var actual = randomBigIntegerLessThanZero();
@@ -289,7 +287,7 @@ class JbstRandomTest {
         assertThat(actual).isLessThan(BigInteger.ZERO);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -304,7 +302,7 @@ class JbstRandomTest {
                 .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigIntegerLessThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -319,7 +317,7 @@ class JbstRandomTest {
                 .isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(BigInteger.ONE.negate()));
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomBigIntegerByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -334,7 +332,7 @@ class JbstRandomTest {
                 .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomStringTest() {
         // Act
         var actual = randomString();
@@ -343,7 +341,7 @@ class JbstRandomTest {
         assertThat(actual).hasSize(32);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomStringLetterOrNumbersOnlyTest() {
         // Arrange
         var regex = "[^a-z0-9 ]";
@@ -357,7 +355,7 @@ class JbstRandomTest {
         assertThat(Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(actual).find()).isFalse();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomIPv4Test() {
         // Act
         var actual = randomIPv4();
@@ -373,7 +371,7 @@ class JbstRandomTest {
         });
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomServerURLTest() {
         // Arrange
         var pattern = Pattern.compile("^"
@@ -472,7 +470,7 @@ class JbstRandomTest {
         assertThat(set).contains(actual);
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomElementExceptList1Test() {
         // Act
         var actual = randomElementExcept(
@@ -486,7 +484,7 @@ class JbstRandomTest {
                 .isNotIn(Set.of(EXAMPLE_4));
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomElementExceptList2Test() {
         // Act
         var actual = randomElementExcept(
@@ -500,7 +498,7 @@ class JbstRandomTest {
                 .isNotIn(Set.of(EXAMPLE_2, EXAMPLE_4));
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomElementExceptList3Test() {
         // Act
         var actual = randomElementExcept(
@@ -512,7 +510,7 @@ class JbstRandomTest {
         assertThat(actual).isNull();
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomElementExceptSetTest() {
         // Act
         var actual = randomElementExcept(
@@ -526,7 +524,7 @@ class JbstRandomTest {
                 .isNotIn(Set.of(EXAMPLE_4));
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomElementExceptSet2Test() {
         // Act
         var actual = randomElementExcept(
@@ -540,7 +538,7 @@ class JbstRandomTest {
                 .isNotIn(Set.of(EXAMPLE_2, EXAMPLE_4));
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomElementExceptSet3Test() {
         // Act
         var actual = randomElementExcept(
@@ -552,7 +550,7 @@ class JbstRandomTest {
         assertThat(actual).isNull();
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomLocalDateTest() {
         // Act
         var actual = randomLocalDate();
@@ -563,7 +561,7 @@ class JbstRandomTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomLocalDateByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
@@ -578,7 +576,7 @@ class JbstRandomTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(2022);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomLocalDateTimeTest() {
         // Act
         var actual = randomLocalDateTime();
@@ -589,7 +587,7 @@ class JbstRandomTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomLocalDateTimeByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
@@ -604,7 +602,7 @@ class JbstRandomTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(2022);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomDateTest() {
         // Act
         var actual = randomDate();
@@ -618,7 +616,7 @@ class JbstRandomTest {
         assertThat(calendar.get(Calendar.YEAR)).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomDateByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
@@ -636,7 +634,7 @@ class JbstRandomTest {
         assertThat(calendar.get(Calendar.YEAR)).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomEnumTest() {
         // Act
         var actual1 = randomEnum(EnumUnderTests.class);
@@ -647,7 +645,7 @@ class JbstRandomTest {
         assertThat(EnumUnderTests.values()).contains(actual2);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomEnumExceptExceptionTest() {
         // Act
         var throwable1 = catchThrowable(() -> randomEnumExcept(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
@@ -661,7 +659,7 @@ class JbstRandomTest {
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomEnumExceptWildcardTest() {
         // Arrange
         var enumValues = List.of(EnumUnderTests.values());
@@ -681,7 +679,7 @@ class JbstRandomTest {
         assertThat(actual1).isNotEqualTo(randomEnum);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomEnumExceptCaseAsListTest() {
         // Arrange
         var enumValues = List.of(EnumUnderTests.values());
@@ -707,7 +705,7 @@ class JbstRandomTest {
         assertThat(randomEnum1).isNotEqualTo(randomEnum2);
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomEnumExceptCaseAsListExceptionTest() {
         // Arrange
         var clazz = EnumUnderTests.class;
@@ -757,7 +755,7 @@ class JbstRandomTest {
         }
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomMethodTest() {
         // Act
         var actual = randomMethod();
@@ -766,7 +764,7 @@ class JbstRandomTest {
         assertThat(actual.getName()).isEqualTo("finalize");
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomZoneIdTest() {
         // Act
         var actual = randomZoneId();
@@ -775,7 +773,7 @@ class JbstRandomTest {
         assertThat(getAvailableZoneIds()).contains(actual.getId());
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomTimeZoneTest() {
         // Act
         var actual = randomTimeZone();
@@ -784,7 +782,7 @@ class JbstRandomTest {
         assertThat(getAvailableZoneIds()).contains(actual.toZoneId().getId());
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomTimeUnitTest() {
         // Act
         var timeUnit = randomTimeUnit();
@@ -793,7 +791,7 @@ class JbstRandomTest {
         assertThat(TimeUnit.values()).contains(timeUnit);
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomChronoUnitTest() {
         // Act
         var chronoUnit = randomChronoUnit();
@@ -802,7 +800,7 @@ class JbstRandomTest {
         assertThat(ChronoUnit.values()).contains(chronoUnit);
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomFeignExceptionTest() {
         // Act
         var actual = randomFeignException();

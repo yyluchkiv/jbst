@@ -48,7 +48,7 @@ import static java.util.stream.Collectors.toUnmodifiableMap;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 
 @Slf4j
 @Component

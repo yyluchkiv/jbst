@@ -30,7 +30,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -102,7 +101,7 @@ class AbstractJbstUsersServiceTest {
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 
-    @RepeatedTest(value = FIVE_TIMES)
+    @RepeatedTest(5)
     void safeSaveAlreadyExistsTest() {
         // Arrange
         var email = Email.hardcoded();
@@ -210,7 +209,7 @@ class AbstractJbstUsersServiceTest {
         // no verifications on static SecurityContextHolder
     }
 
-    @RepeatedTest(FIVE_TIMES)
+    @RepeatedTest(5)
     void changePasswordRequired() {
         // Arrange
         var request = RequestUserChangePasswordBasic.hardcoded();
@@ -233,7 +232,7 @@ class AbstractJbstUsersServiceTest {
         // no verifications on static SecurityContextHolder
     }
 
-    @RepeatedTest(FIVE_TIMES)
+    @RepeatedTest(5)
     void changePassword1() {
         // Arrange
         var request = RequestUserChangePasswordBasic.hardcoded();

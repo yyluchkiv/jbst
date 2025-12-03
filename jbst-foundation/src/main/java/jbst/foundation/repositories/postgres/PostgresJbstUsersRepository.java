@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.SpringAuthorities.SUPERADMIN;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
 
 @SuppressWarnings({"JpaQlInspection", "SqlNoDataSourceInspection"})
 public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUser, String>, JpaSpecificationExecutor<PostgresDbUser>, JbstUsersRepository {

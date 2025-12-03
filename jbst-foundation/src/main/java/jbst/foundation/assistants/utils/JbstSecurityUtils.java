@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
-import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
+import static jbst.foundation.domain.time.JbstTime.convert;
 
 @Slf4j
 @Component
@@ -87,7 +87,7 @@ public class JbstSecurityUtils {
                 .id(UUID.randomUUID().toString())
                 .claims(claims.build())
                 .issuedAt(getIssuedAt())
-                .expiration(convertLocalDateTime(expiration, zoneId))
+                .expiration(convert(expiration, zoneId))
                 .signWith(this.secretKey)
                 .compact();
     }

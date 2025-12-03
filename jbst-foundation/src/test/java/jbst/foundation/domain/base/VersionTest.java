@@ -1,7 +1,6 @@
 package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.SneakyThrows;
@@ -56,7 +55,7 @@ class VersionTest extends AbstractFolderSerializationRunner {
         assertThat(actual.toString()).hasToString(version.value());
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomTest() {
         // Act
         var actual = Version.random();

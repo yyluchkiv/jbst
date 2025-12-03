@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.numbers;
+package jbst.foundation.domain.numbers;
 
 import lombok.experimental.UtilityClass;
 

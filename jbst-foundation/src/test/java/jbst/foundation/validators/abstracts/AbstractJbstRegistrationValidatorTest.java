@@ -14,7 +14,7 @@ import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failur
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
-import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
+import jbst.foundation.domain.strings.JbstMessages;
 import jbst.foundation.validators.JbstRegistrationValidator;
 import jbst.foundation.validators.abtracts.AbstractJbstRegistrationValidator;
 import lombok.RequiredArgsConstructor;
@@ -98,7 +98,7 @@ class AbstractJbstRegistrationValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest0(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Username", request.username().value());
+        var exception = JbstMessages.entityAlreadyUsed("Username", request.username().value());
         assertThat(throwable)
                 .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
@@ -130,7 +130,7 @@ class AbstractJbstRegistrationValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest0(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Email", request.email().value());
+        var exception = JbstMessages.entityAlreadyUsed("Email", request.email().value());
         assertThat(throwable)
                 .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
@@ -177,7 +177,7 @@ class AbstractJbstRegistrationValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Username", request.username().value());
+        var exception = JbstMessages.entityAlreadyUsed("Username", request.username().value());
         assertThat(throwable)
                 .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
@@ -210,7 +210,7 @@ class AbstractJbstRegistrationValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Code", invitation.code());
+        var exception = JbstMessages.entityAlreadyUsed("Code", invitation.code());
         assertThat(throwable)
                 .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);
@@ -247,7 +247,7 @@ class AbstractJbstRegistrationValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityNotFound("Code", invitation);
+        var exception = JbstMessages.entityNotFound("Code", invitation);
         assertThat(throwable)
                 .isInstanceOf(JbstRegistrationException.class)
                 .hasMessage(exception);

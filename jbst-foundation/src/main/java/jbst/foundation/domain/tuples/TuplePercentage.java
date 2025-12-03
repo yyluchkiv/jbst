@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import static java.math.BigDecimal.ZERO;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
-import static jbst.foundation.utilities.numbers.RoundingUtility.divideOrZero;
-import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
+import static jbst.foundation.domain.numbers.RoundingUtility.divideOrZero;
+import static jbst.foundation.domain.numbers.RoundingUtility.scale;
 
 public record TuplePercentage(
         BigDecimal value,

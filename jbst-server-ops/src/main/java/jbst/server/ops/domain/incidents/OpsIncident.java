@@ -22,7 +22,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
-import static jbst.foundation.utilities.time.LocalDateUtility.now;
+import static jbst.foundation.domain.time.LocalDateUtility.now;
 
 // Lombok
 @SuppressWarnings("ClassCanBeRecord")

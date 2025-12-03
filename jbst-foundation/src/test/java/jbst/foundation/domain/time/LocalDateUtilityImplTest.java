@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.time;
+package jbst.foundation.domain.time;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +14,7 @@ import static java.time.Month.*;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.*;
-import static jbst.foundation.utilities.time.LocalDateUtility.*;
+import static jbst.foundation.domain.time.LocalDateUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalDateUtilityImplTest {

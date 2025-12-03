@@ -38,10 +38,9 @@ import static java.time.temporal.ChronoUnit.*;
 import static java.util.Objects.nonNull;
 import static java.util.TimeZone.getTimeZone;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
-import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
+import static jbst.foundation.domain.time.JbstTime.convert;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
@@ -158,7 +157,7 @@ class JbstSecurityUtilsTest {
         assertThat(validatedClaims.username()).isEqualTo(username);
         var zoneId = creationParams.zoneId();
         var timeAmount = this.jbstProperties.getSecurity().getJwt().getAccessToken().getExpiration();
-        var expiration = convertLocalDateTime(
+        var expiration = convert(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
@@ -180,7 +179,7 @@ class JbstSecurityUtilsTest {
         assertThat(validatedClaims.username()).isEqualTo(expectedUsername);
         var zoneId = creationParams.zoneId();
         var timeAmount = this.jbstProperties.getSecurity().getJwt().getRefreshToken().getExpiration();
-        var expiration = convertLocalDateTime(
+        var expiration = convert(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
@@ -200,7 +199,7 @@ class JbstSecurityUtilsTest {
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         assertThat(validatedClaims.username()).isEqualTo(Username.hardcoded());
         var zoneId = nonNull(creationParams.zoneId()) ? creationParams.zoneId() : ZoneId.systemDefault();
-        var expiration = convertLocalDateTime(
+        var expiration = convert(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
@@ -253,7 +252,7 @@ class JbstSecurityUtilsTest {
     @MethodSource("versionsTests")
     void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> authorities) throws ParseException {
         // Arrange
-        var sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT_PATTERN);
+        var sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         sdf.setTimeZone(getTimeZone(UKRAINE));
 
         // Act

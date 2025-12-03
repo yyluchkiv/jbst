@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.time;
+package jbst.foundation.domain.time;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import org.junit.jupiter.api.Test;
@@ -21,8 +21,7 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static java.util.TimeZone.getTimeZone;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.*;
+import static jbst.foundation.domain.time.LocalDateTimeUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalDateTimeUtilityImplTest {
@@ -33,14 +32,14 @@ class LocalDateTimeUtilityImplTest {
     private static Stream<Arguments> formatTest() {
         return Stream.of(
                 Arguments.of(_25_11_2021, ISO_DATE_TIME, "2021-12-25T15:16:17"),
-                Arguments.of(_25_11_2021, ofPattern(DEFAULT_DATE_FORMAT_PATTERN), "25.12.2021 15:16:17")
+                Arguments.of(_25_11_2021, ofPattern("dd.MM.yyyy HH:mm:ss"), "25.12.2021 15:16:17")
         );
     }
 
     private static Stream<Arguments> parseTest() {
         return Stream.of(
                 Arguments.of("2021-12-25T15:16:17", ISO_DATE_TIME, _25_11_2021),
-                Arguments.of("25.12.2021 15:16:17", ofPattern(DEFAULT_DATE_FORMAT_PATTERN), _25_11_2021)
+                Arguments.of("25.12.2021 15:16:17", ofPattern("dd.MM.yyyy HH:mm:ss"), _25_11_2021)
         );
     }
 

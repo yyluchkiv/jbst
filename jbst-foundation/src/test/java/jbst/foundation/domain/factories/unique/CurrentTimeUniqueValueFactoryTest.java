@@ -1,8 +1,7 @@
 package jbst.foundation.domain.factories.unique;
 
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.concurrent.JbstSleep;
-import jbst.foundation.utilities.time.TimestampUtility;
+import jbst.foundation.domain.time.TimestampUtility;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -27,7 +26,7 @@ class CurrentTimeUniqueValueFactoryTest {
         );
     }
 
-    @RepeatedTest(TestsJunitConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void createValueBetween() {
         // Arrange
         var window = 1;

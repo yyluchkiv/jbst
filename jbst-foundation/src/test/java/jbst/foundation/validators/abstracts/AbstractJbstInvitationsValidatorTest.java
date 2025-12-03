@@ -30,8 +30,8 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.base.AbstractAuthority.*;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.strings.JbstMessages.entityAccessDenied;
+import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.verify;

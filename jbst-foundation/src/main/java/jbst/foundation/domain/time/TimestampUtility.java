@@ -1,8 +1,7 @@
-package jbst.foundation.utilities.time;
+package jbst.foundation.domain.time;
 
 import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import jbst.foundation.domain.base.Timestamp;
-import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
@@ -13,7 +12,7 @@ import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
+import static jbst.foundation.domain.time.LocalDateTimeUtility.getTimestamp;
 
 @JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass

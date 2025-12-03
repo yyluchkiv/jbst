@@ -1,7 +1,6 @@
 package jbst.foundation.domain.http.requests;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
@@ -41,7 +40,7 @@ class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
         assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void validTest() {
         // Act
         var actual = UserAgentDetails.valid();
@@ -55,7 +54,7 @@ class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getWhat()).isEqualTo("Chrome, macOS on Desktop");
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void invalidTest() {
         // Act
         var actual = UserAgentDetails.invalid();
@@ -69,7 +68,7 @@ class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomTest() {
         // Act
         var userAgentDetails = UserAgentDetails.random();

@@ -1,9 +1,9 @@
 package jbst.foundation.domain.http.requests;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoLocation;
-import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleExceptionDetails;
@@ -12,8 +12,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.pleaseWait;
 import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static jbst.foundation.domain.strings.JbstMessages.pleaseWait;
 import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 
 // JSON
@@ -85,7 +85,7 @@ public class UserRequestMetadata {
         if (this.status.isCompleted()) {
             return new Tuple3<>(this.geoLocation.getIpAddr(), this.geoLocation.getCountryFlag(), this.geoLocation.getWhere());
         } else {
-            return new Tuple3<>(this.geoLocation.getIpAddr(), TestsFlagsConstants.UNKNOWN, pleaseWait("Processing"));
+            return new Tuple3<>(this.geoLocation.getIpAddr(), JbstConstants.Flags.UNKNOWN, pleaseWait("Processing"));
         }
     }
 

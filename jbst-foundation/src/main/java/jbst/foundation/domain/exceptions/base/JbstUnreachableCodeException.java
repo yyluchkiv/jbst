@@ -1,6 +1,6 @@
 package jbst.foundation.domain.exceptions.base;
 
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 
 public class JbstUnreachableCodeException extends IllegalArgumentException {
 

@@ -1,6 +1,6 @@
 package jbst.foundation.domain.cryptography;
 
-import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
+import jbst.foundation.domain.strings.JbstMessages;
 import lombok.experimental.UtilityClass;
 
 import javax.crypto.Mac;
@@ -29,8 +29,8 @@ public class JbstHashing {
     }
 
     public static String shaByAlgorithm(String value, String hashingKey, String algorithm) {
-        assertNonNullOrThrow(value, ExceptionsMessagesUtility.invalidAttribute("value"));
-        assertNonNullOrThrow(hashingKey, ExceptionsMessagesUtility.invalidAttribute("hashingKey"));
+        assertNonNullOrThrow(value, JbstMessages.invalidAttribute("value"));
+        assertNonNullOrThrow(hashingKey, JbstMessages.invalidAttribute("hashingKey"));
         try {
             var mac = Mac.getInstance(algorithm);
             var keySpec = new SecretKeySpec(hashingKey.getBytes(UTF_8), algorithm);

@@ -1,6 +1,5 @@
 package jbst.foundation.domain.http.requests;
 
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +33,7 @@ class IPAddressTest {
         assertThat(actual.value()).isEqualTo(value);
     }
 
-    @RepeatedTest(TestsJunitConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void randomTest() {
         // Act
         var actual = IPAddress.random();

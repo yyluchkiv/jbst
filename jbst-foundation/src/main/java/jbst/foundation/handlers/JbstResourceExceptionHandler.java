@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.unexpectedErrorOccurred;
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
+import static jbst.foundation.domain.strings.JbstMessages.unexpectedErrorOccurred;
 
 // WARNING: @Order by default uses Ordered.LOWEST_PRECEDENCE
 @Slf4j

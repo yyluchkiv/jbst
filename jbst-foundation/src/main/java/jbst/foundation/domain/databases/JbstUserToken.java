@@ -6,7 +6,7 @@ import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.random.JbstRandom;
 
 import static jbst.foundation.domain.enums.JbstUserTokenType.*;
-import static jbst.foundation.utilities.time.TimestampUtility.isPast;
+import static jbst.foundation.domain.time.TimestampUtility.isPast;
 
 public record JbstUserToken(
         TokenId id,

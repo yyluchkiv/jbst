@@ -9,7 +9,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static jbst.foundation.domain.strings.JbstMessages.entityAlreadyUsed;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJbstUsersValidator implements JbstUsersValidator {

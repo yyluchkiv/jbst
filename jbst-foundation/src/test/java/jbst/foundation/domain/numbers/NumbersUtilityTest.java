@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.numbers;
+package jbst.foundation.domain.numbers;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.numbers.NumbersUtility.getReadableNumber;
+import static jbst.foundation.domain.numbers.NumbersUtility.getReadableNumber;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NumbersUtilityTest {

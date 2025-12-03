@@ -18,11 +18,10 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
-import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.reflection.JbstReflections.setPrivateField;
+import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CurrentClientUserTest extends AbstractFolderSerializationRunner {
@@ -60,7 +59,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         return "jsons";
     }
 
-    @RepeatedTest(FIVE_TIMES)
+    @RepeatedTest(5)
     void serializeTest() {
         // Arrange
         var currentClientUser = new CurrentClientUser(

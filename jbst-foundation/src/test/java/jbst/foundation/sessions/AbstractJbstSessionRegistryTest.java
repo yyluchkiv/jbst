@@ -50,7 +50,7 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.reflection.JbstReflections.setPrivateFieldOfSuperClass;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

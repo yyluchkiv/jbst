@@ -19,7 +19,7 @@ import java.util.List;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
 import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @NoArgsConstructor

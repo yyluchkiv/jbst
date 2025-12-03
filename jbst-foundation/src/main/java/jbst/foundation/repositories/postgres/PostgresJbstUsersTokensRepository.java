@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 public interface PostgresJbstUsersTokensRepository extends JpaRepository<PostgresDbUserToken, String>, JbstUsersTokensRepository {
 

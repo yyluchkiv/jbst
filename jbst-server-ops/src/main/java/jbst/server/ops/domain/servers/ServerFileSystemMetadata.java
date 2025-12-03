@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.is;
+import static jbst.foundation.domain.strings.JbstTraces.getTrace;
+import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
 import static jbst.server.ops.domain.servers.ServerFileSystemMetadata.FileSystemMetadataRow.PERCENTAGE_REVERSED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 

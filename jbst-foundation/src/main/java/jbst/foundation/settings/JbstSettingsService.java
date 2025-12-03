@@ -20,8 +20,8 @@ import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
 @SuppressWarnings("LoggingSimilarMessage")

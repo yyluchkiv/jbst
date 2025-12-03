@@ -9,9 +9,9 @@ import lombok.ToString;
 import java.time.ZoneId;
 
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
+import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @Getter

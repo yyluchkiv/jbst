@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.domain.random.JbstRandom.validClaims;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JwtTokenValidatedClaimsTest {
@@ -56,7 +55,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.authorities()).isEmpty();
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void validAccessTokenTest() {
         // Arrange
         var token = JwtAccessToken.random();
@@ -78,7 +77,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void validRefreshTokenTest() {
         // Arrange
         var token = JwtRefreshToken.random();

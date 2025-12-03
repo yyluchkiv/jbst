@@ -1,14 +1,13 @@
-package jbst.foundation.utilities.exceptions;
+package jbst.foundation.domain.strings;
 
 import org.junit.jupiter.api.RepeatedTest;
 
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
+import static jbst.foundation.domain.strings.JbstTraces.getTrace;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TraceUtilityTest {
+class JbstTracesTest {
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void getTraceTest() {
         // Arrange
         var npe = new NullPointerException("jbst");
@@ -21,6 +20,6 @@ class TraceUtilityTest {
         assertThat(actual.value()).isNotNull();
         assertThat(actual.value().length()).isGreaterThan(10000);
         assertThat(actual.value()).startsWith("java.lang.NullPointerException: jbst");
-        assertThat(actual.value()).contains("at jbst.foundation.utilities.exceptions.TraceUtilityTest.getTraceTest(TraceUtilityTest.java:14)");
+        assertThat(actual.value()).contains("at jbst.foundation.domain.strings.JbstTracesTest.getTraceTest");
     }
 }

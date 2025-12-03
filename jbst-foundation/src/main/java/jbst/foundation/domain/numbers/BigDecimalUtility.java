@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.numbers;
+package jbst.foundation.domain.numbers;
 
 import jbst.foundation.domain.exceptions.base.JbstUnreachableCodeException;
 import jbst.foundation.domain.tuples.TupleRange;
@@ -13,7 +13,7 @@ import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
-import static jbst.foundation.utilities.numbers.RoundingUtility.divide;
+import static jbst.foundation.domain.numbers.RoundingUtility.divide;
 
 @UtilityClass
 public class BigDecimalUtility {

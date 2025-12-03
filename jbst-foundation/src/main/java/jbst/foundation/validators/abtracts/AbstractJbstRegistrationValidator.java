@@ -17,8 +17,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.strings.JbstMessages.entityAlreadyUsed;
+import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJbstRegistrationValidator implements JbstRegistrationValidator {

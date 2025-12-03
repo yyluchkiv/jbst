@@ -1,6 +1,5 @@
 package jbst.foundation.domain.collections;
 
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -12,7 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 @Slf4j
 class JbstPartitionsTest {
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void integrationTest() {
         // Arrange
         var values = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);

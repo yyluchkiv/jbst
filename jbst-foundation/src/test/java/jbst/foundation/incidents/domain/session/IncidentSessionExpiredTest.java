@@ -1,13 +1,13 @@
 package jbst.foundation.incidents.domain.session;
 
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentSessionExpiredTest {
@@ -19,7 +19,7 @@ class IncidentSessionExpiredTest {
         var incident = new IncidentSessionExpired(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", UK, "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", JbstConstants.Flags.UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -37,7 +37,7 @@ class IncidentSessionExpiredTest {
                 .containsEntry("incidentType", "Session Expired")
                 .containsEntry("username", username)
                 .containsEntry("browser", "Mozilla")
-                .containsEntry("countryFlag", UK)
+                .containsEntry("countryFlag", JbstConstants.Flags.UK)
                 .containsEntry("ipAddress", "2.2.2.2")
                 .containsEntry("what", "Mozilla, MacOS on Desktop")
                 .containsEntry("where", "🇬🇧 UK, London");

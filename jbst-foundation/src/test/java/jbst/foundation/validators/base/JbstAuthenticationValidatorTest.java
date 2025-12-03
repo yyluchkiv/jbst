@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;

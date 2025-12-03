@@ -3,9 +3,8 @@ package jbst.foundation.domain.geo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
-import jbst.foundation.domain.tuples.Tuple5;
 import jbst.foundation.domain.random.JbstRandom;
+import jbst.foundation.domain.tuples.Tuple5;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -22,16 +21,16 @@ import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 @ToString
 public class GeoLocation {
     private static final List<Tuple5<String, String, String, String, String>> TEST_DATA = List.of(
-            new Tuple5<>("103.194.114.1", "Ukraine", "UA", TestsFlagsConstants.UKRAINE, "Lviv"),
-            new Tuple5<>("103.194.114.2", "Ukraine", "UA", TestsFlagsConstants.UKRAINE, "Kyiv"),
-            new Tuple5<>("1.186.0.1", "United Kingdom", "UK", TestsFlagsConstants.UK, "London"),
-            new Tuple5<>("1.186.0.2", "United Kingdom", "UK", TestsFlagsConstants.UK, "Manchester"),
-            new Tuple5<>("55.255.1.1", "USA", "US", TestsFlagsConstants.USA, "New York"),
-            new Tuple5<>("55.255.1.2", "USA", "US", TestsFlagsConstants.USA, "Washington"),
-            new Tuple5<>("55.255.1.3", "USA", "US", TestsFlagsConstants.USA, "Las Vegas"),
-            new Tuple5<>("55.255.1.4", "USA", "US", TestsFlagsConstants.USA, "Los Angeles"),
-            new Tuple5<>("149.90.0.1", "Portugal", "PT", TestsFlagsConstants.PORTUGAL, "Porto"),
-            new Tuple5<>("149.90.0.2", "Portugal", "PT", TestsFlagsConstants.PORTUGAL, "Lisbon")
+            new Tuple5<>("103.194.114.1", "Ukraine", "UA", JbstConstants.Flags.UKRAINE, "Lviv"),
+            new Tuple5<>("103.194.114.2", "Ukraine", "UA", JbstConstants.Flags.UKRAINE, "Kyiv"),
+            new Tuple5<>("1.186.0.1", "United Kingdom", "UK", JbstConstants.Flags.UK, "London"),
+            new Tuple5<>("1.186.0.2", "United Kingdom", "UK", JbstConstants.Flags.UK, "Manchester"),
+            new Tuple5<>("55.255.1.1", "USA", "US", JbstConstants.Flags.USA, "New York"),
+            new Tuple5<>("55.255.1.2", "USA", "US", JbstConstants.Flags.USA, "Washington"),
+            new Tuple5<>("55.255.1.3", "USA", "US", JbstConstants.Flags.USA, "Las Vegas"),
+            new Tuple5<>("55.255.1.4", "USA", "US", JbstConstants.Flags.USA, "Los Angeles"),
+            new Tuple5<>("149.90.0.1", "Portugal", "PT", JbstConstants.Flags.PORTUGAL, "Porto"),
+            new Tuple5<>("149.90.0.2", "Portugal", "PT", JbstConstants.Flags.PORTUGAL, "Lisbon")
     );
 
     private final String ipAddr;
@@ -60,7 +59,7 @@ public class GeoLocation {
         if (nonNull(countryFlag)) {
             this.countryFlag = countryFlag;
         } else {
-            this.countryFlag = TestsFlagsConstants.UNKNOWN;
+            this.countryFlag = JbstConstants.Flags.UNKNOWN;
         }
         if (nonNull(country)) {
             this.country = country.trim();
@@ -80,7 +79,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 JbstConstants.Strings.UNKNOWN,
                 JbstConstants.Strings.UNKNOWN,
-                TestsFlagsConstants.UNKNOWN,
+                JbstConstants.Flags.UNKNOWN,
                 JbstConstants.Strings.UNKNOWN,
                 exceptionDetails
         );
@@ -93,7 +92,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 JbstConstants.Strings.UNDEFINED,
                 JbstConstants.Strings.UNDEFINED,
-                TestsFlagsConstants.UNKNOWN,
+                JbstConstants.Flags.UNKNOWN,
                 JbstConstants.Strings.UNDEFINED,
                 ""
         );
@@ -158,7 +157,7 @@ public class GeoLocation {
         if (countryPresent) {
             return countryFlagPrefix + this.country + ", " + this.city;
         }
-        return TestsFlagsConstants.UNKNOWN + " " + JbstConstants.Strings.UNKNOWN;
+        return JbstConstants.Flags.UNKNOWN + " " + JbstConstants.Strings.UNKNOWN;
     }
 
     // =================================================================================================================

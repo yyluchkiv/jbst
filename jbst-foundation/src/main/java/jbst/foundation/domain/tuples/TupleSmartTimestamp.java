@@ -8,8 +8,8 @@ import lombok.ToString;
 import java.time.ZoneId;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
+import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
 
 // Lombok
 @Getter

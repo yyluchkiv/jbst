@@ -1,7 +1,6 @@
 package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.RepeatedTest;
@@ -47,7 +46,7 @@ class PasswordTest extends AbstractSerializationDeserializationRunner {
         assertThat(actual.toString()).hasToString(PASSWORD.value());
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomTest() {
         // Act
         var actual = Password.random();

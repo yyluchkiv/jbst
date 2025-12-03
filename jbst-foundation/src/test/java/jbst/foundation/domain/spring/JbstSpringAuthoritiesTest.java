@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static jbst.foundation.domain.base.AbstractAuthority.*;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.TWICE;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getResponseInvitationsAuthoritiesAsField;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +30,7 @@ class JbstSpringAuthoritiesTest {
         );
     }
 
-    @RepeatedTest(TWICE)
+    @RepeatedTest(2)
     void getSimpleGrantedAuthoritiesAsListTest() {
         // Act
         var actual = getSimpleGrantedAuthorities(
@@ -47,7 +46,7 @@ class JbstSpringAuthoritiesTest {
         actual.forEach(authority -> assertThat(authority).isInstanceOf(SimpleGrantedAuthority.class));
     }
 
-    @RepeatedTest(TWICE)
+    @RepeatedTest(2)
     void getSimpleGrantedAuthoritiesAsSetTest() {
         // Act
         var actual = getSimpleGrantedAuthorities(

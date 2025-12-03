@@ -7,7 +7,6 @@ import jbst.foundation.domain.exceptions.geo.JbstGeoLocationNotFoundException;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -40,12 +39,12 @@ class JbstGeoUtilsTest {
 
     private static Stream<Arguments> getFlagEmojiTest() {
         return Stream.of(
-                Arguments.of(null, null, TestsFlagsConstants.UNKNOWN),
-                Arguments.of("Ukraine", "UA", TestsFlagsConstants.UKRAINE),
-                Arguments.of("Portugal", "PT", TestsFlagsConstants.PORTUGAL),
-                Arguments.of("United States", "US", TestsFlagsConstants.USA),
-                Arguments.of(JbstConstants.Strings.UNKNOWN, JbstConstants.Strings.UNKNOWN, TestsFlagsConstants.UNKNOWN),
-                Arguments.of(JbstConstants.Strings.UNDEFINED, JbstConstants.Strings.UNDEFINED, TestsFlagsConstants.UNKNOWN)
+                Arguments.of(null, null, JbstConstants.Flags.UNKNOWN),
+                Arguments.of("Ukraine", "UA", JbstConstants.Flags.UKRAINE),
+                Arguments.of("Portugal", "PT", JbstConstants.Flags.PORTUGAL),
+                Arguments.of("United States", "US", JbstConstants.Flags.USA),
+                Arguments.of(JbstConstants.Strings.UNKNOWN, JbstConstants.Strings.UNKNOWN, JbstConstants.Flags.UNKNOWN),
+                Arguments.of(JbstConstants.Strings.UNDEFINED, JbstConstants.Strings.UNDEFINED, JbstConstants.Flags.UNKNOWN)
         );
     }
 

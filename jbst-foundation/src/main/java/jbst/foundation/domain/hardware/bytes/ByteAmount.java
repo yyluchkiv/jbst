@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
 
 // JSON
 // NOT used in serialization/deserialization

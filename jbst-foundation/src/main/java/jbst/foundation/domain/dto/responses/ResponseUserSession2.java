@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.time.TimeAgo;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.domain.tuples.TupleExceptionDetails;
-import jbst.foundation.utilities.time.TimestampUtility;
+import jbst.foundation.domain.time.TimestampUtility;
 
 import java.util.Comparator;
 

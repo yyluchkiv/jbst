@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UKRAINE;
+import static jbst.foundation.domain.constants.JbstConstants.Flags.UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {

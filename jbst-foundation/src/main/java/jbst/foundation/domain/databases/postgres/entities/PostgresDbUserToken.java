@@ -19,7 +19,7 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
-import static jbst.foundation.utilities.time.TimestampUtility.*;
+import static jbst.foundation.domain.time.TimestampUtility.*;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok

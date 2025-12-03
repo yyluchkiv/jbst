@@ -48,7 +48,7 @@ public class JbstConstants {
         public static final String HARDCODED = "yyluchkiv.com";
     }
 
-    public class Dropdowns {
+    public static class Dropdowns {
         public static final String ALL = "All";
     }
 
@@ -59,11 +59,19 @@ public class JbstConstants {
         public static final AnsiFormat BLACK_BOLD_TEXT = new AnsiFormat(BLACK_TEXT(), BOLD());
     }
 
-    public class Files {
+    public static class Files {
         public static final String PATH_DELIMITER = "/";
     }
 
-    public class Logs {
+    public static class Flags {
+        public static final String UNKNOWN = "🏴‍";
+        public static final String UKRAINE = "🇺🇦";
+        public static final String PORTUGAL = "🇵🇹";
+        public static final String UK = "🇬🇧";
+        public static final String USA = "🇺🇸";
+    }
+
+    public static class Logs {
         // =================================================================================================================
         // Prefixes
         // =================================================================================================================
