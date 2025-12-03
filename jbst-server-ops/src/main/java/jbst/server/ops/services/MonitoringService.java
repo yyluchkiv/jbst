@@ -3,7 +3,7 @@ package jbst.server.ops.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.feigns.github.GithubClient;
+import jbst.foundation.feigns.github.JbstGithub;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.server.ops.domain.computed.ServerInfinityTimerTask;
 import jbst.server.ops.domain.computed.ServerInfinityTimerTaskSpringBeans;
@@ -54,7 +54,7 @@ public class MonitoringService {
     // Computing
     private final ServerInfinityTimerTaskSpringBeans serverInfinityTimerTaskSpringBeans;
     // Clients
-    private final GithubClient githubClient;
+    private final JbstGithub github;
     // Spring
     private final ResourceLoader resourceLoader;
     private final ObjectMapper objectMapper;
@@ -194,8 +194,8 @@ public class MonitoringService {
                 var gc = this.serverProperties.getServers().getGithub();
                 copyURLToFile(
                         new URL(
-                                this.githubClient.getContents(
-                                        new GithubClient.GithubRepoContentsRequest(
+                                this.github.getContents(
+                                        new JbstGithub.GithubRepoContentsRequest(
                                                 gc.getToken(),
                                                 gc.getOwner(),
                                                 gc.getRepo(),

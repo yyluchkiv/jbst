@@ -16,28 +16,28 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SpringBootClientTest extends AbstractFolderSerializationRunner {
+class JbstSpringBootTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> healthArgs() {
         return Stream.of(
-                Arguments.of(new SpringBootClient.SpringBootActuatorHealth(Status.UP), "health-1.json"),
-                Arguments.of(new SpringBootClient.SpringBootActuatorHealth(Status.DOWN), "health-2.json"),
-                Arguments.of(SpringBootClient.SpringBootActuatorHealth.unknown(), "health-3.json")
+                Arguments.of(new JbstSpringBoot.SpringBootActuatorHealth(Status.UP), "health-1.json"),
+                Arguments.of(new JbstSpringBoot.SpringBootActuatorHealth(Status.DOWN), "health-2.json"),
+                Arguments.of(JbstSpringBoot.SpringBootActuatorHealth.unknown(), "health-3.json")
         );
     }
 
     private static Stream<Arguments> infoArgs() {
         return Stream.of(
                 Arguments.of(
-                        SpringBootClient.SpringBootActuatorInfo.dash(),
+                        JbstSpringBoot.SpringBootActuatorInfo.dash(),
                         "—",
                         true,
                         Version.dash(),
                         "info-1.json"
                 ),
                 Arguments.of(
-                        new SpringBootClient.SpringBootActuatorInfo(
-                                SpringBootClient.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
+                        new JbstSpringBoot.SpringBootActuatorInfo(
+                                JbstSpringBoot.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 new ArrayList<>(),
                                 null,
                                 null
@@ -48,8 +48,8 @@ class SpringBootClientTest extends AbstractFolderSerializationRunner {
                         "info-2.json"
                 ),
                 Arguments.of(
-                        new SpringBootClient.SpringBootActuatorInfo(
-                                SpringBootClient.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
+                        new JbstSpringBoot.SpringBootActuatorInfo(
+                                JbstSpringBoot.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 new ArrayList<>(List.of("dev", "prod")),
                                 null,
                                 null
@@ -60,8 +60,8 @@ class SpringBootClientTest extends AbstractFolderSerializationRunner {
                         "info-3.json"
                 ),
                 Arguments.of(
-                        new SpringBootClient.SpringBootActuatorInfo(
-                                SpringBootClient.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
+                        new JbstSpringBoot.SpringBootActuatorInfo(
+                                JbstSpringBoot.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 null,
                                 "stage",
                                 null
@@ -72,8 +72,8 @@ class SpringBootClientTest extends AbstractFolderSerializationRunner {
                         "info-4.json"
                 ),
                 Arguments.of(
-                        new SpringBootClient.SpringBootActuatorInfo(
-                                SpringBootClient.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
+                        new JbstSpringBoot.SpringBootActuatorInfo(
+                                JbstSpringBoot.SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 null,
                                 null,
                                 null
@@ -84,7 +84,7 @@ class SpringBootClientTest extends AbstractFolderSerializationRunner {
                         "info-5.json"
                 ),
                 Arguments.of(
-                        SpringBootClient.SpringBootActuatorInfo.hardcoded(),
+                        JbstSpringBoot.SpringBootActuatorInfo.hardcoded(),
                         "dev",
                         false,
                         Version.hardcoded(),
@@ -103,10 +103,10 @@ class SpringBootClientTest extends AbstractFolderSerializationRunner {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("healthArgs")
-    void healthTest(SpringBootClient.SpringBootActuatorHealth springBootActuatorHealth, String fileName) {
+    void healthTest(JbstSpringBoot.SpringBootActuatorHealth springBootActuatorHealth, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
-        var typeReference = new TypeReference<SpringBootClient.SpringBootActuatorHealth>() {};
+        var typeReference = new TypeReference<JbstSpringBoot.SpringBootActuatorHealth>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
@@ -118,10 +118,10 @@ class SpringBootClientTest extends AbstractFolderSerializationRunner {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("infoArgs")
-    void infoTest(SpringBootClient.SpringBootActuatorInfo springBootActuatorInfo, String profile, boolean isDash, Version version, String fileName) {
+    void infoTest(JbstSpringBoot.SpringBootActuatorInfo springBootActuatorInfo, String profile, boolean isDash, Version version, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
-        var typeReference = new TypeReference<SpringBootClient.SpringBootActuatorInfo>() {};
+        var typeReference = new TypeReference<JbstSpringBoot.SpringBootActuatorInfo>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);

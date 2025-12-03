@@ -21,7 +21,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
 @AllArgsConstructor
-public abstract class SpringBootClient {
+public abstract class JbstSpringBoot {
 
     // Classes: Definitions
     public interface SpringBootDefinition {

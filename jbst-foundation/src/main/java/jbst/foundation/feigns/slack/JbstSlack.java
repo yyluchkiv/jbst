@@ -30,7 +30,7 @@ import static jbst.foundation.domain.concurrent.JbstSleep.sleepMilliseconds;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SlackClient {
+public class JbstSlack {
 
     // Classes: Definitions
     public interface SlackDefinition {

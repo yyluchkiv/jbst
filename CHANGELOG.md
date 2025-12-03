@@ -3,3 +3,4 @@
 — Deletion: Printer.printTableV138()
 — Modification: ExceptionEntity -> JbstExceptionResponse + type as nested enum
 — Modification: TimeUnitUtility -> JbstTime
+— Modification: feigns-client(s) add prefix Jbst

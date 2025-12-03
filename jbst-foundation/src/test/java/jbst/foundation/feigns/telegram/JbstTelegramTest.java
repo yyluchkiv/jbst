@@ -15,7 +15,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TelegramClientTest {
+class JbstTelegramTest {
 
     @Configuration
     @Import({
@@ -25,20 +25,20 @@ class TelegramClientTest {
 
     }
 
-    private final TelegramClient telegramClient;
+    private final JbstTelegram telegram;
 
     @Disabled
     @Test
     void sendMessage() {
         // Arrange
-        var message = new TelegramClient.TelegramMessageRequest(
+        var message = new JbstTelegram.TelegramMessageRequest(
                 "<?>",
                 "<?>",
                 "<@username> <b>V1</b>"
         );
 
         // Act
-        this.telegramClient.sendMessage(message);
+        this.telegram.sendMessage(message);
 
         // Assert
         // no asserts

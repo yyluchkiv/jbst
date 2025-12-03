@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 @SuppressWarnings("unused")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class GithubClient {
+public class JbstGithub {
 
     // Classes: Definitions
     public interface GithubDefinition {
