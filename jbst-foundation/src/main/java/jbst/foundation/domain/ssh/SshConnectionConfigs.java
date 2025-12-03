@@ -2,7 +2,7 @@ package jbst.foundation.domain.ssh;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.time.TimeAmount;
+import jbst.foundation.domain.time.JbstTimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,4 +33,4 @@ public class SshConnectionConfigs {
     @Nullable
     private final Password sshKeyPassword;
     // Timeout
-    private final TimeAmount timeout = new TimeAmount(15L, SECONDS);}
+    private final JbstTimeAmount timeout = new JbstTimeAmount(15L, SECONDS);}

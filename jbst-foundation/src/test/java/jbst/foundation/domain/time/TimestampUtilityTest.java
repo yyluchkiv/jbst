@@ -22,7 +22,7 @@ class TimestampUtilityTest {
     private static final Long _2_MINUTES_FUTURE = getFutureTimestamp(Duration.ofMinutes(2L)).value();
     private static final Long _1_HOUR_FUTURE = getFutureTimestamp(Duration.ofHours(1L)).value();
 
-    private static final long _5_SECONDS = new TimeAmount(5L, SECONDS).toMillis();
+    private static final long _5_SECONDS = new JbstTimeAmount(5L, SECONDS).toMillis();
 
     private static Stream<Arguments> toUnixTimeTest() {
         return Stream.of(
@@ -180,7 +180,7 @@ class TimestampUtilityTest {
         var currentTimestamp = getCurrentTimestamp();
 
         // Act
-        var actual = getPastRange(currentTimestamp, new TimeAmount(5, SECONDS));
+        var actual = getPastRange(currentTimestamp, new JbstTimeAmount(5, SECONDS));
 
         // Assert
         assertThat(actual.to()).isGreaterThan(actual.from());
@@ -193,7 +193,7 @@ class TimestampUtilityTest {
         var currentTimestamp = getCurrentTimestamp();
 
         // Act
-        var actual = getFutureRange(currentTimestamp, new TimeAmount(5, SECONDS));
+        var actual = getFutureRange(currentTimestamp, new JbstTimeAmount(5, SECONDS));
 
         // Assert
         assertThat(actual.to()).isGreaterThan(actual.from());

@@ -6,7 +6,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -39,7 +39,7 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     // Server
     // =================================================================================================================
     @Override
-    public ResetServerStatus getResetServerStatus() {
+    public JbstSystemResetServerStatus getResetServerStatus() {
         return this.resetServerTask.getStatus();
     }
 

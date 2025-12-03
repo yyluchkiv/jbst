@@ -8,7 +8,7 @@ import feign.RequestLine;
 import feign.RetryableException;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.time.TimeAmount;
+import jbst.foundation.domain.time.JbstTimeAmount;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +65,7 @@ public class JbstSlack {
     }
 
     // Classes: Base
-    public record JbstSlackConfiguration(String token, TimeAmount sleepDelay) { }
+    public record JbstSlackConfiguration(String token, JbstTimeAmount sleepDelay) { }
 
     public record JbstSlackMessageTs(@NotNull String value) {
         @JsonCreator
@@ -143,7 +143,7 @@ public class JbstSlack {
     @SuppressWarnings("unused")
     @JbstDevelopmentOnly
     public final void configureHardcodedSleepDelay(String token) {
-        this.configure(new JbstSlackConfiguration(token, new TimeAmount(500, ChronoUnit.MILLIS)));
+        this.configure(new JbstSlackConfiguration(token, new JbstTimeAmount(500, ChronoUnit.MILLIS)));
     }
 
     public final JbstSlackMessageTs sendMessage(JbstSlackChatMessage req) throws JbstSlackException {
@@ -189,6 +189,17 @@ public class JbstSlack {
         for (var request : reqs) {
             this.submitMessage(request);
         }
+    }
+
+    // =================================================================================================================
+    // STATIC
+    // =================================================================================================================
+    public static String getSlackTable(String header, String table) {
+        return "```\n%s\n%s\n```".formatted(header, table);
+    }
+
+    public static String getSlackMessage(String text) {
+        return "```\n%s\n```".formatted(text);
     }
 
     // =================================================================================================================

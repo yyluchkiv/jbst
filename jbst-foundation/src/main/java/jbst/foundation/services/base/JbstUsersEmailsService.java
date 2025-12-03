@@ -13,13 +13,13 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.function.Function;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.domain.time.LocalDateUtility.now;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -61,7 +61,7 @@ public class JbstUsersEmailsService {
                 function.getTemplateName(this.getTemplateNameFNC()),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getApp().getMaven().getVersion()),
-                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("year", LocalDate.now(UTC).getYear()),
                         Map.entry("username", function.username().value()),
                         Map.entry("accessMethod", function.accountAccessMethod().getValue()),
                         Map.entry("where", function.userRequestMetadata().getGeoLocation().getWhere()),
@@ -82,7 +82,7 @@ public class JbstUsersEmailsService {
                 )),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getApp().getMaven().getVersion()),
-                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("year", LocalDate.now(UTC).getYear()),
                         Map.entry("email", userToken.email().value()),
                         Map.entry("magicLink", this.jbstProperties.getMagicLink(userToken.value()))
                 )
@@ -99,7 +99,7 @@ public class JbstUsersEmailsService {
                 )),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getApp().getMaven().getVersion()),
-                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("year", LocalDate.now(UTC).getYear()),
                         Map.entry("email", userToken.email().value()),
                         Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, userToken.value()))
                 )
@@ -116,7 +116,7 @@ public class JbstUsersEmailsService {
                 )),
                 Map.ofEntries(
                         Map.entry("version", this.jbstProperties.getApp().getMaven().getVersion()),
-                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("year", LocalDate.now(UTC).getYear()),
                         Map.entry("email", userToken.email().value()),
                         Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(userToken.value()))
                 )

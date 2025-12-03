@@ -1,14 +1,14 @@
 package jbst.foundation.domain.workers;
 
-import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 
 import java.time.Duration;
 
 public abstract class JbstWorkerFixed extends JbstWorker {
 
-    protected final SchedulerConfiguration interval;
+    protected final JbstSchedulerConfiguration interval;
 
-    public JbstWorkerFixed(Duration duration, SchedulerConfiguration interval) {
+    public JbstWorkerFixed(Duration duration, JbstSchedulerConfiguration interval) {
         super(duration);
         this.interval = interval;
     }

@@ -1,6 +1,6 @@
 package jbst.foundation.domain.workers;
 
-import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ class JbstWorkerFixedTest {
 
     public static class JbstWorkerFixedConsole extends JbstWorkerFixed {
 
-        public JbstWorkerFixedConsole(Duration duration, SchedulerConfiguration interval) {
+        public JbstWorkerFixedConsole(Duration duration, JbstSchedulerConfiguration interval) {
             super(duration, interval);
         }
 
@@ -36,7 +36,7 @@ class JbstWorkerFixedTest {
         // Arrange
         var worker = new JbstWorkerFixedConsole(
                 Duration.ofSeconds(30),
-                SchedulerConfiguration.EVERY_5_SECONDS
+                JbstSchedulerConfiguration.EVERY_5_SECONDS
         );
 
         // Act

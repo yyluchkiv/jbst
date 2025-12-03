@@ -1,12 +1,12 @@
 package jbst.foundation.domain.workers;
 
-import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 
 import java.time.Duration;
 
 public abstract class JbstWorkerFixedInfinity extends JbstWorkerFixed {
 
-    protected JbstWorkerFixedInfinity(SchedulerConfiguration interval) {
+    protected JbstWorkerFixedInfinity(JbstSchedulerConfiguration interval) {
         super(Duration.ZERO, interval);
     }
 

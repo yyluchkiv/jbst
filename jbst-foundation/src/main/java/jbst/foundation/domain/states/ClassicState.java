@@ -1,4 +1,4 @@
-package jbst.foundation.domain.states.classic;
+package jbst.foundation.domain.states;
 
 import com.diogonunes.jcolor.AnsiFormat;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -13,6 +13,7 @@ import java.util.Set;
 import static jbst.foundation.domain.colors.JbstANSI.getBoldHexAnsiFormat;
 import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow;
 
+@SuppressWarnings("unused")
 @AllArgsConstructor
 public enum ClassicState implements EnumValue<String> {
     DISABLED("Disabled", getBoldHexAnsiFormat("#808080")), // Gray

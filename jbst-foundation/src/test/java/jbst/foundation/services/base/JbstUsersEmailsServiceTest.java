@@ -27,6 +27,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Set;
 
@@ -35,7 +36,6 @@ import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.
 import static jbst.foundation.domain.enums.JbstAccountAccessMethod.SESSION_TOKEN;
 import static jbst.foundation.domain.enums.JbstAccountAccessMethod.USERNAME_PASSWORD;
 import static jbst.foundation.domain.time.LocalDateTimeUtility.getTimestamp;
-import static jbst.foundation.domain.time.LocalDateUtility.now;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -135,7 +135,7 @@ class JbstUsersEmailsServiceTest {
                 .containsEntry("version", this.jbstProperties.getApp().getMaven().getVersion())
                 .containsEntry("email", userToken.email().value())
                 .containsEntry("magicLink", "http://127.0.0.1:3000/magic-link?token=" + userToken.value())
-                .containsEntry("year", now(UTC).getYear());
+                .containsEntry("year", LocalDate.now(UTC).getYear());
     }
 
     @Test
@@ -158,7 +158,7 @@ class JbstUsersEmailsServiceTest {
                 .containsEntry("version", this.jbstProperties.getApp().getMaven().getVersion())
                 .containsEntry("email", userToken.email().value())
                 .containsEntry("emailConfirmationLink", "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + userToken.value())
-                .containsEntry("year", now(UTC).getYear());
+                .containsEntry("year", LocalDate.now(UTC).getYear());
     }
 
     @Test
@@ -181,7 +181,7 @@ class JbstUsersEmailsServiceTest {
                 .containsEntry("version", this.jbstProperties.getApp().getMaven().getVersion())
                 .containsEntry("email", userToken.email().value())
                 .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + userToken.value())
-                .containsEntry("year", now(UTC).getYear());
+                .containsEntry("year", LocalDate.now(UTC).getYear());
     }
 
     @Test
@@ -212,7 +212,7 @@ class JbstUsersEmailsServiceTest {
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
                 .containsEntry("version", this.jbstProperties.getApp().getMaven().getVersion())
-                .containsEntry("year", now(UTC).getYear())
+                .containsEntry("year", LocalDate.now(UTC).getYear())
                 .containsEntry("username", Username.hardcoded().value())
                 .containsEntry("accessMethod", USERNAME_PASSWORD.getValue())
                 .containsEntry("where", "🇺🇦 Ukraine, Lviv")
@@ -249,7 +249,7 @@ class JbstUsersEmailsServiceTest {
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
                 .containsEntry("version", this.jbstProperties.getApp().getMaven().getVersion())
-                .containsEntry("year", now(UTC).getYear())
+                .containsEntry("year", LocalDate.now(UTC).getYear())
                 .containsEntry("username", Username.hardcoded().value())
                 .containsEntry("accessMethod", SESSION_TOKEN.getValue())
                 .containsEntry("where", "🇺🇦 Ukraine, Lviv")

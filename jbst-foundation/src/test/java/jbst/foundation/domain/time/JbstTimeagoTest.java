@@ -12,7 +12,7 @@ import static java.time.temporal.ChronoUnit.YEARS;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TimeAgoTest {
+class JbstTimeagoTest {
 
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
@@ -22,8 +22,8 @@ class TimeAgoTest {
                 Arguments.of(getCurrentTimestamp() - Duration.ofMinutes(10).toMillis(), "10 minutes ago"),
                 Arguments.of(getCurrentTimestamp() - Duration.ofHours(2).toMillis(), "2 hours ago"),
                 Arguments.of(getCurrentTimestamp() - Duration.ofDays(25).toMillis(), "25 days ago"),
-                Arguments.of(getCurrentTimestamp() - new TimeAmount(25L, MONTHS).toMillis(), "2 years ago"),
-                Arguments.of(getCurrentTimestamp() - new TimeAmount(2L, YEARS).toMillis(), "2 years ago")
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(25L, MONTHS).toMillis(), "2 years ago"),
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(2L, YEARS).toMillis(), "2 years ago")
         );
     }
 
@@ -31,7 +31,7 @@ class TimeAgoTest {
     @MethodSource("constructorTest")
     void constructorTest(long timestamp, String expected) {
         // Act
-        var actual = TimeAgo.of(timestamp);
+        var actual = JbstTimeago.of(timestamp);
 
         // Assert
         assertThat(actual.getValue()).isEqualTo(expected);

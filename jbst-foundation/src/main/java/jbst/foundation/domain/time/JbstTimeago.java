@@ -15,7 +15,7 @@ import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 // Lombok
 @Getter
 @EqualsAndHashCode
-public class TimeAgo {
+public class JbstTimeago {
     public static final List<Tuple2<Long, String>> UNITS = List.of(
             new Tuple2<>(DAYS.toMillis(365), "year"),
             new Tuple2<>(DAYS.toMillis(30), "month"),
@@ -29,7 +29,7 @@ public class TimeAgo {
     private final String value;
 
     @JsonCreator
-    public TimeAgo(long timestamp) {
+    public JbstTimeago(long timestamp) {
         var duration = getCurrentTimestamp() - timestamp;
         var agoSb = new StringBuilder();
         for (Tuple2<Long, String> unit : UNITS) {
@@ -53,13 +53,13 @@ public class TimeAgo {
         }
     }
 
-    public static TimeAgo of(long timestamp) {
-        return new TimeAgo(timestamp);
+    public static JbstTimeago of(long timestamp) {
+        return new JbstTimeago(timestamp);
     }
 
     @SuppressWarnings("unused")
-    public static TimeAgo justNow() {
-        return new TimeAgo(TimestampUtility.getCurrentTimestamp());
+    public static JbstTimeago justNow() {
+        return new JbstTimeago(TimestampUtility.getCurrentTimestamp());
     }
 
     @Override

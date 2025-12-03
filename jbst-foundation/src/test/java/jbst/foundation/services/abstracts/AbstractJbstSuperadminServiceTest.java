@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -81,8 +81,8 @@ class AbstractJbstSuperadminServiceTest {
                     this.incidentsPublisher()
             ) {
                 @Override
-                public ResetServerStatus getStatus() {
-                    return ResetServerStatus.random();
+                public JbstSystemResetServerStatus getStatus() {
+                    return JbstSystemResetServerStatus.random();
                 }
 
                 @Override
@@ -148,7 +148,7 @@ class AbstractJbstSuperadminServiceTest {
         var actual = this.componentUnderTest.getResetServerStatus();
 
         // Assert
-        assertThat(actual).isEqualTo(ResetServerStatus.random());
+        assertThat(actual).isEqualTo(JbstSystemResetServerStatus.random());
     }
 
     @Test

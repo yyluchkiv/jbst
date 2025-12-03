@@ -1,7 +1,7 @@
 package jbst.foundation.domain.events;
 
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -34,7 +34,7 @@ public class WebsocketEvent {
         );
     }
 
-    public static WebsocketEvent resetServerProgress(@NotNull ResetServerStatus status) {
+    public static WebsocketEvent resetServerProgress(@NotNull JbstSystemResetServerStatus status) {
         return new WebsocketEvent(
                 Map.of(
                         WebsocketEventsAttributes.Keys.TYPE, WebsocketEventsAttributes.Values.TYPE_RESET_SERVER_PROGRESS,

@@ -6,7 +6,7 @@ import feign.RequestLine;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class JbstHardwareMonitoringClient extends JbstWorkerFixedInfinity {
     @Autowired
     public JbstHardwareMonitoringClient(HardwareMonitoringClientDefinition hardwareMonitoringClientDefinition, JbstProperties jbstProperties) {
         super(
-                new SchedulerConfiguration(0L, 30L, SECONDS)
+                new JbstSchedulerConfiguration(0L, 30L, SECONDS)
         );
         this.hardwareMonitoringClientDefinition = hardwareMonitoringClientDefinition;
         this.jbstProperties = jbstProperties;
