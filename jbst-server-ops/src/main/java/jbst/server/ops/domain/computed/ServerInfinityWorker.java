@@ -58,7 +58,7 @@ import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @ToString
-public class ServerInfinityTimerTask {
+public class ServerInfinityWorker {
     public static final SchedulerConfiguration EVERY_1_HOUR = new SchedulerConfiguration(1L, 60L, TimeUnit.MINUTES);
 
     private static class StateManager extends AbstractClassicStateManager {
@@ -109,7 +109,7 @@ public class ServerInfinityTimerTask {
     private final ScheduledExecutorService onlineSES = newSingleThreadScheduledExecutor();
     private final ScheduledExecutorService sshSES = newSingleThreadScheduledExecutor();
 
-    public ServerInfinityTimerTask(
+    public ServerInfinityWorker(
             ServerConfigs serverConfigs,
             JbstPropertyOpsServersMonitoring serversMonitoringConfigs,
             ServerInfinityTimerTaskSpringBeans beans,
