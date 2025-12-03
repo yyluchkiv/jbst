@@ -4,8 +4,9 @@ import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Constructor;
 
+@SuppressWarnings("unused")
 @UtilityClass
-public class JacocoUtility {
+public class JbstJacoco {
 
     public static void classCoverageHook(Class<?> clazz) {
         try {

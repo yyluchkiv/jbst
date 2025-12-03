@@ -6,3 +6,4 @@
 — Addition + Deletion: ZonesUtility -> JbstZones
 — Addition + Deletion: HardwareUtility -> JbstHardware
 — Addition + Deletion: ProcessorsUtility -> JbstCPU
+— Addition + Deletion: JacocoUtility -> JbstJacoco
