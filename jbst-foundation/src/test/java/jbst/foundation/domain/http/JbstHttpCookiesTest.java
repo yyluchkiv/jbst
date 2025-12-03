@@ -3,7 +3,7 @@ package jbst.foundation.domain.http;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.exceptions.cookies.JbstCookieNotFoundException;
-import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
+import jbst.foundation.domain.strings.JbstMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -80,7 +80,7 @@ class JbstHttpCookiesTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(JbstCookieNotFoundException.class)
-                .hasMessage(ExceptionsMessagesUtility.entityNotFound("Cookie", cookieKey));
+                .hasMessage(JbstMessages.entityNotFound("Cookie", cookieKey));
     }
 
     @Test
@@ -99,7 +99,7 @@ class JbstHttpCookiesTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(JbstCookieNotFoundException.class)
-                .hasMessage(ExceptionsMessagesUtility.entityNotFound("Cookie", cookieKey));
+                .hasMessage(JbstMessages.entityNotFound("Cookie", cookieKey));
     }
 
     @RepeatedTest(5)

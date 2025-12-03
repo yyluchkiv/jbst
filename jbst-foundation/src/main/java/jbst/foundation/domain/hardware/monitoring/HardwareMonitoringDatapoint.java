@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @Getter

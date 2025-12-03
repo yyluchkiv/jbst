@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 import java.util.Arrays;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
 
 @UtilityClass
 public class JbstHttpCookies {

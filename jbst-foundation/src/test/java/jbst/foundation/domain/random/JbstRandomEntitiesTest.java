@@ -4,9 +4,8 @@ import jbst.foundation.domain.tests.classes.*;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static jbst.foundation.domain.random.JbstRandomEntities.*;
 import static jbst.foundation.domain.random.JbstRandom.one;
+import static jbst.foundation.domain.random.JbstRandomEntities.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -170,7 +169,7 @@ class JbstRandomEntitiesTest {
         assertThat(random.getChild2().getNest2Value2()).isNotNull();
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void list345Test() {
         // Act
         var set = list345(Long.class);
@@ -180,7 +179,7 @@ class JbstRandomEntitiesTest {
         assertThat(set.size()).isBetween(1, 6);
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void set345Test() {
         // Act
         var set = set345(Long.class);

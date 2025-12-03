@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 import static jbst.foundation.domain.enums.JbstEnums.baseJoining;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttributeOptionUnexpectedValue;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttributeOptionUnexpectedValue;
 
 @UtilityClass
 public class JbstEnumsCreator {

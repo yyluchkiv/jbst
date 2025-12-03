@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.time;
+package jbst.foundation.domain.time;
 
 import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import lombok.experimental.UtilityClass;

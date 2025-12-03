@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UKRAINE;
+import static jbst.foundation.domain.constants.JbstConstants.Flags.UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginFailureUsernamePasswordTest {

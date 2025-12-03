@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.exceptions;
+package jbst.foundation.domain.strings;
 
 import jbst.foundation.domain.exceptions.ThrowableTrace;
 import lombok.experimental.UtilityClass;
@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 @UtilityClass
-public class TraceUtility {
+public class JbstTraces {
 
     public static ThrowableTrace getTrace(Throwable throwable) {
         var sw = new StringWriter();

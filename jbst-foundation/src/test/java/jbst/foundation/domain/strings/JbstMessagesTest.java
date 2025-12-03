@@ -1,12 +1,12 @@
-package jbst.foundation.utilities.exceptions;
+package jbst.foundation.domain.strings;
 
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.*;
+import static jbst.foundation.domain.strings.JbstMessages.*;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ExceptionsMessagesUtilityTest {
+class JbstMessagesTest {
 
     @Test
     void pleaseWaitTest() {

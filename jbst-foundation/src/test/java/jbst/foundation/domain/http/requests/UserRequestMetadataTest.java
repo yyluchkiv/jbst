@@ -2,7 +2,6 @@ package jbst.foundation.domain.http.requests;
 
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoLocation;
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.assertj.core.api.Assertions;
@@ -54,7 +53,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void validTest() {
         // Act
         var actual = UserRequestMetadata.valid();
@@ -80,7 +79,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         Assertions.assertThat(actual.getWhereTuple3().c()).isEqualTo("🇺🇦 Ukraine, Lviv");
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void invalidTest() {
         // Act
         var actual = UserRequestMetadata.invalid();
@@ -106,7 +105,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         Assertions.assertThat(actual.getWhereTuple3().c()).isEqualTo("🏴‍ Unknown, Unknown");
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomTest() {
         // Act
         var actual = UserRequestMetadata.random();

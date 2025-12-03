@@ -8,7 +8,7 @@ import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
 import jbst.foundation.domain.properties.configs.JbstPropertyUtils;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
-import jbst.foundation.utilities.time.TimestampUtility;
+import jbst.foundation.domain.time.TimestampUtility;
 import jbst.foundation.utils.JbstGeoUtils;
 import jbst.server.ops.properties.configs.JbstPropertyOpsRecipients;
 import lombok.RequiredArgsConstructor;

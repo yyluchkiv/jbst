@@ -19,7 +19,7 @@ import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Service;
 
 import static jbst.foundation.domain.http.JbstHttpCookies.*;
-import static jbst.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
+import static jbst.foundation.domain.numbers.LongUtility.toIntExactOrZeroOnOverflow;
 
 @Slf4j
 @Service

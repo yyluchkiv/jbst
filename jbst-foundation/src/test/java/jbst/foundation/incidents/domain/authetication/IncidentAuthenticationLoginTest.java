@@ -7,7 +7,7 @@ import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
-import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UNKNOWN;
+import static jbst.foundation.domain.constants.JbstConstants.Flags.UNKNOWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginTest {

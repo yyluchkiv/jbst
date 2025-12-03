@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.MONTHS;
 import static java.time.temporal.ChronoUnit.YEARS;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimeAgoTest {

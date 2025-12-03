@@ -30,7 +30,7 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static jbst.foundation.incidents.domain.IncidentAttributes.IncidentsTypes.THROWABLE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.TRACE;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.server.ops.domain.incidents.OpsIncident.TIMES;
 import static jbst.server.ops.domain.incidents.OpsIncidentHTML.opsAnyIncident;
 

@@ -14,8 +14,8 @@ import java.util.UUID;
 import static java.time.ZoneOffset.UTC;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF12;
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 @MappedSuperclass
 public abstract class PostgresDbAbstractPersistableAuditableUUID implements Persistable<UUID> {

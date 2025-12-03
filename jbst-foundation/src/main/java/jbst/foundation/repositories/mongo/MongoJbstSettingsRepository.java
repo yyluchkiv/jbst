@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestJbstSettings;
 import jbst.foundation.repositories.JbstSettingsRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 
 public interface MongoJbstSettingsRepository extends MongoRepository<MongoDbJbstSettings, String>, JbstSettingsRepository {
     // ================================================================================================================

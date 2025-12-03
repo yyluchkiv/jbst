@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.numbers;
+package jbst.foundation.domain.numbers;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
+import static jbst.foundation.domain.numbers.LongUtility.toIntExactOrZeroOnOverflow;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LongUtilityTest {

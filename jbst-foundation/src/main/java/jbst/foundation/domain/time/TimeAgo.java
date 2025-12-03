@@ -3,7 +3,6 @@ package jbst.foundation.domain.time;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.utilities.time.TimestampUtility;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 import static java.util.concurrent.TimeUnit.*;
 import static jbst.foundation.domain.strings.JbstStrings.isNullOrBlank;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @Getter

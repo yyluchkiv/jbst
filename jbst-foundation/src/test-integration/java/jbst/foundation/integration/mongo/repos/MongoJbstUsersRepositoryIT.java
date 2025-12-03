@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 import static jbst.foundation.tests.converters.MongoUserConverter.toUsernamesAsStrings1;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;

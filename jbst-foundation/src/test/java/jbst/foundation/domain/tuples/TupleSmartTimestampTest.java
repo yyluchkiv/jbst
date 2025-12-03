@@ -1,7 +1,6 @@
 package jbst.foundation.domain.tuples;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.tests.constants.TestsDTFsConstants;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +8,7 @@ class TupleSmartTimestampTest extends AbstractTupleTest {
     private static final TupleSmartTimestamp TUPLE = TupleSmartTimestamp.of(
             1668419401637L,
             JbstConstants.ZoneIds.UKRAINE,
-            TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN
+            "dd.MM.yyyy HH:mm:ss"
     );
 
     @Override

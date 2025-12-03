@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 
 public interface PostgresJbstSettingsRepository extends JpaRepository<PostgresDbJbstSettings, UUID>, JbstSettingsRepository {
     // ================================================================================================================

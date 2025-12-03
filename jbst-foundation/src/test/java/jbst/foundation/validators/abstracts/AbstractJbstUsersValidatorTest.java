@@ -29,7 +29,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static jbst.foundation.domain.strings.JbstMessages.entityAlreadyUsed;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;

@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.numbers;
+package jbst.foundation.domain.numbers;
 
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.TupleRange;
@@ -16,7 +16,7 @@ import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.TWO;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
+import static jbst.foundation.domain.numbers.BigDecimalUtility.*;
 import static jbst.foundation.domain.random.JbstRandom.randomBigDecimalGreaterThanZero;
 import static jbst.foundation.domain.random.JbstRandom.randomBigDecimalLessThanZero;
 import static org.assertj.core.api.Assertions.assertThat;

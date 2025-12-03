@@ -12,7 +12,7 @@ import jbst.foundation.domain.exceptions.tokens.JbstUserTokenValidationException
 import jbst.foundation.domain.ids.TokenId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
-import jbst.foundation.utilities.time.TimestampUtility;
+import jbst.foundation.domain.time.TimestampUtility;
 import jbst.foundation.validators.JbstUsersTokensValidator;
 import jbst.foundation.validators.abtracts.AbstractJbstUsersTokensValidator;
 import lombok.RequiredArgsConstructor;

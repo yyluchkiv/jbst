@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
 
 @Slf4j
 @Component

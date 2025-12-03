@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
 import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 
 @UtilityClass
@@ -59,6 +59,7 @@ public class JbstHttpServletRequests {
         return "PUT".equalsIgnoreCase(request.getMethod());
     }
 
+    @SuppressWarnings("unused")
     public static boolean isMultipartRequest(@NotNull HttpServletRequest request) {
         var contentType = request.getContentType();
         return nonNull(contentType) && contentType.startsWith("multipart/") && (isPOST(request) || isPUT(request));

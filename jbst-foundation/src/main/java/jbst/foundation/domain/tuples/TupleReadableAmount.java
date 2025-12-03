@@ -2,14 +2,14 @@ package jbst.foundation.domain.tuples;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jbst.foundation.utilities.numbers.NumbersUtility;
+import jbst.foundation.domain.numbers.NumbersUtility;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static java.math.BigDecimal.ZERO;
-import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
+import static jbst.foundation.domain.numbers.RoundingUtility.scale;
 
 @Data
 public class TupleReadableAmount {

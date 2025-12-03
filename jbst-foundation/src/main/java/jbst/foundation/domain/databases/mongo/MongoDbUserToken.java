@@ -17,8 +17,8 @@ import java.time.Duration;
 import java.util.List;
 
 import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
-import static jbst.foundation.utilities.time.TimestampUtility.getFutureTimestamp;
-import static jbst.foundation.utilities.time.TimestampUtility.getPastTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getFutureTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getPastTimestamp;
 
 // Lombok
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.numbers;
+package jbst.foundation.domain.numbers;
 
 import lombok.experimental.UtilityClass;
 
@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.*;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
-import static jbst.foundation.utilities.numbers.RoundingUtility.divide;
-import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
+import static jbst.foundation.domain.numbers.BigDecimalUtility.*;
+import static jbst.foundation.domain.numbers.RoundingUtility.divide;
+import static jbst.foundation.domain.numbers.RoundingUtility.scale;
 
 @UtilityClass
 public class NumbersUtility {

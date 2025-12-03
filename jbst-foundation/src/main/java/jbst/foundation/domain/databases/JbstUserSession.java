@@ -8,7 +8,7 @@ import jbst.foundation.domain.jwt.JwtRefreshToken;
 
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 public record JbstUserSession(
         boolean persisted,

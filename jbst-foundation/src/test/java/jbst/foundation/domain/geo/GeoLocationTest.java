@@ -2,7 +2,6 @@ package jbst.foundation.domain.geo;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
@@ -66,7 +65,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void validTest() {
         // Act
         var actual = GeoLocation.valid();
@@ -82,7 +81,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getWhere()).isEqualTo("🇺🇦 Ukraine, Lviv");
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void invalidTest() {
         // Act
         var actual = GeoLocation.invalid();
@@ -96,7 +95,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getWhere()).isEqualTo("🏴‍ Unknown, Unknown");
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void randomTest() {
         // Act
         var actual = GeoLocation.random();

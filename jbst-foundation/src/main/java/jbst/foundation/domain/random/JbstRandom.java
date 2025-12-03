@@ -30,8 +30,8 @@ import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.systemDefault;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
-import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.convert;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 @UtilityClass
 public class JbstRandom {
@@ -377,7 +377,7 @@ public class JbstRandom {
         var claims = Jwts.claims();
         claims.subject(Username.hardcoded().value());
         var timeAmount = new JbstPropertyTimeAmount(1, ChronoUnit.HOURS);
-        var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
+        var expiration = convert(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.issuedAt(new Date());
         claims.expiration(expiration);
         claims.add("authorities", getSimpleGrantedAuthorities("admin", "user"));

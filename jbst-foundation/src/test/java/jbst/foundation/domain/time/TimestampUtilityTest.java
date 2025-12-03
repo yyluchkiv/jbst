@@ -1,7 +1,6 @@
-package jbst.foundation.utilities.time;
+package jbst.foundation.domain.time;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.time.TimeAmount;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,10 +11,8 @@ import java.util.stream.Stream;
 
 import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
-import static jbst.foundation.utilities.time.TimestampUtility.*;
+import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimestampUtilityTest {
@@ -99,7 +96,7 @@ class TimestampUtilityTest {
         );
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void getCurrentTimestampTest() {
         // Arrange
         var expected = System.currentTimeMillis();
@@ -131,7 +128,7 @@ class TimestampUtilityTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
@@ -144,7 +141,7 @@ class TimestampUtilityTest {
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(100)
     void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
@@ -157,7 +154,7 @@ class TimestampUtilityTest {
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
@@ -177,7 +174,7 @@ class TimestampUtilityTest {
         assertThat(localDateTimePoland.toString()).endsWith("00:00");
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void getPastRangeTest() {
         // Arrange
         var currentTimestamp = getCurrentTimestamp();
@@ -190,7 +187,7 @@ class TimestampUtilityTest {
         assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp - 5000);
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void getFutureRangeTest() {
         // Arrange
         var currentTimestamp = getCurrentTimestamp();

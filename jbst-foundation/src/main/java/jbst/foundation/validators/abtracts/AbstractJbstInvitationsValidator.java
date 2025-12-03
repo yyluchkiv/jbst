@@ -12,8 +12,8 @@ import org.springframework.security.access.AccessDeniedException;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.strings.JbstMessages.entityAccessDenied;
+import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJbstInvitationsValidator implements JbstInvitationsValidator {

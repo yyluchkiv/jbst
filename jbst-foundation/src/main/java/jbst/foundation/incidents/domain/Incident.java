@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
-import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
+import static jbst.foundation.domain.strings.JbstTraces.getTrace;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.springframework.util.CollectionUtils.isEmpty;
 

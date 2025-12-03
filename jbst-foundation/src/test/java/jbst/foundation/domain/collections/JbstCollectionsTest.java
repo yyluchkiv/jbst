@@ -1,6 +1,5 @@
 package jbst.foundation.domain.collections;
 
-import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.enums.EnumUnderTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static jbst.foundation.domain.collections.JbstCollections.*;
 import static jbst.foundation.domain.random.JbstRandom.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -225,7 +223,7 @@ class JbstCollectionsTest {
         });
     }
 
-    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void safeGetters() {
         // Arrange
         var list = List.of(1, 2, 3, 4, 5);
@@ -316,7 +314,7 @@ class JbstCollectionsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @RepeatedTest(FIVE_TIMES)
+    @RepeatedTest(5)
     void baseJoiningRawTest() {
         // Act
         var actual = baseJoiningRaw(Stream.of(EnumUnderTests.values()).collect(Collectors.toSet()));

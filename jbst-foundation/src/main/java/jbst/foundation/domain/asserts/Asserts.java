@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
+import static jbst.foundation.domain.numbers.BigDecimalUtility.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasLength;
 

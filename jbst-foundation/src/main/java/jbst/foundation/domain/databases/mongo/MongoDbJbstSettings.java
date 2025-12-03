@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF12;
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @NoArgsConstructor

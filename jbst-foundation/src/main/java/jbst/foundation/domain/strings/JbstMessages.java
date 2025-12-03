@@ -1,11 +1,11 @@
-package jbst.foundation.utilities.exceptions;
+package jbst.foundation.domain.strings;
 
 import lombok.experimental.UtilityClass;
 
 import static org.springframework.util.StringUtils.capitalize;
 
 @UtilityClass
-public class ExceptionsMessagesUtility {
+public class JbstMessages {
 
     public static String pleaseWait(String prefix) {
         return "%s. Please wait...".formatted(prefix);

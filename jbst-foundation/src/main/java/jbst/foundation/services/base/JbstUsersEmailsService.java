@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
-import static jbst.foundation.utilities.time.LocalDateUtility.now;
+import static jbst.foundation.domain.time.LocalDateUtility.now;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UK;
-import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.USA;
+import static jbst.foundation.domain.constants.JbstConstants.Flags.UK;
+import static jbst.foundation.domain.constants.JbstConstants.Flags.USA;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
-import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResponseUserSessionsTableTest {
