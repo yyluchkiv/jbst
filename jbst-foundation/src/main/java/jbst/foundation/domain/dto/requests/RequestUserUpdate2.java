@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.ZoneId;
 
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
+import static jbst.foundation.utilities.zones.JbstZones.reworkUkraineZoneId;
 
 public record RequestUserUpdate2(
         @Schema(type = "string") @NotNull ZoneId zoneId,

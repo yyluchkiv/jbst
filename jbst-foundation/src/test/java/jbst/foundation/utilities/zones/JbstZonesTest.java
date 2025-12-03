@@ -8,11 +8,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.ZoneId;
 import java.util.stream.Stream;
 
+import static jbst.foundation.utilities.zones.JbstZones.reworkUkraineZoneId;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ZonesUtilityTest {
+class JbstZonesTest {
 
-    private static Stream<Arguments> getBasicAuthenticationHeaderTest() {
+    private static Stream<Arguments> reworkUkraineZoneIdArgs() {
         return Stream.of(
                 Arguments.of(ZoneId.of("Europe/Kiev"), JbstConstants.ZoneIds.UKRAINE),
                 Arguments.of(ZoneId.of("Europe/Kiev"), JbstConstants.ZoneIds.UKRAINE),
@@ -21,12 +22,9 @@ class ZonesUtilityTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getBasicAuthenticationHeaderTest")
-    void getBasicAuthenticationHeaderTest(ZoneId zoneId, ZoneId expected) {
-        // Act
-        var actual = ZonesUtility.reworkUkraineZoneId(zoneId);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
+    @MethodSource("reworkUkraineZoneIdArgs")
+    void reworkUkraineZoneIdTest(ZoneId zoneId, ZoneId expected) {
+        // Act + Assert
+        assertThat(reworkUkraineZoneId(zoneId)).isEqualTo(expected);
     }
 }
