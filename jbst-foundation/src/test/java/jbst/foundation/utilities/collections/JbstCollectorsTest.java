@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static jbst.foundation.utilities.collections.CollectorUtility.toSingleton;
+import static jbst.foundation.utilities.collections.JbstCollectors.toSingleton;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 @Slf4j
-class CollectorUtilityTest {
+class JbstCollectorsTest {
 
     @Test
     void toSingletonExceptionTest() {
@@ -59,7 +59,7 @@ class CollectorUtilityTest {
         );
 
         // Act
-        var actual = usernames.stream().collect(CollectorUtility.toConcurrentKeySet());
+        var actual = usernames.stream().collect(JbstCollectors.toConcurrentKeySet());
 
         // Assert
         assertThat(actual)

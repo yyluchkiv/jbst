@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toCollection;
 
 @JbstDeletionScheduled(version = "v1.41")
 @UtilityClass
-public class CollectorUtility {
+public class JbstCollectors {
 
     public static <T> Collector<T, ?, T> toSingleton() {
         return java.util.stream.Collectors.collectingAndThen(

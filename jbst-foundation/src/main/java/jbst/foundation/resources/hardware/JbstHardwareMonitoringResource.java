@@ -1,10 +1,10 @@
 package jbst.foundation.resources.hardware;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.sessions.JbstSessionRegistry;
 import jbst.foundation.websockets.JbstWebsocketsService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
 
-import static jbst.foundation.utilities.hardware.HardwareUtility.getHeapMemory;
+import static jbst.foundation.utilities.hardware.JbstHardware.getHeapMemory;
 
 // Swagger
 @Tag(name = "[jbst] Hardware API")

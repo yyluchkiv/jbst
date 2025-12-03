@@ -7,14 +7,14 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.incidents.services.JbstIncidentsSubscriber;
 import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
 import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.ErrorHandlerPublisher;
 import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
+import jbst.foundation.incidents.services.JbstIncidentsSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ import org.springframework.util.ErrorHandler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionHandler;
 
-import static jbst.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
+import static jbst.foundation.utilities.hardware.JbstCPU.getNumOfCores;
 
 @Configuration
 @EnableConfigurationProperties({

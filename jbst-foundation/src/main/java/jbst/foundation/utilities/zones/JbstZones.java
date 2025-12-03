@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.ZoneId;
 
 @UtilityClass
-public class ZonesUtility {
+public class JbstZones {
 
     public static ZoneId reworkUkraineZoneId(@NotNull ZoneId zoneId) {
         if ("Europe/Kiev".equals(zoneId.getId())) {

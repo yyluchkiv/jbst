@@ -10,7 +10,7 @@ import jbst.foundation.domain.enums.JbstUserTokenType;
 import java.time.ZoneId;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
-import static jbst.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
+import static jbst.foundation.utilities.zones.JbstZones.reworkUkraineZoneId;
 
 public record RequestUserRegistration0(
         @Email.ValidEmail Email email,

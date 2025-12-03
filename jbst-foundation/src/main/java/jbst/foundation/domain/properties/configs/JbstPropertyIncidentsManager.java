@@ -5,11 +5,10 @@ import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
-import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
-import jbst.foundation.utilities.collections.CollectionUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +22,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
-import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static jbst.foundation.utilities.collections.JbstCollections.baseJoiningRaw;
 import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static org.apache.commons.collections4.SetUtils.disjunction;
@@ -105,7 +104,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
                         "incidents-manager.incidents",
                         baseJoiningRaw(this.incidents.entrySet()),
                         baseJoiningRaw(keys),
-                        RED_TEXT.format(CollectionUtility.baseJoiningRaw(disjunction(this.incidents.keySet(), keys)))
+                        RED_TEXT.format(baseJoiningRaw(disjunction(this.incidents.keySet(), keys)))
                 )
         );
     }

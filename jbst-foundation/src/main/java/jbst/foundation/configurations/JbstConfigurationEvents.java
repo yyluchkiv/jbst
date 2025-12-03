@@ -12,7 +12,7 @@ import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.support.TaskUtils;
 
-import static jbst.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
+import static jbst.foundation.utilities.hardware.JbstCPU.getNumOfCores;
 
 @Configuration
 @EnableConfigurationProperties({

@@ -1,6 +1,5 @@
 package jbst.foundation.utilities.collections;
 
-import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import jbst.foundation.domain.constants.JbstConstants;
 import lombok.experimental.UtilityClass;
 
@@ -14,9 +13,8 @@ import static java.util.Objects.requireNonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static org.springframework.util.CollectionUtils.*;
 
-@JbstDeletionScheduled(version = "v1.41")
 @UtilityClass
-public class CollectionUtility {
+public class JbstCollections {
 
     public <E> ConcurrentHashMap.KeySetView<E, Boolean> toConcurrentSet(Collection<E> list) {
         ConcurrentHashMap.KeySetView<E, Boolean> set = ConcurrentHashMap.newKeySet();

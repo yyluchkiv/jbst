@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import static java.lang.management.ManagementFactory.getMemoryMXBean;
 
 @UtilityClass
-public class HardwareUtility {
+public class JbstHardware {
 
     public static HeapMemory getHeapMemory() {
         var heapMemoryUsage = getMemoryMXBean().getHeapMemoryUsage();

@@ -25,9 +25,9 @@ public class DevelopmentUtility {
     public static void printJsonAsError(Object object, String keyword) {
         LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         try {
-            LOGGER.debug("{}:\n\n{}\n", keyword, MAPPER.writeValueAsString(object));
+            LOGGER.error("{}:\n\n{}\n", keyword, MAPPER.writeValueAsString(object));
         } catch (JsonProcessingException ex) {
-            LOGGER.debug("JSON printing failure: {}", ex.getMessage());
+            LOGGER.error("JSON printing failure: {}", ex.getMessage());
         }
         LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
