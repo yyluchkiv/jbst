@@ -1,10 +1,12 @@
 package jbst.foundation.utilities.time;
 
+import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import lombok.experimental.UtilityClass;
 
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
+@JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass
 public class TimeUnitUtility {
 

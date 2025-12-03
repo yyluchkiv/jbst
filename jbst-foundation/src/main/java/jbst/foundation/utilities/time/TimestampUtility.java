@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.time;
 
+import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import jbst.foundation.domain.base.Timestamp;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.domain.tuples.TupleRange;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
 
+@JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass
 public class TimestampUtility {
     public static long getCurrentTimestamp() {

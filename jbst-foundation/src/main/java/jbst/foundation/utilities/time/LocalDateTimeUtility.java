@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.time;
 
+import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import lombok.experimental.UtilityClass;
 
 import java.time.Instant;
@@ -10,6 +11,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.TimeZone;
 
+@JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass
 public class LocalDateTimeUtility {
 
