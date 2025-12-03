@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
-import static jbst.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
+import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow;
+import static jbst.foundation.domain.random.JbstRandom.randomEnum;
 
 @AllArgsConstructor
 public enum JbstUserCreationOption implements EnumValue<String> {

@@ -13,7 +13,7 @@ import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import jbst.foundation.validators.JbstUsersTokensValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -127,7 +127,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
             int code
     ) throws Exception {
         // Arrange
-        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        var token = JbstRandom.randomStringLetterOrNumbersOnly(36);
         Function<Exception, Stubber> doThrowNonNull = ex -> nonNull(ex) ? doThrow(ex) : doNothing();
         doThrowNonNull.apply(validationException).when(this.usersTokensValidator).validateEmailConfirmationToken(token);
         doThrowNonNull.apply(confirmException).when(this.usersTokensService).confirmEmail(token);

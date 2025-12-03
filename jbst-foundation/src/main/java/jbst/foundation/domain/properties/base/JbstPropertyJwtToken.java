@@ -13,8 +13,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

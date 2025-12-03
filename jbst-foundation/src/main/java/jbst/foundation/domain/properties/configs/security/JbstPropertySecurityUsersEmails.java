@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 @Slf4j
 // Lombok (property-based)

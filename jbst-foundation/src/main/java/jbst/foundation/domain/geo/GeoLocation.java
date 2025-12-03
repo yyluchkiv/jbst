@@ -5,7 +5,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.Tuple5;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,8 +13,8 @@ import lombok.ToString;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.strings.StringUtility.hasLength;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 
 // Lombok
 @Getter
@@ -138,7 +138,7 @@ public class GeoLocation {
     }
 
     public static GeoLocation testData() {
-        var tuple5 = RandomUtility.randomElement(TEST_DATA);
+        var tuple5 = JbstRandom.randomElement(TEST_DATA);
         return GeoLocation.processed(
                 new IPAddress(tuple5.a()),
                 tuple5.b(),

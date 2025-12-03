@@ -13,7 +13,7 @@ import org.springframework.util.StreamUtils;
 import java.io.*;
 
 import static java.nio.charset.Charset.defaultCharset;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 @JbstDevelopmentOnly
 public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {

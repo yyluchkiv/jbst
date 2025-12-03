@@ -1,7 +1,7 @@
 package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.foundation.utilities.strings.MaskUtility;
+import jbst.foundation.domain.strings.JbstMasks;
 import org.springframework.data.annotation.Transient;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -10,7 +10,7 @@ public record UsernamePasswordCredentials(
         Password password
 ) {
     public static UsernamePasswordCredentials mask5(Username username, Password password) {
-        return new UsernamePasswordCredentials(username, Password.of(MaskUtility.mask5(password.value())));
+        return new UsernamePasswordCredentials(username, Password.of(JbstMasks.mask5(password.value())));
     }
 
     public static UsernamePasswordCredentials hardcoded() {

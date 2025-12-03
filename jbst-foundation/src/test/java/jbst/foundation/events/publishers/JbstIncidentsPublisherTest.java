@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static jbst.foundation.domain.enums.JbstSecurityJwtIncident.*;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

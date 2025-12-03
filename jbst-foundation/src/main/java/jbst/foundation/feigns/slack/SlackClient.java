@@ -26,7 +26,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static jbst.foundation.utilities.concurrent.SleepUtility.sleepMilliseconds;
+import static jbst.foundation.domain.concurrent.JbstSleep.sleepMilliseconds;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

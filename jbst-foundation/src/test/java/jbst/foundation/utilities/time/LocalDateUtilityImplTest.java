@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static java.time.Month.*;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.domain.random.JbstRandom.*;
 import static jbst.foundation.utilities.time.LocalDateUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

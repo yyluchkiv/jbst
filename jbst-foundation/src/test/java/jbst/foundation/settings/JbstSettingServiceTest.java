@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
+import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZero;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 

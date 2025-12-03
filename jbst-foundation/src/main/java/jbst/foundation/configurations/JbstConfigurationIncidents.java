@@ -34,7 +34,7 @@ import org.springframework.util.ErrorHandler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionHandler;
 
-import static jbst.foundation.utilities.hardware.JbstCPU.getNumOfCores;
+import static jbst.foundation.domain.hardware.JbstCPU.getNumOfCores;
 
 @Configuration
 @EnableConfigurationProperties({

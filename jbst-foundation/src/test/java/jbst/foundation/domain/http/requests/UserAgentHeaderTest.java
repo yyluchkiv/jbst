@@ -1,7 +1,7 @@
 package jbst.foundation.domain.http.requests;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,7 +36,7 @@ class UserAgentHeaderTest {
     @Test
     void constructorsRequestValid() {
         // Arrange
-        var userAgentHeader = RandomUtility.randomString();
+        var userAgentHeader = JbstRandom.randomString();
         var request = mock(HttpServletRequest.class);
         when(request.getHeader("User-Agent")).thenReturn(userAgentHeader);
 

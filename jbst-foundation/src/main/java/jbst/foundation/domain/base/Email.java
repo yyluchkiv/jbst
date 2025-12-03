@@ -7,7 +7,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.utilities.http.HttpRequestFieldsUtility;
+import jbst.foundation.domain.http.JbstHttpRequestFields;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
@@ -16,7 +16,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.springframework.util.StringUtils.hasLength;
 
 public record Email(@NotNull String value) {
@@ -74,7 +74,7 @@ public record Email(@NotNull String value) {
             if (!hasLength(email.value)) {
                 return false;
             }
-            return HttpRequestFieldsUtility.isEmail(email);
+            return JbstHttpRequestFields.isEmail(email);
         }
     }
 }

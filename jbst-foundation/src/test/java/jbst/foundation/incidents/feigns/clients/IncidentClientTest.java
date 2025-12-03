@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomFeignException;
+import static jbst.foundation.domain.random.JbstRandom.randomFeignException;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

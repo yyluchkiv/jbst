@@ -10,17 +10,15 @@ import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstract
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.TokenId;
-import jbst.foundation.domain.time.TimeAmount;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.Transient;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.time.TimestampUtility.*;
 
 @SuppressWarnings("JpaDataSourceORMInspection")

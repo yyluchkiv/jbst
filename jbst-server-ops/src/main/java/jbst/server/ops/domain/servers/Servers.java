@@ -1,7 +1,7 @@
 package jbst.server.ops.domain.servers;
 
 import jbst.foundation.domain.base.ServerName;
-import jbst.foundation.domain.collections.Partitions;
+import jbst.foundation.domain.collections.JbstPartitions;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.feigns.spring.SpringBootClient;
 import jbst.server.ops.domain.slack.messages.SlackMessageFileSystemTable;
@@ -99,7 +99,7 @@ public class Servers {
         if (!isEmpty(successesRows)) {
             successesRows.sort(PERCENTAGE_REVERSED);
             // WARNING: 25 is practical number is this case as max slack rows to wrap a message
-            var partitionsSuccesses = Partitions.ofSize(successesRows, 25);
+            var partitionsSuccesses = JbstPartitions.ofSize(successesRows, 25);
             partitionsSuccesses.forEach(chuckedMappedRows -> {
                 var table = new SlackMessageFileSystemTable(chuckedMappedRows).getValue();
                 messages.add(table);

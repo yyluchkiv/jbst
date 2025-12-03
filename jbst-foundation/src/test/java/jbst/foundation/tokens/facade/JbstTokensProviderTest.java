@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

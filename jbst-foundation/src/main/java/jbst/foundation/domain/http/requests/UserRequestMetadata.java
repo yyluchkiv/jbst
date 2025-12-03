@@ -13,8 +13,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.pleaseWait;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.strings.StringUtility.hasLength;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 
 // JSON
 @JsonPropertyOrder({

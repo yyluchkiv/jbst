@@ -3,7 +3,7 @@ package jbst.foundation.domain.time;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.*;
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZeroByBounds;
 
 @SuppressWarnings("unused")
 public record SchedulerConfiguration(

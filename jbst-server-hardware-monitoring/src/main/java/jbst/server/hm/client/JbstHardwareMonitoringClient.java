@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static jbst.foundation.domain.tuples.TuplePercentage.progressTuplePercentage;
-import static jbst.foundation.utilities.hardware.JbstHardware.getSystemMemories;
+import static jbst.foundation.domain.hardware.JbstHardware.getSystemMemories;
 
 @Slf4j
 @Component

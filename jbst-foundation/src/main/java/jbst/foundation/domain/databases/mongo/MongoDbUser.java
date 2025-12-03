@@ -27,8 +27,8 @@ import java.util.*;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.base.AbstractAuthority.*;
-import static jbst.foundation.utilities.random.RandomUtility.*;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.random.JbstRandom.*;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 import static org.springframework.util.StringUtils.capitalize;
 
 // Lombok

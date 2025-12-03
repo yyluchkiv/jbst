@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
 public interface MongoJbstInvitationsRepository extends MongoRepository<MongoDbInvitation, String>, JbstInvitationsRepository {
     // ================================================================================================================

@@ -3,7 +3,7 @@ package jbst.foundation.handshakes;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.exceptions.tokens.JbstCsrfTokenNotFoundException;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
-import jbst.foundation.utilities.random.EntityUtility;
+import jbst.foundation.domain.random.JbstRandomEntities;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -128,7 +128,7 @@ class JbstCsrfInterceptorHandshakeTest {
         var httpRequest = mock(HttpServletRequest.class);
         var response = mock(ServerHttpResponse.class);
         var wsHandler = mock(WebSocketHandler.class);
-        var defaultCsrfToken = EntityUtility.entity(DefaultCsrfToken.class);
+        var defaultCsrfToken = JbstRandomEntities.entity(DefaultCsrfToken.class);
         when(this.tokensProvider.readCsrfToken(httpRequest)).thenReturn(defaultCsrfToken);
         Map<String, Object> attributes = new HashMap<>();
         when(request.getServletRequest()).thenReturn(httpRequest);

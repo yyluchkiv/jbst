@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationsAuthoritiesAsField;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getResponseInvitationsAuthoritiesAsField;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
 // Lombok
 @NoArgsConstructor

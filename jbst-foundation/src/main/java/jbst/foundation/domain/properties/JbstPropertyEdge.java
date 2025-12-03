@@ -3,7 +3,7 @@ package jbst.foundation.domain.properties;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapEnums;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
-import jbst.foundation.utilities.enums.EnumUtility;
+import jbst.foundation.domain.enums.JbstEnums;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +24,10 @@ import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_T
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.properties.JbstPropertiesUtility.getMandatoryBasedFields;
-import static jbst.foundation.utilities.collections.JbstCollections.baseJoiningRaw;
-import static jbst.foundation.utilities.enums.EnumUtility.baseJoining;
-import static jbst.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
-import static jbst.foundation.utilities.strings.StringUtility.toKebab;
+import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
+import static jbst.foundation.domain.enums.JbstEnums.baseJoining;
+import static jbst.foundation.domain.enums.JbstEnums.baseJoiningWildcard;
+import static jbst.foundation.domain.strings.JbstStrings.toKebab;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j
@@ -105,7 +105,7 @@ public class JbstPropertyEdge {
                             this.name,
                             baseJoiningWildcard(keySetClass),
                             baseJoiningRaw(castedProperty.keySet()),
-                            RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
+                            RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), JbstEnums.setWildcard(keySetClass))))
                     )
             );
         }

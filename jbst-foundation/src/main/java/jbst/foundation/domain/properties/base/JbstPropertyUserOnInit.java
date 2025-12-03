@@ -7,7 +7,7 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
-import jbst.foundation.utilities.spring.SpringAuthoritiesUtility;
+import jbst.foundation.domain.spring.JbstSpringAuthorities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -74,6 +74,6 @@ public class JbstPropertyUserOnInit extends JbstProperty {
     }
 
     public Set<SimpleGrantedAuthority> getSimpleGrantedAuthorities() {
-        return SpringAuthoritiesUtility.getSimpleGrantedAuthorities(this.authorities);
+        return JbstSpringAuthorities.getSimpleGrantedAuthorities(this.authorities);
     }
 }

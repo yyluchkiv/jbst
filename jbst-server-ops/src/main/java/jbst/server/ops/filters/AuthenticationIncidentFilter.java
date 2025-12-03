@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
 
 @Slf4j
 @Component

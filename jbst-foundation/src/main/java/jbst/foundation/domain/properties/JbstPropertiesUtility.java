@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
-import static jbst.foundation.utilities.reflections.ReflectionUtility.getFields;
+import static jbst.foundation.domain.reflection.JbstReflections.getFields;
 
 @UtilityClass
 public class JbstPropertiesUtility {

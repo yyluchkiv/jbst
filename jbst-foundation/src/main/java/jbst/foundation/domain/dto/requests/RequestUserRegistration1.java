@@ -8,9 +8,9 @@ import jbst.foundation.domain.base.Username;
 
 import java.time.ZoneId;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
-import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
-import static jbst.foundation.utilities.zones.JbstZones.reworkUkraineZoneId;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
+import static jbst.foundation.domain.zones.JbstZones.reworkUkraineZoneId;
 
 public record RequestUserRegistration1(
         @Username.ValidUsername Username username,

@@ -40,7 +40,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.enums.JbstAccountAccessMethod.SESSION_TOKEN;
 import static jbst.foundation.domain.enums.JbstAccountAccessMethod.USERNAME_PASSWORD;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static jbst.foundation.utilities.colors.AnsiUtility.getBoldHexAnsiFormat;
+import static jbst.foundation.domain.colors.JbstANSI.getBoldHexAnsiFormat;
 
 // Lombok
 @AllArgsConstructor

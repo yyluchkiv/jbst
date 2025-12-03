@@ -3,7 +3,7 @@ package jbst.foundation.utilities.exceptions;
 import org.junit.jupiter.api.Test;
 
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.*;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ExceptionsMessagesUtilityTest {

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZeroByBounds;
 import static org.apache.commons.collections4.queue.SynchronizedQueue.synchronizedQueue;
 
 @EqualsAndHashCode

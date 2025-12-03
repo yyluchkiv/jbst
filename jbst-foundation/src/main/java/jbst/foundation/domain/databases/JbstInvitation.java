@@ -8,8 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 
 import static jbst.foundation.domain.base.AbstractAuthority.SUPERADMIN;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
 public record JbstInvitation(
         InvitationId id,

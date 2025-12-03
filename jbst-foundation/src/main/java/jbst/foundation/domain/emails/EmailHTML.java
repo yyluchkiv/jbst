@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import java.util.Map;
 import java.util.Set;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 public record EmailHTML(
         Set<String> to,

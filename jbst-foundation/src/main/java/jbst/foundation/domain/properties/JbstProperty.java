@@ -5,7 +5,7 @@ import jbst.foundation.domain.annotations.JbstNonMandatoryMethod;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.ConsoleAsserts.assertNonNullOrThrow;
 import static jbst.foundation.domain.properties.JbstPropertiesUtility.*;
-import static jbst.foundation.utilities.strings.StringUtility.toKebab;
+import static jbst.foundation.domain.strings.JbstStrings.toKebab;
 
 public abstract class JbstProperty {
     public enum JbstPropertyNodeType {

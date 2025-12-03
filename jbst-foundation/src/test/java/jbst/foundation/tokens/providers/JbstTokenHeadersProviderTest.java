@@ -10,7 +10,7 @@ import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityJWT;
-import jbst.foundation.utilities.random.RandomUtility;
+import jbst.foundation.domain.random.JbstRandom;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -116,7 +116,7 @@ class JbstTokenHeadersProviderTest {
     void readRequestAccessToken() throws JbstAccessTokenNotFoundException {
         // Arrange
         var headerKey = this.jwt().getAccessToken().getHeaderKey();
-        var header = RandomUtility.randomString();
+        var header = JbstRandom.randomString();
         var request = mock(HttpServletRequest.class);
         when(request.getHeader(headerKey)).thenReturn(header);
 
@@ -148,7 +148,7 @@ class JbstTokenHeadersProviderTest {
     void readRequestAccessTokenOnWebsocketHandshake() throws JbstAccessTokenNotFoundException {
         // Arrange
         var headerKey = this.jwt().getAccessToken().getHeaderKey();
-        var header = RandomUtility.randomString();
+        var header = JbstRandom.randomString();
         var request = mock(HttpServletRequest.class);
         when(request.getParameter(headerKey)).thenReturn(header);
 
@@ -180,7 +180,7 @@ class JbstTokenHeadersProviderTest {
     void readRequestRefreshToken() throws JbstRefreshTokenNotFoundException {
         // Arrange
         var headerKey = this.jwt().getRefreshToken().getHeaderKey();
-        var header = RandomUtility.randomString();
+        var header = JbstRandom.randomString();
         var request = mock(HttpServletRequest.class);
         when(request.getHeader(headerKey)).thenReturn(header);
 
@@ -212,7 +212,7 @@ class JbstTokenHeadersProviderTest {
     void readRequestRefreshTokenOnWebsocketHandshake() throws JbstRefreshTokenNotFoundException {
         // Arrange
         var headerKey = this.jwt().getRefreshToken().getHeaderKey();
-        var header = RandomUtility.randomString();
+        var header = JbstRandom.randomString();
         var request = mock(HttpServletRequest.class);
         when(request.getParameter(headerKey)).thenReturn(header);
 

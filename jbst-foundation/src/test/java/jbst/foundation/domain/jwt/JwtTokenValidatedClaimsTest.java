@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static jbst.foundation.utilities.random.RandomUtility.validClaims;
+import static jbst.foundation.domain.random.JbstRandom.validClaims;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 

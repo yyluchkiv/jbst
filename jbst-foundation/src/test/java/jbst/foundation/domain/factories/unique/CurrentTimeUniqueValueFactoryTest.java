@@ -1,7 +1,7 @@
 package jbst.foundation.domain.factories.unique;
 
 import jbst.foundation.domain.tests.constants.TestsJunitConstants;
-import jbst.foundation.utilities.concurrent.SleepUtility;
+import jbst.foundation.domain.concurrent.JbstSleep;
 import jbst.foundation.utilities.time.TimestampUtility;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -53,7 +53,7 @@ class CurrentTimeUniqueValueFactoryTest {
 
         // Act
         var values1 = IntStream.range(0, iterations).mapToObj(i -> randomFactory.createValue()).collect(Collectors.toSet());
-        SleepUtility.sleep(2, TimeUnit.SECONDS);
+        JbstSleep.sleep(2, TimeUnit.SECONDS);
         var values2 = IntStream.range(0, iterations).mapToObj(i -> randomFactory.createValue()).collect(Collectors.toSet());
 
         // Assert

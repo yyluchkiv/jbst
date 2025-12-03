@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
-import static jbst.foundation.utilities.slack.SlackUtility.getSlackTable;
-import static jbst.foundation.utilities.strings.StringUtility.getShortenValueOrUndefined;
-import static jbst.foundation.utilities.strings.StringUtility.toObjectsArray;
+import static jbst.foundation.domain.slack.JbstSlack.getSlackTable;
+import static jbst.foundation.domain.strings.JbstStrings.getShortenValueOrUndefined;
+import static jbst.foundation.domain.strings.JbstStrings.toObjectsArray;
 
 // Lombok
 @Getter

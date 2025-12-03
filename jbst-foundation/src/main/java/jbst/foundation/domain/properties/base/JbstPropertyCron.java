@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
 
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data

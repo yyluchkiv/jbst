@@ -15,8 +15,8 @@ import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomEnum;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 @Slf4j
 // Lombok (property-based)

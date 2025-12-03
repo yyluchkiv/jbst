@@ -3,7 +3,7 @@ package jbst.foundation.domain.dto.requests;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 public record RequestAccessToken(String value) {
     public static RequestAccessToken hardcoded() {

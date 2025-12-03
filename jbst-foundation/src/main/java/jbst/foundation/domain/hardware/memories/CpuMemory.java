@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
-import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomBigDecimalByBounds;
 
 // Lombok
 @SuppressWarnings("ALL")

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
+import static jbst.foundation.domain.random.JbstRandom.randomEnum;
+import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZero;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SchedulerConfigurationTest {

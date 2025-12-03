@@ -2,7 +2,7 @@ package jbst.foundation.domain.exceptions;
 
 import jakarta.validation.constraints.NotNull;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.utilities.strings.StringUtility;
+import jbst.foundation.domain.strings.JbstStrings;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -50,7 +50,7 @@ public class ExceptionEntity {
                 .map(item -> {
                     // E.G. "bollingerBands.numberOfPeriods" -> "Bollinger bands Number of periods"
                     var fieldName = Stream.of(item.getField().split("\\."))
-                            .map(StringUtility::convertCamelCaseToSplit)
+                            .map(JbstStrings::convertCamelCaseToSplit)
                             .collect(Collectors.joining(" "));
                     // E.G: "Bollinger bands Number of periods" → "Bollinger bands number of periods"
                     fieldName = capitalize(fieldName.toLowerCase());
