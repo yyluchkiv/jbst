@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableList;
 
-// Lombok
 @Getter
 @EqualsAndHashCode
 @ToString
