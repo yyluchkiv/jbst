@@ -1,4 +1,4 @@
-package jbst.foundation.utilities.processors;
+package jbst.foundation.utilities.hardware;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
@@ -7,33 +7,21 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
-import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tuples.TuplePercentage.progressTuplePercentage;
-import static jbst.foundation.utilities.processors.ProcessorsUtility.getHalfOfCores;
-import static jbst.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
+import static jbst.foundation.utilities.hardware.JbstCPU.getHalfOfCores;
+import static jbst.foundation.utilities.hardware.JbstCPU.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ProcessorsUtilityTest {
+class JbstCPUTest {
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void getNumOfCoresTest() {
-        // Act
-        int cores = getNumOfCores();
-
-        // Assert
-        assertThat(cores).isPositive();
+    @RepeatedTest(10)
+    void getCoresTest() {
+        // Act + Assert
+        assertThat(getNumOfCores()).isPositive();
+        assertThat(getHalfOfCores()).isPositive();
     }
 
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void getHalfOfCoresTest() {
-        // Act
-        int cores = getHalfOfCores();
-
-        // Assert
-        assertThat(cores).isPositive();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(10)
     void integrationComparisonTest() {
         // Act
         int numOfCores = getNumOfCores();
