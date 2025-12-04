@@ -39,7 +39,7 @@ class JbstStateManagerClassicTest {
     @Test
     void classicStateGroupedMappingsConstructorNoStatesTest() {
         // Act
-        var groupedMappings = new JbstStateManagerClassic.ClassicStateGroupedMappings(
+        var groupedMappings = new JbstStateManagerClassic.GroupedMappings(
                 List.of()
         );
 
@@ -51,7 +51,7 @@ class JbstStateManagerClassicTest {
     @Test
     void classicStateGroupedMappingsConstructorTest() {
         // Act
-        var groupedMappings = new JbstStateManagerClassic.ClassicStateGroupedMappings(
+        var groupedMappings = new JbstStateManagerClassic.GroupedMappings(
                 List.of(
                         JbstStateClassic.TERMINATED,
                         JbstStateClassic.CREATED,

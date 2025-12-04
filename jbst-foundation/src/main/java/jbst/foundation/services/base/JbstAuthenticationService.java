@@ -8,11 +8,11 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
-import jbst.foundation.domain.events.EventAuthenticationMagicLinkFailure;
+import jbst.foundation.domain.events.JbstEventAuthenticationLoginFailure;
+import jbst.foundation.domain.events.JbstEventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.security.MagicLinkUserCredentials;
+import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -69,7 +69,7 @@ public class JbstAuthenticationService {
             return credentials.username();
         } catch (BadCredentialsException ex) {
             this.eventsPublisher.publishAuthenticationLoginFailure(
-                    new EventAuthenticationLoginFailure(
+                    new JbstEventAuthenticationLoginFailure(
                             credentials.username(),
                             credentials.password(),
                             getClientIpAddr(httpRequest),
@@ -80,7 +80,7 @@ public class JbstAuthenticationService {
         }
     }
 
-    public final Username asMagicLink(MagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Login {
+    public final Username asMagicLink(JbstMagicLinkUserCredentials magicLinkUserCredentials, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Login {
         try {
             var credentials = this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
             this.usersTokensRepository.saveAs(magicLinkUserCredentials.userToken().withUsed(true));
@@ -93,7 +93,7 @@ public class JbstAuthenticationService {
             return credentials.username();
         } catch (BadCredentialsException ex) {
             this.eventsPublisher.publishAuthenticationLoginMagicLinkFailure(
-                    new EventAuthenticationMagicLinkFailure(
+                    new JbstEventAuthenticationMagicLinkFailure(
                             magicLinkUserCredentials.userToken(),
                             getClientIpAddr(httpRequest),
                             new UserAgentHeader(httpRequest)

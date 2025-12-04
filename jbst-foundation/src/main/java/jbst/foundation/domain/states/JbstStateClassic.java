@@ -53,8 +53,8 @@ public enum JbstStateClassic implements EnumValue<String> {
         return this.value;
     }
 
-    public ClassicStatePermissions getPermissions() {
-        return new ClassicStatePermissions(
+    public Permissions getPermissions() {
+        return new Permissions(
                 this.isDisabled(),
                 Set.of(CREATED, TERMINATED).contains(this),
                 Set.of(CREATED, ACTIVE, PAUSED, TERMINATED, COMPLETED).contains(this),
@@ -110,7 +110,7 @@ public enum JbstStateClassic implements EnumValue<String> {
     // =================================================================================================================
     // CLASSES
     // =================================================================================================================
-    public record ClassicStatePermissions(
+    public record Permissions(
             boolean disabled,
             boolean startPermitted,
             boolean restartPermitted,

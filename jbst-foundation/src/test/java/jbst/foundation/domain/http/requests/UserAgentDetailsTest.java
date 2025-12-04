@@ -1,7 +1,7 @@
 package jbst.foundation.domain.http.requests;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
+class UserAgentDetailsTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(

@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.security.MagicLinkUserCredentials;
+import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
@@ -106,7 +106,7 @@ class AbstractJbstUsersServiceTest {
         // Arrange
         var email = Email.hardcoded();
         var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
-        var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
+        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
@@ -126,7 +126,7 @@ class AbstractJbstUsersServiceTest {
         // Arrange
         var creationOption = JbstUserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
-        var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
+        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var username = email.getUsername();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
@@ -153,7 +153,7 @@ class AbstractJbstUsersServiceTest {
         var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
-        var magicLinkUserCredentials = new MagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
+        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(UKRAINE))).thenThrow(new JbstExceptions.UsernameAlreadyExist(baseUsername));
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);

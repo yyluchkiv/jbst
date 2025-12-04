@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.services.JbstInvitationsService;
@@ -35,7 +35,7 @@ public abstract class AbstractJbstInvitationsService implements JbstInvitationsS
     }
 
     @Override
-    public void deleteById(InvitationId invitationId) {
+    public void deleteById(JbstInvitationId invitationId) {
         this.invitationsRepository.delete(invitationId);
     }
 }

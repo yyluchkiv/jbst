@@ -7,12 +7,12 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.security.JbstCurrentClientUser;
 
 public interface CurrentSessionAssistant {
     Username getCurrentUsername();
     JwtUser getCurrentJwtUser();
-    CurrentClientUser getCurrentClientUser();
+    JbstCurrentClientUser getCurrentClientUser();
     JbstUserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws JbstExceptions.AccessTokenNotFound;
     ResponseUserSessionsTable getCurrentUserDbSessionsTable(RequestAccessToken requestAccessToken);
 }

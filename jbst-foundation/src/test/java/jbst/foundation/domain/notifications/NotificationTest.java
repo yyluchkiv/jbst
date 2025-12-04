@@ -1,6 +1,6 @@
 package jbst.foundation.domain.notifications;
 
-import jbst.foundation.domain.tests.JbstUnitTests.Runners.AbstractObjectMapperRunner;
+import jbst.foundation.domain.tests.JbstUnitTests.Runners.Base;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NotificationTest extends AbstractObjectMapperRunner {
+class NotificationTest extends Base {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(

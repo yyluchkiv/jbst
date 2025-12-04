@@ -4,9 +4,9 @@ import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
-import jbst.foundation.domain.events.EventRegistration0;
-import jbst.foundation.domain.events.EventRegistration1;
-import jbst.foundation.domain.events.EventRegistrationMagicLink;
+import jbst.foundation.domain.events.JbstEventRegistration0;
+import jbst.foundation.domain.events.JbstEventRegistration1;
+import jbst.foundation.domain.events.JbstEventRegistrationMagicLink;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
@@ -81,7 +81,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.registrationValidator).validateRegistrationRequestMagicLink(request);
         verify(this.registrationService).registerMagicLink(request);
-        verify(this.eventsPublisher).publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
+        verify(this.eventsPublisher).publishRegistrationMagicLink(new JbstEventRegistrationMagicLink(request));
         verify(this.incidentsPublisher).publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
         verify(this.extensionService).registerMagicLink(request.email());
     }
@@ -103,7 +103,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         request = request.createReworkedUkraineZoneId();
         verify(this.registrationValidator).validateRegistrationRequest0(request);
         verify(this.registrationService).register0(request);
-        verify(this.eventsPublisher).publishRegistration0(new EventRegistration0(request));
+        verify(this.eventsPublisher).publishRegistration0(new JbstEventRegistration0(request));
         verify(this.incidentsPublisher).publishRegistration0(new IncidentRegistration0(request.username()));
         verify(this.extensionService).register0(request.username());
     }
@@ -125,7 +125,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
         request = request.createReworkedUkraineZoneId();
         verify(this.registrationValidator).validateRegistrationRequest1(request);
         verify(this.registrationService).register1(request);
-        verify(this.eventsPublisher).publishRegistration1(new EventRegistration1(request));
+        verify(this.eventsPublisher).publishRegistration1(new JbstEventRegistration1(request));
         verify(this.incidentsPublisher).publishRegistration1(new IncidentRegistration1(request.username()));
         verify(this.extensionService).register1(request.username());
     }

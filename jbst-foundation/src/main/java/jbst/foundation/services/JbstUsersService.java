@@ -7,11 +7,11 @@ import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.security.MagicLinkUserCredentials;
+import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 
 public interface JbstUsersService {
     JwtUser findByEmail(Email email);
-    UsernamePasswordCredentials saveOrGetMagicLinkCredentials(MagicLinkUserCredentials credentials);
+    UsernamePasswordCredentials saveOrGetMagicLinkCredentials(JbstMagicLinkUserCredentials credentials);
     void updateUser1(JwtUser user, RequestUserUpdate1 request);
     void updateUser2(JwtUser user, RequestUserUpdate2 request);
     void changePasswordRequired(JwtUser user, RequestUserChangePasswordBasic request);

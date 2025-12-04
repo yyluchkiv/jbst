@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import jbst.foundation.domain.tuples.Tuple1;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +16,7 @@ import static jbst.foundation.domain.enums.JbstSecurityJwtIncident.REGISTER1;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IncidentTypeTest extends AbstractFolderSerializationRunner {
+class IncidentTypeTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(

@@ -16,15 +16,15 @@ import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.events.EventAuthenticationLoginFailure;
+import jbst.foundation.domain.events.JbstEventAuthenticationLoginFailure;
 import jbst.foundation.domain.exceptions.JbstExceptionResponse;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.security.CurrentClientUser;
-import jbst.foundation.domain.security.MagicLinkUserCredentials;
+import jbst.foundation.domain.security.JbstCurrentClientUser;
+import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
@@ -157,7 +157,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var refreshToken = JwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(CurrentClientUser.hardcoded());
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.hardcoded());
 
         // Act
         this.mvc.perform(
@@ -193,7 +193,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         // Arrange
         var request = RequestMagicLinkToken.hardcoded();
         var userToken = JbstUserToken.hardcodedMagicLink();
-        var magicLinkUserCredentials = new MagicLinkUserCredentials(userToken, request.zoneId());
+        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(userToken, request.zoneId());
         var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var credentials = new UsernamePasswordCredentials(user.username(), user.password());
         when(this.authenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
@@ -203,7 +203,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var refreshToken = JwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(CurrentClientUser.hardcoded());
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.hardcoded());
 
         // Act
         this.mvc.perform(
@@ -268,7 +268,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.authenticationRequestsValidator).validateLoginStandard(request);
         verify(this.authenticationManager).authenticate(authenticationToken);
-        verify(this.eventsPublisher).publishAuthenticationLoginFailure(any(EventAuthenticationLoginFailure.class));
+        verify(this.eventsPublisher).publishAuthenticationLoginFailure(any(JbstEventAuthenticationLoginFailure.class));
     }
 
     @Test

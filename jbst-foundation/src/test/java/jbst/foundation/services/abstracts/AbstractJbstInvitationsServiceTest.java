@@ -4,7 +4,7 @@ import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import lombok.RequiredArgsConstructor;
@@ -129,7 +129,7 @@ class AbstractJbstInvitationsServiceTest {
     @Test
     void deleteByIdTest() {
         // Arrange
-        var invitationId = InvitationId.random();
+        var invitationId = JbstInvitationId.random();
 
         // Act
         this.componentUnderTest.deleteById(invitationId);

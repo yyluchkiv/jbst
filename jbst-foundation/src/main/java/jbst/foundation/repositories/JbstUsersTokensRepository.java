@@ -2,7 +2,7 @@ package jbst.foundation.repositories;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 
 import static java.util.Objects.nonNull;
 
@@ -11,7 +11,7 @@ public interface JbstUsersTokensRepository {
     JbstUserToken findByUserTokenValidOrNull(RequestUserToken request);
     void cleanupExpired();
     void cleanupUsed();
-    TokenId saveAs(JbstUserToken token);
+    JbstTokenId saveAs(JbstUserToken token);
     JbstUserToken saveAs(RequestUserToken request);
 
     default JbstUserToken findOrCreate(RequestUserToken request) {

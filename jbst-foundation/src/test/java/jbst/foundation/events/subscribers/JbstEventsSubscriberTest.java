@@ -7,7 +7,7 @@ import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.events.*;
-import jbst.foundation.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
@@ -59,7 +59,7 @@ class JbstEventsSubscriberTest {
     private static Stream<Arguments> eventSessionUserRequestMetadataAddLoginTest() {
         return Stream.of(
                 Arguments.of(
-                        new EventSessionUserRequestMetadataAdd(
+                        new JbstEventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 Email.random(),
                                 entity(JbstUserSession.class),
@@ -70,7 +70,7 @@ class JbstEventsSubscriberTest {
                         null
                 ),
                 Arguments.of(
-                        new EventSessionUserRequestMetadataAdd(
+                        new JbstEventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
                                 entity(JbstUserSession.class),
@@ -81,7 +81,7 @@ class JbstEventsSubscriberTest {
                         null
                 ),
                 Arguments.of(
-                        new EventSessionUserRequestMetadataAdd(
+                        new JbstEventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
                                 entity(JbstUserSession.class),
@@ -97,7 +97,7 @@ class JbstEventsSubscriberTest {
     private static Stream<Arguments> eventSessionUserRequestMetadataAddRefreshTest() {
         return Stream.of(
                 Arguments.of(
-                        new EventSessionUserRequestMetadataAdd(
+                        new JbstEventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 Email.random(),
                                 entity(JbstUserSession.class),
@@ -108,7 +108,7 @@ class JbstEventsSubscriberTest {
                         null
                 ),
                 Arguments.of(
-                        new EventSessionUserRequestMetadataAdd(
+                        new JbstEventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
                                 entity(JbstUserSession.class),
@@ -119,7 +119,7 @@ class JbstEventsSubscriberTest {
                         null
                 ),
                 Arguments.of(
-                        new EventSessionUserRequestMetadataAdd(
+                        new JbstEventSessionUserRequestMetadataAdd(
                                 Username.random(),
                                 null,
                                 entity(JbstUserSession.class),
@@ -214,7 +214,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onAuthenticationLoginMagicLinkFailureTest() {
         // Arrange
-        var event = entity(EventAuthenticationMagicLinkFailure.class);
+        var event = entity(JbstEventAuthenticationMagicLinkFailure.class);
 
         // Act
         this.componentUnderTest.onAuthenticationLoginMagicLinkFailure(event);
@@ -226,7 +226,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onAuthenticationLoginTest() {
         // Arrange
-        var event = entity(EventAuthenticationLogin.class);
+        var event = entity(JbstEventAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.onAuthenticationLogin(event);
@@ -239,7 +239,7 @@ class JbstEventsSubscriberTest {
     @MethodSource("exceptionalExecutionParams")
     void onAuthenticationLoginFailureTest(RuntimeException ex) {
         // Arrange
-        var event = EventAuthenticationLoginFailure.hardcoded();
+        var event = JbstEventAuthenticationLoginFailure.hardcoded();
         when(this.geoUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         if (nonNull(ex)) {
             doThrow(ex).when(this.incidentsPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(any());
@@ -274,7 +274,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onAuthenticationLogoutTest() {
         // Arrange
-        var event = entity(EventAuthenticationLogout.class);
+        var event = entity(JbstEventAuthenticationLogout.class);
 
         // Act
         this.componentUnderTest.onAuthenticationLogout(event);
@@ -288,7 +288,7 @@ class JbstEventsSubscriberTest {
     void onRegistration0Test(RuntimeException ex) {
         // Arrange
         var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
-        var event = new EventRegistration0(requestUserRegistration0);
+        var event = new JbstEventRegistration0(requestUserRegistration0);
         var userToken = JbstUserToken.hardcodedEmailConfirmation();
         when(this.usersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
         if (nonNull(ex)) {
@@ -308,7 +308,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onRegistrationMagicLinkTest() {
         // Arrange
-        var event = entity(EventRegistrationMagicLink.class);
+        var event = entity(JbstEventRegistrationMagicLink.class);
 
         // Act
         this.componentUnderTest.onRegistrationMagicLink(event);
@@ -320,7 +320,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onRegistration0FailureTest() {
         // Arrange
-        var event = entity(EventRegistration0Failure.class);
+        var event = entity(JbstEventRegistration0Failure.class);
 
         // Act
         this.componentUnderTest.onRegistration0Failure(event);
@@ -332,7 +332,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onRegistration1Test() {
         // Arrange
-        var event = entity(EventRegistration1.class);
+        var event = entity(JbstEventRegistration1.class);
 
         // Act
         this.componentUnderTest.onRegistration1(event);
@@ -344,7 +344,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onRegistration1FailureTest() {
         // Arrange
-        var event = entity(EventRegistration1Failure.class);
+        var event = entity(JbstEventRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.onRegistration1Failure(event);
@@ -356,7 +356,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onSessionRefreshedTest() {
         // Arrange
-        var event = entity(EventSessionRefreshed.class);
+        var event = entity(JbstEventSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.onSessionRefreshed(event);
@@ -368,7 +368,7 @@ class JbstEventsSubscriberTest {
     @Test
     void onSessionExpiredTest() {
         // Arrange
-        var event = entity(EventSessionExpired.class);
+        var event = entity(JbstEventSessionExpired.class);
 
         // Act
         this.componentUnderTest.onSessionExpired(event);
@@ -380,7 +380,7 @@ class JbstEventsSubscriberTest {
     @ParameterizedTest
     @MethodSource("eventSessionUserRequestMetadataAddLoginTest")
     void onSessionUserRequestMetadataAddIsAuthenticationLoginEndpointTest(
-            EventSessionUserRequestMetadataAdd event,
+            JbstEventSessionUserRequestMetadataAdd event,
             RuntimeException ex
     ) {
         // Arrange
@@ -395,7 +395,7 @@ class JbstEventsSubscriberTest {
         // Assert
         verify(this.usersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
-            verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
+            verify(this.usersEmailsService).executeAccountAccessed(new JbstFunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }
@@ -406,7 +406,7 @@ class JbstEventsSubscriberTest {
     @ParameterizedTest
     @MethodSource("eventSessionUserRequestMetadataAddRefreshTest")
     void onSessionUserRequestMetadataAddIsAuthenticationRefreshTokenEndpointTest(
-            EventSessionUserRequestMetadataAdd event,
+            JbstEventSessionUserRequestMetadataAdd event,
             RuntimeException ex
     ) {
         // Arrange
@@ -421,7 +421,7 @@ class JbstEventsSubscriberTest {
         // Assert
         verify(this.usersSessionsService).saveUserRequestMetadata(event);
         if (nonNull(event.email())) {
-            verify(this.usersEmailsService).executeAccountAccessed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
+            verify(this.usersEmailsService).executeAccountAccessed(new JbstFunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SESSION_TOKEN));
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }
@@ -433,7 +433,7 @@ class JbstEventsSubscriberTest {
     @MethodSource("onSessionUserRequestMetadataRenewTest")
     void onSessionUserRequestMetadataRenewTest(RuntimeException ex) {
         // Arrange
-        var event = entity(EventSessionUserRequestMetadataRenew.class);
+        var event = entity(JbstEventSessionUserRequestMetadataRenew.class);
         if (nonNull(ex)) {
             doThrow(ex).when(this.usersSessionsService).saveUserRequestMetadata(event);
         }

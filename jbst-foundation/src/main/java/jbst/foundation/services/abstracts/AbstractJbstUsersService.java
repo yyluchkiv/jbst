@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.security.MagicLinkUserCredentials;
+import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
@@ -38,7 +38,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
     }
 
     @Override
-    public UsernamePasswordCredentials saveOrGetMagicLinkCredentials(MagicLinkUserCredentials credentials) {
+    public UsernamePasswordCredentials saveOrGetMagicLinkCredentials(JbstMagicLinkUserCredentials credentials) {
         var email = credentials.userToken().email();
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
         var password = Password.of(randomStringLetterOrNumbersOnly(20));

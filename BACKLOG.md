@@ -15,16 +15,13 @@
 — Prefixes: domain.databases (?)
 — Prefixes: domain.dto (?)
 — Prefixes: domain.enums
-— Prefixes: domain.events
-— Prefixes: domain.functions
-— Prefixes: domain.geo
+— Prefixes: domain.events (websockets)
 — Prefixes: domain.hardware
 — Prefixes: domain.http
-— Prefixes: domain.ids
 — Prefixes: domain.jsons (?)
 — Prefixes: domain.jwt
 — Prefixes: domain.notifications
-— Prefixes: domain.security
 — Prefixes: domain.triggers (?)
 — Prefixes: incidents (?)
+— Prefixes: tests (?)
 

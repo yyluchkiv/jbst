@@ -2,7 +2,7 @@ package jbst.foundation.domain.geo;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,30 +13,30 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GeoLocationTest extends AbstractFolderSerializationRunner {
+class JbstGeoLocationTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "geo-location-1.json"),
-                Arguments.of(GeoLocation.unknown(IPAddress.localhost(), "exception details"), "geo-location-2.json"),
-                Arguments.of(GeoLocation.processing(IPAddress.localhost()), "geo-location-3.json"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), null, null, null, "Lviv"), "geo-location-4.json"),
-                Arguments.of(GeoLocation.unknown(null, "exception details"), "geo-location-5.json")
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "geo-location-1.json"),
+                Arguments.of(JbstGeoLocation.unknown(IPAddress.localhost(), "exception details"), "geo-location-2.json"),
+                Arguments.of(JbstGeoLocation.processing(IPAddress.localhost()), "geo-location-3.json"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), null, null, null, "Lviv"), "geo-location-4.json"),
+                Arguments.of(JbstGeoLocation.unknown(null, "exception details"), "geo-location-5.json")
         );
     }
 
     private static Stream<Arguments> getWhereTest() {
         return Stream.of(
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "🇺🇦 Ukraine, Lviv"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", ""), "🇺🇦 Ukraine"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", " "), "🇺🇦 Ukraine"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "    "), "🇺🇦 Ukraine"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", null), "🇺🇦 Ukraine"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), null, "UA", "🇺🇦", "Lviv"), "🇺🇦 Unknown"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "  ", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
-                Arguments.of(GeoLocation.processed(IPAddress.localhost(), "     ", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown")
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "🇺🇦 Ukraine, Lviv"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", ""), "🇺🇦 Ukraine"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", " "), "🇺🇦 Ukraine"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "    "), "🇺🇦 Ukraine"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", null), "🇺🇦 Ukraine"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), null, "UA", "🇺🇦", "Lviv"), "🇺🇦 Unknown"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "  ", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
+                Arguments.of(JbstGeoLocation.processed(IPAddress.localhost(), "     ", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown")
         );
     }
 
@@ -47,7 +47,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    void serializeTest(GeoLocation geoLocation, String fileName) {
+    void serializeTest(JbstGeoLocation geoLocation, String fileName) {
         // Act
         var json = this.writeValueAsString(geoLocation);
 
@@ -57,7 +57,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("getWhereTest")
-    void getWhereTest(GeoLocation geoLocation, String expected) {
+    void getWhereTest(JbstGeoLocation geoLocation, String expected) {
         // Act
         var actual = geoLocation.getWhere();
 
@@ -68,7 +68,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
     @RepeatedTest(10)
     void validTest() {
         // Act
-        var actual = GeoLocation.valid();
+        var actual = JbstGeoLocation.valid();
 
         // Assert
         assertThat(actual).isNotNull();
@@ -84,7 +84,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
     @RepeatedTest(10)
     void invalidTest() {
         // Act
-        var actual = GeoLocation.invalid();
+        var actual = JbstGeoLocation.invalid();
 
         // Assert
         assertThat(actual).isNotNull();
@@ -98,7 +98,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
     @RepeatedTest(10)
     void randomTest() {
         // Act
-        var actual = GeoLocation.random();
+        var actual = JbstGeoLocation.random();
 
         // Assert
         assertThat(actual).isNotNull();

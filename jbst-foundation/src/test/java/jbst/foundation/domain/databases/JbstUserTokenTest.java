@@ -2,7 +2,7 @@ package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -53,7 +53,7 @@ class JbstUserTokenTest {
     void isExpiredTest(long expiryTimestamp, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
-                TokenId.hardcoded(),
+                JbstTokenId.hardcoded(),
                 Email.hardcoded(),
                 "test-token-value",
                 MAGICLINK,
@@ -70,7 +70,7 @@ class JbstUserTokenTest {
     void isInvalidTest(JbstUserTokenType tokenType, JbstUserTokenType expectedType, boolean used, long expiryTimestamp, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
-                TokenId.hardcoded(),
+                JbstTokenId.hardcoded(),
                 Email.hardcoded(),
                 "test-token-value",
                 tokenType,

@@ -104,7 +104,7 @@ public class JbstUnitTests {
     }
 
     public static class Runners {
-        public static abstract class AbstractObjectMapperRunner {
+        public static abstract class Base {
             protected static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder()
                     .addModule(new JavaTimeModule())
                     .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
@@ -127,6 +127,10 @@ public class JbstUnitTests {
                         .writerWithDefaultPrettyPrinter()
                         .writeValueAsString(object);
             }
+        }
+
+        public static abstract class BaseFolder extends JbstUnitTests.Runners.Base {
+            protected abstract String getFolder();
         }
     }
 }

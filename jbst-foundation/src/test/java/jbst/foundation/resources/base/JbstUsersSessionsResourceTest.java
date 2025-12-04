@@ -8,8 +8,8 @@ import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.foundation.domain.ids.UserSessionId;
-import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.ids.JbstUserSessionId;
+import jbst.foundation.domain.security.JbstCurrentClientUser;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
 import jbst.foundation.validators.JbstUsersSessionsValidator;
@@ -90,7 +90,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     @Test
     void getCurrentClientUserCronEnabledTest() throws Exception {
         // Arrange
-        var currentClientUser = CurrentClientUser.random();
+        var currentClientUser = JbstCurrentClientUser.random();
         var session = JbstUserSession.randomPersistedSession();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
         when(this.currentSessionAssistant.getCurrentUserSession(any(HttpServletRequest.class))).thenReturn(session);
@@ -131,14 +131,14 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                        post("/sessions/" + UserSessionId.hardcoded() + "/renew/manually")
+                        post("/sessions/" + JbstUserSessionId.hardcoded() + "/renew/manually")
                 )
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
-        verify(this.usersSessionsService).enableUserRequestMetadataRenewManually(UserSessionId.hardcoded());
+        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded());
+        verify(this.usersSessionsService).enableUserRequestMetadataRenewManually(JbstUserSessionId.hardcoded());
     }
 
     @Test
@@ -147,13 +147,13 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
 
         // Act
-        this.mvc.perform(delete("/sessions/" + UserSessionId.hardcoded()))
+        this.mvc.perform(delete("/sessions/" + JbstUserSessionId.hardcoded()))
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
-        verify(this.usersSessionsService).deleteById(UserSessionId.hardcoded());
+        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded());
+        verify(this.usersSessionsService).deleteById(JbstUserSessionId.hardcoded());
     }
 
     @Test

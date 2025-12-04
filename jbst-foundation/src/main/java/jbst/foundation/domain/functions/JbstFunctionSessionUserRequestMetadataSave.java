@@ -7,7 +7,7 @@ import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.tuples.TupleToggle;
 import org.jetbrains.annotations.NotNull;
 
-public record FunctionSessionUserRequestMetadataSave(
+public record JbstFunctionSessionUserRequestMetadataSave(
         @NotNull Username username,
         @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,

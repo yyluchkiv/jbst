@@ -1,8 +1,10 @@
 package jbst.foundation.domain.tests.runners;
 
+import jbst.foundation.domain.tests.JbstUnitTests;
+
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 
-public abstract class AbstractSerializationDeserializationRunner extends AbstractFolderSerializationRunner {
+public abstract class AbstractSerializationDeserializationRunner extends JbstUnitTests.Runners.BaseFolder {
 
     protected abstract String getFileName();
 

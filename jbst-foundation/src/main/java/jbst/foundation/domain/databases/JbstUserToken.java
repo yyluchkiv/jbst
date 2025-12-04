@@ -2,14 +2,14 @@ package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.domain.random.JbstRandom;
 
 import static jbst.foundation.domain.enums.JbstUserTokenType.*;
 import static jbst.foundation.domain.time.JbstTime.isPast;
 
 public record JbstUserToken(
-        TokenId id,
+        JbstTokenId id,
         Email email,
         String value,
         JbstUserTokenType type,
@@ -19,7 +19,7 @@ public record JbstUserToken(
 
     public static JbstUserToken hardcodedEmailConfirmation() {
         return new JbstUserToken(
-                TokenId.hardcoded(),
+                JbstTokenId.hardcoded(),
                 Email.hardcoded(),
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
                 EMAIL_CONFIRMATION,
@@ -30,7 +30,7 @@ public record JbstUserToken(
 
     public static JbstUserToken hardcodedPasswordReset() {
         return new JbstUserToken(
-                TokenId.hardcoded(),
+                JbstTokenId.hardcoded(),
                 Email.hardcoded(),
                 "0BF9F5865172B5C7DDE5C84048E8BE8150CFCC4C",
                 PASSWORD_RESET,
@@ -41,7 +41,7 @@ public record JbstUserToken(
 
     public static JbstUserToken hardcodedMagicLink() {
         return new JbstUserToken(
-                TokenId.hardcoded(),
+                JbstTokenId.hardcoded(),
                 Email.hardcoded(),
                 "B3A85D887DB47A307330C93DC06787EF54A0F46F",
                 MAGICLINK,
@@ -52,7 +52,7 @@ public record JbstUserToken(
 
     public static JbstUserToken random() {
         return new JbstUserToken(
-                TokenId.random(),
+                JbstTokenId.random(),
                 Email.random(),
                 JbstRandom.randomString(),
                 JbstRandom.randomEnum(JbstUserTokenType.class),

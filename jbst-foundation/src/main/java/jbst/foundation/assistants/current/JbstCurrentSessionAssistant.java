@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.security.JbstCurrentClientUser;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -51,7 +51,7 @@ public class JbstCurrentSessionAssistant implements CurrentSessionAssistant {
     }
 
     @Override
-    public CurrentClientUser getCurrentClientUser() {
+    public JbstCurrentClientUser getCurrentClientUser() {
         var user = this.getCurrentJwtUser();
 
         var attributes = nonNull(user.attributes()) ? user.attributes() : new HashMap<String, Object>();
@@ -60,7 +60,7 @@ public class JbstCurrentSessionAssistant implements CurrentSessionAssistant {
             attributes.put("hardware", this.jbstHardwareMonitoringStore.getWidget());
         }
 
-        return new CurrentClientUser(
+        return new JbstCurrentClientUser(
                 user.username(),
                 user.email(),
                 user.name(),

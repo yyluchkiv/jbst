@@ -2,7 +2,7 @@ package jbst.foundation.validators.abtracts;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.validators.JbstInvitationsValidator;
@@ -33,7 +33,7 @@ public abstract class AbstractJbstInvitationsValidator implements JbstInvitation
     }
 
     @Override
-    public void validateDeleteById(Username username, InvitationId invitationId) {
+    public void validateDeleteById(Username username, JbstInvitationId invitationId) {
         var tuplePresence = this.invitationsRepository.isPresent(invitationId);
         if (!tuplePresence.present()) {
             throw new IllegalArgumentException(entityNotFound("Invitation", invitationId.value()));

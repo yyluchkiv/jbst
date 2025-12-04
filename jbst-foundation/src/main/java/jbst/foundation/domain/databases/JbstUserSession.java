@@ -2,7 +2,7 @@ package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 
@@ -12,7 +12,7 @@ import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 public record JbstUserSession(
         boolean persisted,
-        UserSessionId id,
+        JbstUserSessionId id,
         long createdAt,
         long updatedAt,
         Username username,
@@ -25,7 +25,7 @@ public record JbstUserSession(
 
     public static JbstUserSession randomPersistedSession() {
         return JbstUserSession.ofPersisted(
-                UserSessionId.random(),
+                JbstUserSessionId.random(),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 Username.random(),
@@ -47,7 +47,7 @@ public record JbstUserSession(
     }
 
     public static JbstUserSession ofPersisted(
-            UserSessionId id,
+            JbstUserSessionId id,
             long createdAt,
             long updatedAt,
             Username username,
@@ -80,7 +80,7 @@ public record JbstUserSession(
         var currentTimestamp = getCurrentTimestamp();
         return new JbstUserSession(
                 false,
-                UserSessionId.undefined(),
+                JbstUserSessionId.undefined(),
                 currentTimestamp,
                 currentTimestamp,
                 username,
@@ -94,7 +94,7 @@ public record JbstUserSession(
 
     public static JbstUserSession random(Username owner, JwtAccessToken accessToken, JwtRefreshToken refreshToken) {
         return JbstUserSession.ofPersisted(
-                UserSessionId.random(),
+                JbstUserSessionId.random(),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 owner,

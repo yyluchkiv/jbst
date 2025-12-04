@@ -10,13 +10,13 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
-import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
-import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
+import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataAdd;
+import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataRenew;
+import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -159,27 +159,27 @@ class AbstractJbstUsersSessionsServiceTest {
 
     @Test
     void assertAccess() {
-        when(this.usersSessionsRepository.isPresent(UserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(JbstUserSession.randomPersistedSession()));
+        when(this.usersSessionsRepository.isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(JbstUserSession.randomPersistedSession()));
 
         // Act
-        this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
+        this.componentUnderTest.assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded());
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(UserSessionId.hardcoded(), Username.hardcoded());
+        verify(this.usersSessionsRepository).isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded());
     }
 
     @Test
     void assertAccessNoAccess() {
-        when(this.usersSessionsRepository.isPresent(UserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.absent());
+        when(this.usersSessionsRepository.isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.absent());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.hardcoded()));
+        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded()));
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(UserSessionId.hardcoded(), Username.hardcoded());
+        verify(this.usersSessionsRepository).isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded());
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage(entityAccessDenied("Session", UserSessionId.hardcoded().value()));
+                .hasMessage(entityAccessDenied("Session", JbstUserSessionId.hardcoded().value()));
     }
 
     private static Stream<Arguments> saveUserSessionTest() {
@@ -225,7 +225,7 @@ class AbstractJbstUsersSessionsServiceTest {
         assertThat(whatTuple2.a()).isEqualTo(JbstConstants.Strings.UNDEFINED);
         assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.id()).isNotNull();
-        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);
+        var eventAC = ArgumentCaptor.forClass(JbstEventSessionUserRequestMetadataAdd.class);
         verify(this.eventsPublisher).publishSessionUserRequestMetadataAdd(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
@@ -270,7 +270,7 @@ class AbstractJbstUsersSessionsServiceTest {
         assertThat(whatTuple2.a()).isEqualTo(JbstConstants.Strings.UNDEFINED);
         assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.id()).isNotNull();
-        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);
+        var eventAC = ArgumentCaptor.forClass(JbstEventSessionUserRequestMetadataAdd.class);
         verify(this.eventsPublisher).publishSessionUserRequestMetadataAdd(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
@@ -302,7 +302,7 @@ class AbstractJbstUsersSessionsServiceTest {
         assertThat(newUserSession.refreshToken()).isEqualTo(newRefreshToken);
         assertThat(newUserSession.metadata()).isEqualTo(oldSession.metadata());
         verify(this.usersSessionsRepository).delete(oldSession.id());
-        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);
+        var eventAC = ArgumentCaptor.forClass(JbstEventSessionUserRequestMetadataAdd.class);
         verify(this.eventsPublisher).publishSessionUserRequestMetadataAdd(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
@@ -313,7 +313,7 @@ class AbstractJbstUsersSessionsServiceTest {
 
     @Test
     void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
-        var event = entity(EventSessionUserRequestMetadataAdd.class);
+        var event = entity(JbstEventSessionUserRequestMetadataAdd.class);
         when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
@@ -329,7 +329,7 @@ class AbstractJbstUsersSessionsServiceTest {
 
     @Test
     void saveUserRequestMetadataEventSessionUserRequestMetadataRenewTest() {
-        var event = new EventSessionUserRequestMetadataRenew(
+        var event = new JbstEventSessionUserRequestMetadataRenew(
                 Username.random(),
                 entity(JbstUserSession.class),
                 IPAddress.random(),
@@ -361,7 +361,7 @@ class AbstractJbstUsersSessionsServiceTest {
         // Arrange
         var username = Username.random();
         var session = JbstUserSession.ofPersisted(
-                entity(UserSessionId.class),
+                entity(JbstUserSessionId.class),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 username,
@@ -371,7 +371,7 @@ class AbstractJbstUsersSessionsServiceTest {
                 false,
                 false
         );
-        var saveFunction = new FunctionSessionUserRequestMetadataSave(
+        var saveFunction = new JbstFunctionSessionUserRequestMetadataSave(
                 username,
                 session,
                 entity(IPAddress.class),
@@ -446,7 +446,7 @@ class AbstractJbstUsersSessionsServiceTest {
     @Test
     void enableUserRequestMetadataRenewManuallyTest() {
         // Arrange
-        var sessionId = entity(UserSessionId.class);
+        var sessionId = entity(JbstUserSessionId.class);
 
         // Act
         this.componentUnderTest.enableUserRequestMetadataRenewManually(sessionId);
@@ -466,7 +466,7 @@ class AbstractJbstUsersSessionsServiceTest {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         var session = JbstUserSession.ofPersisted(
-                entity(UserSessionId.class),
+                entity(JbstUserSessionId.class),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 Username.random(),
@@ -481,7 +481,7 @@ class AbstractJbstUsersSessionsServiceTest {
         this.componentUnderTest.renewUserRequestMetadata(session, httpServletRequest);
 
         // Assert
-        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenew.class);
+        var eventAC = ArgumentCaptor.forClass(JbstEventSessionUserRequestMetadataRenew.class);
         if (session.isRenewRequired()) {
             verify(this.eventsPublisher).publishSessionUserRequestMetadataRenew(eventAC.capture());
             var event = eventAC.getValue();
@@ -497,7 +497,7 @@ class AbstractJbstUsersSessionsServiceTest {
     @Test
     void deleteByIdTest() {
         // Arrange
-        var sessionId = entity(UserSessionId.class);
+        var sessionId = entity(JbstUserSessionId.class);
 
         // Act
         this.componentUnderTest.deleteById(sessionId);

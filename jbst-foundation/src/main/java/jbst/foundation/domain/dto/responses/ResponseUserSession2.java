@@ -3,7 +3,7 @@ package jbst.foundation.domain.dto.responses;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.time.JbstTimeago;
 import jbst.foundation.domain.time.JbstTimeAmount;
@@ -15,7 +15,7 @@ import java.util.Comparator;
 import static java.util.Comparator.comparing;
 
 public record ResponseUserSession2(
-        UserSessionId id,
+        JbstUserSessionId id,
         Username who,
         boolean current,
         String activity,
@@ -40,7 +40,7 @@ public record ResponseUserSession2(
             .thenComparing(ResponseUserSession2::where);
 
     public static ResponseUserSession2 of(
-            UserSessionId id,
+            JbstUserSessionId id,
             long updatedAt,
             Username username,
             RequestAccessToken requestAccessToken,
@@ -73,7 +73,7 @@ public record ResponseUserSession2(
     public static ResponseUserSession2 hardcodedCurrent() {
         var token = "PFRL63OtcEKKy0hb7UjE";
         return of(
-                UserSessionId.hardcoded(),
+                JbstUserSessionId.hardcoded(),
                 TimestampUtility.getCurrentTimestamp(),
                 Username.hardcoded(),
                 new RequestAccessToken(token),
@@ -84,7 +84,7 @@ public record ResponseUserSession2(
 
     public static ResponseUserSession2 random() {
         return of(
-                UserSessionId.random(),
+                JbstUserSessionId.random(),
                 TimestampUtility.getCurrentTimestamp() - JbstTimeAmount.random().toMillis(),
                 Username.hardcoded(),
                 RequestAccessToken.random(),

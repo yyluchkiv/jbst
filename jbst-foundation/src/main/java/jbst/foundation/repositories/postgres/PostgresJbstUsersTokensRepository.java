@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public interface PostgresJbstUsersTokensRepository extends JpaRepository<Postgre
         this.deleteAllByUsedIsTrue();
     }
 
-    default TokenId saveAs(JbstUserToken token) {
+    default JbstTokenId saveAs(JbstUserToken token) {
         var entity = this.save(new PostgresDbUserToken(token));
         return entity.tokenId();
     }

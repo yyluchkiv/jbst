@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
 import jbst.foundation.domain.dto.requests.RequestUserLogin;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.security.JbstCurrentClientUser;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.services.base.JbstAuthenticationService;
 import jbst.foundation.validators.base.JbstAuthenticationValidator;
@@ -39,7 +39,7 @@ public class JbstAuthenticationResource {
 
     @PostMapping("/login/standard")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser authenticateAsStandard(
+    public JbstCurrentClientUser authenticateAsStandard(
             @RequestBody @Valid RequestUserLogin request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
@@ -52,7 +52,7 @@ public class JbstAuthenticationResource {
 
     @PostMapping("/login/magiclink")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser authenticateAsMagicLink(
+    public JbstCurrentClientUser authenticateAsMagicLink(
             @RequestBody @Valid RequestMagicLinkToken request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse

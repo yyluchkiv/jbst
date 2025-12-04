@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import jbst.foundation.tests.enums.TestAuthority;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +24,7 @@ import static jbst.foundation.domain.reflection.JbstReflections.setPrivateField;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CurrentClientUserTest extends AbstractFolderSerializationRunner {
+class JbstCurrentClientUserTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> getAttributeByKeyTest() {
         return Stream.of(
@@ -62,7 +62,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     @RepeatedTest(5)
     void serializeTest() {
         // Arrange
-        var currentClientUser = new CurrentClientUser(
+        var currentClientUser = new JbstCurrentClientUser(
                 Username.hardcoded(),
                 Email.of("tests@" + JbstConstants.Domains.HARDCODED),
                 "JBST",
@@ -90,7 +90,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     @MethodSource("getAttributeByKeyTest")
     void getAttributeByKeyTest(String attributeKey, boolean reflectionHack, Object expected) throws NoSuchFieldException, IllegalAccessException {
         // Arrange
-        var currentClientUser = new CurrentClientUser(
+        var currentClientUser = new JbstCurrentClientUser(
                 Username.random(),
                 Email.random(),
                 randomString(),
@@ -119,7 +119,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     @MethodSource("hasAbstractAuthorityTest")
     void hasAbstractAuthorityTest(AbstractAuthority abstractAuthority, boolean expected) {
         // Arrange
-        var currentClientUser = new CurrentClientUser(
+        var currentClientUser = new JbstCurrentClientUser(
                 Username.random(),
                 Email.random(),
                 randomString(),
@@ -145,7 +145,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     @MethodSource("hasAuthorityTest")
     void hasAuthorityTest(String authority, boolean expected) {
         // Arrange
-        var currentClientUser = new CurrentClientUser(
+        var currentClientUser = new JbstCurrentClientUser(
                 Username.random(),
                 Email.random(),
                 randomString(),

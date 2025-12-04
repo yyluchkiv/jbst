@@ -1,7 +1,7 @@
 package jbst.foundation.domain.databases;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.plurals.JbstPlurals;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class JbstUsers extends JbstPlurals<JbstUser, UserId> {
+public class JbstUsers extends JbstPlurals<JbstUser, JbstUserId> {
 
     public JbstUsers(List<JbstUser> values) {
         super(values);

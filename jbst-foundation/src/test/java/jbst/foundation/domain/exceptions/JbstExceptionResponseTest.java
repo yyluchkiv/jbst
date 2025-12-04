@@ -1,7 +1,7 @@
 package jbst.foundation.domain.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.JbstUnitTests.Runners.AbstractObjectMapperRunner;
+import jbst.foundation.domain.tests.JbstUnitTests.Runners.Base;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ import static jbst.foundation.domain.exceptions.JbstExceptionResponse.Type.ERROR
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JbstExceptionResponseTest extends AbstractObjectMapperRunner {
+class JbstExceptionResponseTest extends Base {
 
     @SuppressWarnings("unchecked")
     @SneakyThrows

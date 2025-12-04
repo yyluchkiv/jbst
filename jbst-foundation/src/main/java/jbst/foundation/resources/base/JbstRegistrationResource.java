@@ -6,9 +6,9 @@ import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
-import jbst.foundation.domain.events.EventRegistration0;
-import jbst.foundation.domain.events.EventRegistration1;
-import jbst.foundation.domain.events.EventRegistrationMagicLink;
+import jbst.foundation.domain.events.JbstEventRegistration0;
+import jbst.foundation.domain.events.JbstEventRegistration1;
+import jbst.foundation.domain.events.JbstEventRegistrationMagicLink;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
@@ -52,7 +52,7 @@ public class JbstRegistrationResource {
         this.rateLimitsService.acquireMagicLinkOrThrow(request.email());
         this.registrationValidator.validateRegistrationRequestMagicLink(request);
         this.registrationService.registerMagicLink(request);
-        this.eventsPublisher.publishRegistrationMagicLink(new EventRegistrationMagicLink(request));
+        this.eventsPublisher.publishRegistrationMagicLink(new JbstEventRegistrationMagicLink(request));
         this.incidentsPublisher.publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
         this.extensionService.registerMagicLink(request.email());
     }
@@ -63,7 +63,7 @@ public class JbstRegistrationResource {
         request = request.createReworkedUkraineZoneId();
         this.registrationValidator.validateRegistrationRequest0(request);
         this.registrationService.register0(request);
-        this.eventsPublisher.publishRegistration0(new EventRegistration0(request));
+        this.eventsPublisher.publishRegistration0(new JbstEventRegistration0(request));
         this.incidentsPublisher.publishRegistration0(new IncidentRegistration0(request.username()));
         this.extensionService.register0(request.username());
     }
@@ -74,7 +74,7 @@ public class JbstRegistrationResource {
         request = request.createReworkedUkraineZoneId();
         this.registrationValidator.validateRegistrationRequest1(request);
         this.registrationService.register1(request);
-        this.eventsPublisher.publishRegistration1(new EventRegistration1(request));
+        this.eventsPublisher.publishRegistration1(new JbstEventRegistration1(request));
         this.incidentsPublisher.publishRegistration1(new IncidentRegistration1(request.username()));
         this.extensionService.register1(request.username());
     }

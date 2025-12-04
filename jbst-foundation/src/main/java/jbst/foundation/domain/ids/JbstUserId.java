@@ -7,23 +7,23 @@ import org.jetbrains.annotations.NotNull;
 
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
-public record UserId(@NotNull String value) {
+public record JbstUserId(@NotNull String value) {
 
     @JsonCreator
-    public static UserId of(String value) {
-        return new UserId(value);
+    public static JbstUserId of(String value) {
+        return new JbstUserId(value);
     }
 
-    public static UserId hardcoded() {
+    public static JbstUserId hardcoded() {
         return of("72667893848372913475");
     }
 
-    public static UserId random() {
-        return new UserId(randomString());
+    public static JbstUserId random() {
+        return new JbstUserId(randomString());
     }
 
     @SuppressWarnings("unused")
-    public static UserId unknown() {
+    public static JbstUserId unknown() {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 

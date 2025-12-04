@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.plurals.JbstPlurable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public record JbstUser(
-        UserId id,
+        JbstUserId id,
         JbstUserCreationOption creationOption,
         Username username,
         boolean enabled,
@@ -21,11 +21,11 @@ public record JbstUser(
         Set<SimpleGrantedAuthority> authorities,
         Email email,
         String name
-) implements JbstPlurable<UserId> {
+) implements JbstPlurable<JbstUserId> {
 
     public static JbstUser hardcoded() {
         return new JbstUser(
-                UserId.hardcoded(),
+                JbstUserId.hardcoded(),
                 JbstUserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 true,
@@ -36,7 +36,7 @@ public record JbstUser(
         );
     }
     @Override
-    public UserId getId() {
+    public JbstUserId getId() {
         return this.id;
     }
 }

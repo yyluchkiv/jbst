@@ -1,7 +1,7 @@
 package jbst.foundation.domain.tuples;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TupleRangeTest extends AbstractFolderSerializationRunner {
+class TupleRangeTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(

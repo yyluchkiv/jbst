@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.emails.JbstEmails;
-import jbst.foundation.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.JbstEmailService;
@@ -44,7 +44,7 @@ public class JbstUsersEmailsService {
         this.emailService.sendHTML(this.getPasswordResetHTML(userToken));
     }
 
-    public final void executeAccountAccessed(FunctionAccountAccessed function) {
+    public final void executeAccountAccessed(JbstFunctionAccountAccessed function) {
         if (!this.jbstProperties.getSecurity().getUsersEmails().isEnabled(function.accountAccessMethod())) {
             return;
         }
@@ -54,7 +54,7 @@ public class JbstUsersEmailsService {
     // =================================================================================================================
     // PRIVATE METHODS: Mails
     // =================================================================================================================
-    private JbstEmails.HTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
+    private JbstEmails.HTML getAccountAccessedHTML(@NotNull JbstFunctionAccountAccessed function) {
         return JbstEmails.HTML.of(
                 function.to(),
                 this.getSubjectV1("Account Accessed"),

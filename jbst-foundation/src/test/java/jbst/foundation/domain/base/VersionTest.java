@@ -1,7 +1,7 @@
 package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VersionTest extends AbstractFolderSerializationRunner {
+class VersionTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> versionsTests() {
         return Stream.of(

@@ -10,7 +10,7 @@ import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.services.JbstUsersSessionsService;
@@ -89,13 +89,13 @@ public class JbstSuperadminResource {
     }
 
     @PostMapping("/sessions/{sessionId}/renew/manually")
-    public void renewManually(@PathVariable UserSessionId sessionId) {
+    public void renewManually(@PathVariable JbstUserSessionId sessionId) {
         this.usersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable UserSessionId sessionId) {
+    public void deleteById(@PathVariable JbstUserSessionId sessionId) {
         this.usersSessionsService.deleteById(sessionId);
     }
 

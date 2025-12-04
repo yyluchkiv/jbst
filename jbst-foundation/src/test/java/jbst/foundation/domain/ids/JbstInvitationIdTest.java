@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InvitationIdTest extends AbstractSerializationDeserializationRunner {
-    private static final InvitationId INVITATION_CODE_ID = InvitationId.of("code123");
+class JbstInvitationIdTest extends AbstractSerializationDeserializationRunner {
+    private static final JbstInvitationId INVITATION_CODE_ID = JbstInvitationId.of("code123");
 
     @Override
     protected String getFileName() {
@@ -34,7 +34,7 @@ class InvitationIdTest extends AbstractSerializationDeserializationRunner {
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<InvitationId>() {};
+        var typeReference = new TypeReference<JbstInvitationId>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.system;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import static jbst.foundation.domain.reflection.JbstReflections.getGetters;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JbstSystemResetServerStatusTest extends AbstractFolderSerializationRunner {
+class JbstSystemResetServerStatusTest extends JbstUnitTests.Runners.BaseFolder {
 
     @Override
     protected String getFolder() {

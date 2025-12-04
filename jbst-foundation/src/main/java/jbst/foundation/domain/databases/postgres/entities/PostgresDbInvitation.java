@@ -7,7 +7,7 @@ import jbst.foundation.domain.converters.JbstPostgresConverters;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable0;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -117,8 +117,8 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
 
     @JsonIgnore
     @Transient
-    public InvitationId invitationId() {
-        return new InvitationId(this.id);
+    public JbstInvitationId invitationId() {
+        return new JbstInvitationId(this.id);
     }
 
     @JsonIgnore

@@ -4,14 +4,14 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
-import jbst.foundation.domain.events.EventAuthenticationLogin;
-import jbst.foundation.domain.events.EventAuthenticationLogout;
-import jbst.foundation.domain.events.EventSessionExpired;
-import jbst.foundation.domain.events.EventSessionRefreshed;
-import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.events.JbstEventAuthenticationLogin;
+import jbst.foundation.domain.events.JbstEventAuthenticationLogout;
+import jbst.foundation.domain.events.JbstEventSessionExpired;
+import jbst.foundation.domain.events.JbstEventSessionRefreshed;
+import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.sessions.JbstSession;
@@ -191,14 +191,14 @@ class AbstractJbstSessionRegistryTest {
         verify(this.usersSessionsRepository).isPresent(session2.accessToken());
         verify(this.usersSessionsRepository).isPresent(session3.accessToken());
         verify(this.usersSessionsRepository).isPresent(session4.accessToken());
-        verify(this.eventsPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session1.username()));
-        verify(this.eventsPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session2.username()));
-        verify(this.eventsPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session3.username()));
-        verify(this.eventsPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session4.username()));
-        verify(this.eventsPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session1.username()));
-        verify(this.eventsPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session2.username()));
-        verify(this.eventsPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session3.username()));
-        verify(this.eventsPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session4.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogin(new JbstEventAuthenticationLogin(session1.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogin(new JbstEventAuthenticationLogin(session2.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogin(new JbstEventAuthenticationLogin(session3.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogin(new JbstEventAuthenticationLogin(session4.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogout(new JbstEventAuthenticationLogout(session1.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogout(new JbstEventAuthenticationLogout(session2.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogout(new JbstEventAuthenticationLogout(session3.username()));
+        verify(this.eventsPublisher).publishAuthenticationLogout(new JbstEventAuthenticationLogout(session4.username()));
         verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session1.username(), dbUserSession1.metadata()));
         verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session2.username(), dbUserSession2.metadata()));
         verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session3.username(), dbUserSession3.metadata()));
@@ -224,7 +224,7 @@ class AbstractJbstSessionRegistryTest {
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(1);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
-        verify(this.eventsPublisher, times(3)).publishAuthenticationLogin(new EventAuthenticationLogin(Username.hardcoded()));
+        verify(this.eventsPublisher, times(3)).publishAuthenticationLogin(new JbstEventAuthenticationLogin(Username.hardcoded()));
     }
 
     @Test
@@ -243,7 +243,7 @@ class AbstractJbstSessionRegistryTest {
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEqualTo(Set.of("jbst"));
-        verify(this.eventsPublisher, times(3)).publishSessionRefreshed(any(EventSessionRefreshed.class));
+        verify(this.eventsPublisher, times(3)).publishSessionRefreshed(any(JbstEventSessionRefreshed.class));
     }
 
     @Test
@@ -259,7 +259,7 @@ class AbstractJbstSessionRegistryTest {
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(accessToken);
-        var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
+        var eventAC = ArgumentCaptor.forClass(JbstEventAuthenticationLogout.class);
         verify(this.eventsPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.eventsPublisher).publishAuthenticationLogout(eventAC.capture());
         var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutFull.class);
@@ -282,7 +282,7 @@ class AbstractJbstSessionRegistryTest {
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(accessToken);
-        var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
+        var eventAC = ArgumentCaptor.forClass(JbstEventAuthenticationLogout.class);
         verify(this.eventsPublisher).publishAuthenticationLogout(eventAC.capture());
         assertThat(eventAC.getValue().username()).isEqualTo(session.username());
         var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutMin.class);
@@ -324,7 +324,7 @@ class AbstractJbstSessionRegistryTest {
         verify(this.usersSessionsService).getExpiredRefreshTokensSessions(usernames);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(2);
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEqualTo(Set.of("username1", "username2"));
-        var eseCaptor = ArgumentCaptor.forClass(EventSessionExpired.class);
+        var eseCaptor = ArgumentCaptor.forClass(JbstEventSessionExpired.class);
         verify(this.eventsPublisher).publishSessionExpired(eseCaptor.capture());
         var eventSessionExpired = eseCaptor.getValue();
         assertThat(eventSessionExpired.session().username()).isEqualTo(username3);
@@ -345,12 +345,12 @@ class AbstractJbstSessionRegistryTest {
         var requestAccessToken = RequestAccessToken.random();
 
         Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
-                tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JwtAccessToken(tuple2.b()), tuple2.a());
+                tuple2 -> ResponseUserSession2.of(entity(JbstUserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JwtAccessToken(tuple2.b()), tuple2.a());
 
-        var validSession = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.valid()), requestAccessToken.value()));
-        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.valid()), randomString()));
-        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.invalid()), randomString()));
-        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.invalid()), randomString()));
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), UserAgentDetails.valid()), requestAccessToken.value()));
+        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), UserAgentDetails.valid()), randomString()));
+        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), UserAgentDetails.invalid()), randomString()));
+        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), UserAgentDetails.invalid()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
         List<Tuple3<List<ResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();

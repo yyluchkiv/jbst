@@ -1,5 +1,6 @@
 package jbst.foundation.domain.time;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,7 +26,6 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.time.JbstTime.*;
-import static jbst.foundation.domain.time.TimestampUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstTimeTest {
@@ -35,9 +35,9 @@ class JbstTimeTest {
     private static final LocalDateTime NOW_6_30 = LocalDate.now().atTime(6, 30); // to avoid failures on 59 min
     private static final LocalDateTime _25_11_2021 = LocalDateTime.of(2021, DECEMBER, 25, 15, 16, 17);
 
-    private static final Long _2_HOUR_AGO = getPastTimestamp(Duration.ofHours(2L)).value();
-    private static final Long _5_MINUTES_AGO = getPastTimestamp(Duration.ofMinutes(5)).value();
-    private static final Long _1_MINUTE_AGO = getPastTimestamp(Duration.ofMinutes(1L)).value();
+    private static final Long _2_HOUR_AGO = TimestampUtility.getPastTimestamp(Duration.ofHours(2L)).value();
+    private static final Long _5_MINUTES_AGO = TimestampUtility.getPastTimestamp(Duration.ofMinutes(5)).value();
+    private static final Long _1_MINUTE_AGO = TimestampUtility.getPastTimestamp(Duration.ofMinutes(1L)).value();
     private static final Long _2_MINUTES_FUTURE = getFutureTimestamp(Duration.ofMinutes(2L)).value();
     private static final Long _1_HOUR_FUTURE = getFutureTimestamp(Duration.ofHours(1L)).value();
 
@@ -164,6 +164,19 @@ class JbstTimeTest {
         assertThat(JbstTime.getStartOfMonth(timestamp)).isEqualTo(expected);
     }
 
+    @RepeatedTest(10)
+    void getFutureRangeTest() {
+        // Arrange
+        var currentTimestamp = TimestampUtility.getCurrentTimestamp();
+
+        // Act
+        var actual = getFutureRange(currentTimestamp, new JbstTimeAmount(5, SECONDS));
+
+        // Assert
+        assertThat(actual.to()).isGreaterThan(actual.from());
+        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp + 5000);
+    }
+
     private static Stream<Arguments> isBetweenArgs() {
         return Stream.of(
                 Arguments.of(_5_MINUTES_AGO, _1_HOUR_FUTURE, true),
@@ -182,7 +195,7 @@ class JbstTimeTest {
     @MethodSource("isBetweenArgs")
     void isBetweenTest(long past, long future, boolean expected) {
         // Act + Assert
-        assertThat(isBetween(getCurrentTimestamp(), past, future)).isEqualTo(expected);
+        assertThat(isBetween(TimestampUtility.getCurrentTimestamp(), past, future)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> isBetweenInclusiveArgs() {
@@ -208,7 +221,7 @@ class JbstTimeTest {
         return Stream.of(
                 Arguments.of(1642767625000L, true),
                 Arguments.of(1642767626000L, true),
-                Arguments.of(getCurrentTimestamp() + 10000L, false)
+                Arguments.of(TimestampUtility.getCurrentTimestamp() + 10000L, false)
         );
     }
     @ParameterizedTest
@@ -222,7 +235,7 @@ class JbstTimeTest {
         return Stream.of(
                 Arguments.of(1642767625000L, false),
                 Arguments.of(1642767626000L, false),
-                Arguments.of(getCurrentTimestamp() + 10000L, true)
+                Arguments.of(TimestampUtility.getCurrentTimestamp() + 10000L, true)
         );
     }
     @ParameterizedTest
@@ -234,12 +247,12 @@ class JbstTimeTest {
 
     private static Stream<Arguments> isCurrentTimestampNSecondsMoreArgs() {
         return Stream.of(
-                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 1L, true),
-                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 2L, true),
-                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 3L, true),
-                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 7L, false),
-                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 8L, false),
-                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 9L, false)
+                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 1L, true),
+                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 2L, true),
+                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 3L, true),
+                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 7L, false),
+                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 8L, false),
+                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 9L, false)
         );
     }
     @ParameterizedTest

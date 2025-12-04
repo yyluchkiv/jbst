@@ -6,12 +6,12 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
-import jbst.foundation.domain.events.EventSessionUserRequestMetadataAdd;
-import jbst.foundation.domain.events.EventSessionUserRequestMetadataRenew;
-import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
+import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataAdd;
+import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataRenew;
+import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
@@ -51,7 +51,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     protected final JbstSecurityUtils securityUtils;
 
     @Override
-    public void assertAccess(Username username, UserSessionId sessionId) {
+    public void assertAccess(Username username, JbstUserSessionId sessionId) {
         var tuplePresence = this.usersSessionsRepository.isPresent(sessionId, username);
         if (!tuplePresence.present()) {
             throw new AccessDeniedException(entityAccessDenied("Session", sessionId.value()));
@@ -82,7 +82,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
         }
         session = this.usersSessionsRepository.saveAs(session);
         this.eventsPublisher.publishSessionUserRequestMetadataAdd(
-                new EventSessionUserRequestMetadataAdd(
+                new JbstEventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
                         session,
@@ -99,7 +99,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
         var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
         this.eventsPublisher.publishSessionUserRequestMetadataAdd(
-                new EventSessionUserRequestMetadataAdd(
+                new JbstEventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
                         newSession,
@@ -111,17 +111,17 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     }
 
     @Override
-    public JbstUserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
+    public JbstUserSession saveUserRequestMetadata(JbstEventSessionUserRequestMetadataAdd event) {
         return this.saveUserRequestMetadata(event.getSaveFunction());
     }
 
     @Override
-    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenew event) {
+    public void saveUserRequestMetadata(JbstEventSessionUserRequestMetadataRenew event) {
         this.saveUserRequestMetadata(event.getSaveFunction());
     }
 
     @Override
-    public JbstUserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
+    public JbstUserSession saveUserRequestMetadata(JbstFunctionSessionUserRequestMetadataSave saveFunction) {
         var session = saveFunction.session();
         var sessionProcessedMetadata = ofPersisted(
                 session.id(),
@@ -141,7 +141,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     public JbstSessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
         var usersSessions = this.usersSessionsRepository.findByUsernameInAsAny(usernames);
         List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions = new ArrayList<>();
-        Set<UserSessionId> expiredOrInvalidSessionIds = new HashSet<>();
+        Set<JbstUserSessionId> expiredOrInvalidSessionIds = new HashSet<>();
 
         usersSessions.forEach(userSession -> {
             var sessionId = userSession.id();
@@ -176,7 +176,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     }
 
     @Override
-    public void enableUserRequestMetadataRenewManually(UserSessionId sessionId) {
+    public void enableUserRequestMetadataRenewManually(JbstUserSessionId sessionId) {
         this.usersSessionsRepository.enableMetadataRenewManually(sessionId);
     }
 
@@ -184,7 +184,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     public void renewUserRequestMetadata(JbstUserSession session, HttpServletRequest httpServletRequest) {
         if (session.isRenewRequired()) {
             this.eventsPublisher.publishSessionUserRequestMetadataRenew(
-                    new EventSessionUserRequestMetadataRenew(
+                    new JbstEventSessionUserRequestMetadataRenew(
                             session.username(),
                             session,
                             getClientIpAddr(httpServletRequest),
@@ -197,7 +197,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     }
 
     @Override
-    public void deleteById(UserSessionId sessionId) {
+    public void deleteById(JbstUserSessionId sessionId) {
         this.usersSessionsRepository.delete(sessionId);
     }
 

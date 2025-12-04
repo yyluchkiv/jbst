@@ -16,7 +16,7 @@ import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstract
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -215,8 +215,8 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
 
     @JsonIgnore
     @Transient
-    public UserId userId() {
-        return new UserId(this.id);
+    public JbstUserId userId() {
+        return new JbstUserId(this.id);
     }
 
     @JsonIgnore

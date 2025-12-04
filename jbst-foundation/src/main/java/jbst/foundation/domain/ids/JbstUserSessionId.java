@@ -7,27 +7,27 @@ import org.jetbrains.annotations.NotNull;
 
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
-public record UserSessionId(@NotNull String value) {
+public record JbstUserSessionId(@NotNull String value) {
 
     @JsonCreator
-    public static UserSessionId of(String value) {
-        return new UserSessionId(value);
+    public static JbstUserSessionId of(String value) {
+        return new JbstUserSessionId(value);
     }
 
-    public static UserSessionId undefined() {
-        return new UserSessionId(JbstConstants.Strings.UNDEFINED);
+    public static JbstUserSessionId undefined() {
+        return new JbstUserSessionId(JbstConstants.Strings.UNDEFINED);
     }
 
-    public static UserSessionId random() {
-        return new UserSessionId(randomString());
+    public static JbstUserSessionId random() {
+        return new JbstUserSessionId(randomString());
     }
 
     @SuppressWarnings("unused")
-    public static UserSessionId unknown() {
+    public static JbstUserSessionId unknown() {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 
-    public static UserSessionId hardcoded() {
+    public static JbstUserSessionId hardcoded() {
         return of("8DE052C55BD26A1A6F0E");
     }
 

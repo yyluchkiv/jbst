@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.integration.postgres.configs.PostgresBeforeAllCallback;
 import jbst.foundation.integration.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
@@ -50,7 +50,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         // Arrange
         var saved = this.usersTokensRepository.saveAll(PostgresDbUserToken.dummies1());
 
-        var notExistentTokenId = entity(TokenId.class);
+        var notExistentTokenId = entity(JbstTokenId.class);
         var notExistentToken = JbstRandom.randomString();
 
         var savedToken = saved.get(0);
@@ -129,7 +129,7 @@ class PostgresJbstUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         // Act-Assert-2
         var existentTokenId = this.usersTokensRepository.saveAs(JbstUserToken.randomNotPersisted());
         assertThat(this.usersTokensRepository.count()).isEqualTo(7);
-        var notExistentTokenId = entity(TokenId.class);
+        var notExistentTokenId = entity(JbstTokenId.class);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
 

@@ -9,19 +9,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
-public record FunctionAccountAccessed(
+public record JbstFunctionAccountAccessed(
         @NotNull Username username,
         @NotNull Email to,
         @NotNull UserRequestMetadata userRequestMetadata,
         @NotNull JbstAccountAccessMethod accountAccessMethod
 ) {
 
-    public static FunctionAccountAccessed hardcoded() {
+    public static JbstFunctionAccountAccessed hardcoded() {
         return hardcoded(JbstAccountAccessMethod.USERNAME_PASSWORD);
     }
 
-    public static FunctionAccountAccessed hardcoded(JbstAccountAccessMethod accountAccessMethod) {
-        return new FunctionAccountAccessed(
+    public static JbstFunctionAccountAccessed hardcoded(JbstAccountAccessMethod accountAccessMethod) {
+        return new JbstFunctionAccountAccessed(
                 Username.hardcoded(),
                 Email.hardcoded(),
                 UserRequestMetadata.valid(),

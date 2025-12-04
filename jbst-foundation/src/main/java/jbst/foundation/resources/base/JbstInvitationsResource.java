@@ -6,7 +6,7 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.services.JbstInvitationsService;
 import jbst.foundation.validators.JbstInvitationsValidator;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class JbstInvitationsResource {
 
     @DeleteMapping("/{invitationId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable InvitationId invitationId) {
+    public void deleteById(@PathVariable JbstInvitationId invitationId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
         this.invitationsValidator.validateDeleteById(username, invitationId);
         this.invitationsService.deleteById(invitationId);

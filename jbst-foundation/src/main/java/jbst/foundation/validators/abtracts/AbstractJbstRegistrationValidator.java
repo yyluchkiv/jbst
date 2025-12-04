@@ -3,8 +3,8 @@ package jbst.foundation.validators.abtracts;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
-import jbst.foundation.domain.events.EventRegistration0Failure;
-import jbst.foundation.domain.events.EventRegistration1Failure;
+import jbst.foundation.domain.events.JbstEventRegistration0Failure;
+import jbst.foundation.domain.events.JbstEventRegistration1Failure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
@@ -42,7 +42,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         if (existsByUsername) {
             var message = entityAlreadyUsed("Username", request.username().value());
             this.eventsPublisher.publishRegistration0Failure(
-                    new EventRegistration0Failure(
+                    new JbstEventRegistration0Failure(
                             request.email(),
                             request.username(),
                             message
@@ -61,7 +61,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         if (existsByEmail) {
             var message = entityAlreadyUsed("Email", request.email().value());
             this.eventsPublisher.publishRegistration0Failure(
-                    new EventRegistration0Failure(
+                    new JbstEventRegistration0Failure(
                             request.email(),
                             request.username(),
                             message
@@ -85,7 +85,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         if (nonNull(user)) {
             var message = entityAlreadyUsed("Username", request.username().value());
             this.eventsPublisher.publishRegistration1Failure(
-                    EventRegistration1Failure.of(
+                    JbstEventRegistration1Failure.of(
                             request.username(),
                             request.code(),
                             message
@@ -106,7 +106,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
             if (nonNull(invitation.invited())) {
                 var message = entityAlreadyUsed("Code", invitation.code());
                 this.eventsPublisher.publishRegistration1Failure(
-                        new EventRegistration1Failure(
+                        new JbstEventRegistration1Failure(
                                 request.username(),
                                 request.code(),
                                 invitation.owner(),
@@ -126,7 +126,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
         } else {
             var exception = entityNotFound("Code", request.code());
             this.eventsPublisher.publishRegistration1Failure(
-                    EventRegistration1Failure.of(
+                    JbstEventRegistration1Failure.of(
                             request.username(),
                             request.code(),
                             exception

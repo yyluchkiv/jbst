@@ -3,7 +3,7 @@ package jbst.foundation.domain.random;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
@@ -53,7 +53,7 @@ public class JbstRandomEntities {
         addConstructorRule(Email.class, clazz -> Email.random());
 
         addConstructorRule(IPAddress.class, clazz -> IPAddress.random());
-        addConstructorRule(GeoLocation.class, clazz -> GeoLocation.random());
+        addConstructorRule(JbstGeoLocation.class, clazz -> JbstGeoLocation.random());
         addConstructorRule(UserAgentDetails.class, clazz -> UserAgentDetails.random());
         addConstructorRule(UserRequestMetadata.class, clazz -> UserRequestMetadata.random());
 
@@ -107,7 +107,7 @@ public class JbstRandomEntities {
         addClassRule(ChronoUnit.class::equals, parameterClass -> JbstRandom.randomChronoUnit());
 
         addClassRule(IPAddress.class::equals, parameterClass -> IPAddress.random());
-        addClassRule(GeoLocation.class::equals, parameterClass -> GeoLocation.random());
+        addClassRule(JbstGeoLocation.class::equals, parameterClass -> JbstGeoLocation.random());
         addClassRule(UserAgentDetails.class::equals, parameterClass -> UserAgentDetails.random());
         addClassRule(UserRequestMetadata.class::equals, parameterClass -> UserRequestMetadata.random());
     }

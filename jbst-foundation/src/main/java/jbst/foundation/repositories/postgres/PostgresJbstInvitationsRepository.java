@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import org.springframework.data.domain.Sort;
@@ -25,7 +25,7 @@ public interface PostgresJbstInvitationsRepository extends JpaRepository<Postgre
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<JbstInvitation> isPresent(InvitationId invitationId) {
+    default TuplePresence<JbstInvitation> isPresent(JbstInvitationId invitationId) {
         return this.findById(invitationId.value())
                 .map(entity -> present(entity.invitation()))
                 .orElseGet(TuplePresence::absent);
@@ -50,19 +50,19 @@ public interface PostgresJbstInvitationsRepository extends JpaRepository<Postgre
 
     long countByOwner(Username username);
 
-    default void delete(InvitationId invitationId) {
+    default void delete(JbstInvitationId invitationId) {
         var tuplePresence = this.isPresent(invitationId);
         if (tuplePresence.present()) {
             this.deleteById(invitationId.value());
         }
     }
 
-    default InvitationId saveAs(JbstInvitation invitation) {
+    default JbstInvitationId saveAs(JbstInvitation invitation) {
         var entity = this.save(new PostgresDbInvitation(invitation));
         return entity.invitationId();
     }
 
-    default InvitationId saveAs(Username owner, RequestNewInvitationParams request) {
+    default JbstInvitationId saveAs(Username owner, RequestNewInvitationParams request) {
         var invitation = new PostgresDbInvitation(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())

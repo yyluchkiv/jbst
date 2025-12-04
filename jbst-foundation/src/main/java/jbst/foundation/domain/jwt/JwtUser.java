@@ -8,7 +8,7 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +22,7 @@ import static jbst.foundation.domain.random.JbstRandom.*;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
 public record JwtUser(
-        UserId id,
+        JbstUserId id,
         JbstUserCreationOption creationOption,
         Username username,
         Password password,
@@ -58,7 +58,7 @@ public record JwtUser(
 
     public static JwtUser hardcoded(JbstUserCreationOption userCreationOption) {
         return new JwtUser(
-                UserId.hardcoded(),
+                JbstUserId.hardcoded(),
                 userCreationOption,
                 Username.hardcoded(),
                 Password.hardcoded(),
@@ -81,7 +81,7 @@ public record JwtUser(
 
     public static JwtUser hardcoded(Set<SimpleGrantedAuthority> authorities) {
         return new JwtUser(
-                UserId.hardcoded(),
+                JbstUserId.hardcoded(),
                 JbstUserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
@@ -101,7 +101,7 @@ public record JwtUser(
             JbstUserEmailDetails emailDetails
     ) {
         return new JwtUser(
-                UserId.hardcoded(),
+                JbstUserId.hardcoded(),
                 JbstUserCreationOption.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
@@ -124,7 +124,7 @@ public record JwtUser(
 
     public static JwtUser random() {
         return new JwtUser(
-                UserId.random(),
+                JbstUserId.random(),
                 JbstUserCreationOption.random(),
                 Username.random(),
                 Password.random(),
@@ -148,7 +148,7 @@ public record JwtUser(
 
     public static JwtUser randomSuperadmin() {
         return new JwtUser(
-                UserId.random(),
+                JbstUserId.random(),
                 JbstUserCreationOption.random(),
                 Username.random(),
                 Password.random(),

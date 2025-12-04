@@ -1,8 +1,8 @@
 package jbst.foundation.domain.hardware.memories;
 
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 
-public abstract class AbstractMemoriesTest extends AbstractFolderSerializationRunner {
+public abstract class AbstractMemoriesTest extends JbstUnitTests.Runners.BaseFolder {
 
     @Override
     protected String getFolder() {

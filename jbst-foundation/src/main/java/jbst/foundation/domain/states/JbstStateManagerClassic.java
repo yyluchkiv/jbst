@@ -84,11 +84,11 @@ public abstract class JbstStateManagerClassic {
     @Getter
     @EqualsAndHashCode
     @ToString
-    public static class ClassicStateGroupedMappings {
+    public static class GroupedMappings {
         private final Map<JbstStateClassic, Long> values;
         private final boolean empty;
 
-        public ClassicStateGroupedMappings(@NotNull List<JbstStateClassic> values) {
+        public GroupedMappings(@NotNull List<JbstStateClassic> values) {
             this.values = values.stream()
                     .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                     .entrySet().stream()
@@ -104,8 +104,8 @@ public abstract class JbstStateManagerClassic {
             this.empty = CollectionUtils.isEmpty(values);
         }
 
-        public static ClassicStateGroupedMappings hardcoded() {
-            return new ClassicStateGroupedMappings(List.of(JbstStateClassic.CREATED, JbstStateClassic.ACTIVE));
+        public static GroupedMappings hardcoded() {
+            return new GroupedMappings(List.of(JbstStateClassic.CREATED, JbstStateClassic.ACTIVE));
         }
     }
 }

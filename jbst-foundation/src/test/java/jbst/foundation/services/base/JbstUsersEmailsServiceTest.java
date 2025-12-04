@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.emails.JbstEmails;
-import jbst.foundation.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.services.JbstEmailService;
@@ -190,7 +190,7 @@ class JbstUsersEmailsServiceTest {
         this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmails());
 
         // Act
-        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
 
         // Assert
         // no actions + revert
@@ -200,7 +200,7 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeAuthenticationLogin() {
         // Act
-        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
 
         // Assert
         ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
@@ -227,7 +227,7 @@ class JbstUsersEmailsServiceTest {
         this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmails());
 
         // Act
-        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
         // no actions + revert
@@ -237,7 +237,7 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeSessionRefreshed() {
         // Act
-        this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
         ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);

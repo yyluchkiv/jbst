@@ -6,7 +6,7 @@ import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -31,13 +31,13 @@ public interface PostgresJbstUsersSessionsRepository extends JpaRepository<Postg
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<JbstUserSession> isPresent(UserSessionId sessionId, Username username) {
+    default TuplePresence<JbstUserSession> isPresent(JbstUserSessionId sessionId, Username username) {
         return this.findByIdAndUsername(sessionId.value(), username)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<JbstUserSession> isPresent(UserSessionId sessionId) {
+    default TuplePresence<JbstUserSession> isPresent(JbstUserSessionId sessionId) {
         return this.findById(sessionId.value())
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
@@ -95,18 +95,18 @@ public interface PostgresJbstUsersSessionsRepository extends JpaRepository<Postg
     }
 
     @Transactional
-    default JbstUserSession enableMetadataRenewManually(UserSessionId sessionId) {
+    default JbstUserSession enableMetadataRenewManually(JbstUserSessionId sessionId) {
         this.setMetadataRenewManually(sessionId.value(), true);
         return this.isPresent(sessionId).value();
     }
 
-    default void delete(UserSessionId sessionId) {
+    default void delete(JbstUserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }
 
     @Transactional
-    default long delete(Set<UserSessionId> sessionsIds) {
-        return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
+    default long delete(Set<JbstUserSessionId> sessionsIds) {
+        return this.deleteByIdIn(sessionsIds.stream().map(JbstUserSessionId::value).toList());
     }
 
     @Transactional

@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -57,7 +57,7 @@ class PostgresJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
         // Arrange
         var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
-        var notExistentSessionId = entity(UserSessionId.class);
+        var notExistentSessionId = entity(JbstUserSessionId.class);
 
         var savedSession = saved.get(0);
         var existentSessionId = savedSession.userSessionId();
@@ -135,8 +135,8 @@ class PostgresJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
         assertThat(toMetadataRenewCron(saved1))
                 .hasSize(1)
                 .contains(false);
-        var sessionId1 = UserSessionId.of(saved1.get(2).getId());
-        var sessionId2 = UserSessionId.of(saved1.get(5).getId());
+        var sessionId1 = JbstUserSessionId.of(saved1.get(2).getId());
+        var sessionId2 = JbstUserSessionId.of(saved1.get(5).getId());
 
         // Act
         var session1 = this.usersSessionsRepository.enableMetadataRenewManually(sessionId1);
@@ -230,7 +230,7 @@ class PostgresJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
         // Act-Assert-2
         var existentSessionId = this.usersSessionsRepository.saveAs(JbstUserSession.randomNotPersistedSession()).id();
         assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
-        var notExistentSessionId = entity(UserSessionId.class);
+        var notExistentSessionId = entity(JbstUserSessionId.class);
         assertThat(this.usersSessionsRepository.isPresent(existentSessionId).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(notExistentSessionId).present()).isFalse();
     }

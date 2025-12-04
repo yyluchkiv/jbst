@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.domain.authetication;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
@@ -19,7 +19,7 @@ class IncidentAuthenticationLoginTest {
         var incident = new IncidentAuthenticationLogin(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.unknown(new IPAddress("8.8.8.8"), "exception1"),
+                        JbstGeoLocation.unknown(new IPAddress("8.8.8.8"), "exception1"),
                         UserAgentDetails.processing()
                 )
         );

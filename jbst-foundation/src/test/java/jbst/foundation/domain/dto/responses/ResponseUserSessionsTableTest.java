@@ -2,11 +2,11 @@ package jbst.foundation.domain.dto.responses;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import org.junit.jupiter.api.Test;
 
@@ -38,35 +38,35 @@ class ResponseUserSessionsTableTest {
         // Arrange
         var username = Username.random();
         var responseUserSession21 = ResponseUserSession2.of(
-                UserSessionId.random(),
+                JbstUserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
                 new RequestAccessToken(randomString()),
                 new JwtAccessToken("token1"),
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", UK, "London"),
+                        JbstGeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", UK, "London"),
                         UserAgentDetails.random()
                 )
         );
         var responseUserSession22 = ResponseUserSession2.of(
-                UserSessionId.random(),
+                JbstUserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
                 new RequestAccessToken("token2"),
                 new JwtAccessToken("token2"),
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", USA, "New York"),
+                        JbstGeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", USA, "New York"),
                         UserAgentDetails.valid()
                 )
         );
         var responseUserSession23 = ResponseUserSession2.of(
-                UserSessionId.random(),
+                JbstUserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
                 new RequestAccessToken(randomString()),
                 new JwtAccessToken("token3"),
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", UK, "Liverpool"),
+                        JbstGeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", UK, "Liverpool"),
                         UserAgentDetails.invalid()
                 )
         );
