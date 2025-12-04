@@ -1,6 +1,6 @@
 package jbst.foundation.domain.plurals;
 
 @FunctionalInterface
-public interface Plurable<ID> {
+public interface JbstPlurable<ID> {
     ID getId();
 }

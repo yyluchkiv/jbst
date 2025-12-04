@@ -2,7 +2,7 @@ package jbst.server.iam.postgres.domain;
 
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.PostgresConverters;
+import jbst.foundation.domain.converters.JbstPostgresConverters;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class PostgresDbAnything {
     @Column(length = 36, nullable = false, updatable = false)
     private String id;
 
-    @Convert(converter = PostgresConverters.UsernameConverter.class)
+    @Convert(converter = JbstPostgresConverters.UsernameConverter.class)
     @Column(nullable = false)
     private Username username;
 

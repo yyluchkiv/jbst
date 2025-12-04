@@ -17,14 +17,14 @@ import static java.util.stream.Collectors.toUnmodifiableMap;
 @Accessors(fluent = true)
 @EqualsAndHashCode
 @ToString
-public abstract class PluralsSet<T extends Plurable<ID>, ID> {
+public abstract class JbstPluralsSet<T extends JbstPlurable<ID>, ID> {
     protected final Set<T> values;
     protected final Map<ID, T> mappedValues;
 
-    protected PluralsSet(Set<T> values) {
+    protected JbstPluralsSet(Set<T> values) {
         this.values = unmodifiableSet(values);
         this.mappedValues = values.stream().collect(toUnmodifiableMap(
-                Plurable::getId,
+                JbstPlurable::getId,
                 entry -> entry,
                 (existing, replacement) -> existing
         ));
@@ -32,7 +32,7 @@ public abstract class PluralsSet<T extends Plurable<ID>, ID> {
 
     @JsonIgnore
     public final Set<ID> getIds() {
-        return this.values.stream().map(Plurable::getId).collect(Collectors.toSet());
+        return this.values.stream().map(JbstPlurable::getId).collect(Collectors.toSet());
     }
 
     @SuppressWarnings("unused")

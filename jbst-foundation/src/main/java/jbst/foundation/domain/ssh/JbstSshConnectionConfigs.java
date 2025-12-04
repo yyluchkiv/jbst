@@ -17,7 +17,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class SshConnectionConfigs {
+public class JbstSshConnectionConfigs {
     @NotNull
     private final Username username;
     @NotNull

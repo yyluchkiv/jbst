@@ -1,7 +1,6 @@
 package jbst.foundation.domain.hardware.memories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractObjectMapperRunner;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,7 +45,7 @@ class HeapMemoryTest extends AbstractMemoriesTest {
         var typeReference = new TypeReference<HeapMemory>() {};
 
         // Act
-        var actual = AbstractObjectMapperRunner.OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
         assertThat(actual).isEqualTo(heapMemory);

@@ -12,7 +12,7 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 
 @Slf4j
 @AllArgsConstructor
-public abstract class AbstractJbstResetServerTask {
+public abstract class JbstAbstractTaskOnResetServer {
 
     protected final JbstIncidentsPublisher incidentsPublisher;
 

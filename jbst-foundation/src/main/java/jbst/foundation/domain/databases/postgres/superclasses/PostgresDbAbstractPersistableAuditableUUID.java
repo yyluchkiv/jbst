@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.converters.PostgresConverters;
+import jbst.foundation.domain.converters.JbstPostgresConverters;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.domain.Persistable;
 import org.springframework.lang.Nullable;
@@ -25,7 +25,7 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     protected UUID id;
 
     @Basic
-    @Convert(converter = PostgresConverters.UsernameConverter.class)
+    @Convert(converter = JbstPostgresConverters.UsernameConverter.class)
     @Column(name = "created_by", nullable = false, updatable = false)
     protected Username createdBy;
 
@@ -33,7 +33,7 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     protected long createdAt;
 
     @Basic
-    @Convert(converter = PostgresConverters.UsernameConverter.class)
+    @Convert(converter = JbstPostgresConverters.UsernameConverter.class)
     @Column(name = "updated_by", nullable = false)
     protected Username updatedBy;
 
