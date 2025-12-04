@@ -2,8 +2,8 @@ package jbst.foundation.feigns.slack;
 
 import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.foundation.domain.time.JbstTimeAmount;
 import jbst.foundation.domain.concurrent.JbstSleep;
+import jbst.foundation.domain.time.JbstTimeAmount;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class JbstSlackTest {
     @Autowired
     public JbstSlackTest(JbstSlack slack) {
         this.slack = slack;
-        this.slack.configure(new JbstSlack.JbstSlackConfiguration(
+        this.slack.configure(new JbstSlack.Configuration(
                 SLACK_TOKEN,
                 new JbstTimeAmount(250, ChronoUnit.MILLIS)
         ));
@@ -51,9 +51,9 @@ class JbstSlackTest {
 
     @Disabled
     @Test
-    void sendMessage() throws JbstSlack.JbstSlackException {
+    void sendMessage() throws JbstSlack.ConfigurationException, JbstSlack.ClientException {
         // Arrange
-        var message = new JbstSlack.JbstSlackChatMessage(
+        var message = new JbstSlack.ChatMessage(
                 SLACK_CHANNEL,
                 "<@username> <b>text</b>, timestamp: " + getCurrentTimestamp()
         );
@@ -67,10 +67,10 @@ class JbstSlackTest {
 
     @Disabled
     @Test
-    void editMessage() throws JbstSlack.JbstSlackException {
+    void editMessage() throws JbstSlack.ConfigurationException, JbstSlack.ClientException {
         // Arrange
-        var ts = new JbstSlack.JbstSlackMessageTs("1764601641.615379");
-        var message = new JbstSlack.JbstSlackChatMessage(
+        var ts = new JbstSlack.MessageTs("1764601641.615379");
+        var message = new JbstSlack.ChatMessage(
                 SLACK_CHANNEL,
                 "<@username> <b>text</b>, timestamp: (edited)"
         );
@@ -87,13 +87,13 @@ class JbstSlackTest {
     void submitMessagesBackpressure() {
         // Arrange
         var messages1 = IntStream.range(0, 20)
-                .mapToObj(i -> new JbstSlack.JbstSlackChatMessage(
+                .mapToObj(i -> new JbstSlack.ChatMessage(
                         SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
                 ))
                 .toList();
         var messages2 = IntStream.range(20, 40)
-                .mapToObj(i -> new JbstSlack.JbstSlackChatMessage(
+                .mapToObj(i -> new JbstSlack.ChatMessage(
                         SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
                 ))

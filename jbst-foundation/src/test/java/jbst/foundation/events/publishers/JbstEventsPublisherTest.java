@@ -60,7 +60,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishAuthenticationLoginMagicLinkFailureTest() {
         // Arrange
-        var event = entity(EventAuthenticationMagicLinkFailure.class);
+        var event = entity(JbstEventAuthenticationMagicLinkFailure.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginMagicLinkFailure(event);
@@ -72,7 +72,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishAuthenticationLoginTest() {
         // Arrange
-        var event = entity(EventAuthenticationLogin.class);
+        var event = entity(JbstEventAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(event);
@@ -84,7 +84,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishAuthenticationLoginFailureTest() {
         // Arrange
-        var event = entity(EventAuthenticationLoginFailure.class);
+        var event = entity(JbstEventAuthenticationLoginFailure.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailure(event);
@@ -96,7 +96,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishAuthenticationLogoutTest() {
         // Arrange
-        var event = entity(EventAuthenticationLogout.class);
+        var event = entity(JbstEventAuthenticationLogout.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogout(event);
@@ -108,7 +108,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishRegistrationMagicLinkTest() {
         // Arrange
-        var event = entity(EventRegistrationMagicLink.class);
+        var event = entity(JbstEventRegistrationMagicLink.class);
 
         // Act
         this.componentUnderTest.publishRegistrationMagicLink(event);
@@ -120,7 +120,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishRegistration0Test() {
         // Arrange
-        var event = entity(EventRegistration0.class);
+        var event = entity(JbstEventRegistration0.class);
 
         // Act
         this.componentUnderTest.publishRegistration0(event);
@@ -132,7 +132,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishRegistration0FailureTest() {
         // Arrange
-        var event = entity(EventRegistration0Failure.class);
+        var event = entity(JbstEventRegistration0Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration0Failure(event);
@@ -144,7 +144,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishRegistration1Test() {
         // Arrange
-        var event = entity(EventRegistration1.class);
+        var event = entity(JbstEventRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(event);
@@ -156,7 +156,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishRegistration1FailureTest() {
         // Arrange
-        var event = entity(EventRegistration1Failure.class);
+        var event = entity(JbstEventRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(event);
@@ -168,7 +168,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishSessionRefreshedTest() {
         // Arrange
-        var event = entity(EventSessionRefreshed.class);
+        var event = entity(JbstEventSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(event);
@@ -180,7 +180,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishSessionExpiredTest() {
         // Arrange
-        var event = entity(EventSessionExpired.class);
+        var event = entity(JbstEventSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(event);
@@ -192,7 +192,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishSessionUserRequestMetadataAddTest() {
         // Arrange
-        var event = entity(EventSessionUserRequestMetadataAdd.class);
+        var event = entity(JbstEventSessionUserRequestMetadataAdd.class);
 
         // Act
         this.componentUnderTest.publishSessionUserRequestMetadataAdd(event);
@@ -204,7 +204,7 @@ class JbstEventsPublisherTest {
     @Test
     void publishSessionUserRequestMetadataRenewTest() {
         // Arrange
-        var event = entity(EventSessionUserRequestMetadataRenew.class);
+        var event = entity(JbstEventSessionUserRequestMetadataRenew.class);
 
         // Act
         this.componentUnderTest.publishSessionUserRequestMetadataRenew(event);

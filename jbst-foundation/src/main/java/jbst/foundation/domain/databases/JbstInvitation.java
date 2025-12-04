@@ -1,7 +1,7 @@
 package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -12,7 +12,7 @@ import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
 public record JbstInvitation(
-        InvitationId id,
+        JbstInvitationId id,
         Username owner,
         Set<SimpleGrantedAuthority> authorities,
         String code,
@@ -26,7 +26,7 @@ public record JbstInvitation(
 
     public static JbstInvitation random() {
         return new JbstInvitation(
-                InvitationId.random(),
+                JbstInvitationId.random(),
                 Username.random(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
                 randomString(),
@@ -46,7 +46,7 @@ public record JbstInvitation(
 
     public static JbstInvitation randomNoInvited() {
         return new JbstInvitation(
-                InvitationId.random(),
+                JbstInvitationId.random(),
                 Username.random(),
                 getSimpleGrantedAuthorities(SUPERADMIN),
                 randomString(),

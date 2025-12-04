@@ -1,6 +1,6 @@
 package jbst.foundation.domain.tuples;
 
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TupleReadableAmountTest extends AbstractFolderSerializationRunner {
+class TupleReadableAmountTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializationTest() {
         return Stream.of(

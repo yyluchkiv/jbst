@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -39,7 +39,7 @@ public interface MongoJbstUsersTokensRepository extends MongoRepository<MongoDbU
         this.deleteAllByUsedIsTrue();
     }
 
-    default TokenId saveAs(JbstUserToken token) {
+    default JbstTokenId saveAs(JbstUserToken token) {
         var entity = this.save(new MongoDbUserToken(token));
         return entity.tokenId();
     }

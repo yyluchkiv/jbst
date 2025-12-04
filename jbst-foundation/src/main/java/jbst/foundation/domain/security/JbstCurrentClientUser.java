@@ -22,7 +22,7 @@ import static jbst.foundation.domain.random.JbstRandom.*;
 
 // Lombok
 @Data
-public class CurrentClientUser {
+public class JbstCurrentClientUser {
     private final Username username;
     private final Email email;
     private final String name;
@@ -33,8 +33,8 @@ public class CurrentClientUser {
     private final Set<String> authorities;
     private Map<String, Object> attributes;
 
-    public static CurrentClientUser hardcoded() {
-        return new CurrentClientUser(
+    public static JbstCurrentClientUser hardcoded() {
+        return new JbstCurrentClientUser(
                 Username.hardcoded(),
                 Email.hardcoded(),
                 "JBST",
@@ -46,8 +46,8 @@ public class CurrentClientUser {
         );
     }
 
-    public static CurrentClientUser random() {
-        return new CurrentClientUser(
+    public static JbstCurrentClientUser random() {
+        return new JbstCurrentClientUser(
                 Username.random(),
                 Email.random(),
                 randomString(),
@@ -59,7 +59,7 @@ public class CurrentClientUser {
         );
     }
 
-    public CurrentClientUser(
+    public JbstCurrentClientUser(
             Username username,
             Email email,
             String name,

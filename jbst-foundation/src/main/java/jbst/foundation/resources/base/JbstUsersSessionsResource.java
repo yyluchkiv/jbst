@@ -6,8 +6,8 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.ids.UserSessionId;
-import jbst.foundation.domain.security.CurrentClientUser;
+import jbst.foundation.domain.ids.JbstUserSessionId;
+import jbst.foundation.domain.security.JbstCurrentClientUser;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class JbstUsersSessionsResource {
     }
 
     @GetMapping("/current")
-    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
+    public JbstCurrentClientUser getCurrentClientUser(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         var user = this.currentSessionAssistant.getCurrentClientUser();
         var session = this.currentSessionAssistant.getCurrentUserSession(httpRequest);
         this.usersSessionsService.renewUserRequestMetadata(session, httpRequest);
@@ -48,7 +48,7 @@ public class JbstUsersSessionsResource {
     }
 
     @PostMapping("/{sessionId}/renew/manually")
-    public void renewManually(@PathVariable UserSessionId sessionId) {
+    public void renewManually(@PathVariable JbstUserSessionId sessionId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
         this.usersSessionsService.assertAccess(username, sessionId);
         this.usersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
@@ -56,7 +56,7 @@ public class JbstUsersSessionsResource {
 
     @DeleteMapping("/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable UserSessionId sessionId) {
+    public void deleteById(@PathVariable JbstUserSessionId sessionId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
         this.usersSessionsService.assertAccess(username, sessionId);
         this.usersSessionsService.deleteById(sessionId);

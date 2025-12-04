@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -35,7 +35,7 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<JwtUser> isPresent(UserId userId) {
+    default TuplePresence<JwtUser> isPresent(JbstUserId userId) {
         return this.findById(userId.value())
                 .map(entity -> present(entity.asJwtUser()))
                 .orElseGet(TuplePresence::absent);
@@ -100,12 +100,12 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         }
     }
 
-    default UserId saveAs(JwtUser user) {
+    default JbstUserId saveAs(JwtUser user) {
         var entity = this.save(new MongoDbUser(user));
         return entity.userId();
     }
 
-    default UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password) {
+    default JbstUserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password) {
         var user = new MongoDbUser(
                 requestUserRegistration0,
                 password
@@ -114,7 +114,7 @@ public interface MongoJbstUsersRepository extends MongoRepository<MongoDbUser, S
         return entity.userId();
     }
 
-    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation) {
+    default JbstUserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation) {
         var user = new MongoDbUser(
                 requestUserRegistration1,
                 password,

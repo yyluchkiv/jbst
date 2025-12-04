@@ -19,7 +19,7 @@ import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class GeoLocation {
+public class JbstGeoLocation {
     private static final List<Tuple5<String, String, String, String, String>> TEST_DATA = List.of(
             new Tuple5<>("103.194.114.1", "Ukraine", "UA", JbstConstants.Flags.UKRAINE, "Lviv"),
             new Tuple5<>("103.194.114.2", "Ukraine", "UA", JbstConstants.Flags.UKRAINE, "Kyiv"),
@@ -42,7 +42,7 @@ public class GeoLocation {
     @JsonIgnore
     private final String exceptionDetails;
 
-    public GeoLocation(
+    public JbstGeoLocation(
             String ipAddr,
             String country,
             String countryCode,
@@ -71,11 +71,11 @@ public class GeoLocation {
         this.exceptionDetails = exceptionDetails;
     }
 
-    public static GeoLocation unknown(
+    public static JbstGeoLocation unknown(
             IPAddress ipAddress,
             String exceptionDetails
     ) {
-        return new GeoLocation(
+        return new JbstGeoLocation(
                 getIpAddrOrUnknown(ipAddress),
                 JbstConstants.Strings.UNKNOWN,
                 JbstConstants.Strings.UNKNOWN,
@@ -85,10 +85,10 @@ public class GeoLocation {
         );
     }
 
-    public static GeoLocation processing(
+    public static JbstGeoLocation processing(
             IPAddress ipAddress
     ) {
-        return new GeoLocation(
+        return new JbstGeoLocation(
                 getIpAddrOrUnknown(ipAddress),
                 JbstConstants.Strings.UNDEFINED,
                 JbstConstants.Strings.UNDEFINED,
@@ -98,14 +98,14 @@ public class GeoLocation {
         );
     }
 
-    public static GeoLocation processed(
+    public static JbstGeoLocation processed(
             IPAddress ipAddress,
             String country,
             String countryCode,
             String countryFlag,
             String city
     ) {
-        return new GeoLocation(
+        return new JbstGeoLocation(
                 getIpAddrOrUnknown(ipAddress),
                 country,
                 countryCode,
@@ -115,8 +115,8 @@ public class GeoLocation {
         );
     }
 
-    public static GeoLocation valid() {
-        return GeoLocation.processed(
+    public static JbstGeoLocation valid() {
+        return JbstGeoLocation.processed(
                 IPAddress.localhost(),
                 "Ukraine",
                 "UA",
@@ -125,20 +125,20 @@ public class GeoLocation {
         );
     }
 
-    public static GeoLocation invalid() {
-        return GeoLocation.unknown(
+    public static JbstGeoLocation invalid() {
+        return JbstGeoLocation.unknown(
                 IPAddress.localhost(),
                 "Location is unknown"
         );
     }
 
-    public static GeoLocation random() {
+    public static JbstGeoLocation random() {
         return randomBoolean() ? valid() : invalid();
     }
 
-    public static GeoLocation testData() {
+    public static JbstGeoLocation testData() {
         var tuple5 = JbstRandom.randomElement(TEST_DATA);
-        return GeoLocation.processed(
+        return JbstGeoLocation.processed(
                 new IPAddress(tuple5.a()),
                 tuple5.b(),
                 tuple5.c(),

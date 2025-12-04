@@ -9,7 +9,7 @@ import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstract
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import lombok.*;
@@ -121,8 +121,8 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     @JsonIgnore
     @Transient
-    public UserSessionId userSessionId() {
-        return new UserSessionId(this.id);
+    public JbstUserSessionId userSessionId() {
+        return new JbstUserSessionId(this.id);
     }
 
     @JsonIgnore

@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.integration.postgres.configs.PostgresBeforeAllCallback;
 import jbst.foundation.integration.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
@@ -58,7 +58,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
         // Arrange
         var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
 
-        var notExistentInvitationId = entity(InvitationId.class);
+        var notExistentInvitationId = entity(JbstInvitationId.class);
         var notExistentInvitation = randomStringLetterOrNumbersOnly(JbstInvitation.DEFAULT_INVITATION_CODE_LENGTH);
 
         var savedInvitation = saved.get(0);
@@ -113,7 +113,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
     void deletionIntegrationTests() {
         // Arrange
         var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
-        var notExistentInvitationId = entity(InvitationId.class);
+        var notExistentInvitationId = entity(JbstInvitationId.class);
         var existentInvitationId = saved.get(0).invitationId();
 
         // Act-Assert-0
@@ -152,7 +152,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
         // Act-Assert-2
         var existentInvitationId = this.invitationsRepository.saveAs(JbstInvitation.randomNotPersisted());
         assertThat(this.invitationsRepository.count()).isEqualTo(7);
-        var notExistentInvitationId = entity(InvitationId.class);
+        var notExistentInvitationId = entity(JbstInvitationId.class);
         assertThat(this.invitationsRepository.isPresent(existentInvitationId).present()).isTrue();
         assertThat(this.invitationsRepository.isPresent(notExistentInvitationId).present()).isFalse();
 

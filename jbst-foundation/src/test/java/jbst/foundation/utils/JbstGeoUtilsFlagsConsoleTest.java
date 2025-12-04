@@ -2,7 +2,7 @@ package jbst.foundation.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 
 @Slf4j
-class JbstGeoUtilsFlagsConsoleTest extends AbstractFolderSerializationRunner {
+class JbstGeoUtilsFlagsConsoleTest extends JbstUnitTests.Runners.BaseFolder {
 
     record CountryFlagFull(String name, String code, String emoji, String unicode) {
     }

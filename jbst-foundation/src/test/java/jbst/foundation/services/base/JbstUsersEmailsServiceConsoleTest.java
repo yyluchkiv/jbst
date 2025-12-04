@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
-import jbst.foundation.domain.functions.FunctionAccountAccessed;
+import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
@@ -175,7 +175,7 @@ class JbstUsersEmailsServiceConsoleTest {
     void executeAuthenticationLogin() {
         // Act
         this.componentUnderTest.executeAccountAccessed(
-                FunctionAccountAccessed.hardcoded(
+                JbstFunctionAccountAccessed.hardcoded(
                         JbstAccountAccessMethod.USERNAME_PASSWORD
                 )
         );
@@ -189,7 +189,7 @@ class JbstUsersEmailsServiceConsoleTest {
     void executeSessionRefreshed() {
         // Act
         this.componentUnderTest.executeAccountAccessed(
-                FunctionAccountAccessed.hardcoded(
+                JbstFunctionAccountAccessed.hardcoded(
                         JbstAccountAccessMethod.SESSION_TOKEN
                 )
         );

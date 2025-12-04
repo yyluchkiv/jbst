@@ -2,13 +2,13 @@ package jbst.foundation.domain.events;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.functions.FunctionSessionUserRequestMetadataSave;
+import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.tuples.TupleToggle;
 import org.jetbrains.annotations.NotNull;
 
-public record EventSessionUserRequestMetadataRenew(
+public record JbstEventSessionUserRequestMetadataRenew(
         @NotNull Username username,
         @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,
@@ -16,8 +16,8 @@ public record EventSessionUserRequestMetadataRenew(
         @NotNull TupleToggle<Boolean> metadataRenewCron,
         @NotNull TupleToggle<Boolean> metadataRenewManually
 ) {
-    public FunctionSessionUserRequestMetadataSave getSaveFunction() {
-        return new FunctionSessionUserRequestMetadataSave(
+    public JbstFunctionSessionUserRequestMetadataSave getSaveFunction() {
+        return new JbstFunctionSessionUserRequestMetadataSave(
                 this.username,
                 this.session,
                 this.clientIpAddr,

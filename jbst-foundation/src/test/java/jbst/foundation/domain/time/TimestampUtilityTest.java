@@ -122,17 +122,4 @@ class TimestampUtilityTest {
         assertThat(actual.to()).isGreaterThan(actual.from());
         assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp - 5000);
     }
-
-    @RepeatedTest(10)
-    void getFutureRangeTest() {
-        // Arrange
-        var currentTimestamp = getCurrentTimestamp();
-
-        // Act
-        var actual = getFutureRange(currentTimestamp, new JbstTimeAmount(5, SECONDS));
-
-        // Assert
-        assertThat(actual.to()).isGreaterThan(actual.from());
-        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp + 5000);
-    }
 }

@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
 import jbst.foundation.domain.enums.JbstUserTokenType;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.Id;
@@ -17,7 +17,7 @@ import java.time.Duration;
 import java.util.List;
 
 import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
-import static jbst.foundation.domain.time.TimestampUtility.getFutureTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getFutureTimestamp;
 import static jbst.foundation.domain.time.TimestampUtility.getPastTimestamp;
 
 // Lombok
@@ -138,15 +138,15 @@ public class MongoDbUserToken {
 
     @JsonIgnore
     @Transient
-    public TokenId tokenId() {
-        return new TokenId(this.id);
+    public JbstTokenId tokenId() {
+        return new JbstTokenId(this.id);
     }
 
     @JsonIgnore
     @Transient
     public JbstUserToken asUserToken() {
         return new JbstUserToken(
-                new TokenId(this.id),
+                new JbstTokenId(this.id),
                 this.email,
                 this.value,
                 this.type,

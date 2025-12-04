@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserToken;
-import jbst.foundation.domain.ids.TokenId;
+import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.integration.mongo.configs.MongoBeforeAllCallback;
 import jbst.foundation.integration.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
 import jbst.foundation.repositories.mongo.MongoJbstUsersTokensRepository;
@@ -48,7 +48,7 @@ class MongoJbstUsersTokensRepositoryIT extends TestsJbstConfigurationMongoReposi
         // Arrange
         var saved = this.usersTokensRepository.saveAll(MongoDbUserToken.dummies1());
 
-        var notExistentTokenId = entity(TokenId.class);
+        var notExistentTokenId = entity(JbstTokenId.class);
         var notExistentToken = JbstRandom.randomString();
 
         var savedToken = saved.get(0);
@@ -127,7 +127,7 @@ class MongoJbstUsersTokensRepositoryIT extends TestsJbstConfigurationMongoReposi
         // Act-Assert-2
         var existentTokenId = this.usersTokensRepository.saveAs(JbstUserToken.random());
         assertThat(this.usersTokensRepository.count()).isEqualTo(7);
-        var notExistentTokenId = entity(TokenId.class);
+        var notExistentTokenId = entity(JbstTokenId.class);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
 

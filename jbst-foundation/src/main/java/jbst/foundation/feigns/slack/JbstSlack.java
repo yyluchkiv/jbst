@@ -41,7 +41,7 @@ public class JbstSlack {
                         "Content-Type: " + MediaType.APPLICATION_JSON_VALUE
                 }
         )
-        JbstSlackSendMessageRes chatPostMessage(
+        SendMessageRes chatPostMessage(
                 @Param("token") String token,
                 @RequestBody Map<String, Object> requestBody
         );
@@ -51,26 +51,32 @@ public class JbstSlack {
                 "Authorization: Bearer {token}",
                 "Content-Type: " + MediaType.APPLICATION_JSON_VALUE
         })
-        JbstSlackSendMessageRes chatUpdate(
+        SendMessageRes chatUpdate(
                 @Param("token") String token,
                 @RequestBody Map<String, Object> requestBody
         );
     }
 
     // Classes: Exception
-    public static class JbstSlackException extends Exception {
-        public JbstSlackException(String message) {
+    public static class ConfigurationException extends Exception {
+        public ConfigurationException() {
+            super("Please configure jbst-slack-client");
+        }
+    }
+
+    public static class ClientException extends Exception {
+        public ClientException(String message) {
             super(message);
         }
     }
 
     // Classes: Base
-    public record JbstSlackConfiguration(String token, JbstTimeAmount sleepDelay) { }
+    public record Configuration(String token, JbstTimeAmount sleepDelay) { }
 
-    public record JbstSlackMessageTs(@NotNull String value) {
+    public record MessageTs(@NotNull String value) {
         @JsonCreator
-        public static JbstSlackMessageTs of(String value) {
-            return new JbstSlackMessageTs(value);
+        public static MessageTs of(String value) {
+            return new MessageTs(value);
         }
 
         @NotNull
@@ -82,7 +88,7 @@ public class JbstSlack {
     }
 
     // Classes: Requests
-    public record JbstSlackChatMessage(String channel, String text) {
+    public record ChatMessage(String channel, String text) {
 
         public Map<String, Object> getReqBody() {
             Map<String, Object> reqBody = new HashMap<>();
@@ -93,30 +99,30 @@ public class JbstSlack {
     }
 
     // Classes: Responses
-    public record JbstSlackSendMessageRes(
+    public record SendMessageRes(
             boolean ok,
             String error,
             String channel,
-            JbstSlackMessageTs ts,
+            MessageTs ts,
             Map<String, Object> message
     ) {
-        public void assertOK() throws JbstSlackException {
+        public void assertOK() throws ClientException {
             if (!this.ok) {
-                throw new JbstSlackException("Slack API response is not OK");
+                throw new ClientException("Slack API response is not OK");
             }
         }
     }
 
     private final AtomicBoolean configured = new AtomicBoolean(false);
     private final AtomicReference<String> token = new AtomicReference<>(null);
-    private final BlockingQueue<JbstSlackChatMessage> queue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<ChatMessage> queue = new LinkedBlockingQueue<>();
 
     // Definitions
     private final SlackDefinition definition;
     // Incidents
     private final JbstIncidentsPublisher incidentsPublisher;
 
-    public final void configure(JbstSlackConfiguration slackConfiguration) {
+    public final void configure(Configuration slackConfiguration) {
         if (this.configured.get()) {
             return;
         }
@@ -131,7 +137,7 @@ public class JbstSlack {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;
-                } catch (JbstSlackException | RuntimeException ex) {
+                } catch (ConfigurationException | ClientException | RuntimeException ex) {
                     this.incidentsPublisher.publishThrowable(ex);
                 }
             }
@@ -143,10 +149,10 @@ public class JbstSlack {
     @SuppressWarnings("unused")
     @JbstDevelopmentOnly
     public final void configureHardcodedSleepDelay(String token) {
-        this.configure(new JbstSlackConfiguration(token, new JbstTimeAmount(500, ChronoUnit.MILLIS)));
+        this.configure(new Configuration(token, new JbstTimeAmount(500, ChronoUnit.MILLIS)));
     }
 
-    public final JbstSlackMessageTs sendMessage(JbstSlackChatMessage req) throws JbstSlackException {
+    public final MessageTs sendMessage(ChatMessage req) throws ConfigurationException, ClientException {
         this.assertConfigured();
         try {
             var res = this.definition.chatPostMessage(this.token.get(), req.getReqBody());
@@ -154,11 +160,11 @@ public class JbstSlack {
             return res.ts;
         } catch (RetryableException ex) {
             LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "Slack", ex.getMessage());
-            throw new JbstSlackException(ex.getMessage());
+            throw new ClientException(ex.getMessage());
         }
     }
 
-    public final JbstSlackMessageTs editMessage(JbstSlackMessageTs ts, JbstSlackChatMessage req) throws JbstSlackException {
+    public final MessageTs editMessage(MessageTs ts, ChatMessage req) throws ConfigurationException, ClientException {
         this.assertConfigured();
         try {
             var reqBody = req.getReqBody();
@@ -168,14 +174,14 @@ public class JbstSlack {
             return res.ts;
         } catch (RetryableException ex) {
             LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "Slack", ex.getMessage());
-            throw new JbstSlackException(ex.getMessage());
+            throw new ClientException(ex.getMessage());
         }
     }
 
-    public final void submitMessage(JbstSlackChatMessage req) {
+    public final void submitMessage(ChatMessage req) {
         try {
             this.assertConfigured();
-        } catch (JbstSlackException ex) {
+        } catch (ConfigurationException ex) {
             this.incidentsPublisher.publishThrowable(ex);
             return;
         }
@@ -185,7 +191,7 @@ public class JbstSlack {
         }
     }
 
-    public final void submitMessages(List<JbstSlackChatMessage> reqs) {
+    public final void submitMessages(List<ChatMessage> reqs) {
         for (var request : reqs) {
             this.submitMessage(request);
         }
@@ -205,11 +211,9 @@ public class JbstSlack {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private void assertConfigured() throws JbstSlackException {
+    private void assertConfigured() throws ConfigurationException {
         if (!this.configured.get()) {
-            var message = "Please configure jbst-slack-client";
-            LOGGER.warn(message);
-            throw new JbstSlackException(message);
+            throw new ConfigurationException();
         }
     }
 }

@@ -3,7 +3,7 @@ package jbst.foundation.domain.events;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.Map;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WebsocketEventTest extends AbstractFolderSerializationRunner {
+class WebsocketEventTest extends JbstUnitTests.Runners.BaseFolder {
 
     @Override
     protected String getFolder() {

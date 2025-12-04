@@ -5,15 +5,15 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 
-public record EventAuthenticationLoginFailure(
+public record JbstEventAuthenticationLoginFailure(
         Username username,
         Password password,
         IPAddress ipAddress,
         UserAgentHeader userAgentHeader
 ) {
 
-    public static EventAuthenticationLoginFailure hardcoded() {
-        return new EventAuthenticationLoginFailure(
+    public static JbstEventAuthenticationLoginFailure hardcoded() {
+        return new JbstEventAuthenticationLoginFailure(
                 Username.hardcoded(),
                 Password.hardcoded(),
                 IPAddress.hardcoded(),

@@ -4,8 +4,8 @@ import jbst.foundation.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.events.EventRegistration0Failure;
-import jbst.foundation.domain.events.EventRegistration1Failure;
+import jbst.foundation.domain.events.JbstEventRegistration0Failure;
+import jbst.foundation.domain.events.JbstEventRegistration1Failure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.strings.JbstMessages;
@@ -104,7 +104,7 @@ class AbstractJbstRegistrationValidatorTest {
                 .hasMessage(exception);
         verify(this.usersRepository).existsByUsername(request.username());
         verify(this.eventsPublisher).publishRegistration0Failure(
-                new EventRegistration0Failure(
+                new JbstEventRegistration0Failure(
                         request.email(),
                         request.username(),
                         exception
@@ -137,7 +137,7 @@ class AbstractJbstRegistrationValidatorTest {
         verify(this.usersRepository).existsByUsername(request.username());
         verify(this.usersRepository).existsByEmail(request.email());
         verify(this.eventsPublisher).publishRegistration0Failure(
-                new EventRegistration0Failure(
+                new JbstEventRegistration0Failure(
                         request.email(),
                         request.username(),
                         exception
@@ -183,7 +183,7 @@ class AbstractJbstRegistrationValidatorTest {
                 .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(request.username());
         verify(this.eventsPublisher).publishRegistration1Failure(
-                EventRegistration1Failure.of(
+                JbstEventRegistration1Failure.of(
                         request.username(),
                         request.code(),
                         exception
@@ -217,7 +217,7 @@ class AbstractJbstRegistrationValidatorTest {
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(request.username());
         verify(this.invitationsRepository).findByCodeAsAny(request.code());
         verify(this.eventsPublisher).publishRegistration1Failure(
-                new EventRegistration1Failure(
+                new JbstEventRegistration1Failure(
                         request.username(),
                         request.code(),
                         invitation.owner(),
@@ -254,7 +254,7 @@ class AbstractJbstRegistrationValidatorTest {
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(username);
         verify(this.invitationsRepository).findByCodeAsAny(invitation);
         verify(this.eventsPublisher).publishRegistration1Failure(
-                EventRegistration1Failure.of(
+                JbstEventRegistration1Failure.of(
                         username,
                         invitation,
                         exception

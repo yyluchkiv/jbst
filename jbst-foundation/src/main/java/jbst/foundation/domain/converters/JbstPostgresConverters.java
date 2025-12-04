@@ -11,7 +11,7 @@ import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.jwt.JwtAccessToken;
@@ -179,7 +179,7 @@ public class JbstPostgresConverters {
             var json = MAPPER.readValue(value, typeReference);
             return new UserRequestMetadata(
                     Status.valueOf(json.get("status")),
-                    new GeoLocation(
+                    new JbstGeoLocation(
                             json.get("ipAddr"),
                             json.get("country"),
                             json.get("countryCode"),

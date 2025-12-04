@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
-import jbst.foundation.domain.ids.UserSessionId;
+import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
@@ -204,7 +204,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void renewManuallyTest() throws Exception {
         // Arrange
-        var sessionId = UserSessionId.random();
+        var sessionId = JbstUserSessionId.random();
 
         // Act
         this.mvc.perform(post("/superadmin/sessions/" + sessionId + "/renew/manually"))
@@ -217,7 +217,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
-        var sessionId = UserSessionId.random();
+        var sessionId = JbstUserSessionId.random();
 
         // Act
         this.mvc.perform(delete("/superadmin/sessions/" + sessionId))

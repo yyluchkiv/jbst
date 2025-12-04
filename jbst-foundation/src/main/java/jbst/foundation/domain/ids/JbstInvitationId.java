@@ -7,23 +7,23 @@ import org.jetbrains.annotations.NotNull;
 
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
-public record TokenId(@NotNull String value) {
+public record JbstInvitationId(@NotNull String value) {
 
     @JsonCreator
-    public static TokenId of(String value) {
-        return new TokenId(value);
+    public static JbstInvitationId of(String value) {
+        return new JbstInvitationId(value);
     }
 
-    public static TokenId hardcoded() {
-        return of("75e0d0dfc0d34914a1c49305d6477abd");
+    public static JbstInvitationId hardcoded() {
+        return of("5EFCB2583361E1C7071E");
     }
 
-    public static TokenId random() {
-        return new TokenId(randomString());
+    public static JbstInvitationId random() {
+        return new JbstInvitationId(randomString());
     }
 
     @SuppressWarnings("unused")
-    public static TokenId unknown() {
+    public static JbstInvitationId unknown() {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 
@@ -33,5 +33,4 @@ public record TokenId(@NotNull String value) {
     public String toString() {
         return this.value;
     }
-
 }

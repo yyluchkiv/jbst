@@ -20,8 +20,8 @@ import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.geo.GeoCountryFlag;
-import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.geo.JbstGeoCountryFlag;
+import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
@@ -62,8 +62,8 @@ public class JbstGeoUtils {
     // ================================================================================================================
     private record GeoFlags(
             JbstPropertyCountriesFlags configs,
-            Map<String, GeoCountryFlag> names,
-            Map<String, GeoCountryFlag> codes
+            Map<String, JbstGeoCountryFlag> names,
+            Map<String, JbstGeoCountryFlag> codes
     ) {
         public String getEmojiByName(String searchKey) {
             return this.getEmoji(this.names, searchKey);
@@ -75,14 +75,14 @@ public class JbstGeoUtils {
         // ================================================================================================================
         // PRIVATE METHODS
         // ================================================================================================================
-        public String getEmoji(Map<String, GeoCountryFlag> mappedBy, String searchKey) {
+        public String getEmoji(Map<String, JbstGeoCountryFlag> mappedBy, String searchKey) {
             if (!this.configs.isEnabled()) {
-                return GeoCountryFlag.unknown().emoji();
+                return JbstGeoCountryFlag.unknown().emoji();
             }
             if (isNull(searchKey)) {
                 searchKey = JbstConstants.Strings.UNKNOWN.toLowerCase();
             }
-            return mappedBy.getOrDefault(searchKey.toLowerCase(), GeoCountryFlag.unknown()).emoji();
+            return mappedBy.getOrDefault(searchKey.toLowerCase(), JbstGeoCountryFlag.unknown()).emoji();
         }
     }
 
@@ -149,14 +149,14 @@ public class JbstGeoUtils {
     // ================================================================================================================
     // METHODS: FACADE
     // ================================================================================================================
-    public final GeoLocation getGeoLocation(IPAddress ipAddress) {
+    public final JbstGeoLocation getGeoLocation(IPAddress ipAddress) {
         try {
             return this.getGeoLocationIPAPI(ipAddress);
         } catch (JbstExceptions.GeoLocationNotFound ex1) {
             try {
                 return this.getGeoLocationMindMax(ipAddress);
             } catch (JbstExceptions.GeoLocationNotFound ex2) {
-                return GeoLocation.unknown(ipAddress, ex2.getMessage());
+                return JbstGeoLocation.unknown(ipAddress, ex2.getMessage());
             }
         }
     }
@@ -182,13 +182,13 @@ public class JbstGeoUtils {
     // ================================================================================================================
     // METHODS (atomic): IPAPI
     // ================================================================================================================
-    protected final GeoLocation getGeoLocationIPAPI(IPAddress ipAddress) throws JbstExceptions.GeoLocationNotFound {
+    protected final JbstGeoLocation getGeoLocationIPAPI(IPAddress ipAddress) throws JbstExceptions.GeoLocationNotFound {
         try {
             var queryResponse = this.ipapi.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {
                 var countryCode = queryResponse.countryCode();
                 var countryFlag = this.getFlagEmojiByCountryCode(countryCode);
-                return GeoLocation.processed(
+                return JbstGeoLocation.processed(
                         ipAddress,
                         queryResponse.country(),
                         countryCode,
@@ -206,14 +206,14 @@ public class JbstGeoUtils {
     // ================================================================================================================
     // METHODS (atomic): MINDMAX
     // ================================================================================================================
-    protected final GeoLocation getGeoLocationMindMax(IPAddress ipAddress) throws JbstExceptions.GeoLocationNotFound {
+    protected final JbstGeoLocation getGeoLocationMindMax(IPAddress ipAddress) throws JbstExceptions.GeoLocationNotFound {
         if (!this.jbstProperties.getUtils().getGeolocations().isEnabled()) {
-            return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
+            return JbstGeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
         try {
             var response = this.geoMindMax.databaseReader().city(InetAddress.getByName(ipAddress.value()));
             var countryCode = response.getCountry().getIsoCode();
-            return GeoLocation.processed(
+            return JbstGeoLocation.processed(
                     ipAddress,
                     response.getCountry().getName(),
                     countryCode,
@@ -241,7 +241,7 @@ public class JbstGeoUtils {
         if (enabled) {
             try {
                 var resource = resourceLoader.getResource("classpath:geo-countries-flags.json");
-                var typeReference = new TypeReference<List<GeoCountryFlag>>() {};
+                var typeReference = new TypeReference<List<JbstGeoCountryFlag>>() {};
                 var objectMapper = new ObjectMapper();
                 var geoCountryFlags = objectMapper.readValue(resource.getInputStream(), typeReference);
                 LOGGER.info(CONFIGURATION_LOG_FLAGS, SUCCESS.asANSI());

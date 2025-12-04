@@ -72,18 +72,4 @@ public class TimestampUtility {
         var past = timestamp - timeAmount.toMillis();
         return new TupleRange<>(past, timestamp);
     }
-
-    public static Timestamp getFutureTimestamp(Duration duration) {
-        return new Timestamp(getCurrentTimestamp() + duration.toMillis());
-    }
-
-    @SuppressWarnings("unused")
-    public static TupleRange<Long> getFutureRange(JbstTimeAmount timeAmount) {
-        return getFutureRange(getCurrentTimestamp(), timeAmount);
-    }
-
-    public static TupleRange<Long> getFutureRange(long timestamp, JbstTimeAmount timeAmount) {
-        var future = timestamp + timeAmount.toMillis();
-        return new TupleRange<>(timestamp, future);
-    }
 }

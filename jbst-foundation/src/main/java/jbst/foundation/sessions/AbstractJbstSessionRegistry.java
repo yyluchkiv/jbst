@@ -3,10 +3,10 @@ package jbst.foundation.sessions;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
-import jbst.foundation.domain.events.EventAuthenticationLogin;
-import jbst.foundation.domain.events.EventAuthenticationLogout;
-import jbst.foundation.domain.events.EventSessionExpired;
-import jbst.foundation.domain.events.EventSessionRefreshed;
+import jbst.foundation.domain.events.JbstEventAuthenticationLogin;
+import jbst.foundation.domain.events.JbstEventAuthenticationLogout;
+import jbst.foundation.domain.events.JbstEventSessionExpired;
+import jbst.foundation.domain.events.JbstEventSessionRefreshed;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.sessions.JbstSession;
@@ -68,7 +68,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
         boolean added = this.sessions.add(session);
         if (added) {
             LOGGER.debug(USER_ACTION, username, "Session Registration");
-            this.eventsPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
+            this.eventsPublisher.publishAuthenticationLogin(new JbstEventAuthenticationLogin(username));
         }
     }
 
@@ -79,7 +79,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
         var added = this.sessions.add(newSession);
         if (added) {
             LOGGER.debug(USER_ACTION, username, "Session Renew");
-            this.eventsPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
+            this.eventsPublisher.publishSessionRefreshed(new JbstEventSessionRefreshed(newSession));
         }
     }
 
@@ -88,7 +88,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
         LOGGER.debug(USER_ACTION, username, "Session Deletion");
         var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
         if (removed) {
-            this.eventsPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
+            this.eventsPublisher.publishAuthenticationLogout(new JbstEventAuthenticationLogout(username));
 
             var sessionTP = this.usersSessionsRepository.isPresent(accessToken);
 
@@ -120,7 +120,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
             if (sessionOpt.isPresent()) {
                 var session = sessionOpt.get();
                 this.sessions.remove(session);
-                this.eventsPublisher.publishSessionExpired(new EventSessionExpired(session));
+                this.eventsPublisher.publishSessionExpired(new JbstEventSessionExpired(session));
                 this.incidentsPublisher.publishSessionExpired(new IncidentSessionExpired(username, metadata));
             }
         });

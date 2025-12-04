@@ -2,7 +2,7 @@ package jbst.foundation.domain.enums;
 
 import java.time.Duration;
 
-import static jbst.foundation.domain.time.TimestampUtility.getFutureTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getFutureTimestamp;
 
 public enum JbstUserTokenType {
     EMAIL_CONFIRMATION,

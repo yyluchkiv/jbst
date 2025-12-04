@@ -18,16 +18,16 @@ class JbstStateClassicTest extends AbstractSerializationDeserializationRunner {
 
     private static Stream<Arguments> getPermissionsTest() {
         return Stream.of(
-                Arguments.of(JbstStateClassic.DISABLED, new JbstStateClassic.ClassicStatePermissions(true, false, false, false, false)),
-                Arguments.of(JbstStateClassic.CREATED, new JbstStateClassic.ClassicStatePermissions(false, true, true, false, false)),
-                Arguments.of(JbstStateClassic.STARTING, new JbstStateClassic.ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(JbstStateClassic.ACTIVE, new JbstStateClassic.ClassicStatePermissions(false, false, true, true, true)),
-                Arguments.of(JbstStateClassic.PAUSING, new JbstStateClassic.ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(JbstStateClassic.PAUSED, new JbstStateClassic.ClassicStatePermissions(false, false, true, false, true)),
-                Arguments.of(JbstStateClassic.STOPPING, new JbstStateClassic.ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(JbstStateClassic.TERMINATED, new JbstStateClassic.ClassicStatePermissions(false, true, true, false, false)),
-                Arguments.of(JbstStateClassic.COMPLETING, new JbstStateClassic.ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(JbstStateClassic.COMPLETED, new JbstStateClassic.ClassicStatePermissions(false, false, true, false, false))
+                Arguments.of(JbstStateClassic.DISABLED, new JbstStateClassic.Permissions(true, false, false, false, false)),
+                Arguments.of(JbstStateClassic.CREATED, new JbstStateClassic.Permissions(false, true, true, false, false)),
+                Arguments.of(JbstStateClassic.STARTING, new JbstStateClassic.Permissions(false, false, false, false, false)),
+                Arguments.of(JbstStateClassic.ACTIVE, new JbstStateClassic.Permissions(false, false, true, true, true)),
+                Arguments.of(JbstStateClassic.PAUSING, new JbstStateClassic.Permissions(false, false, false, false, false)),
+                Arguments.of(JbstStateClassic.PAUSED, new JbstStateClassic.Permissions(false, false, true, false, true)),
+                Arguments.of(JbstStateClassic.STOPPING, new JbstStateClassic.Permissions(false, false, false, false, false)),
+                Arguments.of(JbstStateClassic.TERMINATED, new JbstStateClassic.Permissions(false, true, true, false, false)),
+                Arguments.of(JbstStateClassic.COMPLETING, new JbstStateClassic.Permissions(false, false, false, false, false)),
+                Arguments.of(JbstStateClassic.COMPLETED, new JbstStateClassic.Permissions(false, false, true, false, false))
         );
     }
 
@@ -73,7 +73,7 @@ class JbstStateClassicTest extends AbstractSerializationDeserializationRunner {
 
     @ParameterizedTest
     @MethodSource("getPermissionsTest")
-    void getPermissionsTest(JbstStateClassic state, JbstStateClassic.ClassicStatePermissions permissions) {
+    void getPermissionsTest(JbstStateClassic state, JbstStateClassic.Permissions permissions) {
         // Act
         var actual = state.getPermissions();
 

@@ -12,7 +12,7 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
@@ -182,8 +182,8 @@ public class MongoDbUser {
 
     @JsonIgnore
     @Transient
-    public UserId userId() {
-        return new UserId(this.id);
+    public JbstUserId userId() {
+        return new JbstUserId(this.id);
     }
 
     @JsonIgnore

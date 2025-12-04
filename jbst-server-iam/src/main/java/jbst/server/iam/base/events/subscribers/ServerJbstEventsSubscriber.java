@@ -1,6 +1,6 @@
 package jbst.server.iam.base.events.subscribers;
 
-import jbst.foundation.domain.events.EventAuthenticationLogin;
+import jbst.foundation.domain.events.JbstEventAuthenticationLogin;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.events.subscribers.JbstEventsSubscriber;
 import jbst.foundation.services.JbstUsersSessionsService;
@@ -34,7 +34,7 @@ public class ServerJbstEventsSubscriber extends JbstEventsSubscriber {
     }
 
     @Override
-    public void onAuthenticationLogin(EventAuthenticationLogin event) {
+    public void onAuthenticationLogin(JbstEventAuthenticationLogin event) {
         super.onAuthenticationLogin(event);
         LOGGER.info("[server] JbstEventsSubscriber.onAuthenticationLogin(). Username: {}", event.username());
     }

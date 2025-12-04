@@ -1,8 +1,8 @@
 package jbst.foundation.domain.http.requests;
 
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.geo.GeoLocation;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.geo.JbstGeoLocation;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,25 +14,25 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
+class UserRequestMetadataTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(UserRequestMetadata.processing(IPAddress.localhost()), "user-request-metadata-1.json"),
                 Arguments.of(UserRequestMetadata.processed(
-                        GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
+                        JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
                         UserAgentDetails.processed("Chrome", "MacOS", "Mobile")
                 ), "user-request-metadata-2.json"),
                 Arguments.of(UserRequestMetadata.processed(
-                        GeoLocation.unknown(IPAddress.localhost(), "exception details on geo location"),
+                        JbstGeoLocation.unknown(IPAddress.localhost(), "exception details on geo location"),
                         UserAgentDetails.unknown("exception details on user agent")
                 ), "user-request-metadata-3.json"),
                 Arguments.of(UserRequestMetadata.processed(
-                        GeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
+                        JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
                         UserAgentDetails.unknown("exception details on user agent")
                 ), "user-request-metadata-4.json"),
                 Arguments.of(UserRequestMetadata.processed(
-                        GeoLocation.unknown(IPAddress.localhost(), "exception details on geo location"),
+                        JbstGeoLocation.unknown(IPAddress.localhost(), "exception details on geo location"),
                         UserAgentDetails.processed("Chrome", "MacOS", "Mobile")
                 ), "user-request-metadata-5.json")
         );

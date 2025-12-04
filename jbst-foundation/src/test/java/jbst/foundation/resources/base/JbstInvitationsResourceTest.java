@@ -7,7 +7,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseInvitations;
-import jbst.foundation.domain.ids.InvitationId;
+import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.JbstInvitationsService;
 import jbst.foundation.validators.JbstInvitationsValidator;
@@ -103,7 +103,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
     void deleteByIdTest() throws Exception {
         // Arrange
         var username= entity(Username.class);
-        var invitationId = entity(InvitationId.class);
+        var invitationId = entity(JbstInvitationId.class);
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
 
         // Act

@@ -9,7 +9,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.time.ZoneId;
 
 public interface JbstUsersRepository {
-    TuplePresence<JwtUser> isPresent(UserId userId);
+    TuplePresence<JwtUser> isPresent(JbstUserId userId);
     JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException;
     JwtUser findByUsernameAsJwtUserOrNull(Username username);
     JwtUser findByEmailAsJwtUserOrNull(Email email);
@@ -30,8 +30,8 @@ public interface JbstUsersRepository {
     void resetPassword(Email email, Password password);
     void resetPassword(Username username, Password password);
     void disable(Username username);
-    UserId saveAs(JwtUser user);
-    UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
-    UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation);
+    JbstUserId saveAs(JwtUser user);
+    JbstUserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
+    JbstUserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation);
     JwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstExceptions.UsernameAlreadyExist;
 }

@@ -11,7 +11,7 @@ import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.dto.requests.RequestUsers;
-import jbst.foundation.domain.ids.UserId;
+import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.integration.postgres.configs.PostgresBeforeAllCallback;
 import jbst.foundation.integration.postgres.configs.TestsJbstConfigurationPostgresRepositoriesRunner;
@@ -64,7 +64,7 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
         // Arrange
         var saved = this.usersRepository.saveAll(PostgresDbUser.dummies1());
 
-        var notExistentUserId = entity(UserId.class);
+        var notExistentUserId = entity(JbstUserId.class);
 
         var savedUser = saved.get(0);
         var existentUserId = savedUser.userId();
@@ -228,7 +228,7 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();
-        assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
+        assertThat(this.usersRepository.isPresent(entity(JbstUserId.class)).present()).isFalse();
 
         // Act-Assert-3
         var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), JbstInvitation.random());

@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
 import jbst.foundation.domain.hardware.memories.GlobalMemory;
 import jbst.foundation.domain.hardware.memories.HeapMemory;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner {
+class HardwareMonitoringDatapointTest extends JbstUnitTests.Runners.BaseFolder {
 
     @Override
     protected String getFolder() {

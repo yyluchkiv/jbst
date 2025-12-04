@@ -1,11 +1,10 @@
 package jbst.foundation.domain.time;
 
+import jbst.foundation.domain.base.Timestamp;
+import jbst.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.YearMonth;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -52,6 +51,20 @@ public class JbstTime {
                 convert4(Date.from(ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
                 UTC
         );
+    }
+
+    public static Timestamp getFutureTimestamp(Duration duration) {
+        return new Timestamp(getCurrentTimestamp() + duration.toMillis());
+    }
+
+    @SuppressWarnings("unused")
+    public static TupleRange<Long> getFutureRange(JbstTimeAmount timeAmount) {
+        return getFutureRange(getCurrentTimestamp(), timeAmount);
+    }
+
+    public static TupleRange<Long> getFutureRange(long timestamp, JbstTimeAmount timeAmount) {
+        var future = timestamp + timeAmount.toMillis();
+        return new TupleRange<>(timestamp, future);
     }
 
     public static boolean isBetween(long timestamp, long past, long future) {

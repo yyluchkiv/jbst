@@ -3,7 +3,7 @@ package jbst.foundation.domain.http.requests;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleExceptionDetails;
@@ -32,7 +32,7 @@ import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 @ToString
 public class UserRequestMetadata {
     private final Status status;
-    private final GeoLocation geoLocation;
+    private final JbstGeoLocation geoLocation;
     private final UserAgentDetails userAgentDetails;
 
     public static UserRequestMetadata processing(
@@ -40,13 +40,13 @@ public class UserRequestMetadata {
     ) {
         return new UserRequestMetadata(
                 Status.STARTED,
-                GeoLocation.processing(ipAddress),
+                JbstGeoLocation.processing(ipAddress),
                 UserAgentDetails.processing()
         );
     }
 
     public static UserRequestMetadata processed(
-            GeoLocation geoLocation,
+            JbstGeoLocation geoLocation,
             UserAgentDetails userAgentDetails
     ) {
         return new UserRequestMetadata(
@@ -58,14 +58,14 @@ public class UserRequestMetadata {
 
     public static UserRequestMetadata valid() {
         return UserRequestMetadata.processed(
-                GeoLocation.valid(),
+                JbstGeoLocation.valid(),
                 UserAgentDetails.valid()
         );
     }
 
     public static UserRequestMetadata invalid() {
         return UserRequestMetadata.processed(
-                GeoLocation.invalid(),
+                JbstGeoLocation.invalid(),
                 UserAgentDetails.invalid()
         );
     }
@@ -76,7 +76,7 @@ public class UserRequestMetadata {
 
     public static UserRequestMetadata testData() {
         return UserRequestMetadata.processed(
-                GeoLocation.testData(),
+                JbstGeoLocation.testData(),
                 UserAgentDetails.testData()
         );
     }
