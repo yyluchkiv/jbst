@@ -2,14 +2,16 @@ package jbst.foundation.domain.time;
 
 import lombok.experimental.UtilityClass;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static java.time.Instant.ofEpochMilli;
 import static java.time.ZoneOffset.UTC;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 @UtilityClass
 public class JbstTime {
@@ -18,7 +20,7 @@ public class JbstTime {
     // CONVERT(s)
     // =================================================================================================================
     public static LocalDateTime convert(long timestamp, ZoneId zoneId) {
-        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), zoneId);
+        return LocalDateTime.ofInstant(ofEpochMilli(timestamp), zoneId);
     }
 
     public static LocalDateTime convert(Date date, ZoneId zoneId) {
@@ -27,6 +29,14 @@ public class JbstTime {
 
     public static Date convert(LocalDateTime localDateTime, ZoneId zoneId) {
         return Date.from(localDateTime.atZone(zoneId).toInstant());
+    }
+
+    public static LocalDate convert4(Date date) {
+        return new java.sql.Date(date.getTime()).toLocalDate();
+    }
+
+    public static LocalDate convert5(Date date, ZoneId zoneId) {
+        return LocalDate.ofInstant(ofEpochMilli(date.getTime()), zoneId);
     }
 
     // =================================================================================================================
@@ -38,9 +48,60 @@ public class JbstTime {
 
     public static long getStartOfMonth(long timestamp) {
         return getTimestamp(
-                LocalDateUtility.convertDate(Date.from(Instant.ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
+                convert4(Date.from(ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
                 UTC
         );
+    }
+
+    public static boolean isCurrentTimestampNSecondsMore(long timestamp, long seconds) {
+        return TimeUnit.MILLISECONDS.toSeconds(getCurrentTimestamp() - timestamp) > seconds;
+    }
+
+    // =================================================================================================================
+    // BLOCK: LocalDateTime
+    // =================================================================================================================
+    public static boolean isParamsEqualsTruncatedBySeconds(LocalDateTime time1, LocalDateTime time2) {
+        return isParamsEqualsTruncatedBy(time1, time2, ChronoUnit.SECONDS);
+    }
+
+    public static boolean isParamsEqualsTruncatedBy(LocalDateTime time1, LocalDateTime time2, ChronoUnit chronoUnit) {
+        return time1.truncatedTo(chronoUnit).isEqual(time2.truncatedTo(chronoUnit));
+    }
+
+    public static boolean isFirstParamAfterTruncatedBySeconds(LocalDateTime time1, LocalDateTime time2) {
+        return isFirstParamAfterTruncatedBy(time1, time2, ChronoUnit.SECONDS);
+    }
+
+    public static boolean isFirstParamAfterTruncatedBy(LocalDateTime time1, LocalDateTime time2, ChronoUnit chronoUnit) {
+        return time1.truncatedTo(chronoUnit).isAfter(time2.truncatedTo(chronoUnit));
+    }
+
+    public static boolean isFirstParamAfterOrEqualTruncatedBySeconds(LocalDateTime time1, LocalDateTime time2) {
+        return isFirstParamAfterOrEqualTruncatedBy(time1, time2, ChronoUnit.SECONDS);
+    }
+
+    public static boolean isFirstParamAfterOrEqualTruncatedBy(LocalDateTime time1, LocalDateTime time2, ChronoUnit chronoUnit) {
+        return isParamsEqualsTruncatedBy(time1, time2, chronoUnit) ||
+                isFirstParamAfterTruncatedBy(time1, time2, chronoUnit);
+    }
+
+    public static boolean isFirstParamBeforeTruncatedBySeconds(LocalDateTime time1, LocalDateTime time2) {
+        return isFirstParamBeforeTruncatedBy(time1, time2, ChronoUnit.SECONDS);
+    }
+
+    public static boolean isFirstParamBeforeTruncatedBy(LocalDateTime time1, LocalDateTime time2, ChronoUnit chronoUnit) {
+        var time1Truncated = time1.truncatedTo(chronoUnit);
+        var time2Truncated = time2.truncatedTo(chronoUnit);
+        return time1Truncated.isBefore(time2Truncated);
+    }
+
+    public static boolean isFirstParamBeforeOrEqualTruncatedBySeconds(LocalDateTime time1, LocalDateTime time2) {
+        return isFirstParamBeforeOrEqualTruncatedBy(time1, time2, ChronoUnit.SECONDS);
+    }
+
+    public static boolean isFirstParamBeforeOrEqualTruncatedBy(LocalDateTime time1, LocalDateTime time2, ChronoUnit chronoUnit) {
+        return isParamsEqualsTruncatedBy(time1, time2, chronoUnit) ||
+                isFirstParamBeforeTruncatedBy(time1, time2, chronoUnit);
     }
 
     // =================================================================================================================

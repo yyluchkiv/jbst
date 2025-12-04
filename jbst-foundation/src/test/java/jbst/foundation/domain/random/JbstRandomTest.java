@@ -2,8 +2,7 @@ package jbst.foundation.domain.random;
 
 import feign.Request;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.tests.enums.EnumOneValueUnderTests;
-import jbst.foundation.domain.tests.enums.EnumUnderTests;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ import java.util.stream.Stream;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Arrays.asList;
 import static jbst.foundation.domain.random.JbstRandom.*;
-import static jbst.foundation.domain.tests.enums.EnumUnderTests.*;
+import static jbst.foundation.domain.tests.JbstUnitTests.Enums.EnumUnderTests.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
@@ -637,24 +636,24 @@ class JbstRandomTest {
     @RepeatedTest(100)
     void randomEnumTest() {
         // Act
-        var actual1 = randomEnum(EnumUnderTests.class);
-        EnumUnderTests actual2 = randomEnumWildcard(EnumUnderTests.class);
+        var actual1 = randomEnum(JbstUnitTests.Enums.EnumUnderTests.class);
+        JbstUnitTests.Enums.EnumUnderTests actual2 = randomEnumWildcard(JbstUnitTests.Enums.EnumUnderTests.class);
 
         // Assert
-        assertThat(EnumUnderTests.values()).contains(actual1);
-        assertThat(EnumUnderTests.values()).contains(actual2);
+        assertThat(JbstUnitTests.Enums.EnumUnderTests.values()).contains(actual1);
+        assertThat(JbstUnitTests.Enums.EnumUnderTests.values()).contains(actual2);
     }
 
     @RepeatedTest(100)
     void randomEnumExceptExceptionTest() {
         // Act
-        var throwable1 = catchThrowable(() -> randomEnumExcept(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
-        var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
+        var throwable1 = catchThrowable(() -> randomEnumExcept(JbstUnitTests.Enums.EnumOneValueUnderTests.class, JbstUnitTests.Enums.EnumOneValueUnderTests.ONE_VALUE));
+        var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(JbstUnitTests.Enums.EnumOneValueUnderTests.class, JbstUnitTests.Enums.EnumOneValueUnderTests.ONE_VALUE));
 
         // Assert
         assertThat(throwable1).isInstanceOf(JbstExceptions.IllegalEnum.class);
         assertThat(throwable2).isInstanceOf(JbstExceptions.IllegalEnum.class);
-        var message = "Please check enum: class jbst.foundation.domain.tests.enums.EnumOneValueUnderTests";
+        var message = "Please check enum: class jbst.foundation.domain.tests.JbstUnitTests$Enums$EnumOneValueUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }
@@ -662,8 +661,8 @@ class JbstRandomTest {
     @RepeatedTest(100)
     void randomEnumExceptWildcardTest() {
         // Arrange
-        var enumValues = List.of(EnumUnderTests.values());
-        var clazz = EnumUnderTests.class;
+        var enumValues = List.of(JbstUnitTests.Enums.EnumUnderTests.values());
+        var clazz = JbstUnitTests.Enums.EnumUnderTests.class;
         var randomEnum = randomEnum(clazz);
 
         // Act
@@ -682,8 +681,8 @@ class JbstRandomTest {
     @RepeatedTest(100)
     void randomEnumExceptCaseAsListTest() {
         // Arrange
-        var enumValues = List.of(EnumUnderTests.values());
-        var clazz = EnumUnderTests.class;
+        var enumValues = List.of(JbstUnitTests.Enums.EnumUnderTests.values());
+        var clazz = JbstUnitTests.Enums.EnumUnderTests.class;
         var randomEnum1 = randomEnum(clazz);
         var randomEnum2 = randomEnumExcept(clazz, randomEnum1);
         var randomEnums = List.of(randomEnum1, randomEnum2);
@@ -708,7 +707,7 @@ class JbstRandomTest {
     @RepeatedTest(10)
     void randomEnumExceptCaseAsListExceptionTest() {
         // Arrange
-        var clazz = EnumUnderTests.class;
+        var clazz = JbstUnitTests.Enums.EnumUnderTests.class;
         var allPossibleEnumValues = List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4);
 
         // Act
@@ -718,7 +717,7 @@ class JbstRandomTest {
         // Assert
         assertThat(throwable1).isInstanceOf(JbstExceptions.IllegalEnum.class);
         assertThat(throwable2).isInstanceOf(JbstExceptions.IllegalEnum.class);
-        var message = "Please check enum: class jbst.foundation.domain.tests.enums.EnumUnderTests";
+        var message = "Please check enum: class jbst.foundation.domain.tests.JbstUnitTests$Enums$EnumUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }

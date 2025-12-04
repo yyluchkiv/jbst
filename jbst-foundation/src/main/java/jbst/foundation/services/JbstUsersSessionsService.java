@@ -11,7 +11,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.sessions.SessionsExpiredTable;
+import jbst.foundation.domain.sessions.JbstSessionsExpiredTable;
 
 import java.util.Set;
 
@@ -22,7 +22,7 @@ public interface JbstUsersSessionsService {
     JbstUserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event);
     void saveUserRequestMetadata(EventSessionUserRequestMetadataRenew event);
     JbstUserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction);
-    SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames);
+    JbstSessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames);
     void enableUserRequestMetadataRenewCron();
     void enableUserRequestMetadataRenewManually(UserSessionId sessionId);
     void renewUserRequestMetadata(JbstUserSession session, HttpServletRequest httpServletRequest);

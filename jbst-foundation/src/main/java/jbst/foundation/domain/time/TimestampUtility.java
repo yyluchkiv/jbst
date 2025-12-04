@@ -7,8 +7,8 @@ import lombok.experimental.UtilityClass;
 
 import java.time.*;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
+import static jbst.foundation.domain.time.JbstTime.convert4;
 import static jbst.foundation.domain.time.JbstTime.getTimestamp;
 
 @JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
@@ -24,7 +24,7 @@ public class TimestampUtility {
 
     public static long getStartOfMonthTimestamp(long timestamp, ZoneId zoneId) {
         return getTimestamp(
-                LocalDateUtility.convertDate(Date.from(Instant.ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
+                convert4(Date.from(Instant.ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
                 zoneId
         );
     }
@@ -101,9 +101,5 @@ public class TimestampUtility {
 
     public static boolean isFuture(long timestamp) {
         return getCurrentTimestamp() < timestamp;
-    }
-
-    public boolean isCurrentTimestampNSecondsMore(long timestamp, long seconds) {
-        return TimeUnit.MILLISECONDS.toSeconds(getCurrentTimestamp() - timestamp) > seconds;
     }
 }

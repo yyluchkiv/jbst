@@ -8,7 +8,7 @@ import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
@@ -59,7 +59,7 @@ public class JbstTokensFilter extends OncePerRequestFilter {
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            this.sessionRegistry.register(new Session(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));
+            this.sessionRegistry.register(new JbstSession(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));
 
             this.extensionService.doFilter(req);
 

@@ -1,8 +1,8 @@
 package jbst.foundation.domain.enums;
 
-import jbst.foundation.domain.tests.enums.EnumNoValuesUnderTests;
-import jbst.foundation.domain.tests.enums.EnumOneValueUnderTests;
-import jbst.foundation.domain.tests.enums.EnumUnderTests;
+import jbst.foundation.domain.tests.JbstUnitTests.Enums.EnumNoValuesUnderTests;
+import jbst.foundation.domain.tests.JbstUnitTests.Enums.EnumOneValueUnderTests;
+import jbst.foundation.domain.tests.JbstUnitTests.Enums.EnumUnderTests;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -10,9 +10,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.tests.enums.EnumOneValueUnderTests.ONE_VALUE;
-import static jbst.foundation.domain.tests.enums.EnumUnderTests.*;
 import static jbst.foundation.domain.enums.JbstEnums.*;
+import static jbst.foundation.domain.tests.JbstUnitTests.Enums.EnumOneValueUnderTests.ONE_VALUE;
+import static jbst.foundation.domain.tests.JbstUnitTests.Enums.EnumUnderTests.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings({"unchecked", "rawtypes"})

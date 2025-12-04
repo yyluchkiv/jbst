@@ -3,23 +3,13 @@ package jbst.foundation.domain.time;
 import jbst.foundation.domain.annotations.JbstDeletionScheduled;
 import lombok.experimental.UtilityClass;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
-import java.util.Date;
 
 @JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass
 public class LocalDateUtility {
-
-    public static LocalDate convertDate(Date date) {
-        return new java.sql.Date(date.getTime()).toLocalDate();
-    }
-
-    public static LocalDate convertDate(Date date, ZoneId zoneId) {
-        return LocalDate.ofInstant(Instant.ofEpochMilli(date.getTime()), zoneId);
-    }
 
     public static LocalDate getFirstDayCurrentMonth(ZoneId zoneId) {
         return LocalDate.now(zoneId).withDayOfMonth(1);
