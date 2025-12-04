@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
@@ -42,7 +42,7 @@ public class JbstAuthenticationService {
     // Authentication
     private final AuthenticationManager authenticationManager;
     // Assistants
-    private final JbstJwtUserDetailsService jwtUserDetailsService;
+    private final JbstUserDetailsService jwtUserDetailsService;
     // Sessions
     private final JbstSessionRegistry sessionRegistry;
     // Services

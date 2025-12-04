@@ -1,7 +1,7 @@
 package jbst.server.iam.postgres.services;
 
-import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
+import jbst.foundation.domain.databases.postgres.entities.JbstPostgresUser;
+import jbst.foundation.repositories.postgres.JbstPostgresUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -28,8 +28,8 @@ class PostgresUsersServiceTest {
     static class ContextConfiguration {
 
         @Bean
-        PostgresJbstUsersRepository usersRepository() {
-            return mock(PostgresJbstUsersRepository.class);
+        JbstPostgresUsersRepository usersRepository() {
+            return mock(JbstPostgresUsersRepository.class);
         }
 
         @Bean
@@ -40,7 +40,7 @@ class PostgresUsersServiceTest {
         }
     }
 
-    private final PostgresJbstUsersRepository postgresUsersRepository;
+    private final JbstPostgresUsersRepository postgresUsersRepository;
 
     private final UsersService componentUnderTest;
 
@@ -61,8 +61,8 @@ class PostgresUsersServiceTest {
     @Test
     void findAll() {
         // Act
-        var postgresDbUsers = list345(PostgresDbUser.class);
-        var expected = postgresDbUsers.stream().map(PostgresDbUser::asJwtUser).toList();
+        var postgresDbUsers = list345(JbstPostgresUser.class);
+        var expected = postgresDbUsers.stream().map(JbstPostgresUser::asJwtUser).toList();
         when(this.postgresUsersRepository.findAll()).thenReturn(postgresDbUsers);
 
         // Act

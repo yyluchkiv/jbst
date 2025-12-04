@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
-import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
@@ -148,8 +148,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    JbstJwtUserDetailsService jwtUserDetailsService() {
-        return mock(JbstJwtUserDetailsService.class);
+    JbstUserDetailsService jwtUserDetailsService() {
+        return mock(JbstUserDetailsService.class);
     }
 
     // =================================================================================================================

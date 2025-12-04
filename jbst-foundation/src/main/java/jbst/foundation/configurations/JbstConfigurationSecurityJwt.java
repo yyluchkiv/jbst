@@ -1,7 +1,7 @@
 package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstUserDetailsService;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -90,7 +90,7 @@ import static org.springframework.http.HttpMethod.*;
 public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
     // Assistants
-    private final JbstJwtUserDetailsService jwtUserDetailsService;
+    private final JbstUserDetailsService jwtUserDetailsService;
     // Passwords
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Filters
@@ -102,7 +102,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     private final JbstCsrfInterceptorHandshake csrfInterceptorHandshake;
     private final JbstSecurityHandshakeHandler securityHandshakeHandler;
     // Configurer
-    private final AbstractJbstSecurityJwtConfigurer abstractJbstSecurityJwtConfigurer;
+    private final JbstAbstractSecurityJwtConfigurer jbstAbstractSecurityJwtConfigurer;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -146,7 +146,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 var endpoint = this.jbstProperties.getSecurity().getWebsockets().getStomp().getEndpoint();
                 web.ignoring().requestMatchers(endpoint + "/**");
             }
-            this.abstractJbstSecurityJwtConfigurer.configure(web);
+            this.jbstAbstractSecurityJwtConfigurer.configure(web);
         };
     }
 
@@ -173,7 +173,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                 );
 
         // WARNING: order is important, configurer must have possibility to override matchers below
-        this.abstractJbstSecurityJwtConfigurer.configure(http);
+        this.jbstAbstractSecurityJwtConfigurer.configure(http);
 
         http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/**"))

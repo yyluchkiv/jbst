@@ -45,7 +45,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.DASH;
 import static jbst.foundation.domain.cryptography.JbstEncoding.getBasicAuthenticationHeader;
 import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
 import static jbst.foundation.domain.enums.JbstStatus.STARTED;
-import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
+import static jbst.foundation.domain.numbers.JbstNumbers.is;
 import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static jbst.foundation.domain.time.JbstSchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.domain.time.JbstTime.convert1;

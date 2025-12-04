@@ -1,10 +1,10 @@
 package jbst.foundation.repositories.postgres;
 
 public record JbstPostgresRepositories(
-        PostgresJbstSettingsRepository settingsRepository,
-        PostgresJbstInvitationsRepository invitationsRepository,
-        PostgresJbstUsersTokensRepository usersTokensRepository,
-        PostgresJbstUsersRepository userRepository,
-        PostgresJbstUsersSessionsRepository userSessionRepository
+        JbstPostgresSettingsRepository settingsRepository,
+        JbstPostgresInvitationsRepository invitationsRepository,
+        JbstPostgresUsersTokensRepository usersTokensRepository,
+        JbstPostgresUsersRepository userRepository,
+        JbstPostgresUsersSessionsRepository userSessionRepository
 ) {
 }

@@ -1,17 +1,17 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.assistants.userdetails.PostgresUserDetailsAssistant;
+import jbst.foundation.assistants.userdetails.JbstPostgresUserDetailsService;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
-import jbst.foundation.services.postgres.PostgresJbstUsersSessionsService;
+import jbst.foundation.repositories.postgres.JbstPostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresSettingsRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresUsersRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresUsersSessionsRepository;
+import jbst.foundation.services.postgres.JbstPostgresUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.sessions.PostgresSessionRegistry;
-import jbst.foundation.settings.PostgresJbstSettingsService;
+import jbst.foundation.sessions.JbstPostgresSessionRegistry;
+import jbst.foundation.settings.JbstPostgresSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,26 +31,26 @@ import org.springframework.context.annotation.Import;
 public class JbstConfigurationPostgres {
 
     // Repositories
-    private final PostgresJbstSettingsRepository postgresJbstSettingsRepository;
-    private final PostgresJbstInvitationsRepository postgresJbstInvitationsRepository;
-    private final PostgresJbstUsersRepository postgresUsersRepository;
-    private final PostgresJbstUsersSessionsRepository postgresUsersSessionsRepository;
+    private final JbstPostgresSettingsRepository jbstPostgresSettingsRepository;
+    private final JbstPostgresInvitationsRepository jbstPostgresInvitationsRepository;
+    private final JbstPostgresUsersRepository postgresUsersRepository;
+    private final JbstPostgresUsersSessionsRepository postgresUsersSessionsRepository;
     // Properties
     private final JbstProperties jbstProperties;
 
     @Bean
-    PostgresJbstSettingsService postgresJbstSettingsService() {
-        return new PostgresJbstSettingsService(
-                this.postgresJbstSettingsRepository,
-                this.postgresJbstInvitationsRepository,
+    JbstPostgresSettingsService postgresJbstSettingsService() {
+        return new JbstPostgresSettingsService(
+                this.jbstPostgresSettingsRepository,
+                this.jbstPostgresInvitationsRepository,
                 this.postgresUsersRepository,
                 this.jbstProperties
         );
     }
 
     @Bean
-    PostgresUserDetailsAssistant postgresUserDetailsAssistant() {
-        return new PostgresUserDetailsAssistant(
+    JbstPostgresUserDetailsService postgresUserDetailsAssistant() {
+        return new JbstPostgresUserDetailsService(
                 this.postgresUsersRepository
         );
     }
@@ -60,9 +60,9 @@ public class JbstConfigurationPostgres {
     JbstSessionRegistry postgresSessionRegistry(
             JbstEventsPublisher eventsPublisher,
             JbstIncidentsPublisher incidentsPublisher,
-            PostgresJbstUsersSessionsService postgresBaseUsersSessionsService
+            JbstPostgresUsersSessionsService postgresBaseUsersSessionsService
     ) {
-        return new PostgresSessionRegistry(
+        return new JbstPostgresSessionRegistry(
                 eventsPublisher,
                 incidentsPublisher,
                 postgresBaseUsersSessionsService,

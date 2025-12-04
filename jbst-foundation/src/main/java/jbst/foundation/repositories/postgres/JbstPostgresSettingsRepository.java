@@ -1,0 +1,42 @@
+package jbst.foundation.repositories.postgres;
+
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstSettings;
+import jbst.foundation.domain.databases.postgres.entities.JbstPostgresSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
+import jbst.foundation.repositories.JbstSettingsRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
+
+public interface JbstPostgresSettingsRepository extends JpaRepository<JbstPostgresSettings, UUID>, JbstSettingsRepository {
+    // ================================================================================================================
+    // Any
+    // ================================================================================================================
+    default JbstSettings getSettings() {
+        return this.findAll().stream()
+                .findFirst()
+                .map(JbstPostgresSettings::jbstSettings)
+                .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));
+    }
+
+    default boolean isPresent() {
+        return this.count() > 0;
+    }
+
+    default JbstSettings saveAs(
+            Username updatedBy,
+            JbstRequestJbstSettings request
+    ) {
+        var entity = this.findAll().stream().findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));
+        entity.edit(
+                updatedBy,
+                request.hardwareMonitoringThresholds()
+        );
+        this.save(entity);
+        return entity.jbstSettings();
+    }
+}
