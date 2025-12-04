@@ -1,7 +1,6 @@
 package jbst.foundation.domain.tuples;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TuplePresenceTest extends AbstractFolderSerializationRunner {
@@ -33,7 +33,7 @@ class TuplePresenceTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(tuplePresence);
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
+        assertThat(json).isEqualTo(read(this.getFolder(), fileName));
     }
 
     @SneakyThrows
@@ -41,7 +41,7 @@ class TuplePresenceTest extends AbstractFolderSerializationRunner {
     @MethodSource("serializeTest")
     void deserializeTest(TuplePresence<String> tuplePresence, String fileName) {
         // Arrange
-        var json = TestsIOUtils.readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<TuplePresence<String>>() {};
 
         // Act

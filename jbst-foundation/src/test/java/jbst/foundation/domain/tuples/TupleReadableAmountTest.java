@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TupleReadableAmountTest extends AbstractFolderSerializationRunner {
@@ -52,6 +52,6 @@ class TupleReadableAmountTest extends AbstractFolderSerializationRunner {
         var actual = this.writeValueAsString(request);
 
         // Assert
-        assertThat(actual).isEqualTo(readFile(getFolder(), fileName));
+        assertThat(actual).isEqualTo(read(getFolder(), fileName));
     }
 }

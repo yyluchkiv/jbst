@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.JbstTime.convert;
 import static jbst.foundation.domain.time.TimestampUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -166,9 +166,9 @@ class TimestampUtilityTest {
                 .isLessThan(timestampPoland)
                 .isLessThan(timestampUkraine);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        var localDateTimeUTC = convertTimestamp(timestampUTC, UTC);
-        var localDateTimeUkraine = convertTimestamp(timestampUkraine, JbstConstants.ZoneIds.UKRAINE);
-        var localDateTimePoland = convertTimestamp(timestampPoland, JbstConstants.ZoneIds.POLAND);
+        var localDateTimeUTC = convert(timestampUTC, UTC);
+        var localDateTimeUkraine = convert(timestampUkraine, JbstConstants.ZoneIds.UKRAINE);
+        var localDateTimePoland = convert(timestampPoland, JbstConstants.ZoneIds.POLAND);
         assertThat(localDateTimeUTC.toString()).endsWith("00:00");
         assertThat(localDateTimeUkraine.toString()).endsWith("00:00");
         assertThat(localDateTimePoland.toString()).endsWith("00:00");

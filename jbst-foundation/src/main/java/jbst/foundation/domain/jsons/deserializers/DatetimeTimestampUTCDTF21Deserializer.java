@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF21;
-import static jbst.foundation.domain.time.LocalDateTimeUtility.getTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getTimestamp;
 import static jbst.foundation.domain.time.LocalDateTimeUtility.parse;
 
 public class DatetimeTimestampUTCDTF21Deserializer extends JsonDeserializer<Long> {

@@ -1,2 +1,5 @@
 ### Changelog [v1.45]
-— TBD
+— Addition: JbstLatencySynchronizedQueue methods - avgMs(), maxMs()
+— Migration: LocalDateTimeUtility methods - converter(s)
+— Migration: LocalDateTimeUtility methods - getTimestamp
+— Migration: TestsIOUtils -> JbstUnitTests.IO.read

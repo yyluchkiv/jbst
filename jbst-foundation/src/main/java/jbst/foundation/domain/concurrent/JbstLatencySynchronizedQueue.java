@@ -1,5 +1,6 @@
 package jbst.foundation.domain.concurrent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -7,10 +8,10 @@ import lombok.ToString;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.apache.commons.collections4.queue.SynchronizedQueue;
 
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZeroByBounds;
 import static org.apache.commons.collections4.queue.SynchronizedQueue.synchronizedQueue;
 
@@ -27,7 +28,7 @@ public class JbstLatencySynchronizedQueue {
         private final String latenciesMs;
 
         public JbstLatencyJSON(SynchronizedQueue<Long> nanos) {
-            var latencies = nanos.stream().map(TimeUnit.NANOSECONDS::toMillis).toList();
+            var latencies = nanos.stream().map(NANOSECONDS::toMillis).toList();
             var latency = (long) latencies.stream()
                     .mapToLong(Long::longValue)
                     .average()
@@ -75,6 +76,32 @@ public class JbstLatencySynchronizedQueue {
 
     public void add(Long latency) {
         this.nanos.add(latency);
+    }
+
+    @JsonIgnore
+    public long avgNanos() {
+        return (long) this.nanos.stream()
+                .mapToLong(Long::longValue)
+                .average()
+                .orElse(0.0);
+    }
+
+    @JsonIgnore
+    public long maxNanos() {
+        return this.nanos.stream()
+                .mapToLong(Long::longValue)
+                .max()
+                .orElse(0L);
+    }
+
+    @JsonIgnore
+    public long avgMs() {
+        return NANOSECONDS.toMillis(this.avgNanos());
+    }
+
+    @JsonIgnore
+    public long maxMs() {
+        return NANOSECONDS.toMillis(this.maxNanos());
     }
 
     @JsonValue

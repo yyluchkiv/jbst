@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 
 @Slf4j
 class JbstGeoUtilsFlagsConsoleTest extends AbstractFolderSerializationRunner {
@@ -27,7 +27,7 @@ class JbstGeoUtilsFlagsConsoleTest extends AbstractFolderSerializationRunner {
 
     @Test
     void readFileTest() throws JsonProcessingException {
-        var flagsFullsJSON = readFile(this.getFolder(), "tests-geo-countries-flags.json");
+        var flagsFullsJSON = read(this.getFolder(), "tests-geo-countries-flags.json");
         var typeReference = new TypeReference<List<CountryFlagFull>>() {};
         var flagsFulls = OBJECT_MAPPER.readValue(flagsFullsJSON, typeReference);
         var flags = flagsFulls.stream()

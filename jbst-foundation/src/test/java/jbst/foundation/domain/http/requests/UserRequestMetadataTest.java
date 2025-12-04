@@ -2,7 +2,6 @@ package jbst.foundation.domain.http.requests;
 
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoLocation;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
@@ -12,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
@@ -50,7 +50,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(userRequestMetadata);
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
+        assertThat(json).isEqualTo(read(this.getFolder(), fileName));
     }
 
     @RepeatedTest(10)

@@ -9,10 +9,13 @@ class JbstLatencySynchronizedQueueTest {
     @RepeatedTest(10)
     void hardcodedTest() {
         // Act
-        var queue = JbstLatencySynchronizedQueue.JbstLatencyJSON.hardcoded();
+        var queue = JbstLatencySynchronizedQueue.hardcoded();
+        var json = JbstLatencySynchronizedQueue.JbstLatencyJSON.hardcoded();
 
         // Assert
-        assertThat(queue.getLatencyMs()).isEqualTo("237 ms");
-        assertThat(queue.getLatenciesMs()).isEqualTo("[200 ms, 210 ms, 210 ms, 215 ms, 225 ms, 232 ms, 251 ms, 274 ms, 278 ms, 279 ms]");
+        assertThat(queue.avgMs()).isEqualTo(237L);
+        assertThat(queue.maxMs()).isEqualTo(279L);
+        assertThat(json.getLatencyMs()).isEqualTo("237 ms");
+        assertThat(json.getLatenciesMs()).isEqualTo("[200 ms, 210 ms, 210 ms, 215 ms, 225 ms, 232 ms, 251 ms, 274 ms, 278 ms, 279 ms]");
     }
 }

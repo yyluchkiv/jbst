@@ -1,12 +1,12 @@
 package jbst.foundation.domain.system;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import org.junit.jupiter.api.Test;
 
 import static jbst.foundation.domain.reflection.JbstReflections.getGetters;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstSystemResetServerStatusTest extends AbstractFolderSerializationRunner {
@@ -29,7 +29,7 @@ class JbstSystemResetServerStatusTest extends AbstractFolderSerializationRunner 
         assertThat(status.getPercentage()).isEqualTo(TuplePercentage.zero());
         assertThat(status.getDescription()).isEqualTo("Ready");
         assertThat(status.isStarted()).isFalse();
-        assertThat(this.writeValueAsString(status)).isEqualTo(TestsIOUtils.readFile(this.getFolder(), "reset-server-status-1.json"));
+        assertThat(this.writeValueAsString(status)).isEqualTo(read(this.getFolder(), "reset-server-status-1.json"));
 
         // Act-2
         status.reset();
@@ -41,7 +41,7 @@ class JbstSystemResetServerStatusTest extends AbstractFolderSerializationRunner 
         assertThat(status.getPercentage()).isEqualTo(TuplePercentage.zero());
         assertThat(status.getDescription()).isEqualTo("Resetting");
         assertThat(status.isStarted()).isTrue();
-        assertThat(this.writeValueAsString(status)).isEqualTo(TestsIOUtils.readFile(this.getFolder(), "reset-server-status-2.json"));
+        assertThat(this.writeValueAsString(status)).isEqualTo(read(this.getFolder(), "reset-server-status-2.json"));
 
         // Act-3
         status.nextStage("[Ops] 1st stage");
@@ -53,7 +53,7 @@ class JbstSystemResetServerStatusTest extends AbstractFolderSerializationRunner 
         assertThat(status.getPercentage()).isEqualTo(TuplePercentage.progressTuplePercentage(1, 9));
         assertThat(status.getDescription()).isEqualTo("[Ops] 1st stage");
         assertThat(status.isStarted()).isTrue();
-        assertThat(this.writeValueAsString(status)).isEqualTo(TestsIOUtils.readFile(this.getFolder(), "reset-server-status-3.json"));
+        assertThat(this.writeValueAsString(status)).isEqualTo(read(this.getFolder(), "reset-server-status-3.json"));
 
         // Act-4
         status.complete(JbstConstants.ZoneIds.UKRAINE);
@@ -76,6 +76,6 @@ class JbstSystemResetServerStatusTest extends AbstractFolderSerializationRunner 
         assertThat(status.getPercentage()).isEqualTo(TuplePercentage.progressTuplePercentage(9, 9));
         assertThat(status.getDescription()).isEqualTo("jbst NPE. Please contact development team");
         assertThat(status.isStarted()).isFalse();
-        assertThat(this.writeValueAsString(status)).isEqualTo(TestsIOUtils.readFile(this.getFolder(), "reset-server-status-4.json"));
+        assertThat(this.writeValueAsString(status)).isEqualTo(read(this.getFolder(), "reset-server-status-4.json"));
     }
 }
