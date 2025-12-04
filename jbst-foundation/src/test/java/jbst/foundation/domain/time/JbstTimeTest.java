@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -24,33 +25,40 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.time.JbstTime.*;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.TimestampUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstTimeTest {
     private static final SimpleDateFormat SDF = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
     private static final LocalDateTime NOW = LocalDateTime.now();
     private static final LocalDateTime NOW_6_30 = LocalDate.now().atTime(6, 30); // to avoid failures on 59 min
     private static final LocalDateTime _25_11_2021 = LocalDateTime.of(2021, DECEMBER, 25, 15, 16, 17);
+
+    private static final Long _2_HOUR_AGO = getPastTimestamp(Duration.ofHours(2L)).value();
+    private static final Long _5_MINUTES_AGO = getPastTimestamp(Duration.ofMinutes(5)).value();
+    private static final Long _1_MINUTE_AGO = getPastTimestamp(Duration.ofMinutes(1L)).value();
+    private static final Long _2_MINUTES_FUTURE = getFutureTimestamp(Duration.ofMinutes(2L)).value();
+    private static final Long _1_HOUR_FUTURE = getFutureTimestamp(Duration.ofHours(1L)).value();
 
     // =================================================================================================================
     // CONVERT(s)
     // =================================================================================================================
     private static Stream<Arguments> convertArgs1() {
         return Stream.of(
-                Arguments.of(of(2021, DECEMBER, 25, 15, 16, 17), "25.12.2021 15:16:17"),
-                Arguments.of(of(2011, DECEMBER, 25, 15, 16, 17), "25.12.2011 15:16:17"),
-                Arguments.of(of(2001, DECEMBER, 25, 15, 16, 17), "25.12.2001 15:16:17")
+                Arguments.of(1640438177000L, UKRAINE, _25_11_2021),
+                Arguments.of(1640445377000L, UTC, _25_11_2021),
+                Arguments.of(1324818977000L, UKRAINE, _25_11_2021.minusYears(10)),
+                Arguments.of(1324826177000L, UTC, _25_11_2021.minusYears(10)),
+                Arguments.of(1009286177000L, UKRAINE, _25_11_2021.minusYears(20)),
+                Arguments.of(1009293377000L, UTC, _25_11_2021.minusYears(20))
         );
     }
     @ParameterizedTest
     @MethodSource("convertArgs1")
-    void convertTest(LocalDateTime localDateTime, String expected) throws ParseException {
-        // Arrange
-        SDF.setTimeZone(getTimeZone(UKRAINE));
-
+    void convertTest(Long timestamp, ZoneId zoneId, LocalDateTime expected) {
         // Act + Assert
-        assertThat(convert(localDateTime, UKRAINE)).isEqualTo(SDF.parse(expected));
+        assertThat(convert1(timestamp, zoneId)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> convertArgs2() {
@@ -72,19 +80,19 @@ class JbstTimeTest {
 
     private static Stream<Arguments> convertArgs3() {
         return Stream.of(
-                Arguments.of(1640438177000L, UKRAINE, _25_11_2021),
-                Arguments.of(1640445377000L, UTC, _25_11_2021),
-                Arguments.of(1324818977000L, UKRAINE, _25_11_2021.minusYears(10)),
-                Arguments.of(1324826177000L, UTC, _25_11_2021.minusYears(10)),
-                Arguments.of(1009286177000L, UKRAINE, _25_11_2021.minusYears(20)),
-                Arguments.of(1009293377000L, UTC, _25_11_2021.minusYears(20))
+                Arguments.of(of(2021, DECEMBER, 25, 15, 16, 17), "25.12.2021 15:16:17"),
+                Arguments.of(of(2011, DECEMBER, 25, 15, 16, 17), "25.12.2011 15:16:17"),
+                Arguments.of(of(2001, DECEMBER, 25, 15, 16, 17), "25.12.2001 15:16:17")
         );
     }
     @ParameterizedTest
     @MethodSource("convertArgs3")
-    void convertTest(Long timestamp, ZoneId zoneId, LocalDateTime expected) {
+    void convertTest(LocalDateTime localDateTime, String expected) throws ParseException {
+        // Arrange
+        SDF.setTimeZone(getTimeZone(UKRAINE));
+
         // Act + Assert
-        assertThat(convert(timestamp, zoneId)).isEqualTo(expected);
+        assertThat(convert(localDateTime, UKRAINE)).isEqualTo(SDF.parse(expected));
     }
 
     private static Stream<Arguments> convertArgs4() {
@@ -154,6 +162,74 @@ class JbstTimeTest {
     void getStartOfMonthTest(long timestamp, long expected) {
         // Act + Assert
         assertThat(JbstTime.getStartOfMonth(timestamp)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> isBetweenArgs() {
+        return Stream.of(
+                Arguments.of(_5_MINUTES_AGO, _1_HOUR_FUTURE, true),
+                Arguments.of(_5_MINUTES_AGO, _1_MINUTE_AGO, false),
+                Arguments.of(_1_MINUTE_AGO, _5_MINUTES_AGO, false),
+                Arguments.of(_1_HOUR_FUTURE, _5_MINUTES_AGO, false),
+                Arguments.of(_1_HOUR_FUTURE, _2_MINUTES_FUTURE, false),
+                Arguments.of(_2_MINUTES_FUTURE, _1_HOUR_FUTURE, false),
+                Arguments.of(_1_MINUTE_AGO, _5_MINUTES_AGO, false),
+                Arguments.of(_1_MINUTE_AGO, _2_HOUR_AGO, false),
+                Arguments.of(_1_MINUTE_AGO, _2_MINUTES_FUTURE, true),
+                Arguments.of(_1_MINUTE_AGO, _1_HOUR_FUTURE, true)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("isBetweenArgs")
+    void isBetweenTest(long past, long future, boolean expected) {
+        // Act + Assert
+        assertThat(isBetween(getCurrentTimestamp(), past, future)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> isBetweenInclusiveArgs() {
+        return Stream.of(
+                Arguments.of(1, 0, 2, true),
+                Arguments.of(1, 1, 2, true),
+                Arguments.of(1, 2, 2, false),
+                Arguments.of(1, 0, 1, true),
+                Arguments.of(1, 0, 0, false),
+                Arguments.of(1, 1, 1, true),
+                Arguments.of(1, -3, -2, false),
+                Arguments.of(1, 2, 3, false)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("isBetweenInclusiveArgs")
+    void isBetweenInclusiveTest(long timestamp, long past, long future, boolean expected) {
+        // Act + Assert
+        assertThat(isBetweenInclusive(timestamp, past, future)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> isPastArgs() {
+        return Stream.of(
+                Arguments.of(1642767625000L, true),
+                Arguments.of(1642767626000L, true),
+                Arguments.of(getCurrentTimestamp() + 10000L, false)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("isPastArgs")
+    void isPastTest(long timestamp, boolean expected) {
+        // Act + Assert
+        assertThat(isPast(timestamp)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> isFutureArgs() {
+        return Stream.of(
+                Arguments.of(1642767625000L, false),
+                Arguments.of(1642767626000L, false),
+                Arguments.of(getCurrentTimestamp() + 10000L, true)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("isFutureArgs")
+    void isFutureTest(long timestamp, boolean expected) {
+        // Act + Assert
+        assertThat(isFuture(timestamp)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> isCurrentTimestampNSecondsMoreArgs() {

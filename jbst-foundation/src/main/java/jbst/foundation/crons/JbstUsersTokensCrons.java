@@ -1,6 +1,6 @@
 package jbst.foundation.crons;
 
-import jbst.foundation.domain.crons.JbstAbstractCron;
+import jbst.foundation.domain.crons.JbstAbstractCrons;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstUsersTokensCron extends JbstAbstractCron {
+public class JbstUsersTokensCrons extends JbstAbstractCrons {
 
     // Repository
     private final JbstUsersTokensRepository usersTokensRepository;

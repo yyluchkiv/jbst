@@ -4,7 +4,7 @@ import jbst.foundation.domain.properties.base.JbstPropertyCron;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public abstract class JbstAbstractCron {
+public abstract class JbstAbstractCrons {
 
     public abstract void processException(Exception ex);
 

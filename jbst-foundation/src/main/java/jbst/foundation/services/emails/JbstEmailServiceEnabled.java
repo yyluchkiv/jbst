@@ -5,9 +5,8 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMultipart;
 import jakarta.mail.util.ByteArrayDataSource;
+import jbst.foundation.domain.emails.JbstEmails;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.emails.EmailHTML;
-import jbst.foundation.domain.emails.EmailPlainAttachment;
 import jbst.foundation.services.JbstEmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +58,7 @@ public class JbstEmailServiceEnabled implements JbstEmailService {
     }
 
     @Override
-    public void sendPlainAttachment(EmailPlainAttachment emailPlainAttachment) {
+    public void sendPlainAttachment(JbstEmails.AttachmentAndText data) {
         var emails = this.jbstProperties.getEmails();
         if (emails.isEnabled()) {
             try {
@@ -67,20 +66,20 @@ public class JbstEmailServiceEnabled implements JbstEmailService {
                 var multipart = new MimeMultipart();
 
                 var part1 = new MimeBodyPart();
-                part1.setText(emailPlainAttachment.message());
+                part1.setText(data.message());
                 multipart.addBodyPart(part1);
 
                 var part2 = new MimeBodyPart();
-                var source = new ByteArrayDataSource(emailPlainAttachment.attachmentMessage(), "text/plain; charset=UTF-8");
+                var source = new ByteArrayDataSource(data.attachmentMessage(), "text/plain; charset=UTF-8");
                 part2.setDataHandler(new DataHandler(source));
-                part2.setFileName(emailPlainAttachment.attachmentFileName());
+                part2.setFileName(data.attachmentFileName());
                 multipart.addBodyPart(part2);
 
                 message.setFrom(emails.getFrom());
-                for (var to : emailPlainAttachment.to()) {
+                for (var to : data.to()) {
                     message.addRecipients(TO, to);
                 }
-                message.setSubject(emailPlainAttachment.subject());
+                message.setSubject(data.subject());
                 message.setContent(multipart);
 
                 this.javaMailSender.send(message);
@@ -91,19 +90,19 @@ public class JbstEmailServiceEnabled implements JbstEmailService {
     }
 
     @Override
-    public void sendHTML(EmailHTML emailHTML) {
+    public void sendHTML(JbstEmails.HTML data) {
         var emails = this.jbstProperties.getEmails();
         if (emails.isEnabled()) {
             try {
                 var message = this.javaMailSender.createMimeMessage();
                 var messageHelper = new MimeMessageHelper(message, MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
                 messageHelper.setFrom(emails.getFrom());
-                messageHelper.setTo(emailHTML.to().toArray(new String[0]));
-                messageHelper.setSubject(emailHTML.subject());
+                messageHelper.setTo(data.to().toArray(new String[0]));
+                messageHelper.setSubject(data.subject());
                 var context = new Context();
-                context.setVariables(emailHTML.templateVariables());
+                context.setVariables(data.templateVariables());
                 messageHelper.setText(
-                        this.springTemplateEngine.process(emailHTML.templateName(), context),
+                        this.springTemplateEngine.process(data.templateName(), context),
                         true
                 );
                 this.javaMailSender.send(message);

@@ -5,8 +5,8 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ssh.JbstSSH;
 import jbst.foundation.domain.ssh.JbstSshConnectionConfigs;
-import jbst.foundation.domain.states.AbstractClassicStateManager;
-import jbst.foundation.domain.states.ClassicState;
+import jbst.foundation.domain.states.JbstStateClassic;
+import jbst.foundation.domain.states.JbstStateManagerClassic;
 import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import jbst.foundation.feigns.spring.JbstSpringBoot;
 import jbst.server.ops.domain.configs.servers.ServerConfigs;
@@ -48,7 +48,7 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
 import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static jbst.foundation.domain.time.JbstSchedulerConfiguration.EVERY_30_SECONDS;
-import static jbst.foundation.domain.time.JbstTime.convert;
+import static jbst.foundation.domain.time.JbstTime.convert1;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 
@@ -61,10 +61,10 @@ import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 public class ServerInfinityWorker {
     public static final JbstSchedulerConfiguration EVERY_1_HOUR = new JbstSchedulerConfiguration(1L, 60L, TimeUnit.MINUTES);
 
-    private static class StateManager extends AbstractClassicStateManager {
+    private static class StateManager extends JbstStateManagerClassic {
         private final ServerConfigs serverConfigs;
 
-        public StateManager(ClassicState state, ServerConfigs serverConfigs) {
+        public StateManager(JbstStateClassic state, ServerConfigs serverConfigs) {
             super(state);
             this.serverConfigs = serverConfigs;
         }
@@ -117,7 +117,7 @@ public class ServerInfinityWorker {
             Map<String, SshRsaKey> mappedSshKeys,
             Team mainTeam
     ) {
-        this.stateManager = new StateManager(ClassicState.CREATED, serverConfigs);
+        this.stateManager = new StateManager(JbstStateClassic.CREATED, serverConfigs);
 
         // Configs [base]
         this.serverConfigs = serverConfigs;
@@ -385,7 +385,7 @@ public class ServerInfinityWorker {
     // ================================================================================================================
     private String getTimeOrDash(Long timestamp) {
         if (nonNull(timestamp)) {
-            return convert(timestamp, this.serversMonitoringConfigs.getZoneId()).format(JbstConstants.DateTimeFormatters.DTF51);
+            return convert1(timestamp, this.serversMonitoringConfigs.getZoneId()).format(JbstConstants.DateTimeFormatters.DTF51);
         } else {
             return DASH;
         }

@@ -1,6 +1,6 @@
 package jbst.foundation.crons;
 
-import jbst.foundation.domain.crons.JbstAbstractCron;
+import jbst.foundation.domain.crons.JbstAbstractCrons;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstSessionsCron extends JbstAbstractCron {
+public class JbstSessionsCrons extends JbstAbstractCrons {
 
     // Sessions
     private final JbstSessionRegistry sessionRegistry;

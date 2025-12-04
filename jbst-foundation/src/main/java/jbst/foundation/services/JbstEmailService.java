@@ -1,7 +1,6 @@
 package jbst.foundation.services;
 
-import jbst.foundation.domain.emails.EmailHTML;
-import jbst.foundation.domain.emails.EmailPlainAttachment;
+import jbst.foundation.domain.emails.JbstEmails;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface JbstEmailService {
     void sendPlain(List<String> to, String subject, String message);
     void sendPlain(Set<String> to, String subject, String message);
 
-    void sendPlainAttachment(EmailPlainAttachment emailPlainAttachment);
+    void sendPlainAttachment(JbstEmails.AttachmentAndText data);
 
-    void sendHTML(EmailHTML emailHTML);
+    void sendHTML(JbstEmails.HTML data);
 }

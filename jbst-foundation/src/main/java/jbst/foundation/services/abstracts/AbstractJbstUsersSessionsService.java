@@ -33,10 +33,10 @@ import java.util.Set;
 
 import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
 import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
-import static jbst.foundation.domain.strings.JbstMessages.entityAccessDenied;
 import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
+import static jbst.foundation.domain.strings.JbstMessages.entityAccessDenied;
+import static jbst.foundation.domain.time.JbstTime.isPast;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
-import static jbst.foundation.domain.time.TimestampUtility.isPast;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessionsService {

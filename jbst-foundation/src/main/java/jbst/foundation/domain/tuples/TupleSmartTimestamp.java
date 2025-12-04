@@ -9,7 +9,7 @@ import java.time.ZoneId;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
-import static jbst.foundation.domain.time.JbstTime.convert;
+import static jbst.foundation.domain.time.JbstTime.convert1;
 
 // Lombok
 @Getter
@@ -27,7 +27,7 @@ public class TupleSmartTimestamp {
         Asserts.assertNonNullOrThrow(zoneId, invalidAttribute("TupleSmartTimestamp.zoneId"));
         Asserts.assertNonNullOrThrow(dateTimePattern, invalidAttribute("TupleSmartTimestamp.dateTimePattern"));
         this.timestamp = timestamp;
-        this.formatted = convert(timestamp, zoneId).format(ofPattern(dateTimePattern));
+        this.formatted = convert1(timestamp, zoneId).format(ofPattern(dateTimePattern));
     }
 
     public static TupleSmartTimestamp of(

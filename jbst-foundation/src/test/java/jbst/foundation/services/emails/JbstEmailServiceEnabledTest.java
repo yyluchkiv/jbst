@@ -5,10 +5,9 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.emails.JbstEmails;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
-import jbst.foundation.domain.emails.EmailHTML;
-import jbst.foundation.domain.emails.EmailPlainAttachment;
 import jbst.foundation.services.JbstEmailService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -35,8 +34,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static jakarta.mail.Message.RecipientType.TO;
-import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
+import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -198,12 +197,12 @@ class JbstEmailServiceEnabledTest {
     @Test
     void sendPlainAttachmentDisabledTest() {
         // Arrange
-        var emailPlainAttachment = entity(EmailPlainAttachment.class);
+        var data = entity(JbstEmails.AttachmentAndText.class);
         var emails = JbstPropertyEmails.disabled();
         when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
-        this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
+        this.componentUnderTest.sendPlainAttachment(data);
 
         // Assert
         verify(this.jbstProperties).getEmails();
@@ -212,7 +211,7 @@ class JbstEmailServiceEnabledTest {
     @Test
     void sendPlainAttachmentEnabledExceptionTest() throws MessagingException {
         // Arrange
-        var emailPlainAttachment = entity(EmailPlainAttachment.class);
+        var data = entity(JbstEmails.AttachmentAndText.class);
         var from = Email.random().value();
         var emails = JbstPropertyEmails.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
@@ -221,7 +220,7 @@ class JbstEmailServiceEnabledTest {
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         // Act
-        this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
+        this.componentUnderTest.sendPlainAttachment(data);
 
         // Assert
         verify(this.jbstProperties).getEmails();
@@ -231,7 +230,7 @@ class JbstEmailServiceEnabledTest {
     @Test
     void sendPlainAttachmentEnabledTest() throws MessagingException, IOException {
         // Arrange
-        var emailPlainAttachment = new EmailPlainAttachment(
+        var data = new JbstEmails.AttachmentAndText(
                 Set.of(
                         "test1@" + JbstConstants.Domains.HARDCODED,
                         "test2@" + JbstConstants.Domains.HARDCODED
@@ -248,7 +247,7 @@ class JbstEmailServiceEnabledTest {
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         // Act
-        this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
+        this.componentUnderTest.sendPlainAttachment(data);
 
         // Assert
         verify(this.jbstProperties).getEmails();
@@ -273,12 +272,12 @@ class JbstEmailServiceEnabledTest {
     @Test
     void sendHTMLDisabledTest() {
         // Arrange
-        var emailHTML = entity(EmailHTML.class);
+        var data = entity(JbstEmails.HTML.class);
         var emails = JbstPropertyEmails.disabled();
         when(this.jbstProperties.getEmails()).thenReturn(emails);
 
         // Act
-        this.componentUnderTest.sendHTML(emailHTML);
+        this.componentUnderTest.sendHTML(data);
 
         // Assert
         verify(this.jbstProperties).getEmails();
@@ -292,7 +291,7 @@ class JbstEmailServiceEnabledTest {
                 "param1", "key2",
                 "param2", 2L
         );
-        var emailHTML = new EmailHTML(
+        var data = new JbstEmails.HTML(
                 Set.of(
                         "tests@" + JbstConstants.Domains.HARDCODED
                 ),
@@ -306,7 +305,7 @@ class JbstEmailServiceEnabledTest {
         when(this.javaMailSender.createMimeMessage()).thenReturn(message);
 
         // Act
-        this.componentUnderTest.sendHTML(emailHTML);
+        this.componentUnderTest.sendHTML(data);
 
         // Assert
         verify(this.jbstProperties).getEmails();
