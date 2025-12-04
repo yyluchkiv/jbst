@@ -166,6 +166,32 @@ class JbstTimeTest {
         assertThat(JbstTime.getStartOfMonth(timestamp)).isEqualTo(expected);
     }
 
+    @RepeatedTest(100)
+    void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
+        // Act
+        var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
+        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
+        var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
+
+        // Assert
+        assertThat(timestampUTC).isGreaterThan(timestampPoland);
+        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
+        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
+    }
+
+    @RepeatedTest(100)
+    void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
+        // Act
+        var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
+        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
+        var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
+
+        // Assert
+        assertThat(timestampUTC).isGreaterThan(timestampPoland);
+        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
+        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
+    }
+
     @RepeatedTest(10)
     void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
@@ -202,7 +228,7 @@ class JbstTimeTest {
     @RepeatedTest(10)
     void getFutureRangeTest() {
         // Arrange
-        var currentTimestamp = TimestampUtility.getCurrentTimestamp();
+        var currentTimestamp = getCurrentTimestamp();
 
         // Act
         var actual = getFutureRange(currentTimestamp, new JbstTimeAmount(5, SECONDS));
@@ -230,7 +256,7 @@ class JbstTimeTest {
     @MethodSource("isBetweenArgs")
     void isBetweenTest(long past, long future, boolean expected) {
         // Act + Assert
-        assertThat(isBetween(TimestampUtility.getCurrentTimestamp(), past, future)).isEqualTo(expected);
+        assertThat(isBetween(getCurrentTimestamp(), past, future)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> isBetweenInclusiveArgs() {
@@ -256,7 +282,7 @@ class JbstTimeTest {
         return Stream.of(
                 Arguments.of(1642767625000L, true),
                 Arguments.of(1642767626000L, true),
-                Arguments.of(TimestampUtility.getCurrentTimestamp() + 10000L, false)
+                Arguments.of(getCurrentTimestamp() + 10000L, false)
         );
     }
     @ParameterizedTest
@@ -270,7 +296,7 @@ class JbstTimeTest {
         return Stream.of(
                 Arguments.of(1642767625000L, false),
                 Arguments.of(1642767626000L, false),
-                Arguments.of(TimestampUtility.getCurrentTimestamp() + 10000L, true)
+                Arguments.of(getCurrentTimestamp() + 10000L, true)
         );
     }
     @ParameterizedTest
@@ -282,12 +308,12 @@ class JbstTimeTest {
 
     private static Stream<Arguments> isCurrentTimestampNSecondsMoreArgs() {
         return Stream.of(
-                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 1L, true),
-                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 2L, true),
-                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 3L, true),
-                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 7L, false),
-                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 8L, false),
-                Arguments.of(TimestampUtility.getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 9L, false)
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 1L, true),
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 2L, true),
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 3L, true),
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 7L, false),
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 8L, false),
+                Arguments.of(getCurrentTimestamp() - new JbstTimeAmount(5L, SECONDS).toMillis(), 9L, false)
         );
     }
     @ParameterizedTest

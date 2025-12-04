@@ -53,6 +53,25 @@ public class JbstTime {
         );
     }
 
+    public static long getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC() {
+        return getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneOffset.UTC);
+    }
+
+    public static long getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId) {
+        return getTimestamp(
+                LocalDate.now(zoneId).withDayOfMonth(1).atStartOfDay(),
+                zoneId
+        );
+    }
+
+    public static long getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC() {
+        return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(1);
+    }
+
+    public static long getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId) {
+        return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(zoneId, 1);
+    }
+
     public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(int monthAgo) {
         return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneOffset.UTC, monthAgo);
     }

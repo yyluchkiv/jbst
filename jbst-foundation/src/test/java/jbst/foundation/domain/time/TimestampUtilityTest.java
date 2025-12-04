@@ -60,30 +60,4 @@ class TimestampUtilityTest {
         // Assert
         assertThat(actual).isEqualTo(expected);
     }
-
-    @RepeatedTest(100)
-    void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
-        // Act
-        var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
-        var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
-
-        // Assert
-        assertThat(timestampUTC).isGreaterThan(timestampPoland);
-        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
-    }
-
-    @RepeatedTest(100)
-    void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
-        // Act
-        var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
-        var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
-
-        // Assert
-        assertThat(timestampUTC).isGreaterThan(timestampPoland);
-        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
-    }
 }
