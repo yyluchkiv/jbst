@@ -6,7 +6,7 @@ import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.enums.JbstStatus;
@@ -510,7 +510,7 @@ class AbstractJbstUsersSessionsServiceTest {
     void deleteAllExceptCurrentTest() {
         // Arrange
         var username = entity(Username.class);
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
 
         // Act
         this.componentUnderTest.deleteAllExceptCurrent(username, requestAccessToken);
@@ -522,7 +522,7 @@ class AbstractJbstUsersSessionsServiceTest {
     @Test
     void deleteAllExceptCurrentAsSuperuserTest() {
         // Arrange
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
 
         // Act
         this.componentUnderTest.deleteAllExceptCurrentAsSuperuser(requestAccessToken);

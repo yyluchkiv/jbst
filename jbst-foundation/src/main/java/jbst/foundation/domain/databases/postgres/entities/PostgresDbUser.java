@@ -13,8 +13,8 @@ import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.jwt.JbstJwtUser;
@@ -114,7 +114,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbUser(
-            @NotNull RequestUserRegistration0 requestUserRegistration0,
+            @NotNull JbstRequestUserRegistration0 requestUserRegistration0,
             @NotNull Password password
     ) {
         this(
@@ -131,7 +131,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     }
 
     public PostgresDbUser(
-            @NotNull RequestUserRegistration1 requestUserRegistration1,
+            @NotNull JbstRequestUserRegistration1 requestUserRegistration1,
             @NotNull Password password,
             @NotNull JbstInvitation invitation
     ) {

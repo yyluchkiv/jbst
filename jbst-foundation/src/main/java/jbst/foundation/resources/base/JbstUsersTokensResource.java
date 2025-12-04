@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.foundation.domain.dto.requests.RequestUserEmail;
-import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.JbstRequestUserEmail;
+import jbst.foundation.domain.dto.requests.JbstRequestUserPasswordReset;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
@@ -83,7 +83,7 @@ public class JbstUsersTokensResource {
 
     @PostMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
-    public void executeResetPassword(@RequestBody @Valid RequestUserEmail request) {
+    public void executeResetPassword(@RequestBody @Valid JbstRequestUserEmail request) {
         try {
             var user = this.usersService.findByEmail(request.email());
             this.usersTokensValidator.validateExecuteResetPassword(user);
@@ -96,7 +96,7 @@ public class JbstUsersTokensResource {
 
     @PatchMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
-    public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws JbstExceptions.UserTokenValidation {
+    public void resetPassword(@RequestBody @Valid JbstRequestUserPasswordReset request) throws JbstExceptions.UserTokenValidation {
         this.usersTokensValidator.validatePasswordReset(request);
         this.usersService.resetPassword(request);
     }

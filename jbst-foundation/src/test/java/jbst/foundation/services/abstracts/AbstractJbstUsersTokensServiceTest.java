@@ -1,7 +1,7 @@
 package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.random.JbstRandom;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -120,7 +120,7 @@ class AbstractJbstUsersTokensServiceTest {
     @Test
     void saveAsTest() {
         // Arrange
-        var request = RequestUserToken.hardcoded();
+        var request = JbstRequestUserToken.hardcoded();
         var userToken = JbstUserToken.hardcodedEmailConfirmation();
         when(this.usersTokensRepository.saveAs(request)).thenReturn(userToken);
 
@@ -135,7 +135,7 @@ class AbstractJbstUsersTokensServiceTest {
     @Test
     void findOrCreateTest() {
         // Arrange
-        var request = RequestUserToken.hardcoded();
+        var request = JbstRequestUserToken.hardcoded();
 
         // Arrange
         this.componentUnderTest.findOrCreate(request);

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.requireNonNull;
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
 import static org.springframework.util.CollectionUtils.*;
 
 @UtilityClass

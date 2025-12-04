@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataRenew;
@@ -202,12 +202,12 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     }
 
     @Override
-    public void deleteAllExceptCurrent(Username username, RequestAccessToken requestAccessToken) {
+    public void deleteAllExceptCurrent(Username username, JbstRequestAccessToken requestAccessToken) {
         this.usersSessionsRepository.deleteByUsernameExceptAccessToken(username, requestAccessToken);
     }
 
     @Override
-    public void deleteAllExceptCurrentAsSuperuser(RequestAccessToken requestAccessToken) {
+    public void deleteAllExceptCurrentAsSuperuser(JbstRequestAccessToken requestAccessToken) {
         this.usersSessionsRepository.deleteExceptAccessToken(requestAccessToken);
     }
 }

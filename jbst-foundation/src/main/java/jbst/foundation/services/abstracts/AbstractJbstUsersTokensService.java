@@ -1,7 +1,7 @@
 package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -32,12 +32,12 @@ public abstract class AbstractJbstUsersTokensService implements JbstUsersTokensS
     }
 
     @Override
-    public JbstUserToken saveAs(RequestUserToken request) {
+    public JbstUserToken saveAs(JbstRequestUserToken request) {
         return this.usersTokensRepository.saveAs(request);
     }
 
     @Override
-    public JbstUserToken findOrCreate(RequestUserToken request) {
+    public JbstUserToken findOrCreate(JbstRequestUserToken request) {
         return this.usersTokensRepository.findOrCreate(request);
     }
 }

@@ -2,8 +2,8 @@ package jbst.foundation.tokens.providers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
@@ -51,45 +51,45 @@ public class JbstTokenHeadersProvider implements JbstTokenProvider {
     }
 
     @Override
-    public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
+    public JbstRequestAccessToken readRequestAccessToken(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
         var headerKey = this.jbstProperties.getSecurity().getJwt().getAccessToken().getHeaderKey();
         var header = request.getHeader(headerKey);
         if (nonNull(header)) {
-            return new RequestAccessToken(header);
+            return new JbstRequestAccessToken(header);
         } else {
             throw new JbstExceptions.AccessTokenNotFound();
         }
     }
 
     @Override
-    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
+    public JbstRequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
         var headerKey = this.jbstProperties.getSecurity().getJwt().getAccessToken().getHeaderKey();
         // WARNING: development workaround to read request query parameters instead of request headers
         var header = request.getParameter(headerKey);
         if (nonNull(header)) {
-            return new RequestAccessToken(header);
+            return new JbstRequestAccessToken(header);
         } else {
             throw new JbstExceptions.AccessTokenNotFound();
         }
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
+    public JbstRequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
         var headerKey = this.jbstProperties.getSecurity().getJwt().getRefreshToken().getHeaderKey();
         var header = request.getHeader(headerKey);
         if (nonNull(header)) {
-            return new RequestRefreshToken(header);
+            return new JbstRequestRefreshToken(header);
         } else {
             throw new JbstExceptions.RefreshTokenNotFound();
         }
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
+    public JbstRequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
         var headerKey = this.jbstProperties.getSecurity().getJwt().getRefreshToken().getHeaderKey();
         var header = request.getParameter(headerKey);
         if (nonNull(header)) {
-            return new RequestRefreshToken(header);
+            return new JbstRequestRefreshToken(header);
         } else {
             throw new JbstExceptions.RefreshTokenNotFound();
         }

@@ -3,8 +3,8 @@ package jbst.foundation.repositories.postgres;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstInvitationsRepository;
@@ -31,7 +31,7 @@ public interface PostgresJbstInvitationsRepository extends JpaRepository<Postgre
                 .orElseGet(TuplePresence::absent);
     }
 
-    default List<ResponseInvitation> findResponseCodesByOwner(Username owner) {
+    default List<JbstResponseInvitation> findResponseCodesByOwner(Username owner) {
         return this.findByOwner(owner).stream()
                 .map(PostgresDbInvitation::responseInvitation)
                 .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public interface PostgresJbstInvitationsRepository extends JpaRepository<Postgre
         return nonNull(invitation) ? invitation.invitation() : null;
     }
 
-    default List<ResponseInvitation> findUnused() {
+    default List<JbstResponseInvitation> findUnused() {
         return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
                 .map(PostgresDbInvitation::responseInvitation)
                 .collect(Collectors.toList());
@@ -62,7 +62,7 @@ public interface PostgresJbstInvitationsRepository extends JpaRepository<Postgre
         return entity.invitationId();
     }
 
-    default JbstInvitationId saveAs(Username owner, RequestNewInvitationParams request) {
+    default JbstInvitationId saveAs(Username owner, JbstRequestNewInvitationParams request) {
         var invitation = new PostgresDbInvitation(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())

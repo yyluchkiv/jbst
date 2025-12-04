@@ -11,9 +11,7 @@
 — JbstNumbers: domain.numbers
 
 ##### Minor
-— Prefixes: domain.asserts
 — Prefixes: domain.databases (?)
-— Prefixes: domain.dto (?)
 — Prefixes: domain.events (websockets)
 — Prefixes: domain.hardware
 — Prefixes: domain.notifications

@@ -8,8 +8,8 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
 import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -204,12 +204,12 @@ class MongoJbstUsersRepositoryIT extends TestsJbstConfigurationMongoRepositories
         assertThat(this.usersRepository.isPresent(entity(JbstUserId.class)).present()).isFalse();
 
         // Act-Assert-3
-        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), JbstInvitation.random());
+        var userId2 = this.usersRepository.saveAs(JbstRequestUserRegistration1.hardcoded(), Password.random(), JbstInvitation.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
 
         // Act-Assert-4
-        var userId3 = this.usersRepository.saveAs(RequestUserRegistration0.hardcoded(), Password.random());
+        var userId3 = this.usersRepository.saveAs(JbstRequestUserRegistration0.hardcoded(), Password.random());
         assertThat(this.usersRepository.count()).isEqualTo(9);
         var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
@@ -222,7 +222,7 @@ class MongoJbstUsersRepositoryIT extends TestsJbstConfigurationMongoRepositories
 
         // Act-Assert-5
         var savedPassword = Password.random();
-        var userId4 = this.usersRepository.saveAs(RequestUserRegistration0.random(), savedPassword);
+        var userId4 = this.usersRepository.saveAs(JbstRequestUserRegistration0.random(), savedPassword);
         assertThat(this.usersRepository.count()).isEqualTo(10);
         var user4 = this.usersRepository.findById(userId4.value()).orElse(null);
         assertThat(user4).isNotNull();

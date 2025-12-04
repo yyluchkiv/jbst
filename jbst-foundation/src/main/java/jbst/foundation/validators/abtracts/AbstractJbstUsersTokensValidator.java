@@ -1,6 +1,6 @@
 package jbst.foundation.validators.abtracts;
 
-import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.JbstRequestUserPasswordReset;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtUser;
@@ -10,8 +10,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertFalseOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertNonNullOrThrow;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJbstUsersTokensValidator implements JbstUsersTokensValidator {
@@ -44,7 +44,7 @@ public abstract class AbstractJbstUsersTokensValidator implements JbstUsersToken
     }
 
     @Override
-    public void validatePasswordReset(RequestUserPasswordReset request) throws JbstExceptions.UserTokenValidation {
+    public void validatePasswordReset(JbstRequestUserPasswordReset request) throws JbstExceptions.UserTokenValidation {
         request.assertPasswordsOrThrow();
         this.validateToken(request.token(), JbstUserTokenType.PASSWORD_RESET);
     }

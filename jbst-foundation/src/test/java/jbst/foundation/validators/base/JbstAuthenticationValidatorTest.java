@@ -3,8 +3,8 @@ package jbst.foundation.validators.base;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
-import jbst.foundation.domain.dto.requests.RequestUserLogin;
+import jbst.foundation.domain.dto.requests.JbstRequestMagicLinkToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserLogin;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,18 +53,18 @@ class JbstAuthenticationValidatorTest {
     private static Stream<Arguments> validateLoginStandardTest() {
         return Stream.of(
                 Arguments.of(
-                        new RequestUserLogin(null, Password.of("admin")),
+                        new JbstRequestUserLogin(null, Password.of("admin")),
                         invalidAttribute("username")
                 ),
                 Arguments.of(
-                        new RequestUserLogin(Username.of("admin"), null),
+                        new JbstRequestUserLogin(Username.of("admin"), null),
                         invalidAttribute("password")
                 ),
                 Arguments.of(
-                        new RequestUserLogin(Username.of("admin"), Password.of("admin")), null
+                        new JbstRequestUserLogin(Username.of("admin"), Password.of("admin")), null
                 ),
                 Arguments.of(
-                        new RequestUserLogin(Username.of("user"), Password.of("password")), null
+                        new JbstRequestUserLogin(Username.of("user"), Password.of("password")), null
                 )
         );
     }
@@ -72,22 +72,22 @@ class JbstAuthenticationValidatorTest {
     private static Stream<Arguments> validateLoginMagicLinkTest() {
         return Stream.of(
                 Arguments.of(
-                        RequestMagicLinkToken.hardcoded(),
+                        JbstRequestMagicLinkToken.hardcoded(),
                         null,
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
-                        RequestMagicLinkToken.hardcoded(),
+                        JbstRequestMagicLinkToken.hardcoded(),
                         JbstUserToken.hardcodedEmailConfirmation(),
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
-                        RequestMagicLinkToken.hardcoded(),
+                        JbstRequestMagicLinkToken.hardcoded(),
                         JbstUserToken.hardcodedPasswordReset(),
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
-                        RequestMagicLinkToken.hardcoded(),
+                        JbstRequestMagicLinkToken.hardcoded(),
                         JbstUserToken.hardcodedMagicLink(),
                         null
                 )
@@ -115,7 +115,7 @@ class JbstAuthenticationValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateLoginStandardTest")
-    void validateLoginStandardTest(RequestUserLogin request, String exceptionMessage) {
+    void validateLoginStandardTest(JbstRequestUserLogin request, String exceptionMessage) {
         // Act + Assert
         var throwable = catchThrowable(() -> {
             // Act
@@ -138,7 +138,7 @@ class JbstAuthenticationValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateLoginMagicLinkTest")
-    void validateLoginMagicLinkTest(RequestMagicLinkToken request, JbstUserToken userToken, String exceptionMessage) {
+    void validateLoginMagicLinkTest(JbstRequestMagicLinkToken request, JbstUserToken userToken, String exceptionMessage) {
         // Arrange
         when(this.usersTokensRepository.findByValueAsAnyOrNull(request.value())).thenReturn(userToken);
 

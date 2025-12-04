@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.security.JbstCurrentClientUser;
@@ -34,7 +34,7 @@ public class JbstUsersSessionsResource {
     private final JbstTokensProvider tokensProvider;
 
     @GetMapping
-    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
+    public JbstResponseUserSessionsTable getSessionsTable(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }

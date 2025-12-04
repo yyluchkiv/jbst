@@ -3,7 +3,7 @@ package jbst.foundation.repositories.postgres;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -23,7 +23,7 @@ public interface PostgresJbstUsersTokensRepository extends JpaRepository<Postgre
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
-    default JbstUserToken findByUserTokenValidOrNull(RequestUserToken request) {
+    default JbstUserToken findByUserTokenValidOrNull(JbstRequestUserToken request) {
         var entity = this.findByEmailAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
                 request.email(),
                 request.type(),
@@ -47,7 +47,7 @@ public interface PostgresJbstUsersTokensRepository extends JpaRepository<Postgre
         return entity.tokenId();
     }
 
-    default JbstUserToken saveAs(RequestUserToken request) {
+    default JbstUserToken saveAs(JbstRequestUserToken request) {
         var entity = this.save(
                 new PostgresDbUserToken(
                         request

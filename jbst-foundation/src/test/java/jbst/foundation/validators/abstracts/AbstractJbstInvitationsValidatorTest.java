@@ -3,7 +3,7 @@ package jbst.foundation.validators.abstracts;
 import jbst.foundation.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -44,10 +44,10 @@ class AbstractJbstInvitationsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationTest() {
         return Stream.of(
-                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, "code:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
-                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
-                Arguments.of(new RequestNewInvitationParams(Set.of()), null),
-                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, INVITATIONS_WRITE)), null)
+                Arguments.of(new JbstRequestNewInvitationParams(Set.of(INVITATIONS_READ, "code:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
+                Arguments.of(new JbstRequestNewInvitationParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
+                Arguments.of(new JbstRequestNewInvitationParams(Set.of()), null),
+                Arguments.of(new JbstRequestNewInvitationParams(Set.of(INVITATIONS_READ, INVITATIONS_WRITE)), null)
         );
     }
 
@@ -75,7 +75,7 @@ class AbstractJbstInvitationsValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateCreateNewInvitationTest")
-    void validateCreateNewInvitationTest(RequestNewInvitationParams request, String exceptionMessage) {
+    void validateCreateNewInvitationTest(JbstRequestNewInvitationParams request, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitation(request));
 

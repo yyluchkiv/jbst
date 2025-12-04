@@ -3,9 +3,9 @@ package jbst.foundation.repositories.mongo;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.foundation.domain.dto.responses.ResponseUserSession2;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSession2;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static jbst.foundation.domain.dto.responses.ResponseUserSession2.*;
+import static jbst.foundation.domain.dto.responses.JbstResponseUserSession2.*;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 
 public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, JbstUsersSessionsRepository {
@@ -52,18 +52,18 @@ public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoD
                 .orElseGet(TuplePresence::absent);
     }
 
-    default List<ResponseUserSession2> getUsersSessionsTable(Username username, RequestAccessToken requestAccessToken) {
+    default List<JbstResponseUserSession2> getUsersSessionsTable(Username username, JbstRequestAccessToken requestAccessToken) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(requestAccessToken))
                 .sorted(USERS_SESSIONS)
                 .collect(Collectors.toList());
     }
 
-    default ResponseSuperadminSessionsTable getSessionsTable(Set<JbstJwtAccessToken> activeAccessTokens, RequestAccessToken requestAccessToken) {
+    default JbstResponseSuperadminSessionsTable getSessionsTable(Set<JbstJwtAccessToken> activeAccessTokens, JbstRequestAccessToken requestAccessToken) {
         var sessions = this.findAll();
 
-        List<ResponseUserSession2> activeSessions = new ArrayList<>();
-        List<ResponseUserSession2> inactiveSessions = new ArrayList<>();
+        List<JbstResponseUserSession2> activeSessions = new ArrayList<>();
+        List<JbstResponseUserSession2> inactiveSessions = new ArrayList<>();
 
         sessions.forEach(session -> {
             var session2 = session.responseUserSession2(requestAccessToken);
@@ -77,7 +77,7 @@ public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoD
         activeSessions.sort(ACTIVE_SESSIONS_AS_SUPERADMIN);
         inactiveSessions.sort(INACTIVE_SESSIONS_AS_SUPERADMIN);
 
-        return new ResponseSuperadminSessionsTable(activeSessions, inactiveSessions);
+        return new JbstResponseSuperadminSessionsTable(activeSessions, inactiveSessions);
     }
 
     default List<JbstUserSession> findByUsernameInAsAny(Set<Username> usernames) {
@@ -103,11 +103,11 @@ public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoD
         return this.deleteByIdIn(sessionsIds.stream().map(JbstUserSessionId::value).toList());
     }
 
-    default void deleteByUsernameExceptAccessToken(Username username, RequestAccessToken requestAccessToken) {
+    default void deleteByUsernameExceptAccessToken(Username username, JbstRequestAccessToken requestAccessToken) {
         this.deleteByUsernameExceptAccessToken(username, requestAccessToken.getJwtAccessToken());
     }
 
-    default void deleteExceptAccessToken(RequestAccessToken requestAccessToken) {
+    default void deleteExceptAccessToken(JbstRequestAccessToken requestAccessToken) {
         this.deleteExceptToken(requestAccessToken.getJwtAccessToken());
     }
 

@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.dto.responses.ResponseInvitations;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitations;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.services.JbstInvitationsService;
 import jbst.foundation.validators.JbstInvitationsValidator;
@@ -34,14 +34,14 @@ public class JbstInvitationsResource {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseInvitations findAll() {
+    public JbstResponseInvitations findAll() {
         var owner = this.currentSessionAssistant.getCurrentUsername();
         return this.invitationsService.findByOwner(owner);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void save(@RequestBody @Valid RequestNewInvitationParams request) {
+    public void save(@RequestBody @Valid JbstRequestNewInvitationParams request) {
         this.invitationsValidator.validateCreateNewInvitation(request);
         var owner = this.currentSessionAssistant.getCurrentUsername();
         this.invitationsService.save(owner, request);

@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertNonNullOrThrow;
 
 @UtilityClass
 public class JbstEncryption {

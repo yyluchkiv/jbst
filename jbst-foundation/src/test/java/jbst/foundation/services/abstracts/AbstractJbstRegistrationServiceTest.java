@@ -4,8 +4,8 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -101,7 +101,7 @@ class AbstractJbstRegistrationServiceTest {
     @Test
     void register0Test() {
         // Arrange
-        var requestUserRegistration0 = new RequestUserRegistration0(
+        var requestUserRegistration0 = new JbstRequestUserRegistration0(
                 Email.random(),
                 Username.random(),
                 Password.random(),
@@ -122,7 +122,7 @@ class AbstractJbstRegistrationServiceTest {
     @Test
     void register1Test() {
         // Arrange
-        var requestUserRegistration1 = new RequestUserRegistration1(
+        var requestUserRegistration1 = new JbstRequestUserRegistration1(
                 Username.random(),
                 Password.random(),
                 Password.random(),

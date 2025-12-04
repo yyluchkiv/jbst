@@ -3,7 +3,7 @@ package jbst.foundation.repositories.mongo;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.databases.mongo.MongoDbJbstSettings;
-import jbst.foundation.domain.dto.requests.RequestJbstSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
 import jbst.foundation.repositories.JbstSettingsRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -26,7 +26,7 @@ public interface MongoJbstSettingsRepository extends MongoRepository<MongoDbJbst
 
     default JbstSettings saveAs(
             Username updatedBy,
-            RequestJbstSettings request
+            JbstRequestJbstSettings request
     ) {
         var entity = this.findAll().stream().findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));

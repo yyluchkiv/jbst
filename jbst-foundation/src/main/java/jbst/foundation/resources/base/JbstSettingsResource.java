@@ -6,7 +6,7 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.databases.JbstSettings;
-import jbst.foundation.domain.dto.requests.RequestJbstSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class JbstSettingsResource {
     }
 
     @PostMapping
-    public JbstSettings saveJbstSettings(@RequestBody @Valid RequestJbstSettings request) {
+    public JbstSettings saveJbstSettings(@RequestBody @Valid JbstRequestJbstSettings request) {
         this.settingsService.saveSettings(
                 this.currentSessionAssistant.getCurrentJwtUser().username(),
                 request

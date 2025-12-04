@@ -1,20 +1,20 @@
 package jbst.foundation.repositories;
 
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.ids.JbstTokenId;
 
 import static java.util.Objects.nonNull;
 
 public interface JbstUsersTokensRepository {
     JbstUserToken findByValueAsAnyOrNull(String value);
-    JbstUserToken findByUserTokenValidOrNull(RequestUserToken request);
+    JbstUserToken findByUserTokenValidOrNull(JbstRequestUserToken request);
     void cleanupExpired();
     void cleanupUsed();
     JbstTokenId saveAs(JbstUserToken token);
-    JbstUserToken saveAs(RequestUserToken request);
+    JbstUserToken saveAs(JbstRequestUserToken request);
 
-    default JbstUserToken findOrCreate(RequestUserToken request) {
+    default JbstUserToken findOrCreate(JbstRequestUserToken request) {
         var userToken = this.findByUserTokenValidOrNull(request);
         if (nonNull(userToken)) {
             return userToken;

@@ -4,8 +4,8 @@ import jbst.foundation.configurations.TestConfigurationValidators;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate1;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.JbstUsersValidator;
@@ -44,11 +44,11 @@ class AbstractJbstUsersValidatorTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequestBasicArgs() {
         return Stream.of(
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("simple"), Password.of(randomString())), "Passwords must be same"),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple"), Password.of(randomString())), "Passwords must be same"),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple1"), Password.of(randomString())), "Passwords must be same"),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("NoMatch")), "Passwords must be same"),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("ComPLEx12")), null)
+                Arguments.of(new JbstRequestUserChangePasswordBasic(Password.of("simple"), Password.of(randomString())), "Passwords must be same"),
+                Arguments.of(new JbstRequestUserChangePasswordBasic(Password.of("Simple"), Password.of(randomString())), "Passwords must be same"),
+                Arguments.of(new JbstRequestUserChangePasswordBasic(Password.of("Simple1"), Password.of(randomString())), "Passwords must be same"),
+                Arguments.of(new JbstRequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("NoMatch")), "Passwords must be same"),
+                Arguments.of(new JbstRequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("ComPLEx12")), null)
         );
     }
 
@@ -92,7 +92,7 @@ class AbstractJbstUsersValidatorTest {
         var username = entity(Username.class);
         var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), email, randomString());
+        var requestUserUpdate1 = new JbstRequestUserUpdate1(randomZoneId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
@@ -108,7 +108,7 @@ class AbstractJbstUsersValidatorTest {
         var user= entity(JbstJwtUser.class);
         var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), email, randomString());
+        var requestUserUpdate1 = new JbstRequestUserUpdate1(randomZoneId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(user.username(), requestUserUpdate1));
@@ -124,7 +124,7 @@ class AbstractJbstUsersValidatorTest {
         var username = Username.random();
         var user = JbstJwtUser.hardcoded();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(user.email())).thenReturn(user);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), user.email(), randomString());
+        var requestUserUpdate1 = new JbstRequestUserUpdate1(randomZoneId(), user.email(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
@@ -138,7 +138,7 @@ class AbstractJbstUsersValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateUserChangePasswordRequestBasicArgs")
-    void validateUserChangePasswordRequestBasic(RequestUserChangePasswordBasic request, String exceptionMessage) {
+    void validateUserChangePasswordRequestBasic(JbstRequestUserChangePasswordBasic request, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserChangePasswordRequestBasic(request));
 

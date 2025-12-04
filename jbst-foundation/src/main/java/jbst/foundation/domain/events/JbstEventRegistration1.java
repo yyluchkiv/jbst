@@ -1,8 +1,8 @@
 package jbst.foundation.domain.events;
 
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
 
 public record JbstEventRegistration1(
-        RequestUserRegistration1 requestUserRegistration1
+        JbstRequestUserRegistration1 requestUserRegistration1
 ) {
 }

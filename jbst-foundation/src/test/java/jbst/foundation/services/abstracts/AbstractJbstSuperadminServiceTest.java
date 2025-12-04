@@ -2,9 +2,9 @@ package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUsers;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
@@ -168,7 +168,7 @@ class AbstractJbstSuperadminServiceTest {
     @Test
     void findInvitationsUnusedTest() {
         // Arrange
-        var invitations = list345(ResponseInvitation.class);
+        var invitations = list345(JbstResponseInvitation.class);
         when(this.invitationsRepository.findUnused()).thenReturn(invitations);
 
         // Act
@@ -208,9 +208,9 @@ class AbstractJbstSuperadminServiceTest {
     @Test
     void getServerSessionsTest() {
         // Arrange
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
         var activeSessions = Set.of(JbstJwtAccessToken.random(), JbstJwtAccessToken.random());
-        var serverSessionsTable = entity(ResponseSuperadminSessionsTable.class);
+        var serverSessionsTable = entity(JbstResponseSuperadminSessionsTable.class);
 
         when(this.sessionRegistry.getActiveSessionsAccessTokens()).thenReturn(activeSessions);
         when(this.usersSessionsRepository.getSessionsTable(activeSessions, requestAccessToken)).thenReturn(serverSessionsTable);

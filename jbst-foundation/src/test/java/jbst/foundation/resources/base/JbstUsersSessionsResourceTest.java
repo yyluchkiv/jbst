@@ -5,9 +5,9 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseUserSession2;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSession2;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.security.JbstCurrentClientUser;
 import jbst.foundation.services.JbstUsersSessionsService;
@@ -70,8 +70,8 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     @Test
     void getSessionsTableTest() throws Exception {
         // Arrange
-        var userSessionsTables = ResponseUserSessionsTable.of(list345(ResponseUserSession2.class));
-        var requestAccessToken = RequestAccessToken.random();
+        var userSessionsTables = JbstResponseUserSessionsTable.of(list345(JbstResponseUserSession2.class));
+        var requestAccessToken = JbstRequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(requestAccessToken)).thenReturn(userSessionsTables);
 
@@ -160,7 +160,7 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
-        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(RequestAccessToken.hardcoded());
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(JbstRequestAccessToken.hardcoded());
 
         // Act
         this.mvc.perform(delete("/sessions"))
@@ -169,6 +169,6 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.usersSessionsService).deleteAllExceptCurrent(Username.hardcoded(), RequestAccessToken.hardcoded());
+        verify(this.usersSessionsService).deleteAllExceptCurrent(Username.hardcoded(), JbstRequestAccessToken.hardcoded());
     }
 }

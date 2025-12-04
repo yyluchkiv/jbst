@@ -3,7 +3,7 @@ package jbst.foundation.repositories.postgres;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbJbstSettings;
-import jbst.foundation.domain.dto.requests.RequestJbstSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
 import jbst.foundation.repositories.JbstSettingsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -28,7 +28,7 @@ public interface PostgresJbstSettingsRepository extends JpaRepository<PostgresDb
 
     default JbstSettings saveAs(
             Username updatedBy,
-            RequestJbstSettings request
+            JbstRequestJbstSettings request
     ) {
         var entity = this.findAll().stream().findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));

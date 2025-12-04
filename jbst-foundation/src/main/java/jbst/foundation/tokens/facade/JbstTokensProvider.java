@@ -2,8 +2,8 @@ package jbst.foundation.tokens.facade;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
@@ -61,7 +61,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
+    public final JbstRequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestAccessToken(httpRequest);
         } else {
@@ -69,7 +69,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
+    public final JbstRequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestAccessTokenOnWebsocketHandshake(httpRequest);
         } else {
@@ -77,7 +77,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws JbstExceptions.RefreshTokenNotFound {
+    public final JbstRequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws JbstExceptions.RefreshTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestRefreshToken(httpRequest);
         } else {
@@ -85,7 +85,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstExceptions.RefreshTokenNotFound {
+    public final JbstRequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws JbstExceptions.RefreshTokenNotFound {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestRefreshTokenOnWebsocketHandshake(httpRequest);
         } else {

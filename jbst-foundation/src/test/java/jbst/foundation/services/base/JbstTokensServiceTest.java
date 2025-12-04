@@ -4,9 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
+import jbst.foundation.domain.dto.responses.JbstResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
@@ -128,8 +128,8 @@ class JbstTokensServiceTest {
     @Test
     void getJwtUserByAccessTokenOrThrowTest() throws JbstExceptions.AccessTokenInvalid, JbstExceptions.RefreshTokenInvalid, JbstExceptions.AccessTokenExpired, JbstExceptions.AccessTokenDbNotFound {
         // Arrange
-        var requestAccessToken = RequestAccessToken.random();
-        var requestRefreshToken = RequestRefreshToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
+        var requestRefreshToken = JbstRequestRefreshToken.random();
         var accessToken = requestAccessToken.getJwtAccessToken();
         var refreshToken = requestRefreshToken.getJwtRefreshToken();
         var accessTokenValidatedClaims = JbstJwtTokenValidatedClaims.valid(accessToken, validClaims());
@@ -156,7 +156,7 @@ class JbstTokensServiceTest {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
-        var oldRequestRefreshToken = new RequestRefreshToken(randomString());
+        var oldRequestRefreshToken = new JbstRequestRefreshToken(randomString());
         var oldRefreshToken = oldRequestRefreshToken.getJwtRefreshToken();
         var validatedClaims = JbstJwtTokenValidatedClaims.valid(oldRefreshToken, validClaims());
         var user = entity(JbstJwtUser.class);
@@ -184,6 +184,6 @@ class JbstTokensServiceTest {
         verify(this.tokensProvider).createResponseAccessToken(newAccessToken, response);
         verify(this.tokensProvider).createResponseRefreshToken(newRefreshToken, response);
         verify(this.sessionRegistry).renew(user.username(), oldRefreshToken, newAccessToken, newRefreshToken);
-        assertThat(responseUserSession1).isEqualTo(new ResponseRefreshTokens(newAccessToken, newRefreshToken));
+        assertThat(responseUserSession1).isEqualTo(new JbstResponseRefreshTokens(newAccessToken, newRefreshToken));
     }
 }

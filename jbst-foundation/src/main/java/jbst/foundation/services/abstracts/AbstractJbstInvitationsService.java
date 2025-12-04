@@ -1,9 +1,9 @@
 package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.dto.responses.ResponseInvitations;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitations;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
@@ -20,17 +20,17 @@ public abstract class AbstractJbstInvitationsService implements JbstInvitationsS
     protected final JbstProperties jbstProperties;
 
     @Override
-    public ResponseInvitations findByOwner(Username owner) {
+    public JbstResponseInvitations findByOwner(Username owner) {
         var invitations = this.invitationsRepository.findResponseCodesByOwner(owner);
-        invitations.sort(ResponseInvitation.INVITATION);
-        return new ResponseInvitations(
+        invitations.sort(JbstResponseInvitation.INVITATION);
+        return new JbstResponseInvitations(
                 this.jbstProperties.getSecurity().getAuthorities().getAvailableAuthorities(),
                 invitations
         );
     }
 
     @Override
-    public void save(Username owner, RequestNewInvitationParams request) {
+    public void save(Username owner, JbstRequestNewInvitationParams request) {
         this.invitationsRepository.saveAs(owner, request);
     }
 

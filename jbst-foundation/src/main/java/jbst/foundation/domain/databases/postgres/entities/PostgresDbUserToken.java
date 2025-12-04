@@ -7,7 +7,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.JbstPostgresConverters;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable0;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.JbstTokenId;
 import lombok.*;
@@ -66,7 +66,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
         this.used = used;
     }
 
-    public PostgresDbUserToken(RequestUserToken request) {
+    public PostgresDbUserToken(JbstRequestUserToken request) {
         this(
                 request.email(),
                 randomStringLetterOrNumbersOnly(255),

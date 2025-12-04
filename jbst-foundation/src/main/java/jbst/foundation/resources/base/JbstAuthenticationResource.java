@@ -6,9 +6,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.foundation.domain.dto.requests.RequestMagicLinkToken;
-import jbst.foundation.domain.dto.requests.RequestUserLogin;
-import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
+import jbst.foundation.domain.dto.requests.JbstRequestMagicLinkToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserLogin;
+import jbst.foundation.domain.dto.responses.JbstResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.security.JbstCurrentClientUser;
 import jbst.foundation.extension.JbstExtensionService;
@@ -40,7 +40,7 @@ public class JbstAuthenticationResource {
     @PostMapping("/login/standard")
     @ResponseStatus(HttpStatus.OK)
     public JbstCurrentClientUser authenticateAsStandard(
-            @RequestBody @Valid RequestUserLogin request,
+            @RequestBody @Valid JbstRequestUserLogin request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws JbstExceptions.Login {
@@ -53,7 +53,7 @@ public class JbstAuthenticationResource {
     @PostMapping("/login/magiclink")
     @ResponseStatus(HttpStatus.OK)
     public JbstCurrentClientUser authenticateAsMagicLink(
-            @RequestBody @Valid RequestMagicLinkToken request,
+            @RequestBody @Valid JbstRequestMagicLinkToken request,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse
     ) throws JbstExceptions.Login {
@@ -72,7 +72,7 @@ public class JbstAuthenticationResource {
 
     @PostMapping("/refreshToken")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Unauthorized {
+    public JbstResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Unauthorized {
         return this.authenticationService.refreshToken(httpRequest, httpResponse);
     }
 }

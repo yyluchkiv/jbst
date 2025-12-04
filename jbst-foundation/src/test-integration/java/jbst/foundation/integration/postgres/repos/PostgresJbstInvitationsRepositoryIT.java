@@ -4,7 +4,7 @@ import jbst.foundation.configurations.JbstConfigurationPostgresRepositories;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbInvitation;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.integration.postgres.configs.PostgresBeforeAllCallback;
@@ -140,7 +140,7 @@ class PostgresJbstInvitationsRepositoryIT extends TestsJbstConfigurationPostgres
     void saveIntegrationTests() {
         // Arrange
         var saved = this.invitationsRepository.saveAll(PostgresDbInvitation.dummies1());
-        var request = RequestNewInvitationParams.random();
+        var request = JbstRequestNewInvitationParams.random();
 
         // Act-Assert-0
         assertThat(this.invitationsRepository.count()).isEqualTo(6);

@@ -4,8 +4,8 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserEmail;
-import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.JbstRequestUserEmail;
+import jbst.foundation.domain.dto.requests.JbstRequestUserPasswordReset;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.random.JbstRandom;
@@ -154,7 +154,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     @Test
     void executeResetPasswordTest() throws Exception {
         // Arrange
-        var request = RequestUserEmail.hardcoded();
+        var request = JbstRequestUserEmail.hardcoded();
         var user = JbstJwtUser.hardcoded(request.email(), JbstUserEmailDetails.confirmed());
         when(this.usersService.findByEmail(request.email())).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsPasswordReset();
@@ -178,7 +178,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     @Test
     void resetPasswordTest() throws Exception {
         // Arrange
-        var request = RequestUserPasswordReset.hardcoded();
+        var request = JbstRequestUserPasswordReset.hardcoded();
 
         // Act
         this.mvc.perform(

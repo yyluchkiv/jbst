@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
 import static jbst.foundation.domain.random.JbstRandom.getEnumMapMappedRandomBoolean;

@@ -2,8 +2,8 @@ package jbst.foundation.services.abstracts;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
@@ -77,12 +77,12 @@ class AbstractJbstInvitationsServiceTest {
         // Arrange
         var owner = Username.random();
 
-        var invitation1 = ResponseInvitation.random(owner, Username.of("user2"));
-        var invitation2 = ResponseInvitation.random(owner, Username.of("user1"));
-        var invitation3 = ResponseInvitation.random(owner);
-        var invitation4 = ResponseInvitation.random(owner);
-        var invitation5 = ResponseInvitation.random(owner, Username.of("user5"));
-        var invitation6 = ResponseInvitation.random(owner);
+        var invitation1 = JbstResponseInvitation.random(owner, Username.of("user2"));
+        var invitation2 = JbstResponseInvitation.random(owner, Username.of("user1"));
+        var invitation3 = JbstResponseInvitation.random(owner);
+        var invitation4 = JbstResponseInvitation.random(owner);
+        var invitation5 = JbstResponseInvitation.random(owner, Username.of("user5"));
+        var invitation6 = JbstResponseInvitation.random(owner);
 
         var invitations = asList(invitation1, invitation2, invitation3, invitation4, invitation5, invitation6);
         when(this.invitationsRepository.findResponseCodesByOwner(owner)).thenReturn(invitations);
@@ -94,7 +94,7 @@ class AbstractJbstInvitationsServiceTest {
         verify(this.invitationsRepository).findResponseCodesByOwner(owner);
         assertThat(responseInvitations.invitations().stream()
                         .limit(3)
-                        .map(ResponseInvitation::value)
+                        .map(JbstResponseInvitation::value)
                         .collect(Collectors.toSet())
         ).containsExactlyInAnyOrder(
                 invitation3.value(),
@@ -103,7 +103,7 @@ class AbstractJbstInvitationsServiceTest {
         );
         assertThat(responseInvitations.invitations().stream()
                 .skip(3)
-                .map(ResponseInvitation::value)
+                .map(JbstResponseInvitation::value)
                 .collect(Collectors.toSet())
         ).containsExactlyInAnyOrder(
                 invitation1.value(),
@@ -117,7 +117,7 @@ class AbstractJbstInvitationsServiceTest {
     void saveTest() {
         // Arrange
         var username = Username.random();
-        var request = RequestNewInvitationParams.random();
+        var request = JbstRequestNewInvitationParams.random();
 
         // Act
         this.componentUnderTest.save(username, request);

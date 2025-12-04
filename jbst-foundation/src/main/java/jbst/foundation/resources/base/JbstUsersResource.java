@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
+import jbst.foundation.domain.dto.requests.JbstRequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate2;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.validators.JbstUsersValidator;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class JbstUsersResource {
 
     @PostMapping("/update1")
     @ResponseStatus(HttpStatus.OK)
-    public void update1(@RequestBody @Valid RequestUserUpdate1 request) {
+    public void update1(@RequestBody @Valid JbstRequestUserUpdate1 request) {
         request = request.createReworkedUkraineZoneId();
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersValidator.validateUserUpdateRequest1(user.username(), request);
@@ -43,7 +43,7 @@ public class JbstUsersResource {
 
     @PostMapping("/update2")
     @ResponseStatus(HttpStatus.OK)
-    public void update1(@RequestBody @Valid RequestUserUpdate2 request) {
+    public void update1(@RequestBody @Valid JbstRequestUserUpdate2 request) {
         request = request.createReworkedUkraineZoneId();
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.usersService.updateUser2(user, request);
@@ -51,7 +51,7 @@ public class JbstUsersResource {
 
     @PostMapping("/changePasswordRequired")
     @ResponseStatus(HttpStatus.OK)
-    public void changePasswordRequired(@RequestBody @Valid RequestUserChangePasswordBasic request) {
+    public void changePasswordRequired(@RequestBody @Valid JbstRequestUserChangePasswordBasic request) {
         this.baseUsersValidator.validateUserChangePasswordRequestBasic(request);
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.usersService.changePasswordRequired(user, request);
@@ -59,7 +59,7 @@ public class JbstUsersResource {
 
     @PostMapping("/changePassword1")
     @ResponseStatus(HttpStatus.OK)
-    public void changePassword(@RequestBody @Valid RequestUserChangePasswordBasic request) {
+    public void changePassword(@RequestBody @Valid JbstRequestUserChangePasswordBasic request) {
         this.baseUsersValidator.validateUserChangePasswordRequestBasic(request);
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.usersService.changePassword1(user, request);

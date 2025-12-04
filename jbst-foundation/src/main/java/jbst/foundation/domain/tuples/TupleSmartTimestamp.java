@@ -1,6 +1,6 @@
 package jbst.foundation.domain.tuples;
 
-import jbst.foundation.domain.asserts.Asserts;
+import jbst.foundation.domain.asserts.JbstAsserts;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,8 +24,8 @@ public class TupleSmartTimestamp {
             ZoneId zoneId,
             String dateTimePattern
     ) {
-        Asserts.assertNonNullOrThrow(zoneId, invalidAttribute("TupleSmartTimestamp.zoneId"));
-        Asserts.assertNonNullOrThrow(dateTimePattern, invalidAttribute("TupleSmartTimestamp.dateTimePattern"));
+        JbstAsserts.assertNonNullOrThrow(zoneId, invalidAttribute("TupleSmartTimestamp.zoneId"));
+        JbstAsserts.assertNonNullOrThrow(dateTimePattern, invalidAttribute("TupleSmartTimestamp.dateTimePattern"));
         this.timestamp = timestamp;
         this.formatted = convert1(timestamp, zoneId).format(ofPattern(dateTimePattern));
     }

@@ -4,7 +4,7 @@ import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.databases.mongo.MongoDbUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.integration.mongo.configs.MongoBeforeAllCallback;
 import jbst.foundation.integration.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
@@ -74,15 +74,15 @@ class MongoJbstUsersTokensRepositoryIT extends TestsJbstConfigurationMongoReposi
         assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(expiredToken)).isNotNull();
         assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAnyOrNull(usedToken)).isNotNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.random(), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.random(), PASSWORD_RESET))).isNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username1@gmail.com"), EMAIL_CONFIRMATION))).isNotNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username1@gmail.com"), PASSWORD_RESET))).isNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username2@gmail.com"), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username2@gmail.com"), PASSWORD_RESET))).isNotNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username3@gmail.com"), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username5@gmail.com"), EMAIL_CONFIRMATION))).isNull();
-        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new RequestUserToken(Email.of("username6@gmail.com"),EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.random(), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.random(), PASSWORD_RESET))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.of("username1@gmail.com"), EMAIL_CONFIRMATION))).isNotNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.of("username1@gmail.com"), PASSWORD_RESET))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.of("username2@gmail.com"), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.of("username2@gmail.com"), PASSWORD_RESET))).isNotNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.of("username3@gmail.com"), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.of("username5@gmail.com"), EMAIL_CONFIRMATION))).isNull();
+        assertThat(this.usersTokensRepository.findByUserTokenValidOrNull(new JbstRequestUserToken(Email.of("username6@gmail.com"),EMAIL_CONFIRMATION))).isNull();
     }
 
     @Test
@@ -132,7 +132,7 @@ class MongoJbstUsersTokensRepositoryIT extends TestsJbstConfigurationMongoReposi
         assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
 
         // Act-Assert-3
-        var requestUserEmailToken = RequestUserToken.hardcoded();
+        var requestUserEmailToken = JbstRequestUserToken.hardcoded();
         var userEmailToken = this.usersTokensRepository.saveAs(requestUserEmailToken);
         assertThat(this.usersTokensRepository.count()).isEqualTo(8);
         assertThat(this.usersTokensRepository.findById(userEmailToken.id().value())).isNotEmpty();

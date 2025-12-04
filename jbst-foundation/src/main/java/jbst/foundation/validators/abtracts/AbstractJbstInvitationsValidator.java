@@ -1,7 +1,7 @@
 package jbst.foundation.validators.abtracts;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.repositories.JbstInvitationsRepository;
@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
 import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
 import static jbst.foundation.domain.strings.JbstMessages.entityAccessDenied;
 import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
@@ -24,7 +24,7 @@ public abstract class AbstractJbstInvitationsValidator implements JbstInvitation
     protected final JbstProperties jbstProperties;
 
     @Override
-    public void validateCreateNewInvitation(RequestNewInvitationParams request) {
+    public void validateCreateNewInvitation(JbstRequestNewInvitationParams request) {
         var availableAuthorities = this.jbstProperties.getSecurity().getAuthorities().getAvailableAuthorities();
         assertTrueOrThrow(
                 availableAuthorities.containsAll(request.authorities()),
