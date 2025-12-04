@@ -3,6 +3,11 @@ package jbst.foundation.domain.numbers;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
@@ -13,6 +18,8 @@ import static jbst.foundation.domain.numbers.RoundingUtility.scale;
 
 @UtilityClass
 public class JbstNumbers {
+    public static final int DEFAULT_SCALE = 3;
+    public static final ConcurrentHashMap<Integer, DecimalFormat> DFS_BY_SCALE = new ConcurrentHashMap<>();
 
     // =================================================================================================================
     // LONG(s)
@@ -54,5 +61,26 @@ public class JbstNumbers {
         }
         // N >= 1K
         return scale(divide(number, THOUSAND), 2).stripTrailingZeros() + "K";
+    }
+
+    // =================================================================================================================
+    // FORMAT(s)
+    // =================================================================================================================
+    public static String format(BigDecimal value) {
+        return format(value, DEFAULT_SCALE);
+    }
+
+    public static String format(BigDecimal value, int scale) {
+        var symbols = DecimalFormatSymbols.getInstance();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat decimalFormat;
+        if (DFS_BY_SCALE.containsKey(scale)) {
+            decimalFormat = DFS_BY_SCALE.get(scale);
+        } else {
+            var pattern = "###,###." + IntStream.range(0, scale).mapToObj(i -> "#").collect(Collectors.joining());
+            decimalFormat = new DecimalFormat(pattern, symbols);
+            DFS_BY_SCALE.put(scale, decimalFormat);
+        }
+        return decimalFormat.format(value).replace(".", ",");
     }
 }

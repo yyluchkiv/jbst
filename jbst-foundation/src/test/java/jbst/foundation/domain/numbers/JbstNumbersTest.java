@@ -7,8 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.numbers.JbstNumbers.getReadableNumber;
-import static jbst.foundation.domain.numbers.JbstNumbers.toIntExactOrZeroOnOverflow;
+import static jbst.foundation.domain.numbers.JbstNumbers.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstNumbersTest {
@@ -97,5 +96,34 @@ class JbstNumbersTest {
     void getReadableNumberTest(BigDecimal number, String expectedReadableNumber) {
         // Act + Assert
         assertThat(getReadableNumber(number)).isEqualTo(expectedReadableNumber);
+    }
+
+    // =================================================================================================================
+    // FORMAT(s)
+    // =================================================================================================================
+    private static Stream<Arguments> formatArgs() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 3, "5 941 306,042"),
+                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 4, "5 941 306,0421"),
+                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 5, "5 941 306,04213")
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("formatArgs")
+    void formatTest(BigDecimal value, int scale, String expected) {
+        String actual;
+        if (scale == DEFAULT_SCALE) {
+            // Act
+            actual = format(value);
+
+            // Assert
+            var actual2 = format(value, scale);
+            assertThat(actual2).isEqualTo(expected);
+        } else {
+            // Act
+            actual = format(value, scale);
+        }
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 }

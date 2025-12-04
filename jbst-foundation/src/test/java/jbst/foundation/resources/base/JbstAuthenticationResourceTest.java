@@ -19,10 +19,10 @@ import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.JbstEventAuthenticationLoginFailure;
 import jbst.foundation.domain.exceptions.JbstExceptionResponse;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtTokenValidatedClaims;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.security.JbstCurrentClientUser;
 import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.JbstSession;
@@ -151,10 +151,10 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         ));
         var username = request.username();
         var password = request.password();
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.jwtUserDetailsService.loadUserByUsername(username.value())).thenReturn(user);
-        var accessToken = JwtAccessToken.random();
-        var refreshToken = JwtRefreshToken.random();
+        var accessToken = JbstJwtAccessToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.hardcoded());
@@ -194,13 +194,13 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var request = RequestMagicLinkToken.hardcoded();
         var userToken = JbstUserToken.hardcodedMagicLink();
         var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(userToken, request.zoneId());
-        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
+        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var credentials = new UsernamePasswordCredentials(user.username(), user.password());
         when(this.authenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
         when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
         when(this.jwtUserDetailsService.loadUserByUsername(user.username().value())).thenReturn(user);
-        var accessToken = JwtAccessToken.random();
-        var refreshToken = JwtRefreshToken.random();
+        var accessToken = JbstJwtAccessToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.hardcoded());
@@ -291,7 +291,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var requestAccessToken = RequestAccessToken.random();
         var accessToken = requestAccessToken.getJwtAccessToken();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        when(this.securityUtils.validate(accessToken)).thenReturn(JwtTokenValidatedClaims.invalid(accessToken));
+        when(this.securityUtils.validate(accessToken)).thenReturn(JbstJwtTokenValidatedClaims.invalid(accessToken));
 
         // Act
         this.mvc.perform(post("/authentication/logout"))
@@ -312,7 +312,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.value());
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
+        var validatedClaims = JbstJwtTokenValidatedClaims.valid(accessToken, claims);
         when(this.securityUtils.validate(requestAccessToken.getJwtAccessToken())).thenReturn(validatedClaims);
 
         // Act
@@ -342,7 +342,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.value());
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
+        var validatedClaims = JbstJwtTokenValidatedClaims.valid(accessToken, claims);
         when(this.securityUtils.validate(accessToken)).thenReturn(validatedClaims);
 
         // Act

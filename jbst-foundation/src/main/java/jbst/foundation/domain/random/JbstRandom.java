@@ -31,7 +31,7 @@ import static java.time.ZoneId.systemDefault;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 import static jbst.foundation.domain.time.JbstTime.convert;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 @UtilityClass
 public class JbstRandom {

@@ -1,7 +1,6 @@
 package jbst.foundation.domain.factories.unique;
 
 import jbst.foundation.domain.concurrent.JbstSleep;
-import jbst.foundation.domain.time.TimestampUtility;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CurrentTimeUniqueValueFactoryTest {
@@ -39,8 +39,8 @@ class CurrentTimeUniqueValueFactoryTest {
         assertThat(value)
                 .isNotNull()
                 .isBetween(
-                        (int) (TimestampUtility.getCurrentTimestamp() / 1000) - window,
-                        (int) (TimestampUtility.getCurrentTimestamp() / 1000) + window
+                        (int) (getCurrentTimestamp() / 1000) - window,
+                        (int) (getCurrentTimestamp() / 1000) + window
                 );
     }
 

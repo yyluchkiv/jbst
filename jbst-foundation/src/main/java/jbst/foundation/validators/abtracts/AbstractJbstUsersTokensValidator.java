@@ -3,7 +3,7 @@ package jbst.foundation.validators.abtracts;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.validators.JbstUsersTokensValidator;
 import lombok.AccessLevel;
@@ -20,7 +20,7 @@ public abstract class AbstractJbstUsersTokensValidator implements JbstUsersToken
     protected final JbstUsersTokensRepository usersTokensRepository;
 
     @Override
-    public void validateExecuteConfirmEmail(JwtUser user) {
+    public void validateExecuteConfirmEmail(JbstJwtUser user) {
         assertFalseOrThrow(user.emailDetails().isEnabled(), "User email already confirmed");
         assertNonNullOrThrow(user.email(), "User email is missing");
     }
@@ -31,7 +31,7 @@ public abstract class AbstractJbstUsersTokensValidator implements JbstUsersToken
     }
 
     @Override
-    public void validateExecuteResetPassword(JwtUser user) throws JbstExceptions.PasswordReset {
+    public void validateExecuteResetPassword(JbstJwtUser user) throws JbstExceptions.PasswordReset {
         if (isNull(user)) {
             throw JbstExceptions.PasswordReset.userNotFound();
         }

@@ -5,8 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.tokens.providers.JbstTokenCookiesProvider;
 import jbst.foundation.tokens.providers.JbstTokenHeadersProvider;
@@ -37,7 +37,7 @@ public class JbstTokensProvider {
         this.jbstProperties = jbstProperties;
     }
 
-    public final void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
+    public final void createResponseAccessToken(JbstJwtAccessToken jwtAccessToken, HttpServletResponse response) {
         if (this.isCookiesProviderEnabled()) {
             this.tokensCookiesProvider.createResponseAccessToken(jwtAccessToken, response);
         } else {
@@ -45,7 +45,7 @@ public class JbstTokensProvider {
         }
     }
 
-    public final void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
+    public final void createResponseRefreshToken(JbstJwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
         if (this.isCookiesProviderEnabled()) {
             this.tokensCookiesProvider.createResponseRefreshToken(jwtRefreshToken, response);
         } else {

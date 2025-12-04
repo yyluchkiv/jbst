@@ -5,7 +5,7 @@ import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import org.springframework.scheduling.annotation.Async;
 
@@ -17,7 +17,7 @@ public interface JbstSuperadminService {
     // =================================================================================================================
     JbstSystemResetServerStatus getResetServerStatus();
     @Async
-    void resetServerBy(JwtUser user);
+    void resetServerBy(JbstJwtUser user);
 
     // =================================================================================================================
     // Invitations

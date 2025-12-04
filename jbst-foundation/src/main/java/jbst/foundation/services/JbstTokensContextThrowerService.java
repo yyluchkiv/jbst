@@ -2,19 +2,19 @@ package jbst.foundation.services;
 
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtTokenValidatedClaims;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.tuples.Tuple2;
 
 public interface JbstTokensContextThrowerService {
-    JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws JbstExceptions.AccessTokenInvalid;
-    JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws JbstExceptions.RefreshTokenInvalid;
+    JbstJwtTokenValidatedClaims verifyValidityOrThrow(JbstJwtAccessToken accessToken) throws JbstExceptions.AccessTokenInvalid;
+    JbstJwtTokenValidatedClaims verifyValidityOrThrow(JbstJwtRefreshToken refreshToken) throws JbstExceptions.RefreshTokenInvalid;
 
-    void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.AccessTokenExpired;
-    void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.RefreshTokenExpired;
+    void verifyAccessTokenExpirationOrThrow(JbstJwtTokenValidatedClaims validatedClaims) throws JbstExceptions.AccessTokenExpired;
+    void verifyRefreshTokenExpirationOrThrow(JbstJwtTokenValidatedClaims validatedClaims) throws JbstExceptions.RefreshTokenExpired;
 
-    void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.AccessTokenDbNotFound;
-    Tuple2<JwtUser, JbstUserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws JbstExceptions.RefreshTokenDbNotFound;
+    void verifyDbPresenceOrThrow(JbstJwtAccessToken accessToken, JbstJwtTokenValidatedClaims validatedClaims) throws JbstExceptions.AccessTokenDbNotFound;
+    Tuple2<JbstJwtUser, JbstUserSession> verifyDbPresenceOrThrow(JbstJwtRefreshToken refreshToken, JbstJwtTokenValidatedClaims validatedClaims) throws JbstExceptions.RefreshTokenDbNotFound;
 }

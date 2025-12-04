@@ -1,7 +1,7 @@
 package jbst.server.iam.postgres.services;
 
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class PostgresUsersService implements UsersService {
     private final PostgresJbstUsersRepository postgresUsersRepository;
 
     @Override
-    public List<JwtUser> findAll() {
+    public List<JbstJwtUser> findAll() {
         return this.postgresUsersRepository.findAll().stream().map(PostgresDbUser::asJwtUser).toList();
     }
 }

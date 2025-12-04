@@ -10,8 +10,8 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import lombok.*;
 
 import java.util.List;
@@ -39,11 +39,11 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     @Convert(converter = JbstPostgresConverters.JwtAccessTokenConverter.class)
     @Column(name = "access_token", length = 4096, nullable = false)
-    private JwtAccessToken accessToken;
+    private JbstJwtAccessToken accessToken;
 
     @Convert(converter = JbstPostgresConverters.JwtRefreshTokenConverter.class)
     @Column(name = "refresh_token", length = 4096, nullable = false)
-    private JwtRefreshToken refreshToken;
+    private JbstJwtRefreshToken refreshToken;
 
     @Convert(converter = JbstPostgresConverters.UserRequestMetadataConverter.class)
     @Column(length = 65535, nullable = false)

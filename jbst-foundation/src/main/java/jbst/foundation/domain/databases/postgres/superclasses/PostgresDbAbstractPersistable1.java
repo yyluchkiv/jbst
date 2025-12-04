@@ -5,7 +5,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 @Getter
 @Setter

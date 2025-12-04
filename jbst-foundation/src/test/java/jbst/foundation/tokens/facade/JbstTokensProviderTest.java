@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.enums.JbstJwtTokenStorageMethod;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyJwtToken;
 import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
@@ -117,7 +117,7 @@ class JbstTokensProviderTest {
     void createResponseAccessToken(JbstJwtTokenStorageMethod method) {
         // Arrange
         this.mockProperties(method);
-        var jwtAccessToken = new JwtAccessToken(randomString());
+        var jwtAccessToken = new JbstJwtAccessToken(randomString());
         var response = mock(HttpServletResponse.class);
 
         // Act
@@ -137,7 +137,7 @@ class JbstTokensProviderTest {
     void createResponseRefreshToken(JbstJwtTokenStorageMethod method) {
         // Arrange
         this.mockProperties(method);
-        var refreshAccessToken = JwtRefreshToken.random();
+        var refreshAccessToken = JbstJwtRefreshToken.random();
         var response = mock(HttpServletResponse.class);
 
         // Act

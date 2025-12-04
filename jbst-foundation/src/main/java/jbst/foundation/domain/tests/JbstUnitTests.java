@@ -16,7 +16,9 @@ import lombok.*;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,7 +34,95 @@ import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 @UtilityClass
 public class JbstUnitTests {
 
+    @SuppressWarnings("unused")
     public static class Classes {
+        @NoArgsConstructor
+        @Getter
+        @Setter
+        public static class ClassDefaultConstructor {
+            private String string;
+        }
+
+        @Getter
+        public static class ClassDefaultConstructorNoSetters {
+            private String string;
+        }
+
+        @Getter
+        public static class ClassDefaultConstructorUnexpectedMethods {
+            private String string;
+            public void badNamingMethod1(Integer wrongParameterType1, Long wrongParameterType2) {}
+            public void badNamingMethod2() {}
+        }
+
+        @NoArgsConstructor
+        @Getter
+        public static class ClassDefaultConstructorUnexpectedSetter {
+            private String string;
+            public void setException1(Integer wrongParameterType1, Long wrongParameterType2) {}
+            public void setException2() {}
+        }
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Getter
+        @Setter
+        @EqualsAndHashCode
+        @ToString
+        public static class ClassNestChild1 {
+            private Integer nest1Value1;
+            private BigDecimal nest1Value2;
+            private JbstUnitTests.Enums.EnumUnderTests nest1Value3;
+        }
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Getter
+        @Setter
+        @EqualsAndHashCode
+        @ToString
+        public static class ClassNestChild2 {
+            private Short nest2Value1;
+            private LocalDate nest2Value2;
+        }
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Getter
+        @Setter
+        @EqualsAndHashCode
+        @ToString
+        public static class ClassNestParent {
+            private String value1;
+            private Long value2;
+            private int value3;
+            private BigDecimal value4;
+            private ClassNestChild1 child1;
+            private ClassNestChild2 child2;
+        }
+
+        @AllArgsConstructor
+        @Getter
+        @Setter
+        public static class ClassNoDefaultConstructor {
+            private String string;
+        }
+
+        @Getter
+        @Setter
+        public static class ClassPrivateConstructor {
+            private ClassPrivateConstructor() {}
+            private String string;
+        }
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Getter
+        @Setter
+        public static class ClassWithAllArgsAndDefaultConstructors {
+            private String stringValue;
+        }
+
         public record TestObject(ObjectId id, String name) implements JbstPlurable<ObjectId> {
 
             public static TestObject random() {

@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import static java.time.Instant.ofEpochMilli;
 import static java.time.ZoneOffset.UTC;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 @UtilityClass
 public class JbstTime {
@@ -42,14 +41,29 @@ public class JbstTime {
     // =================================================================================================================
     // BLOCK: "timestamp"(s)
     // =================================================================================================================
+    public static long getCurrentTimestamp() {
+        return System.currentTimeMillis();
+    }
+
     public static long getTimestamp(LocalDateTime localDateTime, ZoneId zoneId) {
         return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
     }
 
-    public static long getStartOfMonth(long timestamp) {
+    public static long toUnixTime(long timestamp) {
+        return timestamp / 1000;
+    }
+
+    public static long getStartOfMonthTimestamp(long timestamp) {
         return getTimestamp(
                 convert4(Date.from(ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
                 UTC
+        );
+    }
+
+    public static long getStartOfMonthTimestamp(long timestamp, ZoneId zoneId) {
+        return getTimestamp(
+                convert4(Date.from(ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
+                zoneId
         );
     }
 

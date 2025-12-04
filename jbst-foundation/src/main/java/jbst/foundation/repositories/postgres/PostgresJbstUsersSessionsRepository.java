@@ -7,8 +7,8 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -43,13 +43,13 @@ public interface PostgresJbstUsersSessionsRepository extends JpaRepository<Postg
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<JbstUserSession> isPresent(JwtAccessToken accessToken) {
+    default TuplePresence<JbstUserSession> isPresent(JbstJwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<JbstUserSession> isPresent(JwtRefreshToken refreshToken) {
+    default TuplePresence<JbstUserSession> isPresent(JbstJwtRefreshToken refreshToken) {
         return this.findByRefreshToken(refreshToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
@@ -62,7 +62,7 @@ public interface PostgresJbstUsersSessionsRepository extends JpaRepository<Postg
                 .collect(Collectors.toList());
     }
 
-    default ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, RequestAccessToken requestAccessToken) {
+    default ResponseSuperadminSessionsTable getSessionsTable(Set<JbstJwtAccessToken> activeAccessTokens, RequestAccessToken requestAccessToken) {
         var sessions = this.findAll();
 
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
@@ -128,8 +128,8 @@ public interface PostgresJbstUsersSessionsRepository extends JpaRepository<Postg
     // Spring Data
     // ================================================================================================================
     Optional<PostgresDbUserSession> findByIdAndUsername(String sessionId, Username username);
-    Optional<PostgresDbUserSession> findByAccessToken(JwtAccessToken accessToken);
-    Optional<PostgresDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
+    Optional<PostgresDbUserSession> findByAccessToken(JbstJwtAccessToken accessToken);
+    Optional<PostgresDbUserSession> findByRefreshToken(JbstJwtRefreshToken refreshToken);
     List<PostgresDbUserSession> findByUsername(Username username);
     List<PostgresDbUserSession> findByUsernameIn(Set<Username> usernames);
 
@@ -157,10 +157,10 @@ public interface PostgresJbstUsersSessionsRepository extends JpaRepository<Postg
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.username = :username AND s.accessToken != :accessToken")
-    void deleteByUsernameExceptAccessToken(@Param("username") Username username, @Param("accessToken") JwtAccessToken accessToken);
+    void deleteByUsernameExceptAccessToken(@Param("username") Username username, @Param("accessToken") JbstJwtAccessToken accessToken);
 
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.accessToken != :accessToken")
-    void deleteExceptToken(@Param("accessToken") JwtAccessToken accessToken);
+    void deleteExceptToken(@Param("accessToken") JbstJwtAccessToken accessToken);
 }

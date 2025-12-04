@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.concurrent.JbstRateLimiter;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class JbstRateLimitsService {
         this.magicLinkRL.acquire(email);
     }
 
-    public final void acquireEmailConfirmationOrThrow(JwtUser user) throws JbstExceptions.TooManyRequests {
+    public final void acquireEmailConfirmationOrThrow(JbstJwtUser user) throws JbstExceptions.TooManyRequests {
         this.emailConfirmationRL.acquire(user.username());
     }
 }

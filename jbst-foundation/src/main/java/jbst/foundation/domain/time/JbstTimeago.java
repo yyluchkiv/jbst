@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.util.concurrent.TimeUnit.*;
 import static jbst.foundation.domain.strings.JbstStrings.isNullOrBlank;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 // Lombok
 @Getter
@@ -59,7 +59,7 @@ public class JbstTimeago {
 
     @SuppressWarnings("unused")
     public static JbstTimeago justNow() {
-        return new JbstTimeago(TimestampUtility.getCurrentTimestamp());
+        return new JbstTimeago(getCurrentTimestamp());
     }
 
     @Override

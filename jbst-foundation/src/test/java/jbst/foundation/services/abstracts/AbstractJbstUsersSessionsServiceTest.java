@@ -17,9 +17,9 @@ import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
@@ -55,7 +55,7 @@ import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.strings.JbstMessages.entityAccessDenied;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -184,22 +184,22 @@ class AbstractJbstUsersSessionsServiceTest {
 
     private static Stream<Arguments> saveUserSessionTest() {
         return Stream.of(
-                Arguments.of(JwtUser.hardcoded(JbstUserCreationOption.STANDARD), JbstAccountAccessMethod.USERNAME_PASSWORD),
-                Arguments.of(JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK), JbstAccountAccessMethod.MAGICLINK)
+                Arguments.of(JbstJwtUser.hardcoded(JbstUserCreationOption.STANDARD), JbstAccountAccessMethod.USERNAME_PASSWORD),
+                Arguments.of(JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK), JbstAccountAccessMethod.MAGICLINK)
         );
     }
 
     @ParameterizedTest
     @MethodSource("saveUserSessionTest")
-    void saveUserSessionNotNullTest(JwtUser user, JbstAccountAccessMethod accountAccessMethod) {
+    void saveUserSessionNotNullTest(JbstJwtUser user, JbstAccountAccessMethod accountAccessMethod) {
         // Arrange
         var ipAddr = randomIPv4();
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
         var username = user.username();
-        var accessToken = JwtAccessToken.random();
-        var refreshToken = JwtRefreshToken.random();
+        var accessToken = JbstJwtAccessToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         var userSession = JbstUserSession.random(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(userSession);
@@ -241,10 +241,10 @@ class AbstractJbstUsersSessionsServiceTest {
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         var username = user.username();
-        var accessToken = JwtAccessToken.random();
-        var refreshToken = JwtRefreshToken.random();
+        var accessToken = JbstJwtAccessToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
         var userSession = JbstUserSession.random(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(userSession);
@@ -284,10 +284,10 @@ class AbstractJbstUsersSessionsServiceTest {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         var username = user.username();
-        var newAccessToken = JwtAccessToken.random();
-        var newRefreshToken = JwtRefreshToken.random();
+        var newAccessToken = JbstJwtAccessToken.random();
+        var newRefreshToken = JbstJwtRefreshToken.random();
         var oldSession = randomPersistedSession();
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(randomPersistedSession());
 
@@ -365,8 +365,8 @@ class AbstractJbstUsersSessionsServiceTest {
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 username,
-                JwtAccessToken.random(),
-                JwtRefreshToken.random(),
+                JbstJwtAccessToken.random(),
+                JbstJwtRefreshToken.random(),
                 JbstUserRequestMetadata.random(),
                 false,
                 false
@@ -401,18 +401,18 @@ class AbstractJbstUsersSessionsServiceTest {
         var usernames = new HashSet<>(Set.of(Username.hardcoded()));
         var sessionInvalidUserSession = JbstUserSession.random(
                 Username.random(),
-                JwtAccessToken.random(),
-                new JwtRefreshToken("<invalid>")
+                JbstJwtAccessToken.random(),
+                new JbstJwtRefreshToken("<invalid>")
         );
         var sessionExpiredUserSession = JbstUserSession.random(
                 Username.random(),
-                JwtAccessToken.random(),
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.KUkURlpCWsh0VJFC4xrCOxr_dXNusRRjdjFb88Wb4Rw")
+                JbstJwtAccessToken.random(),
+                new JbstJwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.KUkURlpCWsh0VJFC4xrCOxr_dXNusRRjdjFb88Wb4Rw")
         );
         var sessionAliveUserSession = JbstUserSession.random(
                 Username.random(),
-                JwtAccessToken.random(),
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9.06Ep_ri727dkMEVA3zptDb8tmFn1VJ1FIhjjbE-mxpw")
+                JbstJwtAccessToken.random(),
+                new JbstJwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9.06Ep_ri727dkMEVA3zptDb8tmFn1VJ1FIhjjbE-mxpw")
         );
         var usersSessions = List.of(sessionInvalidUserSession, sessionExpiredUserSession, sessionAliveUserSession);
         when(this.usersSessionsRepository.findByUsernameInAsAny(usernames)).thenReturn(usersSessions);
@@ -470,8 +470,8 @@ class AbstractJbstUsersSessionsServiceTest {
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 Username.random(),
-                JwtAccessToken.random(),
-                JwtRefreshToken.random(),
+                JbstJwtAccessToken.random(),
+                JbstJwtRefreshToken.random(),
                 JbstUserRequestMetadata.random(),
                 metadataRenewCron,
                 metadataRenewManually

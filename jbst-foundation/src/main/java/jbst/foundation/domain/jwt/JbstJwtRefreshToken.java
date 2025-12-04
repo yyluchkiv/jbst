@@ -11,28 +11,29 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
-public record JwtAccessToken(@NotNull String value) {
+public record JbstJwtRefreshToken(@NotNull String value) {
 
     @JsonCreator
-    public static JwtAccessToken of(String value) {
-        return new JwtAccessToken(value);
+    public static JbstJwtRefreshToken of(String value) {
+        return new JbstJwtRefreshToken(value);
     }
 
-    public static JwtAccessToken hardcoded() {
-        return of("D9F4AF096BEE11C93D84");
+    public static JbstJwtRefreshToken hardcoded() {
+        return of("B7C50972C873270CD7B2");
     }
 
-    public static JwtAccessToken random() {
-        return new JwtAccessToken(randomString());
+    public static JbstJwtRefreshToken random() {
+        return new JbstJwtRefreshToken(randomString());
     }
 
     @SuppressWarnings("unused")
-    public static JwtAccessToken unknown() {
+    public static JbstJwtRefreshToken unknown() {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 
-    public static Set<JwtAccessToken> accessTokens(String... tokens) {
-        return Stream.of(tokens).map(JwtAccessToken::new).collect(Collectors.toSet());
+    @SuppressWarnings("unused")
+    public static Set<JbstJwtRefreshToken> refreshTokens(String... tokens) {
+        return Stream.of(tokens).map(JbstJwtRefreshToken::new).collect(Collectors.toSet());
     }
 
     @SuppressWarnings("NullableProblems")

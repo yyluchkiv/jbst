@@ -1,6 +1,6 @@
 package jbst.foundation.domain.random;
 
-import jbst.foundation.domain.tests.classes.*;
+import jbst.foundation.domain.tests.JbstUnitTests.Classes.*;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 

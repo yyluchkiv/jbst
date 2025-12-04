@@ -16,9 +16,7 @@
 — Prefixes: domain.dto (?)
 — Prefixes: domain.events (websockets)
 — Prefixes: domain.hardware
-— Prefixes: domain.jwt
 — Prefixes: domain.notifications
-— Prefixes: domain.triggers (?)
+— Prefixes: domain.numbers
 — Prefixes: incidents (?)
-— Prefixes: tests (?)
 

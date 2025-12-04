@@ -1,7 +1,7 @@
 package jbst.foundation.domain.dto.requests;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
@@ -19,7 +19,7 @@ public record RequestAccessToken(String value) {
         return new RequestAccessToken(JbstConstants.Strings.UNKNOWN);
     }
 
-    public JwtAccessToken getJwtAccessToken() {
-        return new JwtAccessToken(this.value);
+    public JbstJwtAccessToken getJwtAccessToken() {
+        return new JbstJwtAccessToken(this.value);
     }
 }

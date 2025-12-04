@@ -1,7 +1,7 @@
 package jbst.foundation.tasks;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.AllArgsConstructor;
@@ -17,9 +17,9 @@ public abstract class JbstAbstractTaskOnResetServer {
     protected final JbstIncidentsPublisher incidentsPublisher;
 
     public abstract JbstSystemResetServerStatus getStatus();
-    public abstract void resetOnServer(JwtUser initiator);
+    public abstract void resetOnServer(JbstJwtUser initiator);
 
-    public final void reset(JwtUser initiator) {
+    public final void reset(JbstJwtUser initiator) {
         if (this.getStatus().getState().isResetting()) {
             return;
         }

@@ -27,7 +27,6 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.time.JbstTime.*;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstTimeTest {
@@ -136,6 +135,18 @@ class JbstTimeTest {
     // =================================================================================================================
     // BLOCK: "timestamp"(s)
     // =================================================================================================================
+    @RepeatedTest(100)
+    void getCurrentTimestampTest() {
+        // Arrange
+        var expected = System.currentTimeMillis();
+
+        // Act
+        var actual = getCurrentTimestamp();
+
+        // Assert
+        assertThat(actual).isGreaterThanOrEqualTo(expected);
+    }
+
     private static Stream<Arguments> getTimestampArgs() {
         return Stream.of(
                 Arguments.of(_25_11_2021, UKRAINE, 1640438177000L),
@@ -153,24 +164,53 @@ class JbstTimeTest {
         assertThat(getTimestamp(localDateTime, zoneId)).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> getStartOfMonthArgs() {
+    private static Stream<Arguments> toUnixTimeArgs() {
+        return Stream.of(
+                Arguments.of(1670526412123L, 1670526412L),
+                Arguments.of(1670526412456L, 1670526412L),
+                Arguments.of(1670526412789L, 1670526412L),
+                Arguments.of(1670526412999L, 1670526412L),
+                Arguments.of(1670526413001L, 1670526413L)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("toUnixTimeArgs")
+    void toUnixTimeTest(long timestamp, long expected) {
+        // Act + Assert
+        assertThat(toUnixTime(timestamp)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getStartOfMonthTimestampUTCArgs() {
         return Stream.of(
                 Arguments.of(1705474657000L, 1704067200000L),
                 Arguments.of(1704059999000L, 1701388800000L)
         );
     }
-    @MethodSource("getStartOfMonthArgs")
+    @MethodSource("getStartOfMonthTimestampUTCArgs")
     @ParameterizedTest
-    void getStartOfMonthTest(long timestamp, long expected) {
+    void getStartOfMonthTimestampUTC(long timestamp, long expected) {
         // Act + Assert
-        assertThat(JbstTime.getStartOfMonth(timestamp)).isEqualTo(expected);
+        assertThat(getStartOfMonthTimestamp(timestamp)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getStartOfMonthTimestampArgs() {
+        return Stream.of(
+                Arguments.of(1705474657000L, 1704060000000L),
+                Arguments.of(1704059999000L, 1701381600000L)
+        );
+    }
+    @MethodSource("getStartOfMonthTimestampArgs")
+    @ParameterizedTest
+    void getStartOfMonthTimestampUkraine(long timestamp, long expected) {
+        // Act + Assert
+        assertThat(getStartOfMonthTimestamp(timestamp, UKRAINE)).isEqualTo(expected);
     }
 
     @RepeatedTest(100)
     void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
+        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE);
         var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
 
         // Assert
@@ -183,7 +223,7 @@ class JbstTimeTest {
     void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
+        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE);
         var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
 
         // Assert
@@ -196,7 +236,7 @@ class JbstTimeTest {
     void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
-        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE, 3);
+        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE, 3);
         var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND, 3);
 
         // Assert
@@ -205,7 +245,7 @@ class JbstTimeTest {
                 .isLessThan(timestampUkraine);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
         var localDateTimeUTC = convert1(timestampUTC, UTC);
-        var localDateTimeUkraine = convert1(timestampUkraine, JbstConstants.ZoneIds.UKRAINE);
+        var localDateTimeUkraine = convert1(timestampUkraine, UKRAINE);
         var localDateTimePoland = convert1(timestampPoland, JbstConstants.ZoneIds.POLAND);
         assertThat(localDateTimeUTC.toString()).endsWith("00:00");
         assertThat(localDateTimeUkraine.toString()).endsWith("00:00");

@@ -12,8 +12,8 @@ import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.domain.sessions.JbstSessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple2;
@@ -50,7 +50,7 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.reflection.JbstReflections.setPrivateFieldOfSuperClass;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -124,8 +124,8 @@ class AbstractJbstSessionRegistryTest {
         );
     }
 
-    private JbstSession authenticateHardcoded(JwtAccessToken accessToken) throws NoSuchFieldException, IllegalAccessException {
-        var session = new JbstSession(Username.hardcoded(), accessToken, JwtRefreshToken.random());
+    private JbstSession authenticateHardcoded(JbstJwtAccessToken accessToken) throws NoSuchFieldException, IllegalAccessException {
+        var session = new JbstSession(Username.hardcoded(), accessToken, JbstJwtRefreshToken.random());
         var sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session);
         setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", sessions, 1);
@@ -135,11 +135,11 @@ class AbstractJbstSessionRegistryTest {
     @Test
     void integrationTest() {
         // Arrange
-        var session1 = new JbstSession(Username.of("username1"), JwtAccessToken.random(), JwtRefreshToken.random());
-        var session2 = new JbstSession(Username.of("username2"), JwtAccessToken.random(), JwtRefreshToken.random());
-        var session3 = new JbstSession(Username.of("username3"), JwtAccessToken.random(), JwtRefreshToken.random());
-        var session4 = new JbstSession(Username.of("username4"), JwtAccessToken.random(), JwtRefreshToken.random());
-        var rndSession = new JbstSession(Username.random(), JwtAccessToken.random(), JwtRefreshToken.random());
+        var session1 = new JbstSession(Username.of("username1"), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        var session2 = new JbstSession(Username.of("username2"), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        var session3 = new JbstSession(Username.of("username3"), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        var session4 = new JbstSession(Username.of("username4"), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        var rndSession = new JbstSession(Username.random(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
         var dbUserSession1 = entity(JbstUserSession.class);
         var dbUserSession2 = entity(JbstUserSession.class);
         var dbUserSession3 = entity(JbstUserSession.class);
@@ -212,11 +212,11 @@ class AbstractJbstSessionRegistryTest {
     @Test
     void registerTest() {
         // Act
-        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), JwtAccessToken.random(), JwtRefreshToken.random()));
-        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), JwtAccessToken.random(), JwtRefreshToken.random()));
+        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random()));
+        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random()));
 
-        var duplicatedAccessToken = JwtAccessToken.random();
-        var duplicatedRefreshToken = JwtRefreshToken.random();
+        var duplicatedAccessToken = JbstJwtAccessToken.random();
+        var duplicatedRefreshToken = JbstJwtRefreshToken.random();
         this.componentUnderTest.register(new JbstSession(Username.hardcoded(), duplicatedAccessToken, duplicatedRefreshToken));
         this.componentUnderTest.register(new JbstSession(Username.hardcoded(), duplicatedAccessToken, duplicatedRefreshToken));
         this.componentUnderTest.register(new JbstSession(Username.hardcoded(), duplicatedAccessToken, duplicatedRefreshToken));
@@ -230,15 +230,15 @@ class AbstractJbstSessionRegistryTest {
     @Test
     void renewTest() {
         // Act
-        this.componentUnderTest.renew(Username.hardcoded(), JwtRefreshToken.random(), JwtAccessToken.random(), JwtRefreshToken.random());
-        this.componentUnderTest.renew(Username.hardcoded(), JwtRefreshToken.random(), JwtAccessToken.random(), JwtRefreshToken.random());
+        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
 
-        var duplicatedAccessToken = JwtAccessToken.random();
-        var duplicatedRefreshToken = JwtRefreshToken.random();
-        this.componentUnderTest.renew(Username.hardcoded(), JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(Username.hardcoded(), JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(Username.hardcoded(), JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(Username.hardcoded(), JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        var duplicatedAccessToken = JbstJwtAccessToken.random();
+        var duplicatedRefreshToken = JbstJwtRefreshToken.random();
+        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
 
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
@@ -249,7 +249,7 @@ class AbstractJbstSessionRegistryTest {
     @Test
     void logoutDbUserSessionPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
-        var accessToken = JwtAccessToken.random();
+        var accessToken = JbstJwtAccessToken.random();
         this.authenticateHardcoded(accessToken);
         var dbUserSession = entity(JbstUserSession.class);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(dbUserSession));
@@ -273,7 +273,7 @@ class AbstractJbstSessionRegistryTest {
     @Test
     void logoutDbUserSessionNotPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
-        var accessToken = JwtAccessToken.random();
+        var accessToken = JbstJwtAccessToken.random();
         var session = this.authenticateHardcoded(accessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(absent());
 
@@ -296,9 +296,9 @@ class AbstractJbstSessionRegistryTest {
         var username1 = Username.of("username1");
         var username2 = Username.of("username2");
         var username3 = Username.of("username3");
-        var session1 = new JbstSession(username1, JwtAccessToken.random(), JwtRefreshToken.random());
-        var session2 = new JbstSession(username2, JwtAccessToken.random(), JwtRefreshToken.random());
-        var session3 = new JbstSession(username3, JwtAccessToken.random(), JwtRefreshToken.random());
+        var session1 = new JbstSession(username1, JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        var session2 = new JbstSession(username2, JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        var session3 = new JbstSession(username3, JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
         Set<JbstSession> sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session1);
         sessions.add(session2);
@@ -309,7 +309,7 @@ class AbstractJbstSessionRegistryTest {
         var dbUserSession3 = entity(JbstUserSession.class);
         var sessionsExpiredTable = new JbstSessionsExpiredTable(
                 List.of(
-                        new Tuple3<>(Username.hardcoded(), JwtRefreshToken.random(), JbstUserRequestMetadata.random()),
+                        new Tuple3<>(Username.hardcoded(), JbstJwtRefreshToken.random(), JbstUserRequestMetadata.random()),
                         new Tuple3<>(username3, session3.refreshToken(), dbUserSession3.metadata())
                 ),
                 Set.of(dbUserSession1.id(), dbUserSession2.id())
@@ -345,7 +345,7 @@ class AbstractJbstSessionRegistryTest {
         var requestAccessToken = RequestAccessToken.random();
 
         Function<Tuple2<JbstUserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
-                tuple2 -> ResponseUserSession2.of(entity(JbstUserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JwtAccessToken(tuple2.b()), tuple2.a());
+                tuple2 -> ResponseUserSession2.of(entity(JbstUserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JbstJwtAccessToken(tuple2.b()), tuple2.a());
 
         var validSession = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), JbstUserAgentDetails.valid()), requestAccessToken.value()));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), JbstUserAgentDetails.valid()), randomString()));

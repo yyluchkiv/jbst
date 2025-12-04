@@ -2,7 +2,7 @@ package jbst.foundation.tasks;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.websockets.JbstWebsocketsService;
@@ -38,7 +38,7 @@ public class NoopTaskOnResetServer extends JbstAbstractTaskOnResetServer {
     }
 
     @Override
-    public void resetOnServer(JwtUser initiator) {
+    public void resetOnServer(JbstJwtUser initiator) {
         var username = initiator.username();
         var usernames = Set.of(username);
         try {

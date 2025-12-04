@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityJWT;
 import jbst.foundation.domain.random.JbstRandom;
@@ -53,7 +53,7 @@ class JbstTokenHeadersProviderTest {
     @Test
     void createResponseAccessToken() {
         // Arrange
-        var jwtAccessToken = JwtAccessToken.random();
+        var jwtAccessToken = JbstJwtAccessToken.random();
         var response = mock(HttpServletResponse.class);
 
         // Act
@@ -67,7 +67,7 @@ class JbstTokenHeadersProviderTest {
     @Test
     void createResponseRefreshToken() {
         // Arrange
-        var refreshAccessToken = JwtRefreshToken.random();
+        var refreshAccessToken = JbstJwtRefreshToken.random();
         var response = mock(HttpServletResponse.class);
 
         // Act

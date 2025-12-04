@@ -3,9 +3,9 @@ package jbst.foundation.assistants.utils;
 import io.jsonwebtoken.Jwts;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtTokenCreationParams;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtTokenCreationParams;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyTimeAmount;
 import jbst.foundation.tests.enums.TestAuthority;
@@ -147,7 +147,7 @@ class JbstSecurityUtilsTest {
         // Arrange
         var username = Username.of("multiuser43");
         var authorities = getSimpleGrantedAuthorities("admin", "user");
-        var creationParams = new JwtTokenCreationParams(username, authorities, randomZoneId());
+        var creationParams = new JbstJwtTokenCreationParams(username, authorities, randomZoneId());
 
         // Act
         var accessToken = this.componentUnderTest.createJwtAccessToken(creationParams);
@@ -169,7 +169,7 @@ class JbstSecurityUtilsTest {
         // Arrange
         var expectedUsername = Username.of("multiuser43");
         var authorities = getSimpleGrantedAuthorities("admin", "user");
-        var creationParams = new JwtTokenCreationParams(expectedUsername, authorities, randomZoneId());
+        var creationParams = new JbstJwtTokenCreationParams(expectedUsername, authorities, randomZoneId());
 
         // Act
         var refreshToken = this.componentUnderTest.createJwtRefreshToken(creationParams);
@@ -190,13 +190,13 @@ class JbstSecurityUtilsTest {
     @MethodSource("createJwtTokenTest")
     void createJwtTokenTest(JbstPropertyTimeAmount timeAmount) {
         // Arrange
-        var creationParams = new JwtTokenCreationParams(Username.hardcoded(), getSimpleGrantedAuthorities("user"), randomZoneId());
+        var creationParams = new JbstJwtTokenCreationParams(Username.hardcoded(), getSimpleGrantedAuthorities("user"), randomZoneId());
 
         // Act
         var jwtToken = this.componentUnderTest.createJwtToken(creationParams, timeAmount);
 
         // Assert
-        var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
+        var validatedClaims = this.componentUnderTest.validate(new JbstJwtAccessToken(jwtToken));
         assertThat(validatedClaims.username()).isEqualTo(Username.hardcoded());
         var zoneId = nonNull(creationParams.zoneId()) ? creationParams.zoneId() : ZoneId.systemDefault();
         var expiration = convert(
@@ -210,8 +210,8 @@ class JbstSecurityUtilsTest {
     @MethodSource("validateTest")
     void validateTest(String jwtToken, boolean expected) {
         // Act
-        var accessValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
-        var refreshValidatedClaims = this.componentUnderTest.validate(new JwtRefreshToken(jwtToken));
+        var accessValidatedClaims = this.componentUnderTest.validate(new JbstJwtAccessToken(jwtToken));
+        var refreshValidatedClaims = this.componentUnderTest.validate(new JbstJwtRefreshToken(jwtToken));
 
         // Assert
         assertThat(accessValidatedClaims.valid()).isEqualTo(expected);
@@ -231,7 +231,7 @@ class JbstSecurityUtilsTest {
     @MethodSource("isExpiredTest")
     void isExpiredTest(String jwtToken, boolean expected) {
         // Act
-        var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
+        var validatedClaims = this.componentUnderTest.validate(new JbstJwtAccessToken(jwtToken));
 
         // Assert
         assertThat(validatedClaims.isExpired()).isEqualTo(expected);
@@ -241,7 +241,7 @@ class JbstSecurityUtilsTest {
     @MethodSource("getUsernameByClaimsTest")
     void getUsernameByClaimsTest(String jwtToken, Username expectedUsername) {
         // Act
-        var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
+        var validatedClaims = this.componentUnderTest.validate(new JbstJwtAccessToken(jwtToken));
 
         // Assert
         assertThat(validatedClaims.username()).isEqualTo(expectedUsername);
@@ -256,7 +256,7 @@ class JbstSecurityUtilsTest {
         sdf.setTimeZone(getTimeZone(UKRAINE));
 
         // Act
-        var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
+        var validatedClaims = this.componentUnderTest.validate(new JbstJwtAccessToken(jwtToken));
 
         // Assert
         assertThat(validatedClaims.issuedAt()).isEqualTo(sdf.parse(expectedIssuedAt));

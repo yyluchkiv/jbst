@@ -1,7 +1,7 @@
 package jbst.foundation.domain.dto.requests;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
@@ -19,7 +19,7 @@ public record RequestRefreshToken(String value) {
         return new RequestRefreshToken(JbstConstants.Strings.UNKNOWN);
     }
 
-    public JwtRefreshToken getJwtRefreshToken() {
-        return new JwtRefreshToken(this.value);
+    public JbstJwtRefreshToken getJwtRefreshToken() {
+        return new JbstJwtRefreshToken(this.value);
     }
 }

@@ -5,7 +5,7 @@ import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.validators.JbstUsersValidator;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     void update1() throws Exception {
         // Arrange
         var request = RequestUserUpdate1.hardcoded();
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -76,7 +76,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     void update2() throws Exception {
         // Arrange
         var request = RequestUserUpdate2.hardcoded();
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -96,7 +96,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     void changePasswordRequired() throws Exception {
         // Arrange
         var request = RequestUserChangePasswordBasic.hardcoded();
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -117,7 +117,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     void changePassword1() throws Exception {
         // Arrange
         var request = RequestUserChangePasswordBasic.hardcoded();
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act

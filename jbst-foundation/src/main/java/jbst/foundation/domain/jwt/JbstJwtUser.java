@@ -21,7 +21,7 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.*;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
 
-public record JwtUser(
+public record JbstJwtUser(
         JbstUserId id,
         JbstUserCreationOption creationOption,
         Username username,
@@ -56,8 +56,8 @@ public record JwtUser(
         return this.enabled;
     }
 
-    public static JwtUser hardcoded(JbstUserCreationOption userCreationOption) {
-        return new JwtUser(
+    public static JbstJwtUser hardcoded(JbstUserCreationOption userCreationOption) {
+        return new JbstJwtUser(
                 JbstUserId.hardcoded(),
                 userCreationOption,
                 Username.hardcoded(),
@@ -73,14 +73,14 @@ public record JwtUser(
         );
     }
 
-    public static JwtUser hardcoded() {
+    public static JbstJwtUser hardcoded() {
         return hardcoded(
                 getSimpleGrantedAuthorities("user")
         );
     }
 
-    public static JwtUser hardcoded(Set<SimpleGrantedAuthority> authorities) {
-        return new JwtUser(
+    public static JbstJwtUser hardcoded(Set<SimpleGrantedAuthority> authorities) {
+        return new JbstJwtUser(
                 JbstUserId.hardcoded(),
                 JbstUserCreationOption.hardcoded(),
                 Username.hardcoded(),
@@ -96,11 +96,11 @@ public record JwtUser(
         );
     }
 
-    public static JwtUser hardcoded(
+    public static JbstJwtUser hardcoded(
             Email email,
             JbstUserEmailDetails emailDetails
     ) {
-        return new JwtUser(
+        return new JbstJwtUser(
                 JbstUserId.hardcoded(),
                 JbstUserCreationOption.hardcoded(),
                 Username.hardcoded(),
@@ -116,14 +116,14 @@ public record JwtUser(
         );
     }
 
-    public static JwtUser hardcoded(Map<String, Object> attributes) {
-        var user = JwtUser.hardcoded();
+    public static JbstJwtUser hardcoded(Map<String, Object> attributes) {
+        var user = JbstJwtUser.hardcoded();
         user.attributes().putAll(attributes);
         return user;
     }
 
-    public static JwtUser random() {
-        return new JwtUser(
+    public static JbstJwtUser random() {
+        return new JbstJwtUser(
                 JbstUserId.random(),
                 JbstUserCreationOption.random(),
                 Username.random(),
@@ -146,8 +146,8 @@ public record JwtUser(
         );
     }
 
-    public static JwtUser randomSuperadmin() {
-        return new JwtUser(
+    public static JbstJwtUser randomSuperadmin() {
+        return new JbstJwtUser(
                 JbstUserId.random(),
                 JbstUserCreationOption.random(),
                 Username.random(),
@@ -163,8 +163,8 @@ public record JwtUser(
         );
     }
 
-    public static JwtUser randomSuperadminNotPersisted() {
-        return new JwtUser(
+    public static JbstJwtUser randomSuperadminNotPersisted() {
+        return new JbstJwtUser(
                 null,
                 JbstUserCreationOption.random(),
                 Username.random(),
@@ -197,8 +197,8 @@ public record JwtUser(
     }
 
     @JsonIgnore
-    public JwtTokenCreationParams getJwtTokenCreationParams() {
-        return new JwtTokenCreationParams(
+    public JbstJwtTokenCreationParams getJwtTokenCreationParams() {
+        return new JbstJwtTokenCreationParams(
                 this.username,
                 this.authorities,
                 this.zoneId

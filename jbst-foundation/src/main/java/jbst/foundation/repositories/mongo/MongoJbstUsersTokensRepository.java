@@ -10,7 +10,7 @@ import jbst.foundation.repositories.JbstUsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 public interface MongoJbstUsersTokensRepository extends MongoRepository<MongoDbUserToken, String>, JbstUsersTokensRepository {
 

@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.services.base.JbstTokensService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -133,7 +133,7 @@ class JbstSecurityHandshakeHandlerTest {
         var serverHttpRequest = mock(ServletServerHttpRequest.class);
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();

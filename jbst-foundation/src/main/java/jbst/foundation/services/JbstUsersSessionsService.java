@@ -8,17 +8,17 @@ import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.sessions.JbstSessionsExpiredTable;
 
 import java.util.Set;
 
 public interface JbstUsersSessionsService {
     void assertAccess(Username username, JbstUserSessionId sessionId);
-    void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest);
-    void refresh(JwtUser user, JbstUserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);
+    void save(JbstJwtUser user, JbstJwtAccessToken accessToken, JbstJwtRefreshToken refreshToken, HttpServletRequest httpServletRequest);
+    void refresh(JbstJwtUser user, JbstUserSession oldSession, JbstJwtAccessToken newAccessToken, JbstJwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);
     JbstUserSession saveUserRequestMetadata(JbstEventSessionUserRequestMetadataAdd event);
     void saveUserRequestMetadata(JbstEventSessionUserRequestMetadataRenew event);
     JbstUserSession saveUserRequestMetadata(JbstFunctionSessionUserRequestMetadataSave saveFunction);

@@ -19,7 +19,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 @Slf4j
 @ExtendWith({ SpringExtension.class })

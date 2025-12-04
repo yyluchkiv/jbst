@@ -12,9 +12,9 @@ import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSa
 import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.sessions.JbstSessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
@@ -36,7 +36,7 @@ import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
 import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
 import static jbst.foundation.domain.strings.JbstMessages.entityAccessDenied;
 import static jbst.foundation.domain.time.JbstTime.isPast;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessionsService {
@@ -59,7 +59,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     }
 
     @Override
-    public void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest) {
+    public void save(JbstJwtUser user, JbstJwtAccessToken accessToken, JbstJwtRefreshToken refreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
         var userSessionTP = this.usersSessionsRepository.isPresent(accessToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
@@ -94,7 +94,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     }
 
     @Override
-    public void refresh(JwtUser user, JbstUserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
+    public void refresh(JbstJwtUser user, JbstUserSession oldSession, JbstJwtAccessToken newAccessToken, JbstJwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
         var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
@@ -140,7 +140,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     @Override
     public JbstSessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
         var usersSessions = this.usersSessionsRepository.findByUsernameInAsAny(usernames);
-        List<Tuple3<Username, JwtRefreshToken, JbstUserRequestMetadata>> expiredSessions = new ArrayList<>();
+        List<Tuple3<Username, JbstJwtRefreshToken, JbstUserRequestMetadata>> expiredSessions = new ArrayList<>();
         Set<JbstUserSessionId> expiredOrInvalidSessionIds = new HashSet<>();
 
         usersSessions.forEach(userSession -> {

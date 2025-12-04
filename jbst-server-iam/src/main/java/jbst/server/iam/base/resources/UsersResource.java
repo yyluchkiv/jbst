@@ -1,7 +1,7 @@
 package jbst.server.iam.base.resources;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UsersResource {
     private final UsersService usersService;
 
     @GetMapping("/server")
-    public List<JwtUser> findAll() {
+    public List<JbstJwtUser> findAll() {
         return this.usersService.findAll();
     }
 }
