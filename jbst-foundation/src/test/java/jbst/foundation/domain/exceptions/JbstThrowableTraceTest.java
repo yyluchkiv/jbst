@@ -1,13 +1,13 @@
 package jbst.foundation.domain.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JbstThrowableTraceTest extends AbstractSerializationDeserializationRunner {
+class JbstThrowableTraceTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final JbstThrowableTrace TRACE = new JbstThrowableTrace("java.lang.NullPointerException: jbst at jbst.domain.exceptions.ThrowableTraceTest.main(ThrowableTraceTest.java:20)");
 
     @Override

@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
-import static jbst.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
 
 @Slf4j
 @SpringBootApplication(exclude = {

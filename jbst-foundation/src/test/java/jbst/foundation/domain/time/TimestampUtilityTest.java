@@ -8,9 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static java.time.ZoneOffset.UTC;
-import static java.time.temporal.ChronoUnit.SECONDS;
-import static jbst.foundation.domain.time.JbstTime.convert1;
 import static jbst.foundation.domain.time.TimestampUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -88,38 +85,5 @@ class TimestampUtilityTest {
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
-    }
-
-    @RepeatedTest(10)
-    void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
-        // Act
-        var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
-        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE, 3);
-        var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND, 3);
-
-        // Assert
-        assertThat(timestampUTC)
-                .isLessThan(timestampPoland)
-                .isLessThan(timestampUkraine);
-        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        var localDateTimeUTC = convert1(timestampUTC, UTC);
-        var localDateTimeUkraine = convert1(timestampUkraine, JbstConstants.ZoneIds.UKRAINE);
-        var localDateTimePoland = convert1(timestampPoland, JbstConstants.ZoneIds.POLAND);
-        assertThat(localDateTimeUTC.toString()).endsWith("00:00");
-        assertThat(localDateTimeUkraine.toString()).endsWith("00:00");
-        assertThat(localDateTimePoland.toString()).endsWith("00:00");
-    }
-
-    @RepeatedTest(10)
-    void getPastRangeTest() {
-        // Arrange
-        var currentTimestamp = getCurrentTimestamp();
-
-        // Act
-        var actual = getPastRange(currentTimestamp, new JbstTimeAmount(5, SECONDS));
-
-        // Assert
-        assertThat(actual.to()).isGreaterThan(actual.from());
-        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp - 5000);
     }
 }

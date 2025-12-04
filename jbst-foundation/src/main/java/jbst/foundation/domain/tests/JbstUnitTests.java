@@ -6,24 +6,67 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.enums.EnumValue;
+import jbst.foundation.domain.enums.JbstEnumValue;
 import jbst.foundation.domain.enums.JbstEnumsCreator;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.SneakyThrows;
+import jbst.foundation.domain.plurals.JbstPlurable;
+import jbst.foundation.domain.plurals.JbstPlurals;
+import lombok.*;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.nio.charset.Charset.defaultCharset;
 import static java.nio.file.Files.readAllLines;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.Files.PATH_DELIMITER;
+import static jbst.foundation.domain.random.JbstRandom.randomString;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 
 @UtilityClass
 public class JbstUnitTests {
+
+    public static class Classes {
+        public record TestObject(ObjectId id, String name) implements JbstPlurable<ObjectId> {
+
+            public static TestObject random() {
+                return new TestObject(ObjectId.random(), randomString());
+            }
+
+            @Override
+            public ObjectId getId() {
+                return this.id;
+            }
+        }
+
+        @Getter
+        @EqualsAndHashCode(callSuper = true)
+        @ToString
+        public static class TestObjects extends JbstPlurals<TestObject, ObjectId> {
+
+            public TestObjects(List<TestObject> values) {
+                super(values);
+            }
+
+            public static TestObjects random(int size) {
+                return new TestObjects(
+                        IntStream.range(0, size)
+                                .mapToObj(i -> TestObject.random())
+                                .toList()
+                );
+            }
+
+            public Set<String> getNames() {
+                return this.values.stream().map(TestObject::name).collect(Collectors.toSet());
+            }
+        }
+    }
 
     public static class Enums {
         public enum EnumNoValuesUnderTests {}
@@ -31,15 +74,15 @@ public class JbstUnitTests {
         public enum EnumUnderTests { EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4 }
 
         @AllArgsConstructor
-        public enum EnumValue1 implements EnumValue<String> {
+        public enum JbstEnumValue1 implements JbstEnumValue<String> {
             JBST("jbst"),
             TESTS("Tests");
 
             private final String value;
 
             @JsonCreator
-            public static EnumValue1 findBotType(String value) {
-                return JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow(EnumValue1.class, value);
+            public static JbstEnumValue1 findBotType(String value) {
+                return JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow(JbstEnumValue1.class, value);
             }
 
             @JsonValue
@@ -56,7 +99,7 @@ public class JbstUnitTests {
 
         @AllArgsConstructor
         @Getter
-        public enum EnumValue2 implements EnumValue<String> {
+        public enum JbstEnumValue2 implements JbstEnumValue<String> {
             JBST("jbst"),
             TESTS("Tests"),
             UNKNOWN("Unknown");
@@ -70,7 +113,7 @@ public class JbstUnitTests {
         }
 
         @AllArgsConstructor
-        public enum EnumValue3 implements EnumValue<Integer> {
+        public enum JbstEnumValue3 implements JbstEnumValue<Integer> {
             EMAIL_SENT(0),
             CANCELLED(1),
             AWAITING_APPROVAL(2),
@@ -131,6 +174,14 @@ public class JbstUnitTests {
 
         public static abstract class BaseFolder extends JbstUnitTests.Runners.Base {
             protected abstract String getFolder();
+        }
+
+        public static abstract class BaseFolderFile extends JbstUnitTests.Runners.Base {
+            protected abstract String getFolder();
+            protected abstract String getFileName();
+            protected final String readFile() {
+                return read(this.getFolder(), this.getFileName());
+            }
         }
     }
 }

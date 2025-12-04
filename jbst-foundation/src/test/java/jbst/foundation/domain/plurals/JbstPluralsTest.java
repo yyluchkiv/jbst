@@ -1,8 +1,8 @@
 package jbst.foundation.domain.plurals;
 
 import jbst.foundation.domain.base.ObjectId;
-import jbst.foundation.domain.tests.classes.TestObject;
-import jbst.foundation.domain.tests.classes.TestObjects;
+import jbst.foundation.domain.tests.JbstUnitTests.Classes.TestObject;
+import jbst.foundation.domain.tests.JbstUnitTests.Classes.TestObjects;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

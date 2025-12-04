@@ -4,7 +4,7 @@ import com.diogonunes.jcolor.AnsiFormat;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
-import jbst.foundation.domain.enums.EnumValue;
+import jbst.foundation.domain.enums.JbstEnumValue;
 import lombok.AllArgsConstructor;
 
 import java.util.Comparator;
@@ -15,7 +15,7 @@ import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnor
 
 @SuppressWarnings("unused")
 @AllArgsConstructor
-public enum JbstStateClassic implements EnumValue<String> {
+public enum JbstStateClassic implements JbstEnumValue<String> {
     DISABLED("Disabled", getBoldHexAnsiFormat("#808080")), // Gray
     CREATED("Created", getBoldHexAnsiFormat("#ADD8E6")),  // Light Blue
     STARTING("Starting", getBoldHexAnsiFormat("#FFA500")), // Orange

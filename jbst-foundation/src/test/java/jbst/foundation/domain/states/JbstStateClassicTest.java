@@ -1,7 +1,7 @@
 package jbst.foundation.domain.states;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JbstStateClassicTest extends AbstractSerializationDeserializationRunner {
+class JbstStateClassicTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final JbstStateClassic STATE = JbstStateClassic.ACTIVE;
 
     private static Stream<Arguments> getPermissionsTest() {

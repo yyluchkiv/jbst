@@ -1,4 +1,4 @@
-package jbst.foundation.domain.http.requests;
+package jbst.foundation.domain.base;
 
 import org.jetbrains.annotations.NotNull;
 

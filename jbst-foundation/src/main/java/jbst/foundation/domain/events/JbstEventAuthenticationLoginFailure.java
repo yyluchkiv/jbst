@@ -2,14 +2,14 @@ package jbst.foundation.domain.events;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 
 public record JbstEventAuthenticationLoginFailure(
         Username username,
         Password password,
         IPAddress ipAddress,
-        UserAgentHeader userAgentHeader
+        JbstUserAgentHeader userAgentHeader
 ) {
 
     public static JbstEventAuthenticationLoginFailure hardcoded() {
@@ -17,7 +17,7 @@ public record JbstEventAuthenticationLoginFailure(
                 Username.hardcoded(),
                 Password.hardcoded(),
                 IPAddress.hardcoded(),
-                UserAgentHeader.hardcoded()
+                JbstUserAgentHeader.hardcoded()
         );
     }
 }

@@ -3,9 +3,9 @@ package jbst.foundation.incidents.domain.session;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,9 +18,9 @@ class IncidentSessionRefreshedTest {
         var username = Username.hardcoded();
         var incident = new IncidentSessionRefreshed(
                 username,
-                UserRequestMetadata.processed(
+                JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", JbstConstants.Flags.UK, "London"),
-                        UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
+                        JbstUserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
 

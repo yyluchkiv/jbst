@@ -53,6 +53,31 @@ public class JbstTime {
         );
     }
 
+    public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(int monthAgo) {
+        return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneOffset.UTC, monthAgo);
+    }
+
+    public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId, int monthAgo) {
+        return getTimestamp(
+                LocalDate.now(zoneId).minusMonths(monthAgo).withDayOfMonth(1).atStartOfDay(),
+                zoneId
+        );
+    }
+
+    public static Timestamp getPastTimestamp(Duration duration) {
+        return new Timestamp(getCurrentTimestamp() - duration.toMillis());
+    }
+
+    @SuppressWarnings("unused")
+    public static TupleRange<Long> getPastRange(JbstTimeAmount timeAmount) {
+        return getPastRange(getCurrentTimestamp(), timeAmount);
+    }
+
+    public static TupleRange<Long> getPastRange(long timestamp, JbstTimeAmount timeAmount) {
+        var past = timestamp - timeAmount.toMillis();
+        return new TupleRange<>(past, timestamp);
+    }
+
     public static Timestamp getFutureTimestamp(Duration duration) {
         return new Timestamp(getCurrentTimestamp() + duration.toMillis());
     }

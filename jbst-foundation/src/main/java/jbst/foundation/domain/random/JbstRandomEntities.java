@@ -4,9 +4,9 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
 import java.lang.annotation.Annotation;
@@ -54,8 +54,8 @@ public class JbstRandomEntities {
 
         addConstructorRule(IPAddress.class, clazz -> IPAddress.random());
         addConstructorRule(JbstGeoLocation.class, clazz -> JbstGeoLocation.random());
-        addConstructorRule(UserAgentDetails.class, clazz -> UserAgentDetails.random());
-        addConstructorRule(UserRequestMetadata.class, clazz -> UserRequestMetadata.random());
+        addConstructorRule(JbstUserAgentDetails.class, clazz -> JbstUserAgentDetails.random());
+        addConstructorRule(JbstUserRequestMetadata.class, clazz -> JbstUserRequestMetadata.random());
 
         addClassRule(parameterClass -> {
                     var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !JbstRandom.containsPrimitiveWrapper(parameterClass);
@@ -108,8 +108,8 @@ public class JbstRandomEntities {
 
         addClassRule(IPAddress.class::equals, parameterClass -> IPAddress.random());
         addClassRule(JbstGeoLocation.class::equals, parameterClass -> JbstGeoLocation.random());
-        addClassRule(UserAgentDetails.class::equals, parameterClass -> UserAgentDetails.random());
-        addClassRule(UserRequestMetadata.class::equals, parameterClass -> UserRequestMetadata.random());
+        addClassRule(JbstUserAgentDetails.class::equals, parameterClass -> JbstUserAgentDetails.random());
+        addClassRule(JbstUserRequestMetadata.class::equals, parameterClass -> JbstUserRequestMetadata.random());
     }
 
     public static void addConstructorRule(Class<?> constructorClass, Function<Class<?>, Object> constructionFnc) {

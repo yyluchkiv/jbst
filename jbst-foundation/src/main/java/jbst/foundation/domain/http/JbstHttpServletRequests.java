@@ -1,7 +1,7 @@
 package jbst.foundation.domain.http;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.base.IPAddress;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 

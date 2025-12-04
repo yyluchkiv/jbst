@@ -1,7 +1,7 @@
 package jbst.foundation.startup;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
-import static jbst.foundation.domain.enums.Status.*;
+import static jbst.foundation.domain.enums.JbstStatus.*;
 
 @Slf4j
 @Service
@@ -33,14 +33,14 @@ public class JbstStartupEventListener {
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), PROGRESS_33));
 
         var users = this.jbstProperties.getSecurity().getEssence().getUsersOnInit();
-        LOGGER.info("{} essence 'users-on-init' — {}", PREFIX, Status.of(users.isEnabled()).asANSI());
+        LOGGER.info("{} essence 'users-on-init' — {}", PREFIX, JbstStatus.of(users.isEnabled()).asANSI());
         if (users.isEnabled()) {
             this.settingsService.initUsers();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), PROGRESS_66));
 
         var invitations = this.jbstProperties.getSecurity().getEssence().getInvitationsOnInit();
-        LOGGER.info("{} essence 'invitations-on-init' — {}", PREFIX, Status.of(invitations.isEnabled()).asANSI());
+        LOGGER.info("{} essence 'invitations-on-init' — {}", PREFIX, JbstStatus.of(invitations.isEnabled()).asANSI());
         if (invitations.isEnabled()) {
             this.settingsService.initInvitations();
         }

@@ -1,5 +1,5 @@
 package jbst.foundation.domain.enums;
 
-public interface EnumValue<E> {
+public interface JbstEnumValue<E> {
     E getValue();
 }

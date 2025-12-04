@@ -3,7 +3,7 @@ package jbst.foundation.incidents.domain.authetication;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,7 +38,7 @@ class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
                         username,
                         new Password(password)
                 ),
-                UserRequestMetadata.valid()
+                JbstUserRequestMetadata.valid()
         );
 
         // Assert
@@ -55,7 +55,7 @@ class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
                         Username.hardcoded(),
                         Password.hardcoded()
                 ),
-                UserRequestMetadata.valid()
+                JbstUserRequestMetadata.valid()
         );
 
         // Act

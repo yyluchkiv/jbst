@@ -15,7 +15,7 @@ import static jbst.foundation.domain.random.JbstRandom.randomElement;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class UserAgentDetails {
+public class JbstUserAgentDetails {
     private static final List<String> TEST_DATA_BROWSERS = List.of("Chrome", "Mozilla", "Opera", "Edge");
     private static final List<String> TEST_DATA_PLATFORMS = List.of("macOS", "linux", "windows");
 
@@ -24,7 +24,7 @@ public class UserAgentDetails {
     private final String deviceType;
     private final String exceptionDetails;
 
-    public UserAgentDetails(
+    public JbstUserAgentDetails(
             String browser,
             String platform,
             String deviceType,
@@ -36,10 +36,10 @@ public class UserAgentDetails {
         this.exceptionDetails = exceptionDetails;
     }
 
-    public static UserAgentDetails unknown(
+    public static JbstUserAgentDetails unknown(
             String exceptionDetails
     ) {
-        return new UserAgentDetails(
+        return new JbstUserAgentDetails(
                 JbstConstants.Strings.UNKNOWN,
                 JbstConstants.Strings.UNKNOWN,
                 JbstConstants.Strings.UNKNOWN,
@@ -47,8 +47,8 @@ public class UserAgentDetails {
         );
     }
 
-    public static UserAgentDetails processing() {
-        return new UserAgentDetails(
+    public static JbstUserAgentDetails processing() {
+        return new JbstUserAgentDetails(
                 JbstConstants.Strings.UNDEFINED,
                 JbstConstants.Strings.UNDEFINED,
                 JbstConstants.Strings.UNDEFINED,
@@ -56,12 +56,12 @@ public class UserAgentDetails {
         );
     }
 
-    public static UserAgentDetails processed(
+    public static JbstUserAgentDetails processed(
             String browser,
             String platform,
             String deviceType
     ) {
-        return new UserAgentDetails(
+        return new JbstUserAgentDetails(
                 browser,
                 platform,
                 deviceType,
@@ -69,26 +69,26 @@ public class UserAgentDetails {
         );
     }
 
-    public static UserAgentDetails valid() {
-        return UserAgentDetails.processed(
+    public static JbstUserAgentDetails valid() {
+        return JbstUserAgentDetails.processed(
                 "Chrome",
                 "macOS",
                 "Desktop"
         );
     }
 
-    public static UserAgentDetails invalid() {
-        return UserAgentDetails.unknown(
+    public static JbstUserAgentDetails invalid() {
+        return JbstUserAgentDetails.unknown(
                 "User agent details are unknown"
         );
     }
 
-    public static UserAgentDetails random() {
+    public static JbstUserAgentDetails random() {
         return randomBoolean() ? valid() : invalid();
     }
 
-    public static UserAgentDetails testData() {
-        return UserAgentDetails.processed(
+    public static JbstUserAgentDetails testData() {
+        return JbstUserAgentDetails.processed(
                 randomElement(TEST_DATA_BROWSERS),
                 randomElement(TEST_DATA_PLATFORMS),
                 "Desktop"

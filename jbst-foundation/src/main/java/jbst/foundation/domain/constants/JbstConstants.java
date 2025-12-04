@@ -3,7 +3,7 @@ package jbst.foundation.domain.constants;
 import com.diogonunes.jcolor.AnsiFormat;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -86,22 +86,22 @@ public class JbstConstants {
         // =================================================================================================================
         // Server
         // =================================================================================================================
-        public static String getServerContainer(JbstPropertyApp serverConfigs, Status status) {
+        public static String getServerContainer(JbstPropertyApp serverConfigs, JbstStatus status) {
             return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " container/server: " + status.asANSI();
         }
 
-        public static String getServerStartup(JbstPropertyApp serverConfigs, Status status) {
+        public static String getServerStartup(JbstPropertyApp serverConfigs, JbstStatus status) {
             return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " startup listener: " + status.asANSI();
         }
 
-        public static String getServerProcess(String processId, Status status) {
+        public static String getServerProcess(String processId, JbstStatus status) {
             return "ProcessId: " + BLACK_BOLD_TEXT.format(processId) + ": " + status.asANSI();
         }
 
         // =================================================================================================================
         // User
         // =================================================================================================================
-        public static String getUserProcess(Username username, String processId, Status status) {
+        public static String getUserProcess(Username username, String processId, JbstStatus status) {
             return "User: " + username + ". ProcessId: " + BLACK_BOLD_TEXT.format(processId) + " " + status.asANSI();
         }
     }

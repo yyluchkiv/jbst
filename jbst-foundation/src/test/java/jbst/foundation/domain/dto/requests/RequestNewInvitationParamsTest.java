@@ -1,7 +1,7 @@
 package jbst.foundation.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestNewInvitationParamsTest extends AbstractSerializationDeserializationRunner {
+class RequestNewInvitationParamsTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final RequestNewInvitationParams REQUEST = new RequestNewInvitationParams(
             Set.of("admin", "user")
     );

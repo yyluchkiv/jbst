@@ -2,7 +2,7 @@ package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
-import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.http.cache.JbstCachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class JbstHttpUtils {
     }
 
     @JbstDevelopmentOnly
-    public final void cachePayload(CachedBodyHttpServletRequest cachedRequest) {
+    public final void cachePayload(JbstCachedBodyHttpServletRequest cachedRequest) {
         if (this.isCachedEndpoint(cachedRequest)) {
             cachedRequest.setAttribute(CACHED_PAYLOAD_ATTRIBUTE, cachedRequest.getCachedPayload().value());
         }

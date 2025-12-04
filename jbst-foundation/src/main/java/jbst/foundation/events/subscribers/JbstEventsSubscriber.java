@@ -3,7 +3,7 @@ package jbst.foundation.events.subscribers;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
@@ -149,7 +149,7 @@ public class JbstEventsSubscriber {
     // =================================================================================================================
     private void processSessionUserRequestMetadataAddEmails(
             JbstEventSessionUserRequestMetadataAdd event,
-            UserRequestMetadata metadata
+            JbstUserRequestMetadata metadata
     ) {
         if (isNull(event.email())) {
             return;
@@ -166,7 +166,7 @@ public class JbstEventsSubscriber {
 
     private void processSessionUserRequestMetadataAddIncidents(
             JbstEventSessionUserRequestMetadataAdd event,
-            UserRequestMetadata metadata
+            JbstUserRequestMetadata metadata
     ) {
         if (event.isUsernamePassword()) {
             this.incidentsPublisher.publishAuthenticationLogin(

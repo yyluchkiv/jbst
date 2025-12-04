@@ -1,14 +1,14 @@
 package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ServerNameTest extends AbstractSerializationDeserializationRunner {
+class ServerNameTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final ServerName SERVER_NAME = ServerName.hardcoded();
 
     @Override

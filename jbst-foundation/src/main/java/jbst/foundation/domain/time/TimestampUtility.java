@@ -1,15 +1,15 @@
 package jbst.foundation.domain.time;
 
 import jbst.foundation.domain.annotations.JbstDeletionScheduled;
-import jbst.foundation.domain.base.Timestamp;
-import jbst.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
-import static jbst.foundation.domain.time.JbstTime.convert4;
-import static jbst.foundation.domain.time.JbstTime.getTimestamp;
+import static jbst.foundation.domain.time.JbstTime.*;
 
 @JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass
@@ -46,30 +46,5 @@ public class TimestampUtility {
 
     public static long getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId) {
         return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(zoneId, 1);
-    }
-
-    public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(int monthAgo) {
-        return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneOffset.UTC, monthAgo);
-    }
-
-    public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId, int monthAgo) {
-        return getTimestamp(
-                LocalDate.now(zoneId).minusMonths(monthAgo).withDayOfMonth(1).atStartOfDay(),
-                zoneId
-        );
-    }
-
-    public static Timestamp getPastTimestamp(Duration duration) {
-        return new Timestamp(getCurrentTimestamp() - duration.toMillis());
-    }
-
-    @SuppressWarnings("unused")
-    public static TupleRange<Long> getPastRange(JbstTimeAmount timeAmount) {
-        return getPastRange(getCurrentTimestamp(), timeAmount);
-    }
-
-    public static TupleRange<Long> getPastRange(long timestamp, JbstTimeAmount timeAmount) {
-        var past = timestamp - timeAmount.toMillis();
-        return new TupleRange<>(past, timestamp);
     }
 }

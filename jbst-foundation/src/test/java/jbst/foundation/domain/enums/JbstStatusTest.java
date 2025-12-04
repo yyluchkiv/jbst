@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.Stream;
 
 @Slf4j
-class StatusTest {
+class JbstStatusTest {
 
     @Test
     void print() {
         // Act
-        Stream.of(Status.values()).forEach(status -> LOGGER.warn("{} → {}", status, status.asANSI()));
+        Stream.of(JbstStatus.values()).forEach(status -> LOGGER.warn("{} → {}", status, status.asANSI()));
     }
 }

@@ -2,13 +2,13 @@ package jbst.foundation.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestUserChangePasswordBasicTest extends AbstractSerializationDeserializationRunner {
+class RequestUserChangePasswordBasicTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final RequestUserChangePasswordBasic REQUEST = new RequestUserChangePasswordBasic(
             Password.of("password123"),
             Password.of("password123")

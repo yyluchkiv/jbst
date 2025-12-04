@@ -1,6 +1,7 @@
 package jbst.foundation.domain.http.requests;
 
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.tests.JbstUnitTests;
 import org.assertj.core.api.Assertions;
@@ -14,26 +15,26 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserRequestMetadataTest extends JbstUnitTests.Runners.BaseFolder {
+class JbstUserRequestMetadataTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
-                Arguments.of(UserRequestMetadata.processing(IPAddress.localhost()), "user-request-metadata-1.json"),
-                Arguments.of(UserRequestMetadata.processed(
+                Arguments.of(JbstUserRequestMetadata.processing(IPAddress.localhost()), "user-request-metadata-1.json"),
+                Arguments.of(JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
-                        UserAgentDetails.processed("Chrome", "MacOS", "Mobile")
+                        JbstUserAgentDetails.processed("Chrome", "MacOS", "Mobile")
                 ), "user-request-metadata-2.json"),
-                Arguments.of(UserRequestMetadata.processed(
+                Arguments.of(JbstUserRequestMetadata.processed(
                         JbstGeoLocation.unknown(IPAddress.localhost(), "exception details on geo location"),
-                        UserAgentDetails.unknown("exception details on user agent")
+                        JbstUserAgentDetails.unknown("exception details on user agent")
                 ), "user-request-metadata-3.json"),
-                Arguments.of(UserRequestMetadata.processed(
+                Arguments.of(JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(IPAddress.localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
-                        UserAgentDetails.unknown("exception details on user agent")
+                        JbstUserAgentDetails.unknown("exception details on user agent")
                 ), "user-request-metadata-4.json"),
-                Arguments.of(UserRequestMetadata.processed(
+                Arguments.of(JbstUserRequestMetadata.processed(
                         JbstGeoLocation.unknown(IPAddress.localhost(), "exception details on geo location"),
-                        UserAgentDetails.processed("Chrome", "MacOS", "Mobile")
+                        JbstUserAgentDetails.processed("Chrome", "MacOS", "Mobile")
                 ), "user-request-metadata-5.json")
         );
     }
@@ -45,7 +46,7 @@ class UserRequestMetadataTest extends JbstUnitTests.Runners.BaseFolder {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    void serializeTest(UserRequestMetadata userRequestMetadata, String fileName) {
+    void serializeTest(JbstUserRequestMetadata userRequestMetadata, String fileName) {
         // Act
         var json = this.writeValueAsString(userRequestMetadata);
 
@@ -56,11 +57,11 @@ class UserRequestMetadataTest extends JbstUnitTests.Runners.BaseFolder {
     @RepeatedTest(10)
     void validTest() {
         // Act
-        var actual = UserRequestMetadata.valid();
+        var actual = JbstUserRequestMetadata.valid();
 
         // Assert
         assertThat(actual).isNotNull();
-        Assertions.assertThat(actual.getStatus()).isEqualTo(Status.COMPLETED);
+        Assertions.assertThat(actual.getStatus()).isEqualTo(JbstStatus.COMPLETED);
         Assertions.assertThat(actual.getGeoLocation().getIpAddr()).isNotNull();
         Assertions.assertThat(actual.getGeoLocation().getCountry()).isEqualTo("Ukraine");
         Assertions.assertThat(actual.getGeoLocation().getCity()).isEqualTo("Lviv");
@@ -82,11 +83,11 @@ class UserRequestMetadataTest extends JbstUnitTests.Runners.BaseFolder {
     @RepeatedTest(10)
     void invalidTest() {
         // Act
-        var actual = UserRequestMetadata.invalid();
+        var actual = JbstUserRequestMetadata.invalid();
 
         // Assert
         assertThat(actual).isNotNull();
-        Assertions.assertThat(actual.getStatus()).isEqualTo(Status.COMPLETED);
+        Assertions.assertThat(actual.getStatus()).isEqualTo(JbstStatus.COMPLETED);
         Assertions.assertThat(actual.getGeoLocation().getIpAddr()).isNotNull();
         Assertions.assertThat(actual.getGeoLocation().getCountry()).isEqualTo("Unknown");
         Assertions.assertThat(actual.getGeoLocation().getCity()).isEqualTo("Unknown");
@@ -108,7 +109,7 @@ class UserRequestMetadataTest extends JbstUnitTests.Runners.BaseFolder {
     @RepeatedTest(10)
     void randomTest() {
         // Act
-        var actual = UserRequestMetadata.random();
+        var actual = JbstUserRequestMetadata.random();
 
         // Assert
         assertThat(actual).isNotNull();

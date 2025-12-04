@@ -1,7 +1,7 @@
 package jbst.foundation.domain.databases;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
@@ -18,7 +18,7 @@ public record JbstUserSession(
         Username username,
         JwtAccessToken accessToken,
         JwtRefreshToken refreshToken,
-        UserRequestMetadata metadata,
+        JbstUserRequestMetadata metadata,
         boolean metadataRenewCron,
         boolean metadataRenewManually
 ) {
@@ -31,7 +31,7 @@ public record JbstUserSession(
                 Username.random(),
                 JwtAccessToken.random(),
                 JwtRefreshToken.random(),
-                UserRequestMetadata.random(),
+                JbstUserRequestMetadata.random(),
                 randomBoolean(),
                 randomBoolean()
         );
@@ -42,7 +42,7 @@ public record JbstUserSession(
                 Username.random(),
                 JwtAccessToken.random(),
                 JwtRefreshToken.random(),
-                UserRequestMetadata.random()
+                JbstUserRequestMetadata.random()
         );
     }
 
@@ -53,7 +53,7 @@ public record JbstUserSession(
             Username username,
             JwtAccessToken accessToken,
             JwtRefreshToken refreshToken,
-            UserRequestMetadata metadata,
+            JbstUserRequestMetadata metadata,
             boolean metadataRenewCron,
             boolean metadataRenewManually
     ) {
@@ -75,7 +75,7 @@ public record JbstUserSession(
             Username username,
             JwtAccessToken accessToken,
             JwtRefreshToken refreshToken,
-            UserRequestMetadata metadata
+            JbstUserRequestMetadata metadata
     ) {
         var currentTimestamp = getCurrentTimestamp();
         return new JbstUserSession(
@@ -100,7 +100,7 @@ public record JbstUserSession(
                 owner,
                 accessToken,
                 refreshToken,
-                UserRequestMetadata.random(),
+                JbstUserRequestMetadata.random(),
                 false,
                 false
         );

@@ -1,7 +1,7 @@
 package jbst.foundation.domain.geo;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;

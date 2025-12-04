@@ -10,10 +10,10 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import lombok.SneakyThrows;
@@ -150,11 +150,11 @@ public class JbstPostgresConverters {
     }
 
     @Converter
-    public class UserRequestMetadataConverter extends JbstAbstractAttributeConverter<UserRequestMetadata, String> {
+    public class UserRequestMetadataConverter extends JbstAbstractAttributeConverter<JbstUserRequestMetadata, String> {
 
         @SneakyThrows
         @Override
-        public String convertToDatabaseColumn(UserRequestMetadata metadata) {
+        public String convertToDatabaseColumn(JbstUserRequestMetadata metadata) {
             Map<String, String> json = new HashMap<>();
             var geoLocation = metadata.getGeoLocation();
             var userAgentDetails = metadata.getUserAgentDetails();
@@ -174,11 +174,11 @@ public class JbstPostgresConverters {
 
         @SneakyThrows
         @Override
-        public UserRequestMetadata convertToEntityAttribute(String value) {
+        public JbstUserRequestMetadata convertToEntityAttribute(String value) {
             var typeReference = new TypeReference<Map<String, String>>() {};
             var json = MAPPER.readValue(value, typeReference);
-            return new UserRequestMetadata(
-                    Status.valueOf(json.get("status")),
+            return new JbstUserRequestMetadata(
+                    JbstStatus.valueOf(json.get("status")),
                     new JbstGeoLocation(
                             json.get("ipAddr"),
                             json.get("country"),
@@ -187,7 +187,7 @@ public class JbstPostgresConverters {
                             json.get("city"),
                             json.get("geoLocationExceptionDetails")
                     ),
-                    new UserAgentDetails(
+                    new JbstUserAgentDetails(
                             json.get("browser"),
                             json.get("platform"),
                             json.get("deviceType"),

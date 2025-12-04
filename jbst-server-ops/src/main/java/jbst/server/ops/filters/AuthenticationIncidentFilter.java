@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.utils.JbstGeoUtils;
 import jbst.server.ops.properties.ServerProperties;
@@ -55,7 +55,7 @@ public class AuthenticationIncidentFilter extends OncePerRequestFilter {
                         credentials,
                         this.geoUtils.getUserRequestMetadataProcessed(
                                 getClientIpAddr(request),
-                                new UserAgentHeader(request)
+                                new JbstUserAgentHeader(request)
                         )
                 );
                 this.applicationEventPublisher.publishEvent(incident.getPlainIncident());

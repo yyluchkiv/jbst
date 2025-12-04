@@ -8,7 +8,7 @@ import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable1;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
@@ -47,7 +47,7 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     @Convert(converter = JbstPostgresConverters.UserRequestMetadataConverter.class)
     @Column(length = 65535, nullable = false)
-    private UserRequestMetadata metadata;
+    private JbstUserRequestMetadata metadata;
 
     @Column(name = "metadata_renew_cron", nullable = false)
     private boolean metadataRenewCron;

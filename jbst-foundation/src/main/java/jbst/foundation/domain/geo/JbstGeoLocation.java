@@ -2,7 +2,7 @@ package jbst.foundation.domain.geo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.random.JbstRandom;
 import jbst.foundation.domain.tuples.Tuple5;
 import lombok.EqualsAndHashCode;

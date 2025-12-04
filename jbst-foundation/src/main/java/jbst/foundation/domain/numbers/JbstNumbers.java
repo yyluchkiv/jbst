@@ -12,8 +12,22 @@ import static jbst.foundation.domain.numbers.RoundingUtility.divide;
 import static jbst.foundation.domain.numbers.RoundingUtility.scale;
 
 @UtilityClass
-public class NumbersUtility {
+public class JbstNumbers {
 
+    // =================================================================================================================
+    // LONG(s)
+    // =================================================================================================================
+    public static int toIntExactOrZeroOnOverflow(long value) {
+        try {
+            return Math.toIntExact(value);
+        } catch (ArithmeticException ex) {
+            return 0;
+        }
+    }
+
+    // =================================================================================================================
+    // READABILITY
+    // =================================================================================================================
     public String getReadableNumber(BigDecimal number) {
         return getReadableNumber(number, 2);
     }

@@ -3,7 +3,7 @@ package jbst.foundation.domain.functions;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.tuples.Tuple2;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import java.util.function.Function;
 public record JbstFunctionAccountAccessed(
         @NotNull Username username,
         @NotNull Email to,
-        @NotNull UserRequestMetadata userRequestMetadata,
+        @NotNull JbstUserRequestMetadata userRequestMetadata,
         @NotNull JbstAccountAccessMethod accountAccessMethod
 ) {
 
@@ -24,7 +24,7 @@ public record JbstFunctionAccountAccessed(
         return new JbstFunctionAccountAccessed(
                 Username.hardcoded(),
                 Email.hardcoded(),
-                UserRequestMetadata.valid(),
+                JbstUserRequestMetadata.valid(),
                 accountAccessMethod
         );
     }

@@ -1,8 +1,9 @@
 package jbst.foundation.domain.http.requests;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
@@ -30,54 +31,54 @@ import static jbst.foundation.domain.strings.JbstStrings.hasLength;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class UserRequestMetadata {
-    private final Status status;
+public class JbstUserRequestMetadata {
+    private final JbstStatus status;
     private final JbstGeoLocation geoLocation;
-    private final UserAgentDetails userAgentDetails;
+    private final JbstUserAgentDetails userAgentDetails;
 
-    public static UserRequestMetadata processing(
+    public static JbstUserRequestMetadata processing(
             IPAddress ipAddress
     ) {
-        return new UserRequestMetadata(
-                Status.STARTED,
+        return new JbstUserRequestMetadata(
+                JbstStatus.STARTED,
                 JbstGeoLocation.processing(ipAddress),
-                UserAgentDetails.processing()
+                JbstUserAgentDetails.processing()
         );
     }
 
-    public static UserRequestMetadata processed(
+    public static JbstUserRequestMetadata processed(
             JbstGeoLocation geoLocation,
-            UserAgentDetails userAgentDetails
+            JbstUserAgentDetails userAgentDetails
     ) {
-        return new UserRequestMetadata(
-                Status.COMPLETED,
+        return new JbstUserRequestMetadata(
+                JbstStatus.COMPLETED,
                 geoLocation,
                 userAgentDetails
         );
     }
 
-    public static UserRequestMetadata valid() {
-        return UserRequestMetadata.processed(
+    public static JbstUserRequestMetadata valid() {
+        return JbstUserRequestMetadata.processed(
                 JbstGeoLocation.valid(),
-                UserAgentDetails.valid()
+                JbstUserAgentDetails.valid()
         );
     }
 
-    public static UserRequestMetadata invalid() {
-        return UserRequestMetadata.processed(
+    public static JbstUserRequestMetadata invalid() {
+        return JbstUserRequestMetadata.processed(
                 JbstGeoLocation.invalid(),
-                UserAgentDetails.invalid()
+                JbstUserAgentDetails.invalid()
         );
     }
 
-    public static UserRequestMetadata random() {
+    public static JbstUserRequestMetadata random() {
         return randomBoolean() ? valid() : invalid();
     }
 
-    public static UserRequestMetadata testData() {
-        return UserRequestMetadata.processed(
+    public static JbstUserRequestMetadata testData() {
+        return JbstUserRequestMetadata.processed(
                 JbstGeoLocation.testData(),
-                UserAgentDetails.testData()
+                JbstUserAgentDetails.testData()
         );
     }
 

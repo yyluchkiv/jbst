@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.domain.authetication;
 
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
 import static jbst.foundation.domain.constants.JbstConstants.Flags.UKRAINE;
@@ -14,7 +14,7 @@ class IncidentAuthenticationLoginFailureUsernamePasswordTest {
         // Arrange
         var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
                 UsernamePasswordCredentials.hardcoded(),
-                UserRequestMetadata.valid()
+                JbstUserRequestMetadata.valid()
         );
 
         // Act

@@ -9,8 +9,8 @@ import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
@@ -63,7 +63,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
         var username = user.username();
         var userSessionTP = this.usersSessionsRepository.isPresent(accessToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
-        var metadata = UserRequestMetadata.processing(clientIpAddr);
+        var metadata = JbstUserRequestMetadata.processing(clientIpAddr);
         var session = userSessionTP.value();
         if (userSessionTP.present()) {
             session = ofPersisted(
@@ -87,7 +87,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
                         user.email(),
                         session,
                         clientIpAddr,
-                        new UserAgentHeader(httpServletRequest),
+                        new JbstUserAgentHeader(httpServletRequest),
                         JbstAccountAccessMethod.getMethod(user.creationOption())
                 )
         );
@@ -104,7 +104,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
                         user.email(),
                         newSession,
                         getClientIpAddr(httpServletRequest),
-                        new UserAgentHeader(httpServletRequest),
+                        new JbstUserAgentHeader(httpServletRequest),
                         JbstAccountAccessMethod.SESSION_TOKEN
                 )
         );
@@ -140,7 +140,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     @Override
     public JbstSessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
         var usersSessions = this.usersSessionsRepository.findByUsernameInAsAny(usernames);
-        List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions = new ArrayList<>();
+        List<Tuple3<Username, JwtRefreshToken, JbstUserRequestMetadata>> expiredSessions = new ArrayList<>();
         Set<JbstUserSessionId> expiredOrInvalidSessionIds = new HashSet<>();
 
         usersSessions.forEach(userSession -> {
@@ -188,7 +188,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
                             session.username(),
                             session,
                             getClientIpAddr(httpServletRequest),
-                            new UserAgentHeader(httpServletRequest),
+                            new JbstUserAgentHeader(httpServletRequest),
                             session.metadataRenewCron() ? TupleToggle.enabled(true) : TupleToggle.disabled(),
                             session.metadataRenewManually() ? TupleToggle.enabled(true) : TupleToggle.disabled()
                     )

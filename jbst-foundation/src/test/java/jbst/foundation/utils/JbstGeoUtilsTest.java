@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,7 +91,7 @@ class JbstGeoUtilsTest {
     @Test
     void getUserAgentDetailsExceptionTest() {
         // Arrange
-        var userAgentHeader = mock(UserAgentHeader.class);
+        var userAgentHeader = mock(JbstUserAgentHeader.class);
 
         // Act
         var userAgentDetails = this.componentUnderTest.getUserAgentDetails(userAgentHeader);
@@ -111,7 +111,7 @@ class JbstGeoUtilsTest {
         // Arrange
         var request = mock(HttpServletRequest.class);
         when(request.getHeader("User-Agent")).thenReturn(header);
-        var userAgentHeader = new UserAgentHeader(request);
+        var userAgentHeader = new JbstUserAgentHeader(request);
 
         // Act
         var userAgentDetails = this.componentUnderTest.getUserAgentDetails(userAgentHeader);

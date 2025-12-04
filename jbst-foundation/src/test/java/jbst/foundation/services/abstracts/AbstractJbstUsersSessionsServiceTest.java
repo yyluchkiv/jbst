@@ -9,13 +9,13 @@ import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.enums.JbstAccountAccessMethod;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
@@ -215,7 +215,7 @@ class AbstractJbstUsersSessionsServiceTest {
         assertThat(actualDbUserSession.username()).isEqualTo(username);
         assertThat(actualDbUserSession.refreshToken()).isEqualTo(refreshToken);
         var requestMetadata = actualDbUserSession.metadata();
-        assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
+        assertThat(requestMetadata.getStatus()).isEqualTo(JbstStatus.STARTED);
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.a()).isEqualTo(ipAddr);
@@ -260,7 +260,7 @@ class AbstractJbstUsersSessionsServiceTest {
         assertThat(actualDbUserSession.username()).isEqualTo(username);
         assertThat(actualDbUserSession.refreshToken()).isEqualTo(refreshToken);
         var requestMetadata = actualDbUserSession.metadata();
-        assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
+        assertThat(requestMetadata.getStatus()).isEqualTo(JbstStatus.STARTED);
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.a()).isEqualTo(ipAddr);
@@ -314,7 +314,7 @@ class AbstractJbstUsersSessionsServiceTest {
     @Test
     void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
         var event = entity(JbstEventSessionUserRequestMetadataAdd.class);
-        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(JbstUserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
@@ -324,7 +324,7 @@ class AbstractJbstUsersSessionsServiceTest {
         verify(this.geoUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
-        assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
+        assertThat(userSessionAC.getValue().metadata()).isEqualTo(JbstUserRequestMetadata.valid());
     }
 
     @Test
@@ -333,11 +333,11 @@ class AbstractJbstUsersSessionsServiceTest {
                 Username.random(),
                 entity(JbstUserSession.class),
                 IPAddress.random(),
-                entity(UserAgentHeader.class),
+                entity(JbstUserAgentHeader.class),
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
-        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(JbstUserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(event.session());
 
         // Act
@@ -347,7 +347,7 @@ class AbstractJbstUsersSessionsServiceTest {
         verify(this.geoUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(JbstUserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
-        assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
+        assertThat(userSessionAC.getValue().metadata()).isEqualTo(JbstUserRequestMetadata.valid());
     }
 
     @ParameterizedTest
@@ -367,7 +367,7 @@ class AbstractJbstUsersSessionsServiceTest {
                 username,
                 JwtAccessToken.random(),
                 JwtRefreshToken.random(),
-                UserRequestMetadata.random(),
+                JbstUserRequestMetadata.random(),
                 false,
                 false
         );
@@ -375,11 +375,11 @@ class AbstractJbstUsersSessionsServiceTest {
                 username,
                 session,
                 entity(IPAddress.class),
-                entity(UserAgentHeader.class),
+                entity(JbstUserAgentHeader.class),
                 metadataRenewCron,
                 metadataRenewManually
         );
-        when(this.geoUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(JbstUserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(JbstUserSession.class))).thenReturn(saveFunction.session());
 
         // Act
@@ -392,7 +392,7 @@ class AbstractJbstUsersSessionsServiceTest {
         var sessionProcessedMetadata = userSessionAC.getValue();
         assertThat(sessionProcessedMetadata.metadataRenewCron()).isEqualTo(expectedMetadataRenewCron);
         assertThat(sessionProcessedMetadata.metadataRenewManually()).isEqualTo(expectedMetadataRenewManually);
-        assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
+        assertThat(userSessionAC.getValue().metadata()).isEqualTo(JbstUserRequestMetadata.valid());
     }
 
     @Test
@@ -472,7 +472,7 @@ class AbstractJbstUsersSessionsServiceTest {
                 Username.random(),
                 JwtAccessToken.random(),
                 JwtRefreshToken.random(),
-                UserRequestMetadata.random(),
+                JbstUserRequestMetadata.random(),
                 metadataRenewCron,
                 metadataRenewManually
         );
@@ -488,7 +488,7 @@ class AbstractJbstUsersSessionsServiceTest {
             assertThat(event.username()).isEqualTo(session.username());
             assertThat(event.session()).isEqualTo(session);
             assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
-            assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));
+            assertThat(event.userAgentHeader()).isEqualTo(new JbstUserAgentHeader(httpServletRequest));
             assertThat(event.metadataRenewCron()).isEqualTo(expectedMetadataRenewCron);
             assertThat(event.metadataRenewManually()).isEqualTo(expectedMetadataRenewManually);
         }

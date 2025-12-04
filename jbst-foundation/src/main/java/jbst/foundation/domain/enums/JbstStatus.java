@@ -10,7 +10,7 @@ import static jbst.foundation.domain.colors.JbstANSI.getBoldHexAnsiFormat;
 // Lombok
 @AllArgsConstructor
 @Getter
-public enum Status {
+public enum JbstStatus {
     // MAIN
     ENABLED("ENABLED", getBoldHexAnsiFormat("#000000")),
     DISABLED("DISABLED", getBoldHexAnsiFormat("#000000")),
@@ -36,11 +36,11 @@ public enum Status {
     PROGRESS_80("PROGRESS: 80%", getBoldHexAnsiFormat("#DAA520")),
     PROGRESS_99("PROGRESS: 99%", getBoldHexAnsiFormat("#DAA520"));
 
-    public static Status of(boolean toggle) {
+    public static JbstStatus of(boolean toggle) {
         if (toggle) {
-            return Status.ENABLED;
+            return JbstStatus.ENABLED;
         }
-        return Status.DISABLED;
+        return JbstStatus.DISABLED;
     }
 
     private final String value;

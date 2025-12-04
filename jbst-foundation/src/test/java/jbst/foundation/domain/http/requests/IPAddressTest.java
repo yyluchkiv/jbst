@@ -1,5 +1,6 @@
 package jbst.foundation.domain.http.requests;
 
+import jbst.foundation.domain.base.IPAddress;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 

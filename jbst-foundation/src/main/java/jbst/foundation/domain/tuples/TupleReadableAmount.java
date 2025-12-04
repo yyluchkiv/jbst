@@ -2,7 +2,7 @@ package jbst.foundation.domain.tuples;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jbst.foundation.domain.numbers.NumbersUtility;
+import jbst.foundation.domain.numbers.JbstNumbers;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -58,7 +58,7 @@ public class TupleReadableAmount {
             this.number = null;
         }
         if (readableRequired) {
-            this.readable = NumbersUtility.getReadableNumber(this.value, scale);
+            this.readable = JbstNumbers.getReadableNumber(this.value, scale);
         } else {
             this.readable = null;
         }
