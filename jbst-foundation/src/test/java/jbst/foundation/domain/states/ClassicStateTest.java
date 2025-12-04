@@ -1,4 +1,4 @@
-package jbst.foundation.domain.states.classic;
+package jbst.foundation.domain.states;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;

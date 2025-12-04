@@ -9,19 +9,10 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.TimeZone;
 
 @JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass
 public class LocalDateTimeUtility {
-
-    public static LocalDateTime nowByTimezone(TimeZone timeZone) {
-        return nowByZoneId(timeZone.toZoneId());
-    }
-
-    public static LocalDateTime nowByZoneId(ZoneId zoneId) {
-        return LocalDateTime.now(zoneId);
-    }
 
     public static String format(LocalDateTime localDateTime, DateTimeFormatter formatter) {
         return localDateTime.format(formatter);

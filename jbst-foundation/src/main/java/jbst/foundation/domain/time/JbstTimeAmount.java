@@ -16,21 +16,22 @@ import java.util.Set;
 import static jbst.foundation.domain.random.JbstRandom.randomElement;
 import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 
-public record TimeAmount(long amount, ChronoUnit unit) {
+public record JbstTimeAmount(long amount, ChronoUnit unit) {
 
-    public static TimeAmount hardcoded() {
-        return new TimeAmount(30L, ChronoUnit.SECONDS);
+    public static JbstTimeAmount hardcoded() {
+        return new JbstTimeAmount(30L, ChronoUnit.SECONDS);
     }
 
-    public static TimeAmount random() {
-        return new TimeAmount(
+    public static JbstTimeAmount random() {
+        return new JbstTimeAmount(
                 randomIntegerGreaterThanZeroByBounds(15, 30),
                 randomElement(Set.of(ChronoUnit.SECONDS, ChronoUnit.MINUTES, ChronoUnit.HOURS, ChronoUnit.DAYS))
         );
     }
 
-    public static TimeAmount forever() {
-        return new TimeAmount(1L, ChronoUnit.FOREVER);
+    @SuppressWarnings("unused")
+    public static JbstTimeAmount forever() {
+        return new JbstTimeAmount(1L, ChronoUnit.FOREVER);
     }
 
     @JsonIgnore
@@ -59,14 +60,14 @@ public record TimeAmount(long amount, ChronoUnit unit) {
         ChronoUnit maxUnit() default ChronoUnit.FOREVER;
     }
 
-    public static class ConstraintValidatorOnTimeAmount implements ConstraintValidator<TimeAmount.ValidTimeAmount, TimeAmount> {
+    public static class ConstraintValidatorOnTimeAmount implements ConstraintValidator<JbstTimeAmount.ValidTimeAmount, JbstTimeAmount> {
         private int minAmount;
         private ChronoUnit minUnit;
         private int maxAmount;
         private ChronoUnit maxUnit;
 
         @Override
-        public void initialize(TimeAmount.ValidTimeAmount constraintAnnotation) {
+        public void initialize(JbstTimeAmount.ValidTimeAmount constraintAnnotation) {
             this.minAmount = constraintAnnotation.minAmount();
             this.minUnit = constraintAnnotation.minUnit();
             this.maxAmount = constraintAnnotation.maxAmount();
@@ -74,7 +75,7 @@ public record TimeAmount(long amount, ChronoUnit unit) {
         }
 
         @Override
-        public boolean isValid(TimeAmount configuration, ConstraintValidatorContext constraintValidatorContext) {
+        public boolean isValid(JbstTimeAmount configuration, ConstraintValidatorContext constraintValidatorContext) {
             long min = this.minAmount * this.minUnit.getDuration().toMillis();
             long ms = configuration.amount * configuration.unit.getDuration().toMillis();
             long max = this.maxAmount * this.maxUnit.getDuration().toMillis();

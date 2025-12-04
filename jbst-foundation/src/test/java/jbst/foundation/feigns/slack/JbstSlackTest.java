@@ -2,7 +2,7 @@ package jbst.foundation.feigns.slack;
 
 import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.foundation.domain.time.TimeAmount;
+import jbst.foundation.domain.time.JbstTimeAmount;
 import jbst.foundation.domain.concurrent.JbstSleep;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -45,7 +45,7 @@ class JbstSlackTest {
         this.slack = slack;
         this.slack.configure(new JbstSlack.JbstSlackConfiguration(
                 SLACK_TOKEN,
-                new TimeAmount(250, ChronoUnit.MILLIS)
+                new JbstTimeAmount(250, ChronoUnit.MILLIS)
         ));
     }
 

@@ -3,6 +3,7 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.time.JbstTimeAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -51,8 +52,8 @@ public class JbstPropertyTimeAmount extends JbstProperty {
         return this.amount + " " + this.unit;
     }
 
-    public jbst.foundation.domain.time.TimeAmount getTimeAmount() {
-        return new jbst.foundation.domain.time.TimeAmount(
+    public JbstTimeAmount getTimeAmount() {
+        return new JbstTimeAmount(
                 this.amount,
                 this.unit
         );

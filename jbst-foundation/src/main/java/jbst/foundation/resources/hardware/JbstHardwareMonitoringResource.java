@@ -3,7 +3,7 @@ package jbst.foundation.resources.hardware;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
-import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -42,7 +42,7 @@ public class JbstHardwareMonitoringResource extends JbstWorkerFixedInfinity {
             JbstHardwareMonitoringStore jbstHardwareMonitoringStore
     ) {
         super(
-                new SchedulerConfiguration(60L, 60L, TimeUnit.SECONDS)
+                new JbstSchedulerConfiguration(60L, 60L, TimeUnit.SECONDS)
         );
         this.sessionRegistry = sessionRegistry;
         this.websocketsService = websocketsService;

@@ -5,10 +5,7 @@ import jbst.foundation.domain.base.Timestamp;
 import jbst.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +35,7 @@ public class TimestampUtility {
 
     public static long getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId) {
         return getTimestamp(
-                LocalDateUtility.now(zoneId).withDayOfMonth(1).atStartOfDay(),
+                LocalDate.now(zoneId).withDayOfMonth(1).atStartOfDay(),
                 zoneId
         );
     }
@@ -57,7 +54,7 @@ public class TimestampUtility {
 
     public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId, int monthAgo) {
         return getTimestamp(
-                LocalDateUtility.now(zoneId).minusMonths(monthAgo).withDayOfMonth(1).atStartOfDay(),
+                LocalDate.now(zoneId).minusMonths(monthAgo).withDayOfMonth(1).atStartOfDay(),
                 zoneId
         );
     }
@@ -66,11 +63,12 @@ public class TimestampUtility {
         return new Timestamp(getCurrentTimestamp() - duration.toMillis());
     }
 
-    public static TupleRange<Long> getPastRange(TimeAmount timeAmount) {
+    @SuppressWarnings("unused")
+    public static TupleRange<Long> getPastRange(JbstTimeAmount timeAmount) {
         return getPastRange(getCurrentTimestamp(), timeAmount);
     }
 
-    public static TupleRange<Long> getPastRange(long timestamp, TimeAmount timeAmount) {
+    public static TupleRange<Long> getPastRange(long timestamp, JbstTimeAmount timeAmount) {
         var past = timestamp - timeAmount.toMillis();
         return new TupleRange<>(past, timestamp);
     }
@@ -79,11 +77,12 @@ public class TimestampUtility {
         return new Timestamp(getCurrentTimestamp() + duration.toMillis());
     }
 
-    public static TupleRange<Long> getFutureRange(TimeAmount timeAmount) {
+    @SuppressWarnings("unused")
+    public static TupleRange<Long> getFutureRange(JbstTimeAmount timeAmount) {
         return getFutureRange(getCurrentTimestamp(), timeAmount);
     }
 
-    public static TupleRange<Long> getFutureRange(long timestamp, TimeAmount timeAmount) {
+    public static TupleRange<Long> getFutureRange(long timestamp, JbstTimeAmount timeAmount) {
         var future = timestamp + timeAmount.toMillis();
         return new TupleRange<>(timestamp, future);
     }

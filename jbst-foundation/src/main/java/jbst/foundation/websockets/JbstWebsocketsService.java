@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.events.WebsocketEvent;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class JbstWebsocketsService {
         usernames.forEach(username -> this.sendObjectToUser(username, hardwareConfigs.getUserDestination(), hardwareMonitoring(tableView)));
     }
 
-    public final void sendResetServerStatus(Set<Username> usernames, ResetServerStatus status) {
+    public final void sendResetServerStatus(Set<Username> usernames, JbstSystemResetServerStatus status) {
         var resetServerConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeatures().getResetServer();
         if (!resetServerConfigs.isEnabled()) {
             return;

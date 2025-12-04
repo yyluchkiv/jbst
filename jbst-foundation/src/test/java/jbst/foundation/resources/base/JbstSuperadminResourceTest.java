@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
@@ -69,7 +69,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void getResetServerStatusTest() throws Exception {
         // Arrange
-        when(this.superadminService.getResetServerStatus()).thenReturn(ResetServerStatus.random());
+        when(this.superadminService.getResetServerStatus()).thenReturn(JbstSystemResetServerStatus.random());
 
         // Act
         this.mvc.perform(get("/superadmin/server/reset/status"))

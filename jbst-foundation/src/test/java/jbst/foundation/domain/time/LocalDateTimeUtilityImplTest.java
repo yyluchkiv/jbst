@@ -1,7 +1,5 @@
 package jbst.foundation.domain.time;
 
-import jbst.foundation.domain.constants.JbstConstants;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,8 +16,6 @@ import static java.time.Month.DECEMBER;
 import static java.time.ZoneOffset.UTC;
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 import static java.time.format.DateTimeFormatter.ofPattern;
-import static java.time.temporal.ChronoUnit.SECONDS;
-import static java.util.TimeZone.getTimeZone;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.time.LocalDateTimeUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -156,30 +152,6 @@ class LocalDateTimeUtilityImplTest {
                 Arguments.of(NOW.plusDays(2), NOW.plusDays(2), true),
                 Arguments.of(NOW, NOW.plusDays(2), true)
         );
-    }
-
-    @Test
-    void nowByTimezoneIncludingDaylightSavingTimeTest() {
-        // Act
-        var actual1 = nowByTimezone(getTimeZone(JbstConstants.ZoneIds.POLAND));
-        var actual2 = nowByTimezone(getTimeZone(UKRAINE));
-
-        // Assert
-        var actual1Truncated = actual1.truncatedTo(SECONDS);
-        var actual2Truncated = actual2.truncatedTo(SECONDS).minusHours(1);
-        assertThat(actual1Truncated).isEqualTo(actual2Truncated);
-    }
-
-    @Test
-    void nowByZoneIdIncludingDaylightSavingTimeTest() {
-        // Act
-        var actual1 = nowByZoneId(JbstConstants.ZoneIds.POLAND);
-        var actual2 = nowByZoneId(UKRAINE);
-
-        // Assert
-        var actual1Truncated = actual1.truncatedTo(SECONDS);
-        var actual2Truncated = actual2.truncatedTo(SECONDS).minusHours(1);
-        assertThat(actual1Truncated).isEqualTo(actual2Truncated);
     }
 
     @ParameterizedTest

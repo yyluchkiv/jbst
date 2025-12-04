@@ -9,6 +9,7 @@ import jbst.server.ops.domain.servers.Team;
 import jbst.server.ops.properties.configs.JbstPropertyOpsRecipients;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,7 +23,6 @@ import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
-import static jbst.foundation.domain.time.LocalDateUtility.now;
 
 // Lombok
 @SuppressWarnings("ClassCanBeRecord")
@@ -93,7 +93,7 @@ public class OpsIncident {
         Set<String> to = new HashSet<>(recipientsConfigs.getTo());
         Map<String, Object> variables = new HashMap<>();
         variables.put(MEMBERS, to.stream().map(email -> "@" + email.split("@")[0]).collect(joining(", ")));
-        variables.put(YEAR, now(UTC).getYear());
+        variables.put(YEAR, LocalDate.now(UTC).getYear());
         variables.put(SERVER_URL, serverURL);
         variables.put(REMOTE_URL, env.getRemoteHost());
         variables.put(WHEN_UA, LocalDateTime.now(UKRAINE).format(DTF11) + " in Ukraine");

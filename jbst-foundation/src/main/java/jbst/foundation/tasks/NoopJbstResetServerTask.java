@@ -3,7 +3,7 @@ package jbst.foundation.tasks;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.websockets.JbstWebsocketsService;
 import lombok.Getter;
@@ -24,7 +24,7 @@ public class NoopJbstResetServerTask extends AbstractJbstResetServerTask {
     // Wss
     private final JbstWebsocketsService websocketsService;
 
-    private final ResetServerStatus status = new ResetServerStatus(6);
+    private final JbstSystemResetServerStatus status = new JbstSystemResetServerStatus(6);
 
     @Autowired
     public NoopJbstResetServerTask(

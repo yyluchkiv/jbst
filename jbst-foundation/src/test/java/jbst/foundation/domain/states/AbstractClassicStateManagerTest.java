@@ -1,4 +1,4 @@
-package jbst.foundation.domain.states.classic;
+package jbst.foundation.domain.states;
 
 import org.junit.jupiter.api.Test;
 

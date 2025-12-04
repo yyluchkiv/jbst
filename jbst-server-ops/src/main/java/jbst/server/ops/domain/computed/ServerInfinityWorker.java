@@ -5,9 +5,9 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ssh.JbstSSH;
 import jbst.foundation.domain.ssh.SshConnectionConfigs;
-import jbst.foundation.domain.states.classic.AbstractClassicStateManager;
-import jbst.foundation.domain.states.classic.ClassicState;
-import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.domain.states.AbstractClassicStateManager;
+import jbst.foundation.domain.states.ClassicState;
+import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import jbst.foundation.feigns.spring.JbstSpringBoot;
 import jbst.server.ops.domain.configs.servers.ServerConfigs;
 import jbst.server.ops.domain.configs.ssh.SshRsaKey;
@@ -48,7 +48,7 @@ import static jbst.foundation.domain.enums.Status.STARTED;
 import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
 import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
-import static jbst.foundation.domain.time.SchedulerConfiguration.EVERY_30_SECONDS;
+import static jbst.foundation.domain.time.JbstSchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 
@@ -59,7 +59,7 @@ import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 public class ServerInfinityWorker {
-    public static final SchedulerConfiguration EVERY_1_HOUR = new SchedulerConfiguration(1L, 60L, TimeUnit.MINUTES);
+    public static final JbstSchedulerConfiguration EVERY_1_HOUR = new JbstSchedulerConfiguration(1L, 60L, TimeUnit.MINUTES);
 
     private static class StateManager extends AbstractClassicStateManager {
         private final ServerConfigs serverConfigs;

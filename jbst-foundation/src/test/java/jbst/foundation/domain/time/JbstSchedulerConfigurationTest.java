@@ -9,12 +9,12 @@ import static jbst.foundation.domain.random.JbstRandom.randomEnum;
 import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZero;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SchedulerConfigurationTest {
+class JbstSchedulerConfigurationTest {
 
     @Test
     void neverTest() {
         // Act
-        var sc = SchedulerConfiguration.never();
+        var sc = JbstSchedulerConfiguration.never();
 
         // Assert
         assertThat(sc).isNotNull();
@@ -32,7 +32,7 @@ class SchedulerConfigurationTest {
         var unit = randomEnum(TimeUnit.class);
 
         // Act
-        var schedulerConfiguration = new SchedulerConfiguration(initialDelay, delay, unit);
+        var schedulerConfiguration = new JbstSchedulerConfiguration(initialDelay, delay, unit);
 
         // Assert
         assertThat(schedulerConfiguration).isNotNull();
@@ -44,7 +44,7 @@ class SchedulerConfigurationTest {
     @RepeatedTest(100)
     void getDeviatedSchedulerConfiguration1PercentTest() {
         // Act
-        var schedulerConfiguration = SchedulerConfiguration.EVERY_1_HOUR.getDeviatedSchedulerConfiguration(1);
+        var schedulerConfiguration = JbstSchedulerConfiguration.EVERY_1_HOUR.getDeviatedSchedulerConfiguration(1);
 
         // Assert
         assertThat(schedulerConfiguration.unit()).isEqualTo(TimeUnit.SECONDS);
@@ -57,7 +57,7 @@ class SchedulerConfigurationTest {
     @RepeatedTest(100)
     void getDeviatedSchedulerConfiguration3PercentTest() {
         // Act
-        var schedulerConfiguration = SchedulerConfiguration.EVERY_1_HOUR.getDeviatedSchedulerConfiguration(3);
+        var schedulerConfiguration = JbstSchedulerConfiguration.EVERY_1_HOUR.getDeviatedSchedulerConfiguration(3);
 
         // Assert
         assertThat(schedulerConfiguration.unit()).isEqualTo(TimeUnit.SECONDS);

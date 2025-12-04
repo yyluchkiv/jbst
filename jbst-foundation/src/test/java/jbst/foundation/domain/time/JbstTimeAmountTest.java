@@ -13,15 +13,15 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TimeAmountTest extends AbstractSerializationDeserializationRunner {
-    private static final TimeAmount TIME_AMOUNT = TimeAmount.hardcoded();
+class JbstTimeAmountTest extends AbstractSerializationDeserializationRunner {
+    private static final JbstTimeAmount TIME_AMOUNT = JbstTimeAmount.hardcoded();
 
     private static Stream<Arguments> toTest() {
         return Stream.of(
-                Arguments.of(new TimeAmount(10L, SECONDS), 10L, 10000L),
-                Arguments.of(new TimeAmount(10L, MINUTES), 600L, 600000L),
-                Arguments.of(new TimeAmount(10L, HOURS), 36000L, 36000000L),
-                Arguments.of(new TimeAmount(10L, DAYS), 864000L, 864000000L)
+                Arguments.of(new JbstTimeAmount(10L, SECONDS), 10L, 10000L),
+                Arguments.of(new JbstTimeAmount(10L, MINUTES), 600L, 600000L),
+                Arguments.of(new JbstTimeAmount(10L, HOURS), 36000L, 36000000L),
+                Arguments.of(new JbstTimeAmount(10L, DAYS), 864000L, 864000000L)
         );
     }
 
@@ -49,7 +49,7 @@ class TimeAmountTest extends AbstractSerializationDeserializationRunner {
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<TimeAmount>() {};
+        var typeReference = new TypeReference<JbstTimeAmount>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
@@ -62,7 +62,7 @@ class TimeAmountTest extends AbstractSerializationDeserializationRunner {
 
     @ParameterizedTest
     @MethodSource("toTest")
-    void toTest(TimeAmount timeAmount, long expectedSeconds, long expectedMillis) {
+    void toTest(JbstTimeAmount timeAmount, long expectedSeconds, long expectedMillis) {
         // Act
         var actualSeconds = timeAmount.toSeconds();
         var actualMillis = timeAmount.toMillis();

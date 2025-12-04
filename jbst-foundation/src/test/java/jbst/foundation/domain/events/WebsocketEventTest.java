@@ -2,7 +2,7 @@ package jbst.foundation.domain.events;
 
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.Test;
 
@@ -75,13 +75,13 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
     @Test
     void resetServerProgressTest() {
         var websocketEvent = WebsocketEvent.resetServerProgress(
-                new ResetServerStatus(15)
+                new JbstSystemResetServerStatus(15)
         );
         assertThat(websocketEvent.getAttributes())
                 .hasSize(2)
                 .containsKey("status")
                 .containsEntry("eventType", "RESET_SERVER_PROGRESS");
-        assertThat(websocketEvent.getAttributes().get("status").getClass()).isEqualTo(ResetServerStatus.class);
+        assertThat(websocketEvent.getAttributes().get("status").getClass()).isEqualTo(JbstSystemResetServerStatus.class);
 
         websocketEvent.add("key1", "value1");
         websocketEvent.add("key2", "value2");

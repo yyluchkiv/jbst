@@ -13,7 +13,8 @@ import java.util.stream.Stream;
 import static java.time.Month.*;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.domain.random.JbstRandom.*;
+import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
+import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.time.LocalDateUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,30 +69,6 @@ class LocalDateUtilityImplTest {
                 Arguments.of(LocalDate.of(2021, JANUARY, 30), false),
                 Arguments.of(LocalDate.of(2021, JANUARY, 31), true)
         );
-    }
-
-    @Test
-    void nowByTimeZone() {
-        // Arrange
-        var timeZone = randomTimeZone();
-
-        // Act
-        var actual = now(timeZone);
-
-        // Assert
-        assertThat(actual).isBeforeOrEqualTo(LocalDate.now(timeZone.toZoneId()));
-    }
-
-    @Test
-    void nowByZoneId() {
-        // Arrange
-        var zoneId = randomZoneId();
-
-        // Act
-        var actual = now(zoneId);
-
-        // Assert
-        assertThat(actual).isBeforeOrEqualTo(LocalDate.now(zoneId));
     }
 
     @ParameterizedTest

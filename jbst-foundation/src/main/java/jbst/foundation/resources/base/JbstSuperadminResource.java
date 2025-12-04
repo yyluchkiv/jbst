@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.UserSessionId;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.tokens.facade.JbstTokensProvider;
@@ -47,7 +47,7 @@ public class JbstSuperadminResource {
     // Server
     // =================================================================================================================
     @GetMapping("/server/reset/status")
-    public ResetServerStatus getResetServerStatus() {
+    public JbstSystemResetServerStatus getResetServerStatus() {
         return this.superadminService.getResetServerStatus();
     }
 

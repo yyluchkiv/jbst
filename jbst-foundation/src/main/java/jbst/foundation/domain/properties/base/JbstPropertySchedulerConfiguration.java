@@ -3,6 +3,7 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,8 +39,8 @@ public class JbstPropertySchedulerConfiguration extends JbstProperty {
     }
 
     @SuppressWarnings("unused")
-    public jbst.foundation.domain.time.SchedulerConfiguration getSchedulerConfiguration() {
-        return new jbst.foundation.domain.time.SchedulerConfiguration(
+    public JbstSchedulerConfiguration getSchedulerConfiguration() {
+        return new JbstSchedulerConfiguration(
                 this.initialDelay,
                 this.delay,
                 this.unit
