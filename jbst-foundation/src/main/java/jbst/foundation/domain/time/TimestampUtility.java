@@ -86,20 +86,4 @@ public class TimestampUtility {
         var future = timestamp + timeAmount.toMillis();
         return new TupleRange<>(timestamp, future);
     }
-
-    public static boolean isBetween(long timestamp, long past, long future) {
-        return timestamp > past && timestamp < future;
-    }
-
-    public static boolean isBetweenInclusive(long timestamp, long past, long future) {
-        return timestamp >= past && timestamp <= future;
-    }
-
-    public static boolean isPast(long timestamp) {
-        return getCurrentTimestamp() > timestamp;
-    }
-
-    public static boolean isFuture(long timestamp) {
-        return getCurrentTimestamp() < timestamp;
-    }
 }

@@ -4,7 +4,7 @@ import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.domain.emails.JbstEmails;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
@@ -124,7 +124,7 @@ class JbstUsersEmailsServiceTest {
         this.componentUnderTest.executeMagicLink(userToken);
 
         // Assert
-        ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
+        ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
@@ -147,7 +147,7 @@ class JbstUsersEmailsServiceTest {
         this.componentUnderTest.executeEmailConfirmation(userToken);
 
         // Assert
-        ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
+        ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
@@ -170,7 +170,7 @@ class JbstUsersEmailsServiceTest {
         this.componentUnderTest.executePasswordReset(userToken);
 
         // Assert
-        ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
+        ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(userToken.email().value()));
@@ -203,7 +203,7 @@ class JbstUsersEmailsServiceTest {
         this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
 
         // Assert
-        ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
+        ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(Email.hardcoded().value()));
@@ -240,7 +240,7 @@ class JbstUsersEmailsServiceTest {
         this.componentUnderTest.executeAccountAccessed(FunctionAccountAccessed.hardcoded(SESSION_TOKEN));
 
         // Assert
-        ArgumentCaptor<EmailHTML> emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
+        ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.to()).isEqualTo(Set.of(Email.hardcoded().value()));

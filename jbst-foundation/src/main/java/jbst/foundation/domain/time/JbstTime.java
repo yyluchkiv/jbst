@@ -20,12 +20,12 @@ public class JbstTime {
     // =================================================================================================================
     // CONVERT(s)
     // =================================================================================================================
-    public static LocalDateTime convert(long timestamp, ZoneId zoneId) {
+    public static LocalDateTime convert1(long timestamp, ZoneId zoneId) {
         return LocalDateTime.ofInstant(ofEpochMilli(timestamp), zoneId);
     }
 
     public static LocalDateTime convert(Date date, ZoneId zoneId) {
-        return convert(date.getTime(), zoneId);
+        return convert1(date.getTime(), zoneId);
     }
 
     public static Date convert(LocalDateTime localDateTime, ZoneId zoneId) {
@@ -52,6 +52,22 @@ public class JbstTime {
                 convert4(Date.from(ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
                 UTC
         );
+    }
+
+    public static boolean isBetween(long timestamp, long past, long future) {
+        return timestamp > past && timestamp < future;
+    }
+
+    public static boolean isBetweenInclusive(long timestamp, long past, long future) {
+        return timestamp >= past && timestamp <= future;
+    }
+
+    public static boolean isPast(long timestamp) {
+        return getCurrentTimestamp() > timestamp;
+    }
+
+    public static boolean isFuture(long timestamp) {
+        return getCurrentTimestamp() < timestamp;
     }
 
     public static boolean isCurrentTimestampNSecondsMore(long timestamp, long seconds) {

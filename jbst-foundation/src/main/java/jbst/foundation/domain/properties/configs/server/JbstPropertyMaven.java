@@ -1,7 +1,7 @@
 package jbst.foundation.domain.properties.configs.server;
 
 import jbst.foundation.domain.base.Version;
-import jbst.foundation.domain.maven.MavenDetails;
+import jbst.foundation.domain.maven.JbstMavenDetails;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import lombok.AllArgsConstructor;
@@ -40,7 +40,7 @@ public class JbstPropertyMaven extends JbstProperty {
         return "maven";
     }
 
-    public MavenDetails asMavenDetails() {
-        return new MavenDetails(this.groupId, this.artifactId, this.version);
+    public JbstMavenDetails asMavenDetails() {
+        return new JbstMavenDetails(this.groupId, this.artifactId, this.version);
     }
 }

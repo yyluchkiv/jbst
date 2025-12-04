@@ -7,9 +7,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AbstractClassicStateManagerTest {
+class JbstStateManagerClassicTest {
 
-    static class TestClassicStateManager extends AbstractClassicStateManager {
+    static class TestClassicStateManager extends JbstStateManagerClassic {
 
         @Override
         public String getLogKeyword() {
@@ -39,7 +39,7 @@ class AbstractClassicStateManagerTest {
     @Test
     void classicStateGroupedMappingsConstructorNoStatesTest() {
         // Act
-        var groupedMappings = new AbstractClassicStateManager.ClassicStateGroupedMappings(
+        var groupedMappings = new JbstStateManagerClassic.ClassicStateGroupedMappings(
                 List.of()
         );
 
@@ -51,21 +51,21 @@ class AbstractClassicStateManagerTest {
     @Test
     void classicStateGroupedMappingsConstructorTest() {
         // Act
-        var groupedMappings = new AbstractClassicStateManager.ClassicStateGroupedMappings(
+        var groupedMappings = new JbstStateManagerClassic.ClassicStateGroupedMappings(
                 List.of(
-                        ClassicState.TERMINATED,
-                        ClassicState.CREATED,
-                        ClassicState.STARTING,
-                        ClassicState.CREATED,
-                        ClassicState.ACTIVE,
-                        ClassicState.ACTIVE,
-                        ClassicState.ACTIVE,
-                        ClassicState.ACTIVE,
-                        ClassicState.CREATED,
-                        ClassicState.COMPLETED,
-                        ClassicState.COMPLETING,
-                        ClassicState.STARTING,
-                        ClassicState.COMPLETED
+                        JbstStateClassic.TERMINATED,
+                        JbstStateClassic.CREATED,
+                        JbstStateClassic.STARTING,
+                        JbstStateClassic.CREATED,
+                        JbstStateClassic.ACTIVE,
+                        JbstStateClassic.ACTIVE,
+                        JbstStateClassic.ACTIVE,
+                        JbstStateClassic.ACTIVE,
+                        JbstStateClassic.CREATED,
+                        JbstStateClassic.COMPLETED,
+                        JbstStateClassic.COMPLETING,
+                        JbstStateClassic.STARTING,
+                        JbstStateClassic.COMPLETED
                 )
         );
 
@@ -73,12 +73,12 @@ class AbstractClassicStateManagerTest {
         assertThat(groupedMappings.getValues()).hasSize(6);
         assertThat(groupedMappings.getValues()).containsExactlyEntriesOf(
                 new LinkedHashMap<>() {{
-                    put(ClassicState.CREATED, 3L);
-                    put(ClassicState.STARTING, 2L);
-                    put(ClassicState.ACTIVE, 4L);
-                    put(ClassicState.TERMINATED, 1L);
-                    put(ClassicState.COMPLETING, 1L);
-                    put(ClassicState.COMPLETED, 2L);
+                    put(JbstStateClassic.CREATED, 3L);
+                    put(JbstStateClassic.STARTING, 2L);
+                    put(JbstStateClassic.ACTIVE, 4L);
+                    put(JbstStateClassic.TERMINATED, 1L);
+                    put(JbstStateClassic.COMPLETING, 1L);
+                    put(JbstStateClassic.COMPLETED, 2L);
                 }}
         );
         assertThat(groupedMappings.isEmpty()).isFalse();

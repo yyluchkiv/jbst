@@ -15,7 +15,7 @@ import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnor
 
 @SuppressWarnings("unused")
 @AllArgsConstructor
-public enum ClassicState implements EnumValue<String> {
+public enum JbstStateClassic implements EnumValue<String> {
     DISABLED("Disabled", getBoldHexAnsiFormat("#808080")), // Gray
     CREATED("Created", getBoldHexAnsiFormat("#ADD8E6")),  // Light Blue
     STARTING("Starting", getBoldHexAnsiFormat("#FFA500")), // Orange
@@ -27,14 +27,14 @@ public enum ClassicState implements EnumValue<String> {
     COMPLETING("Completing", getBoldHexAnsiFormat("#6495ED")), // Cornflower Blue
     COMPLETED("Completed", getBoldHexAnsiFormat("#0000FF")); // Blue
 
-    public static final Comparator<ClassicState> ORDINAL_COMPARATOR = Comparator.comparing(ClassicState::ordinal);
+    public static final Comparator<JbstStateClassic> ORDINAL_COMPARATOR = Comparator.comparing(JbstStateClassic::ordinal);
 
     private final String value;
     private final AnsiFormat ansiFormat;
 
     @JsonCreator
-    public static ClassicState find(String value) {
-        return findEnumByValueIgnoreCaseOrThrow(ClassicState.class, value);
+    public static JbstStateClassic find(String value) {
+        return findEnumByValueIgnoreCaseOrThrow(JbstStateClassic.class, value);
     }
 
     @JsonValue

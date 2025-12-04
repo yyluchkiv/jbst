@@ -8,7 +8,7 @@ import feign.RetryableException;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.maven.MavenDetails;
+import jbst.foundation.domain.maven.JbstMavenDetails;
 import jbst.foundation.domain.tuples.Tuple2;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public abstract class JbstSpringBoot {
             @JsonInclude(JsonInclude.Include.NON_NULL) SpringBootActuatorInfoGit git,
             @JsonInclude(JsonInclude.Include.NON_NULL) ArrayList<String> activeProfiles,
             @JsonInclude(JsonInclude.Include.NON_NULL) String activeProfile,
-            @JsonInclude(JsonInclude.Include.NON_NULL) MavenDetails maven
+            @JsonInclude(JsonInclude.Include.NON_NULL) JbstMavenDetails maven
     ) {
 
         public static SpringBootActuatorInfo hardcoded() {
@@ -51,7 +51,7 @@ public abstract class JbstSpringBoot {
                     SpringBootActuatorInfoGit.hardcoded(),
                     null,
                     "dev",
-                    MavenDetails.hardcoded()
+                    JbstMavenDetails.hardcoded()
             );
         }
 
@@ -60,7 +60,7 @@ public abstract class JbstSpringBoot {
                     SpringBootActuatorInfoGit.dash(),
                     null,
                     JbstConstants.Symbols.DASH,
-                    MavenDetails.dash()
+                    JbstMavenDetails.dash()
             );
         }
 

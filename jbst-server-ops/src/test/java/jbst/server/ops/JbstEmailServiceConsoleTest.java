@@ -2,13 +2,13 @@ package jbst.server.ops;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.domain.emails.JbstEmails;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
 import jbst.foundation.domain.properties.configs.JbstPropertyUtils;
+import jbst.foundation.domain.time.TimestampUtility;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
-import jbst.foundation.domain.time.TimestampUtility;
 import jbst.foundation.utils.JbstGeoUtils;
 import jbst.server.ops.properties.configs.JbstPropertyOpsRecipients;
 import lombok.RequiredArgsConstructor;
@@ -123,7 +123,7 @@ class JbstEmailServiceConsoleTest {
     @Disabled
     void sendTemplate1() {
         // Arrange
-        var emailHTML = new EmailHTML(
+        var emailHTML = new JbstEmails.HTML(
                 this.getTo(),
                 "Test Template #1: " + TimestampUtility.getCurrentTimestamp(),
                 "tests-template1",
@@ -143,7 +143,7 @@ class JbstEmailServiceConsoleTest {
     void sendOpsAnyIncident() {
         // Arrange
         var ukraineFlag = this.geoUtils.getFlagEmojiByCountryCode("UA");
-        var emailHTML = new EmailHTML(
+        var emailHTML = new JbstEmails.HTML(
                 this.getTo(),
                 "[OpsIncidents] Authentication Login on [server-prod@prod] — " + TimestampUtility.getCurrentTimestamp() + " — [AnyIncident]",
                 "ops-any-incident",

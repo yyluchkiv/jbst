@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF12;
-import static jbst.foundation.domain.time.JbstTime.convert;
+import static jbst.foundation.domain.time.JbstTime.convert1;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
@@ -73,7 +73,7 @@ public class MongoDbJbstSettings {
     private String getActionUTC(Username username, long timestamp) {
         return "%s @ %s".formatted(
                 username,
-                DTF12.format(convert(timestamp, UTC)) + " UTC"
+                DTF12.format(convert1(timestamp, UTC)) + " UTC"
         );
     }
 }

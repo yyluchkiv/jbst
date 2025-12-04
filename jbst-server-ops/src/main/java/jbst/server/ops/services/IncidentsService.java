@@ -1,12 +1,11 @@
 package jbst.server.ops.services;
 
+import jbst.foundation.domain.emails.JbstEmails;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.domain.emails.EmailHTML;
-import jbst.foundation.domain.emails.EmailPlainAttachment;
 import jbst.foundation.services.JbstEmailService;
 import jbst.server.ops.domain.incidents.OpsConcurrentIncidentStats;
 import jbst.server.ops.domain.incidents.OpsIncidentEnv;
@@ -28,9 +27,9 @@ import java.util.stream.Collectors;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.foundation.incidents.domain.IncidentAttributes.IncidentsTypes.THROWABLE;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.TRACE;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.server.ops.domain.incidents.OpsIncident.TIMES;
 import static jbst.server.ops.domain.incidents.OpsIncidentHTML.opsAnyIncident;
 
@@ -138,7 +137,7 @@ public class IncidentsService {
         if (THROWABLE.equals(incident.getType())) {
             this.notificationsService.notifyIncident(opsIncident);
             this.emailService.sendPlainAttachment(
-                    new EmailPlainAttachment(
+                    new JbstEmails.AttachmentAndText(
                             opsIncident.getTo(),
                             opsIncident.getEmailSubject(),
                             opsIncident.getPlainMessage(),
@@ -158,7 +157,7 @@ public class IncidentsService {
     private void registerIncidentHTMLBased(Incident incident, OpsIncidentEnv env, OpsIncidentHTML htmlTemplate) {
         var opsIncident = this.monitoringService.getOpsIncident(incident, env);
         this.emailService.sendHTML(
-                new EmailHTML(
+                new JbstEmails.HTML(
                         opsIncident.getTo(),
                         opsIncident.getEmailSubject(),
                         htmlTemplate.name(),

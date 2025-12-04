@@ -1,7 +1,7 @@
 package jbst.foundation.services.base;
 
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.emails.EmailHTML;
+import jbst.foundation.domain.emails.JbstEmails;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.Tuple2;
@@ -54,8 +54,8 @@ public class JbstUsersEmailsService {
     // =================================================================================================================
     // PRIVATE METHODS: Mails
     // =================================================================================================================
-    private EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
-        return EmailHTML.of(
+    private JbstEmails.HTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
+        return JbstEmails.HTML.of(
                 function.to(),
                 this.getSubjectV1("Account Accessed"),
                 function.getTemplateName(this.getTemplateNameFNC()),
@@ -72,8 +72,8 @@ public class JbstUsersEmailsService {
         );
     }
 
-    private EmailHTML getMagicLinkHTML(@NotNull JbstUserToken userToken) {
-        return EmailHTML.of(
+    private JbstEmails.HTML getMagicLinkHTML(@NotNull JbstUserToken userToken) {
+        return JbstEmails.HTML.of(
                 userToken.email(),
                 this.getSubjectV1("Secure Link"),
                 this.getTemplateNameFNC().apply(new Tuple2<>(
@@ -89,8 +89,8 @@ public class JbstUsersEmailsService {
         );
     }
 
-    private EmailHTML getEmailConfirmationHTML(@NotNull JbstUserToken userToken) {
-        return EmailHTML.of(
+    private JbstEmails.HTML getEmailConfirmationHTML(@NotNull JbstUserToken userToken) {
+        return JbstEmails.HTML.of(
                 userToken.email(),
                 this.getSubjectV1("Email Confirmation"),
                 this.getTemplateNameFNC().apply(new Tuple2<>(
@@ -106,8 +106,8 @@ public class JbstUsersEmailsService {
         );
     }
 
-    private EmailHTML getPasswordResetHTML(@NotNull JbstUserToken userToken) {
-        return EmailHTML.of(
+    private JbstEmails.HTML getPasswordResetHTML(@NotNull JbstUserToken userToken) {
+        return JbstEmails.HTML.of(
                 userToken.email(),
                 this.getSubjectV1("Password Reset"),
                 this.getTemplateNameFNC().apply(new Tuple2<>(

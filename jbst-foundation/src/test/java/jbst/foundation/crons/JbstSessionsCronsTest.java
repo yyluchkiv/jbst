@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstSessionsCronTest {
+class JbstSessionsCronsTest {
 
     public static Stream<Arguments> cronArgs() {
         return Stream.of(
@@ -63,8 +63,8 @@ class JbstSessionsCronTest {
         }
 
         @Bean
-        JbstSessionsCron sessionsCron() {
-            return new JbstSessionsCron(
+        JbstSessionsCrons sessionsCron() {
+            return new JbstSessionsCrons(
                     this.sessionRegistry(),
                     this.usersSessionsService(),
                     this.incidentsPublisher(),
@@ -78,7 +78,7 @@ class JbstSessionsCronTest {
     private final JbstIncidentsPublisher incidentsPublisher;
     private final JbstProperties jbstProperties;
 
-    private final JbstSessionsCron componentUnderTest;
+    private final JbstSessionsCrons componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

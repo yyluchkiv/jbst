@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Getter
-public abstract class AbstractClassicStateManager {
-    private final AtomicReference<ClassicState> state;
+public abstract class JbstStateManagerClassic {
+    private final AtomicReference<JbstStateClassic> state;
 
-    protected AbstractClassicStateManager() {
-        this.state = new AtomicReference<>(ClassicState.CREATED);
+    protected JbstStateManagerClassic() {
+        this.state = new AtomicReference<>(JbstStateClassic.CREATED);
     }
 
-    protected AbstractClassicStateManager(ClassicState state) {
+    protected JbstStateManagerClassic(JbstStateClassic state) {
         this.state = new AtomicReference<>(state);
     }
 
@@ -34,47 +34,47 @@ public abstract class AbstractClassicStateManager {
     public abstract String getLogKeyword();
     public abstract String getLogId();
 
-    public ClassicState getState() {
+    public JbstStateClassic getState() {
         return this.state.get();
     }
     // ================================================================================================================
     // States: Mutation
     // ================================================================================================================
-    public final void setState(ClassicState state) {
+    public final void setState(JbstStateClassic state) {
         LOGGER.info(this.getLogKeyword(), this.getLogId(), this.state.get().asANSI(), state.asANSI());
         this.state.set(state);
     }
 
     public void start() {
-        this.setState(ClassicState.STARTING);
+        this.setState(JbstStateClassic.STARTING);
     }
 
     public void onActivation() {
-        this.setState(ClassicState.ACTIVE);
+        this.setState(JbstStateClassic.ACTIVE);
     }
 
     public void pause() {
-        this.setState(ClassicState.PAUSING);
+        this.setState(JbstStateClassic.PAUSING);
     }
 
     public void onPaused() {
-        this.setState(ClassicState.PAUSED);
+        this.setState(JbstStateClassic.PAUSED);
     }
 
     public void stop() {
-        this.setState(ClassicState.STOPPING);
+        this.setState(JbstStateClassic.STOPPING);
     }
 
     public void onTermination() {
-        this.setState(ClassicState.TERMINATED);
+        this.setState(JbstStateClassic.TERMINATED);
     }
 
     public void complete() {
-        this.setState(ClassicState.COMPLETING);
+        this.setState(JbstStateClassic.COMPLETING);
     }
 
     public void onComplete() {
-        this.setState(ClassicState.COMPLETED);
+        this.setState(JbstStateClassic.COMPLETED);
     }
 
     // =================================================================================================================
@@ -85,14 +85,14 @@ public abstract class AbstractClassicStateManager {
     @EqualsAndHashCode
     @ToString
     public static class ClassicStateGroupedMappings {
-        private final Map<ClassicState, Long> values;
+        private final Map<JbstStateClassic, Long> values;
         private final boolean empty;
 
-        public ClassicStateGroupedMappings(@NotNull List<ClassicState> values) {
+        public ClassicStateGroupedMappings(@NotNull List<JbstStateClassic> values) {
             this.values = values.stream()
                     .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                     .entrySet().stream()
-                    .sorted(Map.Entry.comparingByKey(ClassicState.ORDINAL_COMPARATOR))
+                    .sorted(Map.Entry.comparingByKey(JbstStateClassic.ORDINAL_COMPARATOR))
                     .collect(
                             Collectors.toMap(
                                     Map.Entry::getKey,
@@ -105,7 +105,7 @@ public abstract class AbstractClassicStateManager {
         }
 
         public static ClassicStateGroupedMappings hardcoded() {
-            return new ClassicStateGroupedMappings(List.of(ClassicState.CREATED, ClassicState.ACTIVE));
+            return new ClassicStateGroupedMappings(List.of(JbstStateClassic.CREATED, JbstStateClassic.ACTIVE));
         }
     }
 }
