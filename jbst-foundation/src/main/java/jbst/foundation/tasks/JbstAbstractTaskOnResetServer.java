@@ -7,8 +7,8 @@ import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import static jbst.foundation.domain.enums.Status.COMPLETED;
-import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
+import static jbst.foundation.domain.enums.JbstStatus.STARTED;
 
 @Slf4j
 @AllArgsConstructor

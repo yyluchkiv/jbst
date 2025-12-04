@@ -12,16 +12,16 @@ import java.util.stream.Stream;
 import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserAgentDetailsTest extends JbstUnitTests.Runners.BaseFolder {
+class JbstUserAgentDetailsTest extends JbstUnitTests.Runners.BaseFolder {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
-                Arguments.of(UserAgentDetails.processed("Chrome", "macOS", "Desktop"), "user-agent-details-1.json"),
-                Arguments.of(UserAgentDetails.processing(), "user-agent-details-2.json"),
-                Arguments.of(UserAgentDetails.unknown("exception details"), "user-agent-details-3.json"),
-                Arguments.of(UserAgentDetails.processed(null, "macOS", "Desktop"), "user-agent-details-4.json"),
-                Arguments.of(UserAgentDetails.processed("Chrome", null, "Desktop"), "user-agent-details-5.json"),
-                Arguments.of(UserAgentDetails.processed("Chrome", "macOS", null), "user-agent-details-6.json")
+                Arguments.of(JbstUserAgentDetails.processed("Chrome", "macOS", "Desktop"), "user-agent-details-1.json"),
+                Arguments.of(JbstUserAgentDetails.processing(), "user-agent-details-2.json"),
+                Arguments.of(JbstUserAgentDetails.unknown("exception details"), "user-agent-details-3.json"),
+                Arguments.of(JbstUserAgentDetails.processed(null, "macOS", "Desktop"), "user-agent-details-4.json"),
+                Arguments.of(JbstUserAgentDetails.processed("Chrome", null, "Desktop"), "user-agent-details-5.json"),
+                Arguments.of(JbstUserAgentDetails.processed("Chrome", "macOS", null), "user-agent-details-6.json")
         );
     }
 
@@ -32,7 +32,7 @@ class UserAgentDetailsTest extends JbstUnitTests.Runners.BaseFolder {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    void serializeTest(UserAgentDetails userAgentDetails, String fileName) {
+    void serializeTest(JbstUserAgentDetails userAgentDetails, String fileName) {
         // Act
         var json = this.writeValueAsString(userAgentDetails);
 
@@ -43,7 +43,7 @@ class UserAgentDetailsTest extends JbstUnitTests.Runners.BaseFolder {
     @RepeatedTest(10)
     void validTest() {
         // Act
-        var actual = UserAgentDetails.valid();
+        var actual = JbstUserAgentDetails.valid();
 
         // Assert
         assertThat(actual).isNotNull();
@@ -57,7 +57,7 @@ class UserAgentDetailsTest extends JbstUnitTests.Runners.BaseFolder {
     @RepeatedTest(10)
     void invalidTest() {
         // Act
-        var actual = UserAgentDetails.invalid();
+        var actual = JbstUserAgentDetails.invalid();
 
         // Assert
         assertThat(actual).isNotNull();
@@ -71,7 +71,7 @@ class UserAgentDetailsTest extends JbstUnitTests.Runners.BaseFolder {
     @RepeatedTest(10)
     void randomTest() {
         // Act
-        var userAgentDetails = UserAgentDetails.random();
+        var userAgentDetails = JbstUserAgentDetails.random();
 
         // Assert
         assertThat(userAgentDetails).isNotNull();

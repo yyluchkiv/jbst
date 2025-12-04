@@ -2,7 +2,7 @@ package jbst.foundation.domain.dto.responses;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.time.JbstTimeago;
@@ -45,7 +45,7 @@ public record ResponseUserSession2(
             Username username,
             RequestAccessToken requestAccessToken,
             JwtAccessToken accessToken,
-            UserRequestMetadata metadata
+            JbstUserRequestMetadata metadata
     ) {
         var current = requestAccessToken.value().equals(accessToken.value());
         var activity = current ? "Current session" : "—";
@@ -78,7 +78,7 @@ public record ResponseUserSession2(
                 Username.hardcoded(),
                 new RequestAccessToken(token),
                 new JwtAccessToken(token),
-                UserRequestMetadata.valid()
+                JbstUserRequestMetadata.valid()
         );
     }
 
@@ -89,7 +89,7 @@ public record ResponseUserSession2(
                 Username.hardcoded(),
                 RequestAccessToken.random(),
                 JwtAccessToken.random(),
-                UserRequestMetadata.testData()
+                JbstUserRequestMetadata.testData()
         );
     }
 }

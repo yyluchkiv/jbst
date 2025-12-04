@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
@@ -39,7 +39,7 @@ public class MongoDbUserSession {
     private Username username;
     private JwtAccessToken accessToken;
     private JwtRefreshToken refreshToken;
-    private UserRequestMetadata metadata;
+    private JbstUserRequestMetadata metadata;
     private boolean metadataRenewCron;
     private boolean metadataRenewManually;
 

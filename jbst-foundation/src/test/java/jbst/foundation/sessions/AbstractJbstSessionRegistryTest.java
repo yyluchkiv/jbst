@@ -9,8 +9,8 @@ import jbst.foundation.domain.events.JbstEventAuthenticationLogout;
 import jbst.foundation.domain.events.JbstEventSessionExpired;
 import jbst.foundation.domain.events.JbstEventSessionRefreshed;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
@@ -44,7 +44,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-import static jbst.foundation.domain.http.requests.UserRequestMetadata.processed;
+import static jbst.foundation.domain.http.requests.JbstUserRequestMetadata.processed;
 import static jbst.foundation.domain.tuples.TuplePresence.absent;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
@@ -309,7 +309,7 @@ class AbstractJbstSessionRegistryTest {
         var dbUserSession3 = entity(JbstUserSession.class);
         var sessionsExpiredTable = new JbstSessionsExpiredTable(
                 List.of(
-                        new Tuple3<>(Username.hardcoded(), JwtRefreshToken.random(), UserRequestMetadata.random()),
+                        new Tuple3<>(Username.hardcoded(), JwtRefreshToken.random(), JbstUserRequestMetadata.random()),
                         new Tuple3<>(username3, session3.refreshToken(), dbUserSession3.metadata())
                 ),
                 Set.of(dbUserSession1.id(), dbUserSession2.id())
@@ -344,13 +344,13 @@ class AbstractJbstSessionRegistryTest {
         var username = entity(Username.class);
         var requestAccessToken = RequestAccessToken.random();
 
-        Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
+        Function<Tuple2<JbstUserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
                 tuple2 -> ResponseUserSession2.of(entity(JbstUserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JwtAccessToken(tuple2.b()), tuple2.a());
 
-        var validSession = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), UserAgentDetails.valid()), requestAccessToken.value()));
-        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), UserAgentDetails.valid()), randomString()));
-        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), UserAgentDetails.invalid()), randomString()));
-        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), UserAgentDetails.invalid()), randomString()));
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), JbstUserAgentDetails.valid()), requestAccessToken.value()));
+        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), JbstUserAgentDetails.valid()), randomString()));
+        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), JbstUserAgentDetails.invalid()), randomString()));
+        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), JbstUserAgentDetails.invalid()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
         List<Tuple3<List<ResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();

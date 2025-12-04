@@ -2,14 +2,14 @@ package jbst.foundation.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestUserUpdate1Test extends AbstractSerializationDeserializationRunner {
+class RequestUserUpdate1Test extends JbstUnitTests.Runners.BaseFolderFile {
     private static final RequestUserUpdate1 REQUEST = new RequestUserUpdate1(
             UKRAINE,
             Email.hardcoded(),

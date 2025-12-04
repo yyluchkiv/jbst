@@ -1,12 +1,12 @@
 package jbst.foundation.domain.triggers;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserTriggerTest extends AbstractSerializationDeserializationRunner {
+class UserTriggerTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final UserTrigger USER_TRIGGER = new UserTrigger(Username.hardcoded());
 
     @Override

@@ -17,8 +17,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
-import static jbst.foundation.domain.enums.Status.COMPLETED;
-import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
+import static jbst.foundation.domain.enums.JbstStatus.STARTED;
 
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j

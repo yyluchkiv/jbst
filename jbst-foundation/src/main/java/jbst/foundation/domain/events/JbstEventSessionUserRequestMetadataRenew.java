@@ -3,8 +3,8 @@ package jbst.foundation.domain.events;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.domain.tuples.TupleToggle;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ public record JbstEventSessionUserRequestMetadataRenew(
         @NotNull Username username,
         @NotNull JbstUserSession session,
         @NotNull IPAddress clientIpAddr,
-        @NotNull UserAgentHeader userAgentHeader,
+        @NotNull JbstUserAgentHeader userAgentHeader,
         @NotNull TupleToggle<Boolean> metadataRenewCron,
         @NotNull TupleToggle<Boolean> metadataRenewManually
 ) {

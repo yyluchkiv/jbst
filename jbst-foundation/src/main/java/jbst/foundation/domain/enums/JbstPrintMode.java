@@ -1,6 +1,7 @@
 package jbst.foundation.domain.enums;
 
-public enum PrintMode {
+@SuppressWarnings("unused")
+public enum JbstPrintMode {
     FULL,
     SHORT;
 

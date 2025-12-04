@@ -3,7 +3,7 @@ package jbst.server.hm.client;
 import feign.FeignException;
 import feign.Headers;
 import feign.RequestLine;
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.time.JbstSchedulerConfiguration;
@@ -56,14 +56,14 @@ public class JbstHardwareMonitoringClient extends JbstWorkerFixedInfinity {
                     this.jbstProperties.getApp().getMaven().getVersion(),
                     getSystemMemories()
             );
-            var status = Status.STARTED;
+            var status = JbstStatus.STARTED;
             try {
                 this.hardwareMonitoringClientDefinition.sendHardwareMonitoringMetadata(metadata);
                 this.successes.incrementAndGet();
-                status = Status.SUCCESS;
+                status = JbstStatus.SUCCESS;
             } catch (FeignException ex) {
                 this.failures.incrementAndGet();
-                status = Status.FAILURE;
+                status = JbstStatus.FAILURE;
             }
             LOGGER.info(
                     "Hardware monitoring client iteration #{}, status: {}. Success rate: {}%",

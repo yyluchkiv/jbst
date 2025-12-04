@@ -1,5 +1,6 @@
 package jbst.foundation.domain.time;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,6 +27,7 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.time.JbstTime.*;
+import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstTimeTest {
@@ -35,9 +37,9 @@ class JbstTimeTest {
     private static final LocalDateTime NOW_6_30 = LocalDate.now().atTime(6, 30); // to avoid failures on 59 min
     private static final LocalDateTime _25_11_2021 = LocalDateTime.of(2021, DECEMBER, 25, 15, 16, 17);
 
-    private static final Long _2_HOUR_AGO = TimestampUtility.getPastTimestamp(Duration.ofHours(2L)).value();
-    private static final Long _5_MINUTES_AGO = TimestampUtility.getPastTimestamp(Duration.ofMinutes(5)).value();
-    private static final Long _1_MINUTE_AGO = TimestampUtility.getPastTimestamp(Duration.ofMinutes(1L)).value();
+    private static final Long _2_HOUR_AGO = getPastTimestamp(Duration.ofHours(2L)).value();
+    private static final Long _5_MINUTES_AGO = getPastTimestamp(Duration.ofMinutes(5)).value();
+    private static final Long _1_MINUTE_AGO = getPastTimestamp(Duration.ofMinutes(1L)).value();
     private static final Long _2_MINUTES_FUTURE = getFutureTimestamp(Duration.ofMinutes(2L)).value();
     private static final Long _1_HOUR_FUTURE = getFutureTimestamp(Duration.ofHours(1L)).value();
 
@@ -162,6 +164,39 @@ class JbstTimeTest {
     void getStartOfMonthTest(long timestamp, long expected) {
         // Act + Assert
         assertThat(JbstTime.getStartOfMonth(timestamp)).isEqualTo(expected);
+    }
+
+    @RepeatedTest(10)
+    void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
+        // Act
+        var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
+        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE, 3);
+        var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND, 3);
+
+        // Assert
+        assertThat(timestampUTC)
+                .isLessThan(timestampPoland)
+                .isLessThan(timestampUkraine);
+        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
+        var localDateTimeUTC = convert1(timestampUTC, UTC);
+        var localDateTimeUkraine = convert1(timestampUkraine, JbstConstants.ZoneIds.UKRAINE);
+        var localDateTimePoland = convert1(timestampPoland, JbstConstants.ZoneIds.POLAND);
+        assertThat(localDateTimeUTC.toString()).endsWith("00:00");
+        assertThat(localDateTimeUkraine.toString()).endsWith("00:00");
+        assertThat(localDateTimePoland.toString()).endsWith("00:00");
+    }
+
+    @RepeatedTest(10)
+    void getPastRangeTest() {
+        // Arrange
+        var currentTimestamp = getCurrentTimestamp();
+
+        // Act
+        var actual = getPastRange(currentTimestamp, new JbstTimeAmount(5, SECONDS));
+
+        // Assert
+        assertThat(actual.to()).isGreaterThan(actual.from());
+        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp - 5000);
     }
 
     @RepeatedTest(10)

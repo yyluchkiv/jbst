@@ -10,7 +10,6 @@ import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.JbstTokenId;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.time.TimestampUtility;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.validators.JbstUsersTokensValidator;
 import jbst.foundation.validators.abtracts.AbstractJbstUsersTokensValidator;
@@ -35,6 +34,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.domain.time.JbstTime.getFutureTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getPastTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -75,7 +75,7 @@ class AbstractJbstUsersTokensValidatorTest {
 
     private static Stream<Arguments> validateEmailConfirmationTokenTest() {
         var oneDay = Duration.ofHours(24L);
-        var expiredTimestamp = TimestampUtility.getPastTimestamp(oneDay).value();
+        var expiredTimestamp = getPastTimestamp(oneDay).value();
         var validTimestamp = getFutureTimestamp(oneDay).value();
         return Stream.of(
                 Arguments.of(
@@ -164,7 +164,7 @@ class AbstractJbstUsersTokensValidatorTest {
 
     private static Stream<Arguments> validatePasswordResetTest() {
         var oneDay = Duration.ofHours(24L);
-        var expiredTimestamp = TimestampUtility.getPastTimestamp(oneDay).value();
+        var expiredTimestamp = getPastTimestamp(oneDay).value();
         var validTimestamp = getFutureTimestamp(oneDay).value();
         return Stream.of(
                 Arguments.of(

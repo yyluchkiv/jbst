@@ -20,7 +20,7 @@ import java.util.List;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.domain.time.JbstTime.getFutureTimestamp;
-import static jbst.foundation.domain.time.TimestampUtility.getPastTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getPastTimestamp;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok

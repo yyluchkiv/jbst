@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.configurations.TestConfigurationHandlers;
-import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

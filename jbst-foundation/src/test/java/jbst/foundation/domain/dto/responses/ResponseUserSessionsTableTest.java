@@ -3,9 +3,9 @@ package jbst.foundation.domain.dto.responses;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import org.junit.jupiter.api.Test;
@@ -43,9 +43,9 @@ class ResponseUserSessionsTableTest {
                 username,
                 new RequestAccessToken(randomString()),
                 new JwtAccessToken("token1"),
-                UserRequestMetadata.processed(
+                JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", UK, "London"),
-                        UserAgentDetails.random()
+                        JbstUserAgentDetails.random()
                 )
         );
         var responseUserSession22 = ResponseUserSession2.of(
@@ -54,9 +54,9 @@ class ResponseUserSessionsTableTest {
                 username,
                 new RequestAccessToken("token2"),
                 new JwtAccessToken("token2"),
-                UserRequestMetadata.processed(
+                JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", USA, "New York"),
-                        UserAgentDetails.valid()
+                        JbstUserAgentDetails.valid()
                 )
         );
         var responseUserSession23 = ResponseUserSession2.of(
@@ -65,9 +65,9 @@ class ResponseUserSessionsTableTest {
                 username,
                 new RequestAccessToken(randomString()),
                 new JwtAccessToken("token3"),
-                UserRequestMetadata.processed(
+                JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", UK, "Liverpool"),
-                        UserAgentDetails.invalid()
+                        JbstUserAgentDetails.invalid()
                 )
         );
 

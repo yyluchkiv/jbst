@@ -1,7 +1,7 @@
 package jbst.foundation.domain.time;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JbstTimeAmountTest extends AbstractSerializationDeserializationRunner {
+class JbstTimeAmountTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final JbstTimeAmount TIME_AMOUNT = JbstTimeAmount.hardcoded();
 
     private static Stream<Arguments> toTest() {

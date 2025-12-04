@@ -2,13 +2,13 @@ package jbst.foundation.domain.triggers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import jbst.foundation.domain.enums.EnumValue;
+import jbst.foundation.domain.enums.JbstEnumValue;
 import lombok.AllArgsConstructor;
 
 import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnoreCaseOrThrow;
 
 @AllArgsConstructor
-public enum TriggerType implements EnumValue<String> {
+public enum TriggerType implements JbstEnumValue<String> {
     AUTO("Auto"),
     CRON("Cron"),
     USER("User");
@@ -31,6 +31,7 @@ public enum TriggerType implements EnumValue<String> {
         return this.value;
     }
 
+    @SuppressWarnings("unused")
     public boolean isAuto() {
         return AUTO.equals(this);
     }

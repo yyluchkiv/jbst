@@ -2,9 +2,9 @@ package jbst.foundation.incidents.domain.authetication;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
 import static jbst.foundation.domain.constants.JbstConstants.Flags.UNKNOWN;
@@ -18,9 +18,9 @@ class IncidentAuthenticationLoginTest {
         var username = Username.hardcoded();
         var incident = new IncidentAuthenticationLogin(
                 username,
-                UserRequestMetadata.processed(
+                JbstUserRequestMetadata.processed(
                         JbstGeoLocation.unknown(new IPAddress("8.8.8.8"), "exception1"),
-                        UserAgentDetails.processing()
+                        JbstUserAgentDetails.processing()
                 )
         );
 
@@ -50,7 +50,7 @@ class IncidentAuthenticationLoginTest {
         var username = Username.hardcoded();
         var incident = new IncidentAuthenticationLogin(
                 username,
-                UserRequestMetadata.processing(new IPAddress("127.0.0.1"))
+                JbstUserRequestMetadata.processing(new IPAddress("127.0.0.1"))
         );
 
         // Act

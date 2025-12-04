@@ -11,14 +11,14 @@ import static java.util.Objects.isNull;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class UserAgentHeader {
+public class JbstUserAgentHeader {
     private final String value;
 
-    public static UserAgentHeader hardcoded() {
-        return new UserAgentHeader("Chrome, macOS on Desktop");
+    public static JbstUserAgentHeader hardcoded() {
+        return new JbstUserAgentHeader("Chrome, macOS on Desktop");
     }
 
-    public UserAgentHeader(HttpServletRequest request) {
+    public JbstUserAgentHeader(HttpServletRequest request) {
         if (isNull(request) || isNull(request.getHeader("User-Agent"))) {
             this.value = "";
         } else {
@@ -29,7 +29,7 @@ public class UserAgentHeader {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private UserAgentHeader(String value) {
+    private JbstUserAgentHeader(String value) {
         this.value = value;
     }
 }

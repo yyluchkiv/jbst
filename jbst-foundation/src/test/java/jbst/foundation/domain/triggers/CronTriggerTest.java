@@ -1,11 +1,11 @@
 package jbst.foundation.domain.triggers;
 
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CronTriggerTest extends AbstractSerializationDeserializationRunner {
+class CronTriggerTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final CronTrigger CRON_TRIGGER = new CronTrigger();
 
     @Override

@@ -7,11 +7,40 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.numbers.NumbersUtility.getReadableNumber;
+import static jbst.foundation.domain.numbers.JbstNumbers.getReadableNumber;
+import static jbst.foundation.domain.numbers.JbstNumbers.toIntExactOrZeroOnOverflow;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NumbersUtilityTest {
-    private static Stream<Arguments> readableNumbers() {
+class JbstNumbersTest {
+
+    // =================================================================================================================
+    // LONG(s)
+    // =================================================================================================================
+    private static Stream<Arguments> toIntExactOrZeroOnOverflowArgs() {
+        return Stream.of(
+                Arguments.of(0L, 0),
+                Arguments.of(200L, 200),
+                Arguments.of(1000L, 1000),
+                Arguments.of(Integer.MAX_VALUE, 2147483647),
+                Arguments.of(Long.MAX_VALUE, 0),
+                Arguments.of(Long.MAX_VALUE - 1, 0),
+                Arguments.of(Long.MAX_VALUE - 1000, 0),
+                Arguments.of(Long.MAX_VALUE - Integer.MAX_VALUE, 0),
+                Arguments.of(Long.MIN_VALUE + 1000, 0)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("toIntExactOrZeroOnOverflowArgs")
+    void toIntExactOrZeroOnOverflowTest(long value, int expected) {
+        // Act + Assert
+        assertThat(toIntExactOrZeroOnOverflow(value)).isEqualTo(expected);
+    }
+
+    // =================================================================================================================
+    // READABILITY
+    // =================================================================================================================
+    private static Stream<Arguments> readableNumbersArgs() {
         return Stream.of(
                 // Null + Zero
                 Arguments.of(null, "0.00"),
@@ -63,14 +92,10 @@ class NumbersUtilityTest {
                 Arguments.of(BigDecimal.valueOf(125564), "125.56K")
         );
     }
-
     @ParameterizedTest
-    @MethodSource("readableNumbers")
+    @MethodSource("readableNumbersArgs")
     void getReadableNumberTest(BigDecimal number, String expectedReadableNumber) {
-        // Act
-        var actualReadableNumber = getReadableNumber(number);
-
-        // Assert
-        assertThat(actualReadableNumber).isEqualTo(expectedReadableNumber);
+        // Act + Assert
+        assertThat(getReadableNumber(number)).isEqualTo(expectedReadableNumber);
     }
 }

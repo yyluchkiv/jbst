@@ -8,7 +8,7 @@ import static jbst.foundation.domain.enums.JbstEnumsCreator.findEnumByValueIgnor
 import static jbst.foundation.domain.random.JbstRandom.randomEnum;
 
 @AllArgsConstructor
-public enum JbstUserCreationOption implements EnumValue<String> {
+public enum JbstUserCreationOption implements JbstEnumValue<String> {
     STANDARD("Standard"),
     MAGICLINK("MagicLink");
 

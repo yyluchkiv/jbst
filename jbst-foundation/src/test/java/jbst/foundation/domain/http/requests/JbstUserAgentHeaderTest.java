@@ -8,12 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class UserAgentHeaderTest {
+class JbstUserAgentHeaderTest {
 
     @Test
     void constructorsRequestNull() {
         // Act
-        var actual = new UserAgentHeader(null);
+        var actual = new JbstUserAgentHeader(null);
 
         // Assert
         assertThat(actual).isNotNull();
@@ -26,7 +26,7 @@ class UserAgentHeaderTest {
         var request = mock(HttpServletRequest.class);
 
         // Act
-        var actual = new UserAgentHeader(request);
+        var actual = new JbstUserAgentHeader(request);
 
         // Assert
         assertThat(actual).isNotNull();
@@ -41,7 +41,7 @@ class UserAgentHeaderTest {
         when(request.getHeader("User-Agent")).thenReturn(userAgentHeader);
 
         // Act
-        var actual = new UserAgentHeader(request);
+        var actual = new JbstUserAgentHeader(request);
 
         // Assert
         assertThat(actual).isNotNull();

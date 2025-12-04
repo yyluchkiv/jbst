@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -66,13 +66,13 @@ public class Incident {
         this.addPassword(credentials.password());
     }
 
-    public Incident(JbstSecurityJwtIncident type, Username username, UserRequestMetadata userRequestMetadata) {
+    public Incident(JbstSecurityJwtIncident type, Username username, JbstUserRequestMetadata userRequestMetadata) {
         this(type);
         this.addUsername(username);
         this.addUserRequestMetadata(userRequestMetadata);
     }
 
-    public Incident(JbstSecurityJwtIncident type, UsernamePasswordCredentials credentials, UserRequestMetadata userRequestMetadata) {
+    public Incident(JbstSecurityJwtIncident type, UsernamePasswordCredentials credentials, JbstUserRequestMetadata userRequestMetadata) {
         this(type, credentials);
         this.addUserRequestMetadata(userRequestMetadata);
     }
@@ -147,7 +147,7 @@ public class Incident {
         this.add(PASSWORD, password);
     }
 
-    public void addUserRequestMetadata(UserRequestMetadata userRequestMetadata) {
+    public void addUserRequestMetadata(JbstUserRequestMetadata userRequestMetadata) {
         var tupleResponseException = userRequestMetadata.getException();
         if (!tupleResponseException.isOk()) {
             this.add(EXCEPTION, tupleResponseException.getMessage());

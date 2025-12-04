@@ -16,7 +16,7 @@ import static java.nio.charset.Charset.defaultCharset;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 @JbstDevelopmentOnly
-public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
+public class JbstCachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
     public static class CachedBodyServletInputStream extends ServletInputStream {
 
@@ -76,7 +76,7 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
     private final byte[] cachedBody;
 
-    public CachedBodyHttpServletRequest(HttpServletRequest request) throws IOException {
+    public JbstCachedBodyHttpServletRequest(HttpServletRequest request) throws IOException {
         super(request);
         var requestInputStream = request.getInputStream();
         this.cachedBody = StreamUtils.copyToByteArray(requestInputStream);

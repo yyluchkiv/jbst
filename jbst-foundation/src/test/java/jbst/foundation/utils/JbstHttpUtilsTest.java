@@ -2,7 +2,7 @@ package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
-import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.http.cache.JbstCachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -89,7 +89,7 @@ class JbstHttpUtilsTest {
     @MethodSource({"authenticationAuthenticateStandardEndpointCases", "authenticationAuthenticateMagicLinkEndpointCases"})
     void isCachedEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
-        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        var cachedRequest = mock(JbstCachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
         when(cachedRequest.getRequestURI()).thenReturn(requestURI);
 
@@ -103,7 +103,7 @@ class JbstHttpUtilsTest {
     @Test
     void cachePayloadNoCacheTest() {
         // Arrange
-        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        var cachedRequest = mock(JbstCachedBodyHttpServletRequest.class);
 
         // Act
         this.componentUnderTest.cachePayload(cachedRequest);
@@ -116,9 +116,9 @@ class JbstHttpUtilsTest {
     @Test
     void cachePayloadTest() {
         // Arrange
-        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        var cachedRequest = mock(JbstCachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn("POST");
-        when(cachedRequest.getCachedPayload()).thenReturn(CachedBodyHttpServletRequest.CachedPayload.hardcoded());
+        when(cachedRequest.getCachedPayload()).thenReturn(JbstCachedBodyHttpServletRequest.CachedPayload.hardcoded());
         when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/login/standard");
 
         // Act
@@ -166,7 +166,7 @@ class JbstHttpUtilsTest {
     @MethodSource("authenticationAuthenticateStandardEndpointCases")
     void isAuthenticationAuthenticateStandardEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
-        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        var cachedRequest = mock(JbstCachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
         when(cachedRequest.getRequestURI()).thenReturn(requestURI);
 
@@ -181,7 +181,7 @@ class JbstHttpUtilsTest {
     @MethodSource("authenticationAuthenticateMagicLinkEndpointCases")
     void isAuthenticationAuthenticateMagicLinkEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
-        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        var cachedRequest = mock(JbstCachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
         when(cachedRequest.getRequestURI()).thenReturn(requestURI);
 
@@ -196,7 +196,7 @@ class JbstHttpUtilsTest {
     @MethodSource("authenticationRefreshTokenEndpointCases")
     void isAuthenticationRefreshTokenEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
-        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        var cachedRequest = mock(JbstCachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
         when(cachedRequest.getRequestURI()).thenReturn(requestURI);
 

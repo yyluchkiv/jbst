@@ -1,13 +1,13 @@
 package jbst.foundation.domain.ids;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JbstInvitationIdTest extends AbstractSerializationDeserializationRunner {
+class JbstInvitationIdTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final JbstInvitationId INVITATION_CODE_ID = JbstInvitationId.of("code123");
 
     @Override

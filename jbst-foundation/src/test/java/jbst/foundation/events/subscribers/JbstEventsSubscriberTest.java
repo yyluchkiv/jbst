@@ -8,9 +8,9 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -64,7 +64,7 @@ class JbstEventsSubscriberTest {
                                 Email.random(),
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
-                                mock(UserAgentHeader.class),
+                                mock(JbstUserAgentHeader.class),
                                 USERNAME_PASSWORD
                         ),
                         null
@@ -75,7 +75,7 @@ class JbstEventsSubscriberTest {
                                 null,
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
-                                mock(UserAgentHeader.class),
+                                mock(JbstUserAgentHeader.class),
                                 USERNAME_PASSWORD
                         ),
                         null
@@ -86,7 +86,7 @@ class JbstEventsSubscriberTest {
                                 null,
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
-                                mock(UserAgentHeader.class),
+                                mock(JbstUserAgentHeader.class),
                                 USERNAME_PASSWORD
                         ),
                         new RuntimeException("Unexpected error occurred")
@@ -102,7 +102,7 @@ class JbstEventsSubscriberTest {
                                 Email.random(),
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
-                                mock(UserAgentHeader.class),
+                                mock(JbstUserAgentHeader.class),
                                 SESSION_TOKEN
                         ),
                         null
@@ -113,7 +113,7 @@ class JbstEventsSubscriberTest {
                                 null,
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
-                                mock(UserAgentHeader.class),
+                                mock(JbstUserAgentHeader.class),
                                 SESSION_TOKEN
                         ),
                         null
@@ -124,7 +124,7 @@ class JbstEventsSubscriberTest {
                                 null,
                                 entity(JbstUserSession.class),
                                 IPAddress.random(),
-                                mock(UserAgentHeader.class),
+                                mock(JbstUserAgentHeader.class),
                                 SESSION_TOKEN
                         ),
                         new RuntimeException("Unexpected error occurred")
@@ -240,7 +240,7 @@ class JbstEventsSubscriberTest {
     void onAuthenticationLoginFailureTest(RuntimeException ex) {
         // Arrange
         var event = JbstEventAuthenticationLoginFailure.hardcoded();
-        when(this.geoUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
+        when(this.geoUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(JbstUserRequestMetadata.valid());
         if (nonNull(ex)) {
             doThrow(ex).when(this.incidentsPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(any());
         }
@@ -256,7 +256,7 @@ class JbstEventsSubscriberTest {
                                 event.username(),
                                 event.password()
                         ),
-                        UserRequestMetadata.valid()
+                        JbstUserRequestMetadata.valid()
                 )
         );
         verify(this.incidentsPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(
@@ -265,7 +265,7 @@ class JbstEventsSubscriberTest {
                                 event.username(),
                                 event.password()
                         ),
-                        UserRequestMetadata.valid()
+                        JbstUserRequestMetadata.valid()
                 )
         );
         verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);

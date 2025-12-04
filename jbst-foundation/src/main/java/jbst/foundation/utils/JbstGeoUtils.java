@@ -18,14 +18,14 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.geo.JbstGeoCountryFlag;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentDetails;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.IPAddress;
+import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.utilities.JbstPropertyCountriesFlags;
 import jbst.foundation.domain.properties.configs.utilities.JbstPropertyGeolocations;
@@ -46,8 +46,8 @@ import static java.util.Objects.isNull;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
-import static jbst.foundation.domain.enums.Status.FAILURE;
-import static jbst.foundation.domain.enums.Status.SUCCESS;
+import static jbst.foundation.domain.enums.JbstStatus.FAILURE;
+import static jbst.foundation.domain.enums.JbstStatus.SUCCESS;
 import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 
 @Slf4j
@@ -111,12 +111,12 @@ public class JbstGeoUtils {
     // CLASSES: User Agent Details
     // ================================================================================================================
     private record GeoUserAgentDetails(JbstPropertyUsersAgents configs, boolean configured, UserAgentParser userAgentParser, String exception) {
-        public UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
+        public JbstUserAgentDetails getUserAgentDetails(JbstUserAgentHeader userAgentHeader) {
             if (!configs.isEnabled() || !this.configured) {
-                return UserAgentDetails.unknown(this.exception);
+                return JbstUserAgentDetails.unknown(this.exception);
             }
             var capabilities = this.userAgentParser.parse(userAgentHeader.getValue());
-            return UserAgentDetails.processed(
+            return JbstUserAgentDetails.processed(
                     capabilities.getBrowser(),
                     capabilities.getPlatform(),
                     capabilities.getDeviceType()
@@ -161,8 +161,8 @@ public class JbstGeoUtils {
         }
     }
 
-    public final UserRequestMetadata getUserRequestMetadataProcessed(IPAddress ipAddress, UserAgentHeader userAgentHeader) {
-        return UserRequestMetadata.processed(
+    public final JbstUserRequestMetadata getUserRequestMetadataProcessed(IPAddress ipAddress, JbstUserAgentHeader userAgentHeader) {
+        return JbstUserRequestMetadata.processed(
                 this.getGeoLocation(ipAddress),
                 this.getUserAgentDetails(userAgentHeader)
         );
@@ -228,7 +228,7 @@ public class JbstGeoUtils {
     // ================================================================================================================
     // METHODS (atomic): MINDMAX
     // ================================================================================================================
-    public final UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
+    public final JbstUserAgentDetails getUserAgentDetails(JbstUserAgentHeader userAgentHeader) {
         return this.geoUserAgentDetails.getUserAgentDetails(userAgentHeader);
     }
 
@@ -237,7 +237,7 @@ public class JbstGeoUtils {
     // ================================================================================================================
     private GeoFlags initFlags(ResourceLoader resourceLoader) {
         var enabled = this.jbstProperties.getUtils().getCountriesFlags().isEnabled();
-        LOGGER.info(CONFIGURATION_LOG_FLAGS, Status.of(enabled).asANSI());
+        LOGGER.info(CONFIGURATION_LOG_FLAGS, JbstStatus.of(enabled).asANSI());
         if (enabled) {
             try {
                 var resource = resourceLoader.getResource("classpath:geo-countries-flags.json");
@@ -269,7 +269,7 @@ public class JbstGeoUtils {
     // ================================================================================================================
     private GeoMindMax initMindMax(ResourceLoader resourceLoader) {
         var enabled = this.jbstProperties.getUtils().getGeolocations().isEnabled();
-        LOGGER.info(CONFIGURATION_LOG_MINDMAX, Status.of(enabled).asANSI());
+        LOGGER.info(CONFIGURATION_LOG_MINDMAX, JbstStatus.of(enabled).asANSI());
         if (enabled) {
             try {
                 var resource = resourceLoader.getResource("classpath:GeoLite2-City.mmdb");
@@ -297,7 +297,7 @@ public class JbstGeoUtils {
     // ================================================================================================================
     private GeoUserAgentDetails initUserAgentDetails() {
         var enabled = this.jbstProperties.getUtils().getUsersAgents().isEnabled();
-        LOGGER.info(CONFIGURATION_LOG_USER_AGENT_DETAILS, Status.of(enabled).asANSI());
+        LOGGER.info(CONFIGURATION_LOG_USER_AGENT_DETAILS, JbstStatus.of(enabled).asANSI());
         if (enabled) {
             try {
                 LOGGER.info(CONFIGURATION_LOG_USER_AGENT_DETAILS, SUCCESS);

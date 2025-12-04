@@ -11,7 +11,7 @@ import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.JbstEventAuthenticationLoginFailure;
 import jbst.foundation.domain.events.JbstEventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
@@ -30,8 +30,8 @@ import org.springframework.stereotype.Service;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.getUserProcess;
-import static jbst.foundation.domain.enums.Status.COMPLETED;
-import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
+import static jbst.foundation.domain.enums.JbstStatus.STARTED;
 import static jbst.foundation.domain.http.JbstHttpServletRequests.getClientIpAddr;
 
 @Slf4j
@@ -73,7 +73,7 @@ public class JbstAuthenticationService {
                             credentials.username(),
                             credentials.password(),
                             getClientIpAddr(httpRequest),
-                            new UserAgentHeader(httpRequest)
+                            new JbstUserAgentHeader(httpRequest)
                     )
             );
             throw new JbstExceptions.Login(ex.getMessage());
@@ -96,7 +96,7 @@ public class JbstAuthenticationService {
                     new JbstEventAuthenticationMagicLinkFailure(
                             magicLinkUserCredentials.userToken(),
                             getClientIpAddr(httpRequest),
-                            new UserAgentHeader(httpRequest)
+                            new JbstUserAgentHeader(httpRequest)
                     )
             );
             throw new JbstExceptions.Login(ex.getMessage());

@@ -18,8 +18,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
-import static jbst.foundation.domain.enums.Status.COMPLETED;
-import static jbst.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
+import static jbst.foundation.domain.enums.JbstStatus.STARTED;
 import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
 import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
