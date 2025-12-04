@@ -1,8 +1,8 @@
 package jbst.foundation.sessions;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import jbst.foundation.domain.events.JbstEventAuthenticationLogin;
 import jbst.foundation.domain.events.JbstEventAuthenticationLogout;
 import jbst.foundation.domain.events.JbstEventSessionExpired;
@@ -130,7 +130,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     }
 
     @Override
-    public ResponseUserSessionsTable getSessionsTable(Username username, RequestAccessToken requestAccessToken) {
-        return ResponseUserSessionsTable.of(this.usersSessionsRepository.getUsersSessionsTable(username, requestAccessToken));
+    public JbstResponseUserSessionsTable getSessionsTable(Username username, JbstRequestAccessToken requestAccessToken) {
+        return JbstResponseUserSessionsTable.of(this.usersSessionsRepository.getUsersSessionsTable(username, requestAccessToken));
     }
 }

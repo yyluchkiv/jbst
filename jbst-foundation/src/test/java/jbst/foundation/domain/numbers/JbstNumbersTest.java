@@ -7,8 +7,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
+import static java.math.BigDecimal.TEN;
+import static java.math.BigDecimal.ZERO;
+import static java.util.Objects.isNull;
 import static jbst.foundation.domain.numbers.JbstNumbers.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class JbstNumbersTest {
 
@@ -34,6 +40,93 @@ class JbstNumbersTest {
     void toIntExactOrZeroOnOverflowTest(long value, int expected) {
         // Act + Assert
         assertThat(toIntExactOrZeroOnOverflow(value)).isEqualTo(expected);
+    }
+
+    // =================================================================================================================
+    // DIVISION(s)
+    // =================================================================================================================
+    private static Stream<Arguments> divideArgs() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 3, BigDecimal.valueOf(3.333)),
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 4, BigDecimal.valueOf(3.3333)),
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 5, BigDecimal.valueOf(3.33333))
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("divideArgs")
+    void divideTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
+        BigDecimal actual;
+        if (scale == DEFAULT_SCALE) {
+            // Act
+            actual = divide(divider, divisor);
+        } else {
+            // Act
+            actual = divide(divider, divisor, scale);
+        }
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> divideOrZeroArgs() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 3, BigDecimal.valueOf(3.333)),
+                Arguments.of(BigDecimal.valueOf(10), null, 4, BigDecimal.ZERO),
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ZERO)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("divideOrZeroArgs")
+    void divideOrZeroTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
+        // Act + Assert
+        assertThat(divideOrZero(divider, divisor, scale)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> divideOrOneArgs() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 3, BigDecimal.valueOf(3.333)),
+                Arguments.of(BigDecimal.valueOf(10), null, 4, BigDecimal.ONE),
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ONE),
+                Arguments.of(BigDecimal.valueOf(10), null, 5, BigDecimal.ONE)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("divideOrOneArgs")
+    void divideOrOneTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
+        // Arrange
+        if (isNull(divisor)) {
+            divisor = mock(BigDecimal.class);
+            when(divisor.compareTo(any(BigDecimal.class))).thenThrow(new RuntimeException());
+        }
+
+        // Act
+        var actual = divideOrOne(divider, divisor, scale);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> divideOrFallbackArgs() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 3, TEN, BigDecimal.valueOf(3.333)),
+                Arguments.of(BigDecimal.valueOf(10), null, 4, TEN, TEN),
+                Arguments.of(BigDecimal.valueOf(10), ZERO, 5, TEN, TEN),
+                Arguments.of(BigDecimal.valueOf(10), null, 5, TEN, TEN)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("divideOrFallbackArgs")
+    void divideOrFallbackTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal fallback, BigDecimal expected) {
+        // Arrange
+        if (isNull(divisor)) {
+            divisor = mock(BigDecimal.class);
+            when(divisor.compareTo(any(BigDecimal.class))).thenThrow(new RuntimeException());
+        }
+
+        // Act
+        var actual = divideOrFallback(divider, divisor, scale, fallback);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 
     // =================================================================================================================
@@ -122,6 +215,31 @@ class JbstNumbersTest {
         } else {
             // Act
             actual = format(value, scale);
+        }
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    // =================================================================================================================
+    // SCALING
+    // =================================================================================================================
+    private static Stream<Arguments> scaleArgs() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 3, BigDecimal.valueOf(5941306.042)),
+                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 4, BigDecimal.valueOf(5941306.0421)),
+                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 5, BigDecimal.valueOf(5941306.04213))
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("scaleArgs")
+    void scaleTest(BigDecimal value, Integer scale, BigDecimal expected) {
+        BigDecimal actual;
+        if (scale == DEFAULT_SCALE) {
+            // Act
+            actual = scale(value);
+        } else {
+            // Act
+            actual = scale(value, scale);
         }
         // Assert
         assertThat(actual).isEqualTo(expected);

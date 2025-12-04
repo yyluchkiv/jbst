@@ -1,9 +1,9 @@
 package jbst.foundation.resources.base;
 
 import jbst.foundation.configurations.TestRunnerResources1;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.JbstEventRegistration0;
 import jbst.foundation.domain.events.JbstEventRegistration1;
 import jbst.foundation.domain.events.JbstEventRegistrationMagicLink;
@@ -68,7 +68,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     @Test
     void registerMagicLink() throws Exception {
         // Arrange
-        var request = RequestUserRegistrationMagicLink.hardcoded();
+        var request = JbstRequestUserRegistrationMagicLink.hardcoded();
 
         // Act
         this.mvc.perform(
@@ -89,7 +89,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     @Test
     void register0() throws Exception {
         // Arrange
-        var request = RequestUserRegistration0.hardcoded();
+        var request = JbstRequestUserRegistration0.hardcoded();
 
         // Act
         this.mvc.perform(
@@ -111,7 +111,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     @Test
     void register1() throws Exception {
         // Arrange
-        var request = RequestUserRegistration1.hardcoded();
+        var request = JbstRequestUserRegistration1.hardcoded();
 
         // Act
         this.mvc.perform(

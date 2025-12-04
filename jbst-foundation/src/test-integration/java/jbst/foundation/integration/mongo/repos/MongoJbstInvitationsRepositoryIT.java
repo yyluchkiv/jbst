@@ -4,7 +4,7 @@ import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.mongo.MongoDbInvitation;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.integration.mongo.configs.MongoBeforeAllCallback;
@@ -138,7 +138,7 @@ class MongoJbstInvitationsRepositoryIT extends TestsJbstConfigurationMongoReposi
     void saveIntegrationTests() {
         // Arrange
         var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
-        var request = RequestNewInvitationParams.random();
+        var request = JbstRequestNewInvitationParams.random();
 
         // Act-Assert-0
         assertThat(this.invitationsRepository.count()).isEqualTo(6);

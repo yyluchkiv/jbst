@@ -3,7 +3,7 @@ package jbst.foundation.domain.databases.mongo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -125,8 +125,8 @@ public class MongoDbInvitation {
 
     @JsonIgnore
     @Transient
-    public ResponseInvitation responseInvitation() {
-        return ResponseInvitation.of(
+    public JbstResponseInvitation responseInvitation() {
+        return JbstResponseInvitation.of(
                 this.invitationId(),
                 this.owner,
                 getResponseInvitationsAuthoritiesAsField(this.authorities),

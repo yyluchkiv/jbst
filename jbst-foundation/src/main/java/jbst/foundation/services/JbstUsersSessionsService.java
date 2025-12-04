@@ -3,7 +3,7 @@ package jbst.foundation.services;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataAdd;
 import jbst.foundation.domain.events.JbstEventSessionUserRequestMetadataRenew;
 import jbst.foundation.domain.functions.JbstFunctionSessionUserRequestMetadataSave;
@@ -27,6 +27,6 @@ public interface JbstUsersSessionsService {
     void enableUserRequestMetadataRenewManually(JbstUserSessionId sessionId);
     void renewUserRequestMetadata(JbstUserSession session, HttpServletRequest httpServletRequest);
     void deleteById(JbstUserSessionId sessionId);
-    void deleteAllExceptCurrent(Username username, RequestAccessToken requestAccessToken);
-    void deleteAllExceptCurrentAsSuperuser(RequestAccessToken requestAccessToken);
+    void deleteAllExceptCurrent(Username username, JbstRequestAccessToken requestAccessToken);
+    void deleteAllExceptCurrentAsSuperuser(JbstRequestAccessToken requestAccessToken);
 }

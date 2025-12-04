@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
@@ -196,7 +196,7 @@ class JbstCurrentSessionAssistantTest {
         // Arrange
         var session = entity(JbstUserSession.class);
         var request = mock(HttpServletRequest.class);
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
         var accessToken = JbstJwtAccessToken.of(requestAccessToken.value());
         when(this.tokensProvider.readRequestAccessToken(request)).thenReturn(requestAccessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(session));
@@ -214,8 +214,8 @@ class JbstCurrentSessionAssistantTest {
     void getCurrentUserDbSessionsTableTest() {
         // Arrange
         var username = Username.random();
-        var requestAccessToken = RequestAccessToken.random();
-        var sessionsTable = entity(ResponseUserSessionsTable.class);
+        var requestAccessToken = JbstRequestAccessToken.random();
+        var sessionsTable = entity(JbstResponseUserSessionsTable.class);
         when(this.securityUtils.getAuthenticatedUsername()).thenReturn(username.value());
         when(this.sessionRegistry.getSessionsTable(username, requestAccessToken)).thenReturn(sessionsTable);
 

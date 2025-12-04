@@ -2,9 +2,9 @@ package jbst.foundation.services;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUsers;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import org.springframework.scheduling.annotation.Async;
@@ -22,7 +22,7 @@ public interface JbstSuperadminService {
     // =================================================================================================================
     // Invitations
     // =================================================================================================================
-    List<ResponseInvitation> findInvitationsUnused();
+    List<JbstResponseInvitation> findInvitationsUnused();
 
     // =================================================================================================================
     // Users
@@ -33,5 +33,5 @@ public interface JbstSuperadminService {
     // =================================================================================================================
     // Users Sessions
     // =================================================================================================================
-    ResponseSuperadminSessionsTable getSessions(RequestAccessToken requestAccessToken);
+    JbstResponseSuperadminSessionsTable getSessions(JbstRequestAccessToken requestAccessToken);
 }

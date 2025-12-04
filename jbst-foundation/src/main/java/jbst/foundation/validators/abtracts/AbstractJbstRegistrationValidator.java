@@ -1,8 +1,8 @@
 package jbst.foundation.validators.abtracts;
 
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistrationMagicLink;
 import jbst.foundation.domain.events.JbstEventRegistration0Failure;
 import jbst.foundation.domain.events.JbstEventRegistration1Failure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
@@ -31,12 +31,12 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
     protected final JbstUsersRepository usersRepository;
 
     @Override
-    public void validateRegistrationRequestMagicLink(RequestUserRegistrationMagicLink request) {
+    public void validateRegistrationRequestMagicLink(JbstRequestUserRegistrationMagicLink request) {
         // no required actions
     }
 
     @Override
-    public void validateRegistrationRequest0(RequestUserRegistration0 request) throws JbstExceptions.Registration {
+    public void validateRegistrationRequest0(JbstRequestUserRegistration0 request) throws JbstExceptions.Registration {
         request.assertPasswordsOrThrow();
         var existsByUsername = this.usersRepository.existsByUsername(request.username());
         if (existsByUsername) {
@@ -79,7 +79,7 @@ public abstract class AbstractJbstRegistrationValidator implements JbstRegistrat
     }
 
     @Override
-    public void validateRegistrationRequest1(RequestUserRegistration1 request) throws JbstExceptions.Registration {
+    public void validateRegistrationRequest1(JbstRequestUserRegistration1 request) throws JbstExceptions.Registration {
         request.assertPasswordsOrThrow();
         var user = this.usersRepository.findByUsernameAsJwtUserOrNull(request.username());
         if (nonNull(user)) {

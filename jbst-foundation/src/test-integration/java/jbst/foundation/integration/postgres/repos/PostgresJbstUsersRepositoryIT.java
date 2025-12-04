@@ -8,9 +8,9 @@ import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.dto.requests.RequestUsers;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUsers;
 import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.integration.postgres.configs.PostgresBeforeAllCallback;
@@ -179,15 +179,15 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
         var username = Username.of("user1");
         var email = Email.of("user2@" + JbstConstants.Domains.HARDCODED);
         var name = "Sa3 Sa3";
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, name).toSpecification(), pageRequest)).hasSize(3);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(null, email, name).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, null, name).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
-        assertThat(this.usersRepository.findAll(new RequestUsers(username, null, null).toSpecification(), pageRequest)).hasSize(1);
-        assertThat(this.usersRepository.findAll(new RequestUsers(null, email, null).toSpecification(), pageRequest)).hasSize(1);
-        assertThat(this.usersRepository.findAll(new RequestUsers(null, null, name).toSpecification(), pageRequest)).hasSize(1);
-        var users = this.usersRepository.findAll(new RequestUsers(null, null, null).toSpecification(), pageRequest);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(username, email, name).toSpecification(), pageRequest)).hasSize(3);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(null, email, name).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(username, null, name).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(username, email, null).toSpecification(), pageRequest)).hasSize(2);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(username, null, null).toSpecification(), pageRequest)).hasSize(1);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(null, email, null).toSpecification(), pageRequest)).hasSize(1);
+        assertThat(this.usersRepository.findAll(new JbstRequestUsers(null, null, name).toSpecification(), pageRequest)).hasSize(1);
+        var users = this.usersRepository.findAll(new JbstRequestUsers(null, null, null).toSpecification(), pageRequest);
         assertThat(users).hasSize(5);
         assertThat(users.hasNext()).isTrue();
     }
@@ -231,12 +231,12 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
         assertThat(this.usersRepository.isPresent(entity(JbstUserId.class)).present()).isFalse();
 
         // Act-Assert-3
-        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), JbstInvitation.random());
+        var userId2 = this.usersRepository.saveAs(JbstRequestUserRegistration1.hardcoded(), Password.random(), JbstInvitation.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
 
         // Act-Assert-4
-        var userId3 = this.usersRepository.saveAs(RequestUserRegistration0.hardcoded(), Password.random());
+        var userId3 = this.usersRepository.saveAs(JbstRequestUserRegistration0.hardcoded(), Password.random());
         assertThat(this.usersRepository.count()).isEqualTo(9);
         var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();
@@ -249,7 +249,7 @@ class PostgresJbstUsersRepositoryIT extends TestsJbstConfigurationPostgresReposi
 
         // Act-Assert-5
         var savedPassword = Password.random();
-        var userId4 = this.usersRepository.saveAs(RequestUserRegistration0.random(), savedPassword);
+        var userId4 = this.usersRepository.saveAs(JbstRequestUserRegistration0.random(), savedPassword);
         assertThat(this.usersRepository.count()).isEqualTo(10);
         var user4 = this.usersRepository.findById(userId4.value()).orElse(null);
         assertThat(user4).isNotNull();

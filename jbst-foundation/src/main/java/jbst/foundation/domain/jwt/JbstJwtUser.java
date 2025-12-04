@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.JbstUserId;
@@ -181,16 +181,16 @@ public record JbstJwtUser(
     }
 
     @JsonIgnore
-    public RequestUserToken getRequestUserTokenAsEmailConfirmation() {
-        return new RequestUserToken(
+    public JbstRequestUserToken getRequestUserTokenAsEmailConfirmation() {
+        return new JbstRequestUserToken(
                 this.email,
                 JbstUserTokenType.EMAIL_CONFIRMATION
         );
     }
 
     @JsonIgnore
-    public RequestUserToken getRequestUserTokenAsPasswordReset() {
-        return new RequestUserToken(
+    public JbstRequestUserToken getRequestUserTokenAsPasswordReset() {
+        return new JbstRequestUserToken(
                 this.email,
                 JbstUserTokenType.PASSWORD_RESET
         );

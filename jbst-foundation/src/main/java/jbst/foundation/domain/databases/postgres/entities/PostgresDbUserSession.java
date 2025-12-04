@@ -6,8 +6,8 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.converters.JbstPostgresConverters;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.databases.postgres.superclasses.PostgresDbAbstractPersistable1;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseUserSession2;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSession2;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
@@ -147,8 +147,8 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     @JsonIgnore
     @Transient
-    public ResponseUserSession2 responseUserSession2(RequestAccessToken requestAccessToken) {
-        return ResponseUserSession2.of(
+    public JbstResponseUserSession2 responseUserSession2(JbstRequestAccessToken requestAccessToken) {
+        return JbstResponseUserSession2.of(
                 this.userSessionId(),
                 this.updatedAt,
                 this.username,

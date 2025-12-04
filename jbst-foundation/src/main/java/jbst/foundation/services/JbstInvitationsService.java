@@ -1,12 +1,12 @@
 package jbst.foundation.services;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.dto.responses.ResponseInvitations;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitations;
 import jbst.foundation.domain.ids.JbstInvitationId;
 
 public interface JbstInvitationsService {
-    ResponseInvitations findByOwner(Username owner);
-    void save(Username owner, RequestNewInvitationParams request);
+    JbstResponseInvitations findByOwner(Username owner);
+    void save(Username owner, JbstRequestNewInvitationParams request);
     void deleteById(JbstInvitationId invitationId);
 }

@@ -2,8 +2,8 @@ package jbst.foundation.tokens.providers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
@@ -75,34 +75,34 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     }
 
     @Override
-    public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
+    public JbstRequestAccessToken readRequestAccessToken(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
         try {
             var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
             var cookie = readCookie(request, accessToken.getCookieKey());
-            return new RequestAccessToken(cookie);
+            return new JbstRequestAccessToken(cookie);
         } catch (JbstExceptions.CookieNotFound ex) {
             throw new JbstExceptions.AccessTokenNotFound();
         }
     }
 
     @Override
-    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
+    public JbstRequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.AccessTokenNotFound {
         return this.readRequestAccessToken(request);
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
+    public JbstRequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
         try {
             var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
             var cookie = readCookie(request, refreshToken.getCookieKey());
-            return new RequestRefreshToken(cookie);
+            return new JbstRequestRefreshToken(cookie);
         } catch (JbstExceptions.CookieNotFound ex) {
             throw new JbstExceptions.RefreshTokenNotFound();
         }
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
+    public JbstRequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws JbstExceptions.RefreshTokenNotFound {
         return this.readRequestRefreshToken(request);
     }
 

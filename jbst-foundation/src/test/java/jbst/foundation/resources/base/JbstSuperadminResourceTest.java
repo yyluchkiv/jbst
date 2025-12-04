@@ -5,10 +5,10 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUsers;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.foundation.domain.dto.responses.ResponseUserSession2;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSession2;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
@@ -102,7 +102,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void getUnusedInvitationsTest() throws Exception {
         // Arrange
-        var codes = list345(ResponseInvitation.class);
+        var codes = list345(JbstResponseInvitation.class);
         when(this.superadminService.findInvitationsUnused()).thenReturn(codes);
 
         // Act
@@ -162,11 +162,11 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void getSessionsTest() throws Exception {
         // Arrange
-        var sessionsTable = new ResponseSuperadminSessionsTable(
-                list345(ResponseUserSession2.class),
-                list345(ResponseUserSession2.class)
+        var sessionsTable = new JbstResponseSuperadminSessionsTable(
+                list345(JbstResponseUserSession2.class),
+                list345(JbstResponseUserSession2.class)
         );
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.superadminService.getSessions(requestAccessToken)).thenReturn(sessionsTable);
 
@@ -230,7 +230,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void deleteAllExceptCurrentTest() throws Exception {
         // Arrange
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
 
         // Act

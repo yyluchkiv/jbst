@@ -2,7 +2,7 @@ package jbst.foundation.settings;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
-import jbst.foundation.domain.dto.requests.RequestJbstSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
 import static jbst.foundation.domain.enums.JbstStatus.STARTED;
@@ -100,7 +100,7 @@ public abstract class JbstSettingsService {
         return this.settingsAR.get();
     }
 
-    public final void saveSettings(Username updatedBy, RequestJbstSettings request) {
+    public final void saveSettings(Username updatedBy, JbstRequestJbstSettings request) {
         var jbstSettings = this.settingsRepository.saveAs(
                 updatedBy,
                 request

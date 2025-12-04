@@ -10,10 +10,10 @@ import java.util.List;
 
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
-import static jbst.foundation.domain.numbers.RoundingUtility.divide;
+import static jbst.foundation.domain.numbers.JbstNumbers.divide;
 
 @UtilityClass
 public class BigDecimalUtility {

@@ -8,8 +8,8 @@ import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.databases.postgres.entities.PostgresDbUser;
 import jbst.foundation.domain.databases.postgres.projections.PostgresDbUserProjection1;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.JbstUserId;
@@ -110,7 +110,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         return entity.userId();
     }
 
-    default JbstUserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password) {
+    default JbstUserId saveAs(JbstRequestUserRegistration0 requestUserRegistration0, Password password) {
         var user = new PostgresDbUser(
                 requestUserRegistration0,
                 password
@@ -119,7 +119,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         return entity.userId();
     }
 
-    default JbstUserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation) {
+    default JbstUserId saveAs(JbstRequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation) {
         var user = new PostgresDbUser(
                 requestUserRegistration1,
                 password,

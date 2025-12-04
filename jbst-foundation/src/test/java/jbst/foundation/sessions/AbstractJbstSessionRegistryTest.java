@@ -2,8 +2,8 @@ package jbst.foundation.sessions;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseUserSession2;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSession2;
 import jbst.foundation.domain.events.JbstEventAuthenticationLogin;
 import jbst.foundation.domain.events.JbstEventAuthenticationLogout;
 import jbst.foundation.domain.events.JbstEventSessionExpired;
@@ -342,10 +342,10 @@ class AbstractJbstSessionRegistryTest {
     void getSessionsTableTest() {
         // Arrange
         var username = entity(Username.class);
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
 
-        Function<Tuple2<JbstUserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
-                tuple2 -> ResponseUserSession2.of(entity(JbstUserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JbstJwtAccessToken(tuple2.b()), tuple2.a());
+        Function<Tuple2<JbstUserRequestMetadata, String>, JbstResponseUserSession2> sessionFnc =
+                tuple2 -> JbstResponseUserSession2.of(entity(JbstUserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JbstJwtAccessToken(tuple2.b()), tuple2.a());
 
         var validSession = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.valid(), JbstUserAgentDetails.valid()), requestAccessToken.value()));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), JbstUserAgentDetails.valid()), randomString()));
@@ -353,7 +353,7 @@ class AbstractJbstSessionRegistryTest {
         var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(JbstGeoLocation.invalid(), JbstUserAgentDetails.invalid()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
-        List<Tuple3<List<ResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();
+        List<Tuple3<List<JbstResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();
         cases.add(
                 new Tuple3<>(
                         new ArrayList<>(List.of(validSession)),
@@ -398,7 +398,7 @@ class AbstractJbstSessionRegistryTest {
             verify(this.usersSessionsRepository).getUsersSessionsTable(username, requestAccessToken);
             assertThat(currentUserDbSessionsTable).isNotNull();
             assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
-            assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(JbstResponseUserSession2::current).count()).isEqualTo(1);
             assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.activity())).count()).isEqualTo(1);
             assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
 

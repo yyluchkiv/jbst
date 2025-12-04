@@ -5,8 +5,8 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUsers;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.JbstUserId;
@@ -31,7 +31,7 @@ public interface JbstUsersRepository {
     void resetPassword(Username username, Password password);
     void disable(Username username);
     JbstUserId saveAs(JbstJwtUser user);
-    JbstUserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
-    JbstUserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation);
+    JbstUserId saveAs(JbstRequestUserRegistration0 requestUserRegistration0, Password password);
+    JbstUserId saveAs(JbstRequestUserRegistration1 requestUserRegistration1, Password password, JbstInvitation invitation);
     JbstJwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstExceptions.UsernameAlreadyExist;
 }

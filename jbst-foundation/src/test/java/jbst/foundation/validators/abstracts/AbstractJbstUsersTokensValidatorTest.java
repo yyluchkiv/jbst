@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.JbstRequestUserPasswordReset;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.JbstTokenId;
@@ -168,12 +168,12 @@ class AbstractJbstUsersTokensValidatorTest {
         var validTimestamp = getFutureTimestamp(oneDay).value();
         return Stream.of(
                 Arguments.of(
-                        RequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.hardcoded(),
                         null,
                         JbstExceptions.UserTokenValidation.notFound()
                 ),
                 Arguments.of(
-                        new RequestUserPasswordReset(
+                        new JbstRequestUserPasswordReset(
                                 randomStringLetterOrNumbersOnly(255),
                                 Password.of("655c0667533246a9afdb197466001934"),
                                 Password.of("e4f937b04d9f44519ed58346b9aa67ff")
@@ -183,7 +183,7 @@ class AbstractJbstUsersTokensValidatorTest {
                         new IllegalArgumentException("Passwords must be same")
                 ),
                 Arguments.of(
-                        RequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.hardcoded(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),
@@ -195,7 +195,7 @@ class AbstractJbstUsersTokensValidatorTest {
                         JbstExceptions.UserTokenValidation.used()
                 ),
                 Arguments.of(
-                        RequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.hardcoded(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),
@@ -207,7 +207,7 @@ class AbstractJbstUsersTokensValidatorTest {
                         JbstExceptions.UserTokenValidation.expired()
                 ),
                 Arguments.of(
-                        RequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.hardcoded(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),
@@ -219,7 +219,7 @@ class AbstractJbstUsersTokensValidatorTest {
                         JbstExceptions.UserTokenValidation.invalidType()
                 ),
                 Arguments.of(
-                        RequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.hardcoded(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),
@@ -325,7 +325,7 @@ class AbstractJbstUsersTokensValidatorTest {
     @ParameterizedTest
     @MethodSource("validatePasswordResetTest")
     void validatePasswordResetTest(
-            RequestUserPasswordReset request,
+            JbstRequestUserPasswordReset request,
             JbstUserToken userToken,
             Exception expected
     ) {

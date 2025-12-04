@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertFalseOrThrow;
 import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 

@@ -1,8 +1,8 @@
 package jbst.foundation.validators.abtracts;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate1;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.JbstUsersValidator;
 import lombok.AccessLevel;
@@ -17,7 +17,7 @@ public abstract class AbstractJbstUsersValidator implements JbstUsersValidator {
     protected final JbstUsersRepository usersRepository;
 
     @Override
-    public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 request) {
+    public void validateUserUpdateRequest1(Username username, JbstRequestUserUpdate1 request) {
         var user = this.usersRepository.findByEmailAsJwtUserOrNull(request.email());
         if (nonNull(user) && !user.username().equals(username)) {
             throw new IllegalArgumentException(entityAlreadyUsed("Email", request.email().value()));
@@ -25,7 +25,7 @@ public abstract class AbstractJbstUsersValidator implements JbstUsersValidator {
     }
 
     @Override
-    public void validateUserChangePasswordRequestBasic(RequestUserChangePasswordBasic request) {
+    public void validateUserChangePasswordRequestBasic(JbstRequestUserChangePasswordBasic request) {
         request.assertPasswordsOrThrow();
     }
 }

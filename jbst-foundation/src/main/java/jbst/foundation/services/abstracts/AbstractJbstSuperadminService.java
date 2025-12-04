@@ -2,9 +2,9 @@ package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUsers;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
@@ -54,7 +54,7 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     // Invitations
     // =================================================================================================================
     @Override
-    public List<ResponseInvitation> findInvitationsUnused() {
+    public List<JbstResponseInvitation> findInvitationsUnused() {
         return this.invitationsRepository.findUnused();
     }
 
@@ -75,7 +75,7 @@ public abstract class AbstractJbstSuperadminService implements JbstSuperadminSer
     // Users Sessions
     // =================================================================================================================
     @Override
-    public ResponseSuperadminSessionsTable getSessions(RequestAccessToken requestAccessToken) {
+    public JbstResponseSuperadminSessionsTable getSessions(JbstRequestAccessToken requestAccessToken) {
         var activeAccessTokens = this.sessionRegistry.getActiveSessionsAccessTokens();
         return this.usersSessionsRepository.getSessionsTable(activeAccessTokens, requestAccessToken);
     }

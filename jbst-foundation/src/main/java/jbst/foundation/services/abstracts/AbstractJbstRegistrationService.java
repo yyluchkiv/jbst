@@ -2,9 +2,9 @@ package jbst.foundation.services.abstracts;
 
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.databases.JbstInvitation;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistrationMagicLink;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -29,19 +29,19 @@ public abstract class AbstractJbstRegistrationService implements JbstRegistratio
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void registerMagicLink(RequestUserRegistrationMagicLink request) {
+    public void registerMagicLink(JbstRequestUserRegistrationMagicLink request) {
         var userToken = this.usersTokensRepository.findOrCreate(request.asRequestUserToken());
         this.usersEmailsService.executeMagicLink(userToken);
     }
 
     @Override
-    public void register0(RequestUserRegistration0 request) {
+    public void register0(JbstRequestUserRegistration0 request) {
         var hashPassword = this.bCryptPasswordEncoder.encode(request.password().value());
         this.usersRepository.saveAs(request, Password.of(hashPassword));
     }
 
     @Override
-    public void register1(RequestUserRegistration1 request) {
+    public void register1(JbstRequestUserRegistration1 request) {
         var invitation = this.invitationsRepository.findByCodeAsAny(request.code());
         var hashPassword = this.bCryptPasswordEncoder.encode(request.password().value());
         invitation = new JbstInvitation(

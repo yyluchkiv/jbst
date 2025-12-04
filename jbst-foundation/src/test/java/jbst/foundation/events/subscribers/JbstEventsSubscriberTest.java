@@ -5,7 +5,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
 import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
 import jbst.foundation.domain.base.IPAddress;
@@ -287,7 +287,7 @@ class JbstEventsSubscriberTest {
     @MethodSource("exceptionalExecutionParams")
     void onRegistration0Test(RuntimeException ex) {
         // Arrange
-        var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
+        var requestUserRegistration0 = JbstRequestUserRegistration0.hardcoded();
         var event = new JbstEventRegistration0(requestUserRegistration0);
         var userToken = JbstUserToken.hardcodedEmailConfirmation();
         when(this.usersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);

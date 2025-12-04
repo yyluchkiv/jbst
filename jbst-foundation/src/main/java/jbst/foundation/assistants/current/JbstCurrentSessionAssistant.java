@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtUser;
@@ -79,7 +79,7 @@ public class JbstCurrentSessionAssistant implements CurrentSessionAssistant {
     }
 
     @Override
-    public ResponseUserSessionsTable getCurrentUserDbSessionsTable(RequestAccessToken requestAccessToken) {
+    public JbstResponseUserSessionsTable getCurrentUserDbSessionsTable(JbstRequestAccessToken requestAccessToken) {
         var username = this.getCurrentUsername();
         this.sessionRegistry.cleanByExpiredRefreshTokens(Set.of(username));
         return this.sessionRegistry.getSessionsTable(username, requestAccessToken);

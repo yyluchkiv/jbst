@@ -1,8 +1,8 @@
 package jbst.foundation.services.postgres;
 
-import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
-import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
-import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration0;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistration1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistrationMagicLink;
 import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersTokensRepository;
@@ -37,19 +37,19 @@ public class PostgresJbstRegistrationService extends AbstractJbstRegistrationSer
 
     @Transactional
     @Override
-    public void registerMagicLink(RequestUserRegistrationMagicLink request) {
+    public void registerMagicLink(JbstRequestUserRegistrationMagicLink request) {
         super.registerMagicLink(request);
     }
 
     @Transactional
     @Override
-    public void register0(RequestUserRegistration0 request) {
+    public void register0(JbstRequestUserRegistration0 request) {
         super.register0(request);
     }
 
     @Transactional
     @Override
-    public void register1(RequestUserRegistration1 request) {
+    public void register1(JbstRequestUserRegistration1 request) {
         super.register1(request);
     }
 }

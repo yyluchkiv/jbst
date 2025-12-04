@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserToken;
+import jbst.foundation.domain.dto.requests.JbstRequestUserToken;
 import jbst.foundation.domain.enums.JbstUserTokenType;
 import jbst.foundation.domain.ids.JbstTokenId;
 import lombok.*;
@@ -53,7 +53,7 @@ public class MongoDbUserToken {
         this.used = used;
     }
 
-    public MongoDbUserToken(RequestUserToken request) {
+    public MongoDbUserToken(JbstRequestUserToken request) {
         this(
                 request.email(),
                 randomStringLetterOrNumbersOnly(255),

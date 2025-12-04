@@ -1,8 +1,8 @@
 package jbst.foundation.sessions;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.sessions.JbstSession;
@@ -24,5 +24,5 @@ public interface JbstSessionRegistry {
 
     // think about migrating to separate service/registry
     void cleanByExpiredRefreshTokens(Set<Username> usernames);
-    ResponseUserSessionsTable getSessionsTable(Username username, RequestAccessToken requestAccessToken);
+    JbstResponseUserSessionsTable getSessionsTable(Username username, JbstRequestAccessToken requestAccessToken);
 }

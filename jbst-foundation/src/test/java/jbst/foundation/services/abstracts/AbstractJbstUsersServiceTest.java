@@ -4,10 +4,10 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
-import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
+import jbst.foundation.domain.dto.requests.JbstRequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.JbstRequestUserPasswordReset;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtUser;
@@ -175,7 +175,7 @@ class AbstractJbstUsersServiceTest {
     @Test
     void updateUser1() {
         // Arrange
-        var request = RequestUserUpdate1.hardcoded();
+        var request = JbstRequestUserUpdate1.hardcoded();
         var user = JbstJwtUser.hardcoded();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
@@ -194,7 +194,7 @@ class AbstractJbstUsersServiceTest {
     @Test
     void updateUser2() {
         // Arrange
-        var request = RequestUserUpdate2.hardcoded();
+        var request = JbstRequestUserUpdate2.hardcoded();
         var user = JbstJwtUser.hardcoded();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
@@ -212,7 +212,7 @@ class AbstractJbstUsersServiceTest {
     @RepeatedTest(5)
     void changePasswordRequired() {
         // Arrange
-        var request = RequestUserChangePasswordBasic.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.hardcoded();
         var user = JbstJwtUser.random();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
@@ -235,7 +235,7 @@ class AbstractJbstUsersServiceTest {
     @RepeatedTest(5)
     void changePassword1() {
         // Arrange
-        var request = RequestUserChangePasswordBasic.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.hardcoded();
         var user = JbstJwtUser.hardcoded();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
@@ -258,7 +258,7 @@ class AbstractJbstUsersServiceTest {
     @Test
     void resetPasswordTest() {
         // Arrange
-        var request = RequestUserPasswordReset.hardcoded();
+        var request = JbstRequestUserPasswordReset.hardcoded();
         var userToken = JbstUserToken.hardcodedPasswordReset();
         when(this.usersTokensRepository.findByValueAsAnyOrNull(request.token())).thenReturn(userToken);
         var passwordAC = ArgumentCaptor.forClass(Password.class);

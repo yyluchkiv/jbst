@@ -1,8 +1,8 @@
 package jbst.foundation.domain.events;
 
-import jbst.foundation.domain.dto.requests.RequestUserRegistrationMagicLink;
+import jbst.foundation.domain.dto.requests.JbstRequestUserRegistrationMagicLink;
 
 public record JbstEventRegistrationMagicLink(
-        RequestUserRegistrationMagicLink request
+        JbstRequestUserRegistrationMagicLink request
 ) {
 }

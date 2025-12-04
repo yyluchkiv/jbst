@@ -4,9 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.requests.RequestRefreshToken;
-import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
+import jbst.foundation.domain.dto.responses.JbstResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.services.JbstTokensContextThrowerService;
@@ -35,8 +35,8 @@ public class JbstTokensService {
     private final JbstSecurityUtils securityUtils;
 
     public final JbstJwtUser getJwtUserByAccessTokenOrThrow(
-            RequestAccessToken requestAccessToken,
-            RequestRefreshToken requestRefreshToken
+            JbstRequestAccessToken requestAccessToken,
+            JbstRequestRefreshToken requestRefreshToken
     ) throws JbstExceptions.AccessTokenInvalid, JbstExceptions.RefreshTokenInvalid, JbstExceptions.AccessTokenExpired, JbstExceptions.AccessTokenDbNotFound {
         var accessToken = requestAccessToken.getJwtAccessToken();
         var refreshToken = requestRefreshToken.getJwtRefreshToken();
@@ -51,7 +51,7 @@ public class JbstTokensService {
         return this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.username().value());
     }
 
-    public final ResponseRefreshTokens refreshSessionOrThrow(
+    public final JbstResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws JbstExceptions.RefreshTokenNotFound, JbstExceptions.RefreshTokenInvalid, JbstExceptions.RefreshTokenExpired, JbstExceptions.RefreshTokenDbNotFound {
@@ -76,6 +76,6 @@ public class JbstTokensService {
 
         this.sessionRegistry.renew(username, oldRefreshToken, accessToken, newRefreshToken);
 
-        return new ResponseRefreshTokens(accessToken, newRefreshToken);
+        return new JbstResponseRefreshTokens(accessToken, newRefreshToken);
     }
 }

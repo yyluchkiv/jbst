@@ -2,7 +2,7 @@ package jbst.foundation.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jbst.foundation.domain.annotations.JbstResource;
-import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
+import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class JbstHardcodedResource {
 
     @GetMapping("/sessions")
-    public ResponseUserSessionsTable getSessions() {
-        return ResponseUserSessionsTable.random();
+    public JbstResponseUserSessionsTable getSessions() {
+        return JbstResponseUserSessionsTable.random();
     }
 }
 

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static java.math.BigDecimal.ZERO;
-import static jbst.foundation.domain.numbers.RoundingUtility.scale;
+import static jbst.foundation.domain.numbers.JbstNumbers.scale;
 
 @Data
 public class TupleReadableAmount {

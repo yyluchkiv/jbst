@@ -9,7 +9,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertNonNullOrThrow;
 import static org.apache.commons.codec.binary.Hex.encodeHexString;
 
 @UtilityClass

@@ -4,7 +4,7 @@ import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
-import jbst.foundation.domain.dto.requests.RequestJbstSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -68,14 +68,14 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
     @Test
     void saveJbstSettings() throws Exception {
         // Arrange
-        var request = RequestJbstSettings.hardcoded();
+        var request = JbstRequestJbstSettings.hardcoded();
         when(this.settingsService.getSettings()).thenReturn(JbstSettings.hardcoded());
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(JbstJwtUser.hardcoded());
 
         // Act
         this.mvc.perform(
                         post("/settings")
-                                .content(this.objectMapper.writeValueAsString(RequestJbstSettings.hardcoded()))
+                                .content(this.objectMapper.writeValueAsString(JbstRequestJbstSettings.hardcoded()))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())

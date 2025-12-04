@@ -7,8 +7,8 @@ import jbst.foundation.domain.annotations.JbstResource;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUsers;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
@@ -61,7 +61,7 @@ public class JbstSuperadminResource {
     // Invitations
     // =================================================================================================================
     @GetMapping("/invitations/unused")
-    public List<ResponseInvitation> findInvitationsUnused() {
+    public List<JbstResponseInvitation> findInvitationsUnused() {
         return this.superadminService.findInvitationsUnused();
     }
 
@@ -83,7 +83,7 @@ public class JbstSuperadminResource {
     // Users Sessions
     // =================================================================================================================
     @GetMapping("/sessions")
-    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
+    public JbstResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws JbstExceptions.AccessTokenNotFound {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         return this.superadminService.getSessions(cookie);
     }

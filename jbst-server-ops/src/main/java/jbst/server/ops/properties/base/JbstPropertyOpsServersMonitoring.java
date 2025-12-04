@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
 import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
 
 // Lombok (property-based)

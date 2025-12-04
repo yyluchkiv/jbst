@@ -2,7 +2,7 @@ package jbst.foundation.repositories;
 
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
-import jbst.foundation.domain.dto.requests.RequestJbstSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
 
 public interface JbstSettingsRepository {
     JbstSettings getSettings();
@@ -10,6 +10,6 @@ public interface JbstSettingsRepository {
     long count();
     JbstSettings saveAs(
             Username updatedBy,
-            RequestJbstSettings request
+            JbstRequestJbstSettings request
     );
 }

@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
-import jbst.foundation.domain.dto.requests.RequestRefreshToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -174,8 +174,8 @@ class JbstTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var requestAccessToken = RequestAccessToken.random();
-        var requestRefreshToken = RequestRefreshToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
+        var requestRefreshToken = JbstRequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new JbstExceptions.AccessTokenExpired(Username.hardcoded()));
@@ -201,7 +201,7 @@ class JbstTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var requestAccessToken = RequestAccessToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenThrow(new JbstExceptions.RefreshTokenNotFound());
 
@@ -227,8 +227,8 @@ class JbstTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var requestAccessToken = RequestAccessToken.random();
-        var requestRefreshToken = RequestRefreshToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
+        var requestRefreshToken = JbstRequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(exception);
@@ -256,8 +256,8 @@ class JbstTokensFilterTest {
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
         var user = entity(JbstJwtUser.class);
-        var requestAccessToken = RequestAccessToken.random();
-        var requestRefreshToken = RequestRefreshToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
+        var requestRefreshToken = JbstRequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
@@ -287,8 +287,8 @@ class JbstTokensFilterTest {
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
         var user = entity(JbstJwtUser.class);
-        var requestAccessToken = RequestAccessToken.random();
-        var requestRefreshToken = RequestRefreshToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
+        var requestRefreshToken = JbstRequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
@@ -320,8 +320,8 @@ class JbstTokensFilterTest {
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
         var user = entity(JbstJwtUser.class);
-        var requestAccessToken = RequestAccessToken.random();
-        var requestRefreshToken = RequestRefreshToken.random();
+        var requestAccessToken = JbstRequestAccessToken.random();
+        var requestRefreshToken = JbstRequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);

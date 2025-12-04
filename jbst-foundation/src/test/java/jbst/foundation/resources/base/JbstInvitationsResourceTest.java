@@ -4,9 +4,9 @@ package jbst.foundation.resources.base;
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.dto.requests.RequestNewInvitationParams;
-import jbst.foundation.domain.dto.responses.ResponseInvitation;
-import jbst.foundation.domain.dto.responses.ResponseInvitations;
+import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
+import jbst.foundation.domain.dto.responses.JbstResponseInvitations;
 import jbst.foundation.domain.ids.JbstInvitationId;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.JbstInvitationsService;
@@ -64,8 +64,8 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
         var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.jbstProperties.getSecurity().getAuthorities().getAvailableAuthorities();
-        var invitations = list345(ResponseInvitation.class);
-        var responseInvitations = new ResponseInvitations(authorities, invitations);
+        var invitations = list345(JbstResponseInvitation.class);
+        var responseInvitations = new JbstResponseInvitations(authorities, invitations);
         when(this.invitationsService.findByOwner(owner)).thenReturn(responseInvitations);
 
         // Act
@@ -83,7 +83,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
     void saveTest() throws Exception {
         // Arrange
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
-        var request = RequestNewInvitationParams.hardcoded();
+        var request = JbstRequestNewInvitationParams.hardcoded();
 
         // Act
         this.mvc.perform(

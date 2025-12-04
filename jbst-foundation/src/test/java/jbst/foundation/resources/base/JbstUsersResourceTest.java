@@ -2,9 +2,9 @@ package jbst.foundation.resources.base;
 
 import jbst.foundation.assistants.current.CurrentSessionAssistant;
 import jbst.foundation.configurations.TestRunnerResources1;
-import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
-import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
+import jbst.foundation.domain.dto.requests.JbstRequestUserChangePasswordBasic;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate1;
+import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate2;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.validators.JbstUsersValidator;
@@ -54,7 +54,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void update1() throws Exception {
         // Arrange
-        var request = RequestUserUpdate1.hardcoded();
+        var request = JbstRequestUserUpdate1.hardcoded();
         var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
@@ -75,7 +75,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void update2() throws Exception {
         // Arrange
-        var request = RequestUserUpdate2.hardcoded();
+        var request = JbstRequestUserUpdate2.hardcoded();
         var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
@@ -95,7 +95,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void changePasswordRequired() throws Exception {
         // Arrange
-        var request = RequestUserChangePasswordBasic.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.hardcoded();
         var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
@@ -116,7 +116,7 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void changePassword1() throws Exception {
         // Arrange
-        var request = RequestUserChangePasswordBasic.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.hardcoded();
         var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 

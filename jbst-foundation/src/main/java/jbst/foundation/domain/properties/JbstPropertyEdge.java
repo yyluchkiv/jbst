@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties;
 
-import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapEnums;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.enums.JbstEnums;
@@ -19,7 +18,7 @@ import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
@@ -124,7 +123,7 @@ public class JbstPropertyEdge {
                 );
             }
         }
-        ConsoleAsserts.PROPERTIES_ACTIONS.entrySet().stream()
+        JbstPropertiesAsserts.PROPERTIES_ACTIONS.entrySet().stream()
                 .filter(entry -> entry.getKey().apply(this.valueRAW.getClass()))
                 .map(Map.Entry::getValue)
                 .findFirst()

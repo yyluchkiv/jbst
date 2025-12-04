@@ -6,7 +6,7 @@ import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
+import jbst.foundation.domain.dto.responses.JbstResponseRefreshTokens;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.events.JbstEventAuthenticationLoginFailure;
 import jbst.foundation.domain.events.JbstEventAuthenticationMagicLinkFailure;
@@ -122,7 +122,7 @@ public class JbstAuthenticationService {
         }
     }
 
-    public final ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Unauthorized {
+    public final JbstResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws JbstExceptions.Unauthorized {
         try {
             return this.tokensService.refreshSessionOrThrow(httpRequest, httpResponse);
         } catch (

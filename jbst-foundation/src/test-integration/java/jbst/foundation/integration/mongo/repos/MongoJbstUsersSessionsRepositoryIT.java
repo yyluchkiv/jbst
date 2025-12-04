@@ -4,7 +4,7 @@ import jbst.foundation.configurations.JbstConfigurationMongoRepositories;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.databases.mongo.MongoDbUserSession;
-import jbst.foundation.domain.dto.requests.RequestAccessToken;
+import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.ids.JbstUserSessionId;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
@@ -76,8 +76,8 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
         assertThat(this.usersSessionsRepository.isPresent(JbstJwtRefreshToken.of("rwt1")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JbstJwtRefreshToken.of("rwt2")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JbstJwtRefreshToken.of("rwt777")).present()).isFalse();
-        assertThat(this.usersSessionsRepository.getUsersSessionsTable(Username.of("user777"), new RequestAccessToken("awt2"))).isEmpty();
-        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(Username.hardcoded(), new RequestAccessToken("awt2"));
+        assertThat(this.usersSessionsRepository.getUsersSessionsTable(Username.of("user777"), new JbstRequestAccessToken("awt2"))).isEmpty();
+        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(Username.hardcoded(), new JbstRequestAccessToken("awt2"));
         assertThat(usersSessions).hasSize(4);
         assertThat(usersSessions.get(0).current()).isTrue();
         assertThat(usersSessions.get(0).activity()).isEqualTo("Current session");
@@ -85,7 +85,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
             assertThat(userSession.current()).isFalse();
             assertThat(userSession.activity()).isEqualTo("—");
         });
-        var sessionsTable = this.usersSessionsRepository.getSessionsTable(accessTokens("awt3", "atoken11", "atoken"), new RequestAccessToken("atoken"));
+        var sessionsTable = this.usersSessionsRepository.getSessionsTable(accessTokens("awt3", "atoken11", "atoken"), new JbstRequestAccessToken("atoken"));
         assertThat(sessionsTable.activeSessions()).hasSize(3);
         assertThat(sessionsTable.activeSessions().get(0).current()).isTrue();
         assertThat(sessionsTable.activeSessions().get(0).who().value()).isEqualTo("sa");
@@ -186,7 +186,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
 
         // Act
         var count1 = this.usersSessionsRepository.count();
-        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(Username.hardcoded(), new RequestAccessToken("token2"));
+        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(Username.hardcoded(), new JbstRequestAccessToken("token2"));
         var count2 = this.usersSessionsRepository.count();
         var sessions = this.usersSessionsRepository.findAll();
         assertThat(count1).isEqualTo(4);
@@ -202,7 +202,7 @@ class MongoJbstUsersSessionsRepositoryIT extends TestsJbstConfigurationMongoRepo
 
         // Act
         var count1 = this.usersSessionsRepository.count();
-        this.usersSessionsRepository.deleteExceptAccessToken(new RequestAccessToken("token2"));
+        this.usersSessionsRepository.deleteExceptAccessToken(new JbstRequestAccessToken("token2"));
         var count2 = this.usersSessionsRepository.count();
         var sessions = this.usersSessionsRepository.findAll();
 
