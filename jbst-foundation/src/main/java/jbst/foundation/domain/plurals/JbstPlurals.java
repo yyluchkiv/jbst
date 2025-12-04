@@ -15,13 +15,13 @@ import static java.util.Collections.unmodifiableList;
 @Getter
 @EqualsAndHashCode
 @ToString
-public abstract class Plurals<T extends Plurable<ID>, ID> {
+public abstract class JbstPlurals<T extends JbstPlurable<ID>, ID> {
     protected final List<T> values;
     protected final Map<ID, T> mappedValues;
 
-    protected Plurals(List<T> values) {
+    protected JbstPlurals(List<T> values) {
         this.values = unmodifiableList(values);
-        this.mappedValues = values.stream().collect(Collectors.toUnmodifiableMap(Plurable::getId, entry -> entry));
+        this.mappedValues = values.stream().collect(Collectors.toUnmodifiableMap(JbstPlurable::getId, entry -> entry));
     }
 
     @SuppressWarnings("unused")
@@ -31,7 +31,7 @@ public abstract class Plurals<T extends Plurable<ID>, ID> {
 
     @JsonIgnore
     public final List<ID> getIds() {
-        return this.values.stream().map(Plurable::getId).toList();
+        return this.values.stream().map(JbstPlurable::getId).toList();
     }
 
     @SuppressWarnings("unused")

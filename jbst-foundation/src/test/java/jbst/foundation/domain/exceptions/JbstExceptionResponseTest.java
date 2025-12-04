@@ -1,7 +1,7 @@
 package jbst.foundation.domain.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.runners.AbstractObjectMapperRunner;
+import jbst.foundation.domain.tests.JbstUnitTests.Runners.AbstractObjectMapperRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 

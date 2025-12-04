@@ -26,7 +26,7 @@ import static java.util.Objects.nonNull;
 public class JbstSSH {
 
     @SuppressWarnings("DataFlowIssue")
-    public static SshSession getSession(SshConnectionConfigs connectionConfigs) {
+    public static JbstSshSession getSession(JbstSshConnectionConfigs connectionConfigs) {
         try {
             if (nonNull(connectionConfigs.getPassword())) {
                 var jsch = new JSch();
@@ -44,9 +44,9 @@ public class JbstSSH {
                 return timeoutSshSession(connectionConfigs, session);
             }
         } catch (JSchException ex) {
-            return SshSession.failure(ex);
+            return JbstSshSession.failure(ex);
         }
-        return SshSession.failure(new JSchException(String.format("Unexpected SSH config for host: %s", connectionConfigs.getHost())));
+        return JbstSshSession.failure(new JSchException(String.format("Unexpected SSH config for host: %s", connectionConfigs.getHost())));
     }
 
     public static List<String> executeCmd(Session session, String cmd) throws JbstExceptions.SshSession {
@@ -79,26 +79,26 @@ public class JbstSSH {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private static SshSession timeoutSshSession(SshConnectionConfigs connectionConfigs, Session session) {
+    private static JbstSshSession timeoutSshSession(JbstSshConnectionConfigs connectionConfigs, Session session) {
         var executorService = Executors.newSingleThreadExecutor();
         var connectionCompleted = executorService.submit(() -> {
             try {
                 session.connect();
-                return SshSession.success(session);
+                return JbstSshSession.success(session);
             } catch (JSchException | RuntimeException ex) {
-                return SshSession.failure(ex);
+                return JbstSshSession.failure(ex);
             }
         });
-        SshSession sshSession;
+        JbstSshSession sshSession;
         try {
             sshSession = connectionCompleted.get(connectionConfigs.getTimeout().amount(), TimeUnit.of(connectionConfigs.getTimeout().unit()));
         } catch (ExecutionException ex) {
-            return SshSession.failure(ex.getCause());
+            return JbstSshSession.failure(ex.getCause());
         } catch (TimeoutException ex) {
-            return SshSession.failure(ex);
+            return JbstSshSession.failure(ex);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
-            return SshSession.failure(ex);
+            return JbstSshSession.failure(ex);
         }
         executorService.shutdown();
         try {

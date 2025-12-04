@@ -2,6 +2,10 @@ package jbst.foundation.domain.tests;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.EnumValue;
 import jbst.foundation.domain.enums.JbstEnumsCreator;
@@ -96,6 +100,33 @@ public class JbstUnitTests {
             var file = new File(resource.getFile());
             var lines = readAllLines(Paths.get(file.getAbsolutePath()), defaultCharset());
             return String.join(JbstConstants.Symbols.NEWLINE, lines);
+        }
+    }
+
+    public static class Runners {
+        public static abstract class AbstractObjectMapperRunner {
+            protected static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder()
+                    .addModule(new JavaTimeModule())
+                    .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
+                    .build();
+
+            protected static final ObjectMapper PLAIN_OBJECT_MAPPER = JsonMapper.builder()
+                    .build();
+
+            @SneakyThrows
+            protected final String writeValueAsString(Object object) {
+                return OBJECT_MAPPER
+                        .writerWithDefaultPrettyPrinter()
+                        .writeValueAsString(object);
+            }
+
+            @SuppressWarnings("unused")
+            @SneakyThrows
+            protected final String writeValueAsPlainString(Object object) {
+                return PLAIN_OBJECT_MAPPER
+                        .writerWithDefaultPrettyPrinter()
+                        .writeValueAsString(object);
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresConvertersTest {
+class JbstPostgresConvertersTest {
 
     private static Stream<Arguments> convertToDatabaseColumnArgs() {
         return Stream.of(
@@ -47,12 +47,12 @@ class PostgresConvertersTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        PostgresConverters.SimpleGrantedAuthoritiesSetConverter simpleGrantedAuthoritiesSetConverter() {
-            return new PostgresConverters.SimpleGrantedAuthoritiesSetConverter();
+        JbstPostgresConverters.SimpleGrantedAuthoritiesSetConverter simpleGrantedAuthoritiesSetConverter() {
+            return new JbstPostgresConverters.SimpleGrantedAuthoritiesSetConverter();
         }
     }
 
-    private final PostgresConverters.SimpleGrantedAuthoritiesSetConverter simpleGrantedAuthoritiesSetConverter;
+    private final JbstPostgresConverters.SimpleGrantedAuthoritiesSetConverter simpleGrantedAuthoritiesSetConverter;
 
     @ParameterizedTest
     @MethodSource("convertToDatabaseColumnArgs")

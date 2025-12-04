@@ -9,19 +9,19 @@ import lombok.*;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class SshSession {
+public class JbstSshSession {
     private final TuplePresence<Session> session;
     private final TuplePresence<Throwable> throwable;
 
-    public static SshSession success(Session session) {
-        return new SshSession(
+    public static JbstSshSession success(Session session) {
+        return new JbstSshSession(
                 TuplePresence.present(session),
                 TuplePresence.absent()
         );
     }
 
-    public static SshSession failure(Throwable throwable) {
-        return new SshSession(
+    public static JbstSshSession failure(Throwable throwable) {
+        return new JbstSshSession(
                 TuplePresence.absent(),
                 TuplePresence.present(throwable)
         );

@@ -6,7 +6,7 @@ import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
 import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
 import jbst.foundation.services.abstracts.AbstractJbstSuperadminService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tasks.AbstractJbstResetServerTask;
+import jbst.foundation.tasks.JbstAbstractTaskOnResetServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class PostgresJbstSuperadminService extends AbstractJbstSuperadminService
             PostgresJbstInvitationsRepository invitationsRepository,
             PostgresJbstUsersRepository usersRepository,
             PostgresJbstUsersSessionsRepository usersSessionsRepository,
-            AbstractJbstResetServerTask resetServerTask
+            JbstAbstractTaskOnResetServer taskOnResetServer
     ) {
         super(
                 incidentsPublisher,
@@ -30,7 +30,7 @@ public class PostgresJbstSuperadminService extends AbstractJbstSuperadminService
                 invitationsRepository,
                 usersRepository,
                 usersSessionsRepository,
-                resetServerTask
+                taskOnResetServer
         );
     }
 }

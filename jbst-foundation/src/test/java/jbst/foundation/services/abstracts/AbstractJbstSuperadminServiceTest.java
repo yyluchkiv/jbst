@@ -8,14 +8,14 @@ import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
-import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.tasks.AbstractJbstResetServerTask;
+import jbst.foundation.tasks.JbstAbstractTaskOnResetServer;
 import jbst.foundation.tests.stubbers.AbstractMockService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -76,8 +76,8 @@ class AbstractJbstSuperadminServiceTest {
         }
 
         @Bean
-        AbstractJbstResetServerTask abstractSuperAdminResetServerTask() {
-            return new AbstractJbstResetServerTask(
+        JbstAbstractTaskOnResetServer taskOnResetServer() {
+            return new JbstAbstractTaskOnResetServer(
                     this.incidentsPublisher()
             ) {
                 @Override
@@ -100,7 +100,7 @@ class AbstractJbstSuperadminServiceTest {
                     this.invitationsRepository(),
                     this.usersRepository(),
                     this.usersSessionsRepository(),
-                    this.abstractSuperAdminResetServerTask()
+                    this.taskOnResetServer()
             ) {};
         }
     }

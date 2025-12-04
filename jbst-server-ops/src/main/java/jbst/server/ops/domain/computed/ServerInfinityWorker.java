@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ssh.JbstSSH;
-import jbst.foundation.domain.ssh.SshConnectionConfigs;
+import jbst.foundation.domain.ssh.JbstSshConnectionConfigs;
 import jbst.foundation.domain.states.AbstractClassicStateManager;
 import jbst.foundation.domain.states.ClassicState;
 import jbst.foundation.domain.time.JbstSchedulerConfiguration;
@@ -88,7 +88,7 @@ public class ServerInfinityWorker {
 
     // Configs [processed]
     private final boolean sshRequired;
-    private final SshConnectionConfigs sshConnectionConfigs;
+    private final JbstSshConnectionConfigs sshConnectionConfigs;
     private final boolean isSpringActuatorAuthenticationRequired;
 
     // Computed

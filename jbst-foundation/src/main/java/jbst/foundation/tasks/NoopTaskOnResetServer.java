@@ -19,7 +19,7 @@ import static jbst.foundation.domain.concurrent.JbstSleep.sleepMilliseconds;
 @Slf4j
 @Getter
 @Component
-public class NoopJbstResetServerTask extends AbstractJbstResetServerTask {
+public class NoopTaskOnResetServer extends JbstAbstractTaskOnResetServer {
 
     // Wss
     private final JbstWebsocketsService websocketsService;
@@ -27,7 +27,7 @@ public class NoopJbstResetServerTask extends AbstractJbstResetServerTask {
     private final JbstSystemResetServerStatus status = new JbstSystemResetServerStatus(6);
 
     @Autowired
-    public NoopJbstResetServerTask(
+    public NoopTaskOnResetServer(
             JbstIncidentsPublisher incidentsPublisher,
             JbstWebsocketsService websocketsService
     ) {

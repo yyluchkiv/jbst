@@ -1,6 +1,6 @@
 package jbst.server.ops.crons;
 
-import jbst.foundation.domain.crons.AbstractBaseCron;
+import jbst.foundation.domain.crons.JbstAbstractCron;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.server.ops.properties.ServerProperties;
 import jbst.server.ops.services.IncidentsService;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class NotificationsCron extends AbstractBaseCron {
+public class OpsNotificationsCron extends JbstAbstractCron {
 
     // Services
     private final IncidentsService incidentsService;

@@ -1,10 +1,33 @@
 ### Backlog
 
-##### Major
+##### Strategy
 — Migration @ Java21
 — Users, Registration @ GitHub
 — Users @ Payments (Stripe)
 — Users + Plans
 
-##### Minor
+##### Major
 — Modification: JbstExceptionResponse JSON V2
+— JbstNumbers: domain.numbers
+
+##### Minor
+— Prefixes: domain.asserts
+— Prefixes: domain.databases (?)
+— Prefixes: domain.dto (?)
+— Prefixes: domain.emails
+— Prefixes: domain.enums
+— Prefixes: domain.events
+— Prefixes: domain.functions
+— Prefixes: domain.geo
+— Prefixes: domain.hardware
+— Prefixes: domain.http
+— Prefixes: domain.ids
+— Prefixes: domain.jsons (?)
+— Prefixes: domain.jwt
+— Prefixes: domain.maven
+— Prefixes: domain.notifications
+— Prefixes: domain.security
+— Prefixes: domain.states
+— Prefixes: domain.triggers (?)
+— Prefixes: incidents (?)
+

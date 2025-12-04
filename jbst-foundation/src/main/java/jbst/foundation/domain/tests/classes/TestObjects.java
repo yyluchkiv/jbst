@@ -1,7 +1,7 @@
 package jbst.foundation.domain.tests.classes;
 
 import jbst.foundation.domain.base.ObjectId;
-import jbst.foundation.domain.plurals.Plurals;
+import jbst.foundation.domain.plurals.JbstPlurals;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class TestObjects extends Plurals<TestObject, ObjectId> {
+public class TestObjects extends JbstPlurals<TestObject, ObjectId> {
 
     public TestObjects(List<TestObject> values) {
         super(values);

@@ -8,7 +8,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.converters.PostgresConverters;
+import jbst.foundation.domain.converters.JbstPostgresConverters;
 import jbst.foundation.domain.databases.JbstInvitation;
 import jbst.foundation.domain.databases.JbstUser;
 import jbst.foundation.domain.databases.JbstUserEmailDetails;
@@ -46,30 +46,30 @@ import static org.springframework.util.StringUtils.capitalize;
 public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_users";
 
-    @Convert(converter = PostgresConverters.UserCreationOptionConverter.class)
+    @Convert(converter = JbstPostgresConverters.UserCreationOptionConverter.class)
     @Column(name = "creation_option", nullable = false, updatable = false)
     private JbstUserCreationOption creationOption;
 
     @Basic
-    @Convert(converter = PostgresConverters.UsernameConverter.class)
+    @Convert(converter = JbstPostgresConverters.UsernameConverter.class)
     @Column(nullable = false, updatable = false)
     private Username username;
 
-    @Convert(converter = PostgresConverters.PasswordConverter.class)
+    @Convert(converter = JbstPostgresConverters.PasswordConverter.class)
     @Column(nullable = false)
     private Password password;
 
     @Schema(type = "string")
-    @Convert(converter = PostgresConverters.ZoneIdConverter.class)
+    @Convert(converter = JbstPostgresConverters.ZoneIdConverter.class)
     @Column(name = "zone_id", nullable = false)
     private ZoneId zoneId;
 
-    @Convert(converter = PostgresConverters.SimpleGrantedAuthoritiesSetConverter.class)
+    @Convert(converter = JbstPostgresConverters.SimpleGrantedAuthoritiesSetConverter.class)
     @Column(length = 1024, nullable = false)
     private Set<SimpleGrantedAuthority> authorities;
 
     @Basic
-    @Convert(converter = PostgresConverters.EmailConverter.class)
+    @Convert(converter = JbstPostgresConverters.EmailConverter.class)
     @Column
     private Email email;
 
@@ -86,7 +86,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(name = "email_details", nullable = false)
     private JbstUserEmailDetails emailDetails;
 
-    @Convert(converter = PostgresConverters.MapStringsObjectsConverter.class)
+    @Convert(converter = JbstPostgresConverters.MapStringsObjectsConverter.class)
     @Column(length = 65535)
     private Map<String, Object> attributes;
 

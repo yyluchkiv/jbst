@@ -35,7 +35,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasLength;
 
 @UtilityClass
-public class PostgresConverters {
+public class JbstPostgresConverters {
     @Converter
     public class EmailConverter implements AttributeConverter<Email, String> {
         @Override

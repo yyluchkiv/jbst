@@ -1,6 +1,6 @@
 package jbst.foundation.domain.triggers;
 
-import jbst.foundation.domain.tests.runners.AbstractObjectMapperRunner;
+import jbst.foundation.domain.tests.JbstUnitTests.Runners.AbstractObjectMapperRunner;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
