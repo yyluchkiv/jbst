@@ -103,7 +103,7 @@ class JbstEnumsCreatorTest {
         if (exception) {
             assertThat(throwable)
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageStartingWith("Attribute `EnumValue1` is invalid")
+                    .hasMessageStartingWith("Attribute `JbstEnumValue1` is invalid")
                     .hasMessageEndingWith(expectedMessage);
         }
     }
@@ -124,7 +124,7 @@ class JbstEnumsCreatorTest {
         if (exception) {
             assertThat(throwable)
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageStartingWith("Attribute `EnumValue1` is invalid")
+                    .hasMessageStartingWith("Attribute `JbstEnumValue1` is invalid")
                     .hasMessageEndingWith(expectedMessage);
         }
     }
@@ -157,7 +157,7 @@ class JbstEnumsCreatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("EnumValue1 does not have UNKNOWN enum value");
+                .hasMessageStartingWith("JbstEnumValue1 does not have UNKNOWN enum value");
     }
 
     @ParameterizedTest
@@ -197,6 +197,6 @@ class JbstEnumsCreatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("EnumValue1 does not have UNKNOWN enum value");
+                .hasMessageStartingWith("JbstEnumValue1 does not have UNKNOWN enum value");
     }
 }
