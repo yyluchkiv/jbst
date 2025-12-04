@@ -12,6 +12,7 @@ import static java.nio.file.Files.readAllLines;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.Files.PATH_DELIMITER;
 
+@Deprecated
 @UtilityClass
 public class TestsIOUtils {
 

@@ -1,7 +1,6 @@
 package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.RepeatedTest;
@@ -11,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class VersionTest extends AbstractFolderSerializationRunner {
@@ -35,7 +35,7 @@ class VersionTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(version);
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
+        assertThat(json).isEqualTo(read(this.getFolder(), fileName));
     }
 
     @SneakyThrows
@@ -43,7 +43,7 @@ class VersionTest extends AbstractFolderSerializationRunner {
     @MethodSource("versionsTests")
     void deserializeTest(Version version, String fileName) {
         // Arrange
-        var json = TestsIOUtils.readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<Version>() {};
 
         // Act

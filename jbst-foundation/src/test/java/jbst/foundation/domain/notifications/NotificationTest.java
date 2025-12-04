@@ -1,6 +1,5 @@
 package jbst.foundation.domain.notifications;
 
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractObjectMapperRunner;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NotificationTest extends AbstractObjectMapperRunner {
@@ -32,6 +32,6 @@ class NotificationTest extends AbstractObjectMapperRunner {
         var json = this.writeValueAsString(fnc.apply(message));
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile("jsons", fileName));
+        assertThat(json).isEqualTo(read("jsons", fileName));
     }
 }

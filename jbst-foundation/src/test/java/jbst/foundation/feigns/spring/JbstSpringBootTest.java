@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstSpringBootTest extends AbstractFolderSerializationRunner {
@@ -105,7 +105,7 @@ class JbstSpringBootTest extends AbstractFolderSerializationRunner {
     @MethodSource("healthArgs")
     void healthTest(JbstSpringBoot.SpringBootActuatorHealth springBootActuatorHealth, String fileName) {
         // Arrange
-        var json = readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<JbstSpringBoot.SpringBootActuatorHealth>() {};
 
         // Act
@@ -120,7 +120,7 @@ class JbstSpringBootTest extends AbstractFolderSerializationRunner {
     @MethodSource("infoArgs")
     void infoTest(JbstSpringBoot.SpringBootActuatorInfo springBootActuatorInfo, String profile, boolean isDash, Version version, String fileName) {
         // Arrange
-        var json = readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<JbstSpringBoot.SpringBootActuatorInfo>() {};
 
         // Act

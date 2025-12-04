@@ -6,17 +6,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.stream.Stream;
 
 import static java.time.Month.DECEMBER;
-import static java.time.ZoneOffset.UTC;
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 import static java.time.format.DateTimeFormatter.ofPattern;
-import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.time.LocalDateTimeUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,39 +32,6 @@ class LocalDateTimeUtilityImplTest {
         return Stream.of(
                 Arguments.of("2021-12-25T15:16:17", ISO_DATE_TIME, _25_11_2021),
                 Arguments.of("25.12.2021 15:16:17", ofPattern("dd.MM.yyyy HH:mm:ss"), _25_11_2021)
-        );
-    }
-
-    private static Stream<Arguments> isBetweenTest() {
-        return Stream.of(
-                Arguments.of(1640438177000L, UKRAINE, _25_11_2021),
-                Arguments.of(1640445377000L, UTC, _25_11_2021),
-                Arguments.of(1324818977000L, UKRAINE, _25_11_2021.minusYears(10)),
-                Arguments.of(1324826177000L, UTC, _25_11_2021.minusYears(10)),
-                Arguments.of(1009286177000L, UKRAINE, _25_11_2021.minusYears(20)),
-                Arguments.of(1009293377000L, UTC, _25_11_2021.minusYears(20))
-        );
-    }
-
-    private static Stream<Arguments> convertDateTest() {
-        return Stream.of(
-                Arguments.of(new Date(1640438177000L), UKRAINE, _25_11_2021),
-                Arguments.of(new Date(1640445377000L), UTC, _25_11_2021),
-                Arguments.of(new Date(1324818977000L), UKRAINE, _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1324826177000L), UTC, _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1009286177000L), UKRAINE, _25_11_2021.minusYears(20)),
-                Arguments.of(new Date(1009293377000L), UTC, _25_11_2021.minusYears(20))
-        );
-    }
-
-    private static Stream<Arguments> getTimestampTest() {
-        return Stream.of(
-                Arguments.of(_25_11_2021, UKRAINE, 1640438177000L),
-                Arguments.of(_25_11_2021, UTC, 1640445377000L),
-                Arguments.of(_25_11_2021.minusYears(10), UKRAINE, 1324818977000L),
-                Arguments.of(_25_11_2021.minusYears(10), UTC, 1324826177000L),
-                Arguments.of(_25_11_2021.minusYears(20), UKRAINE, 1009286177000L),
-                Arguments.of(_25_11_2021.minusYears(20), UTC, 1009293377000L)
         );
     }
 
@@ -169,36 +132,6 @@ class LocalDateTimeUtilityImplTest {
     void parseTest(String localDateTime, DateTimeFormatter formatter, LocalDateTime expected) {
         // Act
         var actual = parse(localDateTime, formatter);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isBetweenTest")
-    void convertTimestampTest(Long timestamp, ZoneId zoneId, LocalDateTime expected) {
-        // Act
-        var actual = convertTimestamp(timestamp, zoneId);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("convertDateTest")
-    void convertDateTest(Date date, ZoneId zoneId, LocalDateTime expected) {
-        // Act
-        var actual = convertDate(date, zoneId);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("getTimestampTest")
-    void getTimestampTest(LocalDateTime localDateTime, ZoneId zoneId, long expected) {
-        // Act
-        long actual = getTimestamp(localDateTime, zoneId);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

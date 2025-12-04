@@ -14,7 +14,7 @@ import java.util.UUID;
 import static java.time.ZoneOffset.UTC;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF12;
-import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.JbstTime.convert;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 @MappedSuperclass
@@ -64,7 +64,7 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     public String getCreatedUTC() {
         return "%s @ %s".formatted(
                 this.createdBy,
-                DTF12.format(convertTimestamp(this.createdAt, UTC)) + " UTC"
+                DTF12.format(convert(this.createdAt, UTC)) + " UTC"
         );
     }
 
@@ -73,7 +73,7 @@ public abstract class PostgresDbAbstractPersistableAuditableUUID implements Pers
     public String getUpdatedUTC() {
         return "%s @ %s".formatted(
                 this.updatedBy,
-                DTF12.format(convertTimestamp(this.updatedAt, UTC)) + " UTC"
+                DTF12.format(convert(this.updatedAt, UTC)) + " UTC"
         );
     }
 

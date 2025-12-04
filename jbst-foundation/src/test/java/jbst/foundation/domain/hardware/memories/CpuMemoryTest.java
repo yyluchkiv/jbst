@@ -1,7 +1,6 @@
 package jbst.foundation.domain.hardware.memories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CpuMemoryTest extends AbstractMemoriesTest {
@@ -30,7 +30,7 @@ class CpuMemoryTest extends AbstractMemoriesTest {
         var json = this.writeValueAsString(cpuMemory);
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
+        assertThat(json).isEqualTo(read(this.getFolder(), fileName));
     }
 
     @SneakyThrows
@@ -38,7 +38,7 @@ class CpuMemoryTest extends AbstractMemoriesTest {
     @MethodSource("serializeDeserializeTest")
     void deserializeTest(CpuMemory cpuMemory, String fileName) {
         // Arrange
-        var json = TestsIOUtils.readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<CpuMemory>() {};
 
         // Act

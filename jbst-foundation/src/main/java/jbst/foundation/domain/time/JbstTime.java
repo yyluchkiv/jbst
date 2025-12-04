@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static java.time.ZoneOffset.UTC;
-import static jbst.foundation.domain.time.LocalDateTimeUtility.getTimestamp;
 
 @UtilityClass
 public class JbstTime {
@@ -18,6 +17,14 @@ public class JbstTime {
     // =================================================================================================================
     // CONVERT(s)
     // =================================================================================================================
+    public static LocalDateTime convert(long timestamp, ZoneId zoneId) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), zoneId);
+    }
+
+    public static LocalDateTime convert(Date date, ZoneId zoneId) {
+        return convert(date.getTime(), zoneId);
+    }
+
     public static Date convert(LocalDateTime localDateTime, ZoneId zoneId) {
         return Date.from(localDateTime.atZone(zoneId).toInstant());
     }
@@ -25,6 +32,10 @@ public class JbstTime {
     // =================================================================================================================
     // BLOCK: "timestamp"(s)
     // =================================================================================================================
+    public static long getTimestamp(LocalDateTime localDateTime, ZoneId zoneId) {
+        return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
+    }
+
     public static long getStartOfMonth(long timestamp) {
         return getTimestamp(
                 LocalDateUtility.convertDate(Date.from(Instant.ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),

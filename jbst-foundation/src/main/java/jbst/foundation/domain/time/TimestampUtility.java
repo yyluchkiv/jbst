@@ -9,7 +9,7 @@ import java.time.*;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import static jbst.foundation.domain.time.LocalDateTimeUtility.getTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getTimestamp;
 
 @JbstDeletionScheduled(reason = "migrate -> JbstTime", version = "unknown future")
 @UtilityClass

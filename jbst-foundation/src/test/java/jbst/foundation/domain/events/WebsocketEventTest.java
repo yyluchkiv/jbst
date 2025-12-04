@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WebsocketEventTest extends AbstractFolderSerializationRunner {
@@ -28,7 +28,7 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(websocketEvent);
 
         // Assert
-        assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-1.json"));
+        assertThat(json).isEqualTo(read(this.getFolder(), "websocket-event-1.json"));
     }
 
     @Test
@@ -46,7 +46,7 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(websocketEvent);
 
         // Assert
-        assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-2.json"));
+        assertThat(json).isEqualTo(read(this.getFolder(), "websocket-event-2.json"));
     }
 
     @Test

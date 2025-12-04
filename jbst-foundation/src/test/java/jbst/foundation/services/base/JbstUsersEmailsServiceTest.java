@@ -35,7 +35,7 @@ import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.enums.JbstAccountAccessMethod.SESSION_TOKEN;
 import static jbst.foundation.domain.enums.JbstAccountAccessMethod.USERNAME_PASSWORD;
-import static jbst.foundation.domain.time.LocalDateTimeUtility.getTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getTimestamp;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

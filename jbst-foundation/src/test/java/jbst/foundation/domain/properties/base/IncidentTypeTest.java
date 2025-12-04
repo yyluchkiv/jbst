@@ -2,7 +2,6 @@ package jbst.foundation.domain.properties.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tuples.Tuple1;
 import lombok.SneakyThrows;
@@ -14,6 +13,7 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.enums.JbstSecurityJwtIncident.AUTHENTICATION_LOGIN;
 import static jbst.foundation.domain.enums.JbstSecurityJwtIncident.REGISTER1;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentTypeTest extends AbstractFolderSerializationRunner {
@@ -37,7 +37,7 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(tuple1);
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
+        assertThat(json).isEqualTo(read(this.getFolder(), fileName));
     }
 
     @SneakyThrows
@@ -45,7 +45,7 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
     @MethodSource("serializeTest")
     void deserializeTest(Tuple1<JbstSecurityJwtIncident> tuple1, String fileName) {
         // Arrange
-        var json = TestsIOUtils.readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<Tuple1<JbstSecurityJwtIncident>>() {};
 
         // Act

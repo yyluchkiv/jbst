@@ -21,7 +21,7 @@ import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.reflection.JbstReflections.setPrivateField;
-import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CurrentClientUserTest extends AbstractFolderSerializationRunner {
@@ -83,7 +83,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(currentClientUser);
 
         // Assert
-        assertThat(json).isEqualTo(readFile(this.getFolder(), "current-client-user.json"));
+        assertThat(json).isEqualTo(read(this.getFolder(), "current-client-user.json"));
     }
 
     @ParameterizedTest

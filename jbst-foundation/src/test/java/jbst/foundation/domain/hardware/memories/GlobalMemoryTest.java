@@ -1,7 +1,6 @@
 package jbst.foundation.domain.hardware.memories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GlobalMemoryTest extends AbstractMemoriesTest {
@@ -34,7 +34,7 @@ class GlobalMemoryTest extends AbstractMemoriesTest {
         var json = this.writeValueAsString(globalMemory);
 
         // Assert
-        assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
+        assertThat(json).isEqualTo(read(this.getFolder(), fileName));
     }
 
     @SneakyThrows
@@ -42,7 +42,7 @@ class GlobalMemoryTest extends AbstractMemoriesTest {
     @MethodSource("serializeDeserializeTest")
     void deserializeTest(GlobalMemory globalMemory, String fileName) {
         // Arrange
-        var json = TestsIOUtils.readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<GlobalMemory>() {};
 
         // Act

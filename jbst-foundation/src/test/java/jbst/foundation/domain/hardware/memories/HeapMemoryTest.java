@@ -1,7 +1,6 @@
 package jbst.foundation.domain.hardware.memories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractObjectMapperRunner;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
@@ -11,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.tests.JbstUnitTests.IO.read;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HeapMemoryTest extends AbstractMemoriesTest {
@@ -34,7 +34,7 @@ class HeapMemoryTest extends AbstractMemoriesTest {
         var json = this.writeValueAsString(heapMemory);
 
         // Assert
-        Assertions.assertThat(json).isEqualTo(TestsIOUtils.readFile(this.getFolder(), fileName));
+        Assertions.assertThat(json).isEqualTo(read(this.getFolder(), fileName));
     }
 
     @SneakyThrows
@@ -42,7 +42,7 @@ class HeapMemoryTest extends AbstractMemoriesTest {
     @MethodSource("serializeDeserializeTest")
     void deserializeTest(HeapMemory heapMemory, String fileName) {
         // Arrange
-        var json = TestsIOUtils.readFile(this.getFolder(), fileName);
+        var json = read(this.getFolder(), fileName);
         var typeReference = new TypeReference<HeapMemory>() {};
 
         // Act

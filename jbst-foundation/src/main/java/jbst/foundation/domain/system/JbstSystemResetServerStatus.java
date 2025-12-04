@@ -8,7 +8,7 @@ import java.time.ZoneId;
 
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
-import static jbst.foundation.domain.time.LocalDateTimeUtility.convertTimestamp;
+import static jbst.foundation.domain.time.JbstTime.convert;
 import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
@@ -64,7 +64,7 @@ public class JbstSystemResetServerStatus {
         this.state = State.READY;
         this.stage = this.stagesCount;
         this.percentage = TuplePercentage.progressTuplePercentage(this.stage, this.stagesCount);
-        var time = convertTimestamp(getCurrentTimestamp(), zoneId).format(DTF11);
+        var time = convert(getCurrentTimestamp(), zoneId).format(DTF11);
         this.description = "Successfully completed at " + time;
     }
 
