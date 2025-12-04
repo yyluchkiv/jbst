@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 
+@SuppressWarnings("unused")
 @Getter
 @Accessors(fluent = true)
 @EqualsAndHashCode

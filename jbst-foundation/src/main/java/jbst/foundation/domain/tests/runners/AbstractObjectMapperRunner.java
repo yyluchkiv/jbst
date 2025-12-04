@@ -25,6 +25,7 @@ public abstract class AbstractObjectMapperRunner {
                 .writeValueAsString(object);
     }
 
+    @SuppressWarnings("unused")
     @SneakyThrows
     protected final String writeValueAsPlainString(Object object) {
         return PLAIN_OBJECT_MAPPER
