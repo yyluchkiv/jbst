@@ -1,19 +1,29 @@
 package jbst.foundation.domain.properties.utilties;
 
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
+import jbst.foundation.domain.properties.JbstProperty;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
+import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
+import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.base.*;
 import jbst.foundation.domain.properties.configs.*;
 import jbst.foundation.domain.properties.configs.databases.JbstPropertyDatabaseMongo;
-import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigsIncidentsMinSize0Nullable;
-import jbst.foundation.domain.tests.classes.NotUsedPropertiesConfigsIncidentsMinSize3;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Map;
 import java.util.Set;
 
 import static java.util.Map.entry;
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static org.apache.commons.collections4.SetUtils.disjunction;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
@@ -270,5 +280,80 @@ class PropertiesAsserterAndPrinterTest {
 
         // Assert
         // no asserts
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
+    @Data
+    @EqualsAndHashCode(callSuper = true)
+    public static class NotUsedPropertiesConfigsIncidentsMinSize0Nullable extends JbstProperty {
+        @JbstPropertyMandatory
+        private final JbstPropertyScheduledJob scheduledJob;
+        @JbstPropertyMandatory
+        private final JbstPropertySpringServer springServer;
+        @JbstPropertyMandatory
+        private final JbstPropertySpringLogging springLogging;
+        @JbstPropertyOptional
+        @JbstPropertyMetadataMapMinSize(minSize = 0)
+        private final Map<String, Boolean> types;
+
+        @Override
+        public JbstPropertyNodeType getNodeType() {
+            return JbstPropertyNodeType.ROOT;
+        }
+
+        @Override
+        public boolean isToggle() {
+            return false;
+        }
+
+        @Override
+        public String getNameNonLeaf() {
+            return "not-used-properties-configs";
+        }
+    }
+
+    @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
+    @Data
+    @EqualsAndHashCode(callSuper = true)
+    public static class NotUsedPropertiesConfigsIncidentsMinSize3 extends JbstProperty {
+        @JbstPropertyMandatory
+        private final JbstPropertyScheduledJob scheduledJob;
+        @JbstPropertyMandatory
+        private final JbstPropertySpringServer springServer;
+        @JbstPropertyMandatory
+        private final JbstPropertySpringLogging springLogging;
+        @JbstPropertyMandatory
+        @JbstPropertyMetadataMapMinSize(minSize = 3)
+        private final Map<String, Boolean> types;
+
+        @Override
+        public JbstPropertyNodeType getNodeType() {
+            return JbstPropertyNodeType.ROOT;
+        }
+
+        @Override
+        public boolean isToggle() {
+            return false;
+        }
+
+        @Override
+        public String getNameNonLeaf() {
+            return "not-used-properties-configs";
+        }
+
+        public void assertPropertiesExtended(Set<String> keys) {
+            assertTrueOrThrow(
+                    this.types.size() >= keys.size(),
+                    "Property %s is invalid. Options: [%s]. Required: [%s]. Disjunction: [%s]".formatted(
+                            "not-used-properties-configs.types",
+                            baseJoiningRaw(this.types.entrySet()),
+                            baseJoiningRaw(keys),
+                            RED_TEXT.format(baseJoiningRaw(disjunction(this.types.keySet(), keys)))
+                    )
+            );
+        }
     }
 }

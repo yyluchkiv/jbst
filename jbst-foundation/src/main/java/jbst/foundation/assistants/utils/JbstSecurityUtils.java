@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
+import static jbst.foundation.domain.jwt.JbstJwtTokenValidatedClaims.getIssuedAt;
 import static jbst.foundation.domain.time.JbstTime.convert;
 
 @Slf4j
@@ -39,11 +39,11 @@ public class JbstSecurityUtils {
         this.secretKey = Keys.hmacShaKeyFor(jwt.getSecretKey().getBytes());
     }
 
-    public final JwtUser getAuthenticatedJwtUser() {
+    public final JbstJwtUser getAuthenticatedJwtUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (nonNull(authentication)) {
             try {
-                return (JwtUser) authentication.getPrincipal();
+                return (JbstJwtUser) authentication.getPrincipal();
             } catch (ClassCastException ex) {
                 var message = "Illegal request. Authentication principal is not a JwtUser. EX: " + ex.getMessage();
                 throw new IllegalArgumentException(message);
@@ -66,19 +66,19 @@ public class JbstSecurityUtils {
         }
     }
 
-    public final JwtAccessToken createJwtAccessToken(JwtTokenCreationParams creationParams) {
+    public final JbstJwtAccessToken createJwtAccessToken(JbstJwtTokenCreationParams creationParams) {
         var accessToken = this.jbstProperties.getSecurity().getJwt().getAccessToken();
         var jwtToken = this.createJwtToken(creationParams, accessToken.getExpiration());
-        return new JwtAccessToken(jwtToken);
+        return new JbstJwtAccessToken(jwtToken);
     }
 
-    public final JwtRefreshToken createJwtRefreshToken(JwtTokenCreationParams creationParams) {
+    public final JbstJwtRefreshToken createJwtRefreshToken(JbstJwtTokenCreationParams creationParams) {
         var refreshToken = this.jbstProperties.getSecurity().getJwt().getRefreshToken();
         var jwtToken = this.createJwtToken(creationParams, refreshToken.getExpiration());
-        return new JwtRefreshToken(jwtToken);
+        return new JbstJwtRefreshToken(jwtToken);
     }
 
-    public final String createJwtToken(JwtTokenCreationParams creationParams, JbstPropertyTimeAmount timeAmount) {
+    public final String createJwtToken(JbstJwtTokenCreationParams creationParams, JbstPropertyTimeAmount timeAmount) {
         var claims = Jwts.claims().subject(creationParams.username().value());
         claims.add("authorities", creationParams.authorities());
         var zoneId = creationParams.zoneId();
@@ -92,27 +92,27 @@ public class JbstSecurityUtils {
                 .compact();
     }
 
-    public final JwtTokenValidatedClaims validate(JwtAccessToken jwtAccessToken) {
+    public final JbstJwtTokenValidatedClaims validate(JbstJwtAccessToken jwtAccessToken) {
         return this.validate(jwtAccessToken.value(), true, false);
     }
 
-    public final JwtTokenValidatedClaims validate(JwtRefreshToken jwtRefreshToken) {
+    public final JbstJwtTokenValidatedClaims validate(JbstJwtRefreshToken jwtRefreshToken) {
         return this.validate(jwtRefreshToken.value(), false, true);
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private JwtTokenValidatedClaims validate(String jwtToken, boolean isAccess, boolean isRefresh) {
+    private JbstJwtTokenValidatedClaims validate(String jwtToken, boolean isAccess, boolean isRefresh) {
         try {
             var claims = Jwts.parser().verifyWith(this.secretKey).build().parseSignedClaims(jwtToken).getPayload();
-            return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, claims);
+            return JbstJwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, claims);
         } catch (ExpiredJwtException ex1) {
             LOGGER.info("JWT token expired", ex1);
-            return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, ex1.getClaims());
+            return JbstJwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, ex1.getClaims());
         } catch (JwtException | IllegalArgumentException ex2) {
             LOGGER.info("JWT token exception", ex2);
-            return JwtTokenValidatedClaims.invalid(isAccess, isRefresh, jwtToken);
+            return JbstJwtTokenValidatedClaims.invalid(isAccess, isRefresh, jwtToken);
         }
     }
 }

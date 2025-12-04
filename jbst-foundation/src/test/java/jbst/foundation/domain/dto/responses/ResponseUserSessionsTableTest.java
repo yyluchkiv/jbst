@@ -7,7 +7,7 @@ import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 import static jbst.foundation.domain.constants.JbstConstants.Flags.UK;
 import static jbst.foundation.domain.constants.JbstConstants.Flags.USA;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResponseUserSessionsTableTest {
@@ -42,7 +42,7 @@ class ResponseUserSessionsTableTest {
                 getCurrentTimestamp(),
                 username,
                 new RequestAccessToken(randomString()),
-                new JwtAccessToken("token1"),
+                new JbstJwtAccessToken("token1"),
                 JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", UK, "London"),
                         JbstUserAgentDetails.random()
@@ -53,7 +53,7 @@ class ResponseUserSessionsTableTest {
                 getCurrentTimestamp(),
                 username,
                 new RequestAccessToken("token2"),
-                new JwtAccessToken("token2"),
+                new JbstJwtAccessToken("token2"),
                 JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", USA, "New York"),
                         JbstUserAgentDetails.valid()
@@ -64,7 +64,7 @@ class ResponseUserSessionsTableTest {
                 getCurrentTimestamp(),
                 username,
                 new RequestAccessToken(randomString()),
-                new JwtAccessToken("token3"),
+                new JbstJwtAccessToken("token3"),
                 JbstUserRequestMetadata.processed(
                         JbstGeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", UK, "Liverpool"),
                         JbstUserAgentDetails.invalid()

@@ -5,8 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     private final JbstProperties jbstProperties;
 
     @Override
-    public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
+    public void createResponseAccessToken(JbstJwtAccessToken jwtAccessToken, HttpServletResponse response) {
         var security = this.jbstProperties.getSecurity();
         var accessToken = security.getJwt().getAccessToken();
         var jwtAccessTokenCookieCreationLatency = security.getCookies().getJwtAccessTokenCookieCreationLatency();
@@ -46,7 +46,7 @@ public class JbstTokenCookiesProvider implements JbstTokenProvider {
     }
 
     @Override
-    public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
+    public void createResponseRefreshToken(JbstJwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
         var security = this.jbstProperties.getSecurity();
         var refreshTokenConfiguration = security.getJwt().getRefreshToken();
 

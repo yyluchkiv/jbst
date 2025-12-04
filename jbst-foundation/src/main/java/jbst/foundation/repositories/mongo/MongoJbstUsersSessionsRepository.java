@@ -7,8 +7,8 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -40,13 +40,13 @@ public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoD
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<JbstUserSession> isPresent(JwtAccessToken accessToken) {
+    default TuplePresence<JbstUserSession> isPresent(JbstJwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<JbstUserSession> isPresent(JwtRefreshToken refreshToken) {
+    default TuplePresence<JbstUserSession> isPresent(JbstJwtRefreshToken refreshToken) {
         return this.findByRefreshToken(refreshToken)
                 .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
@@ -59,7 +59,7 @@ public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoD
                 .collect(Collectors.toList());
     }
 
-    default ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, RequestAccessToken requestAccessToken) {
+    default ResponseSuperadminSessionsTable getSessionsTable(Set<JbstJwtAccessToken> activeAccessTokens, RequestAccessToken requestAccessToken) {
         var sessions = this.findAll();
 
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
@@ -120,8 +120,8 @@ public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoD
     // Spring Data
     // ================================================================================================================
     Optional<MongoDbUserSession> findByIdAndUsername(String sessionId, Username username);
-    Optional<MongoDbUserSession> findByAccessToken(JwtAccessToken accessToken);
-    Optional<MongoDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
+    Optional<MongoDbUserSession> findByAccessToken(JbstJwtAccessToken accessToken);
+    Optional<MongoDbUserSession> findByRefreshToken(JbstJwtRefreshToken refreshToken);
     List<MongoDbUserSession> findByUsername(Username username);
     List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
 
@@ -142,8 +142,8 @@ public interface MongoJbstUsersSessionsRepository extends MongoRepository<MongoD
     void deleteByUsernames(Set<Username> usernames);
 
     @Query(value = "{ 'username': ?0, 'accessToken': { $ne: ?1 } }", delete = true)
-    void deleteByUsernameExceptAccessToken(Username username, JwtAccessToken accessToken);
+    void deleteByUsernameExceptAccessToken(Username username, JbstJwtAccessToken accessToken);
 
     @Query(value = "{ 'accessToken': { $ne: ?0 } }", delete = true)
-    void deleteExceptToken(JwtAccessToken accessToken);
+    void deleteExceptToken(JbstJwtAccessToken accessToken);
 }

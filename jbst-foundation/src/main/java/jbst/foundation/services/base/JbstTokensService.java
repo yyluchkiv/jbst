@@ -8,7 +8,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.dto.responses.ResponseRefreshTokens;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.services.JbstTokensContextThrowerService;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
@@ -34,7 +34,7 @@ public class JbstTokensService {
     // Utilities
     private final JbstSecurityUtils securityUtils;
 
-    public final JwtUser getJwtUserByAccessTokenOrThrow(
+    public final JbstJwtUser getJwtUserByAccessTokenOrThrow(
             RequestAccessToken requestAccessToken,
             RequestRefreshToken requestRefreshToken
     ) throws JbstExceptions.AccessTokenInvalid, JbstExceptions.RefreshTokenInvalid, JbstExceptions.AccessTokenExpired, JbstExceptions.AccessTokenDbNotFound {

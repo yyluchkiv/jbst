@@ -4,10 +4,10 @@ import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtTokenValidatedClaims;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.invalid;
-import static jbst.foundation.domain.jwt.JwtTokenValidatedClaims.valid;
+import static jbst.foundation.domain.jwt.JbstJwtTokenValidatedClaims.invalid;
+import static jbst.foundation.domain.jwt.JbstJwtTokenValidatedClaims.valid;
 import static jbst.foundation.domain.random.JbstRandom.expiredClaims;
 import static jbst.foundation.domain.random.JbstRandom.validClaims;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;
@@ -43,19 +43,19 @@ class AbstractJbstTokensContextThrowerServiceTest {
 
     private static Stream<Arguments> verifyAccessTokenExpirationOrThrow() {
         return Stream.of(
-                Arguments.of(valid(JwtAccessToken.random(), validClaims()), false),
-                Arguments.of(valid(JwtRefreshToken.random(), validClaims()), false),
-                Arguments.of(valid(JwtAccessToken.random(), expiredClaims()), true),
-                Arguments.of(valid(JwtRefreshToken.random(), expiredClaims()), false)
+                Arguments.of(valid(JbstJwtAccessToken.random(), validClaims()), false),
+                Arguments.of(valid(JbstJwtRefreshToken.random(), validClaims()), false),
+                Arguments.of(valid(JbstJwtAccessToken.random(), expiredClaims()), true),
+                Arguments.of(valid(JbstJwtRefreshToken.random(), expiredClaims()), false)
         );
     }
 
     private static Stream<Arguments> verifyRefreshTokenExpirationOrThrowTest() {
         return Stream.of(
-                Arguments.of(valid(JwtAccessToken.random(), validClaims()), false),
-                Arguments.of(valid(JwtRefreshToken.random(), validClaims()), false),
-                Arguments.of(valid(JwtAccessToken.random(), expiredClaims()), false),
-                Arguments.of(valid(JwtRefreshToken.random(), expiredClaims()), true)
+                Arguments.of(valid(JbstJwtAccessToken.random(), validClaims()), false),
+                Arguments.of(valid(JbstJwtRefreshToken.random(), validClaims()), false),
+                Arguments.of(valid(JbstJwtAccessToken.random(), expiredClaims()), false),
+                Arguments.of(valid(JbstJwtRefreshToken.random(), expiredClaims()), true)
         );
     }
 
@@ -113,7 +113,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyValidityAccessTokenTest() throws JbstExceptions.AccessTokenInvalid {
         // Arrange
-        var accessToken = JwtAccessToken.random();
+        var accessToken = JbstJwtAccessToken.random();
         var validatedClaims = valid(accessToken, validClaims());
         when(this.securityUtils.validate(accessToken)).thenReturn(validatedClaims);
 
@@ -127,7 +127,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyValidityAccessTokenThrowTest() {
         // Arrange
-        var jwtAccessToken = JwtAccessToken.random();
+        var jwtAccessToken = JbstJwtAccessToken.random();
         var validatedClaims = invalid(jwtAccessToken);
         when(this.securityUtils.validate(jwtAccessToken)).thenReturn(validatedClaims);
 
@@ -144,7 +144,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyValidityRefreshTokenTest() throws JbstExceptions.RefreshTokenInvalid {
         // Arrange
-        var refreshToken = JwtRefreshToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         var validatedClaims = valid(refreshToken, validClaims());
         when(this.securityUtils.validate(refreshToken)).thenReturn(validatedClaims);
 
@@ -158,7 +158,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyValidityRefreshTokenThrowTest() {
         // Arrange
-        var refreshToken = JwtRefreshToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         var validatedClaims = invalid(refreshToken);
         when(this.securityUtils.validate(refreshToken)).thenReturn(validatedClaims);
 
@@ -174,7 +174,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
 
     @ParameterizedTest
     @MethodSource("verifyAccessTokenExpirationOrThrow")
-    void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims, boolean throwableFlag) {
+    void verifyAccessTokenExpirationOrThrow(JbstJwtTokenValidatedClaims validatedClaims, boolean throwableFlag) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyAccessTokenExpirationOrThrow(validatedClaims));
 
@@ -188,7 +188,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
 
     @ParameterizedTest
     @MethodSource("verifyRefreshTokenExpirationOrThrowTest")
-    void verifyRefreshTokenExpirationOrThrowTest(JwtTokenValidatedClaims validatedClaims, boolean throwableFlag) {
+    void verifyRefreshTokenExpirationOrThrowTest(JbstJwtTokenValidatedClaims validatedClaims, boolean throwableFlag) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyRefreshTokenExpirationOrThrow(validatedClaims));
 
@@ -203,7 +203,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyAccessTokenDbPresenceTest() throws JbstExceptions.AccessTokenDbNotFound {
         // Arrange
-        var accessToken = JwtAccessToken.random();
+        var accessToken = JbstJwtAccessToken.random();
         var validatedClaims = valid(accessToken, validClaims());
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(entity(JbstUserSession.class)));
 
@@ -217,7 +217,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyAccessTokenDbPresenceThrowTest() {
         // Arrange
-        var accessToken = JwtAccessToken.random();
+        var accessToken = JbstJwtAccessToken.random();
         var validatedClaims = valid(accessToken, validClaims());
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
 
@@ -234,9 +234,9 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyRefreshTokenDbPresenceTest() throws JbstExceptions.RefreshTokenDbNotFound {
         // Arrange
-        var refreshToken = JwtRefreshToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         var validatedClaims = valid(refreshToken, validClaims());
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         var session = entity(JbstUserSession.class);
         when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.username().value())).thenReturn(user);
         when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.present(session));
@@ -254,7 +254,7 @@ class AbstractJbstTokensContextThrowerServiceTest {
     @Test
     void verifyRefreshTokenDbPresenceThrowTest() {
         // Arrange
-        var refreshToken = JwtRefreshToken.random();
+        var refreshToken = JbstJwtRefreshToken.random();
         var validatedClaims = valid(refreshToken, validClaims());
         when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.absent());
 

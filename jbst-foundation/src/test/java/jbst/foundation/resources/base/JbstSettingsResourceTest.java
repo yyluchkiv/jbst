@@ -5,7 +5,7 @@ import jbst.foundation.configurations.TestRunnerResources1;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
 import jbst.foundation.domain.dto.requests.RequestJbstSettings;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -70,7 +70,7 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
         // Arrange
         var request = RequestJbstSettings.hardcoded();
         when(this.settingsService.getSettings()).thenReturn(JbstSettings.hardcoded());
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(JwtUser.hardcoded());
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(JbstJwtUser.hardcoded());
 
         // Act
         this.mvc.perform(

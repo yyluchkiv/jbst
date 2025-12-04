@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
-public record JwtTokenValidatedClaims(
+public record JbstJwtTokenValidatedClaims(
         boolean valid,
         boolean isAccess,
         boolean isRefresh,
@@ -26,19 +26,19 @@ public record JwtTokenValidatedClaims(
         return new Date();
     }
 
-    public static JwtTokenValidatedClaims invalid(boolean isAccess, boolean isRefresh, String jwtToken) {
-        return new JwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, INVALID, new Date(0), new Date(0), new ArrayList<>());
+    public static JbstJwtTokenValidatedClaims invalid(boolean isAccess, boolean isRefresh, String jwtToken) {
+        return new JbstJwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, INVALID, new Date(0), new Date(0), new ArrayList<>());
     }
 
-    public static JwtTokenValidatedClaims invalid(JwtAccessToken accessToken) {
+    public static JbstJwtTokenValidatedClaims invalid(JbstJwtAccessToken accessToken) {
         return invalid(true, false, accessToken.value());
     }
 
-    public static JwtTokenValidatedClaims invalid(JwtRefreshToken refreshToken) {
+    public static JbstJwtTokenValidatedClaims invalid(JbstJwtRefreshToken refreshToken) {
         return invalid(false, true, refreshToken.value());
     }
 
-    public static JwtTokenValidatedClaims valid(boolean isAccess, boolean isRefresh, String jwtToken, Claims claims) {
+    public static JbstJwtTokenValidatedClaims valid(boolean isAccess, boolean isRefresh, String jwtToken, Claims claims) {
         var username = Username.of(claims.getSubject());
         var issuedAt = claims.getIssuedAt();
         var expirationDate = claims.getExpiration();
@@ -60,14 +60,14 @@ public record JwtTokenValidatedClaims(
         } else {
             authorities = new ArrayList<>();
         }
-        return new JwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, username, issuedAt, expirationDate, authorities);
+        return new JbstJwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, username, issuedAt, expirationDate, authorities);
     }
 
-    public static JwtTokenValidatedClaims valid(JwtAccessToken accessToken, Claims claims) {
+    public static JbstJwtTokenValidatedClaims valid(JbstJwtAccessToken accessToken, Claims claims) {
         return valid(true, false, accessToken.value(), claims);
     }
 
-    public static JwtTokenValidatedClaims valid(JwtRefreshToken refreshToken, Claims claims) {
+    public static JbstJwtTokenValidatedClaims valid(JbstJwtRefreshToken refreshToken, Claims claims) {
         return valid(false, true, refreshToken.value(), claims);
     }
 

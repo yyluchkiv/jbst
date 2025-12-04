@@ -13,7 +13,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.ids.JbstUserId;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,13 +40,13 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<JwtUser> isPresent(JbstUserId userId) {
+    default TuplePresence<JbstJwtUser> isPresent(JbstUserId userId) {
         return this.findById(userId.value())
                 .map(entity -> present(entity.asJwtUser()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException {
+    default JbstJwtUser loadUserByUsername(Username username) throws UsernameNotFoundException {
         var user = this.findByUsername(username);
         if (nonNull(user)) {
             return user.asJwtUser();
@@ -55,12 +55,12 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         }
     }
 
-    default JwtUser findByUsernameAsJwtUserOrNull(Username username) {
+    default JbstJwtUser findByUsernameAsJwtUserOrNull(Username username) {
         var user = this.findByUsername(username);
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default JwtUser findByEmailAsJwtUserOrNull(Email email) {
+    default JbstJwtUser findByEmailAsJwtUserOrNull(Email email) {
         var user = this.findByEmail(email);
         return nonNull(user) ? user.asJwtUser() : null;
     }
@@ -105,7 +105,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         }
     }
 
-    default JbstUserId saveAs(JwtUser user) {
+    default JbstUserId saveAs(JbstJwtUser user) {
         var entity = this.save(new PostgresDbUser(user));
         return entity.userId();
     }
@@ -129,7 +129,7 @@ public interface PostgresJbstUsersRepository extends JpaRepository<PostgresDbUse
         return entity.userId();
     }
 
-    default JwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstExceptions.UsernameAlreadyExist {
+    default JbstJwtUser saveAsOrThrow(JbstUserCreationOption creationOption, Username username, Password password, Email email, ZoneId zoneId) throws JbstExceptions.UsernameAlreadyExist {
         var exist = this.existsByUsername(username);
         if (exist) {
             throw new JbstExceptions.UsernameAlreadyExist(username);

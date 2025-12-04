@@ -7,8 +7,8 @@ import jbst.foundation.domain.events.JbstEventAuthenticationLogin;
 import jbst.foundation.domain.events.JbstEventAuthenticationLogout;
 import jbst.foundation.domain.events.JbstEventSessionExpired;
 import jbst.foundation.domain.events.JbstEventSessionRefreshed;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
@@ -56,7 +56,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     }
 
     @Override
-    public Set<JwtAccessToken> getActiveSessionsAccessTokens() {
+    public Set<JbstJwtAccessToken> getActiveSessionsAccessTokens() {
         return this.sessions.stream()
                 .map(JbstSession::accessToken)
                 .collect(Collectors.toSet());
@@ -73,7 +73,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     }
 
     @Override
-    public void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken) {
+    public void renew(Username username, JbstJwtRefreshToken oldRefreshToken, JbstJwtAccessToken newAccessToken, JbstJwtRefreshToken newRefreshToken) {
         this.sessions.removeIf(session -> session.refreshToken().equals(oldRefreshToken));
         var newSession = new JbstSession(username, newAccessToken, newRefreshToken);
         var added = this.sessions.add(newSession);
@@ -84,7 +84,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     }
 
     @Override
-    public void logout(Username username, JwtAccessToken accessToken) {
+    public void logout(Username username, JbstJwtAccessToken accessToken) {
         LOGGER.debug(USER_ACTION, username, "Session Deletion");
         var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
         if (removed) {

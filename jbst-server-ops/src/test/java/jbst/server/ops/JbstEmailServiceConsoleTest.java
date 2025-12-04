@@ -6,7 +6,6 @@ import jbst.foundation.domain.emails.JbstEmails;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertyEmails;
 import jbst.foundation.domain.properties.configs.JbstPropertyUtils;
-import jbst.foundation.domain.time.TimestampUtility;
 import jbst.foundation.services.JbstEmailService;
 import jbst.foundation.services.emails.JbstEmailServiceEnabled;
 import jbst.foundation.utils.JbstGeoUtils;
@@ -32,6 +31,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -125,7 +126,7 @@ class JbstEmailServiceConsoleTest {
         // Arrange
         var emailHTML = new JbstEmails.HTML(
                 this.getTo(),
-                "Test Template #1: " + TimestampUtility.getCurrentTimestamp(),
+                "Test Template #1: " + getCurrentTimestamp(),
                 "tests-template1",
                 Map.of(
                         "where", "Near Matosinhos Municipality, Porto, Portugal",
@@ -145,7 +146,7 @@ class JbstEmailServiceConsoleTest {
         var ukraineFlag = this.geoUtils.getFlagEmojiByCountryCode("UA");
         var emailHTML = new JbstEmails.HTML(
                 this.getTo(),
-                "[OpsIncidents] Authentication Login on [server-prod@prod] — " + TimestampUtility.getCurrentTimestamp() + " — [AnyIncident]",
+                "[OpsIncidents] Authentication Login on [server-prod@prod] — " + getCurrentTimestamp() + " — [AnyIncident]",
                 "ops-any-incident",
                 Map.of(
                         "members", "sherlock.holmes, mycroft.holmes",

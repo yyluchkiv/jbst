@@ -29,7 +29,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 import java.util.Set;
 
-import static jbst.foundation.domain.jwt.JwtUser.randomSuperadminNotPersisted;
+import static jbst.foundation.domain.jwt.JbstJwtUser.randomSuperadminNotPersisted;
 import static jbst.foundation.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
 import static jbst.foundation.domain.strings.JbstMessages.entityNotFound;
 import static jbst.foundation.domain.random.JbstRandomEntities.entity;

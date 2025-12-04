@@ -49,7 +49,7 @@ import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
 import static jbst.foundation.domain.random.JbstRandom.randomIPv4;
 import static jbst.foundation.domain.time.JbstSchedulerConfiguration.EVERY_30_SECONDS;
 import static jbst.foundation.domain.time.JbstTime.convert1;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 import static jbst.server.ops.constants.OpsConstants.Logs.PREFIX;
 
 @Slf4j

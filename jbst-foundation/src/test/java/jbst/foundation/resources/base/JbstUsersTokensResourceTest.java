@@ -7,7 +7,7 @@ import jbst.foundation.domain.databases.JbstUserToken;
 import jbst.foundation.domain.dto.requests.RequestUserEmail;
 import jbst.foundation.domain.dto.requests.RequestUserPasswordReset;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.random.JbstRandom;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersService;
@@ -96,7 +96,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     @Test
     void executeConfirmEmail() throws Exception {
         // Arrange
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsEmailConfirmation();
         var userToken = JbstUserToken.hardcodedEmailConfirmation();
@@ -155,7 +155,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     void executeResetPasswordTest() throws Exception {
         // Arrange
         var request = RequestUserEmail.hardcoded();
-        var user = JwtUser.hardcoded(request.email(), JbstUserEmailDetails.confirmed());
+        var user = JbstJwtUser.hardcoded(request.email(), JbstUserEmailDetails.confirmed());
         when(this.usersService.findByEmail(request.email())).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsPasswordReset();
         var userToken = JbstUserToken.hardcodedPasswordReset();

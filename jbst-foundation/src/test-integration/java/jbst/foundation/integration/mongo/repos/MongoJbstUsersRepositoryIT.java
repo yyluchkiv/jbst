@@ -11,7 +11,7 @@ import jbst.foundation.domain.databases.mongo.MongoDbUser;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.ids.JbstUserId;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.integration.mongo.configs.MongoBeforeAllCallback;
 import jbst.foundation.integration.mongo.configs.TestsJbstConfigurationMongoRepositoriesRunner;
@@ -197,7 +197,7 @@ class MongoJbstUsersRepositoryIT extends TestsJbstConfigurationMongoRepositories
         assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var userId1 = this.usersRepository.saveAs(JwtUser.randomSuperadmin());
+        var userId1 = this.usersRepository.saveAs(JbstJwtUser.randomSuperadmin());
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();

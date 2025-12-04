@@ -13,7 +13,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration0;
 import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.ids.JbstUserId;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -115,7 +115,7 @@ public class MongoDbUser {
         );
     }
 
-    public MongoDbUser(JwtUser user) {
+    public MongoDbUser(JbstJwtUser user) {
         this.id = user.id().value();
         this.creationOption = user.creationOption();
         this.username = user.username();
@@ -188,8 +188,8 @@ public class MongoDbUser {
 
     @JsonIgnore
     @Transient
-    public JwtUser asJwtUser() {
-        return new JwtUser(
+    public JbstJwtUser asJwtUser() {
+        return new JbstJwtUser(
                 this.userId(),
                 this.creationOption,
                 this.username,

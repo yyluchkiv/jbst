@@ -7,7 +7,7 @@ import jbst.foundation.domain.dto.requests.RequestUserRegistration1;
 import jbst.foundation.domain.events.JbstEventRegistration0Failure;
 import jbst.foundation.domain.events.JbstEventRegistration1Failure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.strings.JbstMessages;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
@@ -171,7 +171,7 @@ class AbstractJbstRegistrationValidatorTest {
     void validateRegistrationRequest1UsernameAlreadyUsedTest() {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
-        when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(JwtUser.hardcoded());
+        when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(JbstJwtUser.hardcoded());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));

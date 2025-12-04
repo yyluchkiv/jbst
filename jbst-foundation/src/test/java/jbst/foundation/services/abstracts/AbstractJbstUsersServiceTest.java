@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -90,7 +90,7 @@ class AbstractJbstUsersServiceTest {
     void findByEmailTest() {
         // Arrange
         var email = Email.hardcoded();
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
@@ -105,7 +105,7 @@ class AbstractJbstUsersServiceTest {
     void safeSaveAlreadyExistsTest() {
         // Arrange
         var email = Email.hardcoded();
-        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
+        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
@@ -127,7 +127,7 @@ class AbstractJbstUsersServiceTest {
         var creationOption = JbstUserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
         var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
-        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
+        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var username = email.getUsername();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);
@@ -150,7 +150,7 @@ class AbstractJbstUsersServiceTest {
         // Arrange
         var creationOption = JbstUserCreationOption.MAGICLINK;
         var email = Email.hardcoded();
-        var user = JwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
+        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
         var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
@@ -176,8 +176,8 @@ class AbstractJbstUsersServiceTest {
     void updateUser1() {
         // Arrange
         var request = RequestUserUpdate1.hardcoded();
-        var user = JwtUser.hardcoded();
-        var userAC = ArgumentCaptor.forClass(JwtUser.class);
+        var user = JbstJwtUser.hardcoded();
+        var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
         // Act
         this.componentUnderTest.updateUser1(user, request);
@@ -195,8 +195,8 @@ class AbstractJbstUsersServiceTest {
     void updateUser2() {
         // Arrange
         var request = RequestUserUpdate2.hardcoded();
-        var user = JwtUser.hardcoded();
-        var userAC = ArgumentCaptor.forClass(JwtUser.class);
+        var user = JbstJwtUser.hardcoded();
+        var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
         // Act
         this.componentUnderTest.updateUser2(user, request);
@@ -213,8 +213,8 @@ class AbstractJbstUsersServiceTest {
     void changePasswordRequired() {
         // Arrange
         var request = RequestUserChangePasswordBasic.hardcoded();
-        var user = JwtUser.random();
-        var userAC = ArgumentCaptor.forClass(JwtUser.class);
+        var user = JbstJwtUser.random();
+        var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
         // Act
         this.componentUnderTest.changePasswordRequired(user, request);
@@ -236,8 +236,8 @@ class AbstractJbstUsersServiceTest {
     void changePassword1() {
         // Arrange
         var request = RequestUserChangePasswordBasic.hardcoded();
-        var user = JwtUser.hardcoded();
-        var userAC = ArgumentCaptor.forClass(JwtUser.class);
+        var user = JbstJwtUser.hardcoded();
+        var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
         // Act
         this.componentUnderTest.changePassword1(user, request);

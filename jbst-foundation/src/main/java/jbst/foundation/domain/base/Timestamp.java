@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZero;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 public record Timestamp(long value) {
 

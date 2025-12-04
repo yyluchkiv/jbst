@@ -5,8 +5,8 @@ import jbst.foundation.domain.databases.JbstUsers;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -86,7 +86,7 @@ class AbstractJbstSuperadminServiceTest {
                 }
 
                 @Override
-                public void resetOnServer(JwtUser initiator) {
+                public void resetOnServer(JbstJwtUser initiator) {
                     abstractMockService().executeInheritedMethod();
                 }
             };
@@ -154,7 +154,7 @@ class AbstractJbstSuperadminServiceTest {
     @Test
     void resetServerByTest() {
         // Arrange
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
 
         // Act
         this.componentUnderTest.resetServerBy(user);
@@ -209,7 +209,7 @@ class AbstractJbstSuperadminServiceTest {
     void getServerSessionsTest() {
         // Arrange
         var requestAccessToken = RequestAccessToken.random();
-        var activeSessions = Set.of(JwtAccessToken.random(), JwtAccessToken.random());
+        var activeSessions = Set.of(JbstJwtAccessToken.random(), JbstJwtAccessToken.random());
         var serverSessionsTable = entity(ResponseSuperadminSessionsTable.class);
 
         when(this.sessionRegistry.getActiveSessionsAccessTokens()).thenReturn(activeSessions);

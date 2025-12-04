@@ -8,8 +8,8 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.resources.hardware.JbstHardwareMonitoringStore;
@@ -120,7 +120,7 @@ class JbstCurrentSessionAssistantTest {
     @Test
     void getCurrentUsernameTest() {
         // Arrange
-        var expectedJwtUser = entity(JwtUser.class);
+        var expectedJwtUser = entity(JbstJwtUser.class);
         when(this.securityUtils.getAuthenticatedUsername()).thenReturn(expectedJwtUser.getUsername());
 
         // Act
@@ -134,7 +134,7 @@ class JbstCurrentSessionAssistantTest {
     @Test
     void getCurrentJwtUserTest() {
         // Arrange
-        var expectedJwtUser = entity(JwtUser.class);
+        var expectedJwtUser = entity(JbstJwtUser.class);
         when(this.securityUtils.getAuthenticatedJwtUser()).thenReturn(expectedJwtUser);
 
         // Act
@@ -148,7 +148,7 @@ class JbstCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserTest() {
         // Arrange
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.securityUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.jbstHardwareMonitoringStore.getWidget()).thenReturn(hardwareMonitoringWidget);
@@ -172,7 +172,7 @@ class JbstCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserNoAttributesNoHardwareTest() {
         // Arrange
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         when(this.securityUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.jbstHardwareMonitoringStore.getWidget()).thenReturn(hardwareMonitoringWidget);
@@ -197,7 +197,7 @@ class JbstCurrentSessionAssistantTest {
         var session = entity(JbstUserSession.class);
         var request = mock(HttpServletRequest.class);
         var requestAccessToken = RequestAccessToken.random();
-        var accessToken = JwtAccessToken.of(requestAccessToken.value());
+        var accessToken = JbstJwtAccessToken.of(requestAccessToken.value());
         when(this.tokensProvider.readRequestAccessToken(request)).thenReturn(requestAccessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(session));
 

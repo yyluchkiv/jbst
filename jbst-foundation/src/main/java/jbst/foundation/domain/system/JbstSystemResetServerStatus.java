@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 import static jbst.foundation.domain.time.JbstTime.convert1;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 // Lombok
 @Getter

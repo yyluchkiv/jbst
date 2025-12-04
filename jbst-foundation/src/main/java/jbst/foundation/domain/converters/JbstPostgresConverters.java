@@ -14,8 +14,8 @@ import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.geo.JbstGeoLocation;
 import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.Nullable;
@@ -50,30 +50,30 @@ public class JbstPostgresConverters {
     }
 
     @Converter
-    public class JwtAccessTokenConverter implements AttributeConverter<JwtAccessToken, String> {
+    public class JwtAccessTokenConverter implements AttributeConverter<JbstJwtAccessToken, String> {
 
         @Override
-        public String convertToDatabaseColumn(JwtAccessToken accessToken) {
+        public String convertToDatabaseColumn(JbstJwtAccessToken accessToken) {
             return nonNull(accessToken) ? accessToken.value() : null;
         }
 
         @Override
-        public JwtAccessToken convertToEntityAttribute(String value) {
-            return nonNull(value) ? JwtAccessToken.of(value) : null;
+        public JbstJwtAccessToken convertToEntityAttribute(String value) {
+            return nonNull(value) ? JbstJwtAccessToken.of(value) : null;
         }
     }
 
     @Converter
-    public class JwtRefreshTokenConverter implements AttributeConverter<JwtRefreshToken, String> {
+    public class JwtRefreshTokenConverter implements AttributeConverter<JbstJwtRefreshToken, String> {
 
         @Override
-        public String convertToDatabaseColumn(JwtRefreshToken accessToken) {
+        public String convertToDatabaseColumn(JbstJwtRefreshToken accessToken) {
             return nonNull(accessToken) ? accessToken.value() : null;
         }
 
         @Override
-        public JwtRefreshToken convertToEntityAttribute(String value) {
-            return nonNull(value) ? JwtRefreshToken.of(value) : null;
+        public JbstJwtRefreshToken convertToEntityAttribute(String value) {
+            return nonNull(value) ? JbstJwtRefreshToken.of(value) : null;
         }
     }
 

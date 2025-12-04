@@ -6,7 +6,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.validators.JbstUsersValidator;
 import jbst.foundation.validators.abtracts.AbstractJbstUsersValidator;
@@ -105,7 +105,7 @@ class AbstractJbstUsersValidatorTest {
     @Test
     void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
-        var user= entity(JwtUser.class);
+        var user= entity(JbstJwtUser.class);
         var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), email, randomString());
@@ -122,7 +122,7 @@ class AbstractJbstUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
         var username = Username.random();
-        var user = JwtUser.hardcoded();
+        var user = JbstJwtUser.hardcoded();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(user.email())).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), user.email(), randomString());
 

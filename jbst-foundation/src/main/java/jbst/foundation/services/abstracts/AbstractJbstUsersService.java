@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.requests.RequestUserUpdate1;
 import jbst.foundation.domain.dto.requests.RequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
@@ -33,7 +33,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public JwtUser findByEmail(Email email) {
+    public JbstJwtUser findByEmail(Email email) {
         return this.usersRepository.findByEmailAsJwtUserOrNull(email);
     }
 
@@ -68,8 +68,8 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
     }
 
     @Override
-    public void updateUser1(JwtUser user, RequestUserUpdate1 request) {
-        user = new JwtUser(
+    public void updateUser1(JbstJwtUser user, RequestUserUpdate1 request) {
+        user = new JbstJwtUser(
                 user.id(),
                 user.creationOption(),
                 user.username(),
@@ -87,8 +87,8 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
     }
 
     @Override
-    public void updateUser2(JwtUser user, RequestUserUpdate2 request) {
-        user = new JwtUser(
+    public void updateUser2(JbstJwtUser user, RequestUserUpdate2 request) {
+        user = new JbstJwtUser(
                 user.id(),
                 user.creationOption(),
                 user.username(),
@@ -106,9 +106,9 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
     }
 
     @Override
-    public void changePasswordRequired(JwtUser user, RequestUserChangePasswordBasic request) {
+    public void changePasswordRequired(JbstJwtUser user, RequestUserChangePasswordBasic request) {
         var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
-        user = new JwtUser(
+        user = new JbstJwtUser(
                 user.id(),
                 user.creationOption(),
                 user.username(),
@@ -126,9 +126,9 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
     }
 
     @Override
-    public void changePassword1(JwtUser user, RequestUserChangePasswordBasic request) {
+    public void changePassword1(JbstJwtUser user, RequestUserChangePasswordBasic request) {
         var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
-        user = new JwtUser(
+        user = new JbstJwtUser(
                 user.id(),
                 user.creationOption(),
                 user.username(),
@@ -157,7 +157,7 @@ public abstract class AbstractJbstUsersService implements JbstUsersService {
     // ================================================================================================================
     // PROTECTED METHODS
     // ================================================================================================================
-    protected void saveAndReauthenticate(JwtUser jwtUser) {
+    protected void saveAndReauthenticate(JbstJwtUser jwtUser) {
         this.usersRepository.saveAs(jwtUser);
         var authentication = new UsernamePasswordAuthenticationToken(jwtUser, null, jwtUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);

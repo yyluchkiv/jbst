@@ -60,14 +60,6 @@ class RoundingUtilityTest {
         );
     }
 
-    private static Stream<Arguments> formatTest() {
-        return Stream.of(
-                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 3, "5 941 306,042"),
-                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 4, "5 941 306,0421"),
-                Arguments.of(BigDecimal.valueOf(5941306.04212988495091641), 5, "5 941 306,04213")
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("scaleTest")
     void scaleTest(BigDecimal value, Integer scale, BigDecimal expected) {
@@ -136,25 +128,6 @@ class RoundingUtilityTest {
         // Act
         var actual = divideOrFallback(divider, divisor, scale, fallback);
 
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("formatTest")
-    void formatTest(BigDecimal value, int scale, String expected) {
-        String actual;
-        if (scale == DEFAULT_SCALE) {
-            // Act
-            actual = format(value);
-
-            // Assert
-            var actual2 = format(value, scale);
-            assertThat(actual2).isEqualTo(expected);
-        } else {
-            // Act
-            actual = format(value, scale);
-        }
         // Assert
         assertThat(actual).isEqualTo(expected);
     }

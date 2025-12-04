@@ -4,15 +4,15 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.time.JbstTimeago;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.time.JbstTimeAmount;
+import jbst.foundation.domain.time.JbstTimeago;
 import jbst.foundation.domain.tuples.TupleExceptionDetails;
-import jbst.foundation.domain.time.TimestampUtility;
 
 import java.util.Comparator;
 
 import static java.util.Comparator.comparing;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 public record ResponseUserSession2(
         JbstUserSessionId id,
@@ -44,7 +44,7 @@ public record ResponseUserSession2(
             long updatedAt,
             Username username,
             RequestAccessToken requestAccessToken,
-            JwtAccessToken accessToken,
+            JbstJwtAccessToken accessToken,
             JbstUserRequestMetadata metadata
     ) {
         var current = requestAccessToken.value().equals(accessToken.value());
@@ -74,10 +74,10 @@ public record ResponseUserSession2(
         var token = "PFRL63OtcEKKy0hb7UjE";
         return of(
                 JbstUserSessionId.hardcoded(),
-                TimestampUtility.getCurrentTimestamp(),
+                getCurrentTimestamp(),
                 Username.hardcoded(),
                 new RequestAccessToken(token),
-                new JwtAccessToken(token),
+                new JbstJwtAccessToken(token),
                 JbstUserRequestMetadata.valid()
         );
     }
@@ -85,10 +85,10 @@ public record ResponseUserSession2(
     public static ResponseUserSession2 random() {
         return of(
                 JbstUserSessionId.random(),
-                TimestampUtility.getCurrentTimestamp() - JbstTimeAmount.random().toMillis(),
+                getCurrentTimestamp() - JbstTimeAmount.random().toMillis(),
                 Username.hardcoded(),
                 RequestAccessToken.random(),
-                JwtAccessToken.random(),
+                JbstJwtAccessToken.random(),
                 JbstUserRequestMetadata.testData()
         );
     }

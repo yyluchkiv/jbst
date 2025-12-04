@@ -7,19 +7,19 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 import static jbst.foundation.domain.random.JbstRandom.validClaims;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JwtTokenValidatedClaimsTest {
+class JbstJwtTokenValidatedClaimsTest {
     private static final Username INVALID = Username.of("invalid");
 
     @Test
     void invalidAccessTokenTest() {
         // Arrange
-        var token = JwtAccessToken.random();
+        var token = JbstJwtAccessToken.random();
 
         // Act
-        var validatedClaims = JwtTokenValidatedClaims.invalid(token);
+        var validatedClaims = JbstJwtTokenValidatedClaims.invalid(token);
 
         // Assert
         assertThat(validatedClaims.valid()).isFalse();
@@ -37,10 +37,10 @@ class JwtTokenValidatedClaimsTest {
     @Test
     void invalidRefreshTokenTest() {
         // Arrange
-        var token = JwtRefreshToken.random();
+        var token = JbstJwtRefreshToken.random();
 
         // Act
-        var validatedClaims = JwtTokenValidatedClaims.invalid(token);
+        var validatedClaims = JbstJwtTokenValidatedClaims.invalid(token);
 
         // Assert
         assertThat(validatedClaims.valid()).isFalse();
@@ -58,10 +58,10 @@ class JwtTokenValidatedClaimsTest {
     @RepeatedTest(10)
     void validAccessTokenTest() {
         // Arrange
-        var token = JwtAccessToken.random();
+        var token = JbstJwtAccessToken.random();
 
         // Act
-        var validatedClaims = JwtTokenValidatedClaims.valid(token, validClaims());
+        var validatedClaims = JbstJwtTokenValidatedClaims.valid(token, validClaims());
 
         // Assert
         assertThat(validatedClaims.valid()).isTrue();
@@ -80,10 +80,10 @@ class JwtTokenValidatedClaimsTest {
     @RepeatedTest(10)
     void validRefreshTokenTest() {
         // Arrange
-        var token = JwtRefreshToken.random();
+        var token = JbstJwtRefreshToken.random();
 
         // Act
-        var validatedClaims = JwtTokenValidatedClaims.valid(token, validClaims());
+        var validatedClaims = JbstJwtTokenValidatedClaims.valid(token, validClaims());
 
         // Assert
         assertThat(validatedClaims.valid()).isTrue();

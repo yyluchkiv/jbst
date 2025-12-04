@@ -7,8 +7,8 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtAccessToken;
-import jbst.foundation.domain.jwt.JwtRefreshToken;
+import jbst.foundation.domain.jwt.JbstJwtAccessToken;
+import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -19,7 +19,7 @@ import java.util.List;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.databases.JbstUserSession.ofNotPersisted;
 import static jbst.foundation.domain.databases.JbstUserSession.ofPersisted;
-import static jbst.foundation.domain.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
 
 // Lombok
 @NoArgsConstructor
@@ -37,8 +37,8 @@ public class MongoDbUserSession {
     private long createdAt;
     private long updatedAt;
     private Username username;
-    private JwtAccessToken accessToken;
-    private JwtRefreshToken refreshToken;
+    private JbstJwtAccessToken accessToken;
+    private JbstJwtRefreshToken refreshToken;
     private JbstUserRequestMetadata metadata;
     private boolean metadataRenewCron;
     private boolean metadataRenewManually;

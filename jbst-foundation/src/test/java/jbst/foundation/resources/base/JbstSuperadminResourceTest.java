@@ -10,7 +10,7 @@ import jbst.foundation.domain.dto.responses.ResponseInvitation;
 import jbst.foundation.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.foundation.domain.dto.responses.ResponseUserSession2;
 import jbst.foundation.domain.ids.JbstUserSessionId;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.services.JbstSuperadminService;
 import jbst.foundation.services.JbstUsersSessionsService;
@@ -87,7 +87,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void resetServerTest() throws Exception {
         // Arrange
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act

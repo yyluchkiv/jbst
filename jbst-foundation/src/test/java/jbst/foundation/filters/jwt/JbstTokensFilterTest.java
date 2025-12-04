@@ -9,7 +9,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.extension.JbstExtensionService;
@@ -255,7 +255,7 @@ class JbstTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
@@ -286,7 +286,7 @@ class JbstTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
@@ -319,7 +319,7 @@ class JbstTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var user = entity(JwtUser.class);
+        var user = entity(JbstJwtUser.class);
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);

@@ -1,7 +1,7 @@
 package jbst.server.iam.mongo.services;
 
 import jbst.foundation.domain.databases.mongo.MongoDbUser;
-import jbst.foundation.domain.jwt.JwtUser;
+import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class MongoUsersService implements UsersService {
     private final MongoJbstUsersRepository mongoUsersRepository;
 
     @Override
-    public List<JwtUser> findAll() {
+    public List<JbstJwtUser> findAll() {
         return this.mongoUsersRepository.findAll().stream().map(MongoDbUser::asJwtUser).toList();
     }
 }
