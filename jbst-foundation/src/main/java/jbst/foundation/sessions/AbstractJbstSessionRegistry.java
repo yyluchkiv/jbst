@@ -9,7 +9,7 @@ import jbst.foundation.domain.events.EventSessionExpired;
 import jbst.foundation.domain.events.EventSessionRefreshed;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
@@ -31,7 +31,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry {
-    protected final ConcurrentHashMap.KeySetView<Session, Boolean> sessions = ConcurrentHashMap.newKeySet();
+    protected final ConcurrentHashMap.KeySetView<JbstSession, Boolean> sessions = ConcurrentHashMap.newKeySet();
 
     // Publishers
     protected final JbstEventsPublisher eventsPublisher;
@@ -51,19 +51,19 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     @Override
     public Set<Username> getActiveSessionsUsernames() {
         return this.sessions.stream()
-                .map(Session::username)
+                .map(JbstSession::username)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<JwtAccessToken> getActiveSessionsAccessTokens() {
         return this.sessions.stream()
-                .map(Session::accessToken)
+                .map(JbstSession::accessToken)
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public void register(Session session) {
+    public void register(JbstSession session) {
         var username = session.username();
         boolean added = this.sessions.add(session);
         if (added) {
@@ -75,7 +75,7 @@ public abstract class AbstractJbstSessionRegistry implements JbstSessionRegistry
     @Override
     public void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken) {
         this.sessions.removeIf(session -> session.refreshToken().equals(oldRefreshToken));
-        var newSession = new Session(username, newAccessToken, newRefreshToken);
+        var newSession = new JbstSession(username, newAccessToken, newRefreshToken);
         var added = this.sessions.add(newSession);
         if (added) {
             LOGGER.debug(USER_ACTION, username, "Session Renew");

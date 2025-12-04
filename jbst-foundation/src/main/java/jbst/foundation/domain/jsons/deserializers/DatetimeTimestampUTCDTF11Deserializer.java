@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
 
+import static java.time.LocalDateTime.parse;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.time.JbstTime.getTimestamp;
-import static jbst.foundation.domain.time.LocalDateTimeUtility.parse;
 
 public class DatetimeTimestampUTCDTF11Deserializer extends JsonDeserializer<Long> {
 

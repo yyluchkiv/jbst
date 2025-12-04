@@ -6,45 +6,15 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.stream.Stream;
 
 import static java.time.Month.*;
-import static java.time.ZoneOffset.UTC;
-import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZeroByBounds;
 import static jbst.foundation.domain.random.JbstRandom.randomZoneId;
 import static jbst.foundation.domain.time.LocalDateUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalDateUtilityImplTest {
-    private static final LocalDate _25_11_2021 = LocalDate.of(2021, DECEMBER, 25);
-
-    private static Stream<Arguments> convertDateTest() {
-        return Stream.of(
-                Arguments.of(new Date(1640438177000L), _25_11_2021),
-                Arguments.of(new Date(1640445377000L), _25_11_2021),
-                Arguments.of(new Date(1324818977000L), _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1324826177000L), _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1009286177000L), _25_11_2021.minusYears(20)),
-                Arguments.of(new Date(1009293377000L), _25_11_2021.minusYears(20)),
-                Arguments.of(new Date(1645999200000L), new java.sql.Date(new Date(1645999200000L).getTime()).toLocalDate()), // 28.02.2022
-                Arguments.of(new Date(1653944400000L), new java.sql.Date(new Date(1653944400000L).getTime()).toLocalDate()) // 31.05.2022
-        );
-    }
-
-    private static Stream<Arguments> convertDateZoneIdTest() {
-        return Stream.of(
-                Arguments.of(new Date(1640438177000L), UKRAINE, _25_11_2021),
-                Arguments.of(new Date(1640445377000L), UTC, _25_11_2021),
-                Arguments.of(new Date(1324818977000L), UKRAINE, _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1324826177000L), UTC, _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1009286177000L), UKRAINE, _25_11_2021.minusYears(20)),
-                Arguments.of(new Date(1009293377000L), UTC, _25_11_2021.minusYears(20))
-        );
-    }
-
     private static Stream<Arguments> isFirstDayOfMonthTest() {
         return Stream.of(
                 Arguments.of(LocalDate.of(2021, DECEMBER, 28), false),
@@ -69,26 +39,6 @@ class LocalDateUtilityImplTest {
                 Arguments.of(LocalDate.of(2021, JANUARY, 30), false),
                 Arguments.of(LocalDate.of(2021, JANUARY, 31), true)
         );
-    }
-
-    @ParameterizedTest
-    @MethodSource("convertDateTest")
-    void convertDateTest(Date date, LocalDate expected) {
-        // Act
-        var actual = convertDate(date);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("convertDateZoneIdTest")
-    void convertDateZoneIdTest(Date date, ZoneId zoneId, LocalDate expected) {
-        // Act
-        var actual = convertDate(date, zoneId);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

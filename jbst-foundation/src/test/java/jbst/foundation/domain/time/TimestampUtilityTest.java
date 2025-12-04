@@ -22,8 +22,6 @@ class TimestampUtilityTest {
     private static final Long _2_MINUTES_FUTURE = getFutureTimestamp(Duration.ofMinutes(2L)).value();
     private static final Long _1_HOUR_FUTURE = getFutureTimestamp(Duration.ofHours(1L)).value();
 
-    private static final long _5_SECONDS = new JbstTimeAmount(5L, SECONDS).toMillis();
-
     private static Stream<Arguments> toUnixTimeTest() {
         return Stream.of(
                 Arguments.of(1670526412123L, 1670526412L),
@@ -82,17 +80,6 @@ class TimestampUtilityTest {
                 Arguments.of(1642767625000L, false),
                 Arguments.of(1642767626000L, false),
                 Arguments.of(getCurrentTimestamp() + 10000L, true)
-        );
-    }
-
-    private static Stream<Arguments> isCurrentTimestampNSecondsMoreTest() {
-        return Stream.of(
-                Arguments.of(getCurrentTimestamp() - _5_SECONDS, 1L, true),
-                Arguments.of(getCurrentTimestamp() - _5_SECONDS, 2L, true),
-                Arguments.of(getCurrentTimestamp() - _5_SECONDS, 3L, true),
-                Arguments.of(getCurrentTimestamp() - _5_SECONDS, 7L, false),
-                Arguments.of(getCurrentTimestamp() - _5_SECONDS, 8L, false),
-                Arguments.of(getCurrentTimestamp() - _5_SECONDS, 9L, false)
         );
     }
 
@@ -235,16 +222,6 @@ class TimestampUtilityTest {
     void isFutureTest(long timestamp, boolean expected) {
         // Act
         var actual = isFuture(timestamp);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isCurrentTimestampNSecondsMoreTest")
-    void isCurrentTimestampNSecondsMoreTest(long timestamp, long seconds, boolean expected) {
-        // Act
-        var actual = isCurrentTimestampNSecondsMore(timestamp, seconds);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

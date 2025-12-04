@@ -11,7 +11,7 @@ import jbst.foundation.domain.dto.requests.RequestRefreshToken;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.handlers.JbstAccessDeniedHandler;
 import jbst.foundation.services.base.JbstTokensService;
@@ -270,7 +270,7 @@ class JbstTokensFilterTest {
         verify(this.tokensProvider).readRequestRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
+        verify(this.sessionRegistry).register(new JbstSession(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
         verify(this.extensionService).doFilter(request);
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
@@ -302,7 +302,7 @@ class JbstTokensFilterTest {
         verify(this.tokensProvider).readRequestRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
+        verify(this.sessionRegistry).register(new JbstSession(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
         verify(this.extensionService).doFilter(request);
         verify(this.tokensProvider).clearTokens(response);
         verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
@@ -336,7 +336,7 @@ class JbstTokensFilterTest {
         verify(this.tokensProvider).readRequestRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
+        verify(this.sessionRegistry).register(new JbstSession(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
         verify(this.extensionService).doFilter(request);
         verify(this.tokensProvider).clearTokens(response);
         var exceptionAC = ArgumentCaptor.forClass(AccessDeniedException.class);

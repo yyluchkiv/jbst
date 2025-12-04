@@ -1,8 +1,8 @@
 package jbst.foundation.domain.events;
 
-import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.JbstSession;
 
 public record EventSessionRefreshed(
-        Session session
+        JbstSession session
 ) {
 }

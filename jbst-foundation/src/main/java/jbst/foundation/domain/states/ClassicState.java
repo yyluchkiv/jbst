@@ -106,4 +106,15 @@ public enum ClassicState implements EnumValue<String> {
     public boolean isActiveOrCompleted() {
         return this.isActive() || this.isCompleted();
     }
+
+    // =================================================================================================================
+    // CLASSES
+    // =================================================================================================================
+    public record ClassicStatePermissions(
+            boolean disabled,
+            boolean startPermitted,
+            boolean restartPermitted,
+            boolean pausePermitted,
+            boolean stopPermitted
+    ) { }
 }

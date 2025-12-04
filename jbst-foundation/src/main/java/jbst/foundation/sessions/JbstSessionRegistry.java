@@ -5,7 +5,7 @@ import jbst.foundation.domain.dto.requests.RequestAccessToken;
 import jbst.foundation.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
-import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.JbstSession;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.Set;
@@ -16,7 +16,7 @@ public interface JbstSessionRegistry {
     Set<JwtAccessToken> getActiveSessionsAccessTokens();
 
     @Async
-    void register(Session session);
+    void register(JbstSession session);
     @Async
     void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken);
     @Async

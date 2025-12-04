@@ -13,7 +13,7 @@ import jbst.foundation.domain.events.EventAuthenticationMagicLinkFailure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
-import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
@@ -166,6 +166,6 @@ public class JbstAuthenticationService {
 
         LOGGER.debug(getUserProcess(username, "Authentication as-'%s' attempt".formatted(userCreationOption.getValue()), COMPLETED));
 
-        this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
+        this.sessionRegistry.register(new JbstSession(username, accessToken, refreshToken));
     }
 }

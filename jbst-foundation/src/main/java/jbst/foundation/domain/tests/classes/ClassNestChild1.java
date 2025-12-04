@@ -1,6 +1,6 @@
 package jbst.foundation.domain.tests.classes;
 
-import jbst.foundation.domain.tests.enums.EnumUnderTests;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -15,5 +15,5 @@ import java.math.BigDecimal;
 public class ClassNestChild1 {
     private Integer nest1Value1;
     private BigDecimal nest1Value2;
-    private EnumUnderTests nest1Value3;
+    private JbstUnitTests.Enums.EnumUnderTests nest1Value3;
 }

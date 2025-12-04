@@ -18,16 +18,16 @@ class ClassicStateTest extends AbstractSerializationDeserializationRunner {
 
     private static Stream<Arguments> getPermissionsTest() {
         return Stream.of(
-                Arguments.of(ClassicState.DISABLED, new ClassicStatePermissions(true, false, false, false, false)),
-                Arguments.of(ClassicState.CREATED, new ClassicStatePermissions(false, true, true, false, false)),
-                Arguments.of(ClassicState.STARTING, new ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(ClassicState.ACTIVE, new ClassicStatePermissions(false, false, true, true, true)),
-                Arguments.of(ClassicState.PAUSING, new ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(ClassicState.PAUSED, new ClassicStatePermissions(false, false, true, false, true)),
-                Arguments.of(ClassicState.STOPPING, new ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(ClassicState.TERMINATED, new ClassicStatePermissions(false, true, true, false, false)),
-                Arguments.of(ClassicState.COMPLETING, new ClassicStatePermissions(false, false, false, false, false)),
-                Arguments.of(ClassicState.COMPLETED, new ClassicStatePermissions(false, false, true, false, false))
+                Arguments.of(ClassicState.DISABLED, new ClassicState.ClassicStatePermissions(true, false, false, false, false)),
+                Arguments.of(ClassicState.CREATED, new ClassicState.ClassicStatePermissions(false, true, true, false, false)),
+                Arguments.of(ClassicState.STARTING, new ClassicState.ClassicStatePermissions(false, false, false, false, false)),
+                Arguments.of(ClassicState.ACTIVE, new ClassicState.ClassicStatePermissions(false, false, true, true, true)),
+                Arguments.of(ClassicState.PAUSING, new ClassicState.ClassicStatePermissions(false, false, false, false, false)),
+                Arguments.of(ClassicState.PAUSED, new ClassicState.ClassicStatePermissions(false, false, true, false, true)),
+                Arguments.of(ClassicState.STOPPING, new ClassicState.ClassicStatePermissions(false, false, false, false, false)),
+                Arguments.of(ClassicState.TERMINATED, new ClassicState.ClassicStatePermissions(false, true, true, false, false)),
+                Arguments.of(ClassicState.COMPLETING, new ClassicState.ClassicStatePermissions(false, false, false, false, false)),
+                Arguments.of(ClassicState.COMPLETED, new ClassicState.ClassicStatePermissions(false, false, true, false, false))
         );
     }
 
@@ -73,7 +73,7 @@ class ClassicStateTest extends AbstractSerializationDeserializationRunner {
 
     @ParameterizedTest
     @MethodSource("getPermissionsTest")
-    void getPermissionsTest(ClassicState state, ClassicStatePermissions permissions) {
+    void getPermissionsTest(ClassicState state, ClassicState.ClassicStatePermissions permissions) {
         // Act
         var actual = state.getPermissions();
 

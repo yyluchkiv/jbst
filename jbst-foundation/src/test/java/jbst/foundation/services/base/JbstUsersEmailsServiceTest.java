@@ -8,7 +8,6 @@ import jbst.foundation.domain.emails.EmailHTML;
 import jbst.foundation.domain.functions.FunctionAccountAccessed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
-import jbst.foundation.domain.time.LocalDateTimeUtility;
 import jbst.foundation.services.JbstEmailService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -31,6 +30,7 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Set;
 
+import static java.time.LocalDateTime.parse;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.enums.JbstAccountAccessMethod.SESSION_TOKEN;
@@ -111,7 +111,7 @@ class JbstUsersEmailsServiceTest {
                 .endsWith(" (UTC)");
         subject = subject.replace("[jbst.com] Account Accessed | ", "");
         subject = subject.replace(" (UTC)", "");
-        var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
+        var timestamp = getTimestamp(parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);
     }
 

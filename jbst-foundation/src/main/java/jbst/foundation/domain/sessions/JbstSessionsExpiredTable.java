@@ -9,7 +9,7 @@ import jbst.foundation.domain.tuples.Tuple3;
 import java.util.List;
 import java.util.Set;
 
-public record SessionsExpiredTable(
+public record JbstSessionsExpiredTable(
         List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions,
         Set<UserSessionId> expiredOrInvalidSessionIds
 ) {

@@ -15,7 +15,7 @@ import jbst.foundation.domain.ids.UserSessionId;
 import jbst.foundation.domain.jwt.JwtAccessToken;
 import jbst.foundation.domain.jwt.JwtRefreshToken;
 import jbst.foundation.domain.jwt.JwtUser;
-import jbst.foundation.domain.sessions.SessionsExpiredTable;
+import jbst.foundation.domain.sessions.JbstSessionsExpiredTable;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TupleToggle;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
@@ -138,7 +138,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
     }
 
     @Override
-    public SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
+    public JbstSessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
         var usersSessions = this.usersSessionsRepository.findByUsernameInAsAny(usernames);
         List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions = new ArrayList<>();
         Set<UserSessionId> expiredOrInvalidSessionIds = new HashSet<>();
@@ -164,7 +164,7 @@ public abstract class AbstractJbstUsersSessionsService implements JbstUsersSessi
             }
         });
 
-        return new SessionsExpiredTable(
+        return new JbstSessionsExpiredTable(
                 expiredSessions,
                 expiredOrInvalidSessionIds
         );

@@ -1,6 +1,6 @@
 package jbst.foundation.domain.collections;
 
-import jbst.foundation.domain.tests.enums.EnumUnderTests;
+import jbst.foundation.domain.tests.JbstUnitTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -317,7 +317,7 @@ class JbstCollectionsTest {
     @RepeatedTest(5)
     void baseJoiningRawTest() {
         // Act
-        var actual = baseJoiningRaw(Stream.of(EnumUnderTests.values()).collect(Collectors.toSet()));
+        var actual = baseJoiningRaw(Stream.of(JbstUnitTests.Enums.EnumUnderTests.values()).collect(Collectors.toSet()));
 
         // Assert
         assertThat(actual).isEqualTo("EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4");

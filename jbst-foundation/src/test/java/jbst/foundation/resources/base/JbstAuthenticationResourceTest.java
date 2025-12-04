@@ -25,7 +25,7 @@ import jbst.foundation.domain.jwt.JwtTokenValidatedClaims;
 import jbst.foundation.domain.jwt.JwtUser;
 import jbst.foundation.domain.security.CurrentClientUser;
 import jbst.foundation.domain.security.MagicLinkUserCredentials;
-import jbst.foundation.domain.sessions.Session;
+import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -183,7 +183,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
+        verify(this.sessionRegistry).register(new JbstSession(username, accessToken, refreshToken));
         verify(this.extensionService).authenticateAsStandard(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
@@ -230,7 +230,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.usersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
-        verify(this.sessionRegistry).register(new Session(user.username(), accessToken, refreshToken));
+        verify(this.sessionRegistry).register(new JbstSession(user.username(), accessToken, refreshToken));
         verify(this.extensionService).authenticateAsMagicLink(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
