@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 
 import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
-import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
+import static jbst.foundation.domain.numbers.JbstNumbers.is;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

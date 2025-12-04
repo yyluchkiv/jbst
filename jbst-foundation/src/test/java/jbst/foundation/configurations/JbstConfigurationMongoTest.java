@@ -1,10 +1,10 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
-import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
-import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
+import jbst.foundation.repositories.mongo.JbstMongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.JbstMongoSettingsRepository;
+import jbst.foundation.repositories.mongo.JbstMongoUsersRepository;
+import jbst.foundation.repositories.mongo.JbstMongoUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,10 +39,10 @@ class JbstConfigurationMongoTest {
         @Bean
         JbstConfigurationMongo jbstConfigurationMongo() {
             return new JbstConfigurationMongo(
-                    mock(MongoJbstSettingsRepository.class),
-                    mock(MongoJbstInvitationsRepository.class),
-                    mock(MongoJbstUsersRepository.class),
-                    mock(MongoJbstUsersSessionsRepository.class),
+                    mock(JbstMongoSettingsRepository.class),
+                    mock(JbstMongoInvitationsRepository.class),
+                    mock(JbstMongoUsersRepository.class),
+                    mock(JbstMongoUsersSessionsRepository.class),
                     this.jbstProperties
             );
         }

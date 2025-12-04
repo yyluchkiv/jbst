@@ -1,17 +1,17 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.assistants.userdetails.MongoUserDetailsAssistant;
+import jbst.foundation.assistants.userdetails.JbstMongoUserDetailsService;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.repositories.mongo.MongoJbstInvitationsRepository;
-import jbst.foundation.repositories.mongo.MongoJbstSettingsRepository;
-import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
-import jbst.foundation.repositories.mongo.MongoJbstUsersSessionsRepository;
-import jbst.foundation.services.mongo.MongoJbstUsersSessionsService;
+import jbst.foundation.repositories.mongo.JbstMongoInvitationsRepository;
+import jbst.foundation.repositories.mongo.JbstMongoSettingsRepository;
+import jbst.foundation.repositories.mongo.JbstMongoUsersRepository;
+import jbst.foundation.repositories.mongo.JbstMongoUsersSessionsRepository;
+import jbst.foundation.services.mongo.JbstMongoUsersSessionsService;
 import jbst.foundation.sessions.JbstSessionRegistry;
-import jbst.foundation.sessions.MongoSessionRegistry;
-import jbst.foundation.settings.MongoJbstSettingsService;
+import jbst.foundation.sessions.JbstMongoSessionRegistry;
+import jbst.foundation.settings.JbstMongoSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,26 +31,26 @@ import org.springframework.context.annotation.Import;
 public class JbstConfigurationMongo {
 
     // Repositories
-    private final MongoJbstSettingsRepository mongoJbstSettingsRepository;
-    private final MongoJbstInvitationsRepository mongoJbstInvitationsRepository;
-    private final MongoJbstUsersRepository mongoUsersRepository;
-    private final MongoJbstUsersSessionsRepository mongoUsersSessionsRepository;
+    private final JbstMongoSettingsRepository jbstMongoSettingsRepository;
+    private final JbstMongoInvitationsRepository jbstMongoInvitationsRepository;
+    private final JbstMongoUsersRepository mongoUsersRepository;
+    private final JbstMongoUsersSessionsRepository mongoUsersSessionsRepository;
     // Properties
     private final JbstProperties jbstProperties;
 
     @Bean
-    MongoJbstSettingsService mongoJbstSettingsService() {
-        return new MongoJbstSettingsService(
-                this.mongoJbstSettingsRepository,
-                this.mongoJbstInvitationsRepository,
+    JbstMongoSettingsService mongoJbstSettingsService() {
+        return new JbstMongoSettingsService(
+                this.jbstMongoSettingsRepository,
+                this.jbstMongoInvitationsRepository,
                 this.mongoUsersRepository,
                 this.jbstProperties
         );
     }
 
     @Bean
-    MongoUserDetailsAssistant mongoUserDetailsAssistant() {
-        return new MongoUserDetailsAssistant(
+    JbstMongoUserDetailsService mongoUserDetailsAssistant() {
+        return new JbstMongoUserDetailsService(
                 this.mongoUsersRepository
         );
     }
@@ -60,9 +60,9 @@ public class JbstConfigurationMongo {
     JbstSessionRegistry mongoSessionRegistry(
             JbstEventsPublisher eventsPublisher,
             JbstIncidentsPublisher incidentsPublisher,
-            MongoJbstUsersSessionsService mongoBaseUsersSessionsService
+            JbstMongoUsersSessionsService mongoBaseUsersSessionsService
     ) {
-        return new MongoSessionRegistry(
+        return new JbstMongoSessionRegistry(
                 eventsPublisher,
                 incidentsPublisher,
                 mongoBaseUsersSessionsService,

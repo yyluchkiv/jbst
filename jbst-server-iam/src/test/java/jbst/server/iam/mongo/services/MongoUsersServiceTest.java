@@ -1,7 +1,7 @@
 package jbst.server.iam.mongo.services;
 
-import jbst.foundation.domain.databases.mongo.MongoDbUser;
-import jbst.foundation.repositories.mongo.MongoJbstUsersRepository;
+import jbst.foundation.domain.databases.mongo.JbstMongoUser;
+import jbst.foundation.repositories.mongo.JbstMongoUsersRepository;
 import jbst.server.iam.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -28,8 +28,8 @@ class MongoUsersServiceTest {
     static class ContextConfiguration {
 
         @Bean
-        MongoJbstUsersRepository usersRepository() {
-            return mock(MongoJbstUsersRepository.class);
+        JbstMongoUsersRepository usersRepository() {
+            return mock(JbstMongoUsersRepository.class);
         }
 
         @Bean
@@ -40,7 +40,7 @@ class MongoUsersServiceTest {
         }
     }
 
-    private final MongoJbstUsersRepository usersRepository;
+    private final JbstMongoUsersRepository usersRepository;
 
     private final UsersService componentUnderTest;
 
@@ -61,8 +61,8 @@ class MongoUsersServiceTest {
     @Test
     void findAll() {
         // Act
-        var mongoDbUsers = list345(MongoDbUser.class);
-        var expected = mongoDbUsers.stream().map(MongoDbUser::asJwtUser).toList();
+        var mongoDbUsers = list345(JbstMongoUser.class);
+        var expected = mongoDbUsers.stream().map(JbstMongoUser::asJwtUser).toList();
         when(this.usersRepository.findAll()).thenReturn(mongoDbUsers);
 
         // Act

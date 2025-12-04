@@ -1,6 +1,6 @@
 package jbst.server.iam.configurations;
 
-import jbst.foundation.configurations.AbstractJbstSecurityJwtConfigurer;
+import jbst.foundation.configurations.JbstAbstractSecurityJwtConfigurer;
 import jbst.foundation.configurations.JbstConfigurationSecurityJwt;
 import jbst.foundation.configurations.JbstConfigurationSecurityJwtFallbacks;
 import jbst.server.iam.base.properties.ServerProperties;
@@ -22,7 +22,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
         ServerProperties.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationServer implements AbstractJbstSecurityJwtConfigurer {
+public class ConfigurationServer implements JbstAbstractSecurityJwtConfigurer {
 
     @Override
     public void configure(WebSecurity web) {

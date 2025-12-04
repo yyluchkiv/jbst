@@ -32,28 +32,28 @@ class JbstConfigurationPostgresRepositoriesTest {
     static class ContextConfiguration {
 
         @Bean
-        PostgresJbstSettingsRepository settingsRepository() {
-            return mock(PostgresJbstSettingsRepository.class);
+        JbstPostgresSettingsRepository settingsRepository() {
+            return mock(JbstPostgresSettingsRepository.class);
         }
 
         @Bean
-        PostgresJbstInvitationsRepository invitationsRepository() {
-            return mock(PostgresJbstInvitationsRepository.class);
+        JbstPostgresInvitationsRepository invitationsRepository() {
+            return mock(JbstPostgresInvitationsRepository.class);
         }
 
         @Bean
-        PostgresJbstUsersTokensRepository usersTokensRepository() {
-            return mock(PostgresJbstUsersTokensRepository.class);
+        JbstPostgresUsersTokensRepository usersTokensRepository() {
+            return mock(JbstPostgresUsersTokensRepository.class);
         }
 
         @Bean
-        PostgresJbstUsersRepository usersRepository() {
-            return mock(PostgresJbstUsersRepository.class);
+        JbstPostgresUsersRepository usersRepository() {
+            return mock(JbstPostgresUsersRepository.class);
         }
 
         @Bean
-        PostgresJbstUsersSessionsRepository usersSessionsRepository() {
-            return mock(PostgresJbstUsersSessionsRepository.class);
+        JbstPostgresUsersSessionsRepository usersSessionsRepository() {
+            return mock(JbstPostgresUsersSessionsRepository.class);
         }
 
         @Bean

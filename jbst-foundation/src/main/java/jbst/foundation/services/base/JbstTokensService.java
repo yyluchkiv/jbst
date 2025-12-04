@@ -2,7 +2,7 @@ package jbst.foundation.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstUserDetailsService;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
 import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstTokensService {
     // Assistants
-    private final JbstJwtUserDetailsService jwtUserDetailsService;
+    private final JbstUserDetailsService jwtUserDetailsService;
     // Session
     private final JbstSessionRegistry sessionRegistry;
     // Services

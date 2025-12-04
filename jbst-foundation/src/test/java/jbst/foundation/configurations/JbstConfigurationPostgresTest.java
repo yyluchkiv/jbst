@@ -1,10 +1,10 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.repositories.postgres.PostgresJbstInvitationsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstSettingsRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersRepository;
-import jbst.foundation.repositories.postgres.PostgresJbstUsersSessionsRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresInvitationsRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresSettingsRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresUsersRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,10 +39,10 @@ class JbstConfigurationPostgresTest {
         @Bean
         JbstConfigurationPostgres jbstConfigurationPostgres() {
             return new JbstConfigurationPostgres(
-                    mock(PostgresJbstSettingsRepository.class),
-                    mock(PostgresJbstInvitationsRepository.class),
-                    mock(PostgresJbstUsersRepository.class),
-                    mock(PostgresJbstUsersSessionsRepository.class),
+                    mock(JbstPostgresSettingsRepository.class),
+                    mock(JbstPostgresInvitationsRepository.class),
+                    mock(JbstPostgresUsersRepository.class),
+                    mock(JbstPostgresUsersSessionsRepository.class),
                     this.jbstProperties
             );
         }

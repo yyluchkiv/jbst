@@ -1,0 +1,40 @@
+package jbst.foundation.repositories.mongo;
+
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.databases.JbstSettings;
+import jbst.foundation.domain.databases.mongo.JbstMongoSettings;
+import jbst.foundation.domain.dto.requests.JbstRequestJbstSettings;
+import jbst.foundation.repositories.JbstSettingsRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
+
+public interface JbstMongoSettingsRepository extends MongoRepository<JbstMongoSettings, String>, JbstSettingsRepository {
+    // ================================================================================================================
+    // Any
+    // ================================================================================================================
+    default JbstSettings getSettings() {
+        return this.findAll().stream()
+                .findFirst()
+                .map(JbstMongoSettings::jbstSettings)
+                .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));
+    }
+
+    default boolean isPresent() {
+        return this.count() > 0;
+    }
+
+    default JbstSettings saveAs(
+            Username updatedBy,
+            JbstRequestJbstSettings request
+    ) {
+        var entity = this.findAll().stream().findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(contactDevelopmentTeam("No jbst settings")));
+        entity.edit(
+                updatedBy,
+                request.hardwareMonitoringThresholds()
+        );
+        this.save(entity);
+        return entity.jbstSettings();
+    }
+}

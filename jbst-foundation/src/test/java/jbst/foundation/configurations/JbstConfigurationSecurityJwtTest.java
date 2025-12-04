@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.assistants.userdetails.JbstJwtUserDetailsService;
+import jbst.foundation.assistants.userdetails.JbstUserDetailsService;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
@@ -124,14 +124,14 @@ class JbstConfigurationSecurityJwtTest {
         @Bean
         JbstConfigurationSecurityJwt configurationBaseSecurityJwt() {
             return new JbstConfigurationSecurityJwt(
-                    mock(JbstJwtUserDetailsService.class),
+                    mock(JbstUserDetailsService.class),
                     mock(BCryptPasswordEncoder.class),
                     mock(JbstTokensFilter.class),
                     mock(JbstAuthenticationEntryPoint.class),
                     mock(JbstAccessDeniedHandler.class),
                     this.csrfInterceptorHandshake(),
                     this.securityHandshakeHandler(),
-                    mock(AbstractJbstSecurityJwtConfigurer.class),
+                    mock(JbstAbstractSecurityJwtConfigurer.class),
                     this.jbstProperties()
             );
         }

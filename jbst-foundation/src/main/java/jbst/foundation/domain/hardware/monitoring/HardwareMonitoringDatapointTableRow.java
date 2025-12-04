@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
 import static java.util.function.Function.identity;
-import static jbst.foundation.domain.numbers.BigDecimalUtility.is;
+import static jbst.foundation.domain.numbers.JbstNumbers.is;
 import static jbst.foundation.domain.random.JbstRandom.*;
 
 // Lombok
