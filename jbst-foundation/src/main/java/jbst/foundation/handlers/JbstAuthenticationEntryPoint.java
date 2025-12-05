@@ -25,6 +25,6 @@ public class JbstAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write(this.objectMapper.writeValueAsString(new JbstExceptionResponse(exception)));
+        response.getWriter().write(this.objectMapper.writeValueAsString(JbstExceptionResponse.of(JbstExceptionResponse.Type.ERROR, exception)));
     }
 }

@@ -53,10 +53,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -166,12 +165,12 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", equalTo("jbst")))
-                .andExpect(jsonPath("$.email", equalTo("tests@yyluchkiv.com")))
-                .andExpect(jsonPath("$.name", equalTo("JBST")))
-                .andExpect(jsonPath("$.zoneId", equalTo("Europe/Kyiv")))
-                .andExpect(jsonPath("$.authorities", notNullValue()))
-                .andExpect(jsonPath("$.attributes", notNullValue()));
+                .andExpect(jsonPath("$.username", Matchers.equalTo("jbst")))
+                .andExpect(jsonPath("$.email", Matchers.equalTo("tests@yyluchkiv.com")))
+                .andExpect(jsonPath("$.name", Matchers.equalTo("JBST")))
+                .andExpect(jsonPath("$.zoneId", Matchers.equalTo("Europe/Kyiv")))
+                .andExpect(jsonPath("$.authorities", Matchers.notNullValue()))
+                .andExpect(jsonPath("$.attributes", Matchers.notNullValue()));
 
         // Assert
         verify(this.authenticationRequestsValidator).validateLoginStandard(request);
@@ -212,12 +211,12 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", equalTo("jbst")))
-                .andExpect(jsonPath("$.email", equalTo("tests@yyluchkiv.com")))
-                .andExpect(jsonPath("$.name", equalTo("JBST")))
-                .andExpect(jsonPath("$.zoneId", equalTo("Europe/Kyiv")))
-                .andExpect(jsonPath("$.authorities", notNullValue()))
-                .andExpect(jsonPath("$.attributes", notNullValue()));
+                .andExpect(jsonPath("$.username", Matchers.equalTo("jbst")))
+                .andExpect(jsonPath("$.email", Matchers.equalTo("tests@yyluchkiv.com")))
+                .andExpect(jsonPath("$.name", Matchers.equalTo("JBST")))
+                .andExpect(jsonPath("$.zoneId", Matchers.equalTo("Europe/Kyiv")))
+                .andExpect(jsonPath("$.authorities", Matchers.notNullValue()))
+                .andExpect(jsonPath("$.attributes", Matchers.notNullValue()));
 
         // Assert
         verify(this.authenticationRequestsValidator).validateLoginMagicLink(request);
@@ -247,10 +246,9 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var password = request.password();
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
         var exception = new BadCredentialsException("Bad credentials");
-        var exceptionEntity = new JbstExceptionResponse(
+        var exceptionResponse = JbstExceptionResponse.of(
                 JbstExceptionResponse.Type.ERROR,
-                exception.getMessage(),
-                exception.getMessage()
+                exception
         );
         when(this.authenticationManager.authenticate(authenticationToken)).thenThrow(exception);
 
@@ -260,10 +258,13 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
                                 .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
+                .andDo(print())
                 .andExpect(status().isInternalServerError())
-                .andExpect(jsonPath("$.exceptionEntityType", equalTo(exceptionEntity.getExceptionEntityType().name())))
-                .andExpect(jsonPath("$.attributes", equalTo(exceptionEntity.getAttributes())))
-                .andExpect(jsonPath("$.timestamp", Matchers.greaterThan(exceptionEntity.getTimestamp())));
+                .andExpect(jsonPath("$.length()").value(4))
+                .andExpect(jsonPath("$.jbsTimestamp", Matchers.greaterThan(exceptionResponse.getJbsTimestamp())))
+                .andExpect(jsonPath("$.jbstType", Matchers.equalTo(exceptionResponse.getJbstType().name())))
+                .andExpect(jsonPath("$.jbstMessageOnClient", Matchers.equalTo(exceptionResponse.getJbstMessageOnClient())))
+                .andExpect(jsonPath("$.jbstAttributes", Matchers.equalTo(exceptionResponse.getJbstAttributes())));
 
         // Assert
         verify(this.authenticationRequestsValidator).validateLoginStandard(request);
@@ -365,10 +366,13 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(post("/authentication/refreshToken"))
+                .andDo(print())
                 .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()))
-                .andExpect(jsonPath("$.exceptionEntityType", equalTo("ERROR")))
-                .andExpect(jsonPath("$.attributes.shortMessage", equalTo(exception.getMessage())))
-                .andExpect(jsonPath("$.attributes.fullMessage", equalTo(exception.getMessage())));
+                .andExpect(jsonPath("$.length()").value(4))
+                .andExpect(jsonPath("$.jbsTimestamp", Matchers.notNullValue()))
+                .andExpect(jsonPath("$.jbstType", Matchers.equalTo("ERROR")))
+                .andExpect(jsonPath("$.jbstMessageOnClient", Matchers.notNullValue()))
+                .andExpect(jsonPath("$.jbstAttributes", Matchers.notNullValue()));
 
         // Assert
         verify(this.tokensService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));
@@ -388,8 +392,8 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         // Act
         this.mvc.perform(post("/authentication/refreshToken"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken", equalTo(response.accessToken().value())))
-                .andExpect(jsonPath("$.refreshToken", equalTo(response.refreshToken().value())));
+                .andExpect(jsonPath("$.accessToken", Matchers.equalTo(response.accessToken().value())))
+                .andExpect(jsonPath("$.refreshToken", Matchers.equalTo(response.refreshToken().value())));
 
         // Assert
         verify(this.tokensService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));

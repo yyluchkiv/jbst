@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.exceptions.JbstExceptionResponse.Type.ERROR;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
-import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -40,7 +39,7 @@ class JbstResourceExceptionHandlerTest {
 
     private final JbstResourceExceptionHandler componentUnderTest;
 
-    private static Stream<Arguments> unauthorizedResponseErrorMessageTest() {
+    private static Stream<Arguments> unauthorizedResponseErrorMessageArgs() {
         return Stream.of(
                 Arguments.of(new JbstExceptions.CookieNotFound(randomString())),
                 Arguments.of(new JbstExceptions.AccessTokenNotFound()),
@@ -55,39 +54,35 @@ class JbstResourceExceptionHandlerTest {
         );
     }
 
-    private static Stream<Arguments> forbiddenResponseErrorMessageTest() {
+    private static Stream<Arguments> forbiddenResponseErrorMessageArgs() {
         return Stream.of(
                 Arguments.of(new AccessDeniedException(randomString()))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("unauthorizedResponseErrorMessageTest")
+    @MethodSource("unauthorizedResponseErrorMessageArgs")
     void unauthorizedResponseErrorMessageTest(Exception exception) {
         // Act
         var response = this.componentUnderTest.unauthorizedExceptions(exception);
 
         // Assert
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes())
-                .containsEntry("shortMessage", exception.getMessage())
-                .containsEntry("fullMessage", exception.getMessage());
+        assertThat(response.getBody().getJbstType()).isEqualTo(ERROR);
+        assertThat(response.getBody().getJbstMessageOnClient()).isEqualTo(exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @ParameterizedTest
-    @MethodSource("forbiddenResponseErrorMessageTest")
+    @MethodSource("forbiddenResponseErrorMessageArgs")
     void forbiddenExceptionsTest(Exception exception) {
         // Act
         var response = this.componentUnderTest.forbiddenExceptions(exception);
 
         // Assert
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes())
-                .containsEntry("shortMessage", exception.getMessage())
-                .containsEntry("fullMessage", exception.getMessage());
+        assertThat(response.getBody().getJbstType()).isEqualTo(ERROR);
+        assertThat(response.getBody().getJbstMessageOnClient()).isEqualTo(exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
@@ -102,10 +97,8 @@ class JbstResourceExceptionHandlerTest {
 
         // Assert
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes())
-                .containsEntry("shortMessage", contactDevelopmentTeam("Registration Failure"))
-                .containsEntry("fullMessage", exception.getMessage());
+        assertThat(response.getBody().getJbstType()).isEqualTo(ERROR);
+        assertThat(response.getBody().getJbstMessageOnClient()).isEqualTo("Registration Failure. Please contact development team");
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -120,10 +113,8 @@ class JbstResourceExceptionHandlerTest {
 
         // Assert
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes())
-                .containsEntry("shortMessage", exception.getMessage())
-                .containsEntry("fullMessage", exception.getMessage());
+        assertThat(response.getBody().getJbstType()).isEqualTo(ERROR);
+        assertThat(response.getBody().getJbstMessageOnClient()).isEqualTo(message);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -21,24 +21,21 @@ class JbstExceptionResponseTest extends Base {
         // Arrange
         var exceptionMessage = randomString();
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
-        var arrangedExceptionEntity = new JbstExceptionResponse(new NullPointerException(exceptionMessage));
-        arrangedExceptionEntity.addAttribute("externalAttribute", randomString());
+        var exceptionResponse = JbstExceptionResponse.of(JbstExceptionResponse.Type.ERROR, new NullPointerException(exceptionMessage));
 
         // Act
-        var json = this.writeValueAsString(arrangedExceptionEntity);
+        var json = this.writeValueAsString(exceptionResponse);
         HashMap<String, Object> exceptionEntity = OBJECT_MAPPER.readValue(json, typeRef);
 
         // Assert
         assertThat(exceptionEntity)
-                .hasSize(3)
-                .containsKeys("exceptionEntityType", "attributes", "timestamp")
-                .containsEntry("exceptionEntityType", ERROR.toString());
-        assertThat(exceptionEntity.get("timestamp")).isNotNull();
-        var attributes = (Map<String, Object>) exceptionEntity.get("attributes");
+                .hasSize(4)
+                .containsKeys("jbsTimestamp", "jbstType", "jbstMessageOnClient", "jbstAttributes")
+                .containsEntry("jbstType", ERROR.toString());
+        assertThat(exceptionEntity.get("jbsTimestamp")).isNotNull();
+        var attributes = (Map<String, Object>) exceptionEntity.get("jbstAttributes");
         assertThat(attributes)
-                .hasSize(3)
-                .containsKey("externalAttribute")
-                .containsEntry("shortMessage", exceptionMessage)
-                .containsEntry("fullMessage", exceptionMessage);
+                .hasSize(1)
+                .containsEntry("jbstTrace", exceptionMessage);
     }
 }
