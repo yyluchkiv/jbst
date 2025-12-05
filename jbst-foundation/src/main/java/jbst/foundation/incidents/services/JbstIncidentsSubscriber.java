@@ -1,12 +1,12 @@
 package jbst.foundation.incidents.services;
 
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
-import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
-import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionExpired;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerStarted;
 import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,90 +25,90 @@ public class JbstIncidentsSubscriber {
     private final JbstIncidentClient incidentClient;
 
     @EventListener
-    public void onEvent(Incident incident) {
+    public void onEvent(JbstIncident incident) {
         this.incidentClient.registerIncident(incident);
     }
 
     @EventListener
-    public void onEvent(IncidentSystemResetServerStarted incident) {
+    public void onEvent(JbstIncidentSystemResetServerStarted incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] system reset server started");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentSystemResetServerCompleted incident) {
+    public void onEvent(JbstIncidentSystemResetServerCompleted incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] system reset server completed");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentAuthenticationLogin incident) {
+    public void onEvent(JbstIncidentAuthenticationLogin incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] login");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentAuthenticationLoginFailureUsernamePassword incident) {
+    public void onEvent(JbstIncidentAuthenticationLoginFailureUsernamePassword incident) {
         LOGGER.debug(USER_ACTION, incident.credentials().username(), "[sub, incidents] login failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident) {
+    public void onEvent(JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword incident) {
         LOGGER.debug(USER_ACTION, incident.credentials().username(), "[sub, incidents] login failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentAuthenticationLogoutMin incident) {
+    public void onEvent(JbstIncidentAuthenticationLogoutMin incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] logout");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentAuthenticationLogoutFull incident) {
+    public void onEvent(JbstIncidentAuthenticationLogoutFull incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] logout");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentRegistrationMagicLink incident) {
+    public void onEvent(JbstIncidentRegistrationMagicLink incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register-magiclink");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentRegistration0 incident) {
+    public void onEvent(JbstIncidentRegistration0 incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register0");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentRegistration0Failure incident) {
+    public void onEvent(JbstIncidentRegistration0Failure incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register0 failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentRegistration1 incident) {
+    public void onEvent(JbstIncidentRegistration1 incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register1");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentRegistration1Failure incident) {
+    public void onEvent(JbstIncidentRegistration1Failure incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register1 failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentSessionRefreshed incident) {
+    public void onEvent(JbstIncidentSessionRefreshed incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] session refreshed");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @EventListener
-    public void onEvent(IncidentSessionExpired incident) {
+    public void onEvent(JbstIncidentSessionExpired incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] session expired");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }

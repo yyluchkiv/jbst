@@ -11,10 +11,10 @@ import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
 import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLogin;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLoginFailureUsernamePassword;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionRefreshed;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
@@ -251,7 +251,7 @@ class JbstEventsSubscriberTest {
         // Assert
         verify(this.geoUtils).getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader());
         verify(this.incidentsPublisher).publishAuthenticationLoginFailureUsernamePassword(
-                new IncidentAuthenticationLoginFailureUsernamePassword(
+                new JbstIncidentAuthenticationLoginFailureUsernamePassword(
                         new UsernamePasswordCredentials(
                                 event.username(),
                                 event.password()
@@ -260,7 +260,7 @@ class JbstEventsSubscriberTest {
                 )
         );
         verify(this.incidentsPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(
-                new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
+                new JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword(
                         UsernamePasswordCredentials.mask5(
                                 event.username(),
                                 event.password()
@@ -399,7 +399,7 @@ class JbstEventsSubscriberTest {
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }
-        verify(this.incidentsPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), event.session().metadata()));
+        verify(this.incidentsPublisher).publishAuthenticationLogin(new JbstIncidentAuthenticationLogin(event.username(), event.session().metadata()));
         verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 
@@ -425,7 +425,7 @@ class JbstEventsSubscriberTest {
         } else {
             verifyNoInteractions(this.usersEmailsService);
         }
-        verify(this.incidentsPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), event.session().metadata()));
+        verify(this.incidentsPublisher).publishSessionRefreshed(new JbstIncidentSessionRefreshed(event.username(), event.session().metadata()));
         verify(this.incidentsPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 

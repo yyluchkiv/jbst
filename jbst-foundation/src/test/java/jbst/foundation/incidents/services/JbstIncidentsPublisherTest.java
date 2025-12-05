@@ -5,13 +5,13 @@ import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
-import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
-import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionExpired;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerStarted;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,7 +88,7 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishIncidentTest() {
         // Arrange
-        var incident = Incident.random();
+        var incident = JbstIncident.random();
 
         // Act
         this.componentUnderTest.publishIncident(incident);
@@ -100,7 +100,7 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishThrowableIncidentTest() {
         // Arrange
-        var incident = new Incident(new Throwable("jbst"));
+        var incident = new JbstIncident(new Throwable("jbst"));
 
         // Act
         this.componentUnderTest.publishIncident(incident);
@@ -112,7 +112,7 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishResetServerStartedTest() {
         // Arrange
-        var incident = IncidentSystemResetServerStarted.hardcoded();
+        var incident = JbstIncidentSystemResetServerStarted.hardcoded();
 
         // Act
         this.componentUnderTest.publishResetServerStarted(incident);
@@ -124,7 +124,7 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishResetServerCompletedTest() {
         // Arrange
-        var incident = IncidentSystemResetServerCompleted.hardcoded();
+        var incident = JbstIncidentSystemResetServerCompleted.hardcoded();
 
         // Act
         this.componentUnderTest.publishResetServerCompleted(incident);
@@ -138,7 +138,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLogin.class);
+        var incident = entity(JbstIncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
@@ -152,7 +152,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLogin.class);
+        var incident = entity(JbstIncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
@@ -167,7 +167,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
+        var incident = entity(JbstIncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
@@ -181,7 +181,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
+        var incident = entity(JbstIncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
@@ -196,7 +196,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
+        var incident = entity(JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
@@ -210,7 +210,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
+        var incident = entity(JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
@@ -225,7 +225,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT_MIN, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLogoutMin.class);
+        var incident = entity(JbstIncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
@@ -239,7 +239,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT_MIN, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLogoutMin.class);
+        var incident = entity(JbstIncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
@@ -254,7 +254,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLogoutFull.class);
+        var incident = entity(JbstIncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
@@ -268,7 +268,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(AUTHENTICATION_LOGOUT, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentAuthenticationLogoutFull.class);
+        var incident = entity(JbstIncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
@@ -283,7 +283,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(SESSION_REFRESHED, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentSessionRefreshed.class);
+        var incident = entity(JbstIncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
@@ -297,7 +297,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(SESSION_REFRESHED, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentSessionRefreshed.class);
+        var incident = entity(JbstIncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
@@ -312,7 +312,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(SESSION_EXPIRED, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentSessionExpired.class);
+        var incident = entity(JbstIncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
@@ -326,7 +326,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(SESSION_EXPIRED, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentSessionExpired.class);
+        var incident = entity(JbstIncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
@@ -342,7 +342,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(REGISTER_MAGICLINK, enabled);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentRegistrationMagicLink.class);
+        var incident = entity(JbstIncidentRegistrationMagicLink.class);
 
         // Act
         this.componentUnderTest.publishRegistrationMagicLink(incident);
@@ -360,7 +360,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(REGISTER0, enabled);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentRegistration0.class);
+        var incident = entity(JbstIncidentRegistration0.class);
 
         // Act
         this.componentUnderTest.publishRegistration0(incident);
@@ -378,7 +378,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(REGISTER0_FAILURE, enabled);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentRegistration0Failure.class);
+        var incident = entity(JbstIncidentRegistration0Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration0Failure(incident);
@@ -395,7 +395,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(REGISTER1, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentRegistration1.class);
+        var incident = entity(JbstIncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
@@ -409,7 +409,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(REGISTER1, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentRegistration1.class);
+        var incident = entity(JbstIncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
@@ -424,7 +424,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(REGISTER1_FAILURE, false);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentRegistration1Failure.class);
+        var incident = entity(JbstIncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);
@@ -438,7 +438,7 @@ class JbstIncidentsPublisherTest {
         // Arrange
         var incidentsManager = incidentsManager(REGISTER1_FAILURE, true);
         when(this.jbstProperties.getIncidentsManager()).thenReturn(incidentsManager);
-        var incident = entity(IncidentRegistration1Failure.class);
+        var incident = entity(JbstIncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);

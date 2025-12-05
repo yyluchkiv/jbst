@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.feigns.github.JbstGithub;
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.server.ops.domain.computed.ServerInfinityWorker;
 import jbst.server.ops.domain.computed.ServerInfinityTimerTaskSpringBeans;
 import jbst.server.ops.domain.computed.ServerInfinityTimerTasks;
@@ -126,7 +126,7 @@ public class MonitoringService {
         return this.getServers().isAnyChanges();
     }
 
-    public final OpsIncident getOpsIncident(Incident incident, OpsIncidentEnv opsIncidentEnv) {
+    public final OpsIncident getOpsIncident(JbstIncident incident, OpsIncidentEnv opsIncidentEnv) {
         Map<String, Server> serversHosts = new HashMap<>();
         // WARNING #1: 6001 - hms
         var skipPorts = Set.of(6001);

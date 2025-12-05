@@ -1,9 +1,9 @@
 package jbst.foundation.resources.hardware;
 
 import jbst.foundation.configurations.TestRunnerResources1;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
-import jbst.foundation.domain.hardware.monitoring.HardwareName;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringDatapointTableView;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringMetadata;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareName;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.settings.JbstSettingsService;
@@ -67,7 +67,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         // Act
         mvc.perform(
                         post("/hardware/monitoring/metadata")
-                                .content(this.getContent(HardwareMonitoringMetadata.hardcoded()))
+                                .content(this.getContent(JbstHardwareMonitoringMetadata.hardcoded()))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
@@ -86,24 +86,24 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         // Act
         mvc.perform(
                 post("/hardware/monitoring/metadata")
-                        .content(this.getContent(HardwareMonitoringMetadata.hardcoded()))
+                        .content(this.getContent(JbstHardwareMonitoringMetadata.hardcoded()))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         // Assert
         var usernameAC = ArgumentCaptor.forClass(Set.class);
-        var datapointTableViewAC = ArgumentCaptor.forClass(HardwareMonitoringDatapointTableView.class);
+        var datapointTableViewAC = ArgumentCaptor.forClass(JbstHardwareMonitoringDatapointTableView.class);
         verify(this.settingsService).getHardwareMonitoringThresholds();
         verify(this.websocketsService).sendHardwareMonitoring(usernameAC.capture(), datapointTableViewAC.capture());
         var datapoint = datapointTableViewAC.getValue();
         assertThat(datapoint.isAnyPresent()).isTrue();
         assertThat(datapoint.isAnyProblem()).isFalse();
         assertThat(datapoint.getRows()).hasSize(5);
-        assertThat(datapoint.getMappedRows().get(HardwareName.HEAP)).isNotNull();
-        assertThat(datapoint.getMappedRows().get(HardwareName.CPU).getUsage()).isEqualTo(new BigDecimal("1.23"));
-        assertThat(datapoint.getMappedRows().get(HardwareName.SERVER).getUsage()).isEqualTo(new BigDecimal("45.6"));
-        assertThat(datapoint.getMappedRows().get(HardwareName.SWAP).getUsage()).isEqualTo(new BigDecimal("60.5"));
-        assertThat(datapoint.getMappedRows().get(HardwareName.VIRTUAL).getUsage()).isEqualTo(new BigDecimal("64.2"));
+        assertThat(datapoint.getMappedRows().get(JbstHardwareName.HEAP)).isNotNull();
+        assertThat(datapoint.getMappedRows().get(JbstHardwareName.CPU).getUsage()).isEqualTo(new BigDecimal("1.23"));
+        assertThat(datapoint.getMappedRows().get(JbstHardwareName.SERVER).getUsage()).isEqualTo(new BigDecimal("45.6"));
+        assertThat(datapoint.getMappedRows().get(JbstHardwareName.SWAP).getUsage()).isEqualTo(new BigDecimal("60.5"));
+        assertThat(datapoint.getMappedRows().get(JbstHardwareName.VIRTUAL).getUsage()).isEqualTo(new BigDecimal("64.2"));
     }
 }

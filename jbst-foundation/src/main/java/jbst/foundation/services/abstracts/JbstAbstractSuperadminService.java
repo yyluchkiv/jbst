@@ -7,8 +7,8 @@ import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
 import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerStarted;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -45,9 +45,9 @@ public abstract class JbstAbstractSuperadminService implements JbstSuperadminSer
 
     @Override
     public void resetServerBy(JbstJwtUser user) {
-        this.incidentsPublisher.publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
+        this.incidentsPublisher.publishResetServerStarted(new JbstIncidentSystemResetServerStarted(user.username()));
         this.taskOnResetServer.reset(user);
-        this.incidentsPublisher.publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
+        this.incidentsPublisher.publishResetServerCompleted(new JbstIncidentSystemResetServerCompleted(user.username()));
     }
 
     // =================================================================================================================

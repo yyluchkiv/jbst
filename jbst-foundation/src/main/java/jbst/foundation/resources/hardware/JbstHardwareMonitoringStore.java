@@ -1,8 +1,8 @@
 package jbst.foundation.resources.hardware;
 
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringDatapoint;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringWidget;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +18,15 @@ public class JbstHardwareMonitoringStore {
     // Settings
     private final JbstSettingsService settingsService;
 
-    private final Deque<HardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
+    private final Deque<JbstHardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 
     @JbstDevelopmentOnly
     public final void clear() {
         this.datapoints.clear();
     }
 
-    public final HardwareMonitoringWidget getWidget() {
-        var datapoint = !this.datapoints.isEmpty() ? this.datapoints.peekLast() : HardwareMonitoringDatapoint.zeroUsage();
+    public final JbstHardwareMonitoringWidget getWidget() {
+        var datapoint = !this.datapoints.isEmpty() ? this.datapoints.peekLast() : JbstHardwareMonitoringDatapoint.zeroUsage();
         return datapoint.getWidget(this.settingsService.getHardwareMonitoringThresholds().values());
     }
 
@@ -38,7 +38,7 @@ public class JbstHardwareMonitoringStore {
         return this.datapoints.size() == 1;
     }
 
-    public final void storeDatapoint(HardwareMonitoringDatapoint datapoint) {
+    public final void storeDatapoint(JbstHardwareMonitoringDatapoint datapoint) {
         if (this.datapoints.size() >= 120) {
             this.datapoints.pollFirst();
         }

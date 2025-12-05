@@ -1,6 +1,6 @@
 package jbst.foundation.incidents.feigns.definitions;
 
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,7 @@ class JbstIncidentClientDefinitionSlf4JTest {
     @Test
     void registerIncidentExceptionTest() {
         // Arrange
-        var incident = mock(Incident.class);
+        var incident = mock(JbstIncident.class);
 
         // Act
         this.componentUnderTest.registerIncident(incident);

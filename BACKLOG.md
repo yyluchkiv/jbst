@@ -6,12 +6,9 @@
 — Users @ Payments (Stripe)
 — Users + Plans
 
-##### Major
+##### Major(s)
 — Modification: JbstExceptionResponse JSON V2
 
-##### Minor
-— Prefixes: domain.events (websockets)
-— Prefixes: domain.hardware
-— Prefixes: domain.notifications
-— Prefixes: incidents (?)
+##### Minor(s)
+— TDB
 

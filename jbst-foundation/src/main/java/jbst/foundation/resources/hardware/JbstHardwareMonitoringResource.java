@@ -1,8 +1,8 @@
 package jbst.foundation.resources.hardware;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringDatapoint;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringMetadata;
 import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
@@ -61,10 +61,10 @@ public class JbstHardwareMonitoringResource extends JbstWorkerFixedInfinity {
 
     @PostMapping("/metadata")
     @ResponseStatus(HttpStatus.OK)
-    public void saveMetadata(@RequestBody HardwareMonitoringMetadata hardwareMonitoringMetadata) {
+    public void saveMetadata(@RequestBody JbstHardwareMonitoringMetadata hardwareMonitoringMetadata) {
         try {
             this.jbstHardwareMonitoringStore.storeDatapoint(
-                    new HardwareMonitoringDatapoint(
+                    new JbstHardwareMonitoringDatapoint(
                             hardwareMonitoringMetadata.version(),
                             hardwareMonitoringMetadata.systemMemories().global(),
                             hardwareMonitoringMetadata.systemMemories().cpu(),

@@ -8,8 +8,8 @@ import jbst.foundation.domain.dto.responses.JbstResponseSuperadminSessionsTable;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerStarted;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -160,9 +160,9 @@ class JbstAbstractSuperadminServiceTest {
         this.componentUnderTest.resetServerBy(user);
 
         // Assert
-        verify(this.incidentsPublisher).publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
+        verify(this.incidentsPublisher).publishResetServerStarted(new JbstIncidentSystemResetServerStarted(user.username()));
         verify(this.abstractMockService).executeInheritedMethod();
-        verify(this.incidentsPublisher).publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
+        verify(this.incidentsPublisher).publishResetServerCompleted(new JbstIncidentSystemResetServerCompleted(user.username()));
     }
 
     @Test

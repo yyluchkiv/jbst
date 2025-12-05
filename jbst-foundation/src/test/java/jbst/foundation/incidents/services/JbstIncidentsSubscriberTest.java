@@ -1,12 +1,12 @@
 package jbst.foundation.incidents.services;
 
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.*;
-import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
-import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionExpired;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.JbstIncidentSystemResetServerStarted;
 import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -67,7 +67,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventIncidentTest() {
         // Arrange
-        var incident = Incident.random();
+        var incident = JbstIncident.random();
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -79,13 +79,13 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventIncidentSystemResetServerStartedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = IncidentSystemResetServerStarted.hardcoded();
+        var incidentSystemResetServerStarted = JbstIncidentSystemResetServerStarted.hardcoded();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);
 
         // Assert
-        var incidentAC = ArgumentCaptor.forClass(Incident.class);
+        var incidentAC = ArgumentCaptor.forClass(JbstIncident.class);
         verify(this.incidentClient).registerIncident(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.getType()).isEqualTo("Reset Server Started");
@@ -98,13 +98,13 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventIncidentSystemResetServerCompletedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = IncidentSystemResetServerCompleted.hardcoded();
+        var incidentSystemResetServerStarted = JbstIncidentSystemResetServerCompleted.hardcoded();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);
 
         // Assert
-        var incidentAC = ArgumentCaptor.forClass(Incident.class);
+        var incidentAC = ArgumentCaptor.forClass(JbstIncident.class);
         verify(this.incidentClient).registerIncident(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.getType()).isEqualTo("Reset Server Completed");
@@ -117,7 +117,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventAuthenticationLoginIncidentTest() {
         // Arrange
-        var incident = entity(IncidentAuthenticationLogin.class);
+        var incident = entity(JbstIncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -129,7 +129,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventAuthenticationLoginFailureUsernamePasswordIncidentTest() {
         // Arrange
-        var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
+        var incident = entity(JbstIncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -141,7 +141,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
         // Arrange
-        var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
+        var incident = entity(JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -153,7 +153,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventAuthenticationLogoutMinIncidentTest() {
         // Arrange
-        var incident = entity(IncidentAuthenticationLogoutMin.class);
+        var incident = entity(JbstIncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -165,7 +165,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventAuthenticationLogoutFullIncidentTest() {
         // Arrange
-        var incident = entity(IncidentAuthenticationLogoutFull.class);
+        var incident = entity(JbstIncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -177,7 +177,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventSessionRefreshedIncidentTest() {
         // Arrange
-        var incident = entity(IncidentSessionRefreshed.class);
+        var incident = entity(JbstIncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -189,7 +189,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventSessionExpiredIncidentTest() {
         // Arrange
-        var incident = entity(IncidentSessionExpired.class);
+        var incident = entity(JbstIncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -201,7 +201,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventRegisterMagicLinkIncidentTest() {
         // Arrange
-        var incident = entity(IncidentRegistrationMagicLink.class);
+        var incident = entity(JbstIncidentRegistrationMagicLink.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -213,7 +213,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventRegister0IncidentTest() {
         // Arrange
-        var incident = entity(IncidentRegistration0.class);
+        var incident = entity(JbstIncidentRegistration0.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -225,7 +225,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventRegister0FailureIncidentTest() {
         // Arrange
-        var incident = entity(IncidentRegistration0Failure.class);
+        var incident = entity(JbstIncidentRegistration0Failure.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -237,7 +237,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventRegister1IncidentTest() {
         // Arrange
-        var incident = entity(IncidentRegistration1.class);
+        var incident = entity(JbstIncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);
@@ -249,7 +249,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventRegister1FailureIncidentTest() {
         // Arrange
-        var incident = entity(IncidentRegistration1Failure.class);
+        var incident = entity(JbstIncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);

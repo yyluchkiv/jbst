@@ -3,7 +3,7 @@ package jbst.foundation.domain.databases.mongo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstSettings;
-import jbst.foundation.domain.hardware.monitoring.HardwareName;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareName;
 import jbst.foundation.domain.settings.JbstSettingsHardwareMonitoringThresholds;
 import lombok.*;
 import org.bson.types.Decimal128;
@@ -38,7 +38,7 @@ public class JbstMongoSettings {
     private long updatedAt;
     // HardwareMonitoringThreshold
     private boolean hmtEnabled;
-    private Map<HardwareName, Decimal128> hmtValues;
+    private Map<JbstHardwareName, Decimal128> hmtValues;
 
     public void edit(Username updatedBy, JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds) {
         this.updatedBy = updatedBy;

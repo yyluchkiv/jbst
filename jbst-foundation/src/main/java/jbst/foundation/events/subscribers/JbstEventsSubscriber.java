@@ -5,10 +5,10 @@ import jbst.foundation.domain.events.*;
 import jbst.foundation.domain.functions.JbstFunctionAccountAccessed;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLogin;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLoginFailureUsernamePassword;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionRefreshed;
 import jbst.foundation.services.JbstUsersSessionsService;
 import jbst.foundation.services.JbstUsersTokensService;
 import jbst.foundation.services.base.JbstUsersEmailsService;
@@ -53,7 +53,7 @@ public class JbstEventsSubscriber {
                     event.userAgentHeader()
             );
             this.incidentsPublisher.publishAuthenticationLoginFailureUsernamePassword(
-                    new IncidentAuthenticationLoginFailureUsernamePassword(
+                    new JbstIncidentAuthenticationLoginFailureUsernamePassword(
                             new UsernamePasswordCredentials(
                                     event.username(),
                                     event.password()
@@ -62,7 +62,7 @@ public class JbstEventsSubscriber {
                     )
             );
             this.incidentsPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
-                    new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
+                    new JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword(
                             UsernamePasswordCredentials.mask5(
                                     event.username(),
                                     event.password()
@@ -170,7 +170,7 @@ public class JbstEventsSubscriber {
     ) {
         if (event.isUsernamePassword()) {
             this.incidentsPublisher.publishAuthenticationLogin(
-                    new IncidentAuthenticationLogin(
+                    new JbstIncidentAuthenticationLogin(
                             event.username(),
                             metadata
                     )
@@ -178,7 +178,7 @@ public class JbstEventsSubscriber {
         }
         if (event.isSessionToken()) {
             this.incidentsPublisher.publishSessionRefreshed(
-                    new IncidentSessionRefreshed(
+                    new JbstIncidentSessionRefreshed(
                             event.username(),
                             metadata
                     )

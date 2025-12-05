@@ -1,7 +1,7 @@
 package jbst.server.ops.crons;
 
 import jbst.foundation.domain.crons.JbstAbstractCrons;
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.server.ops.properties.ServerProperties;
 import jbst.server.ops.services.IncidentsService;
 import jbst.server.ops.services.MonitoringService;
@@ -26,7 +26,7 @@ public class OpsNotificationsCrons extends JbstAbstractCrons {
 
     @Override
     public void processException(Exception ex) {
-        var incident = new Incident(ex);
+        var incident = new JbstIncident(ex);
         this.incidentsService.registerIncident(incident, this.serverProperties.getOpsIncidentEnv());
     }
 

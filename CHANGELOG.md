@@ -1,2 +1,5 @@
 ### Changelog [v1.54]
-— TBD
+— Prefixes: domain.hardware
+— Prefixes: domain.notifications
+— Prefixes: incidents
+— Prefixes: domain.events

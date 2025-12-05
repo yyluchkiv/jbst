@@ -7,8 +7,8 @@ import jbst.foundation.domain.events.JbstEventRegistration0Failure;
 import jbst.foundation.domain.events.JbstEventRegistration1Failure;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.registration.JbstIncidentRegistration0Failure;
+import jbst.foundation.incidents.domain.registration.JbstIncidentRegistration1Failure;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.repositories.JbstUsersRepository;
@@ -49,7 +49,7 @@ public abstract class JbstAbstractRegistrationValidator implements JbstRegistrat
                     )
             );
             this.incidentsPublisher.publishRegistration0Failure(
-                    new IncidentRegistration0Failure(
+                    new JbstIncidentRegistration0Failure(
                             request.email(),
                             request.username(),
                             message
@@ -68,7 +68,7 @@ public abstract class JbstAbstractRegistrationValidator implements JbstRegistrat
                     )
             );
             this.incidentsPublisher.publishRegistration0Failure(
-                    new IncidentRegistration0Failure(
+                    new JbstIncidentRegistration0Failure(
                             request.email(),
                             request.username(),
                             message
@@ -92,7 +92,7 @@ public abstract class JbstAbstractRegistrationValidator implements JbstRegistrat
                     )
             );
             this.incidentsPublisher.publishRegistration1Failure(
-                    IncidentRegistration1Failure.of(
+                    JbstIncidentRegistration1Failure.of(
                             request.username(),
                             request.code(),
                             message
@@ -114,7 +114,7 @@ public abstract class JbstAbstractRegistrationValidator implements JbstRegistrat
                         )
                 );
                 this.incidentsPublisher.publishRegistration1Failure(
-                        new IncidentRegistration1Failure(
+                        new JbstIncidentRegistration1Failure(
                                 request.username(),
                                 request.code(),
                                 invitation.owner(),
@@ -133,7 +133,7 @@ public abstract class JbstAbstractRegistrationValidator implements JbstRegistrat
                     )
             );
             this.incidentsPublisher.publishRegistration1Failure(
-                    IncidentRegistration1Failure.of(
+                    JbstIncidentRegistration1Failure.of(
                             request.username(),
                             request.code(),
                             exception

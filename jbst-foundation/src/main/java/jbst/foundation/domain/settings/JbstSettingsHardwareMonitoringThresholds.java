@@ -1,6 +1,6 @@
 package jbst.foundation.domain.settings;
 
-import jbst.foundation.domain.hardware.monitoring.HardwareName;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareName;
 
 import java.math.BigDecimal;
 import java.util.EnumMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 public record JbstSettingsHardwareMonitoringThresholds(
         boolean enabled,
-        Map<HardwareName, BigDecimal> values
+        Map<JbstHardwareName, BigDecimal> values
 ) {
 
     public static JbstSettingsHardwareMonitoringThresholds hardcoded() {
@@ -16,11 +16,11 @@ public record JbstSettingsHardwareMonitoringThresholds(
                 true,
                 new EnumMap<>(
                         Map.of(
-                                HardwareName.CPU, new BigDecimal("80"),
-                                HardwareName.HEAP, new BigDecimal("85"),
-                                HardwareName.SERVER, new BigDecimal("90"),
-                                HardwareName.SWAP, new BigDecimal("95"),
-                                HardwareName.VIRTUAL, new BigDecimal("98")
+                                JbstHardwareName.CPU, new BigDecimal("80"),
+                                JbstHardwareName.HEAP, new BigDecimal("85"),
+                                JbstHardwareName.SERVER, new BigDecimal("90"),
+                                JbstHardwareName.SWAP, new BigDecimal("95"),
+                                JbstHardwareName.VIRTUAL, new BigDecimal("98")
                         )
                 )
         );
