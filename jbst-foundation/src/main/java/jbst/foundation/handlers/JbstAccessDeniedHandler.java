@@ -25,6 +25,6 @@ public class JbstAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.getWriter().write(this.objectMapper.writeValueAsString(new JbstExceptionResponse(exception)));
+        response.getWriter().write(this.objectMapper.writeValueAsString(JbstExceptionResponse.of(JbstExceptionResponse.Type.ERROR, exception)));
     }
 }

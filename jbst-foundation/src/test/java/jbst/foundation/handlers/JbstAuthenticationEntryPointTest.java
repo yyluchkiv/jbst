@@ -150,14 +150,12 @@ class JbstAuthenticationEntryPointTest {
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
         HashMap<String, Object> json = this.objectMapper.readValue(jsonAC.getValue(), typeRef);
         assertThat(json)
-                .hasSize(3)
-                .containsKeys("exceptionEntityType", "attributes", "timestamp")
-                .containsEntry("exceptionEntityType", ERROR.toString());
-        var attributes = (Map<String, Object>) json.get("attributes");
-        assertThat(attributes)
-                .containsEntry("shortMessage", exception.getMessage())
-                .containsEntry("fullMessage", exception.getMessage());
-        verify(exception, times(4)).getMessage();
+                .hasSize(4)
+                .containsKeys("jbsTimestamp", "jbstType", "jbstMessageOnClient", "jbstAttributes")
+                .containsEntry("jbstType", ERROR.toString());
+        var attributes = (Map<String, Object>) json.get("jbstAttributes");
+        assertThat(attributes).containsEntry("jbstTrace", exception.getMessage());
+        verify(exception, times(5)).getMessage();
         verifyNoMoreInteractions(
                 request,
                 response,

@@ -64,18 +64,16 @@ class JbstAccessDeniedHandlerTest {
         verify(response).setContentType("application/json;charset=UTF-8");
         verify(response).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(response).getWriter();
-        verify(exception, times(2)).getMessage();
+        verify(exception, times(4)).getMessage();
         verify(printWriter).write(jsonAC.capture());
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
         HashMap<String, Object> json = objectMapper.readValue(jsonAC.getValue(), typeRef);
         assertThat(json)
-                .hasSize(3)
-                .containsKeys("exceptionEntityType", "attributes", "timestamp")
-                .containsEntry("exceptionEntityType", ERROR.toString());
-        var attributes = (Map<String, Object>) json.get("attributes");
-        assertThat(attributes)
-                .containsEntry("shortMessage", exceptionMessage)
-                .containsEntry("fullMessage", exceptionMessage);
+                .hasSize(4)
+                .containsKeys("jbsTimestamp", "jbstType", "jbstMessageOnClient", "jbstAttributes")
+                .containsEntry("jbstType", ERROR.toString());
+        var attributes = (Map<String, Object>) json.get("jbstAttributes");
+        assertThat(attributes).containsEntry("jbstTrace", exceptionMessage);
         verifyNoMoreInteractions(
                 request,
                 response,

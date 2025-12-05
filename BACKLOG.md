@@ -7,8 +7,7 @@
 — Users + Plans
 
 ##### Major(s)
-— Modification: JbstExceptionResponse JSON V2
+— TDB
 
 ##### Minor(s)
 — TDB
-
