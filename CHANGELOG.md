@@ -1,2 +1,2 @@
-### Changelog [v1.55]
-— Modification: JbstExceptionResponse JSON V2
+### Changelog [v1.56]
+— TBD
