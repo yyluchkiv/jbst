@@ -20,9 +20,9 @@ import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLogoutFull;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLogoutMin;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionExpired;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.JbstUsersSessionsService;
 import lombok.RequiredArgsConstructor;
@@ -199,10 +199,10 @@ class JbstAbstractSessionRegistryTest {
         verify(this.eventsPublisher).publishAuthenticationLogout(new JbstEventAuthenticationLogout(session2.username()));
         verify(this.eventsPublisher).publishAuthenticationLogout(new JbstEventAuthenticationLogout(session3.username()));
         verify(this.eventsPublisher).publishAuthenticationLogout(new JbstEventAuthenticationLogout(session4.username()));
-        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session1.username(), dbUserSession1.metadata()));
-        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session2.username(), dbUserSession2.metadata()));
-        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session3.username(), dbUserSession3.metadata()));
-        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session4.username(), dbUserSession4.metadata()));
+        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new JbstIncidentAuthenticationLogoutFull(session1.username(), dbUserSession1.metadata()));
+        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new JbstIncidentAuthenticationLogoutFull(session2.username(), dbUserSession2.metadata()));
+        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new JbstIncidentAuthenticationLogoutFull(session3.username(), dbUserSession3.metadata()));
+        verify(this.incidentsPublisher).publishAuthenticationLogoutFull(new JbstIncidentAuthenticationLogoutFull(session4.username(), dbUserSession4.metadata()));
         verify(this.usersSessionsRepository).delete(dbUserSession1.id());
         verify(this.usersSessionsRepository).delete(dbUserSession2.id());
         verify(this.usersSessionsRepository).delete(dbUserSession3.id());
@@ -262,7 +262,7 @@ class JbstAbstractSessionRegistryTest {
         var eventAC = ArgumentCaptor.forClass(JbstEventAuthenticationLogout.class);
         verify(this.eventsPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.eventsPublisher).publishAuthenticationLogout(eventAC.capture());
-        var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutFull.class);
+        var incidentAC = ArgumentCaptor.forClass(JbstIncidentAuthenticationLogoutFull.class);
         verify(this.incidentsPublisher).publishAuthenticationLogoutFull(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.username()).isEqualTo(Username.hardcoded());
@@ -285,7 +285,7 @@ class JbstAbstractSessionRegistryTest {
         var eventAC = ArgumentCaptor.forClass(JbstEventAuthenticationLogout.class);
         verify(this.eventsPublisher).publishAuthenticationLogout(eventAC.capture());
         assertThat(eventAC.getValue().username()).isEqualTo(session.username());
-        var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutMin.class);
+        var incidentAC = ArgumentCaptor.forClass(JbstIncidentAuthenticationLogoutMin.class);
         verify(this.incidentsPublisher).publishAuthenticationLogoutMin(incidentAC.capture());
         assertThat(incidentAC.getValue().username()).isEqualTo(Username.hardcoded());
     }
@@ -330,7 +330,7 @@ class JbstAbstractSessionRegistryTest {
         assertThat(eventSessionExpired.session().username()).isEqualTo(username3);
         assertThat(eventSessionExpired.session().accessToken()).isEqualTo(session3.accessToken());
         assertThat(eventSessionExpired.session().refreshToken()).isEqualTo(session3.refreshToken());
-        var seiCaptor = ArgumentCaptor.forClass(IncidentSessionExpired.class);
+        var seiCaptor = ArgumentCaptor.forClass(JbstIncidentSessionExpired.class);
         verify(this.incidentsPublisher).publishSessionExpired(seiCaptor.capture());
         var sessionExpiredIncident = seiCaptor.getValue();
         assertThat(sessionExpiredIncident.username()).isEqualTo(username3);

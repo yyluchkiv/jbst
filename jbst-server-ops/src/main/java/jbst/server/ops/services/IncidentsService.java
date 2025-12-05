@@ -5,7 +5,7 @@ import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.services.JbstEmailService;
 import jbst.server.ops.domain.incidents.OpsConcurrentIncidentStats;
 import jbst.server.ops.domain.incidents.OpsIncidentEnv;
@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static jbst.foundation.domain.time.JbstTime.getCurrentTimestamp;
-import static jbst.foundation.incidents.domain.IncidentAttributes.IncidentsTypes.THROWABLE;
-import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.TRACE;
+import static jbst.foundation.incidents.domain.JbstIncident.Constants.Keys.TRACE;
+import static jbst.foundation.incidents.domain.JbstIncident.Constants.Types.THROWABLE;
 import static jbst.server.ops.domain.incidents.OpsIncident.TIMES;
 import static jbst.server.ops.domain.incidents.OpsIncidentHTML.opsAnyIncident;
 
@@ -75,10 +75,10 @@ public class IncidentsService {
     );
 
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
-    private final ConcurrentHashMap<Tuple2<Incident, OpsIncidentEnv>, OpsConcurrentIncidentStats> incidents = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Tuple2<JbstIncident, OpsIncidentEnv>, OpsConcurrentIncidentStats> incidents = new ConcurrentHashMap<>();
 
     @EventListener
-    public void onEvent(Incident incident) {
+    public void onEvent(JbstIncident incident) {
         this.registerIncident(incident, this.serverProperties.getOpsIncidentEnv());
     }
 
@@ -92,14 +92,14 @@ public class IncidentsService {
                 var incidentStats = entry.getValue();
 
                 if (incidentStats.getExecutedTimesDifferenceFlagAndUpdatePreviousIfIncidentRegistrationRequired()) {
-                    var incident = Incident.copyOf(entry.getKey().a());
+                    var incident = JbstIncident.copyOf(entry.getKey().a());
                     incident.add(TIMES, incidentStats.getTimes());
                     this.registerIncidentPlainBased(incident, entry.getValue().getEnv());
                 }
 
                 if (MILLISECONDS.toMinutes(getCurrentTimestamp() - incidentStats.getLastTime()) >= 15) {
                     if (incidentStats.isExecutedMoreThanOnce()) {
-                        var incident = Incident.copyOf(entry.getKey().a());
+                        var incident = JbstIncident.copyOf(entry.getKey().a());
                         incident.add(TIMES, incidentStats.getTimes());
                         this.registerIncidentPlainBased(incident, entry.getValue().getEnv());
                     }
@@ -109,7 +109,7 @@ public class IncidentsService {
         }, 0, 15, TimeUnit.SECONDS);
     }
 
-    public final void registerIncident(Incident incident, OpsIncidentEnv env) {
+    public final void registerIncident(JbstIncident incident, OpsIncidentEnv env) {
         var incidentHasPredefinedHTML = this.isIncidentHasPredefinedHTML(incident);
         if (incidentHasPredefinedHTML.present()) {
             this.registerIncidentHTMLBased(incident, env, incidentHasPredefinedHTML.value());
@@ -124,7 +124,7 @@ public class IncidentsService {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private TuplePresence<OpsIncidentHTML> isIncidentHasPredefinedHTML(Incident incident) {
+    private TuplePresence<OpsIncidentHTML> isIncidentHasPredefinedHTML(JbstIncident incident) {
         var incidentType = incident.getType();
         return new TuplePresence<>(
                 TEMPLATES_MAPPINGS.containsKey(incidentType),
@@ -132,7 +132,7 @@ public class IncidentsService {
         );
     }
 
-    private void registerIncidentPlainBased(Incident incident, OpsIncidentEnv env) {
+    private void registerIncidentPlainBased(JbstIncident incident, OpsIncidentEnv env) {
         var opsIncident = this.monitoringService.getOpsIncident(incident, env);
         if (THROWABLE.equals(incident.getType())) {
             this.notificationsService.notifyIncident(opsIncident);
@@ -154,7 +154,7 @@ public class IncidentsService {
         }
     }
 
-    private void registerIncidentHTMLBased(Incident incident, OpsIncidentEnv env, OpsIncidentHTML htmlTemplate) {
+    private void registerIncidentHTMLBased(JbstIncident incident, OpsIncidentEnv env, OpsIncidentHTML htmlTemplate) {
         var opsIncident = this.monitoringService.getOpsIncident(incident, env);
         this.emailService.sendHTML(
                 new JbstEmails.HTML(
@@ -166,7 +166,7 @@ public class IncidentsService {
         );
     }
 
-    private boolean isNew(Incident incident, OpsIncidentEnv env) {
+    private boolean isNew(JbstIncident incident, OpsIncidentEnv env) {
         var incidentOnEnv = new Tuple2<>(incident, env);
         if (this.incidents.containsKey(incidentOnEnv)) {
             this.incidents.get(incidentOnEnv).incrementStats();
@@ -177,7 +177,7 @@ public class IncidentsService {
         }
     }
 
-    private boolean filterOnConfigsAndReturnSkip(Incident incident) {
+    private boolean filterOnConfigsAndReturnSkip(JbstIncident incident) {
         if (!THROWABLE.equals(incident.getType())) {
             return false;
         }

@@ -1,9 +1,9 @@
 package jbst.foundation.domain.hardware;
 
-import jbst.foundation.domain.hardware.memories.CpuMemory;
-import jbst.foundation.domain.hardware.memories.GlobalMemory;
-import jbst.foundation.domain.hardware.memories.HeapMemory;
-import jbst.foundation.domain.hardware.memories.SystemMemories;
+import jbst.foundation.domain.hardware.memories.JbstCpuMemory;
+import jbst.foundation.domain.hardware.memories.JbstGlobalMemory;
+import jbst.foundation.domain.hardware.memories.JbstHeapMemory;
+import jbst.foundation.domain.hardware.memories.JbstSystemMemories;
 import lombok.experimental.UtilityClass;
 import oshi.SystemInfo;
 import oshi.util.Util;
@@ -15,9 +15,9 @@ import static java.lang.management.ManagementFactory.getMemoryMXBean;
 @UtilityClass
 public class JbstHardware {
 
-    public static HeapMemory getHeapMemory() {
+    public static JbstHeapMemory getHeapMemory() {
         var heapMemoryUsage = getMemoryMXBean().getHeapMemoryUsage();
-        return new HeapMemory(
+        return new JbstHeapMemory(
                 heapMemoryUsage.getInit(),
                 heapMemoryUsage.getUsed(),
                 heapMemoryUsage.getMax(),
@@ -25,7 +25,7 @@ public class JbstHardware {
         );
     }
 
-    public static SystemMemories getSystemMemories() {
+    public static JbstSystemMemories getSystemMemories() {
         var systemInfo = new SystemInfo();
         var hardware = systemInfo.getHardware();
         // Hardware: Global
@@ -38,8 +38,8 @@ public class JbstHardware {
         // Hardware: System Memories
         // System CPU ticks is in range [0, 1]
         var systemCpuLoadBetweenTicks = processor.getSystemCpuLoadBetweenTicks(prevTicks);
-        return new SystemMemories(
-                new GlobalMemory(
+        return new JbstSystemMemories(
+                new JbstGlobalMemory(
                         globalMemory.getAvailable(),
                         globalMemory.getTotal(),
                         virtualMemory.getSwapUsed(),
@@ -47,7 +47,7 @@ public class JbstHardware {
                         virtualMemory.getVirtualInUse(),
                         virtualMemory.getVirtualMax()
                 ),
-                new CpuMemory(
+                new JbstCpuMemory(
                         BigDecimal.valueOf(systemCpuLoadBetweenTicks * 100)
                 )
         );

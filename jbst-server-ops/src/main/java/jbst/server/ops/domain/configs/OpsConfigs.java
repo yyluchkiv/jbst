@@ -1,8 +1,7 @@
 package jbst.server.ops.domain.configs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.incidents.domain.IncidentAttributes;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.server.ops.domain.configs.servers.ServerConfigs;
 import jbst.server.ops.domain.configs.ssh.SshRsaKey;
 import jbst.server.ops.domain.servers.Team;
@@ -13,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.incidents.domain.JbstIncident.Constants.Keys.TYPE;
 
 public record OpsConfigs(
         Set<SshRsaKey> sshKeys,
@@ -55,18 +55,18 @@ public record OpsConfigs(
     }
 
     @JsonIgnore
-    public Incident getIncidentUnexpectedTeams() {
-        var incident = new Incident();
-        incident.add(IncidentAttributes.Keys.TYPE, "Unexpected Teams");
+    public JbstIncident getIncidentUnexpectedTeams() {
+        var incident = new JbstIncident();
+        incident.add(TYPE, "Unexpected Teams");
         incident.add("Teams Configs", this.teams);
         incident.add("Teams Servers", this.getServersTeams());
         return incident;
     }
 
     @JsonIgnore
-    public Incident getIncidentUnexpectedSshKeys() {
-        var incident = new Incident();
-        incident.add(IncidentAttributes.Keys.TYPE, "Unexpected SSH Keys");
+    public JbstIncident getIncidentUnexpectedSshKeys() {
+        var incident = new JbstIncident();
+        incident.add(TYPE, "Unexpected SSH Keys");
         incident.add("SSH Keys Configs", this.getMappedSshKeys().keySet());
         incident.add("SSH Keys Servers", this.getServersSshKeys());
         return incident;

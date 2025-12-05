@@ -10,9 +10,9 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
-import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
-import jbst.foundation.incidents.handlers.ErrorHandlerPublisher;
-import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
+import jbst.foundation.incidents.handlers.JbstAsyncUncaughtExceptionHandlerPublisher;
+import jbst.foundation.incidents.handlers.JbstErrorHandlerPublisher;
+import jbst.foundation.incidents.handlers.JbstRejectedExecutionHandlerPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsSubscriber;
 import lombok.RequiredArgsConstructor;
@@ -106,7 +106,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     // ================================================================================================================
     @Bean
     RejectedExecutionHandler rejectedExecutionHandler() {
-        return new RejectedExecutionHandlerPublisher(this.incidentsPublisher());
+        return new JbstRejectedExecutionHandlerPublisher(this.incidentsPublisher());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new AsyncUncaughtExceptionHandlerPublisher(this.incidentsPublisher());
+        return new JbstAsyncUncaughtExceptionHandlerPublisher(this.incidentsPublisher());
     }
 
     // ================================================================================================================
@@ -131,7 +131,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     // ================================================================================================================
     @Bean
     ErrorHandler errorHandlerPublisher() {
-        return new ErrorHandlerPublisher(this.incidentsPublisher());
+        return new JbstErrorHandlerPublisher(this.incidentsPublisher());
     }
 
     @SuppressWarnings("DuplicatedCode")

@@ -1,8 +1,8 @@
 package jbst.foundation.websockets;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.events.WebsocketEvent;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
+import jbst.foundation.domain.events.JbstWebsocketEvent;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringDatapointTableView;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.system.JbstSystemResetServerStatus;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-import static jbst.foundation.domain.events.WebsocketEvent.hardwareMonitoring;
-import static jbst.foundation.domain.events.WebsocketEvent.resetServerProgress;
+import static jbst.foundation.domain.events.JbstWebsocketEvent.hardwareMonitoring;
+import static jbst.foundation.domain.events.JbstWebsocketEvent.resetServerProgress;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -25,7 +25,7 @@ public class JbstWebsocketsService {
     private final JbstIncidentsPublisher incidentsPublisher;
     private final JbstProperties jbstProperties;
 
-    public final void sendEventToUser(Username username, String destination, WebsocketEvent event) {
+    public final void sendEventToUser(Username username, String destination, JbstWebsocketEvent event) {
         this.sendObjectToUser(
                 username,
                 destination,
@@ -33,7 +33,7 @@ public class JbstWebsocketsService {
         );
     }
 
-    public final void sendHardwareMonitoring(Set<Username> usernames, HardwareMonitoringDatapointTableView tableView) {
+    public final void sendHardwareMonitoring(Set<Username> usernames, JbstHardwareMonitoringDatapointTableView tableView) {
         var hardwareConfigs = this.jbstProperties.getSecurity().getWebsockets().getFeatures().getHardware();
         if (!hardwareConfigs.isEnabled()) {
             return;

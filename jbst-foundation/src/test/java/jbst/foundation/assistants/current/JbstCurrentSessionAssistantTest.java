@@ -7,7 +7,7 @@ import jbst.foundation.domain.databases.JbstUserSession;
 import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.dto.responses.JbstResponseUserSessionsTable;
 import jbst.foundation.domain.exceptions.JbstExceptions;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringWidget;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -150,7 +150,7 @@ class JbstCurrentSessionAssistantTest {
         // Arrange
         var user = JbstJwtUser.hardcoded();
         when(this.securityUtils.getAuthenticatedJwtUser()).thenReturn(user);
-        var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
+        var hardwareMonitoringWidget = entity(JbstHardwareMonitoringWidget.class);
         when(this.jbstHardwareMonitoringStore.getWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.settingsService.isHardwareMonitoringThresholdsEnabled()).thenReturn(true);
 
@@ -174,7 +174,7 @@ class JbstCurrentSessionAssistantTest {
         // Arrange
         var user = entity(JbstJwtUser.class);
         when(this.securityUtils.getAuthenticatedJwtUser()).thenReturn(user);
-        var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
+        var hardwareMonitoringWidget = entity(JbstHardwareMonitoringWidget.class);
         when(this.jbstHardwareMonitoringStore.getWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.settingsService.isHardwareMonitoringThresholdsEnabled()).thenReturn(false);
 

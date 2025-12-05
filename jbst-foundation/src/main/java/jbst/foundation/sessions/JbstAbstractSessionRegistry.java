@@ -12,9 +12,9 @@ import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import jbst.foundation.domain.sessions.JbstSession;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLogoutFull;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLogoutMin;
+import jbst.foundation.incidents.domain.session.JbstIncidentSessionExpired;
 import jbst.foundation.repositories.JbstUsersSessionsRepository;
 import jbst.foundation.services.JbstUsersSessionsService;
 import lombok.AccessLevel;
@@ -94,10 +94,10 @@ public abstract class JbstAbstractSessionRegistry implements JbstSessionRegistry
 
             if (sessionTP.present()) {
                 var session = sessionTP.value();
-                this.incidentsPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, session.metadata()));
+                this.incidentsPublisher.publishAuthenticationLogoutFull(new JbstIncidentAuthenticationLogoutFull(username, session.metadata()));
                 this.usersSessionsRepository.delete(session.id());
             } else {
-                this.incidentsPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
+                this.incidentsPublisher.publishAuthenticationLogoutMin(new JbstIncidentAuthenticationLogoutMin(username));
             }
         }
 
@@ -121,7 +121,7 @@ public abstract class JbstAbstractSessionRegistry implements JbstSessionRegistry
                 var session = sessionOpt.get();
                 this.sessions.remove(session);
                 this.eventsPublisher.publishSessionExpired(new JbstEventSessionExpired(session));
-                this.incidentsPublisher.publishSessionExpired(new IncidentSessionExpired(username, metadata));
+                this.incidentsPublisher.publishSessionExpired(new JbstIncidentSessionExpired(username, metadata));
             }
         });
 

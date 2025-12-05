@@ -1,7 +1,7 @@
 package jbst.server.ops.resources;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.server.ops.domain.incidents.OpsIncidentEnv;
 import jbst.server.ops.services.IncidentsService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class IncidentsResource {
     private final IncidentsService incidentsService;
 
     @PostMapping("/register")
-    public void register(@RequestBody Incident incident, HttpServletRequest request) {
+    public void register(@RequestBody JbstIncident incident, HttpServletRequest request) {
         this.incidentsService.registerIncident(incident, new OpsIncidentEnv(request));
     }
 }

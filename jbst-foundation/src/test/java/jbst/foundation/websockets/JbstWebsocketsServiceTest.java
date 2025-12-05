@@ -1,7 +1,7 @@
 package jbst.foundation.websockets;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.events.WebsocketEvent;
+import jbst.foundation.domain.events.JbstWebsocketEvent;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityWebsockets;
@@ -102,7 +102,7 @@ class JbstWebsocketsServiceTest {
         // Assert
         when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.hardcoded());
         var username = Username.random();
-        var websocketEvent = mock(WebsocketEvent.class);
+        var websocketEvent = mock(JbstWebsocketEvent.class);
         var ex = new MessagingException(randomString());
         var destination = "/" + randomString();
         doThrow(ex).when(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
@@ -134,7 +134,7 @@ class JbstWebsocketsServiceTest {
         when(this.jbstProperties.getSecurity()).thenReturn(security);
         var username = Username.random();
         var destination = randomString();
-        var websocketEvent = mock(WebsocketEvent.class);
+        var websocketEvent = mock(JbstWebsocketEvent.class);
 
         // Act
         this.componentUnderTest.sendEventToUser(username, destination, websocketEvent);

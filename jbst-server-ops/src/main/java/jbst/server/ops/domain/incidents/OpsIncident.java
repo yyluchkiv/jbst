@@ -3,8 +3,7 @@ package jbst.server.ops.domain.incidents;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.incidents.domain.Incident;
-import jbst.foundation.incidents.domain.IncidentAttributes;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.server.ops.domain.servers.Team;
 import jbst.server.ops.properties.configs.JbstPropertyOpsRecipients;
 import lombok.Data;
@@ -22,7 +21,7 @@ import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.Symbols.TWO_NEWLINE;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
-import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
+import static jbst.foundation.incidents.domain.JbstIncident.Constants.Keys.*;
 
 // Lombok
 @SuppressWarnings("ClassCanBeRecord")
@@ -76,7 +75,7 @@ public class OpsIncident {
     private final Map<String, Object> variables;
 
     public static OpsIncident of(
-            Incident incident,
+            JbstIncident incident,
             ServerName serverName,
             Team team,
             String serverURL,
@@ -100,7 +99,7 @@ public class OpsIncident {
         variables.put(WHEN_UTC, LocalDateTime.now(UTC).format(DTF11) + " in UK");
 
         incident.getAttributes().entrySet().stream()
-                .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
+                .filter(entry -> !TYPE.equals(entry.getKey()))
                 .forEach(entry -> {
                     if (TRACE.equals(entry.getKey())) {
                         variables.put(

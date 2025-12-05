@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.feigns.clients;
 
 import feign.FeignException;
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class JbstIncidentClient {
     // Definitions
     private final JbstIncidentClientDefinition incidentClientDefinition;
 
-    public void registerIncident(Incident incident) {
+    public void registerIncident(JbstIncident incident) {
         try {
             this.incidentClientDefinition.registerIncident(incident);
         } catch (FeignException ex) {

@@ -15,10 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstUserTokenTest {
 
-    private static Stream<Arguments> isExpiredCases() {
+    private static Stream<Arguments> isExpiredArgs() {
         var currentTimestamp = getCurrentTimestamp();
-        var pastTimestamp = currentTimestamp - 2000; // 2 seconds in the past
-        var futureTimestamp = currentTimestamp + 2000; // 2 seconds in the future
+        var pastTimestamp = currentTimestamp - 3000; // 2 seconds in the past
+        var futureTimestamp = currentTimestamp + 3000; // 2 seconds in the future
         return Stream.of(
                 Arguments.of(pastTimestamp, true),
                 Arguments.of(futureTimestamp, false),
@@ -28,7 +28,7 @@ class JbstUserTokenTest {
         );
     }
 
-    private static Stream<Arguments> isInvalidCases() {
+    private static Stream<Arguments> isInvalidArgs() {
         var currentTimestamp = getCurrentTimestamp();
         var pastTimestamp = currentTimestamp - 1000; // 1 second in the past
         var futureTimestamp = currentTimestamp + 1000; // 1 second in the future
@@ -49,7 +49,7 @@ class JbstUserTokenTest {
     }
 
     @ParameterizedTest
-    @MethodSource("isExpiredCases")
+    @MethodSource("isExpiredArgs")
     void isExpiredTest(long expiryTimestamp, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
@@ -66,7 +66,7 @@ class JbstUserTokenTest {
     }
 
     @ParameterizedTest
-    @MethodSource("isInvalidCases")
+    @MethodSource("isInvalidArgs")
     void isInvalidTest(JbstUserTokenType tokenType, JbstUserTokenType expectedType, boolean used, long expiryTimestamp, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(

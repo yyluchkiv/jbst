@@ -8,7 +8,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
-import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
+import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.utils.JbstGeoUtils;
 import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class AuthenticationIncidentFilter extends OncePerRequestFilter {
             );
             var server = this.serverProperties.getServer();
             if (!server.containsCredentials(credentials)) {
-                var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
+                var incident = new JbstIncidentAuthenticationLoginFailureUsernamePassword(
                         credentials,
                         this.geoUtils.getUserRequestMetadataProcessed(
                                 getClientIpAddr(request),

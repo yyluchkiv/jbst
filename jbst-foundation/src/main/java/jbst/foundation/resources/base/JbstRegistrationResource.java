@@ -12,9 +12,9 @@ import jbst.foundation.domain.events.JbstEventRegistrationMagicLink;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.extension.JbstExtensionService;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
-import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
-import jbst.foundation.incidents.domain.registration.IncidentRegistrationMagicLink;
+import jbst.foundation.incidents.domain.registration.JbstIncidentRegistration0;
+import jbst.foundation.incidents.domain.registration.JbstIncidentRegistration1;
+import jbst.foundation.incidents.domain.registration.JbstIncidentRegistrationMagicLink;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.services.JbstRegistrationService;
 import jbst.foundation.services.base.JbstRateLimitsService;
@@ -53,7 +53,7 @@ public class JbstRegistrationResource {
         this.registrationValidator.validateRegistrationRequestMagicLink(request);
         this.registrationService.registerMagicLink(request);
         this.eventsPublisher.publishRegistrationMagicLink(new JbstEventRegistrationMagicLink(request));
-        this.incidentsPublisher.publishRegistrationMagicLink(IncidentRegistrationMagicLink.of(request));
+        this.incidentsPublisher.publishRegistrationMagicLink(JbstIncidentRegistrationMagicLink.of(request));
         this.extensionService.registerMagicLink(request.email());
     }
 
@@ -64,7 +64,7 @@ public class JbstRegistrationResource {
         this.registrationValidator.validateRegistrationRequest0(request);
         this.registrationService.register0(request);
         this.eventsPublisher.publishRegistration0(new JbstEventRegistration0(request));
-        this.incidentsPublisher.publishRegistration0(new IncidentRegistration0(request.username()));
+        this.incidentsPublisher.publishRegistration0(new JbstIncidentRegistration0(request.username()));
         this.extensionService.register0(request.username());
     }
 
@@ -75,7 +75,7 @@ public class JbstRegistrationResource {
         this.registrationValidator.validateRegistrationRequest1(request);
         this.registrationService.register1(request);
         this.eventsPublisher.publishRegistration1(new JbstEventRegistration1(request));
-        this.incidentsPublisher.publishRegistration1(new IncidentRegistration1(request.username()));
+        this.incidentsPublisher.publishRegistration1(new JbstIncidentRegistration1(request.username()));
         this.extensionService.register1(request.username());
     }
 }

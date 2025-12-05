@@ -1,6 +1,6 @@
 package jbst.foundation.incidents.feigns.definitions;
 
-import jbst.foundation.incidents.domain.Incident;
+import jbst.foundation.incidents.domain.JbstIncident;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class JbstIncidentClientDefinitionSlf4J implements JbstIncidentClientDefinition {
 
     @Override
-    public void registerIncident(@NotNull Incident incident) {
+    public void registerIncident(@NotNull JbstIncident incident) {
         incident.print();
     }
 }

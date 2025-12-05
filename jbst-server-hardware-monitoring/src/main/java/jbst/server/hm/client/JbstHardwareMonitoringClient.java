@@ -4,7 +4,7 @@ import feign.FeignException;
 import feign.Headers;
 import feign.RequestLine;
 import jbst.foundation.domain.enums.JbstStatus;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
+import jbst.foundation.domain.hardware.monitoring.JbstHardwareMonitoringMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.time.JbstSchedulerConfiguration;
 import jbst.foundation.domain.workers.JbstWorkerFixedInfinity;
@@ -41,7 +41,7 @@ public class JbstHardwareMonitoringClient extends JbstWorkerFixedInfinity {
     public interface HardwareMonitoringClientDefinition {
         @RequestLine("POST /api/hardware/monitoring/metadata")
         @Headers("Content-Type: " + MediaType.APPLICATION_JSON_VALUE)
-        void sendHardwareMonitoringMetadata(HardwareMonitoringMetadata hardwareMonitoringMetadata);
+        void sendHardwareMonitoringMetadata(JbstHardwareMonitoringMetadata hardwareMonitoringMetadata);
     }
 
     // Definitions
@@ -52,7 +52,7 @@ public class JbstHardwareMonitoringClient extends JbstWorkerFixedInfinity {
     @Override
     public void onTick() {
         try {
-            var metadata = new HardwareMonitoringMetadata(
+            var metadata = new JbstHardwareMonitoringMetadata(
                     this.jbstProperties.getApp().getMaven().getVersion(),
                     getSystemMemories()
             );
