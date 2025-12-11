@@ -1,17 +1,18 @@
 package jbst.foundation.domain.workers;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 @SuppressWarnings("unused")
 public abstract class JbstWorkerActionStrategy {
     private final AtomicInteger counter;
-    private final long startNanos;
+    private final AtomicLong executionStartNanos;
 
     public JbstWorkerActionStrategy() {
         this.counter = new AtomicInteger(0);
-        this.startNanos = System.nanoTime();
+        this.executionStartNanos = new AtomicLong(System.nanoTime());
     }
     // =================================================================================================================
     // ABSTRACTION
@@ -32,9 +33,12 @@ public abstract class JbstWorkerActionStrategy {
         this.counter.incrementAndGet();
     }
 
-    // TODO [YYL] rename to getExecutionTime
-    public final String getExecutedTime() {
-        var durationNanos = System.nanoTime() - this.startNanos;
+    public final void executionStart() {
+        this.executionStartNanos.set(System.nanoTime());
+    }
+
+    public final String getExecutionTime() {
+        var durationNanos = System.nanoTime() - this.executionStartNanos.get();
         var seconds = NANOSECONDS.toSeconds(durationNanos);
         if (seconds < 60) {
             return seconds + "s";
