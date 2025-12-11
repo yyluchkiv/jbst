@@ -32,6 +32,7 @@ public abstract class JbstWorkerActionStrategy {
         this.counter.incrementAndGet();
     }
 
+    // TODO [YYL] rename to getExecutionTime
     public final String getExecutedTime() {
         var durationNanos = System.nanoTime() - this.startNanos;
         var seconds = NANOSECONDS.toSeconds(durationNanos);
