@@ -1,3 +1,2 @@
 ### Changelog [v1.56]
-— TBD
-
+— Addition: JbstWorkerActionStrategy details on executed time
