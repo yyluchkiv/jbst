@@ -56,7 +56,7 @@ public class JbstGithub {
                     request.content()
             );
         } catch (RetryableException ex) {
-            LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "GitHub", ex.getMessage());
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_RETRY, "GitHub", ex.getMessage());
             throw new IllegalArgumentException(ex);
         }
     }

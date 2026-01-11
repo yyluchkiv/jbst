@@ -78,6 +78,12 @@ public class JbstConstants {
         public static final String PREFIX = BLACK_BOLD_TEXT.format("jbst");
 
         // =================================================================================================================
+        // Feign(s)
+        // =================================================================================================================
+        public static final String FEIGN_EXCEPTION_RETRY = BLACK_BOLD_TEXT.format("{}") + " retry exception. Message: {}";
+        public static final String FEIGN_EXCEPTION_FALLBACK = BLACK_BOLD_TEXT.format("{}") + " retry exception. Message: {}";
+
+        // =================================================================================================================
         // Standard
         // =================================================================================================================
         public static final String SERVER_OFFLINE = BLACK_BOLD_TEXT.format("{}") + " is probably offline. Exception: {}";

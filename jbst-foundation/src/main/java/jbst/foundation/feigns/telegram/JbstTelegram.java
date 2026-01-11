@@ -53,7 +53,7 @@ public class JbstTelegram {
                     request.getRequestBody()
             );
         } catch (RetryableException ex) {
-            LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "Telegram", ex.getMessage());
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_RETRY, "Telegram", ex.getMessage());
             throw new IllegalArgumentException(ex);
         }
     }

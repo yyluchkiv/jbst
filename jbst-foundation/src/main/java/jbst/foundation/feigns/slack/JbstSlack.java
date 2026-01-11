@@ -2,12 +2,10 @@ package jbst.foundation.feigns.slack;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
-import feign.RetryableException;
+import feign.*;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.development.JbstDevelopment;
 import jbst.foundation.domain.time.JbstTimeAmount;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.RequiredArgsConstructor;
@@ -159,7 +157,7 @@ public class JbstSlack {
             res.assertOK();
             return res.ts;
         } catch (RetryableException ex) {
-            LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "Slack", ex.getMessage());
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_RETRY, "Slack", ex.getMessage());
             throw new ClientException(ex.getMessage());
         }
     }
@@ -173,7 +171,20 @@ public class JbstSlack {
             res.assertOK();
             return res.ts;
         } catch (RetryableException ex) {
-            LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "Slack", ex.getMessage());
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_RETRY, "Slack", ex.getMessage());
+            // TODO [YYL-jbst] debuggable (array vs. object)
+            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
+            LOGGER.error("Slack RetryableException Message: {}", ex.getMessage());
+            LOGGER.error("Slack RetryableException Content: {}", ex.contentUTF8());
+            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
+            throw new ClientException(ex.getMessage());
+        } catch (FeignException ex) {
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_FALLBACK, "Slack", ex.getMessage());
+            // TODO [YYL-jbst] debuggable (array vs. object)
+            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
+            LOGGER.error("Slack FeignException Message: {}", ex.getMessage());
+            LOGGER.error("Slack FeignException Content: {}", ex.contentUTF8());
+            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
             throw new ClientException(ex.getMessage());
         }
     }
