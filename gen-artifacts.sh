@@ -7,6 +7,7 @@ NO_COLOR='\033[0m'
 
 print() { echo -e "${1}${2}${NO_COLOR}"; }
 
+# TODO [YYL-scripts] make this script faster
 # jbst
 mvn clean install -DskipTests
 

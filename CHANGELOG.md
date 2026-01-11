@@ -1,2 +1,2 @@
-### Changelog [v1.58]
-— Modification: JbstSlack add development logs
+### Changelog [v1.59]
+— TBD
