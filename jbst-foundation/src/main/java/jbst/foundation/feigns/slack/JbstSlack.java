@@ -87,7 +87,13 @@ public class JbstSlack {
     }
 
     // Classes: Base
-    public record Configuration(String token, JbstTimeAmount sleepDelay) { }
+    public record Configuration(String token, int queueCapacity, JbstTimeAmount sleepDelay) {
+        @JbstDevelopmentOnly
+        public static Configuration developmentOnly(String token) {
+            return new Configuration(token, 100, new JbstTimeAmount(500, ChronoUnit.MILLIS));
+        }
+
+    }
 
     public record MessageTs(@NotNull String value) {
         @JsonCreator
@@ -214,22 +220,35 @@ public class JbstSlack {
 
     // State
     private final AtomicBoolean configured = new AtomicBoolean(false);
+    private final AtomicReference<Configuration> configurationAR = new AtomicReference<>();
     private final AtomicBoolean rateLimits = new AtomicBoolean(false);
-    private final AtomicReference<String> token = new AtomicReference<>(null);
-    private final BlockingQueue<ChatMessageReq> queue = new LinkedBlockingQueue<>(100);
+    private BlockingQueue<ChatMessageReq> queue = new LinkedBlockingQueue<>(100);
 
     // Definitions
     private final SlackDefinition definition;
     // Incidents
     private final JbstIncidentsPublisher incidentsPublisher;
 
-    @SuppressWarnings("BusyWait")
     public final void configure(Configuration slackConfiguration) {
         if (this.configured.get()) {
             return;
         }
         this.configured.compareAndSet(false, true);
-        this.token.set(slackConfiguration.token);
+        this.configurationAR.set(slackConfiguration);
+        this.queue = new LinkedBlockingQueue<>(slackConfiguration.queueCapacity);
+    }
+
+    @SuppressWarnings("unused")
+    @JbstDevelopmentOnly
+    public final void configureHardcodedSleepDelay(String token) {
+        this.configure(Configuration.developmentOnly(token));
+    }
+
+    @SuppressWarnings("BusyWait")
+    public final void start() {
+        if (!this.configured.get()) {
+            return;
+        }
         var worker = new Thread(() -> {
             while (true) {
                 ChatMessageReq req;
@@ -240,7 +259,7 @@ public class JbstSlack {
                     } else if (req.type.isMessageEdit()) {
                         this.messageEdit(req);
                     }
-                    sleep(slackConfiguration.sleepDelay.toMillis());
+                    sleep(this.configurationAR.get().sleepDelay.toMillis());
                 } catch (InterruptedException ex1) {
                     Thread.currentThread().interrupt();
                     break;
@@ -263,17 +282,11 @@ public class JbstSlack {
         worker.start();
     }
 
-    @SuppressWarnings("unused")
-    @JbstDevelopmentOnly
-    public final void configureHardcodedSleepDelay(String token) {
-        this.configure(new Configuration(token, new JbstTimeAmount(500, ChronoUnit.MILLIS)));
-    }
-
     public final MessageDetailsRes messageSend(ChatMessageReq req) throws ConfigurationException, RateLimitsException, ClientException {
         this.assertConfigured();
         req.assertTypeMessageSend();
         try {
-            var response = this.definition.chatPostMessage(this.token.get(), req.getReqBody());
+            var response = this.definition.chatPostMessage(this.configurationAR.get().token, req.getReqBody());
             var headers = this.assertHeaders(response);
             var res = OM.readValue(response.body().asInputStream(), ChatMessageRes.class);
             response.close();
@@ -295,7 +308,7 @@ public class JbstSlack {
         this.assertConfigured();
         req.assertTypeMessageEdit();
         try {
-            var response = this.definition.chatUpdate(this.token.get(), req.getReqBody());
+            var response = this.definition.chatUpdate(this.configurationAR.get().token, req.getReqBody());
             var headers = this.assertHeaders(response);
             var res = OM.readValue(response.body().asInputStream(), ChatMessageRes.class);
             response.close();
