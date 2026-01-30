@@ -1,21 +1,24 @@
 package jbst.foundation.feigns.slack;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.*;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.development.JbstDevelopment;
 import jbst.foundation.domain.time.JbstTimeAmount;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.IOException;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +27,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static jbst.foundation.domain.concurrent.JbstSleep.sleepMilliseconds;
+import static java.lang.Thread.sleep;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static jbst.foundation.feigns.slack.JbstSlack.ChatMessageReqType.MESSAGE_EDIT;
+import static jbst.foundation.feigns.slack.JbstSlack.ChatMessageReqType.MESSAGE_SEND;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -36,10 +44,10 @@ public class JbstSlack {
         @Headers(
                 {
                         "Authorization: Bearer {token}",
-                        "Content-Type: " + MediaType.APPLICATION_JSON_VALUE
+                        "Content-Type: application/json; charset=utf-8"
                 }
         )
-        SendMessageRes chatPostMessage(
+        Response chatPostMessage(
                 @Param("token") String token,
                 @RequestBody Map<String, Object> requestBody
         );
@@ -47,9 +55,9 @@ public class JbstSlack {
         @RequestLine("POST /chat.update")
         @Headers({
                 "Authorization: Bearer {token}",
-                "Content-Type: " + MediaType.APPLICATION_JSON_VALUE
+                "Content-Type: application/json; charset=utf-8"
         })
-        SendMessageRes chatUpdate(
+        Response chatUpdate(
                 @Param("token") String token,
                 @RequestBody Map<String, Object> requestBody
         );
@@ -62,6 +70,16 @@ public class JbstSlack {
         }
     }
 
+    @Getter
+    public static class RateLimitsException extends Exception {
+        private final JbstTimeAmount timeAmount;
+
+        public RateLimitsException(Integer seconds) {
+            super("Please wait %s seconds".formatted(seconds));
+            this.timeAmount = new JbstTimeAmount(seconds, ChronoUnit.SECONDS);
+        }
+    }
+
     public static class ClientException extends Exception {
         public ClientException(String message) {
             super(message);
@@ -69,7 +87,13 @@ public class JbstSlack {
     }
 
     // Classes: Base
-    public record Configuration(String token, JbstTimeAmount sleepDelay) { }
+    public record Configuration(String token, int queueCapacity, JbstTimeAmount sleepDelay) {
+        @JbstDevelopmentOnly
+        public static Configuration developmentOnly(String token) {
+            return new Configuration(token, 100, new JbstTimeAmount(500, ChronoUnit.MILLIS));
+        }
+
+    }
 
     public record MessageTs(@NotNull String value) {
         @JsonCreator
@@ -86,24 +110,102 @@ public class JbstSlack {
     }
 
     // Classes: Requests
-    public record ChatMessage(String channel, String text) {
+    public enum ChatMessageReqType {
+        MESSAGE_SEND,
+        MESSAGE_EDIT;
+
+        public boolean isMessageSend() {
+            return this == MESSAGE_SEND;
+        }
+
+        public boolean isMessageEdit() {
+            return this == MESSAGE_EDIT;
+        }
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    @EqualsAndHashCode
+    @ToString
+    public static class ChatMessageReq {
+        @NotNull
+        private final ChatMessageReqType type;
+        @NotNull
+        private final String channel;
+        @NotNull
+        private final String text;
+        @Nullable
+        private final MessageTs ts;
+
+        public static ChatMessageReq messageSend(String channel, String text) {
+            return new ChatMessageReq(MESSAGE_SEND, channel, text, null);
+        }
+
+        public static ChatMessageReq messageEdit(String channel, String text, MessageTs ts) {
+            return new ChatMessageReq(MESSAGE_EDIT, channel, text, ts);
+        }
+
+        public void assertTypeMessageSend() throws ClientException {
+            if (!type.isMessageSend()) {
+                throw new ClientException("Expected req.type == MESSAGE_SEND");
+            }
+        }
+
+        public void assertTypeMessageEdit() throws ClientException {
+            if (!type.isMessageEdit()) {
+                throw new ClientException("Expected req.type == MESSAGE_EDIT");
+            }
+        }
 
         public Map<String, Object> getReqBody() {
             Map<String, Object> reqBody = new HashMap<>();
             reqBody.put("channel", this.channel);
             reqBody.put("text", this.text);
+            if (nonNull(this.ts)) {
+                reqBody.put("ts", ts);
+            }
             return reqBody;
         }
     }
 
     // Classes: Responses
-    public record SendMessageRes(
-            boolean ok,
-            String error,
-            String channel,
-            MessageTs ts,
-            Map<String, Object> message
-    ) {
+    public record HeadersRes(Map<String, Collection<String>> values) {
+        public void assertRateLimits() throws RateLimitsException, ClientException {
+            if (isNull(this.values)) {
+                return;
+            }
+            var header = this.values.get("Retry-After");
+            if (isEmpty(header)) {
+                return;
+            }
+            try {
+                var seconds = Integer.valueOf(header.iterator().next());
+                throw new RateLimitsException(seconds);
+            } catch (NumberFormatException ex) {
+                throw new ClientException(ex.getMessage());
+            }
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class ChatMessageRes {
+        public Boolean ok;
+        public String error;
+        public String channel;
+        public MessageTs ts;
+        public Message message;
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class Message {
+            public String type;
+            public String subtype;
+            public String text;
+            public String ts;
+            public String username;
+            public String botId;
+        }
+
         public void assertOK() throws ClientException {
             if (!this.ok) {
                 throw new ClientException("Slack API response is not OK");
@@ -111,9 +213,16 @@ public class JbstSlack {
         }
     }
 
+    public record MessageDetailsRes(MessageTs ts, HeadersRes headers) {}
+
+    // Constants
+    private static final ObjectMapper OM = new ObjectMapper();
+
+    // State
     private final AtomicBoolean configured = new AtomicBoolean(false);
-    private final AtomicReference<String> token = new AtomicReference<>(null);
-    private final BlockingQueue<ChatMessage> queue = new LinkedBlockingQueue<>();
+    private final AtomicReference<Configuration> configurationAR = new AtomicReference<>();
+    private final AtomicBoolean rateLimits = new AtomicBoolean(false);
+    private BlockingQueue<ChatMessageReq> queue = new LinkedBlockingQueue<>(100);
 
     // Definitions
     private final SlackDefinition definition;
@@ -125,18 +234,47 @@ public class JbstSlack {
             return;
         }
         this.configured.compareAndSet(false, true);
-        this.token.set(slackConfiguration.token);
+        this.configurationAR.set(slackConfiguration);
+        this.queue = new LinkedBlockingQueue<>(slackConfiguration.queueCapacity);
+    }
+
+    @SuppressWarnings("unused")
+    @JbstDevelopmentOnly
+    public final void configureHardcodedSleepDelay(String token) {
+        this.configure(Configuration.developmentOnly(token));
+    }
+
+    @SuppressWarnings("BusyWait")
+    public final void start() {
+        if (!this.configured.get()) {
+            return;
+        }
         var worker = new Thread(() -> {
             while (true) {
+                ChatMessageReq req;
                 try {
-                    var request = this.queue.take();
-                    this.sendMessage(request);
-                    sleepMilliseconds(slackConfiguration.sleepDelay.toMillis());
-                } catch (InterruptedException e) {
+                    req = this.queue.take();
+                    if (req.type.isMessageSend()) {
+                        this.messageSend(req);
+                    } else if (req.type.isMessageEdit()) {
+                        this.messageEdit(req);
+                    }
+                    sleep(this.configurationAR.get().sleepDelay.toMillis());
+                } catch (InterruptedException ex1) {
                     Thread.currentThread().interrupt();
                     break;
-                } catch (ConfigurationException | ClientException | RuntimeException ex) {
-                    this.incidentsPublisher.publishThrowable(ex);
+                } catch (RateLimitsException ex2) {
+                    this.rateLimits.set(true);
+                    try {
+                        Thread.sleep(ex2.timeAmount.toMillis());
+                    } catch (InterruptedException ex21) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    } finally {
+                        this.rateLimits.set(false);
+                    }
+                } catch (ConfigurationException | ClientException | RuntimeException ex3) {
+                    this.incidentsPublisher.publishThrowable(ex3);
                 }
             }
         }, "jbst-slack-client");
@@ -144,68 +282,69 @@ public class JbstSlack {
         worker.start();
     }
 
-    @SuppressWarnings("unused")
-    @JbstDevelopmentOnly
-    public final void configureHardcodedSleepDelay(String token) {
-        this.configure(new Configuration(token, new JbstTimeAmount(500, ChronoUnit.MILLIS)));
-    }
-
-    public final MessageTs sendMessage(ChatMessage req) throws ConfigurationException, ClientException {
+    public final MessageDetailsRes messageSend(ChatMessageReq req) throws ConfigurationException, RateLimitsException, ClientException {
         this.assertConfigured();
+        req.assertTypeMessageSend();
         try {
-            var res = this.definition.chatPostMessage(this.token.get(), req.getReqBody());
+            var response = this.definition.chatPostMessage(this.configurationAR.get().token, req.getReqBody());
+            var headers = this.assertHeaders(response);
+            var res = OM.readValue(response.body().asInputStream(), ChatMessageRes.class);
+            response.close();
             res.assertOK();
-            return res.ts;
+            return new MessageDetailsRes(res.ts, headers);
         } catch (RetryableException ex) {
             LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_RETRY, "Slack", ex.getMessage());
             throw new ClientException(ex.getMessage());
-        }
-    }
-
-    public final MessageTs editMessage(MessageTs ts, ChatMessage req) throws ConfigurationException, ClientException {
-        this.assertConfigured();
-        try {
-            var reqBody = req.getReqBody();
-            reqBody.put("ts", ts);
-            var res = this.definition.chatUpdate(this.token.get(), reqBody);
-            res.assertOK();
-            return res.ts;
-        } catch (RetryableException ex) {
-            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_RETRY, "Slack", ex.getMessage());
-            // TODO [YYL-jbst] debuggable (array vs. object)
-            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
-            LOGGER.error("Slack RetryableException Message: {}", ex.getMessage());
-            LOGGER.error("Slack RetryableException Content: {}", ex.contentUTF8());
-            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
+        } catch (IOException ex) {
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_IO, "Slack", ex.getMessage());
             throw new ClientException(ex.getMessage());
         } catch (FeignException ex) {
             LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_FALLBACK, "Slack", ex.getMessage());
-            // TODO [YYL-jbst] debuggable (array vs. object)
-            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
-            LOGGER.error("Slack FeignException Message: {}", ex.getMessage());
-            LOGGER.error("Slack FeignException Content: {}", ex.contentUTF8());
-            LOGGER.error(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
             throw new ClientException(ex.getMessage());
         }
     }
 
-    public final void submitMessage(ChatMessage req) {
+    public final MessageDetailsRes messageEdit(ChatMessageReq req) throws ConfigurationException, RateLimitsException, ClientException {
+        this.assertConfigured();
+        req.assertTypeMessageEdit();
+        try {
+            var response = this.definition.chatUpdate(this.configurationAR.get().token, req.getReqBody());
+            var headers = this.assertHeaders(response);
+            var res = OM.readValue(response.body().asInputStream(), ChatMessageRes.class);
+            response.close();
+            res.assertOK();
+            return new MessageDetailsRes(res.ts, headers);
+        } catch (RetryableException ex) {
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_RETRY, "Slack", ex.getMessage());
+            throw new ClientException(ex.getMessage());
+        } catch (IOException ex) {
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_IO, "Slack", ex.getMessage());
+            throw new ClientException(ex.getMessage());
+        } catch (FeignException ex) {
+            LOGGER.warn(JbstConstants.Logs.FEIGN_EXCEPTION_FALLBACK, "Slack", ex.getMessage());
+            throw new ClientException(ex.getMessage());
+        }
+    }
+
+    public final void submitMessage(ChatMessageReq req) {
         try {
             this.assertConfigured();
         } catch (ConfigurationException ex) {
             this.incidentsPublisher.publishThrowable(ex);
             return;
         }
+        if (this.rateLimits.get() && req.type.isMessageEdit()) {
+            LOGGER.warn("rate limits → dropping request (message edit)");
+            return;
+        }
         var success = this.queue.offer(req);
         if (!success) {
-            this.incidentsPublisher.publishThrowable(new IllegalStateException("jbst-slack-client queue is full"));
+            this.incidentsPublisher.publishThrowable(new IllegalStateException("queue full → dropping request (any)"));
         }
     }
 
-    public final void submitMessages(List<ChatMessage> reqs) {
-        for (var request : reqs) {
-            this.submitMessage(request);
-        }
+    public final void submitMessages(List<ChatMessageReq> reqs) {
+        reqs.forEach(this::submitMessage);
     }
 
     // =================================================================================================================
@@ -226,5 +365,11 @@ public class JbstSlack {
         if (!this.configured.get()) {
             throw new ConfigurationException();
         }
+    }
+
+    private HeadersRes assertHeaders(Response response) throws RateLimitsException, ClientException {
+        var headers = new HeadersRes(response.headers());
+        headers.assertRateLimits();
+        return headers;
     }
 }

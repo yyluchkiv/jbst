@@ -1,2 +1,2 @@
 ### Changelog [v1.59]
-— TBD
+— Modification: Slack Client queue management + rate limits management

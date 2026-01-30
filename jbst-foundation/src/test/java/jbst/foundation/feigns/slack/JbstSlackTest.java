@@ -3,7 +3,7 @@ package jbst.foundation.feigns.slack;
 import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.concurrent.JbstSleep;
-import jbst.foundation.domain.time.JbstTimeAmount;
+import jbst.foundation.domain.development.JbstDevelopment;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
@@ -43,43 +42,41 @@ class JbstSlackTest {
     @Autowired
     public JbstSlackTest(JbstSlack slack) {
         this.slack = slack;
-        this.slack.configure(new JbstSlack.Configuration(
-                SLACK_TOKEN,
-                new JbstTimeAmount(250, ChronoUnit.MILLIS)
-        ));
+        this.slack.configureHardcodedSleepDelay(SLACK_TOKEN);
+        this.slack.start();
     }
 
     @Disabled
     @Test
-    void sendMessage() throws JbstSlack.ConfigurationException, JbstSlack.ClientException {
+    void messageSend() throws JbstSlack.ConfigurationException, JbstSlack.RateLimitsException, JbstSlack.ClientException {
         // Arrange
-        var message = new JbstSlack.ChatMessage(
+        var message = JbstSlack.ChatMessageReq.messageSend(
                 SLACK_CHANNEL,
                 "<@username> <b>text</b>, timestamp: " + getCurrentTimestamp()
         );
 
         // Act
-        var ts = this.slack.sendMessage(message);
+        var res = this.slack.messageSend(message);
 
         // Assert
-        LOGGER.info("slack-client ts@send: {}@", ts);
+        LOGGER.info("slack-client res@send: {}@", res);
     }
 
     @Disabled
     @Test
-    void editMessage() throws JbstSlack.ConfigurationException, JbstSlack.ClientException {
+    void messageEdit() throws JbstSlack.ConfigurationException, JbstSlack.RateLimitsException, JbstSlack.ClientException {
         // Arrange
-        var ts = new JbstSlack.MessageTs("1764601641.615379");
-        var message = new JbstSlack.ChatMessage(
+        var message = JbstSlack.ChatMessageReq.messageEdit(
                 SLACK_CHANNEL,
-                "<@username> <b>text</b>, timestamp: (edited)"
+                "<@username> <b>text</b>, timestamp: (edited)",
+                new JbstSlack.MessageTs("1764601641.615379")
         );
 
         // Act
-        ts = this.slack.editMessage(ts, message);
+        var res = this.slack.messageEdit(message);
 
         // Assert
-        LOGGER.info("slack-client ts@edit: {}", ts);
+        LOGGER.info("slack-client res@edit: {}", res);
     }
 
     @Disabled
@@ -87,13 +84,13 @@ class JbstSlackTest {
     void submitMessagesBackpressure() {
         // Arrange
         var messages1 = IntStream.range(0, 20)
-                .mapToObj(i -> new JbstSlack.ChatMessage(
+                .mapToObj(i -> JbstSlack.ChatMessageReq.messageSend(
                         SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
                 ))
                 .toList();
         var messages2 = IntStream.range(20, 40)
-                .mapToObj(i -> new JbstSlack.ChatMessage(
+                .mapToObj(i -> JbstSlack.ChatMessageReq.messageSend(
                         SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
                 ))
