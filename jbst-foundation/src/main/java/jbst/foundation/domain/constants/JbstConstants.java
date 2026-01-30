@@ -80,8 +80,9 @@ public class JbstConstants {
         // =================================================================================================================
         // Feign(s)
         // =================================================================================================================
-        public static final String FEIGN_EXCEPTION_RETRY = BLACK_BOLD_TEXT.format("{}") + " retry exception. Message: {}";
-        public static final String FEIGN_EXCEPTION_FALLBACK = BLACK_BOLD_TEXT.format("{}") + " retry exception. Message: {}";
+        public static final String FEIGN_EXCEPTION_RETRY = BLACK_BOLD_TEXT.format("{}") + " retry exception retry. Message: {}";
+        public static final String FEIGN_EXCEPTION_IO = BLACK_BOLD_TEXT.format("{}") + " retry exception i/o. Message: {}";
+        public static final String FEIGN_EXCEPTION_FALLBACK = BLACK_BOLD_TEXT.format("{}") + " retry exception fallback. Message: {}";
 
         // =================================================================================================================
         // Standard
