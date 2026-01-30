@@ -60,8 +60,6 @@ class JbstSlackTest {
 
         // Assert
         LOGGER.info("slack-client res@send: {}@", res);
-
-        JbstDevelopment.printJsonAsError(res.headers(), "headers");
     }
 
     @Disabled
