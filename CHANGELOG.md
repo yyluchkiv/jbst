@@ -1,2 +1,2 @@
-### Changelog [v1.60]
-— Modification: slack queue(s) management on send/edit
+### Changelog [v1.61]
+— TBD
