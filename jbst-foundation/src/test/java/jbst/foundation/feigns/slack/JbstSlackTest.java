@@ -42,7 +42,7 @@ class JbstSlackTest {
     @Autowired
     public JbstSlackTest(JbstSlack slack) {
         this.slack = slack;
-        this.slack.configureHardcodedSleepDelay(SLACK_TOKEN);
+        this.slack.configurePragmatic(SLACK_TOKEN);
         this.slack.start();
     }
 
@@ -59,7 +59,7 @@ class JbstSlackTest {
         var res = this.slack.messageSend(message);
 
         // Assert
-        LOGGER.info("slack-client res@send: {}@", res);
+        LOGGER.info("jbst-slack res@send: {}@", res);
     }
 
     @Disabled
@@ -76,20 +76,21 @@ class JbstSlackTest {
         var res = this.slack.messageEdit(message);
 
         // Assert
-        LOGGER.info("slack-client res@edit: {}", res);
+        LOGGER.info("jbst-slack res@edit: {}", res);
     }
 
     @Disabled
     @Test
-    void submitMessagesBackpressure() {
+    void messagesBackpressureSend() {
         // Arrange
-        var messages1 = IntStream.range(0, 20)
+        var step = 20;
+        var messages1 = IntStream.range(0, step)
                 .mapToObj(i -> JbstSlack.ChatMessageReq.messageSend(
                         SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
                 ))
                 .toList();
-        var messages2 = IntStream.range(20, 40)
+        var messages2 = IntStream.range(step, step * 2)
                 .mapToObj(i -> JbstSlack.ChatMessageReq.messageSend(
                         SLACK_CHANNEL,
                         "<@username> <b>" + i + "</b>"
@@ -103,6 +104,22 @@ class JbstSlackTest {
         this.slack.submitMessages(messages2);
 
         // Assert
-        JbstSleep.sleep(45, TimeUnit.SECONDS);
+        JbstSleep.sleep(30, TimeUnit.SECONDS);
+    }
+
+    @Disabled
+    @Test
+    void messagesBackpressureEdit() throws JbstSlack.ConfigurationException, JbstSlack.RateLimitsException, JbstSlack.ClientException {
+        // Act: send
+        var messageSend = JbstSlack.ChatMessageReq.messageSend(SLACK_CHANNEL, "index: 0");
+        var res = this.slack.messageSend(messageSend);
+        JbstSleep.sleep(1, TimeUnit.SECONDS);
+
+        // Act: edit
+        var messagesEdit = IntStream.range(1, 10000)
+                .mapToObj(i -> JbstSlack.ChatMessageReq.messageEdit(SLACK_CHANNEL, "index: %s".formatted(i), res.ts()))
+                .toList();
+        this.slack.submitMessages(messagesEdit);
+        JbstSleep.sleep(5, TimeUnit.SECONDS);
     }
 }

@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -66,7 +64,7 @@ public class JbstSlack {
     // Classes: Exception
     public static class ConfigurationException extends Exception {
         public ConfigurationException() {
-            super("Please configure jbst-slack-client");
+            super("Please configure jbst-slack");
         }
     }
 
@@ -88,9 +86,13 @@ public class JbstSlack {
 
     // Classes: Base
     public record Configuration(String token, int queueCapacity, JbstTimeAmount sleepDelay) {
+        public static Configuration pragmatic(String token) {
+            return new Configuration(token, 100, new JbstTimeAmount(500, ChronoUnit.MILLIS));
+        }
+
         @JbstDevelopmentOnly
         public static Configuration developmentOnly(String token) {
-            return new Configuration(token, 100, new JbstTimeAmount(500, ChronoUnit.MILLIS));
+            return new Configuration(token, 25, new JbstTimeAmount(500, ChronoUnit.MILLIS));
         }
 
     }
@@ -222,7 +224,12 @@ public class JbstSlack {
     private final AtomicBoolean configured = new AtomicBoolean(false);
     private final AtomicReference<Configuration> configurationAR = new AtomicReference<>();
     private final AtomicBoolean rateLimits = new AtomicBoolean(false);
-    private BlockingQueue<ChatMessageReq> queue = new LinkedBlockingQueue<>(100);
+    // State: queue-send
+    private BlockingQueue<ChatMessageReq> sendQueue = new LinkedBlockingQueue<>(100);
+    // State: queue-edit
+    private BlockingQueue<MessageTs> editQueue = new LinkedBlockingQueue<>(100);
+    private final Map<MessageTs, ChatMessageReq> editRequests = new ConcurrentHashMap<>();
+    private final Set<MessageTs> editPendingIds = ConcurrentHashMap.newKeySet();
 
     // Definitions
     private final SlackDefinition definition;
@@ -235,7 +242,13 @@ public class JbstSlack {
         }
         this.configured.compareAndSet(false, true);
         this.configurationAR.set(slackConfiguration);
-        this.queue = new LinkedBlockingQueue<>(slackConfiguration.queueCapacity);
+        this.sendQueue = new LinkedBlockingQueue<>(slackConfiguration.queueCapacity);
+        this.editQueue = new LinkedBlockingQueue<>(slackConfiguration.queueCapacity);
+    }
+
+    @SuppressWarnings("unused")
+    public final void configurePragmatic(String token) {
+        this.configure(Configuration.pragmatic(token));
     }
 
     @SuppressWarnings("unused")
@@ -244,21 +257,17 @@ public class JbstSlack {
         this.configure(Configuration.developmentOnly(token));
     }
 
-    @SuppressWarnings("BusyWait")
+    @SuppressWarnings({"BusyWait", "ExtractMethodRecommender"})
     public final void start() {
         if (!this.configured.get()) {
             return;
         }
-        var worker = new Thread(() -> {
+        var workerSend = new Thread(() -> {
             while (true) {
                 ChatMessageReq req;
                 try {
-                    req = this.queue.take();
-                    if (req.type.isMessageSend()) {
-                        this.messageSend(req);
-                    } else if (req.type.isMessageEdit()) {
-                        this.messageEdit(req);
-                    }
+                    req = this.sendQueue.take();
+                    this.messageSend(req);
                     sleep(this.configurationAR.get().sleepDelay.toMillis());
                 } catch (InterruptedException ex1) {
                     Thread.currentThread().interrupt();
@@ -277,9 +286,43 @@ public class JbstSlack {
                     this.incidentsPublisher.publishThrowable(ex3);
                 }
             }
-        }, "jbst-slack-client");
-        worker.setDaemon(true);
-        worker.start();
+        }, "jbst-slack-send");
+        workerSend.setDaemon(true);
+        workerSend.start();
+
+        var workerEdit = new Thread(() -> {
+            while (true) {
+                MessageTs messageTs;
+                ChatMessageReq req;
+                try {
+                    messageTs = this.editQueue.take();
+                    this.editPendingIds.remove(messageTs);
+                    req = this.editRequests.remove(messageTs);
+                    if (nonNull(req)) {
+                        this.messageEdit(req);
+                        sleep(this.configurationAR.get().sleepDelay.toMillis());
+                    }
+                } catch (InterruptedException ex1) {
+                    Thread.currentThread().interrupt();
+                    break;
+                } catch (RateLimitsException ex2) {
+                    this.rateLimits.set(true);
+                    try {
+                        Thread.sleep(ex2.timeAmount.toMillis());
+                    } catch (InterruptedException ex21) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    } finally {
+                        this.rateLimits.set(false);
+                    }
+                } catch (ConfigurationException | ClientException | RuntimeException ex3) {
+                    this.incidentsPublisher.publishThrowable(ex3);
+                }
+            }
+        }, "jbst-slack-edit");
+        workerEdit.setDaemon(true);
+        workerEdit.start();
+
     }
 
     public final MessageDetailsRes messageSend(ChatMessageReq req) throws ConfigurationException, RateLimitsException, ClientException {
@@ -334,12 +377,28 @@ public class JbstSlack {
             return;
         }
         if (this.rateLimits.get() && req.type.isMessageEdit()) {
-            LOGGER.warn("rate limits → dropping request (message edit)");
+            this.incidentsPublisher.publishThrowable(new IllegalStateException("rate limits → dropping request (edit)"));
             return;
         }
-        var success = this.queue.offer(req);
-        if (!success) {
-            this.incidentsPublisher.publishThrowable(new IllegalStateException("queue full → dropping request (any)"));
+        if (req.type.isMessageSend()) {
+            var success = this.sendQueue.offer(req);
+            if (!success) {
+                this.incidentsPublisher.publishThrowable(new IllegalStateException("queue full → dropping request (send)"));
+            }
+        } else {
+            var ts = req.getTs();
+            if (isNull(ts)) {
+                this.incidentsPublisher.publishThrowable(new IllegalStateException("unexpected request → request has no ts (edit)"));
+                return;
+            }
+            this.editRequests.put(ts, req);
+            if (this.editPendingIds.add(ts)) {
+                var success = this.editQueue.offer(ts);
+                if (!success) {
+                    this.editPendingIds.remove(ts);
+                    this.incidentsPublisher.publishThrowable(new IllegalStateException("queue full → dropping request (edit)"));
+                }
+            }
         }
     }
 
