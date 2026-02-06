@@ -259,8 +259,7 @@ public class JbstSlack {
 
     @SuppressWarnings("unused")
     public final void reconfigure(Configuration slackConfiguration) {
-        this.inited.set(false);
-        this.init(slackConfiguration);
+        this.configurationAR.set(slackConfiguration);
     }
 
     @SuppressWarnings({"BusyWait", "ExtractMethodRecommender"})
