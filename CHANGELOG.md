@@ -1,2 +1,2 @@
 ### Changelog [v1.61]
-— TBD
+— Modification: JbstSlack init/reconfigure

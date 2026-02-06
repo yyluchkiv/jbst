@@ -221,7 +221,7 @@ public class JbstSlack {
     private static final ObjectMapper OM = new ObjectMapper();
 
     // State
-    private final AtomicBoolean configured = new AtomicBoolean(false);
+    private final AtomicBoolean inited = new AtomicBoolean(false);
     private final AtomicReference<Configuration> configurationAR = new AtomicReference<>();
     private final AtomicBoolean rateLimits = new AtomicBoolean(false);
     // State: queue-send
@@ -236,30 +236,36 @@ public class JbstSlack {
     // Incidents
     private final JbstIncidentsPublisher incidentsPublisher;
 
-    public final void configure(Configuration slackConfiguration) {
-        if (this.configured.get()) {
+    public final void init(Configuration slackConfiguration) {
+        if (this.inited.get()) {
             return;
         }
-        this.configured.compareAndSet(false, true);
+        this.inited.compareAndSet(false, true);
         this.configurationAR.set(slackConfiguration);
         this.sendQueue = new LinkedBlockingQueue<>(slackConfiguration.queueCapacity);
         this.editQueue = new LinkedBlockingQueue<>(slackConfiguration.queueCapacity);
     }
 
     @SuppressWarnings("unused")
-    public final void configurePragmatic(String token) {
-        this.configure(Configuration.pragmatic(token));
+    public final void initPragmatic(String token) {
+        this.init(Configuration.pragmatic(token));
     }
 
     @SuppressWarnings("unused")
     @JbstDevelopmentOnly
-    public final void configureHardcodedSleepDelay(String token) {
-        this.configure(Configuration.developmentOnly(token));
+    public final void initDevelopment(String token) {
+        this.init(Configuration.developmentOnly(token));
+    }
+
+    @SuppressWarnings("unused")
+    public final void reconfigure(Configuration slackConfiguration) {
+        this.inited.set(false);
+        this.init(slackConfiguration);
     }
 
     @SuppressWarnings({"BusyWait", "ExtractMethodRecommender"})
     public final void start() {
-        if (!this.configured.get()) {
+        if (!this.inited.get()) {
             return;
         }
         var workerSend = new Thread(() -> {
@@ -421,7 +427,7 @@ public class JbstSlack {
     // PRIVATE METHODS
     // =================================================================================================================
     private void assertConfigured() throws ConfigurationException {
-        if (!this.configured.get()) {
+        if (!this.inited.get()) {
             throw new ConfigurationException();
         }
     }

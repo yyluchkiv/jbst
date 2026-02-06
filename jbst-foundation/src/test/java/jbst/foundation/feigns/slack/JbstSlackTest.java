@@ -42,7 +42,7 @@ class JbstSlackTest {
     @Autowired
     public JbstSlackTest(JbstSlack slack) {
         this.slack = slack;
-        this.slack.configurePragmatic(SLACK_TOKEN);
+        this.slack.initPragmatic(SLACK_TOKEN);
         this.slack.start();
     }
 
