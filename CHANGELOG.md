@@ -1,2 +1,2 @@
 ### Changelog [v1.63]
-— TBD
+— Modification: JbstSlack include destination (enabled + channel)

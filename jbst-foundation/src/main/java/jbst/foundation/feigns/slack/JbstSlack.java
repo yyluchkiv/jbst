@@ -78,6 +78,12 @@ public class JbstSlack {
         }
     }
 
+    public static class UnexpectedDisabledMessageReqException extends Exception {
+        public UnexpectedDisabledMessageReqException() {
+            super("Unexpected chat message destination in synchronized method");
+        }
+    }
+
     public static class ClientException extends Exception {
         public ClientException(String message) {
             super(message);
@@ -125,6 +131,12 @@ public class JbstSlack {
         }
     }
 
+    public record ChatMessageDestination(boolean enabled, String channel) {
+        public static ChatMessageDestination enabled(String channel) {
+            return new ChatMessageDestination(true, channel);
+        }
+    }
+
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
     @EqualsAndHashCode
@@ -133,18 +145,24 @@ public class JbstSlack {
         @NotNull
         private final ChatMessageReqType type;
         @NotNull
-        private final String channel;
+        private final ChatMessageDestination destination;
         @NotNull
         private final String text;
         @Nullable
         private final MessageTs ts;
 
-        public static ChatMessageReq messageSend(String channel, String text) {
-            return new ChatMessageReq(MESSAGE_SEND, channel, text, null);
+        public static ChatMessageReq messageSend(ChatMessageDestination destination, String text) {
+            return new ChatMessageReq(MESSAGE_SEND, destination, text, null);
         }
 
-        public static ChatMessageReq messageEdit(String channel, String text, MessageTs ts) {
-            return new ChatMessageReq(MESSAGE_EDIT, channel, text, ts);
+        public static ChatMessageReq messageEdit(ChatMessageDestination destination, String text, MessageTs ts) {
+            return new ChatMessageReq(MESSAGE_EDIT, destination, text, ts);
+        }
+
+        public void assertEnable() throws UnexpectedDisabledMessageReqException {
+            if (!this.destination.enabled) {
+                throw new UnexpectedDisabledMessageReqException();
+            }
         }
 
         public void assertTypeMessageSend() throws ClientException {
@@ -161,7 +179,7 @@ public class JbstSlack {
 
         public Map<String, Object> getReqBody() {
             Map<String, Object> reqBody = new HashMap<>();
-            reqBody.put("channel", this.channel);
+            reqBody.put("channel", this.destination.channel);
             reqBody.put("text", this.text);
             if (nonNull(this.ts)) {
                 reqBody.put("ts", ts);
@@ -287,7 +305,7 @@ public class JbstSlack {
                     } finally {
                         this.rateLimits.set(false);
                     }
-                } catch (ConfigurationException | ClientException | RuntimeException ex3) {
+                } catch (ConfigurationException | UnexpectedDisabledMessageReqException | ClientException | RuntimeException ex3) {
                     this.incidentsPublisher.publishThrowable(ex3);
                 }
             }
@@ -320,7 +338,7 @@ public class JbstSlack {
                     } finally {
                         this.rateLimits.set(false);
                     }
-                } catch (ConfigurationException | ClientException | RuntimeException ex3) {
+                } catch (ConfigurationException | UnexpectedDisabledMessageReqException | ClientException | RuntimeException ex3) {
                     this.incidentsPublisher.publishThrowable(ex3);
                 }
             }
@@ -330,8 +348,9 @@ public class JbstSlack {
 
     }
 
-    public final MessageDetailsRes messageSend(ChatMessageReq req) throws ConfigurationException, RateLimitsException, ClientException {
+    public final MessageDetailsRes messageSend(ChatMessageReq req) throws ConfigurationException, UnexpectedDisabledMessageReqException, RateLimitsException, ClientException {
         this.assertConfigured();
+        req.assertEnable();
         req.assertTypeMessageSend();
         try {
             var response = this.definition.chatPostMessage(this.configurationAR.get().token, req.getReqBody());
@@ -352,8 +371,9 @@ public class JbstSlack {
         }
     }
 
-    public final MessageDetailsRes messageEdit(ChatMessageReq req) throws ConfigurationException, RateLimitsException, ClientException {
+    public final MessageDetailsRes messageEdit(ChatMessageReq req) throws ConfigurationException, UnexpectedDisabledMessageReqException, RateLimitsException, ClientException {
         this.assertConfigured();
+        req.assertEnable();
         req.assertTypeMessageEdit();
         try {
             var response = this.definition.chatUpdate(this.configurationAR.get().token, req.getReqBody());
@@ -379,6 +399,9 @@ public class JbstSlack {
             this.assertConfigured();
         } catch (ConfigurationException ex) {
             this.incidentsPublisher.publishThrowable(ex);
+            return;
+        }
+        if (!req.destination.enabled) {
             return;
         }
         if (this.rateLimits.get() && req.type.isMessageEdit()) {

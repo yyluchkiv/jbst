@@ -3,7 +3,10 @@ package jbst.foundation.feigns.slack;
 import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.concurrent.JbstSleep;
-import jbst.foundation.domain.development.JbstDevelopment;
+import jbst.foundation.feigns.slack.JbstSlack.ClientException;
+import jbst.foundation.feigns.slack.JbstSlack.ConfigurationException;
+import jbst.foundation.feigns.slack.JbstSlack.RateLimitsException;
+import jbst.foundation.feigns.slack.JbstSlack.UnexpectedDisabledMessageReqException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -48,10 +51,10 @@ class JbstSlackTest {
 
     @Disabled
     @Test
-    void messageSend() throws JbstSlack.ConfigurationException, JbstSlack.RateLimitsException, JbstSlack.ClientException {
+    void messageSend() throws ConfigurationException, UnexpectedDisabledMessageReqException, RateLimitsException, ClientException {
         // Arrange
         var message = JbstSlack.ChatMessageReq.messageSend(
-                SLACK_CHANNEL,
+                JbstSlack.ChatMessageDestination.enabled(SLACK_CHANNEL),
                 "<@username> <b>text</b>, timestamp: " + getCurrentTimestamp()
         );
 
@@ -64,10 +67,10 @@ class JbstSlackTest {
 
     @Disabled
     @Test
-    void messageEdit() throws JbstSlack.ConfigurationException, JbstSlack.RateLimitsException, JbstSlack.ClientException {
+    void messageEdit() throws ConfigurationException, UnexpectedDisabledMessageReqException, RateLimitsException, ClientException {
         // Arrange
         var message = JbstSlack.ChatMessageReq.messageEdit(
-                SLACK_CHANNEL,
+                JbstSlack.ChatMessageDestination.enabled(SLACK_CHANNEL),
                 "<@username> <b>text</b>, timestamp: (edited)",
                 new JbstSlack.MessageTs("1764601641.615379")
         );
@@ -86,13 +89,13 @@ class JbstSlackTest {
         var step = 20;
         var messages1 = IntStream.range(0, step)
                 .mapToObj(i -> JbstSlack.ChatMessageReq.messageSend(
-                        SLACK_CHANNEL,
+                        JbstSlack.ChatMessageDestination.enabled(SLACK_CHANNEL),
                         "<@username> <b>" + i + "</b>"
                 ))
                 .toList();
         var messages2 = IntStream.range(step, step * 2)
                 .mapToObj(i -> JbstSlack.ChatMessageReq.messageSend(
-                        SLACK_CHANNEL,
+                        JbstSlack.ChatMessageDestination.enabled(SLACK_CHANNEL),
                         "<@username> <b>" + i + "</b>"
                 ))
                 .toList();
@@ -109,15 +112,23 @@ class JbstSlackTest {
 
     @Disabled
     @Test
-    void messagesBackpressureEdit() throws JbstSlack.ConfigurationException, JbstSlack.RateLimitsException, JbstSlack.ClientException {
+    void messagesBackpressureEdit() throws ConfigurationException, UnexpectedDisabledMessageReqException, RateLimitsException, ClientException {
         // Act: send
-        var messageSend = JbstSlack.ChatMessageReq.messageSend(SLACK_CHANNEL, "index: 0");
+        var messageSend = JbstSlack.ChatMessageReq.messageSend(
+                JbstSlack.ChatMessageDestination.enabled(SLACK_CHANNEL),
+                "index: 0"
+        );
         var res = this.slack.messageSend(messageSend);
         JbstSleep.sleep(1, TimeUnit.SECONDS);
 
         // Act: edit
         var messagesEdit = IntStream.range(1, 10000)
-                .mapToObj(i -> JbstSlack.ChatMessageReq.messageEdit(SLACK_CHANNEL, "index: %s".formatted(i), res.ts()))
+                .mapToObj(i ->
+                        JbstSlack.ChatMessageReq.messageEdit(
+                                JbstSlack.ChatMessageDestination.enabled(SLACK_CHANNEL),
+                                "index: %s".formatted(i), res.ts()
+                        )
+                )
                 .toList();
         this.slack.submitMessages(messagesEdit);
         JbstSleep.sleep(5, TimeUnit.SECONDS);
