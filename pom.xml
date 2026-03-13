@@ -11,10 +11,10 @@
     <version>1.64</version>
 
     <name>${project.artifactId}</name>
-    <url>https://github.com/tech1-agency/jbst</url>
+    <url>https://github.com/yyluchkiv/jbst</url>
     <inceptionYear>2022</inceptionYear>
     <organization>
-        <url>https://github.com/tech1-agency</url>
+        <url>https://github.com/yyluchkiv</url>
     </organization>
     <developers>
         <developer>
@@ -395,7 +395,7 @@
                 <repository>
                     <id>github-jbst</id>
                     <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/tech1-agency/jbst/packages</url>
+                    <url>https://maven.pkg.github.com/yyluchkiv/jbst/packages</url>
                 </repository>
             </distributionManagement>
         </profile>

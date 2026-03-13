@@ -10,8 +10,8 @@ on:
 env:
   MAVEN_DEPLOYMENT_ENABLED: 'true'
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IMAGE_SERVER_IAM: tech1-agency/jbst-server-iam
-  DOCKER_IMAGE_SERVER_OPS: tech1-agency/jbst-server-ops
+  DOCKER_IMAGE_SERVER_IAM: yyluchkiv/jbst-server-iam
+  DOCKER_IMAGE_SERVER_OPS: yyluchkiv/jbst-server-ops
   DOCKER_VERSION: '1.64'
   DOCKER_PUSH_ENABLED: 'true'
 

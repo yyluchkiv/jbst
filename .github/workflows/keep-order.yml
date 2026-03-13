@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  PACKAGE_OWNER: 'tech1-agency'
+  PACKAGE_OWNER: 'yyluchkiv'
   KEEP_COUNT_MAVEN_PACKAGES: 5
   KEEP_COUNT_CONTAINERS: 5
   KEEP_COUNT_RELEASES_AND_TAGS: 5

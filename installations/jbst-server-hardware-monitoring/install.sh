@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-OWNER=tech1-agency
+OWNER=yyluchkiv
 REPO=jbst
 GROUP_ID=jbst
 ARTIFACT_ID=jbst-server-hardware-monitoring
