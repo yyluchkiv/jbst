@@ -29,6 +29,7 @@ VERSION=$(grep -m 1 "<version>" "$POM_FILE" | sed -E 's/.*<version>([^<]+)<\/ver
 if [ -n "$VERSION" ]; then
   mkdir -p "artifacts"
   cp "jbst-foundation/target/jbst-foundation-${VERSION}.jar" "artifacts/"
+  cp "jbst-foundation/pom.xml" "artifacts/jbst-foundation-pom.xml"
   cp "pom.xml" "artifacts/jbst-parent-pom.xml"
   print "${GREEN}" "------------------------------------------------------------------------"
   print "${GREEN}" "[SUCCESS] jbst artifacts completed"
