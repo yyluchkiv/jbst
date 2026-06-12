@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.*;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.JbstTimeAmount;
-import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -189,6 +191,7 @@ public class JbstSlack {
     }
 
     // Classes: Responses
+    @SuppressWarnings("DuplicatedCode")
     public record HeadersRes(Map<String, Collection<String>> values) {
         public void assertRateLimits() throws RateLimitsException, ClientException {
             if (isNull(this.values)) {
@@ -236,6 +239,7 @@ public class JbstSlack {
     public record MessageDetailsRes(MessageTs ts, HeadersRes headers) {}
 
     // Constants
+    private static final String PREFIX = "jbst-slack";
     private static final ObjectMapper OM = new ObjectMapper();
 
     // State
@@ -250,9 +254,11 @@ public class JbstSlack {
     private final Set<MessageTs> editPendingIds = ConcurrentHashMap.newKeySet();
 
     // Definitions
-    private final SlackDefinition definition;
-    // Incidents
-    private final JbstIncidentsPublisher incidentsPublisher;
+    private final SlackDefinition definition = Feign.builder()
+            .client(new OkHttpClient())
+            .encoder(new JacksonEncoder())
+            .decoder(new JacksonDecoder())
+            .target(JbstSlack.SlackDefinition.class, "https://slack.com/api");
 
     public final void init(Configuration slackConfiguration) {
         if (this.inited.get()) {
@@ -306,7 +312,7 @@ public class JbstSlack {
                         this.rateLimits.set(false);
                     }
                 } catch (ConfigurationException | UnexpectedDisabledMessageReqException | ClientException | RuntimeException ex3) {
-                    this.incidentsPublisher.publishThrowable(ex3);
+                    LOGGER.error("{} failure on worker-send", PREFIX, ex3);
                 }
             }
         }, "jbst-slack-send");
@@ -339,7 +345,7 @@ public class JbstSlack {
                         this.rateLimits.set(false);
                     }
                 } catch (ConfigurationException | UnexpectedDisabledMessageReqException | ClientException | RuntimeException ex3) {
-                    this.incidentsPublisher.publishThrowable(ex3);
+                    LOGGER.error("{} failure on worker-edit", PREFIX, ex3);
                 }
             }
         }, "jbst-slack-edit");
@@ -398,25 +404,25 @@ public class JbstSlack {
         try {
             this.assertConfigured();
         } catch (ConfigurationException ex) {
-            this.incidentsPublisher.publishThrowable(ex);
+            LOGGER.error("{} failure on configuration", PREFIX, ex);
             return;
         }
         if (!req.destination.enabled) {
             return;
         }
         if (this.rateLimits.get() && req.type.isMessageEdit()) {
-            this.incidentsPublisher.publishThrowable(new IllegalStateException("rate limits → dropping request (edit)"));
+            LOGGER.error("{} failure on rate limits → dropping request (edit)", PREFIX);
             return;
         }
         if (req.type.isMessageSend()) {
             var success = this.sendQueue.offer(req);
             if (!success) {
-                this.incidentsPublisher.publishThrowable(new IllegalStateException("queue full → dropping request (send)"));
+                LOGGER.error("{} failure on queue full → dropping request (send)", PREFIX);
             }
         } else {
             var ts = req.getTs();
             if (isNull(ts)) {
-                this.incidentsPublisher.publishThrowable(new IllegalStateException("unexpected request → request has no ts (edit)"));
+                LOGGER.error("{} failure on unexpected request → request has no ts (edit)", PREFIX);
                 return;
             }
             this.editRequests.put(ts, req);
@@ -424,7 +430,7 @@ public class JbstSlack {
                 var success = this.editQueue.offer(ts);
                 if (!success) {
                     this.editPendingIds.remove(ts);
-                    this.incidentsPublisher.publishThrowable(new IllegalStateException("queue full → dropping request (edit)"));
+                    LOGGER.error("{} failure on queue full → dropping request (edit)", PREFIX);
                 }
             }
         }

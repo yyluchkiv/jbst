@@ -1,6 +1,5 @@
 package jbst.foundation.feigns.slack;
 
-import jbst.foundation.configurations.JbstConfigurationFeignClientSlack;
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.concurrent.JbstSleep;
 import jbst.foundation.feigns.slack.JbstSlack.ClientException;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,7 +28,6 @@ class JbstSlackTest {
 
     @Configuration
     @Import({
-            JbstConfigurationFeignClientSlack.class,
             TestJbstConfigurationPropertiesHardcoded.class
     })
     static class TestConfiguration {
@@ -40,11 +37,9 @@ class JbstSlackTest {
     private static final String SLACK_TOKEN = "-";
     private static final String SLACK_CHANNEL = "-";
 
-    private final JbstSlack slack;
+    private final JbstSlack slack = new JbstSlack();
 
-    @Autowired
-    public JbstSlackTest(JbstSlack slack) {
-        this.slack = slack;
+    public JbstSlackTest() {
         this.slack.initPragmatic(SLACK_TOKEN);
         this.slack.start();
     }
