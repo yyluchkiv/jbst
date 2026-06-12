@@ -7,6 +7,7 @@
       "Bash(cd */worktrees/* && *)",
       "Bash(grep:*)",
       "Bash(echo:*)",
+      "Bash(gh api *)",
       "Read(*)",
       "Edit(*)",
       "Write(*)",
