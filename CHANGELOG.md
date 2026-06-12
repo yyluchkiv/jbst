@@ -1,2 +1,2 @@
 ### Changelog [v1.65]
-— TBD
+— addition: JbstTelegram RateLimits
