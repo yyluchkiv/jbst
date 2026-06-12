@@ -3,6 +3,10 @@
     "allow": [
       "Bash(mvn:*)",
       "Bash(java:*)",
+      "Bash(cd */.claude/worktrees/* && *)",
+      "Bash(cd */worktrees/* && *)",
+      "Bash(grep:*)",
+      "Bash(echo:*)",
       "Read(*)",
       "Edit(*)",
       "Write(*)",
