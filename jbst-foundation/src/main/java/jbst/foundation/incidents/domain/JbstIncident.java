@@ -2,6 +2,7 @@ package jbst.foundation.incidents.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
@@ -139,6 +140,10 @@ public class JbstIncident {
         this.add(TYPE, type);
     }
 
+    public void addServer(ServerName server) {
+        this.add(SERVER, server);
+    }
+
     public void addUsername(Username username) {
         this.add(USERNAME, username);
     }
@@ -184,6 +189,8 @@ public class JbstIncident {
         @UtilityClass
         public static class Keys {
             public static final String TYPE = "incidentType";
+
+            public static final String SERVER = "server";
 
             public static final String EMAIL = "email";
             public static final String USERNAME = "username";

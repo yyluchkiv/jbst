@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static jbst.foundation.domain.constants.JbstConstants.Logs.SERVER_OFFLINE;
+
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
@@ -19,6 +21,12 @@ public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
 
     @Override
     public void registerIncident(@NotNull JbstIncident incident) {
-        // TODO [YYL-incidents] fixme
+        try {
+            incident.addServer(this.jbstProperties.getApp().getName());
+            // TODO [YYL-incidents] fixme
+        } catch (Exception ex) {
+            LOGGER.error(SERVER_OFFLINE, "telegram", ex.getMessage());
+            incident.print();
+        }
     }
 }
