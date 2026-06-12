@@ -2,29 +2,26 @@ package jbst.foundation.domain.properties.configs;
 
 import jbst.foundation.domain.annotations.JbstModificationBeta;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
-import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.properties.JbstProperty;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatory;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMandatoryOnToggleEnabled;
 import jbst.foundation.domain.properties.annotations.JbstPropertyMetadataMapMinSize;
 import jbst.foundation.domain.properties.annotations.JbstPropertyOptional;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
+import jbst.foundation.domain.properties.base.JbstPropertyTelegram;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
-import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static jbst.foundation.domain.collections.JbstCollections.baseJoiningRaw;
-import static jbst.foundation.domain.random.JbstRandom.getEnumMapMappedRandomBoolean;
-import static jbst.foundation.domain.random.JbstRandom.randomBoolean;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.RED_TEXT;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
@@ -39,6 +36,8 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     @JbstPropertyOptional
     private JbstPropertyRemoteServer remoteServer;
     @JbstPropertyOptional
+    private JbstPropertyTelegram telegram;
+    @JbstPropertyOptional
     @JbstPropertyMetadataMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
 
@@ -47,6 +46,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 JbstPropertyRemoteServer.hardcoded(),
+                JbstPropertyTelegram.hardcoded(),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN", true),
                         Map.entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", false),
@@ -64,21 +64,12 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
         );
     }
 
-    public static JbstPropertyIncidentsManager random() {
-        return new JbstPropertyIncidentsManager(
-                randomBoolean(),
-                JbstIncidentsManagerType.random(),
-                JbstPropertyRemoteServer.random(),
-                getEnumMapMappedRandomBoolean(Arrays.stream(JbstSecurityJwtIncident.values()).map(Enum::name).toArray(String[]::new))
-        );
-    }
-
     public static JbstPropertyIncidentsManager enabled() {
         return hardcoded();
     }
 
     public static JbstPropertyIncidentsManager disabled() {
-        return new JbstPropertyIncidentsManager(false, null, null, null);
+        return new JbstPropertyIncidentsManager(false, null, null, null, null);
     }
 
     @Override

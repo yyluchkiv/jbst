@@ -1,5 +1,6 @@
 package jbst.foundation.incidents.feigns.clients;
 
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.feigns.telegram.JbstTelegram;
 import jbst.foundation.incidents.domain.JbstIncident;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
 
-    // Definitions
+    // Service
     private final JbstTelegram telegram;
+    // Properties
+    private final JbstProperties jbstProperties;
 
     @Override
     public void registerIncident(@NotNull JbstIncident incident) {

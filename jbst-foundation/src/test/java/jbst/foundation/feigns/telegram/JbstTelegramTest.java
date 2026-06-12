@@ -1,6 +1,5 @@
 package jbst.foundation.feigns.telegram;
 
-import jbst.foundation.configurations.JbstConfigurationFeignClientTelegram;
 import jbst.foundation.domain.concurrent.JbstSleep;
 import jbst.foundation.domain.strings.JbstTraces;
 import jbst.foundation.feigns.telegram.JbstTelegram.ClientException;
@@ -10,9 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -27,9 +24,6 @@ import java.util.stream.IntStream;
 class JbstTelegramTest {
 
     @Configuration
-    @Import({
-            JbstConfigurationFeignClientTelegram.class
-    })
     static class TestConfiguration {
 
     }
@@ -37,13 +31,11 @@ class JbstTelegramTest {
     private static final String TELEGRAM_TOKEN = "-";
     // How to obtain chatId
     // Open: https://api.telegram.org/bot$token/getUpdates
-    private static final String TELEGRAM_CHAT_ID = "-";
+    private static final String TELEGRAM_CHAT_ID = "394346882";
 
-    private final JbstTelegram telegram;
+    private final JbstTelegram telegram = new JbstTelegram();
 
-    @Autowired
-    public JbstTelegramTest(JbstTelegram telegram) {
-        this.telegram = telegram;
+    public JbstTelegramTest() {
         this.telegram.initPragmatic(TELEGRAM_TOKEN);
         this.telegram.start();
     }
@@ -70,17 +62,17 @@ class JbstTelegramTest {
     @Test
     void messagesBackpressureSend() {
         // Arrange
-        var step = 20;
+        var step = 5;
         var messages1 = IntStream.range(0, step)
                 .mapToObj(i -> JbstTelegram.TelegramMessageRequest.of(
                         TELEGRAM_CHAT_ID,
-                        "<b>" + i + "</b>"
+                        "<b>A-" + i + "</b>"
                 ))
                 .toList();
         var messages2 = IntStream.range(step, step * 2)
                 .mapToObj(i -> JbstTelegram.TelegramMessageRequest.of(
                         TELEGRAM_CHAT_ID,
-                        "<b>" + i + "</b>"
+                        "<b>B-" + i + "</b>"
                 ))
                 .toList();
 

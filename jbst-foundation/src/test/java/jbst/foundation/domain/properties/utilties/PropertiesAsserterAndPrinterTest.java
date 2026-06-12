@@ -210,6 +210,7 @@ class PropertiesAsserterAndPrinterTest {
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 JbstPropertyRemoteServer.hardcoded(),
+                JbstPropertyTelegram.hardcoded(),
                 Map.ofEntries(
                         entry("AUTHENTICATION_LOGIN", randomBoolean()),
                         entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", loginFailureUsernamePassword),
@@ -239,6 +240,7 @@ class PropertiesAsserterAndPrinterTest {
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 JbstPropertyRemoteServer.hardcoded(),
+                JbstPropertyTelegram.hardcoded(),
                 Map.ofEntries()
         );
 

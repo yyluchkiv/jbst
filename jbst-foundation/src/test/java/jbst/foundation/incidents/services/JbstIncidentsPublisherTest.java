@@ -1,9 +1,10 @@
 package jbst.foundation.incidents.services;
 
-import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.enums.JbstIncidentsManagerType;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyRemoteServer;
+import jbst.foundation.domain.properties.base.JbstPropertyTelegram;
 import jbst.foundation.domain.properties.configs.JbstPropertyIncidentsManager;
 import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.incidents.domain.authetication.*;
@@ -461,6 +462,7 @@ class JbstIncidentsPublisherTest {
                 true,
                 JbstIncidentsManagerType.hardcoded(),
                 JbstPropertyRemoteServer.hardcoded(),
+                JbstPropertyTelegram.hardcoded(),
                 types
         );
     }

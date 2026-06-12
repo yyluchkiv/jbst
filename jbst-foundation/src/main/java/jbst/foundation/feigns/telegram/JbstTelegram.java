@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.*;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.JbstTimeAmount;
@@ -164,7 +167,11 @@ public class JbstTelegram {
     private BlockingQueue<TelegramMessageRequest> sendQueue = new LinkedBlockingQueue<>(100);
 
     // Definitions
-    private final TelegramDefinition definition;
+    private final TelegramDefinition definition = Feign.builder()
+            .client(new OkHttpClient())
+            .encoder(new JacksonEncoder())
+            .decoder(new JacksonDecoder())
+            .target(JbstTelegram.TelegramDefinition.class, "https://api.telegram.org");
 
     public final void init(Configuration telegramConfiguration) {
         if (this.inited.get()) {
