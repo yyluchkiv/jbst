@@ -5,6 +5,7 @@ import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientTypeServerDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.SERVER_OFFLINE;
@@ -17,7 +18,7 @@ public class JbstIncidentClientTypeServer implements JbstIncidentClientV2 {
     private final JbstIncidentClientTypeServerDefinition serverDefinition;
 
     @Override
-    public void registerIncident(JbstIncident incident) {
+    public void registerIncident(@NotNull JbstIncident incident) {
         try {
             this.serverDefinition.registerIncident(incident);
         } catch (FeignException ex) {
