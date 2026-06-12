@@ -196,6 +196,7 @@ public class JbstIncident {
             public static final String USERNAME = "username";
             public static final String PASSWORD = "password";
 
+            public static final String TIMES = "_times";
             public static final String TRIGGER = "_trigger";
 
             public static final String EXCEPTION = "exception";

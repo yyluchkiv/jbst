@@ -17,7 +17,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-
 @Slf4j
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
