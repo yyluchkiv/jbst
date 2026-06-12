@@ -2,6 +2,7 @@ package jbst.server.ops.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.*;
+import jbst.foundation.feigns.github.JbstGithub;
 import jbst.server.ops.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.config.ConnectionConfig;
@@ -35,7 +36,6 @@ import org.springframework.web.client.RestTemplate;
         JbstConfigurationEmail.class,
         JbstConfigurationSpringBootServer.class,
         JbstConfigurationUtils.class,
-        JbstConfigurationFeignClientGitHub.class
 })
 @EnableScheduling
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -49,6 +49,11 @@ public class JbstServerConfigurationBeans {
         this.serverProperties.getServers().assertProperties();
         this.serverProperties.getSlacks().assertProperties();
         this.serverProperties.getRecipients().assertProperties();
+    }
+
+    @Bean
+    JbstGithub github() {
+        return new JbstGithub();
     }
 
     @SuppressWarnings("deprecation")

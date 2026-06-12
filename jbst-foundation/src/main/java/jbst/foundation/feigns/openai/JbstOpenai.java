@@ -1,9 +1,13 @@
 package jbst.foundation.feigns.openai;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import feign.Feign;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.okhttp.OkHttpClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +86,11 @@ public class JbstOpenai {
 
 
     // Definitions
-    private final OpenaiDefinition definition;
+    private final OpenaiDefinition definition = Feign.builder()
+            .client(new OkHttpClient())
+            .encoder(new JacksonEncoder())
+            .decoder(new JacksonDecoder())
+            .target(JbstOpenai.OpenaiDefinition.class, "https://api.openai.com");
 
     public final OpenaiCompletionsResponse getCompletions(String apiKey, OpenaiCompletionsRequest request) {
         return this.definition.completions(

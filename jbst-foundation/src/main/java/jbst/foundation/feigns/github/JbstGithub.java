@@ -2,10 +2,10 @@ package jbst.foundation.feigns.github;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
-import feign.RetryableException;
+import feign.*;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.constants.JbstConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,11 @@ public class JbstGithub {
     }
 
     // Definitions
-    private final GithubDefinition definition;
+    private final GithubDefinition definition = Feign.builder()
+            .client(new OkHttpClient())
+            .encoder(new JacksonEncoder())
+            .decoder(new JacksonDecoder())
+            .target(JbstGithub.GithubDefinition.class, "https://api.github.com");
 
     public final GithubRepoContentsResponse getContents(GithubRepoContentsRequest request) {
         try {
