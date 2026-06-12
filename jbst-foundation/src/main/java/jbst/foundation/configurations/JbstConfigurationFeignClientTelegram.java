@@ -5,13 +5,10 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jbst.foundation.feigns.telegram.JbstTelegram;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JbstConfigurationFeignClientTelegram {
 
     @Bean
