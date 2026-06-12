@@ -12,13 +12,12 @@ import org.springframework.context.annotation.Configuration;
 public class JbstConfigurationFeignClientTelegram {
 
     @Bean
-    JbstTelegram telegramClient() {
-        return new JbstTelegram(
-                Feign.builder()
-                        .client(new OkHttpClient())
-                        .encoder(new JacksonEncoder())
-                        .decoder(new JacksonDecoder())
-                        .target(JbstTelegram.TelegramDefinition.class, "https://api.telegram.org")
-        );
+    JbstTelegram telegram() {
+        var feign = Feign.builder()
+                .client(new OkHttpClient())
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+                .target(JbstTelegram.TelegramDefinition.class, "https://api.telegram.org");
+        return new JbstTelegram(feign);
     }
 }

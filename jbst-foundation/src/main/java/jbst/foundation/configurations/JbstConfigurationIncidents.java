@@ -9,9 +9,10 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.feigns.telegram.JbstTelegram;
-import jbst.foundation.incidents.feigns.clients.*;
-import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
-import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeLogger;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeServer;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeTelegram;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientTypeServerDefinition;
 import jbst.foundation.incidents.handlers.JbstAsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.JbstErrorHandlerPublisher;
@@ -67,39 +68,11 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     }
 
     // ================================================================================================================
-    // Incidents: HTTP
+    // Incidents: [SERVER, TELEGRAM]
     // ================================================================================================================
     @Bean
     @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "true")
-    JbstIncidentClientDefinition incidentClientDefinition() {
-        var incidentServer = this.jbstProperties.getIncidentsManager().getRemoteServer();
-        return Feign.builder()
-                .client(new OkHttpClient())
-                .encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
-                .requestInterceptor(
-                        new BasicAuthRequestInterceptor(
-                                incidentServer.getCredentials().username().value(),
-                                incidentServer.getCredentials().password().value()
-                        )
-                )
-                .target(JbstIncidentClientDefinition.class, incidentServer.getBaseURL());
-    }
-
-    @Bean
-    @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "false", matchIfMissing = true)
-    JbstIncidentClientDefinition incidentClientDefinitionSlf4j() {
-        return new JbstIncidentClientDefinitionSlf4J();
-    }
-
-    @Bean
-    JbstIncidentClient incidentClient(JbstIncidentClientDefinition incidentClientDefinition) {
-        return new JbstIncidentClient(incidentClientDefinition);
-    }
-
-    @Bean
-    @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "true")
-    JbstIncidentClientV2 incidentClient() {
+    JbstIncidentClient incidentClient() {
         var incidentsManagerType = this.jbstProperties.getIncidentsManager().getType();
         if (incidentsManagerType.isServer()) {
             var remoteServer = this.jbstProperties.getIncidentsManager().getRemoteServer();
@@ -124,7 +97,7 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     @Bean
     @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "false", matchIfMissing = true)
-    JbstIncidentClientV2 incidentClientDisabled() {
+    JbstIncidentClient incidentClientDisabled() {
         return new JbstIncidentClientTypeLogger();
     }
 

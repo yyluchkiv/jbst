@@ -12,7 +12,7 @@ import static jbst.foundation.domain.constants.JbstConstants.Logs.SERVER_OFFLINE
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstIncidentClientTypeServer implements JbstIncidentClientV2 {
+public class JbstIncidentClientTypeServer implements JbstIncidentClient {
 
     // Definitions
     private final JbstIncidentClientTypeServerDefinition serverDefinition;

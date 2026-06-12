@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstIncidentClientTypeLogger implements JbstIncidentClientV2{
+public class JbstIncidentClientTypeLogger implements JbstIncidentClient {
     @Override
     public void registerIncident(@NotNull JbstIncident incident) {
         incident.print();

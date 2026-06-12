@@ -1,7 +1,8 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
-import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeLogger;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeServer;
+import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeTelegram;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -49,26 +50,27 @@ class JbstConfigurationIncidents1Test {
                 .contains("rejectedExecutionHandler")
                 .contains("errorHandlerPublisher")
                 .contains("simpleApplicationEventMulticaster")
-                .contains("incidentClientDefinition")
                 .contains("incidentClient")
-                .hasSizeGreaterThanOrEqualTo(24);
+                .contains("incidentClient")
+                .hasSizeGreaterThanOrEqualTo(22);
     }
 
     @Test
-    void incidentClientDefinitionTest() {
+    void incidentClient() {
         // Act
-        var incidentClientDefinition = this.componentUnderTest.incidentClientDefinition();
+        var incidentClient = this.componentUnderTest.incidentClient();
 
         // Assert
-        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstIncidentClientDefinition.class);
-        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(JbstIncidentClientDefinitionSlf4J.class);
+        assertThat(incidentClient.getClass()).isEqualTo(JbstIncidentClientTypeServer.class);
+        assertThat(incidentClient.getClass()).isNotEqualTo(JbstIncidentClientTypeLogger.class);
+        assertThat(incidentClient.getClass()).isNotEqualTo(JbstIncidentClientTypeTelegram.class);
     }
 
     @Test
-    void incidentClientDefinitionSlf4jTest() {
+    void incidentClientDisabled() {
         // Act + Assert
-        assertThatThrownBy(this.componentUnderTest::incidentClientDefinitionSlf4j)
+        assertThatThrownBy(this.componentUnderTest::incidentClientDisabled)
                 .isInstanceOf(NoSuchBeanDefinitionException.class)
-                .hasMessage("No bean named 'incidentClientDefinitionSlf4j' available");
+                .hasMessage("No bean named 'incidentClientDisabled' available");
     }
 }

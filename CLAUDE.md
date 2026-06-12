@@ -28,10 +28,10 @@ JBST is a Java 17 Spring Boot framework providing bootstrapping tools for enterp
 ./compile-all.sh  # or mvn clean compile test-compile
 
 # Unit tests only
-./junit-tests-only.sh  # or mvn clean test
+./execute-unit-tests-only.sh  # or mvn clean test
 
 # Integration tests only
-./integrations-tests-only.sh  # or mvn failsafe:integration-test
+./execute-integrations-tests-only.sh  # or mvn failsafe:integration-test
 
 # All tests (unit + integration)
 mvn integration-test

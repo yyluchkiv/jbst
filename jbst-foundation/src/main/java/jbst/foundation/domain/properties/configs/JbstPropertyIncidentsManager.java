@@ -36,7 +36,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     private final boolean enabled;
     @JbstPropertyMandatoryOnToggleEnabled
     private JbstIncidentsManagerType type;
-    @JbstPropertyMandatoryOnToggleEnabled
+    @JbstPropertyOptional
     private JbstPropertyRemoteServer remoteServer;
     @JbstPropertyOptional
     @JbstPropertyMetadataMapMinSize(minSize = 0)
