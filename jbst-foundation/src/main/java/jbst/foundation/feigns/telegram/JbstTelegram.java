@@ -97,6 +97,7 @@ public class JbstTelegram {
     }
 
     // Classes: Responses
+    @SuppressWarnings("DuplicatedCode")
     public record HeadersRes(Map<String, Collection<String>> values) {
         public void assertRateLimits() throws RateLimitsException, ClientException {
             if (isNull(this.values)) {

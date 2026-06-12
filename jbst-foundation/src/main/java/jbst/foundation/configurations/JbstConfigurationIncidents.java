@@ -6,10 +6,13 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
+import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
+import jbst.foundation.feigns.telegram.JbstTelegram;
+import jbst.foundation.incidents.feigns.clients.*;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinition;
 import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientDefinitionSlf4J;
+import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientTypeServerDefinition;
 import jbst.foundation.incidents.handlers.JbstAsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.JbstErrorHandlerPublisher;
 import jbst.foundation.incidents.handlers.JbstRejectedExecutionHandlerPublisher;
@@ -23,6 +26,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -40,6 +44,9 @@ import static jbst.foundation.domain.hardware.JbstCPU.getNumOfCores;
 @EnableConfigurationProperties({
         JbstProperties.class
 })
+@Import({
+        JbstConfigurationFeignClientTelegram.class
+})
 @EnableAsync
 @EnableScheduling
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -47,6 +54,8 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
 
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
+    // Telegram
+    private final JbstTelegram jbstTelegram;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -86,6 +95,37 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     @Bean
     JbstIncidentClient incidentClient(JbstIncidentClientDefinition incidentClientDefinition) {
         return new JbstIncidentClient(incidentClientDefinition);
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "true")
+    JbstIncidentClientV2 incidentClient() {
+        var incidentsManagerType = this.jbstProperties.getIncidentsManager().getType();
+        if (incidentsManagerType.isServer()) {
+            var remoteServer = this.jbstProperties.getIncidentsManager().getRemoteServer();
+            var feign = Feign.builder()
+                    .client(new OkHttpClient())
+                    .encoder(new JacksonEncoder())
+                    .decoder(new JacksonDecoder())
+                    .requestInterceptor(
+                            new BasicAuthRequestInterceptor(
+                                    remoteServer.getCredentials().username().value(),
+                                    remoteServer.getCredentials().password().value()
+                            )
+                    )
+                    .target(JbstIncidentClientTypeServerDefinition.class, remoteServer.getBaseURL());
+            return new JbstIncidentClientTypeServer(feign);
+        }
+        if (incidentsManagerType.isTelegram()) {
+            return new JbstIncidentClientTypeTelegram(this.jbstTelegram);
+        }
+        throw new JbstExceptions.UnreachableCode();
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "false", matchIfMissing = true)
+    JbstIncidentClientV2 incidentClientDisabled() {
+        return new JbstIncidentClientTypeLogger();
     }
 
     // ================================================================================================================
