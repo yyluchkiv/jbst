@@ -1,5 +1,9 @@
 # CLAUDE.md
 
+## Instructions
+
+Do not add "🤖 Generated with Claude Code" or Co-Authored-By footers to commit messages.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
