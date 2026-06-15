@@ -45,7 +45,8 @@ public class JbstIncident {
 
     private static final Set<String> PLAIN_MESSAGE_SKIPPED = Set.of(
             SERVER,
-            TYPE
+            TYPE,
+            COUNTRY_FLAG
     );
 
     private static final List<String> ORDERED_PREFERRED_KEYS = new LinkedList<>(
