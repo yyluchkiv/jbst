@@ -11,12 +11,10 @@ jbst:
 
   incidents-manager:
     enabled: true
-    type: SERVER
-    remote-server:
-      baseURL: localhost
-      credentials:
-        username: jbst
-        password: jbst
+    type: "TELEGRAM"
+    telegram:
+      token: "-"
+      chatId: "-"
     incidents:
       AUTHENTICATION_LOGIN: true
       AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD: false

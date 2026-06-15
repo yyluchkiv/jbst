@@ -1,8 +1,7 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeLogger;
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeServer;
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeTelegram;
+import jbst.foundation.incidents.clients.JbstIncidentClientTypeLogger;
+import jbst.foundation.incidents.clients.JbstIncidentClientTypeTelegram;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -69,7 +68,6 @@ class JbstConfigurationIncidents2Test {
 
         // Assert
         assertThat(incidentClient.getClass()).isEqualTo(JbstIncidentClientTypeLogger.class);
-        assertThat(incidentClient.getClass()).isNotEqualTo(JbstIncidentClientTypeServer.class);
         assertThat(incidentClient.getClass()).isNotEqualTo(JbstIncidentClientTypeTelegram.class);
     }
 }

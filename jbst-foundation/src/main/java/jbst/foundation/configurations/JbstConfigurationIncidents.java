@@ -1,19 +1,12 @@
 package jbst.foundation.configurations;
 
-import feign.Feign;
-import feign.auth.BasicAuthRequestInterceptor;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.feigns.telegram.JbstTelegram;
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClient;
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeLogger;
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeServer;
-import jbst.foundation.incidents.feigns.clients.JbstIncidentClientTypeTelegram;
-import jbst.foundation.incidents.feigns.definitions.JbstIncidentClientTypeServerDefinition;
+import jbst.foundation.incidents.clients.JbstIncidentClient;
+import jbst.foundation.incidents.clients.JbstIncidentClientTypeLogger;
+import jbst.foundation.incidents.clients.JbstIncidentClientTypeTelegram;
 import jbst.foundation.incidents.handlers.JbstAsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.JbstErrorHandlerPublisher;
 import jbst.foundation.incidents.handlers.JbstRejectedExecutionHandlerPublisher;
@@ -68,21 +61,6 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     @ConditionalOnProperty(value = "jbst.incidents-manager.enabled", havingValue = "true")
     JbstIncidentClient incidentClient() {
         var incidentsManagerType = this.jbstProperties.getIncidentsManager().getType();
-        if (incidentsManagerType.isServer()) {
-            var remoteServer = this.jbstProperties.getIncidentsManager().getRemoteServer();
-            var feign = Feign.builder()
-                    .client(new OkHttpClient())
-                    .encoder(new JacksonEncoder())
-                    .decoder(new JacksonDecoder())
-                    .requestInterceptor(
-                            new BasicAuthRequestInterceptor(
-                                    remoteServer.getCredentials().username().value(),
-                                    remoteServer.getCredentials().password().value()
-                            )
-                    )
-                    .target(JbstIncidentClientTypeServerDefinition.class, remoteServer.getBaseURL());
-            return new JbstIncidentClientTypeServer(feign);
-        }
         if (incidentsManagerType.isTelegram()) {
             var telegram = new JbstTelegram();
             telegram.initPragmatic(

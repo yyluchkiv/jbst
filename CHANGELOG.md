@@ -1,2 +1,2 @@
 ### Changelog [v1.68]
-— TBD
+— deletion: JbstIncidentsManagerType == SERVER

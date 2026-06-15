@@ -1,4 +1,4 @@
-package jbst.foundation.incidents.feigns.clients;
+package jbst.foundation.incidents.clients;
 
 import jbst.foundation.incidents.domain.JbstIncident;
 import org.jetbrains.annotations.NotNull;

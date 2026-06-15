@@ -1,4 +1,4 @@
-package jbst.foundation.incidents.feigns.clients;
+package jbst.foundation.incidents.clients;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.feigns.telegram.JbstTelegram;

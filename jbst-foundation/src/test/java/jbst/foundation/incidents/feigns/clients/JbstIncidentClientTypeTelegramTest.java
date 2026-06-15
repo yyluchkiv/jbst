@@ -2,6 +2,7 @@ package jbst.foundation.incidents.feigns.clients;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.feigns.telegram.JbstTelegram;
+import jbst.foundation.incidents.clients.JbstIncidentClientTypeTelegram;
 import jbst.foundation.incidents.domain.JbstAbstractIncident;
 import jbst.foundation.incidents.domain.JbstIncident;
 import jbst.foundation.incidents.domain.authetication.JbstIncidentAuthenticationLogin;
