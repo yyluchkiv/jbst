@@ -6,6 +6,7 @@
       "Bash(cd */.claude/worktrees/* && *)",
       "Bash(cd */worktrees/* && *)",
       "Bash(gh api *)",
+      "Bash(gh pr list:*)",
       "Bash(git worktree remove:*)",
       "Bash(git worktree prune:*)",
       "Bash(git branch -D:*)",
