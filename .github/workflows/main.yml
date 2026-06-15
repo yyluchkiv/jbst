@@ -56,18 +56,21 @@ jobs:
         run: mvn clean -DskipTests -Dmaven.test.skip deploy -Pgithub
 
       - name: "docker login"
-        if: env.DOCKER_PUSH_ENABLED == 'true'
+        # if: env.DOCKER_PUSH_ENABLED == 'true'
+        if: false
         run: docker login ${{ env.DOCKER_REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: "docker [server-iam]"
-        if: env.DOCKER_PUSH_ENABLED == 'true'
+        # if: env.DOCKER_PUSH_ENABLED == 'true'
+        if: false
         run: |
           cd jbst-server-iam
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_IAM }}:${{ env.DOCKER_VERSION }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_IAM }}:${{ env.DOCKER_VERSION }}
 
       - name: "docker [server-ops]"
-        if: env.DOCKER_PUSH_ENABLED == 'true'
+        # if: env.DOCKER_PUSH_ENABLED == 'true'
+        if: false
         run: |
           cd jbst-server-ops
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_OPS }}:${{ env.DOCKER_VERSION }} .

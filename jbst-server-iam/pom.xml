@@ -41,6 +41,14 @@
             </resource>
         </resources>
         <plugins>
+            <!-- Deployment -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
