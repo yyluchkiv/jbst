@@ -2,12 +2,12 @@ package jbst.foundation.incidents.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
+import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -50,6 +50,7 @@ public class JbstIncident {
 
     private static final List<String> ORDERED_PREFERRED_KEYS = new LinkedList<>(
             List.of(
+                    WEBCLIENT,
                     TIMES,
                     TRIGGER,
                     USERNAME,
@@ -172,8 +173,14 @@ public class JbstIncident {
         this.add(TYPE, type);
     }
 
-    public void addServer(ServerName server) {
-        this.add(SERVER, server);
+    public void addServer(@NotNull JbstPropertyApp app) {
+        this.add(SERVER, app.getName());
+    }
+
+    public void addWebClient(@NotNull JbstPropertyApp app) {
+        if (nonNull(app.getWebclientURL())) {
+            this.add(WEBCLIENT, app.getWebclientURL());
+        }
     }
 
     public void addUsername(Username username) {
@@ -239,13 +246,13 @@ public class JbstIncident {
 
     @JsonIgnore
     public String asTelegramPlainMessage() {
-        var incident = "<b>%s</b> on %s — %s (UTC)".formatted(
+        var header = "<b>%s</b> on %s — %s (UTC)".formatted(
                 this.getType(),
                 this.attributes.get(SERVER),
                 LocalDateTime.now(UTC).format(DTF11)
         );
         return PLAIN_MESSAGE_SEPARATOR + NEWLINE +
-                incident + NEWLINE +
+                header + NEWLINE +
                 PLAIN_MESSAGE_SEPARATOR + NEWLINE +
                 this.getOrderedKeys().stream()
                         .map(variableKey -> {
@@ -271,6 +278,7 @@ public class JbstIncident {
             public static final String TYPE = "incidentType";
 
             public static final String SERVER = "server";
+            public static final String WEBCLIENT = "webClient";
 
             public static final String EMAIL = "email";
             public static final String USERNAME = "username";

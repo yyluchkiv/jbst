@@ -65,7 +65,8 @@ public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
 
     @Override
     public void registerIncident(@NotNull JbstIncident incident) {
-        incident.addServer(this.jbstProperties.getApp().getName());
+        incident.addServer(this.jbstProperties.getApp());
+        incident.addWebClient(this.jbstProperties.getApp());
         this.registerIncidentPlainBased(incident);
     }
 
