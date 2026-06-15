@@ -65,16 +65,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
 
-      - name: "delete maven package [jbst-server-ops]"
-        if: false
-        uses: actions/delete-package-versions@v5
-        with:
-          owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'packages.jbst.jbst-server-ops'
-          package-type: 'maven'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-versions-to-keep: ${{ env.KEEP_COUNT_MAVEN_PACKAGES }}
-
       # Delete packages - package-type: container
 
       - name: "delete container package untagged versions [jbst-server-iam]"
@@ -93,26 +83,6 @@ jobs:
         with:
           owner: ${{ env.PACKAGE_OWNER }}
           package-name: 'jbst-server-iam'
-          package-type: 'container'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-versions-to-keep: ${{ env.KEEP_COUNT_CONTAINERS }}
-
-      - name: "delete container package untagged versions [jbst-server-ops]"
-        if: false
-        uses: actions/delete-package-versions@v5
-        with:
-          owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'jbst-server-ops'
-          package-type: 'container'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          delete-only-untagged-versions: true
-
-      - name: "delete container package [jbst-server-ops]"
-        if: false
-        uses: actions/delete-package-versions@v5
-        with:
-          owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'jbst-server-ops'
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.KEEP_COUNT_CONTAINERS }}

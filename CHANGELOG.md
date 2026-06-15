@@ -1,2 +1,2 @@
 ### Changelog [v1.67]
-— TBD
+— deletion: jbst-server-ops server

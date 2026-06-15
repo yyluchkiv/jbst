@@ -18,7 +18,6 @@ JBST is a Java 17 Spring Boot framework providing bootstrapping tools for enterp
 - **jbst-foundation**: Core domain objects, utilities, configurations, and foundation services, Identity and Access Management module with JWT-based security
 - **jbst-server-iam**: IAM server application supporting both MongoDB and PostgreSQL
 - **jbst-server-hardware-monitoring**: Hardware monitoring server application
-- **jbst-server-ops**: Operations server for incident management
 
 ## Build and Development Commands
 

@@ -11,7 +11,6 @@ env:
   MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IMAGE_SERVER_IAM: yyluchkiv/jbst-server-iam
-  DOCKER_IMAGE_SERVER_OPS: yyluchkiv/jbst-server-ops
   DOCKER_VERSION: '1.67-SNAPSHOT'
   DOCKER_PUSH_ENABLED: 'false'
 
@@ -68,10 +67,3 @@ jobs:
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_IAM }}:${{ env.DOCKER_VERSION }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_IAM }}:${{ env.DOCKER_VERSION }}
 
-      - name: "docker [server-ops]"
-        # if: env.DOCKER_PUSH_ENABLED == 'true'
-        if: false
-        run: |
-          cd jbst-server-ops
-          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_OPS }}:${{ env.DOCKER_VERSION }} .
-          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_SERVER_OPS }}:${{ env.DOCKER_VERSION }}
