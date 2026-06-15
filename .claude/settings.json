@@ -5,17 +5,26 @@
       "Bash(java:*)",
       "Bash(cd */.claude/worktrees/* && *)",
       "Bash(cd */worktrees/* && *)",
-      "Bash(grep:*)",
-      "Bash(echo:*)",
       "Bash(gh api *)",
       "Bash(git worktree remove:*)",
       "Bash(git worktree prune:*)",
       "Bash(git branch -D:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(sed:*)",
+      "Bash(sort:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(echo:*)",
       "Read(*)",
       "Edit(*)",
       "Write(*)",
       "Glob(*)",
       "Grep(*)"
+    ],
+    "deny": [
+      "Bash(find * -delete*)",
+      "Bash(find * -exec*)"
     ]
   }
 }
