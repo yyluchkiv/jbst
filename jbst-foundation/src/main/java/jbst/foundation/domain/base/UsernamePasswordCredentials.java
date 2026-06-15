@@ -17,6 +17,10 @@ public record UsernamePasswordCredentials(
         return new UsernamePasswordCredentials(Username.hardcoded(), Password.hardcoded());
     }
 
+    public static UsernamePasswordCredentials hardcodedMasked() {
+        return UsernamePasswordCredentials.mask5(Username.hardcoded(), Password.hardcoded());
+    }
+
     public static UsernamePasswordCredentials random() {
         return new UsernamePasswordCredentials(Username.random(), Password.random());
     }

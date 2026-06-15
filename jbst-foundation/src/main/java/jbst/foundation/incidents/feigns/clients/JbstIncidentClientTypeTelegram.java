@@ -65,13 +65,8 @@ public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
 
     @Override
     public void registerIncident(@NotNull JbstIncident incident) {
-        try {
-            incident.addServer(this.jbstProperties.getApp().getName());
-            // TODO [YYL-incidents] fixme
-        } catch (Exception ex) {
-            LOGGER.error(SERVER_OFFLINE, "telegram", ex.getMessage());
-            incident.print();
-        }
+        incident.addServer(this.jbstProperties.getApp().getName());
+        this.registerIncidentPlainBased(incident);
     }
 
     // WARNING #1: every 15 seconds check on incident "times" == 10 -> register incident + NO cleanup
@@ -106,7 +101,7 @@ public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
     // =================================================================================================================
     private record JbstIncidentTraceConfiguration(boolean enabled, String trace, String incidentType) {}
 
-    private class JbstIncidentConcurrentStats {
+    private static class JbstIncidentConcurrentStats {
         private final AtomicInteger currentTimes;
         private final AtomicInteger previousTimes;
         private final AtomicLong lastTime;
@@ -149,10 +144,18 @@ public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
     // PRIVATE METHODS
     // =================================================================================================================
     private void registerIncidentPlainBased(JbstIncident incident) {
-        if (THROWABLE.equals(incident.getType())) {
-            // TODO [YYL-incidents] check IncidentsService
-        } else {
-            // TODO [YYL-incidents] check IncidentsService
+        try {
+            if (incident.isJwtBased()) {
+                this.telegram.sendIncident(incident);
+            } else {
+                var skip = this.filterOnConfigsAndReturnSkip(incident);
+                if (!skip && this.isNew(incident)) {
+                    this.telegram.sendIncident(incident);
+                }
+            }
+        } catch (Exception ex) {
+            LOGGER.error(SERVER_OFFLINE, "telegram", ex.getMessage());
+            incident.print();
         }
     }
 

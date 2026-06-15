@@ -35,7 +35,7 @@ class JbstTelegramTest {
     private final JbstTelegram telegram = new JbstTelegram();
 
     public JbstTelegramTest() {
-        this.telegram.initPragmatic(TELEGRAM_TOKEN);
+        this.telegram.initPragmatic(TELEGRAM_TOKEN, TELEGRAM_CHAT_ID);
         this.telegram.start();
     }
 
@@ -45,10 +45,7 @@ class JbstTelegramTest {
         // Arrange
         var npe = new NullPointerException("jbst-telegram");
         var trace = JbstTraces.getTrace(npe).value().substring(0, 4000);
-        var message = JbstTelegram.TelegramMessageRequest.of(
-                TELEGRAM_CHAT_ID,
-                trace
-        );
+        var message = JbstTelegram.TelegramMessageRequest.of(trace);
 
         // Act
         var res = this.telegram.sendMessage(message);
@@ -63,16 +60,10 @@ class JbstTelegramTest {
         // Arrange
         var step = 5;
         var messages1 = IntStream.range(0, step)
-                .mapToObj(i -> JbstTelegram.TelegramMessageRequest.of(
-                        TELEGRAM_CHAT_ID,
-                        "<b>A-" + i + "</b>"
-                ))
+                .mapToObj(i -> JbstTelegram.TelegramMessageRequest.of("<b>A-" + i + "</b>"))
                 .toList();
         var messages2 = IntStream.range(step, step * 2)
-                .mapToObj(i -> JbstTelegram.TelegramMessageRequest.of(
-                        TELEGRAM_CHAT_ID,
-                        "<b>B-" + i + "</b>"
-                ))
+                .mapToObj(i -> JbstTelegram.TelegramMessageRequest.of("<b>B-" + i + "</b>"))
                 .toList();
 
         // Act

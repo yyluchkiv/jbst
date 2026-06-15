@@ -85,7 +85,10 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
         }
         if (incidentsManagerType.isTelegram()) {
             var telegram = new JbstTelegram();
-            telegram.initPragmatic(this.jbstProperties.getIncidentsManager().getTelegram().getToken());
+            telegram.initPragmatic(
+                    this.jbstProperties.getIncidentsManager().getTelegram().getToken(),
+                    this.jbstProperties.getIncidentsManager().getTelegram().getChatId()
+            );
             telegram.start();
             return new JbstIncidentClientTypeTelegram(telegram, this.jbstProperties);
         }

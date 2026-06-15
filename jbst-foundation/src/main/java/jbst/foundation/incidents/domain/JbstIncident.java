@@ -16,13 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.time.ZoneOffset.UTC;
+import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.IntStream.range;
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
+import static jbst.foundation.domain.constants.JbstConstants.Symbols.NEWLINE;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 import static jbst.foundation.domain.strings.JbstTraces.getTrace;
 import static jbst.foundation.incidents.domain.JbstIncident.Constants.Keys.*;
@@ -36,6 +40,34 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 public class JbstIncident {
     private static final Comparator<Map.Entry<String, Object>> PRINT_COMPARATOR = Comparator.<Map.Entry<String, Object>, Boolean>comparing(element -> !element.getKey().equals(TYPE))
             .thenComparing(Map.Entry::getKey);
+
+    private static final String PLAIN_MESSAGE_SEPARATOR = range(0, 160).mapToObj(item -> "·").collect(joining());
+
+    private static final Set<String> PLAIN_MESSAGE_SKIPPED = Set.of(
+            SERVER,
+            TYPE
+    );
+
+    private static final List<String> ORDERED_PREFERRED_KEYS = new LinkedList<>(
+            List.of(
+                    TIMES,
+                    TRIGGER,
+                    USERNAME,
+                    PASSWORD,
+                    INVITATION_CODE,
+                    BROWSER,
+                    COUNTRY_FLAG,
+                    IP_ADDRESS,
+                    WHERE,
+                    WHAT,
+                    WHEN,
+                    EXCEPTION,
+                    MESSAGE,
+                    METHOD,
+                    PARAMS,
+                    TRACE
+            )
+    );
 
     private final Map<String, Object> attributes;
 
@@ -178,6 +210,54 @@ public class JbstIncident {
     public Username getUsername() {
         var attribute = this.attributes.get(USERNAME);
         return nonNull(attribute) ? Username.of(attribute.toString()) : Username.unknown();
+    }
+
+    // =================================================================================================================
+    // a.k.a. "OpsIncident"
+    // =================================================================================================================
+    @JsonIgnore
+    public boolean isJwtBased() {
+        return JbstSecurityJwtIncident.asList().contains(this.getType());
+    }
+
+    @JsonIgnore
+    public List<String> getOrderedKeys() {
+        var variablesKeys = this.attributes.keySet().stream()
+                .filter(entryKey -> !PLAIN_MESSAGE_SKIPPED.contains(entryKey))
+                .collect(Collectors.toList());
+        List<String> orderedKeys = new LinkedList<>();
+        ORDERED_PREFERRED_KEYS.forEach(preferredKey -> {
+            if (variablesKeys.contains(preferredKey)) {
+                orderedKeys.add(preferredKey);
+                variablesKeys.remove(preferredKey);
+            }
+        });
+        variablesKeys.sort(naturalOrder());
+        orderedKeys.addAll(variablesKeys);
+        return orderedKeys;
+    }
+
+    @JsonIgnore
+    public String asTelegramPlainMessage() {
+        var incident = "<b>%s</b> on %s — %s (UTC)".formatted(
+                this.getType(),
+                this.attributes.get(SERVER),
+                LocalDateTime.now(UTC).format(DTF11)
+        );
+        return PLAIN_MESSAGE_SEPARATOR + NEWLINE +
+                incident + NEWLINE +
+                PLAIN_MESSAGE_SEPARATOR + NEWLINE +
+                this.getOrderedKeys().stream()
+                        .map(variableKey -> {
+                            if (TRACE.equals(variableKey)) {
+                                var trace = this.attributes.get(variableKey).toString();
+                                // WARNING: ~4096 is max telegram message
+                                return "trace: <pre>" + trace.substring(0, Math.min(trace.length(), 2000)) + "</pre>";
+                            } else {
+                                return variableKey + ": " + this.attributes.get(variableKey);
+                            }
+                        })
+                        .collect(joining(NEWLINE));
     }
 
     // =================================================================================================================

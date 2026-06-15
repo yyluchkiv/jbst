@@ -10,6 +10,7 @@ import feign.okhttp.OkHttpClient;
 import jbst.foundation.domain.annotations.JbstDevelopmentOnly;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.JbstTimeAmount;
+import jbst.foundation.incidents.domain.JbstIncident;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,29 +71,26 @@ public class JbstTelegram {
     }
 
     // Classes: Base
-    public record Configuration(String token, int queueCapacity, JbstTimeAmount sleepDelay) {
-        public static Configuration pragmatic(String token) {
-            return new Configuration(token, 100, new JbstTimeAmount(500, ChronoUnit.MILLIS));
+    public record Configuration(String token, String chatId, int queueCapacity, JbstTimeAmount sleepDelay) {
+        public static Configuration pragmatic(String token, String chatId) {
+            return new Configuration(token, chatId, 100, new JbstTimeAmount(500, ChronoUnit.MILLIS));
         }
 
         @JbstDevelopmentOnly
-        public static Configuration developmentOnly(String token) {
-            return new Configuration(token, 25, new JbstTimeAmount(500, ChronoUnit.MILLIS));
+        public static Configuration developmentOnly(String token, String chatId) {
+            return new Configuration(token, chatId, 25, new JbstTimeAmount(500, ChronoUnit.MILLIS));
         }
     }
 
     // Classes: Requests
-    public record TelegramMessageRequest(
-            String chatId,
-            String text
-    ) {
-        public static TelegramMessageRequest of(String chatId, String text) {
-            return new TelegramMessageRequest(chatId, text);
+    public record TelegramMessageRequest(String text) {
+        public static TelegramMessageRequest of(String text) {
+            return new TelegramMessageRequest(text);
         }
 
-        public Map<String, Object> getRequestBody() {
+        public Map<String, Object> getRequestBody(String chatId) {
             return Map.of(
-                    "chat_id", this.chatId,
+                    "chat_id", chatId,
                     "text", this.text,
                     "parse_mode", "HTML"
             );
@@ -183,14 +181,14 @@ public class JbstTelegram {
     }
 
     @SuppressWarnings("unused")
-    public final void initPragmatic(String token) {
-        this.init(Configuration.pragmatic(token));
+    public final void initPragmatic(String token, String chatId) {
+        this.init(Configuration.pragmatic(token, chatId));
     }
 
     @SuppressWarnings("unused")
     @JbstDevelopmentOnly
-    public final void initDevelopment(String token) {
-        this.init(Configuration.developmentOnly(token));
+    public final void initDevelopment(String token, String chatId) {
+        this.init(Configuration.developmentOnly(token, chatId));
     }
 
     @SuppressWarnings("unused")
@@ -232,10 +230,15 @@ public class JbstTelegram {
         workerSend.start();
     }
 
+    public final void sendIncident(JbstIncident incident) throws ConfigurationException, RateLimitsException, ClientException {
+        this.sendMessage(new TelegramMessageRequest(incident.asTelegramPlainMessage()));
+    }
+
     public final TelegramMessageDetailsRes sendMessage(TelegramMessageRequest req) throws ConfigurationException, RateLimitsException, ClientException {
         this.assertConfigured();
         try {
-            var response = this.definition.sendMessage(this.configurationAR.get().token, req.getRequestBody());
+            var configuration = this.configurationAR.get();
+            var response = this.definition.sendMessage(configuration.token, req.getRequestBody(configuration.chatId));
             var headers = new HeadersRes(response.headers());
             var res = nonNull(response.body())
                     ? OM.readValue(response.body().asInputStream(), TelegramSendMessageRes.class)

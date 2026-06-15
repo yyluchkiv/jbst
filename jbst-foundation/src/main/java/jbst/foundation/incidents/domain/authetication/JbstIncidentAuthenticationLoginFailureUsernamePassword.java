@@ -1,8 +1,8 @@
 package jbst.foundation.incidents.domain.authetication;
 
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
-import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
+import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
 import jbst.foundation.incidents.domain.JbstAbstractIncident;
 import jbst.foundation.incidents.domain.JbstIncident;
 
@@ -10,6 +10,13 @@ public record JbstIncidentAuthenticationLoginFailureUsernamePassword(
         UsernamePasswordCredentials credentials,
         JbstUserRequestMetadata userRequestMetadata
 ) implements JbstAbstractIncident {
+
+    public static JbstIncidentAuthenticationLoginFailureUsernamePassword hardcoded() {
+        return new JbstIncidentAuthenticationLoginFailureUsernamePassword(
+                UsernamePasswordCredentials.hardcoded(),
+                JbstUserRequestMetadata.testData()
+        );
+    }
 
     @Override
     public JbstIncident getPlainIncident() {
