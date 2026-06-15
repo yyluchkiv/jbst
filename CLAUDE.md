@@ -93,3 +93,7 @@ PostgreSQL schema is managed by **Liquibase**: `src/main/resources/postgres/chan
 
 - **Lombok** everywhere; `lombok.config` sets the logger field name to `LOGGER` (use `@Slf4j` then `LOGGER.info(...)`), adds `@lombok.Generated` (for coverage exclusion), and `@ConstructorProperties` on generated constructors.
 - Server entrypoints are `Server.java` in each server module, extending `JbstStartupEventListener` and importing a `ConfigurationServer`.
+
+## Git Workflow
+
+@.claude/docs/git-workflow.md
