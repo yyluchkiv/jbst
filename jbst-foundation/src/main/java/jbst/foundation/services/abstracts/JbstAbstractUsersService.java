@@ -11,18 +11,26 @@ import jbst.foundation.domain.dto.requests.JbstRequestUserUpdate2;
 import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.jwt.JbstJwtUser;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.security.JbstMagicLinkUserCredentials;
 import jbst.foundation.repositories.JbstUsersRepository;
 import jbst.foundation.repositories.JbstUsersTokensRepository;
 import jbst.foundation.services.JbstUsersService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
+import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
 import static jbst.foundation.domain.random.JbstRandom.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
 
+@SuppressWarnings("LoggingSimilarMessage")
+@Slf4j
 @AllArgsConstructor
 public abstract class JbstAbstractUsersService implements JbstUsersService {
 
@@ -31,6 +39,23 @@ public abstract class JbstAbstractUsersService implements JbstUsersService {
     private final JbstUsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    // Properties
+    private final JbstProperties jbstProperties;
+
+    @Override
+    public void initUsers() {
+        var essenceConfigs = this.jbstProperties.getSecurity().getEssence();
+        assertTrueOrThrow(
+                essenceConfigs.getUsersOnInit().isEnabled(),
+                invalidAttribute("essence-configs.users-on-init.enabled == true")
+        );
+        if (this.usersRepository.count() == 0L) {
+            LOGGER.info("{} essence 'users-on-init' — adding users to database", PREFIX);
+            var usersCount = this.initUsers(essenceConfigs.getUsersOnInit().getUsers());
+            LOGGER.info("{} essence 'users-on-init' — saved users: {}", PREFIX, usersCount);
+        }
+        LOGGER.info("{} essence 'users-on-init' — {}", PREFIX, COMPLETED.asANSI());
+    }
 
     @Override
     public JbstJwtUser findByEmail(Email email) {

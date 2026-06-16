@@ -7,6 +7,8 @@ import jbst.foundation.domain.properties.configs.JbstPropertyApp;
 import jbst.foundation.domain.properties.configs.JbstPropertySecurity;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityAuthorities;
 import jbst.foundation.domain.properties.configs.security.JbstPropertySecurityEssence;
+import jbst.foundation.services.JbstInvitationsService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -50,6 +52,16 @@ class JbstStartupEventListenerTest {
         }
 
         @Bean
+        JbstUsersService jbstUsersService() {
+            return mock(JbstUsersService.class);
+        }
+
+        @Bean
+        JbstInvitationsService jbstInvitationsService() {
+            return mock(JbstInvitationsService.class);
+        }
+
+        @Bean
         JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
@@ -58,12 +70,16 @@ class JbstStartupEventListenerTest {
         JbstStartupEventListener baseStartupEventListener() {
             return new JbstStartupEventListener(
                     this.jbstSettingsService(),
+                    this.jbstUsersService(),
+                    this.jbstInvitationsService(),
                     this.jbstProperties()
             );
         }
     }
 
     private final JbstSettingsService settingsService;
+    private final JbstUsersService usersService;
+    private final JbstInvitationsService invitationsService;
     private final JbstProperties jbstProperties;
 
     private final JbstStartupEventListener componentUnderTest;
@@ -72,6 +88,8 @@ class JbstStartupEventListenerTest {
     void beforeEach() {
         reset(
                 this.settingsService,
+                this.usersService,
+                this.invitationsService,
                 this.jbstProperties
         );
     }
@@ -80,6 +98,8 @@ class JbstStartupEventListenerTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.settingsService,
+                this.usersService,
+                this.invitationsService,
                 this.jbstProperties
         );
     }
@@ -122,13 +142,15 @@ class JbstStartupEventListenerTest {
         // Assert
         verify(this.jbstProperties, times(2)).getSecurity();
         if (isUsersEnabled) {
-            verify(this.settingsService).initUsers();
+            verify(this.usersService).initUsers();
         }
         if (isInvitationsEnabled) {
-            verify(this.settingsService).initInvitations();
+            verify(this.invitationsService).initInvitations();
         }
         reset(
                 this.settingsService,
+                this.usersService,
+                this.invitationsService,
                 this.jbstProperties
         );
     }

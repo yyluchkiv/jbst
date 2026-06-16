@@ -1,10 +1,8 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.userdetails.JbstMongoUserDetailsService;
-import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.repositories.mongo.JbstMongoInvitationsRepository;
 import jbst.foundation.repositories.mongo.JbstMongoSettingsRepository;
 import jbst.foundation.repositories.mongo.JbstMongoUsersRepository;
 import jbst.foundation.repositories.mongo.JbstMongoUsersSessionsRepository;
@@ -32,19 +30,13 @@ public class JbstConfigurationMongo {
 
     // Repositories
     private final JbstMongoSettingsRepository jbstMongoSettingsRepository;
-    private final JbstMongoInvitationsRepository jbstMongoInvitationsRepository;
     private final JbstMongoUsersRepository mongoUsersRepository;
     private final JbstMongoUsersSessionsRepository mongoUsersSessionsRepository;
-    // Properties
-    private final JbstProperties jbstProperties;
 
     @Bean
     JbstMongoSettingsService mongoJbstSettingsService() {
         return new JbstMongoSettingsService(
-                this.jbstMongoSettingsRepository,
-                this.jbstMongoInvitationsRepository,
-                this.mongoUsersRepository,
-                this.jbstProperties
+                this.jbstMongoSettingsRepository
         );
     }
 
