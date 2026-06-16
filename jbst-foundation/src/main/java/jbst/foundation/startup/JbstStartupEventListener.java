@@ -3,6 +3,8 @@ package jbst.foundation.startup;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.services.JbstInvitationsService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.settings.JbstSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,8 @@ public class JbstStartupEventListener {
 
     // Settings
     protected final JbstSettingsService settingsService;
+    protected final JbstUsersService usersService;
+    protected final JbstInvitationsService invitationsService;
     // Properties
     protected final JbstProperties jbstProperties;
 
@@ -35,14 +39,14 @@ public class JbstStartupEventListener {
         var users = this.jbstProperties.getSecurity().getEssence().getUsersOnInit();
         LOGGER.info("{} essence 'users-on-init' — {}", PREFIX, JbstStatus.of(users.isEnabled()).asANSI());
         if (users.isEnabled()) {
-            this.settingsService.initUsers();
+            this.usersService.initUsers();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), PROGRESS_66));
 
         var invitations = this.jbstProperties.getSecurity().getEssence().getInvitationsOnInit();
         LOGGER.info("{} essence 'invitations-on-init' — {}", PREFIX, JbstStatus.of(invitations.isEnabled()).asANSI());
         if (invitations.isEnabled()) {
-            this.settingsService.initInvitations();
+            this.invitationsService.initInvitations();
         }
         LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getApp(), PROGRESS_99));
 

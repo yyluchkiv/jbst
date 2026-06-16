@@ -1,11 +1,9 @@
-package jbst.foundation.settings;
+package jbst.foundation.services.mongo;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
-import jbst.foundation.repositories.mongo.JbstMongoInvitationsRepository;
-import jbst.foundation.repositories.mongo.JbstMongoSettingsRepository;
 import jbst.foundation.repositories.mongo.JbstMongoUsersRepository;
+import jbst.foundation.repositories.mongo.JbstMongoUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -30,24 +27,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstMongoSettingsServiceTest {
+class JbstMongoUsersServiceTest {
 
     @Configuration
-    @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
-    })
-    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final JbstProperties jbstProperties;
-
         @Bean
-        JbstMongoSettingsRepository settingsRepository() {
-            return mock(JbstMongoSettingsRepository.class);
-        }
-
-        @Bean
-        JbstMongoInvitationsRepository invitationsRepository() {
-            return mock(JbstMongoInvitationsRepository.class);
+        JbstMongoUsersTokensRepository usersTokensRepository() {
+            return mock(JbstMongoUsersTokensRepository.class);
         }
 
         @Bean
@@ -56,27 +42,33 @@ class JbstMongoSettingsServiceTest {
         }
 
         @Bean
-        JbstMongoSettingsService settingsService() {
-            return new JbstMongoSettingsService(
-                    this.settingsRepository(),
-                    this.invitationsRepository(),
+        BCryptPasswordEncoder bCryptPasswordEncoder() {
+            return mock(BCryptPasswordEncoder.class);
+        }
+
+        @Bean
+        JbstProperties jbstProperties() {
+            return mock(JbstProperties.class);
+        }
+
+        @Bean
+        JbstMongoUsersService usersService() {
+            return new JbstMongoUsersService(
+                    this.usersTokensRepository(),
                     this.userRepository(),
-                    this.jbstProperties
+                    this.bCryptPasswordEncoder(),
+                    this.jbstProperties()
             );
         }
     }
 
-    private final JbstMongoSettingsRepository settingsRepository;
-    private final JbstMongoInvitationsRepository invitationsRepository;
     private final JbstMongoUsersRepository usersRepository;
 
-    private final JbstMongoSettingsService componentUnderTest;
+    private final JbstMongoUsersService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.settingsRepository,
-                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -84,8 +76,6 @@ class JbstMongoSettingsServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.settingsRepository,
-                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -105,21 +95,5 @@ class JbstMongoSettingsServiceTest {
         assertThat(actual)
                 .isEqualTo(users.size())
                 .isEqualTo(userAC.getValue().size());
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    void initInvitations() {
-        // Arrange
-        var user = entity(JbstPropertyUserOnInit.class);
-        var authorities = set345(SimpleGrantedAuthority.class);
-
-        // Act
-        this.componentUnderTest.initInvitations(user, authorities);
-
-        // Assert
-        var userAC = ArgumentCaptor.forClass(List.class);
-        verify(this.invitationsRepository).saveAll(userAC.capture());
-        assertThat(userAC.getValue()).hasSize(10);
     }
 }

@@ -1,11 +1,9 @@
-package jbst.foundation.settings;
+package jbst.foundation.services.postgres;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JbstPropertyUserOnInit;
-import jbst.foundation.repositories.postgres.JbstPostgresInvitationsRepository;
-import jbst.foundation.repositories.postgres.JbstPostgresSettingsRepository;
 import jbst.foundation.repositories.postgres.JbstPostgresUsersRepository;
+import jbst.foundation.repositories.postgres.JbstPostgresUsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -30,24 +27,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JbstPostgresSettingsServiceTest {
+class JbstPostgresUsersServiceTest {
 
     @Configuration
-    @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
-    })
-    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final JbstProperties jbstProperties;
-
         @Bean
-        JbstPostgresSettingsRepository settingsRepository() {
-            return mock(JbstPostgresSettingsRepository.class);
-        }
-
-        @Bean
-        JbstPostgresInvitationsRepository invitationsRepository() {
-            return mock(JbstPostgresInvitationsRepository.class);
+        JbstPostgresUsersTokensRepository usersTokensRepository() {
+            return mock(JbstPostgresUsersTokensRepository.class);
         }
 
         @Bean
@@ -56,27 +42,33 @@ class JbstPostgresSettingsServiceTest {
         }
 
         @Bean
-        JbstPostgresSettingsService settingsService() {
-            return new JbstPostgresSettingsService(
-                    this.settingsRepository(),
-                    this.invitationsRepository(),
+        BCryptPasswordEncoder bCryptPasswordEncoder() {
+            return mock(BCryptPasswordEncoder.class);
+        }
+
+        @Bean
+        JbstProperties jbstProperties() {
+            return mock(JbstProperties.class);
+        }
+
+        @Bean
+        JbstPostgresUsersService usersService() {
+            return new JbstPostgresUsersService(
+                    this.usersTokensRepository(),
                     this.userRepository(),
-                    this.jbstProperties
+                    this.bCryptPasswordEncoder(),
+                    this.jbstProperties()
             );
         }
     }
 
-    private final JbstPostgresSettingsRepository settingsRepository;
-    private final JbstPostgresInvitationsRepository invitationsRepository;
     private final JbstPostgresUsersRepository usersRepository;
 
-    private final JbstPostgresSettingsService componentUnderTest;
+    private final JbstPostgresUsersService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.settingsRepository,
-                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -84,8 +76,6 @@ class JbstPostgresSettingsServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.settingsRepository,
-                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -105,21 +95,5 @@ class JbstPostgresSettingsServiceTest {
         assertThat(actual)
                 .isEqualTo(users.size())
                 .isEqualTo(userAC.getValue().size());
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    void initInvitations() {
-        // Arrange
-        var user = entity(JbstPropertyUserOnInit.class);
-        var authorities = set345(SimpleGrantedAuthority.class);
-
-        // Act
-        this.componentUnderTest.initInvitations(user, authorities);
-
-        // Assert
-        var userAC = ArgumentCaptor.forClass(List.class);
-        verify(this.invitationsRepository).saveAll(userAC.capture());
-        assertThat(userAC.getValue()).hasSize(10);
     }
 }
