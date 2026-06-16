@@ -76,12 +76,12 @@ jbst:
         enabled: true
         users:
           - username: admin11
-            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
+            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C" # Admin23!
             zone-id: "Europe/Kyiv"
             authorities: [ "admin", "invitations:write" ]
             password-change-required: false
           - username: superadmin11
-            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
+            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C" # Admin23!
             zone-id: "Europe/Kyiv"
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
             password-change-required: false

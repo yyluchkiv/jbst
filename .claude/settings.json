@@ -11,6 +11,7 @@
       "Bash(git worktree prune:*)",
       "Bash(git branch -D:*)",
       "Bash(git add:*)",
+      "Bash(git checkout *)",
       "Bash(git commit:*)",
       "Bash(git push origin claude/*)",
       "Bash(grep:*)",
