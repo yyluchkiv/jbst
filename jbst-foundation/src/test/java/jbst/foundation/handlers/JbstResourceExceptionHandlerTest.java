@@ -13,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.stream.Stream;
 
@@ -60,6 +63,15 @@ class JbstResourceExceptionHandlerTest {
         );
     }
 
+    private static Stream<Arguments> notFoundResponseErrorMessageArgs() {
+        return Stream.of(
+                Arguments.of(new NoHandlerFoundException(HttpMethod.GET.name(), "/api/actuator/configprops", new HttpHeaders())),
+                Arguments.of(new NoHandlerFoundException(HttpMethod.GET.name(), "/api/actuator/logfile", new HttpHeaders())),
+                Arguments.of(new NoHandlerFoundException(HttpMethod.GET.name(), "/api/actuator/heapdump", new HttpHeaders())),
+                Arguments.of(new NoHandlerFoundException(HttpMethod.GET.name(), "/api/actuator/env", new HttpHeaders()))
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("unauthorizedResponseErrorMessageArgs")
     void unauthorizedResponseErrorMessageTest(Exception exception) {
@@ -84,6 +96,19 @@ class JbstResourceExceptionHandlerTest {
         assertThat(response.getBody().getJbstType()).isEqualTo(ERROR);
         assertThat(response.getBody().getJbstMessageOnClient()).isEqualTo(exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @ParameterizedTest
+    @MethodSource("notFoundResponseErrorMessageArgs")
+    void notFoundExceptionsTest(NoHandlerFoundException exception) {
+        // Act
+        var response = this.componentUnderTest.notFoundExceptions(exception);
+
+        // Assert
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getJbstType()).isEqualTo(ERROR);
+        assertThat(response.getBody().getJbstMessageOnClient()).isEqualTo(exception.getMessage());
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test

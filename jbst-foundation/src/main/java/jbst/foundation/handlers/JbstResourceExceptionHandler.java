@@ -15,6 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import static jbst.foundation.domain.strings.JbstMessages.contactDevelopmentTeam;
 
@@ -124,6 +125,17 @@ public class JbstResourceExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<JbstExceptionResponse> forbiddenExceptions(Exception ex) {
         return new ResponseEntity<>(JbstExceptionResponse.of(JbstExceptionResponse.Type.ERROR, ex), HttpStatus.FORBIDDEN);
+    }
+
+    // WARNING: 404 for unmapped endpoints is a client error (bots/scanners, actuator probes), not a server incident.
+    // A dedicated handler here keeps NoHandlerFoundException from falling through to the catch-all generalException,
+    // which would otherwise publish it as an incident.
+    @ExceptionHandler({
+            NoHandlerFoundException.class
+    })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<JbstExceptionResponse> notFoundExceptions(NoHandlerFoundException ex) {
+        return new ResponseEntity<>(JbstExceptionResponse.of(JbstExceptionResponse.Type.ERROR, ex), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({
