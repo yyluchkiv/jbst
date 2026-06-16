@@ -10,7 +10,16 @@ import jbst.foundation.repositories.JbstInvitationsRepository;
 import jbst.foundation.services.JbstInvitationsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import static jbst.foundation.domain.asserts.JbstAsserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
+import static jbst.foundation.domain.enums.JbstStatus.COMPLETED;
+import static jbst.foundation.domain.spring.JbstSpringAuthorities.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.strings.JbstMessages.invalidAttribute;
+
+@SuppressWarnings("LoggingSimilarMessage")
+@Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class JbstAbstractInvitationsService implements JbstInvitationsService {
 
@@ -18,6 +27,25 @@ public abstract class JbstAbstractInvitationsService implements JbstInvitationsS
     protected final JbstInvitationsRepository invitationsRepository;
     // Properties
     protected final JbstProperties jbstProperties;
+
+    @Override
+    public void initInvitations() {
+        var security = this.jbstProperties.getSecurity();
+        var essence = security.getEssence();
+        assertTrueOrThrow(
+                essence.getInvitationsOnInit().isEnabled(),
+                invalidAttribute("essence-configs.invitations-on-init.enabled == true")
+        );
+        var authorities = getSimpleGrantedAuthorities(security.getAuthorities().getAvailableAuthorities());
+        essence.getUsersOnInit().getUsers().forEach(userOnInit -> {
+            var username = userOnInit.getUsername();
+            if (this.invitationsRepository.countByOwner(username) == 0L) {
+                LOGGER.info("{} essence 'invitations-on-init' — add invitations, username: {}", PREFIX, username);
+                this.initInvitations(userOnInit, authorities);
+            }
+        });
+        LOGGER.info("{} essence 'invitations-on-init' — {}", PREFIX, COMPLETED.asANSI());
+    }
 
     @Override
     public JbstResponseInvitations findByOwner(Username owner) {

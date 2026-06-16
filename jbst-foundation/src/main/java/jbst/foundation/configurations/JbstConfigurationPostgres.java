@@ -1,10 +1,8 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.assistants.userdetails.JbstPostgresUserDetailsService;
-import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
-import jbst.foundation.repositories.postgres.JbstPostgresInvitationsRepository;
 import jbst.foundation.repositories.postgres.JbstPostgresSettingsRepository;
 import jbst.foundation.repositories.postgres.JbstPostgresUsersRepository;
 import jbst.foundation.repositories.postgres.JbstPostgresUsersSessionsRepository;
@@ -32,19 +30,13 @@ public class JbstConfigurationPostgres {
 
     // Repositories
     private final JbstPostgresSettingsRepository jbstPostgresSettingsRepository;
-    private final JbstPostgresInvitationsRepository jbstPostgresInvitationsRepository;
     private final JbstPostgresUsersRepository postgresUsersRepository;
     private final JbstPostgresUsersSessionsRepository postgresUsersSessionsRepository;
-    // Properties
-    private final JbstProperties jbstProperties;
 
     @Bean
     JbstPostgresSettingsService postgresJbstSettingsService() {
         return new JbstPostgresSettingsService(
-                this.jbstPostgresSettingsRepository,
-                this.jbstPostgresInvitationsRepository,
-                this.postgresUsersRepository,
-                this.jbstProperties
+                this.jbstPostgresSettingsRepository
         );
     }
 

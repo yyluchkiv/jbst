@@ -3,6 +3,8 @@ package jbst.server.iam;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
+import jbst.foundation.services.JbstInvitationsService;
+import jbst.foundation.services.JbstUsersService;
 import jbst.foundation.settings.JbstSettingsService;
 import jbst.foundation.startup.JbstStartupEventListener;
 import jbst.server.iam.configurations.ConfigurationServer;
@@ -32,8 +34,14 @@ public class Server extends JbstStartupEventListener {
     private final JbstIncidentsPublisher incidentsPublisher;
 
     @Autowired
-    public Server(JbstSettingsService settingsService, JbstIncidentsPublisher incidentsPublisher, JbstProperties jbstProperties) {
-        super(settingsService, jbstProperties);
+    public Server(
+            JbstSettingsService settingsService,
+            JbstUsersService usersService,
+            JbstInvitationsService invitationsService,
+            JbstIncidentsPublisher incidentsPublisher,
+            JbstProperties jbstProperties
+    ) {
+        super(settingsService, usersService, invitationsService, jbstProperties);
         this.incidentsPublisher = incidentsPublisher;
     }
 
