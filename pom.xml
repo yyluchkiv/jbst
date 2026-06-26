@@ -8,7 +8,7 @@
     <groupId>jbst</groupId>
     <artifactId>jbst</artifactId>
     <packaging>pom</packaging>
-    <version>1.69-SNAPSHOT</version>
+    <version>1.69</version>
 
     <name>${project.artifactId}</name>
     <url>https://github.com/yyluchkiv/jbst</url>
