@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-JBST is a Java 17 Spring Boot framework providing bootstrapping tools for enterprise applications. It is a multi-module Maven project:
+JBST is a Java 21 Spring Boot framework providing bootstrapping tools for enterprise applications. It is a multi-module Maven project:
 
 - **jbst-foundation**: The shared library (JAR). Contains all domain objects, utilities, configurations, foundation services, the JWT-based IAM/security layer, the incidents subsystem, and Feign clients for external integrations. Both servers depend on it.
 - **jbst-server-iam**: Identity & Access Management server. Runs against **either** MongoDB **or** PostgreSQL, selected by Spring profile. Port `3002`.
@@ -14,7 +14,7 @@ JBST is a Java 17 Spring Boot framework providing bootstrapping tools for enterp
 
 ## Build and Development Commands
 
-All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via `.mvn/wrapper/maven-wrapper.properties`) — no local Maven installation is required, only a JDK 17 (make sure `JAVA_HOME` points to one).
+All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via `.mvn/wrapper/maven-wrapper.properties`) — no local Maven installation is required, only a JDK 21 (make sure `JAVA_HOME` points to one).
 
 ```bash
 # Compile only (no tests)
@@ -87,7 +87,7 @@ PostgreSQL schema is managed by **Liquibase**: `src/main/resources/postgres/chan
 
 ## CI and Release Engineering
 
-- **CI** (`.github/workflows/main.yml`): on push to `main`, runs `./mvnw clean install` on Java 17 (Temurin). Maven `deploy` to GitHub Packages and the Docker image push are gated behind the `MAVEN_DEPLOYMENT_ENABLED` / `DOCKER_PUSH_ENABLED` env flags in that workflow (normally `false` on snapshots).
+- **CI** (`.github/workflows/main.yml`): on push to `main`, runs `./mvnw clean install` on Java 21 (Temurin). Maven `deploy` to GitHub Packages and the Docker image push are gated behind the `MAVEN_DEPLOYMENT_ENABLED` / `DOCKER_PUSH_ENABLED` env flags in that workflow (normally `false` on snapshots).
 - **Version bumps are scripted** — do not hand-edit versions across POMs and the workflow. The repo follows a `SNAPSHOT:` → `RELEASE:` commit cadence:
   - `./next-release.sh` — strips `-SNAPSHOT` from all POMs and the `docker-compose.*.yml` image tags, and flips the workflow deploy/docker flags on.
   - `./next-snapshot.sh` — bumps to the next `-SNAPSHOT`, resets the workflow flags, resets `CHANGELOG.md`, and updates the `docker-compose.*.yml` image tags.

@@ -15,10 +15,10 @@ the next one runs — stop and report on any failure.
      first following the repo's commit conventions (no tool-attribution
      trailers).
 
-2. **Test** — run the unit test suite with Maven on JDK 17:
+2. **Test** — run the unit test suite with Maven on JDK 21:
 
    ```sh
-   export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+   export JAVA_HOME=$(/usr/libexec/java_home -v 21)
    mvn clean test
    ```
 

@@ -33,7 +33,7 @@
 
     <properties>
         <!-- environment -->
-        <version.java>17</version.java>
+        <version.java>21</version.java>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.delombok.output>${project.build.directory}/delombok</project.delombok.output>
@@ -65,7 +65,7 @@
         <version.dependency.assertj>3.26.3</version.dependency.assertj>
         <version.dependency.jsonpath>2.9.0</version.dependency.jsonpath>
         <version.dependency.junit>5.11.4</version.dependency.junit>
-        <version.dependency.testcontainers>1.20.4</version.dependency.testcontainers>
+        <version.dependency.testcontainers>1.21.4</version.dependency.testcontainers>
         <!-- plugins -->
         <version.plugin.build.helper>3.6.0</version.plugin.build.helper>
         <version.plugin.compiler>3.13.0</version.plugin.compiler>
@@ -549,6 +549,14 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok-maven-plugin</artifactId>
                 <version>${version.plugin.lombok}</version>
+                <dependencies>
+                    <!-- plugin bundles lombok 1.18.20 (no JDK 21 support) — force the project's lombok for delombok -->
+                    <dependency>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>${version.dependency.lombok}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
