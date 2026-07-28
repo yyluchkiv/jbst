@@ -13,4 +13,3 @@ The project ships with the Maven Wrapper (`./mvnw`, pinned to Maven 3.9.9) — n
 ### Swagger
 URL-dev: http://localhost:3002/api/swagger-ui/index.html  
 URL-prod: http://{server:port}/api/swagger-ui/index.html
-
