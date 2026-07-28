@@ -1,19 +1,20 @@
 services:
-  jbst-mongodb:
+  jbst-database-mongodb:
     image: mongo:6.0.15
-    restart: always
-    container_name: jbst-mongodb
+    restart: "no"
+    container_name: jbst-database-mongodb
     ports:
       - "3004:27017"
     networks:
-      - jbst-network
+      - network-jbst
     volumes:
-      - jbst_mongodb_data:/data/db
+      - volume-jbst-mongodb:/data/db
 
 networks:
-  jbst-network:
-    name: jbst-network
+  network-jbst:
+    name: network-jbst
     driver: bridge
 
 volumes:
-  jbst_mongodb_data:
+  volume-jbst-mongodb:
+    name: volume-jbst-mongodb
