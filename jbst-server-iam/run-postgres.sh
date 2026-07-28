@@ -21,7 +21,7 @@ print "=========================================================================
 print "${BLUE}" "PostgreSQL 'jbst': STARTED"
 print "================================================================================================================="
 
-docker run --rm --network jbst-network jbergknoff/postgresql-client postgresql://postgres:postgres@jbst-postgres:5432/postgres -c "CREATE DATABASE jbst"
+docker run --rm --network network-jbst jbergknoff/postgresql-client postgresql://postgres:postgres@jbst-database-postgres:5432/postgres -c "CREATE DATABASE jbst"
 
 print "================================================================================================================="
 print "${GREEN}" "PostgreSQL 'jbst': COMPLETED"

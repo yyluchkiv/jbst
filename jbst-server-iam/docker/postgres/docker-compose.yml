@@ -1,21 +1,22 @@
 services:
-  jbst-postgres:
+  jbst-database-postgres:
     image: postgres:14.3
-    restart: always
-    container_name: jbst-postgres
+    restart: "no"
+    container_name: jbst-database-postgres
     ports:
       - "3004:5432"
     networks:
-      - jbst-network
+      - network-jbst
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - jbst_postgres_data:/var/lib/postgresql/data
+      - volume-jbst-postgres:/var/lib/postgresql/data
 
 networks:
-  jbst-network:
-    name: jbst-network
+  network-jbst:
+    name: network-jbst
     driver: bridge
 
 volumes:
-  jbst_postgres_data:
+  volume-jbst-postgres:
+    name: volume-jbst-postgres
