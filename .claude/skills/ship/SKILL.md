@@ -15,13 +15,16 @@ the next one runs — stop and report on any failure.
      first following the repo's commit conventions (no tool-attribution
      trailers).
 
-2. **Test** — run the full test suite with JDK 21:
+2. **Test** — run the unit test suite with Maven on JDK 17:
 
    ```sh
-   JAVA_HOME=$(/usr/libexec/java_home -v 21) ./gradlew test
+   export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+   mvn clean test
    ```
 
-   Do not proceed if tests fail.
+   The delombok phase prints benign `error:` lines — judge the run by the
+   final `BUILD SUCCESS`/`BUILD FAILURE`, not intermediate noise. Do not
+   proceed if tests fail.
 
 3. **Push** — `git push -u origin <branch>` (never force-push).
 
