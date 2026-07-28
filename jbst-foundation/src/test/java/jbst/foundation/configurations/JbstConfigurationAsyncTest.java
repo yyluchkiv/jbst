@@ -1,6 +1,7 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.configs.JbstPropertyAsync;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,15 +9,19 @@ import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
 import static jbst.foundation.domain.hardware.JbstCPU.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -59,6 +64,26 @@ class JbstConfigurationAsyncTest {
 
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getClass()).isEqualTo(SimpleAsyncTaskExecutor.class);
+        var simpleAsyncTaskExecutor = (SimpleAsyncTaskExecutor) actual;
+        assertThat(simpleAsyncTaskExecutor.getThreadNamePrefix()).isEqualTo(async.getThreadNamePrefix());
+        var virtual = CompletableFuture.supplyAsync(() -> Thread.currentThread().isVirtual(), simpleAsyncTaskExecutor).join();
+        assertThat(virtual).isTrue();
+    }
+
+    @Test
+    void getAsyncExecutorPlatformThreadsTest() {
+        // Arrange
+        var properties = new JbstProperties();
+        properties.setAsync(new JbstPropertyAsync(false, "jbst-async", new BigDecimal("25"), HUNDRED));
+        var configuration = new JbstConfigurationAsync(properties);
+        var async = properties.getAsync();
+
+        // Act
+        var actual = configuration.getAsyncExecutor();
 
         // Assert
         assertThat(actual).isNotNull();

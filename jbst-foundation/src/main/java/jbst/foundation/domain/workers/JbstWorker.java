@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import java.time.Duration;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static java.util.Objects.nonNull;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
@@ -46,7 +47,10 @@ public abstract class JbstWorker {
 
     public record JbstWorkerPermissions(boolean start, boolean stop) {}
 
-    private final Object lock = new Object();
+    /**
+     * ReentrantLock instead of synchronized — avoids carrier-thread pinning on virtual threads (Java 21, JEP 444)
+     */
+    private final ReentrantLock lock = new ReentrantLock();
 
     protected static final ScheduledExecutorService SES = newSingleThreadScheduledExecutor();
     protected Future<?> future = null;
@@ -67,18 +71,21 @@ public abstract class JbstWorker {
     public abstract void onComplete();
     public abstract void start();
 
-    public final Object getLock() {
+    public final ReentrantLock getLock() {
         return this.lock;
     }
 
     @SuppressWarnings("unused")
     public final void switchState() {
-        synchronized (this.getLock()) {
+        this.lock.lock();
+        try {
             if (this.isOperative()) {
                 this.stop();
             } else {
                 this.start();
             }
+        } finally {
+            this.lock.unlock();
         }
     }
 

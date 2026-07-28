@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -103,13 +104,19 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     @Override
     public Executor getAsyncExecutor() {
         var async = this.jbstProperties.getAsync();
-        var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(async.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(async.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(async.asThreadsMaxPoolTuplePercentage()));
-        taskExecutor.setRejectedExecutionHandler(this.rejectedExecutionHandler());
-        taskExecutor.initialize();
-        return taskExecutor;
+        if (async.isVirtualThreadsEnabled()) {
+            var taskExecutor = new SimpleAsyncTaskExecutor(async.getThreadNamePrefix());
+            taskExecutor.setVirtualThreads(true);
+            return taskExecutor;
+        } else {
+            var taskExecutor = new ThreadPoolTaskExecutor();
+            taskExecutor.setThreadNamePrefix(async.getThreadNamePrefix());
+            taskExecutor.setCorePoolSize(getNumOfCores(async.asThreadsCorePoolTuplePercentage()));
+            taskExecutor.setMaxPoolSize(getNumOfCores(async.asThreadsMaxPoolTuplePercentage()));
+            taskExecutor.setRejectedExecutionHandler(this.rejectedExecutionHandler());
+            taskExecutor.initialize();
+            return taskExecutor;
+        }
     }
 
     @Override
@@ -129,13 +136,19 @@ public class JbstConfigurationIncidents implements AsyncConfigurer {
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
         var events = this.jbstProperties.getEvents();
-        var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(events.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(events.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(events.asThreadsMaxPoolTuplePercentage()));
-        taskExecutor.initialize();
         var eventMulticaster = new SimpleApplicationEventMulticaster();
-        eventMulticaster.setTaskExecutor(taskExecutor);
+        if (events.isVirtualThreadsEnabled()) {
+            var taskExecutor = new SimpleAsyncTaskExecutor(events.getThreadNamePrefix());
+            taskExecutor.setVirtualThreads(true);
+            eventMulticaster.setTaskExecutor(taskExecutor);
+        } else {
+            var taskExecutor = new ThreadPoolTaskExecutor();
+            taskExecutor.setThreadNamePrefix(events.getThreadNamePrefix());
+            taskExecutor.setCorePoolSize(getNumOfCores(events.asThreadsCorePoolTuplePercentage()));
+            taskExecutor.setMaxPoolSize(getNumOfCores(events.asThreadsMaxPoolTuplePercentage()));
+            taskExecutor.initialize();
+            eventMulticaster.setTaskExecutor(taskExecutor);
+        }
         eventMulticaster.setErrorHandler(this.errorHandlerPublisher());
         return eventMulticaster;
     }

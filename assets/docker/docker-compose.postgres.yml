@@ -17,7 +17,7 @@ services:
       - SPRING_BOOT_PROFILE=postgres
       - CONFIG_LOCATIONS=classpath:application.yml,classpath:application-dev.yml,classpath:application-postgres.yml,file:/application-docker-postgres.yml
       - JASYPT_PASSWORD=JJJJBSTGH
-      - JVM_ARGUMENTS=-Xmx5g --add-opens=java.base/java.time=ALL-UNNAMED
+      - JVM_ARGUMENTS=-Xmx5g -XX:+UseZGC -XX:+ZGenerational --add-opens=java.base/java.time=ALL-UNNAMED
     volumes:
       - ./application-docker-postgres.yml:/application-docker-postgres.yml
 

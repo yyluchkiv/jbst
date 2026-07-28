@@ -73,7 +73,7 @@ public abstract class JbstSpringBoot {
             if (nonNull(this.activeProfile)) {
                 return this.activeProfile;
             } else if (!isEmpty(this.activeProfiles)) {
-                return this.activeProfiles.get(0);
+                return this.activeProfiles.getFirst();
             } else {
                 return JbstConstants.Symbols.DASH;
             }

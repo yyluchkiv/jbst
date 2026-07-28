@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.support.TaskUtils;
 
@@ -33,13 +34,19 @@ public class JbstConfigurationEvents {
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
         var events = this.jbstProperties.getEvents();
-        var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(events.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(events.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(events.asThreadsMaxPoolTuplePercentage()));
-        taskExecutor.initialize();
         var eventMulticaster = new SimpleApplicationEventMulticaster();
-        eventMulticaster.setTaskExecutor(taskExecutor);
+        if (events.isVirtualThreadsEnabled()) {
+            var taskExecutor = new SimpleAsyncTaskExecutor(events.getThreadNamePrefix());
+            taskExecutor.setVirtualThreads(true);
+            eventMulticaster.setTaskExecutor(taskExecutor);
+        } else {
+            var taskExecutor = new ThreadPoolTaskExecutor();
+            taskExecutor.setThreadNamePrefix(events.getThreadNamePrefix());
+            taskExecutor.setCorePoolSize(getNumOfCores(events.asThreadsCorePoolTuplePercentage()));
+            taskExecutor.setMaxPoolSize(getNumOfCores(events.asThreadsMaxPoolTuplePercentage()));
+            taskExecutor.initialize();
+            eventMulticaster.setTaskExecutor(taskExecutor);
+        }
         eventMulticaster.setErrorHandler(TaskUtils.LOG_AND_SUPPRESS_ERROR_HANDLER);
         return eventMulticaster;
     }

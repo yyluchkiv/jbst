@@ -17,7 +17,7 @@ public class JbstCollectors {
                     if (list.size() != 1) {
                         throw new IllegalStateException("Collector toSingleton() expects one element");
                     }
-                    return list.get(0);
+                    return list.getFirst();
                 }
         );
     }
