@@ -18,7 +18,7 @@ public record JbstJwtRefreshToken(@NotNull String value) {
         return new JbstJwtRefreshToken(value);
     }
 
-    public static JbstJwtRefreshToken hardcoded() {
+    public static JbstJwtRefreshToken fixed() {
         return of("B7C50972C873270CD7B2");
     }
 

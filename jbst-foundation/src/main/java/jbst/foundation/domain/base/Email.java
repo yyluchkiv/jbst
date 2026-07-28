@@ -26,16 +26,16 @@ public record Email(@NotNull String value) {
         return new Email(value);
     }
 
-    public static Email hardcoded() {
-        return of("tests@" + JbstConstants.Domains.HARDCODED);
+    public static Email fixed() {
+        return of("tests@" + JbstConstants.Domains.FIXED);
     }
 
     public static Email random() {
-        return of(randomString() + "@" + JbstConstants.Domains.HARDCODED);
+        return of(randomString() + "@" + JbstConstants.Domains.FIXED);
     }
 
     public static Email unknown() {
-        return of(JbstConstants.Strings.UNKNOWN + "@" + JbstConstants.Domains.HARDCODED);
+        return of(JbstConstants.Strings.UNKNOWN + "@" + JbstConstants.Domains.FIXED);
     }
 
     @NotNull

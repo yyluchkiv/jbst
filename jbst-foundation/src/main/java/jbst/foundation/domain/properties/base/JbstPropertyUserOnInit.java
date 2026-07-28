@@ -39,13 +39,13 @@ public class JbstPropertyUserOnInit extends JbstProperty {
     @JbstPropertyOptional
     private Boolean passwordChangeRequired;
 
-    public static JbstPropertyUserOnInit hardcoded() {
+    public static JbstPropertyUserOnInit fixed() {
         return new JbstPropertyUserOnInit(
-                Username.hardcoded(),
-                Password.hardcoded(),
+                Username.fixed(),
+                Password.fixed(),
                 UKRAINE,
                 Set.of("user", "admin"),
-                Email.hardcoded().value(),
+                Email.fixed().value(),
                 false
         );
     }

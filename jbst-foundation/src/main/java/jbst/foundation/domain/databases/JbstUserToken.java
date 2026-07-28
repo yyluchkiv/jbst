@@ -17,10 +17,10 @@ public record JbstUserToken(
         boolean used
 ) {
 
-    public static JbstUserToken hardcodedEmailConfirmation() {
+    public static JbstUserToken fixedEmailConfirmation() {
         return new JbstUserToken(
-                JbstTokenId.hardcoded(),
-                Email.hardcoded(),
+                JbstTokenId.fixed(),
+                Email.fixed(),
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
                 EMAIL_CONFIRMATION,
                 EMAIL_CONFIRMATION.getExpiryTimestamp(),
@@ -28,10 +28,10 @@ public record JbstUserToken(
         );
     }
 
-    public static JbstUserToken hardcodedPasswordReset() {
+    public static JbstUserToken fixedPasswordReset() {
         return new JbstUserToken(
-                JbstTokenId.hardcoded(),
-                Email.hardcoded(),
+                JbstTokenId.fixed(),
+                Email.fixed(),
                 "0BF9F5865172B5C7DDE5C84048E8BE8150CFCC4C",
                 PASSWORD_RESET,
                 PASSWORD_RESET.getExpiryTimestamp(),
@@ -39,10 +39,10 @@ public record JbstUserToken(
         );
     }
 
-    public static JbstUserToken hardcodedMagicLink() {
+    public static JbstUserToken fixedMagicLink() {
         return new JbstUserToken(
-                JbstTokenId.hardcoded(),
-                Email.hardcoded(),
+                JbstTokenId.fixed(),
+                Email.fixed(),
                 "B3A85D887DB47A307330C93DC06787EF54A0F46F",
                 MAGICLINK,
                 MAGICLINK.getExpiryTimestamp(),

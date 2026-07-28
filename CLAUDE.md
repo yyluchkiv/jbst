@@ -116,5 +116,6 @@ Both `CHANGELOG.md` lines and commit subjects use **Conventional Commits** types
 - `SNAPSHOT: vX.Y` / `RELEASE: vX.Y` commits are produced by the release scripts and are exempt.
 - When a change lands via PR, use the same `type:` prefix in the PR title.
 
+- **`fixed()` factory methods**: domain objects, DTOs, and properties classes should expose a static `fixed()` factory (plus variants like `fixed(...)` overloads or `fixedMasked()`) returning a deterministic, fully-populated instance — used to simplify building and testing (test fixtures, `TestJbstConfigurationPropertiesFixed`, dev-time endpoints). When adding such a class, add a `fixed()` method alongside any `random()` factory. Formerly named `hardcoded()` — use `fixed()` for all new code.
 - **Lombok** everywhere; `lombok.config` sets the logger field name to `LOGGER` (use `@Slf4j` then `LOGGER.info(...)`), adds `@lombok.Generated` (for coverage exclusion), and `@ConstructorProperties` on generated constructors.
 - Server entrypoints are `Server.java` in each server module, extending `JbstStartupEventListener` and importing a `ConfigurationServer`.

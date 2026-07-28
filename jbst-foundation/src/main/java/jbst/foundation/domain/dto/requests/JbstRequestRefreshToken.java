@@ -6,7 +6,7 @@ import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 public record JbstRequestRefreshToken(String value) {
-    public static JbstRequestRefreshToken hardcoded() {
+    public static JbstRequestRefreshToken fixed() {
         return new JbstRequestRefreshToken("AE3C542E4368A21EA007");
     }
 

@@ -53,8 +53,8 @@ class JbstUserTokenTest {
     void isExpiredTest(long expiryTimestamp, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
-                JbstTokenId.hardcoded(),
-                Email.hardcoded(),
+                JbstTokenId.fixed(),
+                Email.fixed(),
                 "test-token-value",
                 MAGICLINK,
                 expiryTimestamp,
@@ -70,8 +70,8 @@ class JbstUserTokenTest {
     void isInvalidTest(JbstUserTokenType tokenType, JbstUserTokenType expectedType, boolean used, long expiryTimestamp, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
-                JbstTokenId.hardcoded(),
-                Email.hardcoded(),
+                JbstTokenId.fixed(),
+                Email.fixed(),
                 "test-token-value",
                 tokenType,
                 expiryTimestamp,

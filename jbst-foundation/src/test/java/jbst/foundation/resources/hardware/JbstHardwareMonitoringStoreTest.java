@@ -39,7 +39,7 @@ class JbstHardwareMonitoringStoreTest {
         @Bean
         JbstSettingsService jbstSettingsService() {
             var jbstSettingsService = mock(JbstSettingsService.class);
-            when(jbstSettingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.hardcoded());
+            when(jbstSettingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.fixed());
             return jbstSettingsService;
         }
 
@@ -62,7 +62,7 @@ class JbstHardwareMonitoringStoreTest {
         assertThat(containsOneElement1).isFalse();
         assertThat(widget1.version()).isEqualTo(Version.unknown());
         assertThat(widget1.datapoint()).isEqualTo(JbstHardwareMonitoringDatapoint.zeroUsage().tableView(
-                JbstSettings.hardcoded().hardwareMonitoringThresholds().values()
+                JbstSettings.fixed().hardwareMonitoringThresholds().values()
         ));
 
         // [1]
@@ -80,9 +80,9 @@ class JbstHardwareMonitoringStoreTest {
         // [3]
         var datapoint3 = new JbstHardwareMonitoringDatapoint(
                 Version.of("jbst vTEST"),
-                JbstGlobalMemory.hardcoded(),
-                JbstCpuMemory.hardcoded(),
-                JbstHeapMemory.hardcoded()
+                JbstGlobalMemory.fixed(),
+                JbstCpuMemory.fixed(),
+                JbstHeapMemory.fixed()
         );
         this.componentUnderTest.storeDatapoint(datapoint3);
         var containsOneElement4 = this.componentUnderTest.containsOneElement();

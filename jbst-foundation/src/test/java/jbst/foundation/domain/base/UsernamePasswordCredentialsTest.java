@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsernamePasswordCredentialsTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final UsernamePasswordCredentials CREDENTIALS = UsernamePasswordCredentials.hardcoded();
+    private static final UsernamePasswordCredentials CREDENTIALS = UsernamePasswordCredentials.fixed();
 
     @Override
     protected String getFileName() {
@@ -42,8 +42,8 @@ class UsernamePasswordCredentialsTest extends JbstUnitTests.Runners.BaseFolderFi
 
         // Assert
         assertThat(actual).isEqualTo(CREDENTIALS);
-        assertThat(actual.username()).isEqualTo(Username.hardcoded());
-        assertThat(actual.password()).isEqualTo(Password.hardcoded());
+        assertThat(actual.username()).isEqualTo(Username.fixed());
+        assertThat(actual.password()).isEqualTo(Password.fixed());
     }
 
     @RepeatedTest(10)

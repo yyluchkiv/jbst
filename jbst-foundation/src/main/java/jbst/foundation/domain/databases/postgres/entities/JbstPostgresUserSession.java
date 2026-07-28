@@ -84,10 +84,10 @@ public class JbstPostgresUserSession extends JbstPostgresAbstractPersistable1 {
             session.id = null;
             return session;
         };
-        var session1 = JbstPostgresUserSession.random(Username.hardcoded().value(), "awt1", "rwt1");
-        var session2 = JbstPostgresUserSession.random(Username.hardcoded().value(), "awt2", "rwt2");
-        var session3 = JbstPostgresUserSession.random(Username.hardcoded().value(), "awt3", "rwt3");
-        var session4 = JbstPostgresUserSession.random(Username.hardcoded().value(), "awt4", "rwt4");
+        var session1 = JbstPostgresUserSession.random(Username.fixed().value(), "awt1", "rwt1");
+        var session2 = JbstPostgresUserSession.random(Username.fixed().value(), "awt2", "rwt2");
+        var session3 = JbstPostgresUserSession.random(Username.fixed().value(), "awt3", "rwt3");
+        var session4 = JbstPostgresUserSession.random(Username.fixed().value(), "awt4", "rwt4");
         var session5 = JbstPostgresUserSession.random("user1", "atoken11", "rtoken11");
         var session6 = JbstPostgresUserSession.random("user1", "atoken12", "rtoken12");
         var session7 = JbstPostgresUserSession.random("sa", "atoken", "rtoken");
@@ -107,9 +107,9 @@ public class JbstPostgresUserSession extends JbstPostgresAbstractPersistable1 {
             session.id = null;
             return session;
         };
-        var session1 = JbstPostgresUserSession.random(Username.hardcoded(), "token1");
-        var session2 = JbstPostgresUserSession.random(Username.hardcoded(), "token2");
-        var session3 = JbstPostgresUserSession.random(Username.hardcoded(), "token3");
+        var session1 = JbstPostgresUserSession.random(Username.fixed(), "token1");
+        var session2 = JbstPostgresUserSession.random(Username.fixed(), "token2");
+        var session3 = JbstPostgresUserSession.random(Username.fixed(), "token3");
         var session4 = JbstPostgresUserSession.random(Username.of("admin"), "token4");
         return List.of(
                 removeId.apply(session1),

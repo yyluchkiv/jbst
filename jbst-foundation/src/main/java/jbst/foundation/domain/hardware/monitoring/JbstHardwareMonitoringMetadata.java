@@ -8,10 +8,10 @@ public record JbstHardwareMonitoringMetadata(
         JbstSystemMemories systemMemories
 ) {
 
-    public static JbstHardwareMonitoringMetadata hardcoded() {
+    public static JbstHardwareMonitoringMetadata fixed() {
         return new JbstHardwareMonitoringMetadata(
                 Version.unknown(),
-                JbstSystemMemories.hardcoded()
+                JbstSystemMemories.fixed()
         );
     }
 }

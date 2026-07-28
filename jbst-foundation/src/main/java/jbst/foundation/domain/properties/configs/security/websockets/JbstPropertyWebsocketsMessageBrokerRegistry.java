@@ -24,7 +24,7 @@ public class JbstPropertyWebsocketsMessageBrokerRegistry extends JbstProperty {
     @JbstPropertyMandatory
     private final String userDestinationPrefix;
 
-    public static JbstPropertyWebsocketsMessageBrokerRegistry hardcoded() {
+    public static JbstPropertyWebsocketsMessageBrokerRegistry fixed() {
         return new JbstPropertyWebsocketsMessageBrokerRegistry("/app", "/queue", "/user");
     }
 

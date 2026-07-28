@@ -5,8 +5,8 @@ import jbst.foundation.domain.constants.JbstConstants;
 
 public record JbstMavenDetails(String groupId, String artifactId, Version version) {
 
-    public static JbstMavenDetails hardcoded() {
-        return new JbstMavenDetails("jbst", "jbst", Version.hardcoded());
+    public static JbstMavenDetails fixed() {
+        return new JbstMavenDetails("jbst", "jbst", Version.fixed());
     }
 
     public static JbstMavenDetails undefined() {

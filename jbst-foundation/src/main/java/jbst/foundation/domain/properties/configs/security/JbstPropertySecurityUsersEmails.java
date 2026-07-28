@@ -28,7 +28,7 @@ public class JbstPropertySecurityUsersEmails extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertyCheckbox accountAccessedSessionToken;
 
-    public static JbstPropertySecurityUsersEmails hardcoded() {
+    public static JbstPropertySecurityUsersEmails fixed() {
         return new JbstPropertySecurityUsersEmails(
                 "[jbst.com]",
                 JbstPropertyCheckbox.enabled(),

@@ -27,10 +27,10 @@ public class JbstPropertyApp extends JbstProperty {
     @JbstPropertyOptional
     private String webclientURL;
 
-    public static JbstPropertyApp hardcoded() {
+    public static JbstPropertyApp fixed() {
         return new JbstPropertyApp(
-                ServerName.hardcoded(),
-                new JbstPropertyMaven("jbst", "jbst", Version.hardcoded()),
+                ServerName.fixed(),
+                new JbstPropertyMaven("jbst", "jbst", Version.fixed()),
                 true,
                 "http://127.0.0.1:3002",
                 "http://127.0.0.1:3000"

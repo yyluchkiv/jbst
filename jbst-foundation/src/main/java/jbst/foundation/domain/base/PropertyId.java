@@ -13,7 +13,7 @@ public record PropertyId(@NotNull String value) {
         return new PropertyId(value);
     }
 
-    public static PropertyId hardcoded() {
+    public static PropertyId fixed() {
         return of("A0814EF707DAF2FDE2D4");
     }
 

@@ -14,7 +14,7 @@ public record JbstUserId(@NotNull String value) {
         return new JbstUserId(value);
     }
 
-    public static JbstUserId hardcoded() {
+    public static JbstUserId fixed() {
         return of("72667893848372913475");
     }
 

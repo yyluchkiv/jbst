@@ -17,7 +17,7 @@ public class JbstPropertyGeolocations extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
 
-    public static JbstPropertyGeolocations hardcoded() {
+    public static JbstPropertyGeolocations fixed() {
         return new JbstPropertyGeolocations(true);
     }
 
@@ -26,7 +26,7 @@ public class JbstPropertyGeolocations extends JbstProperty {
     }
 
     public static JbstPropertyGeolocations enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyGeolocations disabled() {

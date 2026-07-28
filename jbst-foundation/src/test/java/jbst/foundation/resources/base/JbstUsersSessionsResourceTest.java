@@ -127,40 +127,40 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
     @Test
     void renewManuallyTest() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.fixed());
 
         // Act
         this.mvc.perform(
-                        post("/sessions/" + JbstUserSessionId.hardcoded() + "/renew/manually")
+                        post("/sessions/" + JbstUserSessionId.fixed() + "/renew/manually")
                 )
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded());
-        verify(this.usersSessionsService).enableUserRequestMetadataRenewManually(JbstUserSessionId.hardcoded());
+        verify(this.usersSessionsService).assertAccess(Username.fixed(), JbstUserSessionId.fixed());
+        verify(this.usersSessionsService).enableUserRequestMetadataRenewManually(JbstUserSessionId.fixed());
     }
 
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.fixed());
 
         // Act
-        this.mvc.perform(delete("/sessions/" + JbstUserSessionId.hardcoded()))
+        this.mvc.perform(delete("/sessions/" + JbstUserSessionId.fixed()))
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.usersSessionsService).assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded());
-        verify(this.usersSessionsService).deleteById(JbstUserSessionId.hardcoded());
+        verify(this.usersSessionsService).assertAccess(Username.fixed(), JbstUserSessionId.fixed());
+        verify(this.usersSessionsService).deleteById(JbstUserSessionId.fixed());
     }
 
     @Test
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
-        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(JbstRequestAccessToken.hardcoded());
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.fixed());
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(JbstRequestAccessToken.fixed());
 
         // Act
         this.mvc.perform(delete("/sessions"))
@@ -169,6 +169,6 @@ class JbstUsersSessionsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.usersSessionsService).deleteAllExceptCurrent(Username.hardcoded(), JbstRequestAccessToken.hardcoded());
+        verify(this.usersSessionsService).deleteAllExceptCurrent(Username.fixed(), JbstRequestAccessToken.fixed());
     }
 }

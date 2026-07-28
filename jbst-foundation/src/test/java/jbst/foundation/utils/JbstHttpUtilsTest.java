@@ -1,7 +1,7 @@
 package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.http.cache.JbstCachedBodyHttpServletRequest;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +68,7 @@ class JbstHttpUtilsTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
@@ -118,7 +118,7 @@ class JbstHttpUtilsTest {
         // Arrange
         var cachedRequest = mock(JbstCachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn("POST");
-        when(cachedRequest.getCachedPayload()).thenReturn(JbstCachedBodyHttpServletRequest.CachedPayload.hardcoded());
+        when(cachedRequest.getCachedPayload()).thenReturn(JbstCachedBodyHttpServletRequest.CachedPayload.fixed());
         when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/login/standard");
 
         // Act

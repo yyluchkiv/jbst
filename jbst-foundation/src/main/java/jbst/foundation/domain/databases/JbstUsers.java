@@ -21,8 +21,8 @@ public class JbstUsers extends JbstPlurals<JbstUser, JbstUserId> {
         super(values);
     }
 
-    public static JbstUsers hardcoded() {
-        return new JbstUsers(List.of(JbstUser.hardcoded()));
+    public static JbstUsers fixed() {
+        return new JbstUsers(List.of(JbstUser.fixed()));
     }
 
     @JsonIgnore

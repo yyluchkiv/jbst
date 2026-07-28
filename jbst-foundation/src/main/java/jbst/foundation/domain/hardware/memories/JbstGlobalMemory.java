@@ -51,7 +51,7 @@ public class JbstGlobalMemory {
         );
     }
 
-    public static JbstGlobalMemory hardcoded() {
+    public static JbstGlobalMemory fixed() {
         return new JbstGlobalMemory(
                 1073741824L,
                 1973741824L,

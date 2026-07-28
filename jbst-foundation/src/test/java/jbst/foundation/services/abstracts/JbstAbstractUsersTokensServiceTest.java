@@ -120,8 +120,8 @@ class JbstAbstractUsersTokensServiceTest {
     @Test
     void saveAsTest() {
         // Arrange
-        var request = JbstRequestUserToken.hardcoded();
-        var userToken = JbstUserToken.hardcodedEmailConfirmation();
+        var request = JbstRequestUserToken.fixed();
+        var userToken = JbstUserToken.fixedEmailConfirmation();
         when(this.usersTokensRepository.saveAs(request)).thenReturn(userToken);
 
         // Act
@@ -135,7 +135,7 @@ class JbstAbstractUsersTokensServiceTest {
     @Test
     void findOrCreateTest() {
         // Arrange
-        var request = JbstRequestUserToken.hardcoded();
+        var request = JbstRequestUserToken.fixed();
 
         // Arrange
         this.componentUnderTest.findOrCreate(request);

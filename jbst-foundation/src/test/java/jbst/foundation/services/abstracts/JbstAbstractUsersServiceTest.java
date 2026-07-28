@@ -132,7 +132,7 @@ class JbstAbstractUsersServiceTest {
     @MethodSource("usersPresenceTest")
     void initUsers(long count) {
         // Arrange
-        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.hardcoded());
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.fixed());
         when(this.usersRepository.count()).thenReturn(count);
 
         // Act
@@ -149,8 +149,8 @@ class JbstAbstractUsersServiceTest {
     @Test
     void findByEmailTest() {
         // Arrange
-        var email = Email.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var email = Email.fixed();
+        var user = JbstJwtUser.fixed();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
@@ -164,16 +164,16 @@ class JbstAbstractUsersServiceTest {
     @RepeatedTest(5)
     void safeSaveAlreadyExistsTest() {
         // Arrange
-        var email = Email.hardcoded();
-        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
-        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
+        var email = Email.fixed();
+        var user = JbstJwtUser.fixed(JbstUserCreationOption.MAGICLINK);
+        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.fixedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
 
         // Act
         var credentials = this.componentUnderTest.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
 
         // Assert
-        assertThat(credentials.username()).isEqualTo(Username.hardcoded());
+        assertThat(credentials.username()).isEqualTo(Username.fixed());
         assertThat(credentials.password().value()).hasSize(20);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
         ArgumentCaptor<Password> passwordAC = ArgumentCaptor.forClass(Password.class);
@@ -185,9 +185,9 @@ class JbstAbstractUsersServiceTest {
     void safeSaveFirstIterationTest() throws JbstExceptions.UsernameAlreadyExist {
         // Arrange
         var creationOption = JbstUserCreationOption.MAGICLINK;
-        var email = Email.hardcoded();
-        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
-        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
+        var email = Email.fixed();
+        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.fixedMagicLink(), UKRAINE);
+        var user = JbstJwtUser.fixed(JbstUserCreationOption.MAGICLINK);
         var username = email.getUsername();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);
@@ -196,7 +196,7 @@ class JbstAbstractUsersServiceTest {
         var credentials = this.componentUnderTest.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
 
         // Assert
-        assertThat(credentials.username()).isEqualTo(Username.hardcoded());
+        assertThat(credentials.username()).isEqualTo(Username.fixed());
         assertThat(credentials.password().value()).hasSize(20);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
         verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(username), any(Password.class), eq(email), eq(UKRAINE));
@@ -209,11 +209,11 @@ class JbstAbstractUsersServiceTest {
     void safeSaveSecondIterationTest() throws JbstExceptions.UsernameAlreadyExist {
         // Arrange
         var creationOption = JbstUserCreationOption.MAGICLINK;
-        var email = Email.hardcoded();
-        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
+        var email = Email.fixed();
+        var user = JbstJwtUser.fixed(JbstUserCreationOption.MAGICLINK);
         var baseUsername = email.getUsername();
         var finalUsername = new Username(baseUsername.value() + "0");
-        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.hardcodedMagicLink(), UKRAINE);
+        var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(JbstUserToken.fixedMagicLink(), UKRAINE);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(UKRAINE))).thenThrow(new JbstExceptions.UsernameAlreadyExist(baseUsername));
         when(this.usersRepository.saveAsOrThrow(eq(creationOption), eq(finalUsername), any(Password.class), eq(email), eq(UKRAINE))).thenReturn(user);
@@ -222,7 +222,7 @@ class JbstAbstractUsersServiceTest {
         var credentials = this.componentUnderTest.saveOrGetMagicLinkCredentials(magicLinkUserCredentials);
 
         // Assert
-        assertThat(credentials.username()).isEqualTo(Username.hardcoded());
+        assertThat(credentials.username()).isEqualTo(Username.fixed());
         assertThat(credentials.password().value()).hasSize(20);
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
         verify(this.usersRepository).saveAsOrThrow(eq(creationOption), eq(baseUsername), any(Password.class), eq(email), eq(UKRAINE));
@@ -235,8 +235,8 @@ class JbstAbstractUsersServiceTest {
     @Test
     void updateUser1() {
         // Arrange
-        var request = JbstRequestUserUpdate1.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var request = JbstRequestUserUpdate1.fixed();
+        var user = JbstJwtUser.fixed();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
         // Act
@@ -254,8 +254,8 @@ class JbstAbstractUsersServiceTest {
     @Test
     void updateUser2() {
         // Arrange
-        var request = JbstRequestUserUpdate2.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var request = JbstRequestUserUpdate2.fixed();
+        var user = JbstJwtUser.fixed();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
         // Act
@@ -272,7 +272,7 @@ class JbstAbstractUsersServiceTest {
     @RepeatedTest(5)
     void changePasswordRequired() {
         // Arrange
-        var request = JbstRequestUserChangePasswordBasic.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.fixed();
         var user = JbstJwtUser.random();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
@@ -295,8 +295,8 @@ class JbstAbstractUsersServiceTest {
     @RepeatedTest(5)
     void changePassword1() {
         // Arrange
-        var request = JbstRequestUserChangePasswordBasic.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.fixed();
+        var user = JbstJwtUser.fixed();
         var userAC = ArgumentCaptor.forClass(JbstJwtUser.class);
 
         // Act
@@ -318,8 +318,8 @@ class JbstAbstractUsersServiceTest {
     @Test
     void resetPasswordTest() {
         // Arrange
-        var request = JbstRequestUserPasswordReset.hardcoded();
-        var userToken = JbstUserToken.hardcodedPasswordReset();
+        var request = JbstRequestUserPasswordReset.fixed();
+        var userToken = JbstUserToken.fixedPasswordReset();
         when(this.usersTokensRepository.findByValueAsAnyOrNull(request.token())).thenReturn(userToken);
         var passwordAC = ArgumentCaptor.forClass(Password.class);
 

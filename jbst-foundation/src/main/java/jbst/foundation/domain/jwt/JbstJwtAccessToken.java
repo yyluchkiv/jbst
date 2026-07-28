@@ -18,7 +18,7 @@ public record JbstJwtAccessToken(@NotNull String value) {
         return new JbstJwtAccessToken(value);
     }
 
-    public static JbstJwtAccessToken hardcoded() {
+    public static JbstJwtAccessToken fixed() {
         return of("D9F4AF096BEE11C93D84");
     }
 

@@ -32,7 +32,7 @@ class JbstConfigurationSecurityJwtWebMVCTest {
 
     @Configuration
     @Import(
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     )
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

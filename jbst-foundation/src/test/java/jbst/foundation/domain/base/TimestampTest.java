@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimestampTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final Timestamp TIMESTAMP = Timestamp.hardcoded();
+    private static final Timestamp TIMESTAMP = Timestamp.fixed();
 
     @Override
     protected String getFileName() {

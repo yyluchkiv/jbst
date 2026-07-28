@@ -32,7 +32,7 @@ public class JbstPropertyCORS extends JbstProperty {
     @JbstPropertyOptional
     private String[] exposedHeaders;
 
-    public static JbstPropertyCORS hardcoded() {
+    public static JbstPropertyCORS fixed() {
         return new JbstPropertyCORS(
                 "/api/**",
                 new String[] { "http://localhost:8080", "http://localhost:8081" },

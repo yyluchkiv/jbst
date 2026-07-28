@@ -38,10 +38,10 @@ class JbstIncidentClientTypeTelegramTest {
 
     private static Stream<Arguments> jwtArgs() {
         return Stream.of(
-                Arguments.of(JbstIncidentAuthenticationLogin.hardcoded()),
-                Arguments.of(JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword.hardcoded()),
-                Arguments.of(JbstIncidentAuthenticationLoginFailureUsernamePassword.hardcoded()),
-                Arguments.of(JbstIncidentAuthenticationLogoutFull.hardcoded())
+                Arguments.of(JbstIncidentAuthenticationLogin.fixed()),
+                Arguments.of(JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword.fixed()),
+                Arguments.of(JbstIncidentAuthenticationLoginFailureUsernamePassword.fixed()),
+                Arguments.of(JbstIncidentAuthenticationLogoutFull.fixed())
         );
     }
 
@@ -59,7 +59,7 @@ class JbstIncidentClientTypeTelegramTest {
         JbstIncidentClientTypeTelegram incidentClientTypeTelegram() {
             return new JbstIncidentClientTypeTelegram(
                     this.telegram(),
-                    JbstProperties.hardcoded()
+                    JbstProperties.fixed()
             );
         }
     }

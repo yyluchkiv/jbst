@@ -15,7 +15,7 @@ class JbstIncidentSessionRefreshedTest {
     @Test
     void convertSessionRefreshedIncidentTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var incident = new JbstIncidentSessionRefreshed(
                 username,
                 JbstUserRequestMetadata.processed(

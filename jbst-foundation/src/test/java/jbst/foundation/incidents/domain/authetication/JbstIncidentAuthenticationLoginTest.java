@@ -15,7 +15,7 @@ class JbstIncidentAuthenticationLoginTest {
     @Test
     void convertAuthenticationLoginIncidentExceptionTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var incident = new JbstIncidentAuthenticationLogin(
                 username,
                 JbstUserRequestMetadata.processed(
@@ -47,7 +47,7 @@ class JbstIncidentAuthenticationLoginTest {
     @Test
     void convertAuthenticationLoginIncidentTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var incident = new JbstIncidentAuthenticationLogin(
                 username,
                 JbstUserRequestMetadata.processing(new IPAddress("127.0.0.1"))

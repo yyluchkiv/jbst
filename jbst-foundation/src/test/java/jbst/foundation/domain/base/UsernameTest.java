@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsernameTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final Username USERNAME = Username.hardcoded();
+    private static final Username USERNAME = Username.fixed();
 
     @Override
     protected String getFileName() {

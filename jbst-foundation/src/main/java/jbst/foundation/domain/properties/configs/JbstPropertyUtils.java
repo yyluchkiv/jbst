@@ -22,7 +22,7 @@ public class JbstPropertyUtils extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertyUsersAgents usersAgents;
 
-    public static JbstPropertyUtils hardcoded() {
+    public static JbstPropertyUtils fixed() {
         return new JbstPropertyUtils(
                 JbstPropertyGeolocations.disabled(),
                 JbstPropertyCountriesFlags.enabled(),

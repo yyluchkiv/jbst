@@ -10,11 +10,11 @@ public record JbstEventAuthenticationMagicLinkFailure(
         JbstUserAgentHeader userAgentHeader
 ) {
 
-    public static JbstEventAuthenticationMagicLinkFailure hardcoded() {
+    public static JbstEventAuthenticationMagicLinkFailure fixed() {
         return new JbstEventAuthenticationMagicLinkFailure(
-                JbstUserToken.hardcodedMagicLink(),
-                IPAddress.hardcoded(),
-                JbstUserAgentHeader.hardcoded()
+                JbstUserToken.fixedMagicLink(),
+                IPAddress.fixed(),
+                JbstUserAgentHeader.fixed()
         );
     }
 }

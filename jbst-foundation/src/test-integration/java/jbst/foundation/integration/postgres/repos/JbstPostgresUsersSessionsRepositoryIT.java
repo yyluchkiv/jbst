@@ -79,7 +79,7 @@ class JbstPostgresUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
         assertThat(this.usersSessionsRepository.isPresent(JbstJwtRefreshToken.of("rwt2")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JbstJwtRefreshToken.of("rwt777")).present()).isFalse();
         assertThat(this.usersSessionsRepository.getUsersSessionsTable(Username.of("user777"), new JbstRequestAccessToken("awt2"))).isEmpty();
-        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(Username.hardcoded(), new JbstRequestAccessToken("awt2"));
+        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(Username.fixed(), new JbstRequestAccessToken("awt2"));
         assertThat(usersSessions).hasSize(4);
         assertThat(usersSessions.get(0).current()).isTrue();
         assertThat(usersSessions.get(0).activity()).isEqualTo("Current session");
@@ -101,8 +101,8 @@ class JbstPostgresUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
         assertThat(sessionsTable.inactiveSessions().get(1).who().value()).isEqualTo("jbst");
         assertThat(sessionsTable.inactiveSessions().get(2).who().value()).isEqualTo("jbst");
         assertThat(sessionsTable.inactiveSessions().get(3).who().value()).isEqualTo("user1");
-        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.hardcoded(), Username.of("sa")))).hasSize(5);
-        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.hardcoded(), Username.of("user1")))).hasSize(6);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.fixed(), Username.of("sa")))).hasSize(5);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.fixed(), Username.of("user1")))).hasSize(6);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user1"), Username.of("sa")))).hasSize(3);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user777"), Username.of("sa777")))).isEmpty();
     }
@@ -176,7 +176,7 @@ class JbstPostgresUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
         assertThat(this.usersSessionsRepository.count()).isEqualTo(4);
 
         // Act-Assert-1
-        this.usersSessionsRepository.deleteByUsernames(Set.of(Username.hardcoded(), Username.of("sa")));
+        this.usersSessionsRepository.deleteByUsernames(Set.of(Username.fixed(), Username.of("sa")));
         assertThat(this.usersSessionsRepository.count()).isEqualTo(1);
         assertThat(this.usersSessionsRepository.findAll().get(0).getUsername().value()).isEqualTo("user1");
     }
@@ -188,12 +188,12 @@ class JbstPostgresUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
 
         // Act
         var count1 = this.usersSessionsRepository.count();
-        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(Username.hardcoded(), new JbstRequestAccessToken("token2"));
+        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(Username.fixed(), new JbstRequestAccessToken("token2"));
         var count2 = this.usersSessionsRepository.count();
         var sessions = this.usersSessionsRepository.findAll();
         assertThat(count1).isEqualTo(4);
         assertThat(count2).isEqualTo(2);
-        assertThat(toUsernamesAsStrings2(sessions)).isEqualTo(List.of(Username.hardcoded().value(), "admin"));
+        assertThat(toUsernamesAsStrings2(sessions)).isEqualTo(List.of(Username.fixed().value(), "admin"));
         assertThat(toAccessTokensAsStrings2(sessions)).isEqualTo(List.of("token2", "token4"));
     }
 
@@ -211,7 +211,7 @@ class JbstPostgresUsersSessionsRepositoryIT extends TestsJbstConfigurationPostgr
         assertThat(count1).isEqualTo(4);
         assertThat(count2).isEqualTo(1);
         var session = sessions.get(0);
-        assertThat(session.getUsername()).isEqualTo(Username.hardcoded());
+        assertThat(session.getUsername()).isEqualTo(Username.fixed());
         assertThat(session.getAccessToken().value()).isEqualTo("token2");
     }
 

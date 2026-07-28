@@ -20,8 +20,8 @@ public class JbstEmails {
             return new HTML(Set.of(to.value()), subject, templateName, templateVariables);
         }
 
-        public static HTML hardcoded() {
-            return HTML.of(Email.hardcoded(), "Account Accessed", "jbst-account-accessed", Map.of());
+        public static HTML fixed() {
+            return HTML.of(Email.fixed(), "Account Accessed", "jbst-account-accessed", Map.of());
         }
 
         public static HTML random() {

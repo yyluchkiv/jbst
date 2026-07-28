@@ -29,13 +29,13 @@ public class JbstPropertySecurityWebsockets extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private final JbstPropertyWebsocketsFeatures features;
 
-    public static JbstPropertySecurityWebsockets hardcoded() {
+    public static JbstPropertySecurityWebsockets fixed() {
         return new JbstPropertySecurityWebsockets(
                 true,
-                JbstPropertyWebsocketsCSRF.hardcoded(),
-                JbstPropertyWebsocketsStompEndpointRegistry.hardcoded(),
-                JbstPropertyWebsocketsMessageBrokerRegistry.hardcoded(),
-                JbstPropertyWebsocketsFeatures.hardcoded()
+                JbstPropertyWebsocketsCSRF.fixed(),
+                JbstPropertyWebsocketsStompEndpointRegistry.fixed(),
+                JbstPropertyWebsocketsMessageBrokerRegistry.fixed(),
+                JbstPropertyWebsocketsFeatures.fixed()
         );
     }
 

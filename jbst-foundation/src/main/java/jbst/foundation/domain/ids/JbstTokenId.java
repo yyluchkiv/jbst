@@ -14,7 +14,7 @@ public record JbstTokenId(@NotNull String value) {
         return new JbstTokenId(value);
     }
 
-    public static JbstTokenId hardcoded() {
+    public static JbstTokenId fixed() {
         return of("75e0d0dfc0d34914a1c49305d6477abd");
     }
 

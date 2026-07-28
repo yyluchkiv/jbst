@@ -66,7 +66,7 @@ class JbstConfigurationSecurityJwtTest {
                             )
                     )
             );
-            jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
+            jbstProperties.setIncidentsManager(JbstPropertyIncidentsManager.fixed());
             jbstProperties.setSecurity(
                     new JbstPropertySecurity(
                             new JbstPropertySecurityAuthorities(
@@ -80,14 +80,14 @@ class JbstConfigurationSecurityJwtTest {
                                             "user"
                                     )
                             ),
-                            JbstPropertySecurityCookies.hardcoded(),
-                            JbstPropertySecurityEssence.hardcoded(),
-                            JbstPropertySecurityJWT.hardcoded(),
-                            JbstPropertySecurityLogging.hardcoded(),
-                            JbstPropertySecuritySessions.hardcoded(),
-                            JbstPropertySecurityUsersEmails.hardcoded(),
-                            JbstPropertySecurityUsersTokens.hardcoded(),
-                            JbstPropertySecurityWebsockets.hardcoded()
+                            JbstPropertySecurityCookies.fixed(),
+                            JbstPropertySecurityEssence.fixed(),
+                            JbstPropertySecurityJWT.fixed(),
+                            JbstPropertySecurityLogging.fixed(),
+                            JbstPropertySecuritySessions.fixed(),
+                            JbstPropertySecurityUsersEmails.fixed(),
+                            JbstPropertySecurityUsersTokens.fixed(),
+                            JbstPropertySecurityWebsockets.fixed()
                     )
             );
             return jbstProperties;

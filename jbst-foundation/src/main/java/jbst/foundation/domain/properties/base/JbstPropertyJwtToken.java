@@ -28,7 +28,7 @@ public class JbstPropertyJwtToken extends JbstProperty {
     @JbstPropertyOptional
     private String headerKey;
 
-    public static JbstPropertyJwtToken hardcoded() {
+    public static JbstPropertyJwtToken fixed() {
         return new JbstPropertyJwtToken(new JbstPropertyTimeAmount(12L, HOURS), "cookieJWT", null);
     }
 

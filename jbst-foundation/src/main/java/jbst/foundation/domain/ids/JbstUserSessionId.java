@@ -27,7 +27,7 @@ public record JbstUserSessionId(@NotNull String value) {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 
-    public static JbstUserSessionId hardcoded() {
+    public static JbstUserSessionId fixed() {
         return of("8DE052C55BD26A1A6F0E");
     }
 

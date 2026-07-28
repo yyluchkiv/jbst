@@ -56,16 +56,16 @@ public record JbstJwtUser(
         return this.enabled;
     }
 
-    public static JbstJwtUser hardcoded(JbstUserCreationOption userCreationOption) {
+    public static JbstJwtUser fixed(JbstUserCreationOption userCreationOption) {
         return new JbstJwtUser(
-                JbstUserId.hardcoded(),
+                JbstUserId.fixed(),
                 userCreationOption,
-                Username.hardcoded(),
-                Password.hardcoded(),
+                Username.fixed(),
+                Password.fixed(),
                 true,
                 UKRAINE,
                 new HashSet<>(),
-                Email.hardcoded(),
+                Email.fixed(),
                 "",
                 false,
                 JbstUserEmailDetails.unnecessary(),
@@ -73,22 +73,22 @@ public record JbstJwtUser(
         );
     }
 
-    public static JbstJwtUser hardcoded() {
-        return hardcoded(
+    public static JbstJwtUser fixed() {
+        return fixed(
                 getSimpleGrantedAuthorities("user")
         );
     }
 
-    public static JbstJwtUser hardcoded(Set<SimpleGrantedAuthority> authorities) {
+    public static JbstJwtUser fixed(Set<SimpleGrantedAuthority> authorities) {
         return new JbstJwtUser(
-                JbstUserId.hardcoded(),
-                JbstUserCreationOption.hardcoded(),
-                Username.hardcoded(),
-                Password.hardcoded(),
+                JbstUserId.fixed(),
+                JbstUserCreationOption.fixed(),
+                Username.fixed(),
+                Password.fixed(),
                 true,
                 UKRAINE,
                 authorities,
-                Email.hardcoded(),
+                Email.fixed(),
                 "",
                 false,
                 JbstUserEmailDetails.confirmed(),
@@ -96,15 +96,15 @@ public record JbstJwtUser(
         );
     }
 
-    public static JbstJwtUser hardcoded(
+    public static JbstJwtUser fixed(
             Email email,
             JbstUserEmailDetails emailDetails
     ) {
         return new JbstJwtUser(
-                JbstUserId.hardcoded(),
-                JbstUserCreationOption.hardcoded(),
-                Username.hardcoded(),
-                Password.hardcoded(),
+                JbstUserId.fixed(),
+                JbstUserCreationOption.fixed(),
+                Username.fixed(),
+                Password.fixed(),
                 true,
                 UKRAINE,
                 new HashSet<>(),
@@ -116,8 +116,8 @@ public record JbstJwtUser(
         );
     }
 
-    public static JbstJwtUser hardcoded(Map<String, Object> attributes) {
-        var user = JbstJwtUser.hardcoded();
+    public static JbstJwtUser fixed(Map<String, Object> attributes) {
+        var user = JbstJwtUser.fixed();
         user.attributes().putAll(attributes);
         return user;
     }

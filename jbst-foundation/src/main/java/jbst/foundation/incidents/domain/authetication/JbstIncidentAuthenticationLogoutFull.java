@@ -11,9 +11,9 @@ public record JbstIncidentAuthenticationLogoutFull(
         JbstUserRequestMetadata userRequestMetadata
 ) implements JbstAbstractIncident {
 
-    public static JbstIncidentAuthenticationLogoutFull hardcoded() {
+    public static JbstIncidentAuthenticationLogoutFull fixed() {
         return new JbstIncidentAuthenticationLogoutFull(
-                Username.hardcoded(),
+                Username.fixed(),
                 JbstUserRequestMetadata.invalid()
         );
     }

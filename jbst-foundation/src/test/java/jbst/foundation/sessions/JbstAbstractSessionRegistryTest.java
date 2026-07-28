@@ -124,8 +124,8 @@ class JbstAbstractSessionRegistryTest {
         );
     }
 
-    private JbstSession authenticateHardcoded(JbstJwtAccessToken accessToken) throws NoSuchFieldException, IllegalAccessException {
-        var session = new JbstSession(Username.hardcoded(), accessToken, JbstJwtRefreshToken.random());
+    private JbstSession authenticateFixed(JbstJwtAccessToken accessToken) throws NoSuchFieldException, IllegalAccessException {
+        var session = new JbstSession(Username.fixed(), accessToken, JbstJwtRefreshToken.random());
         var sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session);
         setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", sessions, 1);
@@ -212,33 +212,33 @@ class JbstAbstractSessionRegistryTest {
     @Test
     void registerTest() {
         // Act
-        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random()));
-        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random()));
+        this.componentUnderTest.register(new JbstSession(Username.fixed(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random()));
+        this.componentUnderTest.register(new JbstSession(Username.fixed(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random()));
 
         var duplicatedAccessToken = JbstJwtAccessToken.random();
         var duplicatedRefreshToken = JbstJwtRefreshToken.random();
-        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), duplicatedAccessToken, duplicatedRefreshToken));
-        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), duplicatedAccessToken, duplicatedRefreshToken));
-        this.componentUnderTest.register(new JbstSession(Username.hardcoded(), duplicatedAccessToken, duplicatedRefreshToken));
+        this.componentUnderTest.register(new JbstSession(Username.fixed(), duplicatedAccessToken, duplicatedRefreshToken));
+        this.componentUnderTest.register(new JbstSession(Username.fixed(), duplicatedAccessToken, duplicatedRefreshToken));
+        this.componentUnderTest.register(new JbstSession(Username.fixed(), duplicatedAccessToken, duplicatedRefreshToken));
 
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(1);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
-        verify(this.eventsPublisher, times(3)).publishAuthenticationLogin(new JbstEventAuthenticationLogin(Username.hardcoded()));
+        verify(this.eventsPublisher, times(3)).publishAuthenticationLogin(new JbstEventAuthenticationLogin(Username.fixed()));
     }
 
     @Test
     void renewTest() {
         // Act
-        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
-        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        this.componentUnderTest.renew(Username.fixed(), JbstJwtRefreshToken.random(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
+        this.componentUnderTest.renew(Username.fixed(), JbstJwtRefreshToken.random(), JbstJwtAccessToken.random(), JbstJwtRefreshToken.random());
 
         var duplicatedAccessToken = JbstJwtAccessToken.random();
         var duplicatedRefreshToken = JbstJwtRefreshToken.random();
-        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(Username.hardcoded(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(Username.fixed(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(Username.fixed(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(Username.fixed(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(Username.fixed(), JbstJwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
 
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
@@ -250,12 +250,12 @@ class JbstAbstractSessionRegistryTest {
     void logoutDbUserSessionPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var accessToken = JbstJwtAccessToken.random();
-        this.authenticateHardcoded(accessToken);
+        this.authenticateFixed(accessToken);
         var dbUserSession = entity(JbstUserSession.class);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(dbUserSession));
 
         // Act
-        this.componentUnderTest.logout(Username.hardcoded(), accessToken);
+        this.componentUnderTest.logout(Username.fixed(), accessToken);
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(accessToken);
@@ -265,7 +265,7 @@ class JbstAbstractSessionRegistryTest {
         var incidentAC = ArgumentCaptor.forClass(JbstIncidentAuthenticationLogoutFull.class);
         verify(this.incidentsPublisher).publishAuthenticationLogoutFull(incidentAC.capture());
         var incident = incidentAC.getValue();
-        assertThat(incident.username()).isEqualTo(Username.hardcoded());
+        assertThat(incident.username()).isEqualTo(Username.fixed());
         assertThat(incident.userRequestMetadata()).isEqualTo(dbUserSession.metadata());
         verify(this.usersSessionsRepository).delete(dbUserSession.id());
     }
@@ -274,11 +274,11 @@ class JbstAbstractSessionRegistryTest {
     void logoutDbUserSessionNotPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var accessToken = JbstJwtAccessToken.random();
-        var session = this.authenticateHardcoded(accessToken);
+        var session = this.authenticateFixed(accessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(absent());
 
         // Act
-        this.componentUnderTest.logout(Username.hardcoded(), accessToken);
+        this.componentUnderTest.logout(Username.fixed(), accessToken);
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(accessToken);
@@ -287,7 +287,7 @@ class JbstAbstractSessionRegistryTest {
         assertThat(eventAC.getValue().username()).isEqualTo(session.username());
         var incidentAC = ArgumentCaptor.forClass(JbstIncidentAuthenticationLogoutMin.class);
         verify(this.incidentsPublisher).publishAuthenticationLogoutMin(incidentAC.capture());
-        assertThat(incidentAC.getValue().username()).isEqualTo(Username.hardcoded());
+        assertThat(incidentAC.getValue().username()).isEqualTo(Username.fixed());
     }
 
     @Test
@@ -309,7 +309,7 @@ class JbstAbstractSessionRegistryTest {
         var dbUserSession3 = entity(JbstUserSession.class);
         var sessionsExpiredTable = new JbstSessionsExpiredTable(
                 List.of(
-                        new Tuple3<>(Username.hardcoded(), JbstJwtRefreshToken.random(), JbstUserRequestMetadata.random()),
+                        new Tuple3<>(Username.fixed(), JbstJwtRefreshToken.random(), JbstUserRequestMetadata.random()),
                         new Tuple3<>(username3, session3.refreshToken(), dbUserSession3.metadata())
                 ),
                 Set.of(dbUserSession1.id(), dbUserSession2.id())

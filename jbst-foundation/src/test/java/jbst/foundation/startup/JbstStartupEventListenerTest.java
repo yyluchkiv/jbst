@@ -133,7 +133,7 @@ class JbstStartupEventListenerTest {
                 null,
                 null
         );
-        when(this.jbstProperties.getApp()).thenReturn(JbstPropertyApp.hardcoded());
+        when(this.jbstProperties.getApp()).thenReturn(JbstPropertyApp.fixed());
         when(this.jbstProperties.getSecurity()).thenReturn(security);
 
         // Act

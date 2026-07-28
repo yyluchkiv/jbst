@@ -16,9 +16,9 @@ public class JbstPropertyDatabases extends JbstProperty {
     @JbstPropertyOptional
     private final JbstPropertyDatabaseMongo mongo;
 
-    public static JbstPropertyDatabases hardcoded() {
+    public static JbstPropertyDatabases fixed() {
         return new JbstPropertyDatabases(
-                JbstPropertyDatabaseMongo.hardcoded()
+                JbstPropertyDatabaseMongo.fixed()
         );
     }
 

@@ -28,7 +28,7 @@ public class JbstPropertyUsersOnInit extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private List<JbstPropertyUserOnInit> users;
 
-    public static JbstPropertyUsersOnInit hardcoded() {
+    public static JbstPropertyUsersOnInit fixed() {
         return new JbstPropertyUsersOnInit(
                 true,
                 List.of(
@@ -49,7 +49,7 @@ public class JbstPropertyUsersOnInit extends JbstProperty {
     }
 
     public static JbstPropertyUsersOnInit enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyUsersOnInit disabled() {

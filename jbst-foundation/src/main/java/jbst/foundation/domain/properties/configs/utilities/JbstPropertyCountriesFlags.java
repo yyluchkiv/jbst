@@ -17,7 +17,7 @@ public class JbstPropertyCountriesFlags extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
 
-    public static JbstPropertyCountriesFlags hardcoded() {
+    public static JbstPropertyCountriesFlags fixed() {
         return new JbstPropertyCountriesFlags(true);
     }
 
@@ -26,7 +26,7 @@ public class JbstPropertyCountriesFlags extends JbstProperty {
     }
 
     public static JbstPropertyCountriesFlags enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyCountriesFlags disabled() {

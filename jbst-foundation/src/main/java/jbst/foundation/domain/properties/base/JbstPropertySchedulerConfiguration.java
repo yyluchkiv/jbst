@@ -26,7 +26,7 @@ public class JbstPropertySchedulerConfiguration extends JbstProperty {
     @JbstPropertyMandatory
     private final TimeUnit unit;
 
-    public static JbstPropertySchedulerConfiguration hardcoded() {
+    public static JbstPropertySchedulerConfiguration fixed() {
         return new JbstPropertySchedulerConfiguration(30L, 30L, SECONDS);
     }
 

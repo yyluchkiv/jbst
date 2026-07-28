@@ -23,15 +23,15 @@ public record JbstUser(
         String name
 ) implements JbstPlurable<JbstUserId> {
 
-    public static JbstUser hardcoded() {
+    public static JbstUser fixed() {
         return new JbstUser(
-                JbstUserId.hardcoded(),
-                JbstUserCreationOption.hardcoded(),
-                Username.hardcoded(),
+                JbstUserId.fixed(),
+                JbstUserCreationOption.fixed(),
+                Username.fixed(),
                 true,
                 JbstConstants.ZoneIds.UKRAINE,
                 new HashSet<>(),
-                Email.hardcoded(),
+                Email.fixed(),
                 "jbst-user"
         );
     }

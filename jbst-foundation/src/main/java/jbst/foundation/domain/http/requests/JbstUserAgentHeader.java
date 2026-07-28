@@ -14,7 +14,7 @@ import static java.util.Objects.isNull;
 public class JbstUserAgentHeader {
     private final String value;
 
-    public static JbstUserAgentHeader hardcoded() {
+    public static JbstUserAgentHeader fixed() {
         return new JbstUserAgentHeader("Chrome, macOS on Desktop");
     }
 

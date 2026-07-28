@@ -8,9 +8,9 @@ public record JbstRequestUserToken(
         JbstUserTokenType type
 ) {
 
-    public static JbstRequestUserToken hardcoded() {
+    public static JbstRequestUserToken fixed() {
         return new JbstRequestUserToken(
-                Email.hardcoded(),
+                Email.fixed(),
                 JbstUserTokenType.EMAIL_CONFIRMATION
         );
     }

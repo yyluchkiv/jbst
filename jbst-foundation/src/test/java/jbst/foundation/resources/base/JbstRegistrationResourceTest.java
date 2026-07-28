@@ -68,7 +68,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     @Test
     void registerMagicLink() throws Exception {
         // Arrange
-        var request = JbstRequestUserRegistrationMagicLink.hardcoded();
+        var request = JbstRequestUserRegistrationMagicLink.fixed();
 
         // Act
         this.mvc.perform(
@@ -89,7 +89,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     @Test
     void register0() throws Exception {
         // Arrange
-        var request = JbstRequestUserRegistration0.hardcoded();
+        var request = JbstRequestUserRegistration0.fixed();
 
         // Act
         this.mvc.perform(
@@ -111,7 +111,7 @@ class JbstRegistrationResourceTest extends TestRunnerResources1 {
     @Test
     void register1() throws Exception {
         // Arrange
-        var request = JbstRequestUserRegistration1.hardcoded();
+        var request = JbstRequestUserRegistration1.fixed();
 
         // Act
         this.mvc.perform(

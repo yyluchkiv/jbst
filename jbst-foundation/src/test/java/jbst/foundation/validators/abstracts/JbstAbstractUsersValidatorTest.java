@@ -122,7 +122,7 @@ class JbstAbstractUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
         var username = Username.random();
-        var user = JbstJwtUser.hardcoded();
+        var user = JbstJwtUser.fixed();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(user.email())).thenReturn(user);
         var requestUserUpdate1 = new JbstRequestUserUpdate1(randomZoneId(), user.email(), randomString());
 

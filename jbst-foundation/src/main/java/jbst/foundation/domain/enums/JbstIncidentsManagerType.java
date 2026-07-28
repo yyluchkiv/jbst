@@ -5,7 +5,7 @@ import static jbst.foundation.domain.random.JbstRandom.randomEnum;
 public enum JbstIncidentsManagerType {
     TELEGRAM;
 
-    public static JbstIncidentsManagerType hardcoded() {
+    public static JbstIncidentsManagerType fixed() {
         return TELEGRAM;
     }
 

@@ -143,20 +143,20 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
     @Test
     void loginStandardTest() throws Exception {
         // Arrange
-        var request = JbstRequestUserLogin.hardcoded();
+        var request = JbstRequestUserLogin.fixed();
         when(this.authenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
                 request.username(),
                 request.password()
         ));
         var username = request.username();
         var password = request.password();
-        var user = JbstJwtUser.hardcoded();
+        var user = JbstJwtUser.fixed();
         when(this.jwtUserDetailsService.loadUserByUsername(username.value())).thenReturn(user);
         var accessToken = JbstJwtAccessToken.random();
         var refreshToken = JbstJwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.hardcoded());
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.fixed());
 
         // Act
         this.mvc.perform(
@@ -183,17 +183,17 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new JbstSession(username, accessToken, refreshToken));
-        verify(this.extensionService).authenticateAsStandard(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
+        verify(this.extensionService).authenticateAsStandard(eq(Username.fixed()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
 
     @Test
     void loginMagicLinkTest() throws Exception {
         // Arrange
-        var request = JbstRequestMagicLinkToken.hardcoded();
-        var userToken = JbstUserToken.hardcodedMagicLink();
+        var request = JbstRequestMagicLinkToken.fixed();
+        var userToken = JbstUserToken.fixedMagicLink();
         var magicLinkUserCredentials = new JbstMagicLinkUserCredentials(userToken, request.zoneId());
-        var user = JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK);
+        var user = JbstJwtUser.fixed(JbstUserCreationOption.MAGICLINK);
         var credentials = new UsernamePasswordCredentials(user.username(), user.password());
         when(this.authenticationRequestsValidator.validateLoginMagicLink(request)).thenReturn(magicLinkUserCredentials);
         when(this.usersService.saveOrGetMagicLinkCredentials(magicLinkUserCredentials)).thenReturn(credentials);
@@ -202,7 +202,7 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         var refreshToken = JbstJwtRefreshToken.random();
         when(this.securityUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.hardcoded());
+        when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(JbstCurrentClientUser.fixed());
 
         // Act
         this.mvc.perform(
@@ -230,14 +230,14 @@ class JbstAuthenticationResourceTest extends TestRunnerResources1 {
         verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
         verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         verify(this.sessionRegistry).register(new JbstSession(user.username(), accessToken, refreshToken));
-        verify(this.extensionService).authenticateAsMagicLink(eq(Username.hardcoded()), any(HttpServletRequest.class), any(HttpServletResponse.class));
+        verify(this.extensionService).authenticateAsMagicLink(eq(Username.fixed()), any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
 
     @Test
     void authenticateStandardWithInvalidCredentialsTest() throws Exception {
         // Arrange
-        var request = JbstRequestUserLogin.hardcoded();
+        var request = JbstRequestUserLogin.fixed();
         when(this.authenticationRequestsValidator.validateLoginStandard(request)).thenReturn(new UsernamePasswordCredentials(
                 request.username(),
                 request.password()

@@ -72,23 +72,23 @@ class JbstAuthenticationValidatorTest {
     private static Stream<Arguments> validateLoginMagicLinkTest() {
         return Stream.of(
                 Arguments.of(
-                        JbstRequestMagicLinkToken.hardcoded(),
+                        JbstRequestMagicLinkToken.fixed(),
                         null,
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
-                        JbstRequestMagicLinkToken.hardcoded(),
-                        JbstUserToken.hardcodedEmailConfirmation(),
+                        JbstRequestMagicLinkToken.fixed(),
+                        JbstUserToken.fixedEmailConfirmation(),
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
-                        JbstRequestMagicLinkToken.hardcoded(),
-                        JbstUserToken.hardcodedPasswordReset(),
+                        JbstRequestMagicLinkToken.fixed(),
+                        JbstUserToken.fixedPasswordReset(),
                         "Invalid magic link token: E4944FFE506B2838A8F667D95C5FB28DB3ABAE54"
                 ),
                 Arguments.of(
-                        JbstRequestMagicLinkToken.hardcoded(),
-                        JbstUserToken.hardcodedMagicLink(),
+                        JbstRequestMagicLinkToken.fixed(),
+                        JbstUserToken.fixedMagicLink(),
                         null
                 )
         );

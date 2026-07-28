@@ -24,7 +24,7 @@ public class JbstPropertyTimeAmount extends JbstProperty {
     @JbstPropertyMandatory
     private final ChronoUnit unit;
 
-    public static JbstPropertyTimeAmount hardcoded() {
+    public static JbstPropertyTimeAmount fixed() {
         return new JbstPropertyTimeAmount(12L, HOURS);
     }
 

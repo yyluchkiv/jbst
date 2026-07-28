@@ -7,10 +7,10 @@ public record JbstRequestUserChangePasswordBasic(
         @Password.ValidPasswordNotBlank Password confirmPassword
 ) {
 
-    public static JbstRequestUserChangePasswordBasic hardcoded() {
+    public static JbstRequestUserChangePasswordBasic fixed() {
         return new JbstRequestUserChangePasswordBasic(
-                Password.hardcoded(),
-                Password.hardcoded()
+                Password.fixed(),
+                Password.fixed()
         );
     }
 

@@ -13,12 +13,12 @@ public record UsernamePasswordCredentials(
         return new UsernamePasswordCredentials(username, Password.of(JbstMasks.mask5(password.value())));
     }
 
-    public static UsernamePasswordCredentials hardcoded() {
-        return new UsernamePasswordCredentials(Username.hardcoded(), Password.hardcoded());
+    public static UsernamePasswordCredentials fixed() {
+        return new UsernamePasswordCredentials(Username.fixed(), Password.fixed());
     }
 
-    public static UsernamePasswordCredentials hardcodedMasked() {
-        return UsernamePasswordCredentials.mask5(Username.hardcoded(), Password.hardcoded());
+    public static UsernamePasswordCredentials fixedMasked() {
+        return UsernamePasswordCredentials.mask5(Username.fixed(), Password.fixed());
     }
 
     public static UsernamePasswordCredentials random() {

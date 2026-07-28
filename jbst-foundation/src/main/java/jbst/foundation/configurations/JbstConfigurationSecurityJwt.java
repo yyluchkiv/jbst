@@ -204,7 +204,7 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
                     }
 
                     authorizeHttpRequests
-                            .requestMatchers(basePathPrefix + "/hardcoded/**").authenticated()
+                            .requestMatchers(basePathPrefix + "/fixed/**").authenticated()
                             .requestMatchers(basePathPrefix + "/**").authenticated();
 
                     authorizeHttpRequests.requestMatchers(GET, "/system/csrf").authenticated();

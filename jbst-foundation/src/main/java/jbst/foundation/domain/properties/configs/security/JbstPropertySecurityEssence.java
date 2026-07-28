@@ -19,10 +19,10 @@ public class JbstPropertySecurityEssence extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertyInvitationsOnInit invitationsOnInit;
 
-    public static JbstPropertySecurityEssence hardcoded() {
+    public static JbstPropertySecurityEssence fixed() {
         return new JbstPropertySecurityEssence(
-                JbstPropertyUsersOnInit.hardcoded(),
-                JbstPropertyInvitationsOnInit.hardcoded()
+                JbstPropertyUsersOnInit.fixed(),
+                JbstPropertyInvitationsOnInit.fixed()
         );
     }
 

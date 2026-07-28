@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ServerNameTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final ServerName SERVER_NAME = ServerName.hardcoded();
+    private static final ServerName SERVER_NAME = ServerName.fixed();
 
     @Override
     protected String getFileName() {

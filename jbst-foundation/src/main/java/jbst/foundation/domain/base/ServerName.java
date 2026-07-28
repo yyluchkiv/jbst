@@ -25,7 +25,7 @@ public record ServerName(@NotNull String value) {
         return new ServerName(value);
     }
 
-    public static ServerName hardcoded() {
+    public static ServerName fixed() {
         return of("jbst-server");
     }
 

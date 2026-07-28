@@ -11,9 +11,9 @@ public record JbstIncidentAuthenticationLogin(
         JbstUserRequestMetadata userRequestMetadata
 ) implements JbstAbstractIncident {
 
-    public static JbstIncidentAuthenticationLogin hardcoded() {
+    public static JbstIncidentAuthenticationLogin fixed() {
         return new  JbstIncidentAuthenticationLogin(
-                Username.hardcoded(),
+                Username.fixed(),
                 JbstUserRequestMetadata.valid()
         );
     }

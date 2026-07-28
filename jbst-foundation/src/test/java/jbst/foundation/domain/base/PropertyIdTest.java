@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PropertyIdTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final PropertyId PROPERTY_ID = PropertyId.hardcoded();
+    private static final PropertyId PROPERTY_ID = PropertyId.fixed();
 
     @Override
     protected String getFileName() {

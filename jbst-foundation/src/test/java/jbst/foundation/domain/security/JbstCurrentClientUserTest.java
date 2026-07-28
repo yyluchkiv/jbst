@@ -63,8 +63,8 @@ class JbstCurrentClientUserTest extends JbstUnitTests.Runners.BaseFolder {
     void serializeTest() {
         // Arrange
         var currentClientUser = new JbstCurrentClientUser(
-                Username.hardcoded(),
-                Email.of("tests@" + JbstConstants.Domains.HARDCODED),
+                Username.fixed(),
+                Email.of("tests@" + JbstConstants.Domains.FIXED),
                 "JBST",
                 UKRAINE,
                 false,

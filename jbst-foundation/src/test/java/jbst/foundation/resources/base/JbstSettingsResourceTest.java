@@ -51,7 +51,7 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
     @Test
     void getJbstSettings() throws Exception {
         // Arrange
-        when(this.settingsService.getSettings()).thenReturn(JbstSettings.hardcoded());
+        when(this.settingsService.getSettings()).thenReturn(JbstSettings.fixed());
 
         // Act
         this.mvc.perform(get("/settings"))
@@ -68,14 +68,14 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
     @Test
     void saveJbstSettings() throws Exception {
         // Arrange
-        var request = JbstRequestJbstSettings.hardcoded();
-        when(this.settingsService.getSettings()).thenReturn(JbstSettings.hardcoded());
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(JbstJwtUser.hardcoded());
+        var request = JbstRequestJbstSettings.fixed();
+        when(this.settingsService.getSettings()).thenReturn(JbstSettings.fixed());
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(JbstJwtUser.fixed());
 
         // Act
         this.mvc.perform(
                         post("/settings")
-                                .content(this.objectMapper.writeValueAsString(JbstRequestJbstSettings.hardcoded()))
+                                .content(this.objectMapper.writeValueAsString(JbstRequestJbstSettings.fixed()))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -86,7 +86,7 @@ class JbstSettingsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.settingsService).saveSettings(eq(Username.hardcoded()), eq(request));
+        verify(this.settingsService).saveSettings(eq(Username.fixed()), eq(request));
         verify(this.settingsService).getSettings();
     }
 }

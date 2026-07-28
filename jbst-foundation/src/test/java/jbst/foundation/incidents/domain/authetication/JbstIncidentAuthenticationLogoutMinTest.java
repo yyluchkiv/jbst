@@ -10,7 +10,7 @@ class JbstIncidentAuthenticationLogoutMinTest {
     @Test
     void convertAuthenticationLogoutMinIncidentTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var incident = new JbstIncidentAuthenticationLogoutMin(
                 username
         );

@@ -7,10 +7,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JbstLatencySynchronizedQueueTest {
 
     @RepeatedTest(10)
-    void hardcodedTest() {
+    void fixedTest() {
         // Act
-        var queue = JbstLatencySynchronizedQueue.hardcoded();
-        var json = JbstLatencySynchronizedQueue.JbstLatencyJSON.hardcoded();
+        var queue = JbstLatencySynchronizedQueue.fixed();
+        var json = JbstLatencySynchronizedQueue.JbstLatencyJSON.fixed();
 
         // Assert
         assertThat(queue.avgMs()).isEqualTo(237L);

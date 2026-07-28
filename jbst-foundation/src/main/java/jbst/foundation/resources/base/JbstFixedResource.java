@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 // Swagger
-@Tag(name = "[jbst] Hardcoded API")
+@Tag(name = "[jbst] Fixed API")
 // Spring
 @Slf4j
 @JbstResource
 @RestController
-@RequestMapping("/hardcoded")
+@RequestMapping("/fixed")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstHardcodedResource {
+public class JbstFixedResource {
 
     @GetMapping("/sessions")
     public JbstResponseUserSessionsTable getSessions() {

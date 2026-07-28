@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
         "jbst.foundation.validators.postgres"
 })
 @Import({
-        TestJbstConfigurationPropertiesHardcoded.class
+        TestJbstConfigurationPropertiesFixed.class
 })
 public class TestConfigurationPostgresValidators {
 

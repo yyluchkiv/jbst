@@ -84,10 +84,10 @@ class JbstSpringBootTest extends JbstUnitTests.Runners.BaseFolder {
                         "info-5.json"
                 ),
                 Arguments.of(
-                        JbstSpringBoot.SpringBootActuatorInfo.hardcoded(),
+                        JbstSpringBoot.SpringBootActuatorInfo.fixed(),
                         "dev",
                         false,
-                        Version.hardcoded(),
+                        Version.fixed(),
                         "info-6.json"
                 )
         );

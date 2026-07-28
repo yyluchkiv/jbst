@@ -37,8 +37,8 @@ public class JbstLatencySynchronizedQueue {
             this.latenciesMs = "[" + latencies.stream().map(element -> element + " ms").collect(Collectors.joining(", ")) + "]";
         }
 
-        public static JbstLatencyJSON hardcoded() {
-            return JbstLatencySynchronizedQueue.hardcoded().getJSON();
+        public static JbstLatencyJSON fixed() {
+            return JbstLatencySynchronizedQueue.fixed().getJSON();
         }
 
         public static JbstLatencyJSON random() {
@@ -50,7 +50,7 @@ public class JbstLatencySynchronizedQueue {
         this.nanos = synchronizedQueue(new CircularFifoQueue<>(size));
     }
 
-    public static JbstLatencySynchronizedQueue hardcoded() {
+    public static JbstLatencySynchronizedQueue fixed() {
         var queue = new JbstLatencySynchronizedQueue(10);
         queue.add(200_000_000L);
         queue.add(210_000_000L);

@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JbstRequestUserUpdate1Test extends JbstUnitTests.Runners.BaseFolderFile {
     private static final JbstRequestUserUpdate1 REQUEST = new JbstRequestUserUpdate1(
             UKRAINE,
-            Email.hardcoded(),
-            "Hardcoded Tests"
+            Email.fixed(),
+            "Fixed Tests"
     );
 
     @Override

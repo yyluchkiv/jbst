@@ -14,7 +14,7 @@ public class TestConfigurationPropertiesMocked {
     @Bean
     JbstProperties jbstProperties() {
         var jbstProperties = mock(JbstProperties.class);
-        when(jbstProperties.getMvc()).thenReturn(JbstPropertyMVC.hardcoded());
+        when(jbstProperties.getMvc()).thenReturn(JbstPropertyMVC.fixed());
         return jbstProperties;
     }
 }

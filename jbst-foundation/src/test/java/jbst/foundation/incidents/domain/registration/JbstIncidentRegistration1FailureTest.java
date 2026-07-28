@@ -11,7 +11,7 @@ class JbstIncidentRegistration1FailureTest {
     @Test
     void convertRegister1FailureIncidentTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var exception = randomString();
         var code = randomString();
         var incident = JbstIncidentRegistration1Failure.of(

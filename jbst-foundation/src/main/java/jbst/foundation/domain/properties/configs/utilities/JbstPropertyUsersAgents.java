@@ -17,7 +17,7 @@ public class JbstPropertyUsersAgents extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
 
-    public static JbstPropertyUsersAgents hardcoded() {
+    public static JbstPropertyUsersAgents fixed() {
         return new JbstPropertyUsersAgents(true);
     }
 
@@ -26,7 +26,7 @@ public class JbstPropertyUsersAgents extends JbstProperty {
     }
 
     public static JbstPropertyUsersAgents enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyUsersAgents disabled() {

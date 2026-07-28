@@ -11,7 +11,7 @@ public record JbstSettingsHardwareMonitoringThresholds(
         Map<JbstHardwareName, BigDecimal> values
 ) {
 
-    public static JbstSettingsHardwareMonitoringThresholds hardcoded() {
+    public static JbstSettingsHardwareMonitoringThresholds fixed() {
         return new JbstSettingsHardwareMonitoringThresholds(
                 true,
                 new EnumMap<>(

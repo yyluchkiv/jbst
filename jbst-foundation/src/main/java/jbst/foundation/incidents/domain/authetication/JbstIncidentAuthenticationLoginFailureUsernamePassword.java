@@ -11,9 +11,9 @@ public record JbstIncidentAuthenticationLoginFailureUsernamePassword(
         JbstUserRequestMetadata userRequestMetadata
 ) implements JbstAbstractIncident {
 
-    public static JbstIncidentAuthenticationLoginFailureUsernamePassword hardcoded() {
+    public static JbstIncidentAuthenticationLoginFailureUsernamePassword fixed() {
         return new JbstIncidentAuthenticationLoginFailureUsernamePassword(
-                UsernamePasswordCredentials.hardcoded(),
+                UsernamePasswordCredentials.fixed(),
                 JbstUserRequestMetadata.testData()
         );
     }

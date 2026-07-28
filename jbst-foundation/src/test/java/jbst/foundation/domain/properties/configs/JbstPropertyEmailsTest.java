@@ -59,7 +59,7 @@ class JbstPropertyEmailsTest {
         assertThat(emails.getHost()).isNotNull();
         assertThat(emails.getPort()).isEqualTo(587);
         assertThat(emails.getFrom()).isEqualTo(from);
-        assertThat(emails.getUsername()).isEqualTo(Username.hardcoded());
-        assertThat(emails.getPassword()).isEqualTo(Password.hardcoded());
+        assertThat(emails.getUsername()).isEqualTo(Username.fixed());
+        assertThat(emails.getPassword()).isEqualTo(Password.fixed());
     }
 }

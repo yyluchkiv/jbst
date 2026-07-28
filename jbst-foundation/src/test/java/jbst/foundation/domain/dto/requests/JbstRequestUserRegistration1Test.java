@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstRequestUserRegistration1Test extends JbstUnitTests.Runners.BaseFolderFile {
     private static final JbstRequestUserRegistration1 REQUEST = new JbstRequestUserRegistration1(
-            Username.hardcoded(),
+            Username.fixed(),
             Password.of("password123"),
             Password.of("password123"),
             UKRAINE,

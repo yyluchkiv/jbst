@@ -27,7 +27,7 @@ class JbstConfigurationAsyncTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class,
+            TestJbstConfigurationPropertiesFixed.class,
             JbstConfigurationAsync.class
     })
     static class ContextConfiguration {

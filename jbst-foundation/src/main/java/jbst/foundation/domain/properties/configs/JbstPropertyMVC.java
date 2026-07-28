@@ -24,11 +24,11 @@ public class JbstPropertyMVC extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private JbstPropertyCORS cors;
 
-    public static JbstPropertyMVC hardcoded() {
+    public static JbstPropertyMVC fixed() {
         return new JbstPropertyMVC(
                 true,
                 "/jbst/security",
-                JbstPropertyCORS.hardcoded()
+                JbstPropertyCORS.fixed()
         );
     }
 
@@ -41,7 +41,7 @@ public class JbstPropertyMVC extends JbstProperty {
     }
 
     public static JbstPropertyMVC enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyMVC disabled() {

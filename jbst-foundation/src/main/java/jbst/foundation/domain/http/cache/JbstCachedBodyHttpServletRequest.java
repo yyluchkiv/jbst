@@ -58,7 +58,7 @@ public class JbstCachedBodyHttpServletRequest extends HttpServletRequestWrapper 
             return new CachedPayload(value);
         }
 
-        public static CachedPayload hardcoded() {
+        public static CachedPayload fixed() {
             return of("{}");
         }
 

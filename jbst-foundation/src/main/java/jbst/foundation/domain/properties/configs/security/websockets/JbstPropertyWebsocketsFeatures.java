@@ -17,10 +17,10 @@ public class JbstPropertyWebsocketsFeatures extends JbstProperty {
     @JbstPropertyOptional
     private JbstPropertyWebsocketsFeature resetServer;
 
-    public static JbstPropertyWebsocketsFeatures hardcoded() {
+    public static JbstPropertyWebsocketsFeatures fixed() {
         return new JbstPropertyWebsocketsFeatures(
-                JbstPropertyWebsocketsFeature.hardcoded(),
-                JbstPropertyWebsocketsFeature.hardcoded()
+                JbstPropertyWebsocketsFeature.fixed(),
+                JbstPropertyWebsocketsFeature.fixed()
         );
     }
 

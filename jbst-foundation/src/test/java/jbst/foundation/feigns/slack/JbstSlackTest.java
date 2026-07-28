@@ -1,6 +1,6 @@
 package jbst.foundation.feigns.slack;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.concurrent.JbstSleep;
 import jbst.foundation.feigns.slack.JbstSlack.ClientException;
 import jbst.foundation.feigns.slack.JbstSlack.ConfigurationException;
@@ -28,7 +28,7 @@ class JbstSlackTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     static class TestConfiguration {
 

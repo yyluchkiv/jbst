@@ -14,9 +14,9 @@ public class ServerProperties implements PriorityOrdered {
     private JbstPropertyServer server;
 
     @SuppressWarnings("unused")
-    public static ServerProperties hardcoded() {
+    public static ServerProperties fixed() {
         var properties = new ServerProperties();
-        properties.setServer(JbstPropertyServer.hardcoded());
+        properties.setServer(JbstPropertyServer.fixed());
         return properties;
     }
 

@@ -26,17 +26,17 @@ public class JbstProperties implements PriorityOrdered {
     private JbstPropertySecurity security;
     private JbstPropertyDatabases databases;
 
-    public static JbstProperties hardcoded() {
+    public static JbstProperties fixed() {
         var properties = new JbstProperties();
-        properties.setApp(JbstPropertyApp.hardcoded());
-        properties.setUtils(JbstPropertyUtils.hardcoded());
-        properties.setAsync(JbstPropertyAsync.hardcoded());
-        properties.setEvents(JbstPropertyEvents.hardcoded());
-        properties.setMvc(JbstPropertyMVC.hardcoded());
-        properties.setEmails(JbstPropertyEmails.hardcoded());
-        properties.setIncidentsManager(JbstPropertyIncidentsManager.hardcoded());
-        properties.setSecurity(JbstPropertySecurity.hardcoded());
-        properties.setDatabases(JbstPropertyDatabases.hardcoded());
+        properties.setApp(JbstPropertyApp.fixed());
+        properties.setUtils(JbstPropertyUtils.fixed());
+        properties.setAsync(JbstPropertyAsync.fixed());
+        properties.setEvents(JbstPropertyEvents.fixed());
+        properties.setMvc(JbstPropertyMVC.fixed());
+        properties.setEmails(JbstPropertyEmails.fixed());
+        properties.setIncidentsManager(JbstPropertyIncidentsManager.fixed());
+        properties.setSecurity(JbstPropertySecurity.fixed());
+        properties.setDatabases(JbstPropertyDatabases.fixed());
         return properties;
     }
 

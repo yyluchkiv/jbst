@@ -13,7 +13,7 @@ public record JbstRequestUserUpdate2(
         String name
 ) {
 
-    public static JbstRequestUserUpdate2 hardcoded() {
+    public static JbstRequestUserUpdate2 fixed() {
         return new JbstRequestUserUpdate2(
                 UKRAINE,
                 "jbst"

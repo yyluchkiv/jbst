@@ -28,14 +28,14 @@ public class JbstPropertyEmails extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private Password password;
 
-    public static JbstPropertyEmails hardcoded() {
+    public static JbstPropertyEmails fixed() {
         return new JbstPropertyEmails(
                 true,
                 "smtp.gmail.com",
                 587,
                 "jbst",
-                Username.hardcoded(),
-                Password.hardcoded()
+                Username.fixed(),
+                Password.fixed()
         );
     }
 
@@ -44,7 +44,7 @@ public class JbstPropertyEmails extends JbstProperty {
     }
 
     public static JbstPropertyEmails enabled(String from) {
-        return new JbstPropertyEmails(true, "smtp.gmail.com", 587, from, Username.hardcoded(), Password.hardcoded());
+        return new JbstPropertyEmails(true, "smtp.gmail.com", 587, from, Username.fixed(), Password.fixed());
     }
 
     @SuppressWarnings("unused")

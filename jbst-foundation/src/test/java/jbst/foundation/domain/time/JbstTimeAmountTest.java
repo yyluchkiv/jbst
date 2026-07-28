@@ -14,7 +14,7 @@ import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstTimeAmountTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final JbstTimeAmount TIME_AMOUNT = JbstTimeAmount.hardcoded();
+    private static final JbstTimeAmount TIME_AMOUNT = JbstTimeAmount.fixed();
 
     private static Stream<Arguments> toTest() {
         return Stream.of(

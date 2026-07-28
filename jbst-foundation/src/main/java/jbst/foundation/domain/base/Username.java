@@ -28,7 +28,7 @@ public record Username(@NotNull String value) {
         return new Username(value);
     }
 
-    public static Username hardcoded() {
+    public static Username fixed() {
         return of("jbst");
     }
 

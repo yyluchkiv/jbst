@@ -20,12 +20,12 @@ public record JbstRequestUserRegistration0(
         @Schema(type = "string") @NotNull ZoneId zoneId
 ) {
 
-    public static JbstRequestUserRegistration0 hardcoded() {
+    public static JbstRequestUserRegistration0 fixed() {
         return new JbstRequestUserRegistration0(
-                Email.hardcoded(),
+                Email.fixed(),
                 Username.of("registration01"),
-                Password.hardcoded(),
-                Password.hardcoded(),
+                Password.fixed(),
+                Password.fixed(),
                 randomZoneId()
         );
     }

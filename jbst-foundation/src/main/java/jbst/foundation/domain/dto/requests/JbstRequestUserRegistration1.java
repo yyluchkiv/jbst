@@ -20,11 +20,11 @@ public record JbstRequestUserRegistration1(
         @NotBlank String code
 ) {
 
-    public static JbstRequestUserRegistration1 hardcoded() {
+    public static JbstRequestUserRegistration1 fixed() {
         return new JbstRequestUserRegistration1(
                 Username.of("registration11"),
-                Password.hardcoded(),
-                Password.hardcoded(),
+                Password.fixed(),
+                Password.fixed(),
                 randomZoneId(),
                 randomString()
         );

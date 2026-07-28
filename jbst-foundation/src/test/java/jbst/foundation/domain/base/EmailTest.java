@@ -14,11 +14,11 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EmailTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final Email EMAIL = Email.hardcoded();
+    private static final Email EMAIL = Email.fixed();
 
     private static Stream<Arguments> getUsernameTest() {
         return Stream.of(
-                Arguments.of(Email.hardcoded(), new Username("tests")),
+                Arguments.of(Email.fixed(), new Username("tests")),
                 Arguments.of(Email.unknown(), new Username("Unknown"))
         );
     }
@@ -70,7 +70,7 @@ class EmailTest extends JbstUnitTests.Runners.BaseFolderFile {
 
         // Assert
         assertThat(actual.value()).hasSize(expected);
-        assertThat(actual.value().substring(randomLength)).isEqualTo("@" + JbstConstants.Domains.HARDCODED);
+        assertThat(actual.value().substring(randomLength)).isEqualTo("@" + JbstConstants.Domains.FIXED);
     }
 
     @ParameterizedTest

@@ -375,7 +375,7 @@ public class JbstRandom {
 
     public static Claims validClaims() {
         var claims = Jwts.claims();
-        claims.subject(Username.hardcoded().value());
+        claims.subject(Username.fixed().value());
         var timeAmount = new JbstPropertyTimeAmount(1, ChronoUnit.HOURS);
         var expiration = convert(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.issuedAt(new Date());
@@ -386,7 +386,7 @@ public class JbstRandom {
 
     public static Claims expiredClaims() {
         var claims = Jwts.claims();
-        claims.subject(Username.hardcoded().value());
+        claims.subject(Username.fixed().value());
         var currentTimestamp = getCurrentTimestamp();
         var issuedAt = new Date(currentTimestamp);
         var expiration = new Date(currentTimestamp - 1000);

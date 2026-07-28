@@ -22,7 +22,7 @@ public class JbstPropertyWebsocketsFeature extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private String userDestination;
 
-    public static JbstPropertyWebsocketsFeature hardcoded() {
+    public static JbstPropertyWebsocketsFeature fixed() {
         return new JbstPropertyWebsocketsFeature(true, "/accounts");
     }
 
@@ -31,7 +31,7 @@ public class JbstPropertyWebsocketsFeature extends JbstProperty {
     }
 
     public static JbstPropertyWebsocketsFeature enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyWebsocketsFeature disabled() {

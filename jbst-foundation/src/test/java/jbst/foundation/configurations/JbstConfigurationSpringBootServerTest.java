@@ -27,7 +27,7 @@ class JbstConfigurationSpringBootServerTest {
     @Configuration
     @Import({
             JbstConfigurationSpringBootServer.class,
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     static class ContextConfiguration {
         @Bean

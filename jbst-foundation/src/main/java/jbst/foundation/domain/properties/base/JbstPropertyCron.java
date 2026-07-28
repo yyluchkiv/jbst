@@ -23,7 +23,7 @@ public class JbstPropertyCron extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private String zoneId;
 
-    public static JbstPropertyCron hardcoded() {
+    public static JbstPropertyCron fixed() {
         return new JbstPropertyCron(true, "*/30 * * * * *", UKRAINE.getId());
     }
 
@@ -32,7 +32,7 @@ public class JbstPropertyCron extends JbstProperty {
     }
 
     public static JbstPropertyCron enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyCron disabled() {

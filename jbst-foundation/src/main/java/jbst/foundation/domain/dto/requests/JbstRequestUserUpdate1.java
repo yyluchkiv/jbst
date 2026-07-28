@@ -15,10 +15,10 @@ public record JbstRequestUserUpdate1(
         String name
 ) {
 
-    public static JbstRequestUserUpdate1 hardcoded() {
+    public static JbstRequestUserUpdate1 fixed() {
         return new JbstRequestUserUpdate1(
                 UKRAINE,
-                Email.hardcoded(),
+                Email.fixed(),
                 "jbst"
         );
     }

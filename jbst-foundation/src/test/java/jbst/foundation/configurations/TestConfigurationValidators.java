@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @Import({
-        TestJbstConfigurationPropertiesHardcoded.class
+        TestJbstConfigurationPropertiesFixed.class
 })
 public class TestConfigurationValidators {
 

@@ -20,7 +20,7 @@ public class JbstPropertySecuritySessions extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertyCron enableSessionsMetadataRenewCron;
 
-    public static JbstPropertySecuritySessions hardcoded() {
+    public static JbstPropertySecuritySessions fixed() {
         return new JbstPropertySecuritySessions(
                 JbstPropertyCron.enabled("*/30 * * * * *", UKRAINE.getId()),
                 JbstPropertyCron.enabled("*/15 * * * * *", UKRAINE.getId())

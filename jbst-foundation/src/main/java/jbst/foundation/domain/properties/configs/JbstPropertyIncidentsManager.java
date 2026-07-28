@@ -41,12 +41,12 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     @JbstPropertyMetadataMapMinSize(minSize = 0)
     private final Map<String, Boolean> incidents;
 
-    public static JbstPropertyIncidentsManager hardcoded() {
+    public static JbstPropertyIncidentsManager fixed() {
         return new JbstPropertyIncidentsManager(
                 true,
-                JbstIncidentsManagerType.hardcoded(),
-                JbstPropertyRemoteServer.hardcoded(),
-                JbstPropertyTelegram.hardcoded(),
+                JbstIncidentsManagerType.fixed(),
+                JbstPropertyRemoteServer.fixed(),
+                JbstPropertyTelegram.fixed(),
                 Map.ofEntries(
                         Map.entry("AUTHENTICATION_LOGIN", true),
                         Map.entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", false),
@@ -65,7 +65,7 @@ public class JbstPropertyIncidentsManager extends JbstProperty {
     }
 
     public static JbstPropertyIncidentsManager enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyIncidentsManager disabled() {
