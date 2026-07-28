@@ -88,6 +88,6 @@ jbst:
     mongo:
       enabled: true
       database:
-        host: jbst-mongodb
+        host: jbst-database-mongodb
         port: 27017
         name: jbst

@@ -1,10 +1,10 @@
 services:
   jbst-server:
     image: ghcr.io/yyluchkiv/jbst-server-iam:1.69
-    restart: unless-stopped
+    restart: "no"
     container_name: jbst-server
     networks:
-      - jbst-network
+      - network-jbst
     ports:
       - "3002:3002"
     environment:
@@ -16,21 +16,22 @@ services:
     volumes:
       - ./application-docker-mongo.yml:/application-docker-mongo.yml
 
-  jbst-mongodb:
+  jbst-database-mongodb:
     image: mongo:6.0.15
-    restart: always
-    container_name: jbst-mongodb
+    restart: "no"
+    container_name: jbst-database-mongodb
     ports:
       - "3004:27017"
     networks:
-      - jbst-network
+      - network-jbst
     volumes:
-      - jbst-mongodb-data:/data/db
+      - volume-jbst-mongodb:/data/db
 
 networks:
-  jbst-network:
-    name: jbst-network
+  network-jbst:
+    name: network-jbst
     driver: bridge
 
 volumes:
-  jbst-mongodb-data:
+  volume-jbst-mongodb:
+    name: volume-jbst-mongodb
