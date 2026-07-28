@@ -8,10 +8,10 @@ DOCKER_COMPOSE_POSTGRES_PATH="assets/docker/docker-compose.postgres.yml"
 
 MAJOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $1}')
 MINOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $2}')
-CURRENT_RELEASE_CHANGELOG_VERSION="$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER"
 ((MINOR_VERSION_NUMBER++))
 NEXT_RELEASE_CHANGELOG_VERSION="[v$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER]"
-NEXT_SNAPSHOT_DOCKER_VERSION="'$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER-SNAPSHOT'"
+NEXT_SNAPSHOT_VERSION="$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER-SNAPSHOT"
+NEXT_SNAPSHOT_DOCKER_VERSION="'$NEXT_SNAPSHOT_VERSION'"
 
 echo "================================================================================================================="
 echo "$PREFIX Maven versions started"
@@ -56,10 +56,8 @@ echo "==========================================================================
 echo "================================================================================================================="
 echo "$PREFIX docker-compose started"
 
-CURRENT_RELEASE_IMAGE="    image: ghcr.io\/yyluchkiv\/jbst-server-iam:$CURRENT_RELEASE_CHANGELOG_VERSION"
-
-sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_MONGO_PATH"
-sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_POSTGRES_PATH"
+sed -i '' "s|image: ghcr.io/yyluchkiv/jbst-server-iam:.*|image: ghcr.io/yyluchkiv/jbst-server-iam:$NEXT_SNAPSHOT_VERSION|" "$DOCKER_COMPOSE_MONGO_PATH"
+sed -i '' "s|image: ghcr.io/yyluchkiv/jbst-server-iam:.*|image: ghcr.io/yyluchkiv/jbst-server-iam:$NEXT_SNAPSHOT_VERSION|" "$DOCKER_COMPOSE_POSTGRES_PATH"
 
 echo "$PREFIX docker-compose has been completed"
 echo "================================================================================================================="

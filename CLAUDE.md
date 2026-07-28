@@ -33,10 +33,13 @@ All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via
 ./mvnw clean verify   # or `./mvnw clean install`
 
 # Fast install, skip all tests
-./delivery-check-fast.sh          # ./mvnw clean install -Dmaven.test.skip -DskipTests -T 4
+./push-check.sh                   # ./mvnw clean install -Dmaven.test.skip -DskipTests -T 4
 
 # Library-only fast install
 ./build-fast.sh                   # ./mvnw -pl jbst-foundation -am clean install -DskipTests -T 4
+
+# Local docker image for jbst-server-iam (fast install + docker build, tag = workflow DOCKER_VERSION)
+./docker-build-locally.sh
 ```
 
 ### Running a single test
@@ -86,7 +89,7 @@ PostgreSQL schema is managed by **Liquibase**: `src/main/resources/postgres/chan
 
 - **CI** (`.github/workflows/main.yml`): on push to `main`, runs `./mvnw clean install` on Java 17 (Temurin). Maven `deploy` to GitHub Packages and the Docker image push are gated behind the `MAVEN_DEPLOYMENT_ENABLED` / `DOCKER_PUSH_ENABLED` env flags in that workflow (normally `false` on snapshots).
 - **Version bumps are scripted** — do not hand-edit versions across POMs and the workflow. The repo follows a `SNAPSHOT:` → `RELEASE:` commit cadence:
-  - `./next-release.sh` — strips `-SNAPSHOT` from all POMs and flips the workflow deploy/docker flags on.
+  - `./next-release.sh` — strips `-SNAPSHOT` from all POMs and the `docker-compose.*.yml` image tags, and flips the workflow deploy/docker flags on.
   - `./next-snapshot.sh` — bumps to the next `-SNAPSHOT`, resets the workflow flags, resets `CHANGELOG.md`, and updates the `docker-compose.*.yml` image tags.
 - `./gen-artifacts.sh` collects the foundation JAR + parent/foundation POMs into `artifacts/`.
 - `./sonar-check.sh` requires a local SonarQube on `:9000`, then runs `./mvnw clean install` + `sonar-scanner` (config in `sonar-project.properties`).

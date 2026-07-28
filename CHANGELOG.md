@@ -4,3 +4,7 @@
 — fix: next-snapshot.sh — correct docker-compose paths (`files/docker` → `assets/docker`) so image tags get bumped again
 — chore: add `ship-fast` Claude Code skill — ship without running the test suite (compile check only)
 — chore: ship/ship-fast skills — local cleanup step (delete local branch, remove worktree folder, prune stale tracking ref) after merge
+— build: `docker-build-locally.sh` — build the jbst-server-iam docker image locally, tagged from the workflow `DOCKER_VERSION`
+— build: rename `delivery-check-fast.sh` → `push-check.sh` (unique autocomplete prefixes across root scripts)
+— build: docker-compose image tags now track the current `-SNAPSHOT` version; `next-release.sh`/`next-snapshot.sh` keep them in sync with `DOCKER_VERSION`
+— build: jbst-server-iam Dockerfile base `eclipse-temurin:17.0.7_7-jdk-alpine` → `17.0.16_8-jdk` (multi-arch, enables arm64/Apple Silicon local builds)
