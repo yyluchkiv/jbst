@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 WorkingDirectory=/root/artifacts
-Environment="JAVA_HOME=/opt/jdk-17.0.7"
+Environment="JAVA_HOME=/opt/jdk-21.0.11"
 ExecStart=/bin/bash -c "exec $${JAVA_HOME}/bin/java -Djava.security.egd=file:/dev/./urandom -Dserver.port=6001 -Dspring.config.location=classpath:application.yml,file:application-hm-server.yml -jar hms.jar"
 Restart=on-abort
 User=root

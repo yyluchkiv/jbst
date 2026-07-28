@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17.0.16_8-jdk
+FROM eclipse-temurin:21.0.11_10-jdk
 WORKDIR /app
 EXPOSE ${PORT}
 ADD /target/app.jar app.jar

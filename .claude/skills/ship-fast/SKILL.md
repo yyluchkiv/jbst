@@ -18,7 +18,7 @@ step must succeed before the next one runs — stop and report on any failure.
 2. **Compile check** — tests are skipped, but the code must at least compile:
 
    ```sh
-   export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+   export JAVA_HOME=$(/usr/libexec/java_home -v 21)
    ./mvnw clean compile test-compile
    ```
 
