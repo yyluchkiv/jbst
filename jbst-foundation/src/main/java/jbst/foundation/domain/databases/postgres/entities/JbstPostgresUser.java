@@ -1,7 +1,6 @@
 package jbst.foundation.domain.databases.postgres.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Email;
@@ -19,7 +18,8 @@ import jbst.foundation.domain.enums.JbstUserCreationOption;
 import jbst.foundation.domain.ids.JbstUserId;
 import jbst.foundation.domain.jwt.JbstJwtUser;
 import lombok.*;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -82,7 +82,7 @@ public class JbstPostgresUser extends JbstPostgresAbstractPersistable0 {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @Type(JsonBinaryType.class)
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "email_details", nullable = false)
     private JbstUserEmailDetails emailDetails;
 
