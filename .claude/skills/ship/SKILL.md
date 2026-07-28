@@ -44,5 +44,34 @@ the next one runs — stop and report on any failure.
    then delete the remote branch explicitly. If the merge fails (e.g.
    conflicts), report the PR URL and stop — do not force anything.
 
-6. **Report** — output the PR URL and its final state (merged, branch
-   deleted).
+6. **Local cleanup** — remove the local branch, the worktree folder (if
+   any), and the stale remote-tracking ref, so nothing is left to clean up
+   by hand. Run the whole block as ONE command — it deletes the current
+   working directory when running in a worktree, so it must be the last git
+   operation of the session:
+
+   ```sh
+   BRANCH=$(git branch --show-current)
+   TOPLEVEL=$(git rev-parse --show-toplevel)
+   MAIN_REPO=$(git worktree list --porcelain | head -1 | cut -d' ' -f2-)
+   if [ "$TOPLEVEL" != "$MAIN_REPO" ]; then
+     cd "$MAIN_REPO"
+     git worktree remove --force "$TOPLEVEL"
+   else
+     git checkout main
+   fi
+   git branch -D "$BRANCH"
+   git fetch --prune
+   ```
+
+   - `git branch -D` (not `-d`) is required: after a squash merge git does
+     not consider the branch merged — its content is already on `main`, so
+     force-deleting it is safe.
+   - `git worktree remove --force` is needed because leftover ignored/
+     untracked files (build output, scratch files) make git consider the
+     worktree dirty; the committed work is already merged.
+   - After this step the original worktree path no longer exists — stay in
+     the primary repo and use absolute paths for anything that follows.
+
+7. **Report** — output the PR URL and its final state (merged, remote and
+   local branches deleted, worktree removed).
