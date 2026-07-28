@@ -7,9 +7,9 @@ on:
 
 env:
   PACKAGE_OWNER: 'yyluchkiv'
-  KEEP_COUNT_MAVEN_PACKAGES: 2
-  KEEP_COUNT_CONTAINERS: 2
-  KEEP_COUNT_RELEASES_AND_TAGS: 2
+  KEEP_COUNT_MAVEN_PACKAGES: 5
+  KEEP_COUNT_CONTAINERS: 5
+  KEEP_COUNT_RELEASES_AND_TAGS: 5
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
