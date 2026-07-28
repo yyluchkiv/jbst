@@ -3,3 +3,4 @@
 — refactor: docker conventions — `network-jbst` network, `volume-jbst-*` volumes, `jbst-database-*` service names, `restart: "no"` across all compose files
 — fix: next-snapshot.sh — correct docker-compose paths (`files/docker` → `assets/docker`) so image tags get bumped again
 — chore: add `ship-fast` Claude Code skill — ship without running the test suite (compile check only)
+— chore: ship/ship-fast skills — local cleanup step (delete local branch, remove worktree folder, prune stale tracking ref) after merge
