@@ -1,6 +1,7 @@
 package jbst.foundation.configurations;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import jbst.foundation.domain.jsons.JbstObjectMappers;
+import tools.jackson.databind.ObjectMapper;
 import jbst.foundation.events.publishers.JbstEventsPublisher;
 import jbst.foundation.incidents.services.JbstIncidentsPublisher;
 import jbst.foundation.utils.JbstHttpUtils;
@@ -33,6 +34,6 @@ public class TestConfigurationHandlers {
 
     @Bean
     ObjectMapper objectMapper() {
-        return new ObjectMapper();
+        return JbstObjectMappers.jackson2Compatible();
     }
 }

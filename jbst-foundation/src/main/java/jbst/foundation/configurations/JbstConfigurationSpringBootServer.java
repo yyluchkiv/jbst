@@ -9,9 +9,12 @@ import jbst.foundation.utils.JbstEnvUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.jackson.autoconfigure.JsonMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import tools.jackson.databind.MapperFeature;
+import tools.jackson.databind.cfg.EnumFeature;
 
 // Swagger
 @OpenAPIDefinition(
@@ -36,6 +39,17 @@ public class JbstConfigurationSpringBootServer {
     @PostConstruct
     public void init() {
         this.jbstProperties.getApp().assertProperties();
+    }
+
+    /**
+     * Keep the Jackson 2 wire format on the Spring-managed mapper (declaration-order properties,
+     * name()-based enums) — see {@link jbst.foundation.domain.jsons.JbstObjectMappers}.
+     */
+    @Bean
+    public JsonMapperBuilderCustomizer jbstJackson2CompatibilityCustomizer() {
+        return builder -> builder
+                .disable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY)
+                .disable(EnumFeature.READ_ENUMS_USING_TO_STRING, EnumFeature.WRITE_ENUMS_USING_TO_STRING);
     }
 
     @Bean

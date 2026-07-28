@@ -1,7 +1,7 @@
 package jbst.foundation.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
 import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class JbstGeoUtilsFlagsConsoleTest extends JbstUnitTests.Runners.BaseFolder {
     }
 
     @Test
-    void readFileTest() throws JsonProcessingException {
+    void readFileTest() throws JacksonException {
         var flagsFullsJSON = read(this.getFolder(), "tests-geo-countries-flags.json");
         var typeReference = new TypeReference<List<CountryFlagFull>>() {};
         var flagsFulls = OBJECT_MAPPER.readValue(flagsFullsJSON, typeReference);

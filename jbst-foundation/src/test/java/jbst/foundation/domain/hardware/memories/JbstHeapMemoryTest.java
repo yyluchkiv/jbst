@@ -1,6 +1,6 @@
 package jbst.foundation.domain.hardware.memories;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.type.TypeReference;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;

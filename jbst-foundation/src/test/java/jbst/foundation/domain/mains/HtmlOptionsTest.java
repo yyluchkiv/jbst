@@ -1,7 +1,8 @@
 package jbst.foundation.domain.mains;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import jbst.foundation.domain.jsons.JbstObjectMappers;
+import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +17,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HtmlOptionsTest {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = JbstObjectMappers.jackson2Compatible();
 
     public record HtmlOption(String id, String label) {
     }
 
     @Disabled("development purposes")
     @Test
-    void printFormattedDateTimeFormatters() throws JsonProcessingException {
+    void printFormattedDateTimeFormatters() throws JacksonException {
         var pattern1 = "dd.MM.yyyy HH:mm:ss";
         var pattern2 = "dd.MM HH:mm";
         var pattern3 = "dd/MM/yyy HH:mm:ss";
@@ -46,7 +47,7 @@ class HtmlOptionsTest {
 
     @Disabled("development purposes")
     @Test
-    void printFormattedZoneIdsClientConstants() throws JsonProcessingException {
+    void printFormattedZoneIdsClientConstants() throws JacksonException {
         var ukraineLegacy = ZoneId.of("Europe/Kiev");
         var options = ZoneId.getAvailableZoneIds()
                 .stream()
@@ -77,7 +78,7 @@ class HtmlOptionsTest {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    private void prettyPrint(List<HtmlOption> options) throws JsonProcessingException {
+    private void prettyPrint(List<HtmlOption> options) throws JacksonException {
         var json = this.objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(options);
         json = json.replace("\"id\" ", "id");
         json = json.replace("\"label\" ", "label");

@@ -2,10 +2,9 @@ package jbst.foundation.domain.tests;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jbst.foundation.domain.jsons.JbstObjectMappers;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
 import jbst.foundation.domain.base.ObjectId;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstEnumValue;
@@ -238,13 +237,11 @@ public class JbstUnitTests {
 
     public static class Runners {
         public static abstract class Base {
-            protected static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder()
-                    .addModule(new JavaTimeModule())
+            protected static final ObjectMapper OBJECT_MAPPER = JbstObjectMappers.jackson2CompatibleBuilder()
                     .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
                     .build();
 
-            protected static final ObjectMapper PLAIN_OBJECT_MAPPER = JsonMapper.builder()
-                    .build();
+            protected static final ObjectMapper PLAIN_OBJECT_MAPPER = JbstObjectMappers.jackson2Compatible();
 
             @SneakyThrows
             protected final String writeValueAsString(Object object) {

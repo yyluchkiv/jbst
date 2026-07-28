@@ -1,6 +1,6 @@
 package jbst.foundation.domain.jsons;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ public class JbstJsons {
         if (isNull(jsonNode)) {
             return BigDecimal.ZERO;
         }
-        return new BigDecimal(jsonNode.textValue());
+        return new BigDecimal(jsonNode.stringValue());
     }
 
     public BigDecimal getJsonNodeFieldValueAsBigDecimalOrZero(JsonNode jsonNode, String fieldName) {

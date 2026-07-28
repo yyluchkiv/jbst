@@ -1,7 +1,7 @@
 package jbst.foundation.domain.jsons;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.TextNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.StringNode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,7 +23,7 @@ class JbstJsonsTest {
     private static Stream<Arguments> getJsonNodeValueAsBigDecimalOrZeroTest() {
         return Stream.of(
                 Arguments.of(null, BigDecimal.ZERO),
-                Arguments.of(TextNode.valueOf("1.23"), new BigDecimal("1.23"))
+                Arguments.of(StringNode.valueOf("1.23"), new BigDecimal("1.23"))
         );
     }
 
@@ -65,7 +65,7 @@ class JbstJsonsTest {
         // Arrange
         var fieldName = randomString();
         var jsonNode = mock(JsonNode.class);
-        when(jsonNode.get(fieldName)).thenReturn(TextNode.valueOf("100"));
+        when(jsonNode.get(fieldName)).thenReturn(StringNode.valueOf("100"));
 
         // Act
         var actual = getJsonNodeFieldValueAsBigDecimalOrZero(jsonNode, fieldName);

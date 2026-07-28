@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @TestPropertySource(properties = {
-        "server.servlet.contextPath=/api"
+        "server.servlet.context-path=/api"
 })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

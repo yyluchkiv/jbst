@@ -1,7 +1,8 @@
 package jbst.foundation.domain.converters;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.type.TypeReference;
+import jbst.foundation.domain.jsons.JbstObjectMappers;
+import tools.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import jbst.foundation.domain.base.Email;
@@ -79,7 +80,7 @@ public class JbstPostgresConverters {
 
     @Converter
     public class MapStringsObjectsConverter implements AttributeConverter<Map<String, Object>, String> {
-        private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+        private static final ObjectMapper OBJECT_MAPPER = JbstObjectMappers.jackson2Compatible();
 
         @SneakyThrows
         @Override
