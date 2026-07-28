@@ -16,7 +16,7 @@ NEXT_SNAPSHOT_DOCKER_VERSION="'$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER-SNAPS
 echo "================================================================================================================="
 echo "$PREFIX Maven versions started"
 
-mvn versions:set -DnextSnapshot=true -DgenerateBackupPoms=false
+./mvnw versions:set -DnextSnapshot=true -DgenerateBackupPoms=false
 
 echo "$PREFIX Maven versions has been completed"
 echo "================================================================================================================="

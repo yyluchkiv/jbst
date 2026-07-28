@@ -13,7 +13,7 @@ if [ -z "$(lsof -i :9000)" ]; then
     print "------------------------------------------------------------------------------"
 else
     # Run install
-    mvn clean install
+    ./mvnw clean install
     # Run sonar scanner
     sonar-scanner
     if [ "$?" -ne "0" ]; then

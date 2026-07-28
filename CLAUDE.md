@@ -10,41 +10,43 @@ JBST is a Java 17 Spring Boot framework providing bootstrapping tools for enterp
 - **jbst-server-iam**: Identity & Access Management server. Runs against **either** MongoDB **or** PostgreSQL, selected by Spring profile. Port `3002`.
 - **jbst-server-hardware-monitoring**: Hardware monitoring server. Port `6001`.
 
-`jbst-foundation` is published/installed first; the servers consume it as a dependency. When iterating only on the library, `./build-fast.sh` installs just that module (`mvn -pl jbst-foundation -am clean install -DskipTests`).
+`jbst-foundation` is published/installed first; the servers consume it as a dependency. When iterating only on the library, `./build-fast.sh` installs just that module (`./mvnw -pl jbst-foundation -am clean install -DskipTests`).
 
 ## Build and Development Commands
 
+All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via `.mvn/wrapper/maven-wrapper.properties`) — no local Maven installation is required, only a JDK 17 (make sure `JAVA_HOME` points to one).
+
 ```bash
 # Compile only (no tests)
-./compile-all.sh                  # mvn clean compile test-compile
+./compile-all.sh                  # ./mvnw clean compile test-compile
 
 # Unit tests only (Surefire)
-./execute-unit-tests-only.sh      # mvn clean test
+./execute-unit-tests-only.sh      # ./mvnw clean test
 
 # Integration tests only (Failsafe)
-./execute-integrations-tests-only.sh   # mvn failsafe:integration-test
+./execute-integrations-tests-only.sh   # ./mvnw failsafe:integration-test
 
 # All tests (unit + integration)
-mvn integration-test
+./mvnw integration-test
 
 # Full verification (what CI effectively runs)
-mvn clean verify   # or `mvn clean install`
+./mvnw clean verify   # or `./mvnw clean install`
 
 # Fast install, skip all tests
-./delivery-check-fast.sh          # mvn clean install -Dmaven.test.skip -DskipTests -T 4
+./delivery-check-fast.sh          # ./mvnw clean install -Dmaven.test.skip -DskipTests -T 4
 
 # Library-only fast install
-./build-fast.sh                   # mvn -pl jbst-foundation -am clean install -DskipTests -T 4
+./build-fast.sh                   # ./mvnw -pl jbst-foundation -am clean install -DskipTests -T 4
 ```
 
 ### Running a single test
 ```bash
 # Single unit test (class or method)
-mvn test -Dtest=ClassName
-mvn test -Dtest=ClassName#methodName
+./mvnw test -Dtest=ClassName
+./mvnw test -Dtest=ClassName#methodName
 
 # Single integration test (Failsafe; *IT classes under src/test-integration/java)
-mvn failsafe:integration-test -Dit.test=ClassNameIT#methodName
+./mvnw failsafe:integration-test -Dit.test=ClassNameIT#methodName
 ```
 
 ### Delombok build behavior (important)
@@ -82,12 +84,12 @@ PostgreSQL schema is managed by **Liquibase**: `src/main/resources/postgres/chan
 
 ## CI and Release Engineering
 
-- **CI** (`.github/workflows/main.yml`): on push to `main`, runs `mvn clean install` on Java 17 (Temurin). Maven `deploy` to GitHub Packages and the Docker image push are gated behind the `MAVEN_DEPLOYMENT_ENABLED` / `DOCKER_PUSH_ENABLED` env flags in that workflow (normally `false` on snapshots).
+- **CI** (`.github/workflows/main.yml`): on push to `main`, runs `./mvnw clean install` on Java 17 (Temurin). Maven `deploy` to GitHub Packages and the Docker image push are gated behind the `MAVEN_DEPLOYMENT_ENABLED` / `DOCKER_PUSH_ENABLED` env flags in that workflow (normally `false` on snapshots).
 - **Version bumps are scripted** — do not hand-edit versions across POMs and the workflow. The repo follows a `SNAPSHOT:` → `RELEASE:` commit cadence:
   - `./next-release.sh` — strips `-SNAPSHOT` from all POMs and flips the workflow deploy/docker flags on.
   - `./next-snapshot.sh` — bumps to the next `-SNAPSHOT`, resets the workflow flags, resets `CHANGELOG.md`, and updates the `docker-compose.*.yml` image tags.
 - `./gen-artifacts.sh` collects the foundation JAR + parent/foundation POMs into `artifacts/`.
-- `./sonar-check.sh` requires a local SonarQube on `:9000`, then runs `mvn clean install` + `sonar-scanner` (config in `sonar-project.properties`).
+- `./sonar-check.sh` requires a local SonarQube on `:9000`, then runs `./mvnw clean install` + `sonar-scanner` (config in `sonar-project.properties`).
 
 ## Conventions
 

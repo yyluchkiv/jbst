@@ -6,7 +6,7 @@ NO_COLOR='\033[0m'
 
 print() { echo -e "${1}${2}${NO_COLOR}"; }
 
-mvn -pl jbst-foundation -am clean install -DskipTests -T 4
+./mvnw -pl jbst-foundation -am clean install -DskipTests -T 4
 
 POM_FILE="pom.xml"
 if [ ! -f "$POM_FILE" ]; then
