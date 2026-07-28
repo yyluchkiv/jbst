@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
@@ -34,7 +33,7 @@ public interface JbstPostgresInvitationsRepository extends JpaRepository<JbstPos
     default List<JbstResponseInvitation> findResponseCodesByOwner(Username owner) {
         return this.findByOwner(owner).stream()
                 .map(JbstPostgresInvitation::responseInvitation)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     default JbstInvitation findByCodeAsAny(String code) {
@@ -45,7 +44,7 @@ public interface JbstPostgresInvitationsRepository extends JpaRepository<JbstPos
     default List<JbstResponseInvitation> findUnused() {
         return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
                 .map(JbstPostgresInvitation::responseInvitation)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     long countByOwner(Username username);

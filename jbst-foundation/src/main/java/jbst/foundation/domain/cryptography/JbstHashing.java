@@ -37,8 +37,7 @@ public class JbstHashing {
             mac.init(keySpec);
             return encodeHexString(mac.doFinal(value.getBytes(UTF_8)));
         } catch (NoSuchAlgorithmException | InvalidKeyException ex) {
-            var message = String.format(
-                    EXCEPTION_MESSAGE,
+            var message = EXCEPTION_MESSAGE.formatted(
                     value,
                     hashingKey,
                     algorithm,

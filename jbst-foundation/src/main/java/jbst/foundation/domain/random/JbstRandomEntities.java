@@ -149,7 +149,7 @@ public class JbstRandomEntities {
     }
 
     public static <T> List<T> list(Class<? extends T> type, int size) {
-        return IntStream.range(0, size).mapToObj(i -> entity(type)).collect(Collectors.toList());
+        return IntStream.range(0, size).<T>mapToObj(i -> entity(type)).toList();
     }
 
     public static <T> List<T> list345(Class<? extends T> type) {

@@ -76,14 +76,14 @@ public class JbstCollections {
 
     public static <T> List<T> getFirstNElements(List<T> list, long n) {
         assertTrueOrThrow(n >= 0, "Elements quantity can't be negative");
-        return list.stream().limit(n).collect(Collectors.toList());
+        return list.stream().limit(n).toList();
     }
 
     public static <T> List<T> getLastNElements(List<T> list, long n) {
         assertTrueOrThrow(n >= 0, "Elements quantity can't be negative");
         var remainingCount = list.size() - n;
         var remainingCountOrZero = (remainingCount >= 0) ? remainingCount : 0;
-        return list.stream().skip(remainingCountOrZero).collect(Collectors.toList());
+        return list.stream().skip(remainingCountOrZero).toList();
     }
 
     public static BigDecimal maxOrZero(List<BigDecimal> values) {

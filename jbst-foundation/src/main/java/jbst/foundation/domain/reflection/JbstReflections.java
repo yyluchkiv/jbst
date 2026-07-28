@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
@@ -106,7 +105,7 @@ public class JbstReflections {
                     var methodName = method.getName();
                     return !"getClass".equals(methodName) && !"getDeclaringClass".equals(methodName);
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @SuppressWarnings("ConstantValue")

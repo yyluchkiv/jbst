@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static jbst.foundation.domain.dto.responses.JbstResponseUserSession2.*;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
@@ -59,7 +58,7 @@ public interface JbstPostgresUsersSessionsRepository extends JpaRepository<JbstP
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(requestAccessToken))
                 .sorted(USERS_SESSIONS)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     default JbstResponseSuperadminSessionsTable getSessionsTable(Set<JbstJwtAccessToken> activeAccessTokens, JbstRequestAccessToken requestAccessToken) {
@@ -86,7 +85,7 @@ public interface JbstPostgresUsersSessionsRepository extends JpaRepository<JbstP
     default List<JbstUserSession> findByUsernameInAsAny(Set<Username> usernames) {
         return this.findByUsernameIn(usernames).stream()
                 .map(JbstPostgresUserSession::userSession)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Transactional
