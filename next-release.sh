@@ -6,7 +6,7 @@ GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
 echo "================================================================================================================="
 echo "$PREFIX Maven versions started"
 
-mvn versions:set -DremoveSnapshot -DgenerateBackupPoms=false
+./mvnw versions:set -DremoveSnapshot -DgenerateBackupPoms=false
 
 echo "$PREFIX Maven versions has been completed"
 echo "================================================================================================================="

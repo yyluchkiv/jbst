@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-mvn failsafe:integration-test
+./mvnw failsafe:integration-test

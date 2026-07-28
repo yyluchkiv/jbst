@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-mvn clean install -DskipTests
-mvn failsafe:integration-test
+cd "$(dirname "$0")" || exit 1
 
+../mvnw clean install -DskipTests
+../mvnw failsafe:integration-test

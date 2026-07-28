@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-mvn clean compile test-compile
+./mvnw clean compile test-compile

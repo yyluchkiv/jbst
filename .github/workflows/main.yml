@@ -48,11 +48,11 @@ jobs:
 
       - name: "maven [build]"
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'false'
-        run: mvn clean install
+        run: ./mvnw clean install
 
       - name: "maven [github packages]"
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'true'
-        run: mvn clean -DskipTests -Dmaven.test.skip deploy -Pgithub
+        run: ./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub
 
       - name: "docker login"
         # if: env.DOCKER_PUSH_ENABLED == 'true'
