@@ -31,7 +31,7 @@ public class JbstCpuMemory {
         );
     }
 
-    public static JbstCpuMemory hardcoded() {
+    public static JbstCpuMemory fixed() {
         return new JbstCpuMemory(
                 new BigDecimal("1.234")
         );

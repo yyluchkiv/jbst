@@ -21,10 +21,10 @@ public class JbstPropertyDatabaseMongo extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private final JbstPropertyMongo database;
 
-    public static JbstPropertyDatabaseMongo hardcoded() {
+    public static JbstPropertyDatabaseMongo fixed() {
         return new JbstPropertyDatabaseMongo(
                 true,
-                JbstPropertyMongo.hardcoded()
+                JbstPropertyMongo.fixed()
         );
     }
 

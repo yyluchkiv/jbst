@@ -6,7 +6,7 @@ import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
 
 public record JbstRequestAccessToken(String value) {
-    public static JbstRequestAccessToken hardcoded() {
+    public static JbstRequestAccessToken fixed() {
         return new JbstRequestAccessToken("8CF7449A7D1766DE33AD");
     }
 

@@ -52,8 +52,8 @@ class JbstIncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
         // Arrange
         var incident = new JbstIncidentAuthenticationLoginFailureUsernameMaskedPassword(
                 UsernamePasswordCredentials.mask5(
-                        Username.hardcoded(),
-                        Password.hardcoded()
+                        Username.fixed(),
+                        Password.fixed()
                 ),
                 JbstUserRequestMetadata.valid()
         );

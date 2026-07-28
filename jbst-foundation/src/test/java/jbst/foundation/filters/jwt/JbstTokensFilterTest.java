@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
@@ -52,13 +52,13 @@ class JbstTokensFilterTest {
         return Stream.of(
                 Arguments.of(new JbstExceptions.AccessTokenInvalid()),
                 Arguments.of(new JbstExceptions.RefreshTokenInvalid()),
-                Arguments.of(new JbstExceptions.AccessTokenDbNotFound(Username.hardcoded()))
+                Arguments.of(new JbstExceptions.AccessTokenDbNotFound(Username.fixed()))
         );
     }
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
@@ -178,7 +178,7 @@ class JbstTokensFilterTest {
         var requestRefreshToken = JbstRequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new JbstExceptions.AccessTokenExpired(Username.hardcoded()));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new JbstExceptions.AccessTokenExpired(Username.fixed()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);

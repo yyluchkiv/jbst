@@ -14,7 +14,7 @@ public enum JbstUserCreationOption implements JbstEnumValue<String> {
 
     private final String value;
 
-    public static JbstUserCreationOption hardcoded() {
+    public static JbstUserCreationOption fixed() {
         return STANDARD;
     }
 

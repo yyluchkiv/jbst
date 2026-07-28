@@ -17,7 +17,7 @@ public class JbstPropertyCheckbox extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
 
-    public static JbstPropertyCheckbox hardcoded() {
+    public static JbstPropertyCheckbox fixed() {
         return new JbstPropertyCheckbox(true);
     }
 
@@ -26,7 +26,7 @@ public class JbstPropertyCheckbox extends JbstProperty {
     }
 
     public static JbstPropertyCheckbox enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyCheckbox disabled() {

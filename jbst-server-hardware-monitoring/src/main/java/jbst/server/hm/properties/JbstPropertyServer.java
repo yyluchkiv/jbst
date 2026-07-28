@@ -17,7 +17,7 @@ public class JbstPropertyServer extends JbstProperty {
     @JbstPropertyMandatory
     private final String targetURL;
 
-    public static JbstPropertyServer hardcoded() {
+    public static JbstPropertyServer fixed() {
         return new JbstPropertyServer(
                 "http://localhost:8484"
         );

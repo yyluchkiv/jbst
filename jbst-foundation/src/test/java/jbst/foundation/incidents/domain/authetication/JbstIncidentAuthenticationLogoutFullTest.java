@@ -15,7 +15,7 @@ class JbstIncidentAuthenticationLogoutFullTest {
     @Test
     void convertAuthenticationLogoutFullIncidentTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var incident = new JbstIncidentAuthenticationLogoutFull(
                 username,
                 JbstUserRequestMetadata.processed(

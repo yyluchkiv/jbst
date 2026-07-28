@@ -7,9 +7,9 @@ public record JbstRequestUserRegistrationMagicLink(
         @Email.ValidEmail Email email
 ) {
 
-    public static JbstRequestUserRegistrationMagicLink hardcoded() {
+    public static JbstRequestUserRegistrationMagicLink fixed() {
         return new JbstRequestUserRegistrationMagicLink(
-                Email.hardcoded()
+                Email.fixed()
         );
     }
 

@@ -13,7 +13,7 @@ class JbstIncidentAuthenticationLoginFailureUsernamePasswordTest {
     void convertAuthenticationLoginFailureUsernamePasswordIncidentTest() {
         // Arrange
         var incident = new JbstIncidentAuthenticationLoginFailureUsernamePassword(
-                UsernamePasswordCredentials.hardcoded(),
+                UsernamePasswordCredentials.fixed(),
                 JbstUserRequestMetadata.valid()
         );
 

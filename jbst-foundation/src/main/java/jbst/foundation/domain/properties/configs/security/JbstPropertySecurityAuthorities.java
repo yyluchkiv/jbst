@@ -22,7 +22,7 @@ public class JbstPropertySecurityAuthorities extends JbstProperty {
     @JbstPropertyMandatory
     private final Set<String> values;
 
-    public static JbstPropertySecurityAuthorities hardcoded() {
+    public static JbstPropertySecurityAuthorities fixed() {
         return new JbstPropertySecurityAuthorities(
                 "jbst.foundation",
                 Set.of(

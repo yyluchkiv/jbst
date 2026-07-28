@@ -91,7 +91,7 @@ class JbstAbstractRegistrationValidatorTest {
     @Test
     void validateRegistrationRequest0UsernameAlreadyUsedTest() {
         // Arrange
-        var request = JbstRequestUserRegistration0.hardcoded();
+        var request = JbstRequestUserRegistration0.fixed();
         when(this.usersRepository.existsByUsername(request.username())).thenReturn(true);
 
         // Act
@@ -122,7 +122,7 @@ class JbstAbstractRegistrationValidatorTest {
     @Test
     void validateRegistrationRequest0EmailAlreadyUsedTest() {
         // Arrange
-        var request = JbstRequestUserRegistration0.hardcoded();
+        var request = JbstRequestUserRegistration0.fixed();
         when(this.usersRepository.existsByUsername(request.username())).thenReturn(false);
         when(this.usersRepository.existsByEmail(request.email())).thenReturn(true);
 
@@ -155,7 +155,7 @@ class JbstAbstractRegistrationValidatorTest {
     @Test
     void validateRegistrationRequest0UsernameEmailFreeTest() throws JbstExceptions.Registration {
         // Arrange
-        var request = JbstRequestUserRegistration0.hardcoded();
+        var request = JbstRequestUserRegistration0.fixed();
         when(this.usersRepository.existsByUsername(request.username())).thenReturn(false);
         when(this.usersRepository.existsByEmail(request.email())).thenReturn(false);
 
@@ -170,8 +170,8 @@ class JbstAbstractRegistrationValidatorTest {
     @Test
     void validateRegistrationRequest1UsernameAlreadyUsedTest() {
         // Arrange
-        var request = JbstRequestUserRegistration1.hardcoded();
-        when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(JbstJwtUser.hardcoded());
+        var request = JbstRequestUserRegistration1.fixed();
+        when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(JbstJwtUser.fixed());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
@@ -201,7 +201,7 @@ class JbstAbstractRegistrationValidatorTest {
     @Test
     void validateRegistrationRequest1InvitationAlreadyUsedTest() {
         // Arrange
-        var request = JbstRequestUserRegistration1.hardcoded();
+        var request = JbstRequestUserRegistration1.fixed();
         var invitation = JbstInvitation.random();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
         when(this.invitationsRepository.findByCodeAsAny(request.code())).thenReturn(invitation);
@@ -237,7 +237,7 @@ class JbstAbstractRegistrationValidatorTest {
     @Test
     void validateRegistrationRequest1NoInvitationTest() {
         // Arrange
-        var request = JbstRequestUserRegistration1.hardcoded();
+        var request = JbstRequestUserRegistration1.fixed();
         var username = request.username();
         var invitation = request.code();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(null);
@@ -272,7 +272,7 @@ class JbstAbstractRegistrationValidatorTest {
     @Test
     void validateRegistrationRequest1InvitationPresentTest() throws JbstExceptions.Registration {
         // Arrange
-        var request = JbstRequestUserRegistration1.hardcoded();
+        var request = JbstRequestUserRegistration1.fixed();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
         when(this.invitationsRepository.findByCodeAsAny(request.code())).thenReturn(JbstInvitation.randomNoInvited());
 

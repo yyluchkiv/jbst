@@ -20,8 +20,8 @@ public class JbstPropertyScheduledJob extends JbstProperty {
     @JbstPropertyMandatoryOnToggleEnabled
     private JbstPropertySchedulerConfiguration configuration;
 
-    public static JbstPropertyScheduledJob hardcoded() {
-        return new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded());
+    public static JbstPropertyScheduledJob fixed() {
+        return new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.fixed());
     }
 
     public static JbstPropertyScheduledJob random() {
@@ -29,7 +29,7 @@ public class JbstPropertyScheduledJob extends JbstProperty {
     }
 
     public static JbstPropertyScheduledJob enabled() {
-        return hardcoded();
+        return fixed();
     }
 
 

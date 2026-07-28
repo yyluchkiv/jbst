@@ -1,7 +1,7 @@
 package jbst.foundation.handshakes;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.JbstRequestAccessToken;
 import jbst.foundation.domain.dto.requests.JbstRequestRefreshToken;
@@ -52,7 +52,7 @@ class JbstSecurityHandshakeHandlerTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

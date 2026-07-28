@@ -25,7 +25,7 @@ public class JbstPropertyAsync extends JbstProperty {
     @JbstPropertyMandatory
     private final BigDecimal threadsMaxPoolPercentage;
 
-    public static JbstPropertyAsync hardcoded() {
+    public static JbstPropertyAsync fixed() {
         return new JbstPropertyAsync("jbst-async", new BigDecimal("25"), HUNDRED);
     }
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ObjectIdTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final ObjectId OBJECT_ID = ObjectId.hardcoded();
+    private static final ObjectId OBJECT_ID = ObjectId.fixed();
 
     @Override
     protected String getFileName() {

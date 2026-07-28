@@ -18,7 +18,7 @@ public class JbstPropertyTelegram extends JbstProperty {
     @JbstPropertyMandatory
     private final String chatId;
 
-    public static JbstPropertyTelegram hardcoded() {
+    public static JbstPropertyTelegram fixed() {
         return new JbstPropertyTelegram("-", "-");
     }
 

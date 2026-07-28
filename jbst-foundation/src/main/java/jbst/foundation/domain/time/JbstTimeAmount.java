@@ -18,7 +18,7 @@ import static jbst.foundation.domain.random.JbstRandom.randomIntegerGreaterThanZ
 
 public record JbstTimeAmount(long amount, ChronoUnit unit) {
 
-    public static JbstTimeAmount hardcoded() {
+    public static JbstTimeAmount fixed() {
         return new JbstTimeAmount(30L, ChronoUnit.SECONDS);
     }
 

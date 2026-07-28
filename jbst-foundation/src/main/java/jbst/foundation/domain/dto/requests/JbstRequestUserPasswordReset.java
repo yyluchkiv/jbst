@@ -12,11 +12,11 @@ public record JbstRequestUserPasswordReset(
         @Password.ValidPasswordNotBlank Password confirmPassword
 ) {
 
-    public static JbstRequestUserPasswordReset hardcoded() {
+    public static JbstRequestUserPasswordReset fixed() {
         return new JbstRequestUserPasswordReset(
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
-                Password.hardcoded(),
-                Password.hardcoded()
+                Password.fixed(),
+                Password.fixed()
         );
     }
 

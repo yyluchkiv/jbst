@@ -18,7 +18,7 @@ public class JbstPropertySpringLogging extends JbstProperty {
     @JbstPropertyMandatory
     private final String config;
 
-    public static JbstPropertySpringLogging hardcoded() {
+    public static JbstPropertySpringLogging fixed() {
         return new JbstPropertySpringLogging("logback-test.xml");
     }
 

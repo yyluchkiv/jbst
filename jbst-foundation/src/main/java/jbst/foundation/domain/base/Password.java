@@ -26,7 +26,7 @@ public record Password(@NotNull String value) {
         return new Password(value);
     }
 
-    public static Password hardcoded() {
+    public static Password fixed() {
         return of("PasswordTH1/jbst");
     }
 

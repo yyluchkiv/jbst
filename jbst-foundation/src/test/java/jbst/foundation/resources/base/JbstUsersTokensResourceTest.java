@@ -96,10 +96,10 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     @Test
     void executeConfirmEmail() throws Exception {
         // Arrange
-        var user = JbstJwtUser.hardcoded();
+        var user = JbstJwtUser.fixed();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsEmailConfirmation();
-        var userToken = JbstUserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.fixedEmailConfirmation();
         when(this.usersTokensService.findOrCreate(eq(requestUserToken))).thenReturn(userToken);
 
         // Act
@@ -154,11 +154,11 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     @Test
     void executeResetPasswordTest() throws Exception {
         // Arrange
-        var request = JbstRequestUserEmail.hardcoded();
-        var user = JbstJwtUser.hardcoded(request.email(), JbstUserEmailDetails.confirmed());
+        var request = JbstRequestUserEmail.fixed();
+        var user = JbstJwtUser.fixed(request.email(), JbstUserEmailDetails.confirmed());
         when(this.usersService.findByEmail(request.email())).thenReturn(user);
         var requestUserToken = user.getRequestUserTokenAsPasswordReset();
-        var userToken = JbstUserToken.hardcodedPasswordReset();
+        var userToken = JbstUserToken.fixedPasswordReset();
         when(this.usersTokensService.findOrCreate(requestUserToken)).thenReturn(userToken);
 
         // Act
@@ -178,7 +178,7 @@ class JbstUsersTokensResourceTest extends TestRunnerResources1 {
     @Test
     void resetPasswordTest() throws Exception {
         // Arrange
-        var request = JbstRequestUserPasswordReset.hardcoded();
+        var request = JbstRequestUserPasswordReset.fixed();
 
         // Act
         this.mvc.perform(

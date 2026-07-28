@@ -1,7 +1,7 @@
 package jbst.foundation.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.base.IPAddress;
@@ -58,7 +58,7 @@ class JbstGeoUtilsTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

@@ -32,7 +32,7 @@ public record JbstResponseUserSessionsTable(
 
     public static JbstResponseUserSessionsTable random() {
         var sessions = new ArrayList<JbstResponseUserSession2>();
-        sessions.add(JbstResponseUserSession2.hardcodedCurrent());
+        sessions.add(JbstResponseUserSession2.fixedCurrent());
         IntStream.range(0, 100).forEach(element -> sessions.add(JbstResponseUserSession2.random()));
         return of(sessions);
     }

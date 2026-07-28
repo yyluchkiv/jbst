@@ -7,9 +7,9 @@ public record JbstRequestJbstSettings(
         @NotNull JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
 ) {
 
-    public static JbstRequestJbstSettings hardcoded() {
+    public static JbstRequestJbstSettings fixed() {
         return new JbstRequestJbstSettings(
-                JbstSettingsHardwareMonitoringThresholds.hardcoded()
+                JbstSettingsHardwareMonitoringThresholds.fixed()
         );
     }
 }

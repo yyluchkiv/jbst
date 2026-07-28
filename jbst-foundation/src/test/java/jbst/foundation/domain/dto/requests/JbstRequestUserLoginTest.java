@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstRequestUserLoginTest extends JbstUnitTests.Runners.BaseFolderFile {
     private static final JbstRequestUserLogin REQUEST = new JbstRequestUserLogin(
-            Username.hardcoded(),
+            Username.fixed(),
             Password.of("password123")
     );
 

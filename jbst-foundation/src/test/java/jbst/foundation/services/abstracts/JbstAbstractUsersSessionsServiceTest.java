@@ -2,7 +2,7 @@ package jbst.foundation.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.assistants.utils.JbstSecurityUtils;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.databases.JbstUserSession;
@@ -91,7 +91,7 @@ class JbstAbstractUsersSessionsServiceTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
@@ -159,33 +159,33 @@ class JbstAbstractUsersSessionsServiceTest {
 
     @Test
     void assertAccess() {
-        when(this.usersSessionsRepository.isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(JbstUserSession.randomPersistedSession()));
+        when(this.usersSessionsRepository.isPresent(JbstUserSessionId.fixed(), Username.fixed())).thenReturn(TuplePresence.present(JbstUserSession.randomPersistedSession()));
 
         // Act
-        this.componentUnderTest.assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded());
+        this.componentUnderTest.assertAccess(Username.fixed(), JbstUserSessionId.fixed());
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded());
+        verify(this.usersSessionsRepository).isPresent(JbstUserSessionId.fixed(), Username.fixed());
     }
 
     @Test
     void assertAccessNoAccess() {
-        when(this.usersSessionsRepository.isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.absent());
+        when(this.usersSessionsRepository.isPresent(JbstUserSessionId.fixed(), Username.fixed())).thenReturn(TuplePresence.absent());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.hardcoded(), JbstUserSessionId.hardcoded()));
+        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.fixed(), JbstUserSessionId.fixed()));
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(JbstUserSessionId.hardcoded(), Username.hardcoded());
+        verify(this.usersSessionsRepository).isPresent(JbstUserSessionId.fixed(), Username.fixed());
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage(entityAccessDenied("Session", JbstUserSessionId.hardcoded().value()));
+                .hasMessage(entityAccessDenied("Session", JbstUserSessionId.fixed().value()));
     }
 
     private static Stream<Arguments> saveUserSessionTest() {
         return Stream.of(
-                Arguments.of(JbstJwtUser.hardcoded(JbstUserCreationOption.STANDARD), JbstAccountAccessMethod.USERNAME_PASSWORD),
-                Arguments.of(JbstJwtUser.hardcoded(JbstUserCreationOption.MAGICLINK), JbstAccountAccessMethod.MAGICLINK)
+                Arguments.of(JbstJwtUser.fixed(JbstUserCreationOption.STANDARD), JbstAccountAccessMethod.USERNAME_PASSWORD),
+                Arguments.of(JbstJwtUser.fixed(JbstUserCreationOption.MAGICLINK), JbstAccountAccessMethod.MAGICLINK)
         );
     }
 
@@ -241,7 +241,7 @@ class JbstAbstractUsersSessionsServiceTest {
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
-        var user = JbstJwtUser.hardcoded();
+        var user = JbstJwtUser.fixed();
         var username = user.username();
         var accessToken = JbstJwtAccessToken.random();
         var refreshToken = JbstJwtRefreshToken.random();
@@ -398,7 +398,7 @@ class JbstAbstractUsersSessionsServiceTest {
     @Test
     void getExpiredSessionsTest() {
         // Arrange
-        var usernames = new HashSet<>(Set.of(Username.hardcoded()));
+        var usernames = new HashSet<>(Set.of(Username.fixed()));
         var sessionInvalidUserSession = JbstUserSession.random(
                 Username.random(),
                 JbstJwtAccessToken.random(),

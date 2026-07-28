@@ -33,7 +33,7 @@ public class JbstPropertySecurityJWT extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertyJwtToken refreshToken;
 
-    public static JbstPropertySecurityJWT hardcoded() {
+    public static JbstPropertySecurityJWT fixed() {
         return new JbstPropertySecurityJWT(
                 "nbVwWebIpNnZ1rsNZFmkAQGiOZAijWtSt5X6FZx/qHA=",
                 JbstJwtTokenStorageMethod.COOKIES,

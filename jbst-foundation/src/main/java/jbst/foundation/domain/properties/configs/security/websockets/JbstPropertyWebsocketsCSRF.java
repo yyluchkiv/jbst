@@ -22,7 +22,7 @@ public class JbstPropertyWebsocketsCSRF extends JbstProperty {
     @JbstPropertyMandatory
     private final String tokenKey;
 
-    public static JbstPropertyWebsocketsCSRF hardcoded() {
+    public static JbstPropertyWebsocketsCSRF fixed() {
         return new JbstPropertyWebsocketsCSRF("csrf-header", "_csrf", "csrf-token-key");
     }
 

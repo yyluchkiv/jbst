@@ -16,7 +16,7 @@ public class JbstPropertySpringServer extends JbstProperty {
     @JbstPropertyMandatory
     private final Integer port;
 
-    public static JbstPropertySpringServer hardcoded() {
+    public static JbstPropertySpringServer fixed() {
         return new JbstPropertySpringServer(8080);
     }
 

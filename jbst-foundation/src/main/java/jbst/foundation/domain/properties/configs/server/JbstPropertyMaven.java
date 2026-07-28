@@ -21,8 +21,8 @@ public class JbstPropertyMaven extends JbstProperty {
     @JbstPropertyMandatory
     private final Version version;
 
-    public static JbstPropertyMaven hardcoded() {
-        return new JbstPropertyMaven("jbst", "jbst", Version.hardcoded());
+    public static JbstPropertyMaven fixed() {
+        return new JbstPropertyMaven("jbst", "jbst", Version.fixed());
     }
 
     @Override

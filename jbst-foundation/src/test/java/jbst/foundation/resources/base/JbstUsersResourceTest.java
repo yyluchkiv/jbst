@@ -54,8 +54,8 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void update1() throws Exception {
         // Arrange
-        var request = JbstRequestUserUpdate1.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var request = JbstRequestUserUpdate1.fixed();
+        var user = JbstJwtUser.fixed();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -75,8 +75,8 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void update2() throws Exception {
         // Arrange
-        var request = JbstRequestUserUpdate2.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var request = JbstRequestUserUpdate2.fixed();
+        var user = JbstJwtUser.fixed();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -95,8 +95,8 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void changePasswordRequired() throws Exception {
         // Arrange
-        var request = JbstRequestUserChangePasswordBasic.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.fixed();
+        var user = JbstJwtUser.fixed();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -116,8 +116,8 @@ class JbstUsersResourceTest extends TestRunnerResources1 {
     @Test
     void changePassword1() throws Exception {
         // Arrange
-        var request = JbstRequestUserChangePasswordBasic.hardcoded();
-        var user = JbstJwtUser.hardcoded();
+        var request = JbstRequestUserChangePasswordBasic.fixed();
+        var user = JbstJwtUser.fixed();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act

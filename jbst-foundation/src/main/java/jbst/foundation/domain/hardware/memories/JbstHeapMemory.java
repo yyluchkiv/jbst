@@ -43,7 +43,7 @@ public class JbstHeapMemory {
         );
     }
 
-    public static JbstHeapMemory hardcoded() {
+    public static JbstHeapMemory fixed() {
         return new JbstHeapMemory(
                 1073741824L,
                 573741824L,

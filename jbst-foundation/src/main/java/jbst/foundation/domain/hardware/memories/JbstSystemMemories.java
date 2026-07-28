@@ -5,10 +5,10 @@ public record JbstSystemMemories(
         JbstCpuMemory cpu
 ) {
 
-    public static JbstSystemMemories hardcoded() {
+    public static JbstSystemMemories fixed() {
         return new JbstSystemMemories(
-                JbstGlobalMemory.hardcoded(),
-                JbstCpuMemory.hardcoded()
+                JbstGlobalMemory.fixed(),
+                JbstCpuMemory.fixed()
         );
     }
 }

@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class TestJbstConfigurationPropertiesHardcoded {
+public class TestJbstConfigurationPropertiesFixed {
 
     @Bean
     public JbstProperties jbstProperties() {
-        return JbstProperties.hardcoded();
+        return JbstProperties.fixed();
     }
 }

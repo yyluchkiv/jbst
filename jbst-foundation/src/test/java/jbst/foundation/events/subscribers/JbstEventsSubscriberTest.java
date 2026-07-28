@@ -239,7 +239,7 @@ class JbstEventsSubscriberTest {
     @MethodSource("exceptionalExecutionParams")
     void onAuthenticationLoginFailureTest(RuntimeException ex) {
         // Arrange
-        var event = JbstEventAuthenticationLoginFailure.hardcoded();
+        var event = JbstEventAuthenticationLoginFailure.fixed();
         when(this.geoUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(JbstUserRequestMetadata.valid());
         if (nonNull(ex)) {
             doThrow(ex).when(this.incidentsPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(any());
@@ -287,9 +287,9 @@ class JbstEventsSubscriberTest {
     @MethodSource("exceptionalExecutionParams")
     void onRegistration0Test(RuntimeException ex) {
         // Arrange
-        var requestUserRegistration0 = JbstRequestUserRegistration0.hardcoded();
+        var requestUserRegistration0 = JbstRequestUserRegistration0.fixed();
         var event = new JbstEventRegistration0(requestUserRegistration0);
-        var userToken = JbstUserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.fixedEmailConfirmation();
         when(this.usersTokensService.saveAs(requestUserRegistration0.asRequestUserToken())).thenReturn(userToken);
         if (nonNull(ex)) {
             doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(userToken);

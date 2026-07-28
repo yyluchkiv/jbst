@@ -1,6 +1,6 @@
 package jbst.foundation.services.base;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.databases.JbstUserToken;
@@ -47,7 +47,7 @@ class JbstUsersEmailsServiceTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
@@ -118,7 +118,7 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeMagicLink() {
         // Arrange
-        var userToken = JbstUserToken.hardcodedMagicLink();
+        var userToken = JbstUserToken.fixedMagicLink();
 
         // Act
         this.componentUnderTest.executeMagicLink(userToken);
@@ -141,7 +141,7 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executeEmailConfirmation() {
         // Arrange
-        var userToken = JbstUserToken.hardcodedEmailConfirmation();
+        var userToken = JbstUserToken.fixedEmailConfirmation();
 
         // Act
         this.componentUnderTest.executeEmailConfirmation(userToken);
@@ -164,7 +164,7 @@ class JbstUsersEmailsServiceTest {
     @Test
     void executePasswordReset() {
         // Arrange
-        var userToken = JbstUserToken.hardcodedPasswordReset();
+        var userToken = JbstUserToken.fixedPasswordReset();
 
         // Act
         this.componentUnderTest.executePasswordReset(userToken);
@@ -190,30 +190,30 @@ class JbstUsersEmailsServiceTest {
         this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmails());
 
         // Act
-        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.fixed(USERNAME_PASSWORD));
 
         // Assert
         // no actions + revert
-        this.jbstProperties.setSecurity(JbstPropertySecurity.hardcoded());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.fixed());
     }
 
     @Test
     void executeAuthenticationLogin() {
         // Act
-        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.fixed(USERNAME_PASSWORD));
 
         // Assert
         ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.to()).isEqualTo(Set.of(Email.hardcoded().value()));
+        assertThat(emailHTML.to()).isEqualTo(Set.of(Email.fixed().value()));
         assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed | ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
                 .containsEntry("version", this.jbstProperties.getApp().getMaven().getVersion())
                 .containsEntry("year", LocalDate.now(UTC).getYear())
-                .containsEntry("username", Username.hardcoded().value())
+                .containsEntry("username", Username.fixed().value())
                 .containsEntry("accessMethod", USERNAME_PASSWORD.getValue())
                 .containsEntry("where", "🇺🇦 Ukraine, Lviv")
                 .containsEntry("what", "Chrome, macOS on Desktop")
@@ -227,30 +227,30 @@ class JbstUsersEmailsServiceTest {
         this.jbstProperties.setSecurity(JbstPropertySecurity.disabledUsersEmails());
 
         // Act
-        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(SESSION_TOKEN));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.fixed(SESSION_TOKEN));
 
         // Assert
         // no actions + revert
-        this.jbstProperties.setSecurity(JbstPropertySecurity.hardcoded());
+        this.jbstProperties.setSecurity(JbstPropertySecurity.fixed());
     }
 
     @Test
     void executeSessionRefreshed() {
         // Act
-        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.hardcoded(SESSION_TOKEN));
+        this.componentUnderTest.executeAccountAccessed(JbstFunctionAccountAccessed.fixed(SESSION_TOKEN));
 
         // Assert
         ArgumentCaptor<JbstEmails.HTML> emailHTMLAC = ArgumentCaptor.forClass(JbstEmails.HTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.to()).isEqualTo(Set.of(Email.hardcoded().value()));
+        assertThat(emailHTML.to()).isEqualTo(Set.of(Email.fixed().value()));
         assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed | ");
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
                 .hasSize(8)
                 .containsEntry("version", this.jbstProperties.getApp().getMaven().getVersion())
                 .containsEntry("year", LocalDate.now(UTC).getYear())
-                .containsEntry("username", Username.hardcoded().value())
+                .containsEntry("username", Username.fixed().value())
                 .containsEntry("accessMethod", SESSION_TOKEN.getValue())
                 .containsEntry("where", "🇺🇦 Ukraine, Lviv")
                 .containsEntry("what", "Chrome, macOS on Desktop")

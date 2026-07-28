@@ -170,7 +170,7 @@ public class JbstPostgresUser extends JbstPostgresAbstractPersistable0 {
                 true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
-                Email.of(username + "@" + JbstConstants.Domains.HARDCODED),
+                Email.of(username + "@" + JbstConstants.Domains.FIXED),
                 randomBoolean(),
                 JbstUserEmailDetails.random()
         );

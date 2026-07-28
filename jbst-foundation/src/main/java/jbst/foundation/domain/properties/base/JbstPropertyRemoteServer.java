@@ -27,12 +27,12 @@ public class JbstPropertyRemoteServer extends JbstProperty {
     @JbstPropertyMandatory
     private final UsernamePasswordCredentials credentials;
 
-    public static JbstPropertyRemoteServer hardcoded() {
-        return new JbstPropertyRemoteServer("localhost", UsernamePasswordCredentials.hardcoded());
+    public static JbstPropertyRemoteServer fixed() {
+        return new JbstPropertyRemoteServer("localhost", UsernamePasswordCredentials.fixed());
     }
 
     public static JbstPropertyRemoteServer random() {
-        return new JbstPropertyRemoteServer(randomIPv4(), UsernamePasswordCredentials.hardcoded());
+        return new JbstPropertyRemoteServer(randomIPv4(), UsernamePasswordCredentials.fixed());
     }
 
     @Override

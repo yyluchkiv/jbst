@@ -41,7 +41,7 @@ public record Version(@NotNull String value) {
         return new Version(value);
     }
 
-    public static Version hardcoded() {
+    public static Version fixed() {
         return of("v1.1");
     }
 

@@ -7,11 +7,11 @@ public record JbstSettings(
         String updatedUTC,
         JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds
 ) {
-    public static JbstSettings hardcoded() {
+    public static JbstSettings fixed() {
         return new JbstSettings(
                 "ops1 @ 21-10-2025 10:10",
                 "ops2 @ 22-10-2025 11:11",
-                JbstSettingsHardwareMonitoringThresholds.hardcoded()
+                JbstSettingsHardwareMonitoringThresholds.fixed()
         );
     }
 }

@@ -25,7 +25,7 @@ public record Timestamp(long value) {
     }
 
     // Wednesday, April 3, 2024 10:36:10 AM
-    public static Timestamp hardcoded() {
+    public static Timestamp fixed() {
         return of(1712140570L);
     }
 

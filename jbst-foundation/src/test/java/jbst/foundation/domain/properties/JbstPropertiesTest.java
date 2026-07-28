@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 
 class JbstPropertiesTest {
 
-    private final JbstProperties jbstProperties = new TestJbstConfigurationPropertiesHardcoded().jbstProperties();
+    private final JbstProperties jbstProperties = new TestJbstConfigurationPropertiesFixed().jbstProperties();
 
     @Test
     void jbstPropertiesTest() {

@@ -1,6 +1,6 @@
 package jbst.foundation.services.abstracts;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.dto.requests.JbstRequestNewInvitationParams;
 import jbst.foundation.domain.dto.responses.JbstResponseInvitation;
@@ -49,7 +49,7 @@ class JbstAbstractInvitationsServiceTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

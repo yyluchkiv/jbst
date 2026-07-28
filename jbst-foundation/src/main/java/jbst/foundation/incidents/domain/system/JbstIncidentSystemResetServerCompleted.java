@@ -8,9 +8,9 @@ public record JbstIncidentSystemResetServerCompleted(
         Username username
 ) implements JbstAbstractIncident {
 
-    public static JbstIncidentSystemResetServerCompleted hardcoded() {
+    public static JbstIncidentSystemResetServerCompleted fixed() {
         return new JbstIncidentSystemResetServerCompleted(
-                Username.hardcoded()
+                Username.fixed()
         );
     }
 

@@ -33,10 +33,10 @@ public class JbstCurrentClientUser {
     private final Set<String> authorities;
     private Map<String, Object> attributes;
 
-    public static JbstCurrentClientUser hardcoded() {
+    public static JbstCurrentClientUser fixed() {
         return new JbstCurrentClientUser(
-                Username.hardcoded(),
-                Email.hardcoded(),
+                Username.fixed(),
+                Email.fixed(),
                 "JBST",
                 UKRAINE,
                 false,

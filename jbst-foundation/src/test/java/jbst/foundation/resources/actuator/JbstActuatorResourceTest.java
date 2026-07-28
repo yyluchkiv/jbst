@@ -1,6 +1,6 @@
 package jbst.foundation.resources.actuator;
 
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.resources.system.JbstActuatorResource;
 import jbst.foundation.utils.JbstEnvUtils;
@@ -32,7 +32,7 @@ class JbstActuatorResourceTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

@@ -80,13 +80,13 @@ class JbstMongoUsersRepositoryIT extends TestsJbstConfigurationMongoRepositories
         assertThat(this.usersRepository.existsByUsername(Username.of("sa777"))).isFalse();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + JbstConstants.Domains.HARDCODED))).isNotNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + JbstConstants.Domains.HARDCODED))).isNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + JbstConstants.Domains.HARDCODED))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + JbstConstants.Domains.HARDCODED))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + JbstConstants.Domains.HARDCODED))).isNull();
-        assertThat(this.usersRepository.existsByEmail(Email.of("sa1@" + JbstConstants.Domains.HARDCODED))).isTrue();
-        assertThat(this.usersRepository.existsByEmail(Email.of("sa4@" + JbstConstants.Domains.HARDCODED))).isFalse();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + JbstConstants.Domains.FIXED))).isNotNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + JbstConstants.Domains.FIXED))).isNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + JbstConstants.Domains.FIXED))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + JbstConstants.Domains.FIXED))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + JbstConstants.Domains.FIXED))).isNull();
+        assertThat(this.usersRepository.existsByEmail(Email.of("sa1@" + JbstConstants.Domains.FIXED))).isTrue();
+        assertThat(this.usersRepository.existsByEmail(Email.of("sa4@" + JbstConstants.Domains.FIXED))).isFalse();
         assertThat(this.usersRepository.findByUsername(Username.of("sa1"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa4"))).isNull();
@@ -204,12 +204,12 @@ class JbstMongoUsersRepositoryIT extends TestsJbstConfigurationMongoRepositories
         assertThat(this.usersRepository.isPresent(entity(JbstUserId.class)).present()).isFalse();
 
         // Act-Assert-3
-        var userId2 = this.usersRepository.saveAs(JbstRequestUserRegistration1.hardcoded(), Password.random(), JbstInvitation.random());
+        var userId2 = this.usersRepository.saveAs(JbstRequestUserRegistration1.fixed(), Password.random(), JbstInvitation.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
 
         // Act-Assert-4
-        var userId3 = this.usersRepository.saveAs(JbstRequestUserRegistration0.hardcoded(), Password.random());
+        var userId3 = this.usersRepository.saveAs(JbstRequestUserRegistration0.fixed(), Password.random());
         assertThat(this.usersRepository.count()).isEqualTo(9);
         var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
         assertThat(user3).isNotNull();

@@ -79,7 +79,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventIncidentSystemResetServerStartedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = JbstIncidentSystemResetServerStarted.hardcoded();
+        var incidentSystemResetServerStarted = JbstIncidentSystemResetServerStarted.fixed();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);
@@ -98,7 +98,7 @@ class JbstIncidentsSubscriberTest {
     @Test
     void onEventIncidentSystemResetServerCompletedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = JbstIncidentSystemResetServerCompleted.hardcoded();
+        var incidentSystemResetServerStarted = JbstIncidentSystemResetServerCompleted.fixed();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);

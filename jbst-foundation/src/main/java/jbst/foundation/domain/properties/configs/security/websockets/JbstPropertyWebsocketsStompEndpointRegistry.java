@@ -19,7 +19,7 @@ public class JbstPropertyWebsocketsStompEndpointRegistry extends JbstProperty {
     @JbstPropertyMandatory
     private final String endpoint;
 
-    public static JbstPropertyWebsocketsStompEndpointRegistry hardcoded() {
+    public static JbstPropertyWebsocketsStompEndpointRegistry fixed() {
         return new JbstPropertyWebsocketsStompEndpointRegistry("/endpoint");
     }
 

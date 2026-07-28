@@ -148,7 +148,7 @@ class JbstCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserTest() {
         // Arrange
-        var user = JbstJwtUser.hardcoded();
+        var user = JbstJwtUser.fixed();
         when(this.securityUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(JbstHardwareMonitoringWidget.class);
         when(this.jbstHardwareMonitoringStore.getWidget()).thenReturn(hardwareMonitoringWidget);

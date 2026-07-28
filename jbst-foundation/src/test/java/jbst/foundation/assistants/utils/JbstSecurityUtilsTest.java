@@ -1,7 +1,7 @@
 package jbst.foundation.assistants.utils;
 
 import io.jsonwebtoken.Jwts;
-import jbst.foundation.configurations.TestJbstConfigurationPropertiesHardcoded;
+import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.jwt.JbstJwtAccessToken;
 import jbst.foundation.domain.jwt.JbstJwtRefreshToken;
@@ -113,7 +113,7 @@ class JbstSecurityUtilsTest {
 
     @Configuration
     @Import({
-            TestJbstConfigurationPropertiesHardcoded.class
+            TestJbstConfigurationPropertiesFixed.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
@@ -190,14 +190,14 @@ class JbstSecurityUtilsTest {
     @MethodSource("createJwtTokenTest")
     void createJwtTokenTest(JbstPropertyTimeAmount timeAmount) {
         // Arrange
-        var creationParams = new JbstJwtTokenCreationParams(Username.hardcoded(), getSimpleGrantedAuthorities("user"), randomZoneId());
+        var creationParams = new JbstJwtTokenCreationParams(Username.fixed(), getSimpleGrantedAuthorities("user"), randomZoneId());
 
         // Act
         var jwtToken = this.componentUnderTest.createJwtToken(creationParams, timeAmount);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JbstJwtAccessToken(jwtToken));
-        assertThat(validatedClaims.username()).isEqualTo(Username.hardcoded());
+        assertThat(validatedClaims.username()).isEqualTo(Username.fixed());
         var zoneId = nonNull(creationParams.zoneId()) ? creationParams.zoneId() : ZoneId.systemDefault();
         var expiration = convert(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),

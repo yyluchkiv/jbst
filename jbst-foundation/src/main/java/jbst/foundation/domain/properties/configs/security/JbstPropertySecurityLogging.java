@@ -22,7 +22,7 @@ public class JbstPropertySecurityLogging extends JbstProperty {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static JbstPropertySecurityLogging hardcoded() {
+    public static JbstPropertySecurityLogging fixed() {
         return JbstPropertySecurityLogging.disabled();
     }
 

@@ -48,17 +48,17 @@ public class JbstPropertySecurity extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertySecurityWebsockets websockets;
 
-    public static JbstPropertySecurity hardcoded() {
+    public static JbstPropertySecurity fixed() {
         return new JbstPropertySecurity(
-                JbstPropertySecurityAuthorities.hardcoded(),
-                JbstPropertySecurityCookies.hardcoded(),
-                JbstPropertySecurityEssence.hardcoded(),
-                JbstPropertySecurityJWT.hardcoded(),
-                JbstPropertySecurityLogging.hardcoded(),
-                JbstPropertySecuritySessions.hardcoded(),
-                JbstPropertySecurityUsersEmails.hardcoded(),
-                JbstPropertySecurityUsersTokens.hardcoded(),
-                JbstPropertySecurityWebsockets.hardcoded()
+                JbstPropertySecurityAuthorities.fixed(),
+                JbstPropertySecurityCookies.fixed(),
+                JbstPropertySecurityEssence.fixed(),
+                JbstPropertySecurityJWT.fixed(),
+                JbstPropertySecurityLogging.fixed(),
+                JbstPropertySecuritySessions.fixed(),
+                JbstPropertySecurityUsersEmails.fixed(),
+                JbstPropertySecurityUsersTokens.fixed(),
+                JbstPropertySecurityWebsockets.fixed()
         );
     }
 

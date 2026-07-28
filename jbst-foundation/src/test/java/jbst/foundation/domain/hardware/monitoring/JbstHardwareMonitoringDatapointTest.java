@@ -28,7 +28,7 @@ class JbstHardwareMonitoringDatapointTest extends JbstUnitTests.Runners.BaseFold
         // Arrange
         var threshold = new BigDecimal("50");
         var datapoint = new JbstHardwareMonitoringDatapoint(
-                Version.hardcoded(),
+                Version.fixed(),
                 new JbstGlobalMemory(
                         5957144576L,
                         17179869184L,

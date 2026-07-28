@@ -113,7 +113,7 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishResetServerStartedTest() {
         // Arrange
-        var incident = JbstIncidentSystemResetServerStarted.hardcoded();
+        var incident = JbstIncidentSystemResetServerStarted.fixed();
 
         // Act
         this.componentUnderTest.publishResetServerStarted(incident);
@@ -125,7 +125,7 @@ class JbstIncidentsPublisherTest {
     @Test
     void publishResetServerCompletedTest() {
         // Arrange
-        var incident = JbstIncidentSystemResetServerCompleted.hardcoded();
+        var incident = JbstIncidentSystemResetServerCompleted.fixed();
 
         // Act
         this.componentUnderTest.publishResetServerCompleted(incident);
@@ -460,9 +460,9 @@ class JbstIncidentsPublisherTest {
                 ));
         return new JbstPropertyIncidentsManager(
                 true,
-                JbstIncidentsManagerType.hardcoded(),
-                JbstPropertyRemoteServer.hardcoded(),
-                JbstPropertyTelegram.hardcoded(),
+                JbstIncidentsManagerType.fixed(),
+                JbstPropertyRemoteServer.fixed(),
+                JbstPropertyTelegram.fixed(),
                 types
         );
     }

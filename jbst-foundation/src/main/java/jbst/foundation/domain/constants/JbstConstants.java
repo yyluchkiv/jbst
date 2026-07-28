@@ -45,7 +45,7 @@ public class JbstConstants {
     }
 
     public static class Domains {
-        public static final String HARDCODED = "yyluchkiv.com";
+        public static final String FIXED = "yyluchkiv.com";
     }
 
     public static class Dropdowns {

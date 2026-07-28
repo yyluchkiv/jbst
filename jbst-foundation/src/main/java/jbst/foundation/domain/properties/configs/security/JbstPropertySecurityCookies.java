@@ -22,8 +22,8 @@ public class JbstPropertySecurityCookies extends JbstProperty {
     @JbstPropertyMandatory
     private final JbstPropertyTimeAmount jwtAccessTokenCookieCreationLatency;
 
-    public static JbstPropertySecurityCookies hardcoded() {
-        return new JbstPropertySecurityCookies(JbstConstants.Domains.HARDCODED, new JbstPropertyTimeAmount(5L, SECONDS));
+    public static JbstPropertySecurityCookies fixed() {
+        return new JbstPropertySecurityCookies(JbstConstants.Domains.FIXED, new JbstPropertyTimeAmount(5L, SECONDS));
     }
 
     public static JbstPropertySecurityCookies random() {

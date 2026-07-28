@@ -6,9 +6,9 @@ public record JbstRequestUserEmail(
         @Email.ValidEmail Email email
 ) {
 
-    public static JbstRequestUserEmail hardcoded() {
+    public static JbstRequestUserEmail fixed() {
         return new JbstRequestUserEmail(
-                Email.hardcoded()
+                Email.fixed()
         );
     }
 

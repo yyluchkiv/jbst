@@ -12,12 +12,12 @@ public record JbstEventAuthenticationLoginFailure(
         JbstUserAgentHeader userAgentHeader
 ) {
 
-    public static JbstEventAuthenticationLoginFailure hardcoded() {
+    public static JbstEventAuthenticationLoginFailure fixed() {
         return new JbstEventAuthenticationLoginFailure(
-                Username.hardcoded(),
-                Password.hardcoded(),
-                IPAddress.hardcoded(),
-                JbstUserAgentHeader.hardcoded()
+                Username.fixed(),
+                Password.fixed(),
+                IPAddress.fixed(),
+                JbstUserAgentHeader.fixed()
         );
     }
 }

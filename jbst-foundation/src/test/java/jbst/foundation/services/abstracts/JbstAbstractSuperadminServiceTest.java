@@ -182,21 +182,21 @@ class JbstAbstractSuperadminServiceTest {
     @Test
     void findUsersExcept() {
         // Arrange
-        var username = Username.hardcoded();
-        when(this.usersRepository.findUsersExcept(username)).thenReturn(JbstUsers.hardcoded());
+        var username = Username.fixed();
+        when(this.usersRepository.findUsersExcept(username)).thenReturn(JbstUsers.fixed());
 
         // Act
         var users = this.componentUnderTest.findUsersExcept(username);
 
         // Assert
         verify(this.usersRepository).findUsersExcept(username);
-        assertThat(users).isEqualTo(JbstUsers.hardcoded());
+        assertThat(users).isEqualTo(JbstUsers.fixed());
     }
 
     @Test
     void disableUser() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
 
         // Act
         this.componentUnderTest.disableUser(username);

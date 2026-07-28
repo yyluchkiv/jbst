@@ -71,10 +71,10 @@ public class JbstMongoUserSession {
     }
 
     public static List<JbstMongoUserSession> dummies1() {
-        var session1 = JbstMongoUserSession.random(Username.hardcoded().value(), "awt1", "rwt1");
-        var session2 = JbstMongoUserSession.random(Username.hardcoded().value(), "awt2", "rwt2");
-        var session3 = JbstMongoUserSession.random(Username.hardcoded().value(), "awt3", "rwt3");
-        var session4 = JbstMongoUserSession.random(Username.hardcoded().value(), "awt4", "rwt4");
+        var session1 = JbstMongoUserSession.random(Username.fixed().value(), "awt1", "rwt1");
+        var session2 = JbstMongoUserSession.random(Username.fixed().value(), "awt2", "rwt2");
+        var session3 = JbstMongoUserSession.random(Username.fixed().value(), "awt3", "rwt3");
+        var session4 = JbstMongoUserSession.random(Username.fixed().value(), "awt4", "rwt4");
         var session5 = JbstMongoUserSession.random("user1", "atoken11", "rtoken11");
         var session6 = JbstMongoUserSession.random("user1", "atoken12", "rtoken12");
         var session7 = JbstMongoUserSession.random("sa", "atoken", "rtoken");
@@ -90,9 +90,9 @@ public class JbstMongoUserSession {
     }
 
     public static List<JbstMongoUserSession> dummies2() {
-        var session1 = JbstMongoUserSession.random(Username.hardcoded(), "token1");
-        var session2 = JbstMongoUserSession.random(Username.hardcoded(), "token2");
-        var session3 = JbstMongoUserSession.random(Username.hardcoded(), "token3");
+        var session1 = JbstMongoUserSession.random(Username.fixed(), "token1");
+        var session2 = JbstMongoUserSession.random(Username.fixed(), "token2");
+        var session3 = JbstMongoUserSession.random(Username.fixed(), "token3");
         var session4 = JbstMongoUserSession.random(Username.of("admin"), "token4");
         return List.of(session1, session2, session3, session4);
     }

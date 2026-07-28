@@ -15,7 +15,7 @@ class JbstIncidentSessionExpiredTest {
     @Test
     void convertSessionExpiredIncidentTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var incident = new JbstIncidentSessionExpired(
                 username,
                 JbstUserRequestMetadata.processed(

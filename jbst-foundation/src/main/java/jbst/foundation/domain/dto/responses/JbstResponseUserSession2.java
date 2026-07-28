@@ -70,12 +70,12 @@ public record JbstResponseUserSession2(
         );
     }
 
-    public static JbstResponseUserSession2 hardcodedCurrent() {
+    public static JbstResponseUserSession2 fixedCurrent() {
         var token = "PFRL63OtcEKKy0hb7UjE";
         return of(
-                JbstUserSessionId.hardcoded(),
+                JbstUserSessionId.fixed(),
                 getCurrentTimestamp(),
-                Username.hardcoded(),
+                Username.fixed(),
                 new JbstRequestAccessToken(token),
                 new JbstJwtAccessToken(token),
                 JbstUserRequestMetadata.valid()
@@ -86,7 +86,7 @@ public record JbstResponseUserSession2(
         return of(
                 JbstUserSessionId.random(),
                 getCurrentTimestamp() - JbstTimeAmount.random().toMillis(),
-                Username.hardcoded(),
+                Username.fixed(),
                 JbstRequestAccessToken.random(),
                 JbstJwtAccessToken.random(),
                 JbstUserRequestMetadata.testData()

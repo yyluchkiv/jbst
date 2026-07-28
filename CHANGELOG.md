@@ -10,3 +10,4 @@
 — build: rename `delivery-check-fast.sh` → `push-check.sh` (unique autocomplete prefixes across root scripts)
 — build: docker-compose image tags now track the current `-SNAPSHOT` version; `next-release.sh`/`next-snapshot.sh` keep them in sync with `DOCKER_VERSION`
 — build: jbst-server-iam Dockerfile base `eclipse-temurin:17.0.7_7-jdk-alpine` → `17.0.16_8-jdk` (multi-arch, enables arm64/Apple Silicon local builds)
+— refactor!: rename `hardcoded()` factory-method family to `fixed()` (incl. `fixedMasked()`, `fixedCurrent()`, `fixed*` email variants, `Domains.FIXED`, `TestJbstConfigurationPropertiesFixed`, `JbstFixedResource` with `/fixed` endpoint path) — breaking for library consumers using the old names

@@ -272,20 +272,20 @@ class JbstTokensProviderTest {
     private void mockProperties(JbstJwtTokenStorageMethod method) {
         when(this.jbstProperties.getSecurity()).thenReturn(
                 new JbstPropertySecurity(
-                        JbstPropertySecurityAuthorities.hardcoded(),
-                        JbstPropertySecurityCookies.hardcoded(),
-                        JbstPropertySecurityEssence.hardcoded(),
+                        JbstPropertySecurityAuthorities.fixed(),
+                        JbstPropertySecurityCookies.fixed(),
+                        JbstPropertySecurityEssence.fixed(),
                         new JbstPropertySecurityJWT(
                                 "JBST",
                                 method,
                                 new JbstPropertyJwtToken(new JbstPropertyTimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
                                 new JbstPropertyJwtToken(new JbstPropertyTimeAmount(12L, HOURS), "rjwt", "T-RJWT")
                         ),
-                        JbstPropertySecurityLogging.hardcoded(),
-                        JbstPropertySecuritySessions.hardcoded(),
-                        JbstPropertySecurityUsersEmails.hardcoded(),
-                        JbstPropertySecurityUsersTokens.hardcoded(),
-                        JbstPropertySecurityWebsockets.hardcoded()
+                        JbstPropertySecurityLogging.fixed(),
+                        JbstPropertySecuritySessions.fixed(),
+                        JbstPropertySecurityUsersEmails.fixed(),
+                        JbstPropertySecurityUsersTokens.fixed(),
+                        JbstPropertySecurityWebsockets.fixed()
                 )
         );
     }

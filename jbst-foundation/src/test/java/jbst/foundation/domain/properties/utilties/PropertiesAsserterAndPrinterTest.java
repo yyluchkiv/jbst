@@ -33,7 +33,7 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsMapMinSizeNullableCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize0Nullable(
-                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.fixed()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
                 null
@@ -49,7 +49,7 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsMapMinSizeCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
-                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.fixed()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
@@ -71,7 +71,7 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsExtendedSizeCase() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
-                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.fixed()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
@@ -97,7 +97,7 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsOK() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigsIncidentsMinSize3(
-                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.hardcoded()),
+                new JbstPropertyScheduledJob(true, JbstPropertySchedulerConfiguration.fixed()),
                 new JbstPropertySpringServer(8080),
                 new JbstPropertySpringLogging("logback-test.xml"),
                 Map.ofEntries(
@@ -121,7 +121,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void appTest() {
         // Act
-        JbstPropertyApp.hardcoded().assertProperties();
+        JbstPropertyApp.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -130,7 +130,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilsTest() {
         // Act
-        JbstPropertyUtils.hardcoded().assertProperties();
+        JbstPropertyUtils.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -139,7 +139,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void asyncTest() {
         // Act
-        JbstPropertyAsync.hardcoded().assertProperties();
+        JbstPropertyAsync.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -148,7 +148,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void eventsTest() {
         // Act
-        JbstPropertyEvents.hardcoded().assertProperties();
+        JbstPropertyEvents.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -169,7 +169,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcTest() {
         // Act
-        JbstPropertyMVC.hardcoded().assertProperties();
+        JbstPropertyMVC.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -187,7 +187,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailsTest() {
         // Act
-        JbstPropertyEmails.hardcoded().assertProperties();
+        JbstPropertyEmails.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -196,7 +196,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void incidentManagerTest() {
         // Act
-        JbstPropertyIncidentsManager.hardcoded().assertProperties();
+        JbstPropertyIncidentsManager.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -208,9 +208,9 @@ class PropertiesAsserterAndPrinterTest {
         var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
         var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
-                JbstIncidentsManagerType.hardcoded(),
-                JbstPropertyRemoteServer.hardcoded(),
-                JbstPropertyTelegram.hardcoded(),
+                JbstIncidentsManagerType.fixed(),
+                JbstPropertyRemoteServer.fixed(),
+                JbstPropertyTelegram.fixed(),
                 Map.ofEntries(
                         entry("AUTHENTICATION_LOGIN", randomBoolean()),
                         entry("AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD", loginFailureUsernamePassword),
@@ -238,9 +238,9 @@ class PropertiesAsserterAndPrinterTest {
     void incidentManagerZero() {
         var incidentsManager = new JbstPropertyIncidentsManager(
                 true,
-                JbstIncidentsManagerType.hardcoded(),
-                JbstPropertyRemoteServer.hardcoded(),
-                JbstPropertyTelegram.hardcoded(),
+                JbstIncidentsManagerType.fixed(),
+                JbstPropertyRemoteServer.fixed(),
+                JbstPropertyTelegram.fixed(),
                 Map.ofEntries()
         );
 
@@ -269,7 +269,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityTest() {
         // Act
-        JbstPropertySecurity.hardcoded().assertProperties();
+        JbstPropertySecurity.fixed().assertProperties();
 
         // Assert
         // no asserts
@@ -278,7 +278,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void databaseMongoTest() {
         // Act
-        JbstPropertyDatabaseMongo.hardcoded().assertProperties();
+        JbstPropertyDatabaseMongo.fixed().assertProperties();
 
         // Assert
         // no asserts

@@ -16,14 +16,14 @@ public record JbstFunctionAccountAccessed(
         @NotNull JbstAccountAccessMethod accountAccessMethod
 ) {
 
-    public static JbstFunctionAccountAccessed hardcoded() {
-        return hardcoded(JbstAccountAccessMethod.USERNAME_PASSWORD);
+    public static JbstFunctionAccountAccessed fixed() {
+        return fixed(JbstAccountAccessMethod.USERNAME_PASSWORD);
     }
 
-    public static JbstFunctionAccountAccessed hardcoded(JbstAccountAccessMethod accountAccessMethod) {
+    public static JbstFunctionAccountAccessed fixed(JbstAccountAccessMethod accountAccessMethod) {
         return new JbstFunctionAccountAccessed(
-                Username.hardcoded(),
-                Email.hardcoded(),
+                Username.fixed(),
+                Email.fixed(),
                 JbstUserRequestMetadata.valid(),
                 accountAccessMethod
         );

@@ -25,7 +25,7 @@ public class JbstPropertyEvents extends JbstProperty {
     @JbstPropertyMandatory
     private final BigDecimal threadsMaxPoolPercentage;
 
-    public static JbstPropertyEvents hardcoded() {
+    public static JbstPropertyEvents fixed() {
         return new JbstPropertyEvents("jbst-events", new BigDecimal("75"), HUNDRED);
     }
 

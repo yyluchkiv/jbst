@@ -47,27 +47,27 @@ class JbstAbstractUsersTokensValidatorTest {
     private static Stream<Arguments> validateExecuteConfirmEmailTest() {
         return Stream.of(
                 Arguments.of(
-                        JbstJwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.required()),
+                        JbstJwtUser.fixed(Email.fixed(), JbstUserEmailDetails.required()),
                         null
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(null, JbstUserEmailDetails.unnecessary()),
+                        JbstJwtUser.fixed(null, JbstUserEmailDetails.unnecessary()),
                         new IllegalArgumentException("User email already confirmed")
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(null, JbstUserEmailDetails.confirmed()),
+                        JbstJwtUser.fixed(null, JbstUserEmailDetails.confirmed()),
                         new IllegalArgumentException("User email already confirmed")
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(null, JbstUserEmailDetails.required()),
+                        JbstJwtUser.fixed(null, JbstUserEmailDetails.required()),
                         new IllegalArgumentException("User email is missing")
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.unnecessary()),
+                        JbstJwtUser.fixed(Email.fixed(), JbstUserEmailDetails.unnecessary()),
                         new IllegalArgumentException("User email already confirmed")
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.confirmed()),
+                        JbstJwtUser.fixed(Email.fixed(), JbstUserEmailDetails.confirmed()),
                         new IllegalArgumentException("User email already confirmed")
                 )
         );
@@ -136,27 +136,27 @@ class JbstAbstractUsersTokensValidatorTest {
                         JbstExceptions.PasswordReset.userNotFound()
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.unnecessary()),
+                        JbstJwtUser.fixed(Email.fixed(), JbstUserEmailDetails.unnecessary()),
                         null
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.required()),
+                        JbstJwtUser.fixed(Email.fixed(), JbstUserEmailDetails.required()),
                         JbstExceptions.PasswordReset.emailNotConfirmed()
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(Email.hardcoded(), JbstUserEmailDetails.confirmed()),
+                        JbstJwtUser.fixed(Email.fixed(), JbstUserEmailDetails.confirmed()),
                         null
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(null, JbstUserEmailDetails.unnecessary()),
+                        JbstJwtUser.fixed(null, JbstUserEmailDetails.unnecessary()),
                         JbstExceptions.PasswordReset.emailMissing()
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(null, JbstUserEmailDetails.required()),
+                        JbstJwtUser.fixed(null, JbstUserEmailDetails.required()),
                         JbstExceptions.PasswordReset.emailMissing()
                 ),
                 Arguments.of(
-                        JbstJwtUser.hardcoded(null, JbstUserEmailDetails.confirmed()),
+                        JbstJwtUser.fixed(null, JbstUserEmailDetails.confirmed()),
                         JbstExceptions.PasswordReset.emailMissing()
                 )
         );
@@ -168,7 +168,7 @@ class JbstAbstractUsersTokensValidatorTest {
         var validTimestamp = getFutureTimestamp(oneDay).value();
         return Stream.of(
                 Arguments.of(
-                        JbstRequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.fixed(),
                         null,
                         JbstExceptions.UserTokenValidation.notFound()
                 ),
@@ -179,11 +179,11 @@ class JbstAbstractUsersTokensValidatorTest {
                                 Password.of("e4f937b04d9f44519ed58346b9aa67ff")
 
                         ),
-                        JbstUserToken.hardcodedPasswordReset(),
+                        JbstUserToken.fixedPasswordReset(),
                         new IllegalArgumentException("Passwords must be same")
                 ),
                 Arguments.of(
-                        JbstRequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.fixed(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),
@@ -195,7 +195,7 @@ class JbstAbstractUsersTokensValidatorTest {
                         JbstExceptions.UserTokenValidation.used()
                 ),
                 Arguments.of(
-                        JbstRequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.fixed(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),
@@ -207,7 +207,7 @@ class JbstAbstractUsersTokensValidatorTest {
                         JbstExceptions.UserTokenValidation.expired()
                 ),
                 Arguments.of(
-                        JbstRequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.fixed(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),
@@ -219,7 +219,7 @@ class JbstAbstractUsersTokensValidatorTest {
                         JbstExceptions.UserTokenValidation.invalidType()
                 ),
                 Arguments.of(
-                        JbstRequestUserPasswordReset.hardcoded(),
+                        JbstRequestUserPasswordReset.fixed(),
                         new JbstUserToken(
                                 JbstTokenId.random(),
                                 Email.random(),

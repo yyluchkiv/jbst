@@ -17,7 +17,7 @@ public record JbstRequestMagicLinkToken(
         @Schema(type = "string") @NotNull ZoneId zoneId
 ) {
 
-    public static JbstRequestMagicLinkToken hardcoded() {
+    public static JbstRequestMagicLinkToken fixed() {
         return new JbstRequestMagicLinkToken("E4944FFE506B2838A8F667D95C5FB28DB3ABAE54", UKRAINE);
     }
 

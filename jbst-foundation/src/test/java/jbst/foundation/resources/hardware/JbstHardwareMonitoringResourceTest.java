@@ -67,7 +67,7 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
         // Act
         mvc.perform(
                         post("/hardware/monitoring/metadata")
-                                .content(this.getContent(JbstHardwareMonitoringMetadata.hardcoded()))
+                                .content(this.getContent(JbstHardwareMonitoringMetadata.fixed()))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
@@ -81,12 +81,12 @@ class JbstHardwareMonitoringResourceTest extends TestRunnerResources1 {
     @Test
     void saveMetadata() throws Exception {
         // Arrange
-        when(this.settingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.hardcoded());
+        when(this.settingsService.getHardwareMonitoringThresholds()).thenReturn(JbstSettingsHardwareMonitoringThresholds.fixed());
 
         // Act
         mvc.perform(
                 post("/hardware/monitoring/metadata")
-                        .content(this.getContent(JbstHardwareMonitoringMetadata.hardcoded()))
+                        .content(this.getContent(JbstHardwareMonitoringMetadata.fixed()))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());

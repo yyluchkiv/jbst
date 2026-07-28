@@ -13,7 +13,7 @@ public record Versions(List<Version> values) {
         );
     }
 
-    public static Versions hardcoded() {
+    public static Versions fixed() {
         return new Versions(
                 List.of(Version.VERSION_1_3, Version.VERSION_1_4, Version.VERSION_1_5)
         );

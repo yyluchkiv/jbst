@@ -18,7 +18,7 @@ public class JbstPropertyInvitationsOnInit extends JbstProperty {
     @JbstPropertyMandatory
     private final boolean enabled;
 
-    public static JbstPropertyInvitationsOnInit hardcoded() {
+    public static JbstPropertyInvitationsOnInit fixed() {
         return new JbstPropertyInvitationsOnInit(true);
     }
 
@@ -27,7 +27,7 @@ public class JbstPropertyInvitationsOnInit extends JbstProperty {
     }
 
     public static JbstPropertyInvitationsOnInit enabled() {
-        return hardcoded();
+        return fixed();
     }
 
     public static JbstPropertyInvitationsOnInit disabled() {

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PasswordTest extends JbstUnitTests.Runners.BaseFolderFile {
-    private static final Password PASSWORD = Password.hardcoded();
+    private static final Password PASSWORD = Password.fixed();
 
     @Override
     protected String getFileName() {

@@ -232,8 +232,8 @@ class JbstEmailServiceEnabledTest {
         // Arrange
         var data = new JbstEmails.AttachmentAndText(
                 Set.of(
-                        "test1@" + JbstConstants.Domains.HARDCODED,
-                        "test2@" + JbstConstants.Domains.HARDCODED
+                        "test1@" + JbstConstants.Domains.FIXED,
+                        "test2@" + JbstConstants.Domains.FIXED
                 ),
                 "subject1",
                 "message1",
@@ -254,8 +254,8 @@ class JbstEmailServiceEnabledTest {
         verify(this.javaMailSender).createMimeMessage();
         verify(mimeMessage).setFrom(from);
         verify(mimeMessage).setSubject("subject1");
-        verify(mimeMessage).addRecipients(TO, "test1@" + JbstConstants.Domains.HARDCODED);
-        verify(mimeMessage).addRecipients(TO, "test2@" + JbstConstants.Domains.HARDCODED);
+        verify(mimeMessage).addRecipients(TO, "test1@" + JbstConstants.Domains.FIXED);
+        verify(mimeMessage).addRecipients(TO, "test2@" + JbstConstants.Domains.FIXED);
         var mimeMultipartAC = ArgumentCaptor.forClass(MimeMultipart.class);
         verify(mimeMessage).setContent(mimeMultipartAC.capture());
         var multipart = mimeMultipartAC.getValue();
@@ -293,7 +293,7 @@ class JbstEmailServiceEnabledTest {
         );
         var data = new JbstEmails.HTML(
                 Set.of(
-                        "tests@" + JbstConstants.Domains.HARDCODED
+                        "tests@" + JbstConstants.Domains.FIXED
                 ),
                 "subject1",
                 "template1",

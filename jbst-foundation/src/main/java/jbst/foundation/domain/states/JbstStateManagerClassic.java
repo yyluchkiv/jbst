@@ -104,7 +104,7 @@ public abstract class JbstStateManagerClassic {
             this.empty = CollectionUtils.isEmpty(values);
         }
 
-        public static GroupedMappings hardcoded() {
+        public static GroupedMappings fixed() {
             return new GroupedMappings(List.of(JbstStateClassic.CREATED, JbstStateClassic.ACTIVE));
         }
     }

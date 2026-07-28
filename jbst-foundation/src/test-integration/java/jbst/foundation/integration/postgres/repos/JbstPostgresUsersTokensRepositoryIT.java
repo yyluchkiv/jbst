@@ -134,7 +134,7 @@ class JbstPostgresUsersTokensRepositoryIT extends TestsJbstConfigurationPostgres
         assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
 
         // Act-Assert-3
-        var requestUserEmailToken = JbstRequestUserToken.hardcoded();
+        var requestUserEmailToken = JbstRequestUserToken.fixed();
         var userEmailToken = this.usersTokensRepository.saveAs(requestUserEmailToken);
         assertThat(this.usersTokensRepository.count()).isEqualTo(8);
         assertThat(this.usersTokensRepository.findById(userEmailToken.id().value())).isNotEmpty();

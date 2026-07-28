@@ -141,7 +141,7 @@ public class JbstMongoUser {
                 true,
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
-                Email.of(username + "@" + JbstConstants.Domains.HARDCODED),
+                Email.of(username + "@" + JbstConstants.Domains.FIXED),
                 randomBoolean(),
                 JbstUserEmailDetails.random()
         );

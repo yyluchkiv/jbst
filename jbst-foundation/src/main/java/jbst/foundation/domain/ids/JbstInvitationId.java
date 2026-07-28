@@ -14,7 +14,7 @@ public record JbstInvitationId(@NotNull String value) {
         return new JbstInvitationId(value);
     }
 
-    public static JbstInvitationId hardcoded() {
+    public static JbstInvitationId fixed() {
         return of("5EFCB2583361E1C7071E");
     }
 

@@ -30,7 +30,7 @@ public class JbstPropertyMongo extends JbstProperty {
     @JbstPropertyOptional
     private Password password;
 
-    public static JbstPropertyMongo hardcoded() {
+    public static JbstPropertyMongo fixed() {
         return JbstPropertyMongo.noSecurity("127.0.0.1", 27017, "jbst");
     }
 

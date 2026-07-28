@@ -46,12 +46,12 @@ public abstract class JbstSpringBoot {
             @JsonInclude(JsonInclude.Include.NON_NULL) JbstMavenDetails maven
     ) {
 
-        public static SpringBootActuatorInfo hardcoded() {
+        public static SpringBootActuatorInfo fixed() {
             return new SpringBootActuatorInfo(
-                    SpringBootActuatorInfoGit.hardcoded(),
+                    SpringBootActuatorInfoGit.fixed(),
                     null,
                     "dev",
-                    JbstMavenDetails.hardcoded()
+                    JbstMavenDetails.fixed()
             );
         }
 
@@ -108,7 +108,7 @@ public abstract class JbstSpringBoot {
                 @JsonProperty("time") String time
         ) {
 
-            public static SpringBootActuatorInfoCommit hardcoded() {
+            public static SpringBootActuatorInfoCommit fixed() {
                 return new SpringBootActuatorInfoCommit(
                         "1234567",
                         "01.01.2024 15:00:00"
@@ -128,9 +128,9 @@ public abstract class JbstSpringBoot {
                 @JsonProperty("branch") String branch
         ) {
 
-            public static SpringBootActuatorInfoGit hardcoded() {
+            public static SpringBootActuatorInfoGit fixed() {
                 return new SpringBootActuatorInfoGit(
-                        SpringBootActuatorInfoCommit.hardcoded(),
+                        SpringBootActuatorInfoCommit.fixed(),
                         "dev"
                 );
             }
@@ -148,7 +148,7 @@ public abstract class JbstSpringBoot {
             @JsonInclude(JsonInclude.Include.NON_NULL) Status status
     ) {
 
-        public static SpringBootActuatorHealth hardcoded() {
+        public static SpringBootActuatorHealth fixed() {
             return new SpringBootActuatorHealth(
                     Status.UP
             );

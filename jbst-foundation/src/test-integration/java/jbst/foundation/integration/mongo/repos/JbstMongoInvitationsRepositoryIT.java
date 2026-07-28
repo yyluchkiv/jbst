@@ -155,12 +155,12 @@ class JbstMongoInvitationsRepositoryIT extends TestsJbstConfigurationMongoReposi
         assertThat(this.invitationsRepository.isPresent(notExistentInvitationId).present()).isFalse();
 
         // Act-Assert-3
-        this.invitationsRepository.saveAs(Username.hardcoded(), request);
+        this.invitationsRepository.saveAs(Username.fixed(), request);
         assertThat(this.invitationsRepository.count()).isEqualTo(8);
-        var ownedInvitations = this.invitationsRepository.findByOwner(Username.hardcoded());
+        var ownedInvitations = this.invitationsRepository.findByOwner(Username.fixed());
         assertThat(ownedInvitations).hasSize(1);
         var ownedInvitation = ownedInvitations.get(0);
-        assertThat(ownedInvitation.getOwner()).isEqualTo(Username.hardcoded());
+        assertThat(ownedInvitation.getOwner()).isEqualTo(Username.fixed());
         assertThat(ownedInvitation.getAuthorities()).isEqualTo(getSimpleGrantedAuthorities(request.authorities()));
         assertThat(ownedInvitation.getCode()).hasSize(40);
     }

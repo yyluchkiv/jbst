@@ -12,7 +12,7 @@ public record AccountName(@NotNull String value) {
         return new AccountName(value);
     }
 
-    public static AccountName hardcoded() {
+    public static AccountName fixed() {
         return of("Account0");
     }
 

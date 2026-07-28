@@ -70,7 +70,7 @@ class JbstJwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isAccess()).isTrue();
         assertThat(validatedClaims.isRefresh()).isFalse();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
-        assertThat(validatedClaims.username()).isEqualTo(Username.hardcoded());
+        assertThat(validatedClaims.username()).isEqualTo(Username.fixed());
         assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
         // 3600000L == 1 hour
         assertThat(validatedClaims.getExpirationTimestamp() - validatedClaims.issuedAt().getTime()).isEqualTo(3600000L);
@@ -92,7 +92,7 @@ class JbstJwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isAccess()).isFalse();
         assertThat(validatedClaims.isRefresh()).isTrue();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
-        assertThat(validatedClaims.username()).isEqualTo(Username.hardcoded());
+        assertThat(validatedClaims.username()).isEqualTo(Username.fixed());
         assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
         // 3600000L == 1 hour
         assertThat(validatedClaims.getExpirationTimestamp() - validatedClaims.issuedAt().getTime()).isEqualTo(3600000L);

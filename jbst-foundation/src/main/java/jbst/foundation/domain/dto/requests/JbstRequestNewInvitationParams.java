@@ -11,7 +11,7 @@ public record JbstRequestNewInvitationParams(
         @NotEmpty Set<String> authorities
 ) {
 
-    public static JbstRequestNewInvitationParams hardcoded() {
+    public static JbstRequestNewInvitationParams fixed() {
         return new JbstRequestNewInvitationParams(new HashSet<>(Set.of("invitations:read", "invitations:write")));
     }
 

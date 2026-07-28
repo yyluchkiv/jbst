@@ -7,8 +7,8 @@ public record JbstRequestUserLogin(
         @Username.ValidUsername Username username,
         @Password.ValidPasswordNotBlank Password password
 ) {
-    public static JbstRequestUserLogin hardcoded() {
-        return new JbstRequestUserLogin(Username.hardcoded(), Password.hardcoded());
+    public static JbstRequestUserLogin fixed() {
+        return new JbstRequestUserLogin(Username.fixed(), Password.fixed());
     }
 
     public static JbstRequestUserLogin random() {

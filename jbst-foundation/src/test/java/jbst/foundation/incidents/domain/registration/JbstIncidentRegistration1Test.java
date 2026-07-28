@@ -10,7 +10,7 @@ class JbstIncidentRegistration1Test {
     @Test
     void convertRegister1IncidentTest() {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         var incident = new JbstIncidentRegistration1(
                 username
         );

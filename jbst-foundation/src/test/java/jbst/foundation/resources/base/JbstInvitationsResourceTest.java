@@ -82,8 +82,8 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
     @Test
     void saveTest() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
-        var request = JbstRequestNewInvitationParams.hardcoded();
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.fixed());
+        var request = JbstRequestNewInvitationParams.fixed();
 
         // Act
         this.mvc.perform(
@@ -96,7 +96,7 @@ class JbstInvitationsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.invitationsValidator).validateCreateNewInvitation(request);
-        verify(this.invitationsService).save(Username.hardcoded(), request);
+        verify(this.invitationsService).save(Username.fixed(), request);
     }
 
     @Test

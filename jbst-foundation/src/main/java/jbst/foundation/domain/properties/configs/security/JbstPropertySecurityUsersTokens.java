@@ -21,7 +21,7 @@ public class JbstPropertySecurityUsersTokens extends JbstProperty {
     @JbstPropertyOptional
     private String webclientPasswordResetPath;
 
-    public static JbstPropertySecurityUsersTokens hardcoded() {
+    public static JbstPropertySecurityUsersTokens fixed() {
         return new JbstPropertySecurityUsersTokens(
                 "/magic-link",
                 "/email-confirmation",

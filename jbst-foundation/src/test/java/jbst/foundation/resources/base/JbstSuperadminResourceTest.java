@@ -122,9 +122,9 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void findUsersExcept() throws Exception {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
-        when(this.superadminService.findUsersExcept(username)).thenReturn(JbstUsers.hardcoded());
+        when(this.superadminService.findUsersExcept(username)).thenReturn(JbstUsers.fixed());
 
         // Act
         this.mvc.perform(get("/superadmin/users"))
@@ -149,7 +149,7 @@ class JbstSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void disabledUser() throws Exception {
         // Arrange
-        var username = Username.hardcoded();
+        var username = Username.fixed();
 
         // Act
         this.mvc.perform(post("/superadmin/users/" + username + "/disable"))

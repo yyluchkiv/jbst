@@ -50,9 +50,9 @@ class JbstUsersEmailsServiceConsoleTest {
         @Bean
         JbstProperties jbstProperties() {
             var jbstProperties = new JbstProperties();
-            jbstProperties.setApp(JbstPropertyApp.hardcoded());
-            jbstProperties.setMvc(JbstPropertyMVC.hardcoded());
-            jbstProperties.setSecurity(JbstPropertySecurity.hardcoded());
+            jbstProperties.setApp(JbstPropertyApp.fixed());
+            jbstProperties.setMvc(JbstPropertyMVC.fixed());
+            jbstProperties.setSecurity(JbstPropertySecurity.fixed());
             jbstProperties.setEmails(
                     new JbstPropertyEmails(
                             true,
@@ -139,7 +139,7 @@ class JbstUsersEmailsServiceConsoleTest {
     void executeMagicLink() {
         // Act
         this.componentUnderTest.executeMagicLink(
-                JbstUserToken.hardcodedMagicLink()
+                JbstUserToken.fixedMagicLink()
         );
 
         // Assert
@@ -151,7 +151,7 @@ class JbstUsersEmailsServiceConsoleTest {
     void executeEmailConfirmation() {
         // Act
         this.componentUnderTest.executeEmailConfirmation(
-                JbstUserToken.hardcodedEmailConfirmation()
+                JbstUserToken.fixedEmailConfirmation()
         );
 
         // Assert
@@ -163,7 +163,7 @@ class JbstUsersEmailsServiceConsoleTest {
     void executePasswordReset() {
         // Act
         this.componentUnderTest.executePasswordReset(
-                JbstUserToken.hardcodedPasswordReset()
+                JbstUserToken.fixedPasswordReset()
         );
 
         // Assert
@@ -175,7 +175,7 @@ class JbstUsersEmailsServiceConsoleTest {
     void executeAuthenticationLogin() {
         // Act
         this.componentUnderTest.executeAccountAccessed(
-                JbstFunctionAccountAccessed.hardcoded(
+                JbstFunctionAccountAccessed.fixed(
                         JbstAccountAccessMethod.USERNAME_PASSWORD
                 )
         );
@@ -189,7 +189,7 @@ class JbstUsersEmailsServiceConsoleTest {
     void executeSessionRefreshed() {
         // Act
         this.componentUnderTest.executeAccountAccessed(
-                JbstFunctionAccountAccessed.hardcoded(
+                JbstFunctionAccountAccessed.fixed(
                         JbstAccountAccessMethod.SESSION_TOKEN
                 )
         );

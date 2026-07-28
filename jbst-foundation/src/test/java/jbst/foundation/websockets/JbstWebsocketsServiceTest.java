@@ -100,7 +100,7 @@ class JbstWebsocketsServiceTest {
     @Test
     void convertAndSendToUserThrowExceptionTest() {
         // Assert
-        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.hardcoded());
+        when(this.jbstProperties.getSecurity()).thenReturn(JbstPropertySecurity.fixed());
         var username = Username.random();
         var websocketEvent = mock(JbstWebsocketEvent.class);
         var ex = new MessagingException(randomString());
@@ -125,10 +125,10 @@ class JbstWebsocketsServiceTest {
         when(security.getWebsockets()).thenReturn(
                 new JbstPropertySecurityWebsockets(
                         enabled,
-                        JbstPropertyWebsocketsCSRF.hardcoded(),
-                        JbstPropertyWebsocketsStompEndpointRegistry.hardcoded(),
-                        JbstPropertyWebsocketsMessageBrokerRegistry.hardcoded(),
-                        JbstPropertyWebsocketsFeatures.hardcoded()
+                        JbstPropertyWebsocketsCSRF.fixed(),
+                        JbstPropertyWebsocketsStompEndpointRegistry.fixed(),
+                        JbstPropertyWebsocketsMessageBrokerRegistry.fixed(),
+                        JbstPropertyWebsocketsFeatures.fixed()
                 )
         );
         when(this.jbstProperties.getSecurity()).thenReturn(security);
