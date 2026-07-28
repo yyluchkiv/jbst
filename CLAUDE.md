@@ -93,5 +93,25 @@ PostgreSQL schema is managed by **Liquibase**: `src/main/resources/postgres/chan
 
 ## Conventions
 
+### Changelog and commit messages — Conventional Commits
+Both `CHANGELOG.md` lines and commit subjects use **Conventional Commits** types:
+
+| Type | Use for |
+|---|---|
+| `feat` | New functionality (formerly `addition:`) |
+| `fix` | Bug fixes |
+| `refactor` | Code restructuring without behavior change (formerly `modification:`, `deletion:` of internals) |
+| `perf` | Performance improvements |
+| `docs` | Documentation only (README, CLAUDE.md, Javadoc) |
+| `test` | Adding or fixing tests |
+| `build` | Build system / dependencies (Maven, wrapper, scripts) |
+| `ci` | GitHub Actions workflow changes |
+| `chore` | Maintenance that fits nothing above |
+
+- Changelog line format: `— type: short description` (one line per change, appended under the current `### Changelog [vX.Y]` heading; replace the initial `— TBD` seeded by `next-snapshot.sh`).
+- Commit subject format: `type: short description` (scope optional: `feat(iam): ...`); append `!` for breaking changes (`feat!: ...`) and mention the break in the changelog line.
+- `SNAPSHOT: vX.Y` / `RELEASE: vX.Y` commits are produced by the release scripts and are exempt.
+- When a change lands via PR, use the same `type:` prefix in the PR title.
+
 - **Lombok** everywhere; `lombok.config` sets the logger field name to `LOGGER` (use `@Slf4j` then `LOGGER.info(...)`), adds `@lombok.Generated` (for coverage exclusion), and `@ConstructorProperties` on generated constructors.
 - Server entrypoints are `Server.java` in each server module, extending `JbstStartupEventListener` and importing a `ConfigurationServer`.
