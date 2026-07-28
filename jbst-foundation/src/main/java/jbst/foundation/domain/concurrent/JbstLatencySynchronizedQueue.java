@@ -6,19 +6,25 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.apache.commons.collections4.queue.SynchronizedQueue;
 
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static jbst.foundation.domain.random.JbstRandom.randomLongGreaterThanZeroByBounds;
-import static org.apache.commons.collections4.queue.SynchronizedQueue.synchronizedQueue;
 
 @EqualsAndHashCode
 @ToString
 public class JbstLatencySynchronizedQueue {
-    private final SynchronizedQueue<Long> nanos;
+    /**
+     * ReentrantLock instead of synchronized decorator — avoids carrier-thread pinning on virtual threads (Java 21, JEP 444)
+     */
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final ReentrantLock lock = new ReentrantLock();
+    private final CircularFifoQueue<Long> nanos;
 
     @Getter
     @EqualsAndHashCode
@@ -27,7 +33,7 @@ public class JbstLatencySynchronizedQueue {
         private final String latencyMs;
         private final String latenciesMs;
 
-        public JbstLatencyJSON(SynchronizedQueue<Long> nanos) {
+        public JbstLatencyJSON(List<Long> nanos) {
             var latencies = nanos.stream().map(NANOSECONDS::toMillis).toList();
             var latency = (long) latencies.stream()
                     .mapToLong(Long::longValue)
@@ -47,7 +53,7 @@ public class JbstLatencySynchronizedQueue {
     }
 
     public JbstLatencySynchronizedQueue(int size) {
-        this.nanos = synchronizedQueue(new CircularFifoQueue<>(size));
+        this.nanos = new CircularFifoQueue<>(size);
     }
 
     public static JbstLatencySynchronizedQueue fixed() {
@@ -75,12 +81,17 @@ public class JbstLatencySynchronizedQueue {
     }
 
     public void add(Long latency) {
-        this.nanos.add(latency);
+        this.lock.lock();
+        try {
+            this.nanos.add(latency);
+        } finally {
+            this.lock.unlock();
+        }
     }
 
     @JsonIgnore
     public long avgNanos() {
-        return (long) this.nanos.stream()
+        return (long) this.snapshot().stream()
                 .mapToLong(Long::longValue)
                 .average()
                 .orElse(0.0);
@@ -88,7 +99,7 @@ public class JbstLatencySynchronizedQueue {
 
     @JsonIgnore
     public long maxNanos() {
-        return this.nanos.stream()
+        return this.snapshot().stream()
                 .mapToLong(Long::longValue)
                 .max()
                 .orElse(0L);
@@ -106,6 +117,18 @@ public class JbstLatencySynchronizedQueue {
 
     @JsonValue
     public JbstLatencyJSON getJSON() {
-        return new JbstLatencyJSON(this.nanos);
+        return new JbstLatencyJSON(this.snapshot());
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private List<Long> snapshot() {
+        this.lock.lock();
+        try {
+            return List.copyOf(this.nanos);
+        } finally {
+            this.lock.unlock();
+        }
     }
 }

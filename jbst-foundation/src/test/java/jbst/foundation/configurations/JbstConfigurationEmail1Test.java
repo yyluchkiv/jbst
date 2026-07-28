@@ -23,9 +23,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
         properties = {
+                "jbst.async.virtual-threads=true",
                 "jbst.async.thread-name-prefix=tps1-async",
-                "jbst.async.threads-core-pool-percentage=25",
-                "jbst.async.threads-max-pool-percentage=50",
                 "jbst.emails.enabled=true",
                 "jbst.emails.host=smtp.gmail.com",
                 "jbst.emails.port=587",

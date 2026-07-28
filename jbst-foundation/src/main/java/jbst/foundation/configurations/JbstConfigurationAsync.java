@@ -8,6 +8,7 @@ import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -37,12 +38,18 @@ public class JbstConfigurationAsync implements AsyncConfigurer {
     @Override
     public Executor getAsyncExecutor() {
         var async = this.jbstProperties.getAsync();
-        var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setThreadNamePrefix(async.getThreadNamePrefix());
-        taskExecutor.setCorePoolSize(getNumOfCores(async.asThreadsCorePoolTuplePercentage()));
-        taskExecutor.setMaxPoolSize(getNumOfCores(async.asThreadsMaxPoolTuplePercentage()));
-        taskExecutor.initialize();
-        return taskExecutor;
+        if (async.isVirtualThreadsEnabled()) {
+            var taskExecutor = new SimpleAsyncTaskExecutor(async.getThreadNamePrefix());
+            taskExecutor.setVirtualThreads(true);
+            return taskExecutor;
+        } else {
+            var taskExecutor = new ThreadPoolTaskExecutor();
+            taskExecutor.setThreadNamePrefix(async.getThreadNamePrefix());
+            taskExecutor.setCorePoolSize(getNumOfCores(async.asThreadsCorePoolTuplePercentage()));
+            taskExecutor.setMaxPoolSize(getNumOfCores(async.asThreadsMaxPoolTuplePercentage()));
+            taskExecutor.initialize();
+            return taskExecutor;
+        }
     }
 
     @Override

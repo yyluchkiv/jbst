@@ -33,7 +33,7 @@ public final class JbstEnvUtils {
         if (isEmpty(activeProfiles) || activeProfiles.size() > 1) {
             return JbstConstants.Symbols.DASH;
         } else {
-            return activeProfiles.get(0);
+            return activeProfiles.getFirst();
         }
     }
 
