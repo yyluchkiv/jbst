@@ -1,11 +1,23 @@
 ---
 name: plan-execute
 description: Implement an approved plan in a separate PR. User-invoked only.
-argument-hint: [plan-file]
+argument-hint: [plan-file or partial name]
 allowed-tools: Bash(git:*), Bash(gh:*), Read, Edit, Write
 disable-model-invocation: true
 ---
-Approved plan: @$ARGUMENTS
+Available plans (newest first):
+!`ls -t assets/plans/*.md 2>/dev/null`
+
+Requested plan: "$ARGUMENTS"
+
+0. Resolve the plan file:
+   - If "$ARGUMENTS" is an exact path from the list, use it.
+   - If it's empty, use the newest plan if there is only one candidate;
+     otherwise ask which one via AskUserQuestion.
+   - Otherwise treat it as a fuzzy match (date prefix or slug substring)
+     against the list. One match → use it. Zero or several → ask, listing
+     the candidates.
+   Read the chosen plan file before proceeding.
 
 Precondition: the plan PR is already merged into the default branch, so the plan
 file lives there and its claude/<stem> branch was deleted by cleanup. The branch
