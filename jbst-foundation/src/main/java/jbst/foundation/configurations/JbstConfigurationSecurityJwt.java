@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -28,14 +29,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
-import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.messaging.access.intercept.AuthorizationChannelInterceptor;
+import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
+import org.springframework.security.messaging.context.SecurityContextChannelInterceptor;
+import org.springframework.security.messaging.web.csrf.CsrfChannelInterceptor;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_READ;
 import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_WRITE;
@@ -45,19 +49,18 @@ import static org.springframework.http.HttpMethod.*;
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>
  * <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#websocket">Documentation #2</a>
  * <p>
- * Spring Boot 3 Migration Issues 24.04.2024:
+ * Spring Security 7 removed AbstractSecurityWebSocketMessageBrokerConfigurer. Its behavior is reproduced manually in
+ * {@link #configureClientInboundChannel(ChannelRegistration)}: security-context propagation, CSRF token validation on
+ * CONNECT frames (legacy plain-token {@link CsrfChannelInterceptor}, matching the pre-migration configuration where
+ * sameOriginDisabled() returned false), and authorization of inbound messages. @EnableWebSocketSecurity is still not
+ * used — it enforces the XOR-encoded CSRF token contract, which is not what jbst clients send:
  * <p>
  * <a href="https://github.com/spring-projects/spring-security/issues/13640">
  * EnableWebSocketSecurity is not 1:1 replacement for AbstractSecurityWebSocketMessageBrokerConfigurer
  * </a>
- * <p>
- * <a href="https://github.com/jhipster/generator-jhipster/issues/20404">
- * Migrate to Spring Security 6's @EnableWebSocketSecurity (it is not possible to disable CSRF currently)
- * </a>
  */
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling
-// TODO [YYL, deprecation] fixme
-@SuppressWarnings({"deprecation", "SpringJavaInjectionPointsAutowiringInspection"})
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Configuration
 @EnableConfigurationProperties({
         JbstProperties.class
@@ -87,7 +90,7 @@ import static org.springframework.http.HttpMethod.*;
 @EnableWebSecurity
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+public class JbstConfigurationSecurityJwt implements WebSocketMessageBrokerConfigurer {
 
     // Assistants
     private final JbstUserDetailsService jwtUserDetailsService;
@@ -233,11 +236,19 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
     }
 
     @Override
-    protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
+    public void configureClientInboundChannel(ChannelRegistration registration) {
         if (!this.jbstProperties.getSecurity().getWebsockets().isEnabled()) {
             return;
         }
-        registry.anyMessage().authenticated();
+        registration.interceptors(
+                new SecurityContextChannelInterceptor(),
+                new CsrfChannelInterceptor(),
+                new AuthorizationChannelInterceptor(
+                        MessageMatcherDelegatingAuthorizationManager.builder()
+                                .anyMessage().authenticated()
+                                .build()
+                )
+        );
     }
 
     @Override
@@ -251,13 +262,4 @@ public class JbstConfigurationSecurityJwt extends AbstractSecurityWebSocketMessa
         registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());
     }
 
-    /**
-     * Determines if a CSRF token is required for connecting. This protects against remote
-     * sites from connecting to the application and being able to read/write data over the
-     * connection. The default is false (the token is required).
-     */
-    @Override
-    protected boolean sameOriginDisabled() {
-        return false;
-    }
 }

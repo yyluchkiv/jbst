@@ -16,13 +16,19 @@ import jbst.foundation.handshakes.JbstSecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.messaging.access.intercept.AuthorizationChannelInterceptor;
+import org.springframework.security.messaging.context.SecurityContextChannelInterceptor;
+import org.springframework.security.messaging.web.csrf.CsrfChannelInterceptor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
@@ -157,7 +163,7 @@ class JbstConfigurationSecurityJwtTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(30)
+                .hasSize(21)
                 .contains("registerStompEndpoints")
                 .contains("configureMessageBroker");
     }
@@ -183,6 +189,28 @@ class JbstConfigurationSecurityJwtTest {
         verify(registration).withSockJS();
         verifyNoMoreInteractions(
                 registry,
+                registration
+        );
+    }
+
+    @Test
+    void configureClientInboundChannelTest() {
+        // Arrange
+        var registration = mock(ChannelRegistration.class);
+        var captor = ArgumentCaptor.forClass(ChannelInterceptor[].class);
+
+        // Act
+        this.componentUnderTest.configureClientInboundChannel(registration);
+
+        // Assert
+        verify(registration).interceptors(captor.capture());
+        // pre-Security-7 AbstractSecurityWebSocketMessageBrokerConfigurer inbound contract:
+        // security-context propagation → CSRF validation (sameOriginDisabled() == false) → anyMessage().authenticated()
+        assertThat(captor.getValue()).hasSize(3);
+        assertThat(captor.getValue()[0]).isInstanceOf(SecurityContextChannelInterceptor.class);
+        assertThat(captor.getValue()[1]).isInstanceOf(CsrfChannelInterceptor.class);
+        assertThat(captor.getValue()[2]).isInstanceOf(AuthorizationChannelInterceptor.class);
+        verifyNoMoreInteractions(
                 registration
         );
     }
