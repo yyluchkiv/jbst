@@ -41,7 +41,7 @@ public class JbstEncryption {
                  InvalidKeyException |
                  BadPaddingException |
                  IllegalBlockSizeException e) {
-            var message = String.format("Encryption Failure. Algorithm: AES, 128. Value `%s`", value);
+            var message = "Encryption Failure. Algorithm: AES, 128. Value `%s`".formatted(value);
             throw new IllegalArgumentException(message);
         }
     }
@@ -63,7 +63,7 @@ public class JbstEncryption {
                  InvalidKeyException |
                  BadPaddingException |
                  IllegalBlockSizeException e) {
-            var message = String.format("Decryption Failure. Algorithm: AES, 128. Value `%s`", value);
+            var message = "Decryption Failure. Algorithm: AES, 128. Value `%s`".formatted(value);
             throw new IllegalArgumentException(message);
         }
     }

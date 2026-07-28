@@ -52,7 +52,7 @@ public abstract class JbstWorker {
      */
     private final ReentrantLock lock = new ReentrantLock();
 
-    protected static final ScheduledExecutorService SES = newSingleThreadScheduledExecutor();
+    protected static final ScheduledExecutorService SES = newSingleThreadScheduledExecutor(Thread.ofVirtual().factory());
     protected Future<?> future = null;
     protected volatile JbstWorkerState state;
     protected long elapsedSeconds;

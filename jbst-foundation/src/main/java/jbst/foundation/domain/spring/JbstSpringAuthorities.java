@@ -15,7 +15,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 public class JbstSpringAuthorities {
 
     public static List<SimpleGrantedAuthority> getSimpleGrantedAuthorities(List<String> authorities) {
-        return authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return authorities.stream().map(SimpleGrantedAuthority::new).toList();
     }
 
     public static Set<SimpleGrantedAuthority> getSimpleGrantedAuthorities(Stream<String> authorities) {

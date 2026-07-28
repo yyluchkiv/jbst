@@ -66,11 +66,11 @@ public interface JbstPostgresUsersRepository extends JpaRepository<JbstPostgresU
     }
 
     default JbstUsers findUsers() {
-        return new JbstUsers(this.findAll().stream().map(JbstPostgresUser::asJbstUser).collect(Collectors.toList()));
+        return new JbstUsers(this.findAll().stream().map(JbstPostgresUser::asJbstUser).toList());
     }
 
     default JbstUsers findUsersExcept(Username username) {
-        return new JbstUsers(this.findByUsernameNot(username).stream().map(JbstPostgresUser::asJbstUser).collect(Collectors.toList()));
+        return new JbstUsers(this.findByUsernameNot(username).stream().map(JbstPostgresUser::asJbstUser).toList());
     }
 
     default void confirmEmail(Email email) {

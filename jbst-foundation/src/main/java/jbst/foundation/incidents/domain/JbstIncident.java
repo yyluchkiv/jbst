@@ -232,7 +232,7 @@ public class JbstIncident {
     public List<String> getOrderedKeys() {
         var variablesKeys = this.attributes.keySet().stream()
                 .filter(entryKey -> !PLAIN_MESSAGE_SKIPPED.contains(entryKey))
-                .collect(Collectors.toList());
+                .toList();
         List<String> orderedKeys = new LinkedList<>();
         ORDERED_PREFERRED_KEYS.forEach(preferredKey -> {
             if (variablesKeys.contains(preferredKey)) {

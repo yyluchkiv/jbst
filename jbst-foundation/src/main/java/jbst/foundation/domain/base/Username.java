@@ -15,7 +15,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.random.JbstRandom.randomString;
@@ -60,13 +59,13 @@ public record Username(@NotNull String value) {
     public static List<String> asStrings(Set<Username> usernames) {
         return usernames.stream()
                 .map(Username::value)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> asStrings(List<Username> usernames) {
         return usernames.stream()
                 .map(Username::value)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @JsonValue

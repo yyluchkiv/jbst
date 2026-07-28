@@ -1,5 +1,11 @@
 #file: noinspection SpringBootApplicationYaml
 
+# Spring: Tomcat request handling on virtual threads (Java 21)
+spring:
+  threads:
+    virtual:
+      enabled: true
+
 # Spring Security: actuator endpoints
 management:
   endpoints:

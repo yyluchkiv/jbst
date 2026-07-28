@@ -46,7 +46,7 @@ public class JbstSSH {
         } catch (JSchException ex) {
             return JbstSshSession.failure(ex);
         }
-        return JbstSshSession.failure(new JSchException(String.format("Unexpected SSH config for host: %s", connectionConfigs.getHost())));
+        return JbstSshSession.failure(new JSchException("Unexpected SSH config for host: %s".formatted(connectionConfigs.getHost())));
     }
 
     public static List<String> executeCmd(Session session, String cmd) throws JbstExceptions.SshSession {
@@ -80,18 +80,17 @@ public class JbstSSH {
     // PRIVATE METHODS
     // ================================================================================================================
     private static JbstSshSession timeoutSshSession(JbstSshConnectionConfigs connectionConfigs, Session session) {
-        var executorService = Executors.newSingleThreadExecutor();
-        var connectionCompleted = executorService.submit(() -> {
-            try {
-                session.connect();
-                return JbstSshSession.success(session);
-            } catch (JSchException | RuntimeException ex) {
-                return JbstSshSession.failure(ex);
-            }
-        });
-        JbstSshSession sshSession;
+        var executorService = Executors.newVirtualThreadPerTaskExecutor();
         try {
-            sshSession = connectionCompleted.get(connectionConfigs.getTimeout().amount(), TimeUnit.of(connectionConfigs.getTimeout().unit()));
+            var connectionCompleted = executorService.submit(() -> {
+                try {
+                    session.connect();
+                    return JbstSshSession.success(session);
+                } catch (JSchException | RuntimeException ex) {
+                    return JbstSshSession.failure(ex);
+                }
+            });
+            return connectionCompleted.get(connectionConfigs.getTimeout().amount(), TimeUnit.of(connectionConfigs.getTimeout().unit()));
         } catch (ExecutionException ex) {
             return JbstSshSession.failure(ex.getCause());
         } catch (TimeoutException ex) {
@@ -99,17 +98,9 @@ public class JbstSSH {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
             return JbstSshSession.failure(ex);
-        }
-        executorService.shutdown();
-        try {
-            if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
-                executorService.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        } finally {
             executorService.shutdownNow();
         }
-        return sshSession;
     }
 
     private static Properties getConfigs() {

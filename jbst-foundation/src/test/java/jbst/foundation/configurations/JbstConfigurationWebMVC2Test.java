@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.lang.reflect.Method;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static jbst.foundation.domain.random.JbstRandom.randomString;
@@ -64,7 +63,7 @@ class JbstConfigurationWebMVC2Test {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
-                .collect(Collectors.toList());
+                .toList();
 
         // Assert
         assertThat(methods)

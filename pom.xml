@@ -578,8 +578,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.plugin.compiler}</version>
                 <configuration>
-                    <source>${version.java}</source>
-                    <target>${version.java}</target>
+                    <release>${version.java}</release>
                     <forceLegacyJavacApi>true</forceLegacyJavacApi>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>

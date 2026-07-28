@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.databases.JbstInvitation.INVITATION_CODES_UNUSED;
@@ -32,7 +31,7 @@ public interface JbstMongoInvitationsRepository extends MongoRepository<JbstMong
     default List<JbstResponseInvitation> findResponseCodesByOwner(Username owner) {
         return this.findByOwner(owner).stream()
                 .map(JbstMongoInvitation::responseInvitation)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     default JbstInvitation findByCodeAsAny(String code) {
@@ -43,7 +42,7 @@ public interface JbstMongoInvitationsRepository extends MongoRepository<JbstMong
     default List<JbstResponseInvitation> findUnused() {
         return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
                 .map(JbstMongoInvitation::responseInvitation)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     long countByOwner(Username username);

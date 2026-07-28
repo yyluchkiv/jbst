@@ -291,7 +291,7 @@ public class JbstSlack {
         if (!this.inited.get()) {
             return;
         }
-        var workerSend = new Thread(() -> {
+        Thread.ofVirtual().name("jbst-slack-send").start(() -> {
             while (true) {
                 ChatMessageReq req;
                 try {
@@ -315,11 +315,9 @@ public class JbstSlack {
                     LOGGER.error("{} failure on worker-send", PREFIX, ex3);
                 }
             }
-        }, "jbst-slack-send");
-        workerSend.setDaemon(true);
-        workerSend.start();
+        });
 
-        var workerEdit = new Thread(() -> {
+        Thread.ofVirtual().name("jbst-slack-edit").start(() -> {
             while (true) {
                 MessageTs messageTs;
                 ChatMessageReq req;
@@ -348,10 +346,7 @@ public class JbstSlack {
                     LOGGER.error("{} failure on worker-edit", PREFIX, ex3);
                 }
             }
-        }, "jbst-slack-edit");
-        workerEdit.setDaemon(true);
-        workerEdit.start();
-
+        });
     }
 
     public final MessageDetailsRes messageSend(ChatMessageReq req) throws ConfigurationException, UnexpectedDisabledMessageReqException, RateLimitsException, ClientException {

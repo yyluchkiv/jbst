@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.reflect.Method;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,7 +39,7 @@ class JbstConfigurationIncidents1Test {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getDeclaredMethods())
                 .map(Method::getName)
-                .collect(Collectors.toList());
+                .toList();
 
         // Assert
         assertThat(methods)

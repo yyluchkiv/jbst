@@ -49,7 +49,7 @@ public class JbstIncidentClientTypeTelegram implements JbstIncidentClient {
     );
 
     // Data
-    private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor(Thread.ofVirtual().factory());
     private final ConcurrentHashMap<JbstIncident, JbstIncidentConcurrentStats> incidents = new ConcurrentHashMap<>();
 
     // Service

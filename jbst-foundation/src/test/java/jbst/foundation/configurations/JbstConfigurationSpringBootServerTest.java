@@ -13,7 +13,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.lang.reflect.Method;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +42,7 @@ class JbstConfigurationSpringBootServerTest {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
-                .collect(Collectors.toList());
+                .toList();
 
         // Assert
         assertThat(methods)

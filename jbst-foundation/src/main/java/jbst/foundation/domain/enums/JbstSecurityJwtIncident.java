@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @AllArgsConstructor
@@ -35,6 +34,6 @@ public enum JbstSecurityJwtIncident {
     }
 
     public static List<String> asList() {
-        return Stream.of(JbstSecurityJwtIncident.values()).map(JbstSecurityJwtIncident::getValue).collect(Collectors.toList());
+        return Stream.of(JbstSecurityJwtIncident.values()).map(JbstSecurityJwtIncident::getValue).toList();
     }
 }

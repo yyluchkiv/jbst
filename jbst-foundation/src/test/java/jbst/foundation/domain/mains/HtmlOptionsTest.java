@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +36,7 @@ class HtmlOptionsTest {
         var options = patterns.stream()
                 .peek(DateTimeFormatter::ofPattern)
                 .map(pattern -> new HtmlOption(pattern, pattern))
-                .collect(Collectors.toList());
+                .toList();
 
         prettyPrint(options);
 
@@ -66,7 +65,7 @@ class HtmlOptionsTest {
                     }
                 })
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .toList();
 
 
         prettyPrint(options);

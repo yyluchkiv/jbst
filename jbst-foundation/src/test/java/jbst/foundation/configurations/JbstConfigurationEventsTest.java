@@ -19,7 +19,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static jbst.foundation.domain.constants.JbstConstants.Numbers.BigDecimals.HUNDRED;
@@ -46,7 +45,7 @@ class JbstConfigurationEventsTest {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
-                .collect(Collectors.toList());
+                .toList();
 
         // Assert
         assertThat(methods)

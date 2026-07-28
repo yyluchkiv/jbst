@@ -201,7 +201,7 @@ public class JbstTelegram {
         if (!this.inited.get()) {
             return;
         }
-        var workerSend = new Thread(() -> {
+        Thread.ofVirtual().name("jbst-telegram-send").start(() -> {
             while (true) {
                 TelegramMessageRequest req;
                 try {
@@ -225,9 +225,7 @@ public class JbstTelegram {
                     LOGGER.error("jbst-telegram: send worker failure: {}", ex3.getMessage(), ex3);
                 }
             }
-        }, "jbst-telegram-send");
-        workerSend.setDaemon(true);
-        workerSend.start();
+        });
     }
 
     public final void sendIncident(JbstIncident incident) throws ConfigurationException, RateLimitsException, ClientException {

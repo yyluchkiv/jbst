@@ -4,7 +4,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Comparator.comparing;
@@ -16,12 +15,14 @@ public record JbstResponseUserSessionsTable(
         boolean anyPresent,
         boolean anyProblem
 ) {
-    public static JbstResponseUserSessionsTable of(List<JbstResponseUserSession2> sessions) {
-        sessions.sort(comparing(JbstResponseUserSession2::current).reversed().thenComparing(JbstResponseUserSession2::where));
+    public static JbstResponseUserSessionsTable of(List<JbstResponseUserSession2> unsorted) {
+        var sessions = unsorted.stream()
+                .sorted(comparing(JbstResponseUserSession2::current).reversed().thenComparing(JbstResponseUserSession2::where))
+                .toList();
         var countries = sessions.stream()
                 .map(JbstResponseUserSession2::country)
                 .filter(StringUtils::hasLength)
-                .distinct().sorted().collect(Collectors.toList());
+                .distinct().sorted().toList();
         return new JbstResponseUserSessionsTable(
                 sessions,
                 countries,
