@@ -24,26 +24,7 @@ jbst:
     users-agents:
       enabled: false
   incidents-manager:
-    enabled: true
-    type: "SERVER"
-    remote-server:
-      base-url: http://localhost:8973
-      credentials:
-        username: admin
-        password: admin
-    incidents:
-      AUTHENTICATION_LOGIN: true
-      AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD: false
-      AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD: true
-      AUTHENTICATION_LOGOUT: false
-      AUTHENTICATION_LOGOUT_MIN: false
-      SESSION_REFRESHED: true
-      SESSION_EXPIRED: false
-      REGISTER_MAGICLINK: true
-      REGISTER0: true
-      REGISTER0_FAILURE: true
-      REGISTER1: true
-      REGISTER1_FAILURE: true
+    enabled: false
   emails:
     enabled: false
   mvc:

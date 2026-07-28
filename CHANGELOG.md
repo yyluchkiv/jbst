@@ -1,4 +1,5 @@
 ### Changelog [v1.70]
+— fix: dev/docker configs — remove stale `SERVER` incidents-manager type (enum only has `TELEGRAM` now); incidents-manager disabled locally, fixes `run-postgres.sh`/`run-mongo.sh` docker startup
 — build: pin `maven-deploy-plugin` 3.1.3 in parent `pluginManagement` — fixes the missing plugin version warning on jbst-server-iam
 — build: Maven Wrapper — `./mvnw` (Maven 3.9.9); all scripts, docs and CI switched from `mvn` to the wrapper
 — refactor: docker conventions — `network-jbst` network, `volume-jbst-*` volumes, `jbst-database-*` service names, `restart: "no"` across all compose files
