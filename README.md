@@ -1,2 +1,2 @@
 # jbst
-jbst — java17 bootstrapping (mostly spring) tools
+jbst — Java bootstrapping tools (mostly Spring)
