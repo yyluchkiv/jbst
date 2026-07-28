@@ -12,7 +12,7 @@ import jbst.foundation.domain.maven.JbstMavenDetails;
 import jbst.foundation.domain.tuples.Tuple2;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.actuate.health.Status;
+import org.springframework.boot.health.contributor.Status;
 
 import java.util.ArrayList;
 
