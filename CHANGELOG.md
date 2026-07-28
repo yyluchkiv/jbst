@@ -1,4 +1,5 @@
 ### Changelog [v1.70]
+— build: pin `maven-deploy-plugin` 3.1.3 in parent `pluginManagement` — fixes the missing plugin version warning on jbst-server-iam
 — build: Maven Wrapper — `./mvnw` (Maven 3.9.9); all scripts, docs and CI switched from `mvn` to the wrapper
 — refactor: docker conventions — `network-jbst` network, `volume-jbst-*` volumes, `jbst-database-*` service names, `restart: "no"` across all compose files
 — fix: next-snapshot.sh — correct docker-compose paths (`files/docker` → `assets/docker`) so image tags get bumped again
