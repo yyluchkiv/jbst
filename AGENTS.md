@@ -3,10 +3,10 @@
 Multi-module Maven project. Java 21.
 
 ## Build
-mvn -B -q clean verify
+./mvnw -B -q clean verify
 
 Single module:
-mvn -B -q -pl jbst-foundation -am verify
+./mvnw -B -q -pl jbst-foundation -am verify
 
 ## Modules
 - jbst-foundation — core library
