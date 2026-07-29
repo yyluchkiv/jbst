@@ -395,9 +395,8 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${version.dependency.springframework.boot}</version>
-                    <configuration>
-                        <executable>true</executable>
-                    </configuration>
+                    <!-- Boot 4 removed the fully-executable-jar launch script (<executable>true</executable>);
+                         images and scripts start the app via `java -jar`, which needs no launch script -->
                     <executions>
                         <execution>
                             <goals>
