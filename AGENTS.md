@@ -18,5 +18,7 @@ Single module:
 - Never change application logic when the task is a dependency upgrade.
 - All dependency versions live in root pom.xml properties. Change them there only.
 - Never touch database migrations (Liquibase changelogs).
-- Never edit public API signatures in jbst-foundation.
+- Never edit public API signatures in jbst-foundation. This is enforced: japicmp fails
+  `verify` on binary-incompatible changes vs. the latest release. Never add japicmp
+  excludes or skip flags to get past it.
 - If the build does not compile, stop and report the error. Do not work around it.

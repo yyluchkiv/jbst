@@ -202,6 +202,32 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
             </plugin>
+            <!-- japicmp: binary-compatibility gate — public API vs. the latest release (auto-resolved, no SNAPSHOTs);
+                 old/new versions omitted on purpose: old == latest released jbst-foundation, new == freshly built jar -->
+            <plugin>
+                <groupId>com.github.siom79.japicmp</groupId>
+                <artifactId>japicmp-maven-plugin</artifactId>
+                <version>${version.plugin.japicmp}</version>
+                <configuration>
+                    <parameter>
+                        <onlyModified>true</onlyModified>
+                        <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+                        <!-- source-incompatible modifications stay report-only warnings -->
+                        <breakBuildOnSourceIncompatibleModifications>false</breakBuildOnSourceIncompatibleModifications>
+                        <!-- first release / fresh module: no baseline in the repository must not break the build -->
+                        <ignoreMissingOldVersion>true</ignoreMissingOldVersion>
+                    </parameter>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>binary-compatibility-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>cmp</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
