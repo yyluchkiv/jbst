@@ -15,49 +15,46 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class JbstUserTokenTest {
 
+    private static final long ONE_HOUR_MS = 3600000;
+    private static final long ONE_DAY_MS = 86400000;
+
+    // offsets are applied to the clock at execution time, far from the now-boundary, to keep assertions deterministic
     private static Stream<Arguments> isExpiredArgs() {
-        var currentTimestamp = getCurrentTimestamp();
-        var pastTimestamp = currentTimestamp - 3000; // 2 seconds in the past
-        var futureTimestamp = currentTimestamp + 3000; // 2 seconds in the future
         return Stream.of(
-                Arguments.of(pastTimestamp, true),
-                Arguments.of(futureTimestamp, false),
-                Arguments.of(currentTimestamp, true),
-                Arguments.of(currentTimestamp - 86400000, true),
-                Arguments.of(currentTimestamp + 86400000, false)
+                Arguments.of(-ONE_DAY_MS, true),
+                Arguments.of(-ONE_HOUR_MS, true),
+                Arguments.of(-1L, true),
+                Arguments.of(ONE_HOUR_MS, false),
+                Arguments.of(ONE_DAY_MS, false)
         );
     }
 
     private static Stream<Arguments> isInvalidArgs() {
-        var currentTimestamp = getCurrentTimestamp();
-        var pastTimestamp = currentTimestamp - 1000; // 1 second in the past
-        var futureTimestamp = currentTimestamp + 1000; // 1 second in the future
-
         return Stream.of(
-                Arguments.of(MAGICLINK, MAGICLINK, false, futureTimestamp, false),
-                Arguments.of(EMAIL_CONFIRMATION, MAGICLINK, false, futureTimestamp, true),
-                Arguments.of(MAGICLINK, MAGICLINK, true, futureTimestamp, true),
-                Arguments.of(MAGICLINK, MAGICLINK, false, pastTimestamp, true),
-                Arguments.of(PASSWORD_RESET, MAGICLINK, true, futureTimestamp, true),
-                Arguments.of(EMAIL_CONFIRMATION, MAGICLINK, false, pastTimestamp, true),
-                Arguments.of(MAGICLINK, MAGICLINK, true, pastTimestamp, true),
-                Arguments.of(PASSWORD_RESET, MAGICLINK, true, pastTimestamp, true),
-                Arguments.of(PASSWORD_RESET, EMAIL_CONFIRMATION, false, futureTimestamp, true),
-                Arguments.of(EMAIL_CONFIRMATION, EMAIL_CONFIRMATION, false, futureTimestamp, false),
-                Arguments.of(PASSWORD_RESET, PASSWORD_RESET, false, futureTimestamp, false)
+                Arguments.of(MAGICLINK, MAGICLINK, false, ONE_HOUR_MS, false),
+                Arguments.of(EMAIL_CONFIRMATION, MAGICLINK, false, ONE_HOUR_MS, true),
+                Arguments.of(MAGICLINK, MAGICLINK, true, ONE_HOUR_MS, true),
+                Arguments.of(MAGICLINK, MAGICLINK, false, -ONE_HOUR_MS, true),
+                Arguments.of(PASSWORD_RESET, MAGICLINK, true, ONE_HOUR_MS, true),
+                Arguments.of(EMAIL_CONFIRMATION, MAGICLINK, false, -ONE_HOUR_MS, true),
+                Arguments.of(MAGICLINK, MAGICLINK, true, -ONE_HOUR_MS, true),
+                Arguments.of(PASSWORD_RESET, MAGICLINK, true, -ONE_HOUR_MS, true),
+                Arguments.of(PASSWORD_RESET, EMAIL_CONFIRMATION, false, ONE_HOUR_MS, true),
+                Arguments.of(EMAIL_CONFIRMATION, EMAIL_CONFIRMATION, false, ONE_HOUR_MS, false),
+                Arguments.of(PASSWORD_RESET, PASSWORD_RESET, false, ONE_HOUR_MS, false)
         );
     }
 
     @ParameterizedTest
     @MethodSource("isExpiredArgs")
-    void isExpiredTest(long expiryTimestamp, boolean expected) {
+    void isExpiredTest(long expiryOffsetMs, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
                 JbstTokenId.fixed(),
                 Email.fixed(),
                 "test-token-value",
                 MAGICLINK,
-                expiryTimestamp,
+                getCurrentTimestamp() + expiryOffsetMs,
                 false
         );
 
@@ -67,14 +64,14 @@ class JbstUserTokenTest {
 
     @ParameterizedTest
     @MethodSource("isInvalidArgs")
-    void isInvalidTest(JbstUserTokenType tokenType, JbstUserTokenType expectedType, boolean used, long expiryTimestamp, boolean expected) {
+    void isInvalidTest(JbstUserTokenType tokenType, JbstUserTokenType expectedType, boolean used, long expiryOffsetMs, boolean expected) {
         // Arrange
         var userToken = new JbstUserToken(
                 JbstTokenId.fixed(),
                 Email.fixed(),
                 "test-token-value",
                 tokenType,
-                expiryTimestamp,
+                getCurrentTimestamp() + expiryOffsetMs,
                 used
         );
 
