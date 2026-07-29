@@ -1,23 +1,2 @@
-### Changelog [v1.73]
-— build!: Spring Boot 3.4.2 → 4.1.0 platform migration — Spring Framework 7.0, Spring Security 7.1, Hibernate ORM 7.4 (jpamodelgen → hibernate-processor), Liquibase 5.0.3, JUnit Jupiter 6.0.3, Testcontainers 2.0.5 (artifact renames `junit-jupiter`→`testcontainers-junit-jupiter` etc.), jasypt-spring-boot-starter 4.0.4, springdoc 3.0.3, jjwt 0.13.0, Feign 13.13, Lombok 1.18.46, Surefire/Failsafe 3.5.6; canonical `spring-boot-starter-webmvc` starter name
-— refactor!: Jackson 2 → Jackson 3 (`tools.jackson.*`) for all application serialization; new `JbstObjectMappers` factory + `JsonMapperBuilderCustomizer` keep the Jackson 2 wire format (declaration-order properties, name()-based enums); Jackson 2 stays only as the feign-jackson/jjwt-jackson bridge (JbstSlack, JbstTelegram, JbstGithub decoders)
-— refactor!: Spring Security 7 removed AbstractSecurityWebSocketMessageBrokerConfigurer — JbstConfigurationSecurityJwt reimplements STOMP inbound security manually (SecurityContextChannelInterceptor → CsrfChannelInterceptor → AuthorizationChannelInterceptor anyMessage().authenticated()), preserving the plain-token CSRF contract
-— refactor: Boot 4 modular auto-configuration relocations (EntityScan, DataSource/HibernateJpa/Mongo auto-configurations, ServerProperties, actuator health Status, AutoConfigureDataJpa via spring-boot-starter-data-jpa-test)
-— refactor: Spring Data JPA 4 — `Specification.where(null)` removed; JbstRequestUsers.toSpecification uses unrestricted()/anyOf()
-— refactor: Spring Data MongoDB — JbstMongoConverters keep the historical SimpleGrantedAuthority `{"role": ...}` document format (Security 7 renamed the constructor parameter)
-— refactor: hypersistence-utils dependency dropped — jsonb attributes (JbstPostgresUser.email_details, JbstPostgresSettings.hardware_monitoring_thresholds) use Hibernate 7 native `@JdbcTypeCode(SqlTypes.JSON)`
-— fix: foundation integration-test Postgres schema synced with the iam Liquibase changelog (was stale: missing jbst_users_tokens/jbst_settings and newer columns; previously masked by long-lived reused containers)
-— fix: `spring-boot-liquibase` dependency added to jbst-foundation — Boot 4 moved LiquibaseAutoConfiguration out of spring-boot-autoconfigure, so the iam postgres schema migrations silently stopped running on startup (clean database failed with `relation "jbst_settings" does not exist`)
-— build: run-postgres.sh brings up the postgres compose stack itself, waits for `pg_isready` and creates the `jbst` database idempotently via in-container psql (amd64-only jbergknoff/postgresql-client image and network-ordering dependency dropped); compose also sets `POSTGRES_DB=jbst` so clean volumes initialize with the database
-— fix: postgres integration tests back on the Liquibase migration chain — Testcontainers init script reverted to the v001 baseline; the test `db/changelog` (v002+) runs again at context startup via the restored LiquibaseAutoConfiguration (the consolidated full-schema init script from the Boot 4 migration collided with it: `column "created_at" already exists`)
-— build: spring-boot-maven-plugin `<executable>true</executable>` dropped — Boot 4 removed the fully-executable-jar launch script; Docker images and run scripts start apps via `java -jar`
-— docs: detailed migration plan to Spring Boot 4.1 (Framework 7, Jackson 3, JUnit 6, Testcontainers 2) — `assets/plans/2026-07-28-spring-boot-4-migration.md`
-— refactor: JbstTelegram/JbstSlack send/edit workers migrated `new Thread` → `Thread.ofVirtual()` (daemon by definition)
-— refactor: virtual-thread factories for scheduled executors (JbstWorker, JbstIncidentClientTypeTelegram); JbstSSH timeout connect on `newVirtualThreadPerTaskExecutor` with guaranteed shutdown (fixes executor leak on timeout/failure paths)
-— refactor: `Collectors.toList()` → `Stream.toList()` (45 sites); note — returned lists are now unmodifiable; `JbstResponseUserSessionsTable.of` no longer sorts the passed list in place
-— feat: Tomcat request handling on virtual threads via `spring.threads.virtual.enabled=true` (jbst-server-iam, jbst-server-hardware-monitoring)
-— build: maven-compiler-plugin `<source>/<target>` → `<release>21</release>` (JDK API surface pinning)
-— refactor: `String.format(...)` → `String.formatted(...)` (JbstEncryption, JbstHashing, JbstSSH)
-— ci: one-click release workflow (`release.yml`, workflow_dispatch) — next-release.sh → `./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub` → `RELEASE: vX.Y` push → GitHub release/tag with CHANGELOG notes → next-snapshot.sh → `SNAPSHOT: vX.(Y+1)` push; guarded against existing tags and `— TBD` changelogs
-— build: next-release.sh/next-snapshot.sh portable in-place sed (BSD/macOS and GNU/Linux) so the release workflow can run them on ubuntu runners
-— ci: deploy flags + DOCKER_VERSION moved from main.yml env to `.github/deployment.env` (loaded into GITHUB_ENV) — the release run's `RELEASE: vX.Y` push was rejected because GITHUB_TOKEN may not modify workflow files; next-release.sh/next-snapshot.sh/docker-build-locally.sh/release.yml now read and rewrite the env file instead
+### Changelog [v1.74]
+— TBD
