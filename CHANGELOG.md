@@ -18,5 +18,5 @@
 — feat: Tomcat request handling on virtual threads via `spring.threads.virtual.enabled=true` (jbst-server-iam, jbst-server-hardware-monitoring)
 — build: maven-compiler-plugin `<source>/<target>` → `<release>21</release>` (JDK API surface pinning)
 — refactor: `String.format(...)` → `String.formatted(...)` (JbstEncryption, JbstHashing, JbstSSH)
-— ci: one-click release workflow (`release.yml`, workflow_dispatch) — next-release.sh → `./mvnw clean deploy -Pgithub` → `RELEASE: vX.Y` push → GitHub release/tag with CHANGELOG notes → next-snapshot.sh → `SNAPSHOT: vX.(Y+1)` push; guarded against existing tags and `— TBD` changelogs; `dry_run` input rehearses everything with no side effects
+— ci: one-click release workflow (`release.yml`, workflow_dispatch) — next-release.sh → `./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub` → `RELEASE: vX.Y` push → GitHub release/tag with CHANGELOG notes → next-snapshot.sh → `SNAPSHOT: vX.(Y+1)` push; guarded against existing tags and `— TBD` changelogs; `dry_run` input rehearses everything with no side effects
 — build: next-release.sh/next-snapshot.sh portable in-place sed (BSD/macOS and GNU/Linux) so the release workflow can run them on ubuntu runners

@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Dry run — full rehearsal (guards, notes, version bumps, build + tests) with NO side effects: no deploy, no pushes, no release"
+        description: "Dry run — full rehearsal (guards, notes, version bumps, build) with NO side effects: no deploy, no pushes, no release"
         type: boolean
         default: false
 
@@ -83,21 +83,23 @@ jobs:
       - name: "next-release"
         run: ./next-release.sh
 
-      # dry run: same full build with all tests, but 'install' publishes nowhere
-      - name: "maven [verify]"
+      # no tests on the release build — identical to the main.yml deploy step; main is
+      # assumed green from the regular CI run on the last snapshot push
+      # dry run: same build without tests, but 'install' publishes nowhere
+      - name: "maven [build]"
         if: ${{ inputs.dry_run }}
-        run: ./mvnw clean install
+        run: ./mvnw clean -DskipTests -Dmaven.test.skip install
 
-      - name: "maven [verify + github packages]"
+      - name: "maven [github packages]"
         if: ${{ !inputs.dry_run }}
-        run: ./mvnw clean deploy -Pgithub
+        run: ./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub
 
       - name: "git push [RELEASE]"
         run: |
           # runner git has no identity configured; use the repo owner's usual identity so
           # the RELEASE/SNAPSHOT commits look the same as the historical manual releases
           git config user.name "Yurii Luchkiv"
-          git config user.email "yurii.luchkiv@gmail.com"
+          git config user.email "yyluchkiv@gmail.com"
           git commit -am "RELEASE: ${{ steps.version.outputs.tag }}"
           if [[ "${{ inputs.dry_run }}" == "true" ]]; then
             echo "dry run — created local commit only, skipping 'git push origin main'"
