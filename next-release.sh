@@ -5,7 +5,9 @@ GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
 DOCKER_COMPOSE_MONGO_PATH="assets/docker/docker-compose.mongo.yml"
 DOCKER_COMPOSE_POSTGRES_PATH="assets/docker/docker-compose.postgres.yml"
 
-# BSD sed (macOS) requires -i '', GNU sed (Linux/CI) requires -i without an argument
+# In-place sed differs between macOS and Linux: BSD sed (macOS) requires a backup-suffix
+# argument after -i ('' = no backup file), GNU sed (Linux, used by the release.yml runner)
+# treats that '' as a filename and fails — so it must be plain -i there.
 if [[ "$OSTYPE" == darwin* ]]; then
     SED_INPLACE=(sed -i '')
 else

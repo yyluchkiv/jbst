@@ -38,6 +38,17 @@ jobs:
                 "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
 
+      # Computes the release version and refuses to run from a broken/half-finished state.
+      # Version source: the DOCKER_VERSION env in main.yml (e.g. '1.73-SNAPSHOT'), which the
+      # next-release/next-snapshot scripts keep in sync with the POMs. Dropping '-SNAPSHOT'
+      # gives the release version (1.73) and the tag (v1.73), exported as the step output
+      # 'tag' for the later steps (steps.version.outputs.tag).
+      # Guards (each aborts the run before anything is built, deployed or pushed):
+      #   1. main.yml must hold a '-SNAPSHOT' version — if it doesn't, a previous release
+      #      run died halfway (RELEASE pushed, SNAPSHOT not) and needs manual cleanup first
+      #   2. the tag must not already exist on origin — prevents double-releasing a version
+      #   3. CHANGELOG.md must not still contain the '— TBD' placeholder seeded by
+      #      next-snapshot.sh — otherwise the GitHub release notes would say 'TBD'
       - name: "version + guards"
         id: version
         run: |
@@ -72,6 +83,8 @@ jobs:
 
       - name: "git push [RELEASE]"
         run: |
+          # commit author = the official github-actions[bot] account (41898282 is its GitHub
+          # user id) so the RELEASE/SNAPSHOT commits are attributed to the bot, not a person
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -am "RELEASE: ${{ steps.version.outputs.tag }}"
