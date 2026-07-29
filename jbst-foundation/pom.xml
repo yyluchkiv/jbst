@@ -176,6 +176,12 @@
             <artifactId>liquibase-core</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- Boot 4 modular auto-configuration: LiquibaseAutoConfiguration no longer ships in spring-boot-autoconfigure -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-liquibase</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <!-- Spring Boot 4 modular test autoconfiguration (AutoConfigureDataJpa for postgres integration tests) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

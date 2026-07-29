@@ -7,6 +7,8 @@
 — refactor: Spring Data MongoDB — JbstMongoConverters keep the historical SimpleGrantedAuthority `{"role": ...}` document format (Security 7 renamed the constructor parameter)
 — refactor: hypersistence-utils dependency dropped — jsonb attributes (JbstPostgresUser.email_details, JbstPostgresSettings.hardware_monitoring_thresholds) use Hibernate 7 native `@JdbcTypeCode(SqlTypes.JSON)`
 — fix: foundation integration-test Postgres schema synced with the iam Liquibase changelog (was stale: missing jbst_users_tokens/jbst_settings and newer columns; previously masked by long-lived reused containers)
+— fix: `spring-boot-liquibase` dependency added to jbst-foundation — Boot 4 moved LiquibaseAutoConfiguration out of spring-boot-autoconfigure, so the iam postgres schema migrations silently stopped running on startup (clean database failed with `relation "jbst_settings" does not exist`)
+— build: run-postgres.sh brings up the postgres compose stack itself, waits for `pg_isready` and creates the `jbst` database idempotently via in-container psql (amd64-only jbergknoff/postgresql-client image and network-ordering dependency dropped); compose also sets `POSTGRES_DB=jbst` so clean volumes initialize with the database
 — build: spring-boot-maven-plugin `<executable>true</executable>` dropped — Boot 4 removed the fully-executable-jar launch script; Docker images and run scripts start apps via `java -jar`
 — docs: detailed migration plan to Spring Boot 4.1 (Framework 7, Jackson 3, JUnit 6, Testcontainers 2) — `assets/plans/2026-07-28-spring-boot-4-migration.md`
 — refactor: JbstTelegram/JbstSlack send/edit workers migrated `new Thread` → `Thread.ofVirtual()` (daemon by definition)
