@@ -1,6 +1,8 @@
 package jbst.foundation.domain.databases;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.beans.Transient;
@@ -13,9 +15,10 @@ public class JbstUserEmailDetails {
     private final boolean required;
     private final boolean confirmed;
 
+    @JsonCreator
     private JbstUserEmailDetails(
-            boolean required,
-            boolean confirmed
+            @JsonProperty("required") boolean required,
+            @JsonProperty("confirmed") boolean confirmed
     ) {
         this.required = required;
         this.confirmed = confirmed;

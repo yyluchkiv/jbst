@@ -9,7 +9,7 @@ import jbst.foundation.services.JbstEmailService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 

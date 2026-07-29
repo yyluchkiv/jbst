@@ -2,7 +2,7 @@ package jbst.foundation.domain.properties;
 
 import jbst.foundation.configurations.TestJbstConfigurationPropertiesFixed;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 
 import java.lang.reflect.InvocationTargetException;
 

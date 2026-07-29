@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.base;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.type.TypeReference;
 import jbst.foundation.domain.enums.JbstSecurityJwtIncident;
 import jbst.foundation.domain.tests.JbstUnitTests;
 import jbst.foundation.domain.tuples.Tuple1;

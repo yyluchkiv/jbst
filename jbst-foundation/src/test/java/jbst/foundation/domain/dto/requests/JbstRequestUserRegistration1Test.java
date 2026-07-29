@@ -1,6 +1,6 @@
 package jbst.foundation.domain.dto.requests;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.type.TypeReference;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tests.JbstUnitTests;

@@ -6,6 +6,8 @@ import jbst.foundation.domain.databases.postgres.entities.JbstPostgresUser;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.ArrayList;
+
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.databases.postgres.entities.JbstPostgresUserSpecs.*;
 
@@ -16,19 +18,20 @@ public record JbstRequestUsers(
 ) {
 
     public Specification<JbstPostgresUser> toSpecification() {
-        var specification = Specification.<JbstPostgresUser>where(null);
+        var specifications = new ArrayList<Specification<JbstPostgresUser>>();
 
         if (nonNull(this.username)) {
-            specification = specification.or(hasUsername(this.username));
+            specifications.add(hasUsername(this.username));
         }
         if (nonNull(this.email)) {
-            specification = specification.or(hasEmail(this.email));
+            specifications.add(hasEmail(this.email));
         }
         if (nonNull(this.name)) {
-            specification = specification.or(hasName(this.name));
+            specifications.add(hasName(this.name));
         }
 
-        return specification;
+        // empty filter must match all users — anyOf(empty) matches none
+        return specifications.isEmpty() ? Specification.unrestricted() : Specification.anyOf(specifications);
     }
 
 }

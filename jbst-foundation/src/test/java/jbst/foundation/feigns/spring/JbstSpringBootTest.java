@@ -1,13 +1,13 @@
 package jbst.foundation.feigns.spring;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.type.TypeReference;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.boot.actuate.health.Status;
+import org.springframework.boot.health.contributor.Status;
 
 import java.util.ArrayList;
 import java.util.List;

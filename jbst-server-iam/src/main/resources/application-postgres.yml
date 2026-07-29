@@ -5,7 +5,6 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
           auto: none
   liquibase:

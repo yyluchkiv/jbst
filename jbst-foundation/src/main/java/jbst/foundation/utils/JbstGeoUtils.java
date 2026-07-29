@@ -6,8 +6,6 @@ import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import feign.Feign;
@@ -17,15 +15,16 @@ import feign.Retryer;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
+import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.JbstStatus;
 import jbst.foundation.domain.exceptions.JbstExceptions;
 import jbst.foundation.domain.geo.JbstGeoCountryFlag;
 import jbst.foundation.domain.geo.JbstGeoLocation;
-import jbst.foundation.domain.base.IPAddress;
 import jbst.foundation.domain.http.requests.JbstUserAgentDetails;
 import jbst.foundation.domain.http.requests.JbstUserAgentHeader;
 import jbst.foundation.domain.http.requests.JbstUserRequestMetadata;
+import jbst.foundation.domain.jsons.JbstObjectMappers;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.utilities.JbstPropertyCountriesFlags;
 import jbst.foundation.domain.properties.configs.utilities.JbstPropertyGeolocations;
@@ -34,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import tools.jackson.core.type.TypeReference;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -242,7 +242,7 @@ public class JbstGeoUtils {
             try {
                 var resource = resourceLoader.getResource("classpath:geo-countries-flags.json");
                 var typeReference = new TypeReference<List<JbstGeoCountryFlag>>() {};
-                var objectMapper = new ObjectMapper();
+                var objectMapper = JbstObjectMappers.jackson2Compatible();
                 var geoCountryFlags = objectMapper.readValue(resource.getInputStream(), typeReference);
                 LOGGER.info(CONFIGURATION_LOG_FLAGS, SUCCESS.asANSI());
                 return new GeoFlags(

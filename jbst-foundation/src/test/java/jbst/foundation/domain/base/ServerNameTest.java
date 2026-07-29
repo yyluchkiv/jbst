@@ -1,6 +1,6 @@
 package jbst.foundation.domain.base;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.type.TypeReference;
 import jbst.foundation.domain.tests.JbstUnitTests;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.RepeatedTest;

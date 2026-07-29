@@ -1,7 +1,6 @@
 package jbst.foundation.domain.databases.postgres.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,7 +12,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.Transient;
 
 // Lombok
@@ -28,7 +28,7 @@ import org.springframework.data.annotation.Transient;
 public class JbstPostgresSettings extends JbstPostgresAbstractPersistableAuditableUUID {
     public static final String PG_TABLE_NAME = "jbst_settings";
 
-    @Type(JsonBinaryType.class)
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "hardware_monitoring_thresholds", nullable = false)
     private JbstSettingsHardwareMonitoringThresholds hardwareMonitoringThresholds;
 

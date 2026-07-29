@@ -1,7 +1,7 @@
 package jbst.foundation.domain.tuples;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -90,7 +90,7 @@ class TuplePercentageTest extends AbstractTupleTest {
     }
 
     @Test
-    void deserializeTest() throws JsonProcessingException {
+    void deserializeTest() throws JacksonException {
         // Arrange
         var json = this.readFile();
         var typeReference = new TypeReference<TuplePercentage>() {

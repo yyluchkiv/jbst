@@ -1,6 +1,6 @@
 package jbst.foundation.domain.tuples;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.type.TypeReference;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 

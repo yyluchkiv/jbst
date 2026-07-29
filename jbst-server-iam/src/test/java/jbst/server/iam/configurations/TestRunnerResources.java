@@ -1,7 +1,8 @@
 package jbst.server.iam.configurations;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import jbst.foundation.domain.jsons.JbstObjectMappers;
+import tools.jackson.databind.ObjectMapper;
 import jbst.foundation.handlers.JbstResourceExceptionHandler;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 })
 public abstract class TestRunnerResources {
 
-    protected final ObjectMapper objectMapper = new ObjectMapper();
+    protected final ObjectMapper objectMapper = JbstObjectMappers.jackson2Compatible();
 
     protected MockMvc mvc;
 
@@ -34,7 +35,7 @@ public abstract class TestRunnerResources {
     }
 
     @SuppressWarnings("unused")
-    protected String getContent(Object value) throws JsonProcessingException {
+    protected String getContent(Object value) throws JacksonException {
         return this.objectMapper.writeValueAsString(value);
     }
 }
