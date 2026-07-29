@@ -72,7 +72,9 @@ jobs:
 
       - name: "release notes [CHANGELOG.md]"
         run: |
-          tail -n +2 CHANGELOG.md | sed '/./,$!d' > "$RUNNER_TEMP/release-notes.md"
+          # normalize every non-empty line to end with exactly two trailing spaces — the
+          # markdown hard break that keeps one change per line in the GitHub release notes
+          tail -n +2 CHANGELOG.md | sed '/./,$!d' | sed -E 's/([^[:space:]])[[:space:]]*$/\1  /' > "$RUNNER_TEMP/release-notes.md"
           cat "$RUNNER_TEMP/release-notes.md"
 
       - name: "next-release"
