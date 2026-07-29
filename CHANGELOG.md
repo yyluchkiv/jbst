@@ -7,6 +7,7 @@
 — refactor: Spring Data MongoDB — JbstMongoConverters keep the historical SimpleGrantedAuthority `{"role": ...}` document format (Security 7 renamed the constructor parameter)
 — refactor: hypersistence-utils dependency dropped — jsonb attributes (JbstPostgresUser.email_details, JbstPostgresSettings.hardware_monitoring_thresholds) use Hibernate 7 native `@JdbcTypeCode(SqlTypes.JSON)`
 — fix: foundation integration-test Postgres schema synced with the iam Liquibase changelog (was stale: missing jbst_users_tokens/jbst_settings and newer columns; previously masked by long-lived reused containers)
+— build: spring-boot-maven-plugin `<executable>true</executable>` dropped — Boot 4 removed the fully-executable-jar launch script; Docker images and run scripts start apps via `java -jar`
 — docs: detailed migration plan to Spring Boot 4.1 (Framework 7, Jackson 3, JUnit 6, Testcontainers 2) — `assets/plans/2026-07-28-spring-boot-4-migration.md`
 — refactor: JbstTelegram/JbstSlack send/edit workers migrated `new Thread` → `Thread.ofVirtual()` (daemon by definition)
 — refactor: virtual-thread factories for scheduled executors (JbstWorker, JbstIncidentClientTypeTelegram); JbstSSH timeout connect on `newVirtualThreadPerTaskExecutor` with guaranteed shutdown (fixes executor leak on timeout/failure paths)
