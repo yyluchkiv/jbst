@@ -1,0 +1,96 @@
+#file: noinspection UndefinedAction
+name: release
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    timeout-minutes: 30
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: "java21"
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: "maven [settings]"
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          servers: |
+            [{
+                "id": "github-jbst",
+                "username": "${{ github.actor }}",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
+            }]
+
+      - name: "version + guards"
+        id: version
+        run: |
+          SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+-SNAPSHOT')
+          if [[ -z "$SNAPSHOT_VERSION" ]]; then
+            echo "::error::no '<version>-SNAPSHOT' DOCKER_VERSION in main.yml — mid-release state?"
+            exit 1
+          fi
+          RELEASE_VERSION="${SNAPSHOT_VERSION%-SNAPSHOT}"
+          TAG="v$RELEASE_VERSION"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "::error::tag $TAG already exists"
+            exit 1
+          fi
+          if grep -q "^— TBD" CHANGELOG.md; then
+            echo "::error::CHANGELOG.md still contains the '— TBD' placeholder — fill it in before releasing"
+            exit 1
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "releasing $TAG"
+
+      - name: "release notes [CHANGELOG.md]"
+        run: |
+          tail -n +2 CHANGELOG.md | sed '/./,$!d' > "$RUNNER_TEMP/release-notes.md"
+          cat "$RUNNER_TEMP/release-notes.md"
+
+      - name: "next-release"
+        run: ./next-release.sh
+
+      - name: "maven [verify + github packages]"
+        run: ./mvnw clean deploy -Pgithub
+
+      - name: "git push [RELEASE]"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "RELEASE: ${{ steps.version.outputs.tag }}"
+          git push origin main
+
+      - name: "github release [tag + notes]"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --target "$(git rev-parse HEAD)" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
+
+      - name: "next-snapshot"
+        run: ./next-snapshot.sh
+
+      - name: "git push [SNAPSHOT]"
+        run: |
+          NEXT_SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+')
+          git commit -am "SNAPSHOT: v$NEXT_SNAPSHOT_VERSION"
+          git push origin main
