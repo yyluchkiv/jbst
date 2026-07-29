@@ -21,7 +21,16 @@ print "=========================================================================
 print "${BLUE}" "PostgreSQL 'jbst': STARTED"
 print "================================================================================================================="
 
-docker run --rm --network network-jbst jbergknoff/postgresql-client postgresql://postgres:postgres@jbst-database-postgres:5432/postgres -c "CREATE DATABASE jbst"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+docker compose -f "$SCRIPT_DIR/docker/postgres/docker-compose.yml" up -d
+
+until docker exec jbst-database-postgres pg_isready -U postgres -q; do
+  print "${BLUE}" "PostgreSQL 'jbst': waiting for readiness..."
+  sleep 1
+done
+
+docker exec jbst-database-postgres psql -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname = 'jbst'" | grep -q 1 \
+  || docker exec jbst-database-postgres psql -U postgres -c "CREATE DATABASE jbst"
 
 print "================================================================================================================="
 print "${GREEN}" "PostgreSQL 'jbst': COMPLETED"

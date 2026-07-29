@@ -9,6 +9,7 @@ services:
       - network-jbst
     environment:
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=jbst
     volumes:
       - volume-jbst-postgres:/var/lib/postgresql/data
 
