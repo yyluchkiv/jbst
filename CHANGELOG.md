@@ -1,2 +1,2 @@
 ### Changelog [v1.74]
-— TBD
+— ci: release notes readability — changelog lines end with two trailing spaces (markdown hard break); release.yml normalizes them during notes extraction  

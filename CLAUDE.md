@@ -113,7 +113,7 @@ Both `CHANGELOG.md` lines and commit subjects use **Conventional Commits** types
 | `ci` | GitHub Actions workflow changes |
 | `chore` | Maintenance that fits nothing above |
 
-- Changelog line format: `— type: short description` (one line per change, appended under the current `### Changelog [vX.Y]` heading; replace the initial `— TBD` seeded by `next-snapshot.sh`).
+- Changelog line format: `— type: short description` (one line per change, appended under the current `### Changelog [vX.Y]` heading; replace the initial `— TBD` seeded by `next-snapshot.sh`). **End every changelog line with two trailing spaces** — the release workflow copies the body into the GitHub release notes, and without the markdown hard break all changes collapse into one paragraph. Verify with `grep -c '  $' CHANGELOG.md`.
 - Commit subject format: `type: short description` (scope optional: `feat(iam): ...`); append `!` for breaking changes (`feat!: ...`) and mention the break in the changelog line.
 - `SNAPSHOT: vX.Y` / `RELEASE: vX.Y` commits are produced by the release scripts and are exempt.
 - When a change lands via PR, use the same `type:` prefix in the PR title.
