@@ -35,5 +35,29 @@
       "Bash(printenv *)",
       "Bash(env)"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-maven-test-skip.sh\"; rc=$?; if [ \"$rc\" -ne 0 ] && [ \"$rc\" -ne 2 ]; then echo 'jbst hook: test-skip enforcement script failed to run; blocking as a precaution.' >&2; exit 2; fi; exit \"$rc\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-liquibase-changelog-edit.sh\"; rc=$?; if [ \"$rc\" -ne 0 ] && [ \"$rc\" -ne 2 ]; then echo 'jbst hook: Liquibase changelog enforcement script failed to run; blocking as a precaution.' >&2; exit 2; fi; exit \"$rc\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }
