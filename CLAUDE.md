@@ -91,6 +91,8 @@ PostgreSQL schema is managed by **Liquibase**: `src/main/resources/postgres/chan
 - **Version bumps are scripted** — do not hand-edit versions across POMs and the workflow. The repo follows a `SNAPSHOT:` → `RELEASE:` commit cadence:
   - `./next-release.sh` — strips `-SNAPSHOT` from all POMs and the `docker-compose.*.yml` image tags, and flips the workflow deploy/docker flags on.
   - `./next-snapshot.sh` — bumps to the next `-SNAPSHOT`, resets the workflow flags, resets `CHANGELOG.md`, and updates the `docker-compose.*.yml` image tags.
+  - Both scripts detect BSD vs GNU sed (`SED_INPLACE`) so they run on macOS and on Linux CI runners.
+- **One-click release** (`.github/workflows/release.yml`, Actions → `release` → *Run workflow*): automates the whole cadence on a runner — guards (version must be `-SNAPSHOT`, tag must not exist, `CHANGELOG.md` must not contain `— TBD`), extracts release notes from `CHANGELOG.md`, runs `next-release.sh`, deploys with `./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub` (no tests, same as the `main.yml` deploy step — `main` is assumed green from regular CI; a failed build still aborts before anything is pushed), commits/pushes `RELEASE: vX.Y`, creates GitHub release + tag `vX.Y` with the notes, then runs `next-snapshot.sh` and commits/pushes `SNAPSHOT: vX.(Y+1)`. The two bot commits do **not** trigger `main.yml` (GITHUB_TOKEN pushes don't start workflows) — deployment already happened inside the release run.
 - `./gen-artifacts.sh` collects the foundation JAR + parent/foundation POMs into `artifacts/`.
 - `./sonar-check.sh` requires a local SonarQube on `:9000`, then runs `./mvnw clean install` + `sonar-scanner` (config in `sonar-project.properties`).
 

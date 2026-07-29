@@ -1,0 +1,111 @@
+#file: noinspection UndefinedAction
+name: release
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    timeout-minutes: 30
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: "java21"
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: "maven [settings]"
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          servers: |
+            [{
+                "id": "github-jbst",
+                "username": "${{ github.actor }}",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
+            }]
+
+      # Computes the release version and refuses to run from a broken/half-finished state.
+      # Version source: the DOCKER_VERSION env in main.yml (e.g. '1.73-SNAPSHOT'), which the
+      # next-release/next-snapshot scripts keep in sync with the POMs. Dropping '-SNAPSHOT'
+      # gives the release version (1.73) and the tag (v1.73), exported as the step output
+      # 'tag' for the later steps (steps.version.outputs.tag).
+      # Guards (each aborts the run before anything is built, deployed or pushed):
+      #   1. main.yml must hold a '-SNAPSHOT' version — if it doesn't, a previous release
+      #      run died halfway (RELEASE pushed, SNAPSHOT not) and needs manual cleanup first
+      #   2. the tag must not already exist on origin — prevents double-releasing a version
+      #   3. CHANGELOG.md must not still contain the '— TBD' placeholder seeded by
+      #      next-snapshot.sh — otherwise the GitHub release notes would say 'TBD'
+      - name: "version + guards"
+        id: version
+        run: |
+          SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+-SNAPSHOT')
+          if [[ -z "$SNAPSHOT_VERSION" ]]; then
+            echo "::error::no '<version>-SNAPSHOT' DOCKER_VERSION in main.yml — mid-release state?"
+            exit 1
+          fi
+          RELEASE_VERSION="${SNAPSHOT_VERSION%-SNAPSHOT}"
+          TAG="v$RELEASE_VERSION"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "::error::tag $TAG already exists"
+            exit 1
+          fi
+          if grep -q "^— TBD" CHANGELOG.md; then
+            echo "::error::CHANGELOG.md still contains the '— TBD' placeholder — fill it in before releasing"
+            exit 1
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "releasing $TAG"
+
+      - name: "release notes [CHANGELOG.md]"
+        run: |
+          tail -n +2 CHANGELOG.md | sed '/./,$!d' > "$RUNNER_TEMP/release-notes.md"
+          cat "$RUNNER_TEMP/release-notes.md"
+
+      - name: "next-release"
+        run: ./next-release.sh
+
+      # no tests on the release build — identical to the main.yml deploy step; main is
+      # assumed green from the regular CI run on the last snapshot push
+      - name: "maven [github packages]"
+        run: ./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub
+
+      - name: "git push [RELEASE]"
+        run: |
+          # runner git has no identity configured; use the repo owner's usual identity so
+          # the RELEASE/SNAPSHOT commits look the same as the historical manual releases
+          git config user.name "Yurii Luchkiv"
+          git config user.email "yyluchkiv@gmail.com"
+          git commit -am "RELEASE: ${{ steps.version.outputs.tag }}"
+          git push origin main
+
+      - name: "github release [tag + notes]"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --target "$(git rev-parse HEAD)" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
+
+      - name: "next-snapshot"
+        run: ./next-snapshot.sh
+
+      - name: "git push [SNAPSHOT]"
+        run: |
+          NEXT_SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+')
+          git commit -am "SNAPSHOT: v$NEXT_SNAPSHOT_VERSION"
+          git push origin main
