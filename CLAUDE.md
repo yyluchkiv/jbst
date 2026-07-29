@@ -38,7 +38,7 @@ All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via
 # Library-only fast install
 ./build-fast.sh                   # ./mvnw -pl jbst-foundation -am clean install -DskipTests -T 4
 
-# Local docker image for jbst-server-iam (fast install + docker build, tag = workflow DOCKER_VERSION)
+# Local docker image for jbst-server-iam (fast install + docker build, tag = deployment.env DOCKER_VERSION)
 ./docker-build-locally.sh
 ```
 
@@ -87,10 +87,10 @@ PostgreSQL schema is managed by **Liquibase**: `src/main/resources/postgres/chan
 
 ## CI and Release Engineering
 
-- **CI** (`.github/workflows/main.yml`): on push to `main`, runs `./mvnw clean install` on Java 21 (Temurin). Maven `deploy` to GitHub Packages and the Docker image push are gated behind the `MAVEN_DEPLOYMENT_ENABLED` / `DOCKER_PUSH_ENABLED` env flags in that workflow (normally `false` on snapshots).
-- **Version bumps are scripted** — do not hand-edit versions across POMs and the workflow. The repo follows a `SNAPSHOT:` → `RELEASE:` commit cadence:
-  - `./next-release.sh` — strips `-SNAPSHOT` from all POMs and the `docker-compose.*.yml` image tags, and flips the workflow deploy/docker flags on.
-  - `./next-snapshot.sh` — bumps to the next `-SNAPSHOT`, resets the workflow flags, resets `CHANGELOG.md`, and updates the `docker-compose.*.yml` image tags.
+- **CI** (`.github/workflows/main.yml`): on push to `main`, runs `./mvnw clean install` on Java 21 (Temurin). Maven `deploy` to GitHub Packages and the Docker image push are gated behind the `MAVEN_DEPLOYMENT_ENABLED` / `DOCKER_PUSH_ENABLED` flags in **`.github/deployment.env`** (loaded into `GITHUB_ENV` by the workflow; normally `false` on snapshots). The flags and `DOCKER_VERSION` live in that env file — not in `main.yml` — because the release workflow's `GITHUB_TOKEN` is not allowed to push commits that modify `.github/workflows/*`.
+- **Version bumps are scripted** — do not hand-edit versions across POMs and `deployment.env`. The repo follows a `SNAPSHOT:` → `RELEASE:` commit cadence:
+  - `./next-release.sh` — strips `-SNAPSHOT` from all POMs and the `docker-compose.*.yml` image tags, and flips the `deployment.env` deploy/docker flags on.
+  - `./next-snapshot.sh` — bumps to the next `-SNAPSHOT`, resets the `deployment.env` flags, resets `CHANGELOG.md`, and updates the `docker-compose.*.yml` image tags.
   - Both scripts detect BSD vs GNU sed (`SED_INPLACE`) so they run on macOS and on Linux CI runners.
 - **One-click release** (`.github/workflows/release.yml`, Actions → `release` → *Run workflow*): automates the whole cadence on a runner — guards (version must be `-SNAPSHOT`, tag must not exist, `CHANGELOG.md` must not contain `— TBD`), extracts release notes from `CHANGELOG.md`, runs `next-release.sh`, deploys with `./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub` (no tests, same as the `main.yml` deploy step — `main` is assumed green from regular CI; a failed build still aborts before anything is pushed), commits/pushes `RELEASE: vX.Y`, creates GitHub release + tag `vX.Y` with the notes, then runs `next-snapshot.sh` and commits/pushes `SNAPSHOT: vX.(Y+1)`. The two bot commits do **not** trigger `main.yml` (GITHUB_TOKEN pushes don't start workflows) — deployment already happened inside the release run.
 - `./gen-artifacts.sh` collects the foundation JAR + parent/foundation POMs into `artifacts/`.

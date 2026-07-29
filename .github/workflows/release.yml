@@ -39,12 +39,12 @@ jobs:
             }]
 
       # Computes the release version and refuses to run from a broken/half-finished state.
-      # Version source: the DOCKER_VERSION env in main.yml (e.g. '1.73-SNAPSHOT'), which the
-      # next-release/next-snapshot scripts keep in sync with the POMs. Dropping '-SNAPSHOT'
+      # Version source: DOCKER_VERSION in .github/deployment.env (e.g. '1.73-SNAPSHOT'), which
+      # the next-release/next-snapshot scripts keep in sync with the POMs. Dropping '-SNAPSHOT'
       # gives the release version (1.73) and the tag (v1.73), exported as the step output
       # 'tag' for the later steps (steps.version.outputs.tag).
       # Guards (each aborts the run before anything is built, deployed or pushed):
-      #   1. main.yml must hold a '-SNAPSHOT' version — if it doesn't, a previous release
+      #   1. deployment.env must hold a '-SNAPSHOT' version — if it doesn't, a previous release
       #      run died halfway (RELEASE pushed, SNAPSHOT not) and needs manual cleanup first
       #   2. the tag must not already exist on origin — prevents double-releasing a version
       #   3. CHANGELOG.md must not still contain the '— TBD' placeholder seeded by
@@ -52,9 +52,9 @@ jobs:
       - name: "version + guards"
         id: version
         run: |
-          SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+-SNAPSHOT')
+          SNAPSHOT_VERSION=$(grep "^DOCKER_VERSION=" .github/deployment.env | grep -oE '[0-9]+\.[0-9]+-SNAPSHOT')
           if [[ -z "$SNAPSHOT_VERSION" ]]; then
-            echo "::error::no '<version>-SNAPSHOT' DOCKER_VERSION in main.yml — mid-release state?"
+            echo "::error::no '<version>-SNAPSHOT' DOCKER_VERSION in .github/deployment.env — mid-release state?"
             exit 1
           fi
           RELEASE_VERSION="${SNAPSHOT_VERSION%-SNAPSHOT}"
@@ -106,6 +106,6 @@ jobs:
 
       - name: "git push [SNAPSHOT]"
         run: |
-          NEXT_SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+')
+          NEXT_SNAPSHOT_VERSION=$(grep "^DOCKER_VERSION=" .github/deployment.env | grep -oE '[0-9]+\.[0-9]+')
           git commit -am "SNAPSHOT: v$NEXT_SNAPSHOT_VERSION"
           git push origin main

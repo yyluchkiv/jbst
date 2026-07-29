@@ -7,12 +7,12 @@ on:
       - main
   workflow_dispatch:
 
+# MAVEN_DEPLOYMENT_ENABLED, DOCKER_VERSION and DOCKER_PUSH_ENABLED live in
+# .github/deployment.env (loaded below) so the release scripts never have to
+# modify a workflow file — GITHUB_TOKEN cannot push .github/workflows/* changes.
 env:
-  MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IMAGE_SERVER_IAM: yyluchkiv/jbst-server-iam
-  DOCKER_VERSION: '1.73-SNAPSHOT'
-  DOCKER_PUSH_ENABLED: 'false'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,6 +28,9 @@ jobs:
     steps:
       - name: "checkout"
         uses: actions/checkout@v6
+
+      - name: "deployment flags [.github/deployment.env]"
+        run: grep -vE '^\s*(#|$)' .github/deployment.env >> "$GITHUB_ENV"
 
       - name: "java21"
         uses: actions/setup-java@v5

@@ -2,10 +2,11 @@
 
 PREFIX="[DockerBuildLocally]"
 GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
+DEPLOYMENT_ENV_FILE=".github/deployment.env"
 
 DOCKER_REGISTRY=$(grep "DOCKER_REGISTRY:" "$GITHUB_ACTION_MAIN_WORKFLOW" | awk '{print $2}' | tr -d "'")
 DOCKER_IMAGE_SERVER_IAM=$(grep "DOCKER_IMAGE_SERVER_IAM:" "$GITHUB_ACTION_MAIN_WORKFLOW" | awk '{print $2}' | tr -d "'")
-DOCKER_VERSION=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | awk '{print $2}' | tr -d "'")
+DOCKER_VERSION=$(grep "^DOCKER_VERSION=" "$DEPLOYMENT_ENV_FILE" | cut -d= -f2)
 DOCKER_IMAGE="$DOCKER_REGISTRY/$DOCKER_IMAGE_SERVER_IAM:$DOCKER_VERSION"
 
 echo "================================================================================================================="
