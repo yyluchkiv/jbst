@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 PREFIX="[NextRelease]"
-GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
+# Deploy flags/version live in a plain env file, NOT in .github/workflows/main.yml —
+# the release workflow's GITHUB_TOKEN cannot push commits that modify workflow files.
+DEPLOYMENT_ENV_FILE=".github/deployment.env"
 DOCKER_COMPOSE_MONGO_PATH="assets/docker/docker-compose.mongo.yml"
 DOCKER_COMPOSE_POSTGRES_PATH="assets/docker/docker-compose.postgres.yml"
 
@@ -23,27 +25,27 @@ echo "$PREFIX Maven versions has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="
-echo "$PREFIX GitHub Action, MAVEN_DEPLOYMENT_ENABLED started"
+echo "$PREFIX deployment.env, MAVEN_DEPLOYMENT_ENABLED started"
 
-"${SED_INPLACE[@]}" "s/MAVEN_DEPLOYMENT_ENABLED: .*/MAVEN_DEPLOYMENT_ENABLED: 'true'/" "$GITHUB_ACTION_MAIN_WORKFLOW"
+"${SED_INPLACE[@]}" "s/MAVEN_DEPLOYMENT_ENABLED=.*/MAVEN_DEPLOYMENT_ENABLED=true/" "$DEPLOYMENT_ENV_FILE"
 
-echo "$PREFIX GitHub Action, MAVEN_DEPLOYMENT_ENABLED has been completed"
+echo "$PREFIX deployment.env, MAVEN_DEPLOYMENT_ENABLED has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="
-echo "$PREFIX GitHub Action, DOCKER_VERSION started"
+echo "$PREFIX deployment.env, DOCKER_VERSION started"
 
-"${SED_INPLACE[@]}" "s/DOCKER_VERSION: '\(.*\)-SNAPSHOT'/DOCKER_VERSION: '\1'/" "$GITHUB_ACTION_MAIN_WORKFLOW"
+"${SED_INPLACE[@]}" "s/DOCKER_VERSION=\(.*\)-SNAPSHOT/DOCKER_VERSION=\1/" "$DEPLOYMENT_ENV_FILE"
 
-echo "$PREFIX GitHub Action, DOCKER_VERSION has been completed"
+echo "$PREFIX deployment.env, DOCKER_VERSION has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="
-echo "$PREFIX GitHub Action, DOCKER_PUSH_ENABLED started"
+echo "$PREFIX deployment.env, DOCKER_PUSH_ENABLED started"
 
-"${SED_INPLACE[@]}" "s/DOCKER_PUSH_ENABLED: .*/DOCKER_PUSH_ENABLED: 'true'/" "$GITHUB_ACTION_MAIN_WORKFLOW"
+"${SED_INPLACE[@]}" "s/DOCKER_PUSH_ENABLED=.*/DOCKER_PUSH_ENABLED=true/" "$DEPLOYMENT_ENV_FILE"
 
-echo "$PREFIX GitHub Action, DOCKER_PUSH_ENABLED has been completed"
+echo "$PREFIX deployment.env, DOCKER_PUSH_ENABLED has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="

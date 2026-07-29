@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 PREFIX="[NextSnapshot]"
-GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
+# Deploy flags/version live in a plain env file, NOT in .github/workflows/main.yml —
+# the release workflow's GITHUB_TOKEN cannot push commits that modify workflow files.
+DEPLOYMENT_ENV_FILE=".github/deployment.env"
 CHANGELOG_PATH="CHANGELOG.md"
 DOCKER_COMPOSE_MONGO_PATH="assets/docker/docker-compose.mongo.yml"
 DOCKER_COMPOSE_POSTGRES_PATH="assets/docker/docker-compose.postgres.yml"
@@ -15,12 +17,11 @@ else
     SED_INPLACE=(sed -i)
 fi
 
-MAJOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $1}')
-MINOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $2}')
+MAJOR_VERSION_NUMBER=$(grep "^DOCKER_VERSION=" "$DEPLOYMENT_ENV_FILE" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $1}')
+MINOR_VERSION_NUMBER=$(grep "^DOCKER_VERSION=" "$DEPLOYMENT_ENV_FILE" | grep -oE '[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $2}')
 ((MINOR_VERSION_NUMBER++))
 NEXT_RELEASE_CHANGELOG_VERSION="[v$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER]"
 NEXT_SNAPSHOT_VERSION="$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER-SNAPSHOT"
-NEXT_SNAPSHOT_DOCKER_VERSION="'$NEXT_SNAPSHOT_VERSION'"
 
 echo "================================================================================================================="
 echo "$PREFIX Maven versions started"
@@ -31,27 +32,27 @@ echo "$PREFIX Maven versions has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="
-echo "$PREFIX GitHub Action, MAVEN_DEPLOYMENT_ENABLED started"
+echo "$PREFIX deployment.env, MAVEN_DEPLOYMENT_ENABLED started"
 
-"${SED_INPLACE[@]}" "s/MAVEN_DEPLOYMENT_ENABLED: .*/MAVEN_DEPLOYMENT_ENABLED: 'false'/" "$GITHUB_ACTION_MAIN_WORKFLOW"
+"${SED_INPLACE[@]}" "s/MAVEN_DEPLOYMENT_ENABLED=.*/MAVEN_DEPLOYMENT_ENABLED=false/" "$DEPLOYMENT_ENV_FILE"
 
-echo "$PREFIX GitHub Action, MAVEN_DEPLOYMENT_ENABLED has been completed"
+echo "$PREFIX deployment.env, MAVEN_DEPLOYMENT_ENABLED has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="
-echo "$PREFIX GitHub Action, DOCKER_VERSION started"
+echo "$PREFIX deployment.env, DOCKER_VERSION started"
 
-"${SED_INPLACE[@]}" "s/DOCKER_VERSION: .*/DOCKER_VERSION: $NEXT_SNAPSHOT_DOCKER_VERSION/" "$GITHUB_ACTION_MAIN_WORKFLOW"
+"${SED_INPLACE[@]}" "s/DOCKER_VERSION=.*/DOCKER_VERSION=$NEXT_SNAPSHOT_VERSION/" "$DEPLOYMENT_ENV_FILE"
 
-echo "$PREFIX GitHub Action, DOCKER_VERSION has been completed"
+echo "$PREFIX deployment.env, DOCKER_VERSION has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="
-echo "$PREFIX GitHub Action, DOCKER_PUSH_ENABLED started"
+echo "$PREFIX deployment.env, DOCKER_PUSH_ENABLED started"
 
-"${SED_INPLACE[@]}" "s/DOCKER_PUSH_ENABLED: .*/DOCKER_PUSH_ENABLED: 'false'/" "$GITHUB_ACTION_MAIN_WORKFLOW"
+"${SED_INPLACE[@]}" "s/DOCKER_PUSH_ENABLED=.*/DOCKER_PUSH_ENABLED=false/" "$DEPLOYMENT_ENV_FILE"
 
-echo "$PREFIX GitHub Action, DOCKER_PUSH_ENABLED has been completed"
+echo "$PREFIX deployment.env, DOCKER_PUSH_ENABLED has been completed"
 echo "================================================================================================================="
 
 echo "================================================================================================================="

@@ -20,3 +20,4 @@
 — refactor: `String.format(...)` → `String.formatted(...)` (JbstEncryption, JbstHashing, JbstSSH)
 — ci: one-click release workflow (`release.yml`, workflow_dispatch) — next-release.sh → `./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub` → `RELEASE: vX.Y` push → GitHub release/tag with CHANGELOG notes → next-snapshot.sh → `SNAPSHOT: vX.(Y+1)` push; guarded against existing tags and `— TBD` changelogs
 — build: next-release.sh/next-snapshot.sh portable in-place sed (BSD/macOS and GNU/Linux) so the release workflow can run them on ubuntu runners
+— ci: deploy flags + DOCKER_VERSION moved from main.yml env to `.github/deployment.env` (loaded into GITHUB_ENV) — the release run's `RELEASE: vX.Y` push was rejected because GITHUB_TOKEN may not modify workflow files; next-release.sh/next-snapshot.sh/docker-build-locally.sh/release.yml now read and rewrite the env file instead
