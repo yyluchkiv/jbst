@@ -34,7 +34,7 @@ the next one runs — stop and report on any failure.
 5. **Merge and clean up**:
 
    ```sh
-   gh pr merge <pr-number> --squash
+   gh pr merge <pr-number> --squash --auto
    git push origin --delete <branch>
    ```
 
