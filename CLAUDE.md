@@ -12,6 +12,15 @@ JBST is a Java 21 Spring Boot framework providing bootstrapping tools for enterp
 
 `jbst-foundation` is published/installed first; the servers consume it as a dependency. When iterating only on the library, `./build-fast.sh` installs just that module (`./mvnw -pl jbst-foundation -am clean install -DskipTests`).
 
+## Git
+
+- Never push to `main` or `master`.
+- Push only to your own agent branch namespace: `<agent>/*`
+  (Claude Code → `claude/*`, Codex → `codex/*`).
+- Never force-push.
+- Do not add tool-attribution trailers or footers to commits or PRs
+  (e.g. `Co-Authored-By: …`, `Generated with …`).
+
 ## Build and Development Commands
 
 All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via `.mvn/wrapper/maven-wrapper.properties`) — no local Maven installation is required, only a JDK 21 (make sure `JAVA_HOME` points to one).
