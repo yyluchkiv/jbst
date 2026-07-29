@@ -1,3 +1,6 @@
+# Incremental schema history, executed by the postgres integration tests (Boot's default Liquibase
+# location): the Testcontainers init script (database/v001_jbst_schema.sql) creates only the v001
+# baseline, this chain applies v002+ on context startup. Also reused as reference in other projects.
 databaseChangeLog:
   - includeAll:
       path: db/changelog/changes/
