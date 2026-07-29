@@ -8,6 +8,7 @@
       "Glob(*)",
       "Grep(*)",
       "Read(*)",
+      "Skill",
       "WebFetch(*)",
       "WebSearch",
       "Write(*)"
