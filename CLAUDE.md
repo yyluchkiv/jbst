@@ -64,6 +64,9 @@ All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via
 ### Delombok build behavior (important)
 The build runs the `lombok-maven-plugin` **delombok** goal before compilation, emitting expanded sources to `target/delombok` (used as the compile sourcepath, also feeding JaCoCo/Sonar). The delombok phase frequently prints alarming-looking errors/warnings even on a healthy build — **trust the final `BUILD SUCCESS`**, not delombok-phase noise.
 
+### Binary-compatibility gate (japicmp)
+`jbst-foundation` is a published library, so its `verify` phase runs the **japicmp-maven-plugin** (`jbst-foundation/pom.xml`, version property in the root POM): the freshly built jar is compared against the **latest released version**, auto-resolved from the `github-jbst` repository (GitHub Packages — needs `github-jbst` server credentials in `~/.m2/settings.xml`; CI gets them via `maven-settings-action`). Binary-incompatible public-API changes **fail the build**; source-incompatible ones are report-only; a missing/unresolvable baseline is skipped with a warning (`ignoreMissingOldVersion`), so builds without credentials still pass. Reports land in `jbst-foundation/target/japicmp/`; escape hatch: `-Djapicmp.skip=true`. Do not add japicmp excludes to silence a legitimate break — an intentional break is a `feat!:`/release decision.
+
 ## Testing Strategy
 
 - **Unit tests**: `src/test/java`, run by Maven **Surefire**. Fast, mock-based.
