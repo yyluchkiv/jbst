@@ -72,12 +72,29 @@
         <version.plugin.failsafe>3.5.6</version.plugin.failsafe>
         <version.plugin.git.commit>9.0.1</version.plugin.git.commit>
         <version.plugin.jacoco>0.8.12</version.plugin.jacoco>
+        <version.plugin.japicmp>0.26.1</version.plugin.japicmp>
         <version.plugin.javadoc>3.11.2</version.plugin.javadoc>
         <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
         <version.plugin.resource>3.3.1</version.plugin.resource>
         <version.plugin.source>3.3.1</version.plugin.source>
         <version.plugin.surefire>3.5.6</version.plugin.surefire>
     </properties>
+
+    <!-- GitHub Packages (jbst releases) — resolves the japicmp binary-compatibility baseline;
+         requires `github-jbst` server credentials (CI: maven-settings-action, local: ~/.m2/settings.xml) -->
+    <repositories>
+        <repository>
+            <id>github-jbst</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/yyluchkiv/jbst</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
