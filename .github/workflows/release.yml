@@ -3,11 +3,6 @@ name: release
 
 on:
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: "Dry run — full rehearsal (guards, notes, version bumps, build) with NO side effects: no deploy, no pushes, no release"
-        type: boolean
-        default: false
 
 concurrency:
   group: release
@@ -85,13 +80,7 @@ jobs:
 
       # no tests on the release build — identical to the main.yml deploy step; main is
       # assumed green from the regular CI run on the last snapshot push
-      # dry run: same build without tests, but 'install' publishes nowhere
-      - name: "maven [build]"
-        if: ${{ inputs.dry_run }}
-        run: ./mvnw clean -DskipTests -Dmaven.test.skip install
-
       - name: "maven [github packages]"
-        if: ${{ !inputs.dry_run }}
         run: ./mvnw clean -DskipTests -Dmaven.test.skip deploy -Pgithub
 
       - name: "git push [RELEASE]"
@@ -101,14 +90,9 @@ jobs:
           git config user.name "Yurii Luchkiv"
           git config user.email "yyluchkiv@gmail.com"
           git commit -am "RELEASE: ${{ steps.version.outputs.tag }}"
-          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
-            echo "dry run — created local commit only, skipping 'git push origin main'"
-          else
-            git push origin main
-          fi
+          git push origin main
 
       - name: "github release [tag + notes]"
-        if: ${{ !inputs.dry_run }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -124,8 +108,4 @@ jobs:
         run: |
           NEXT_SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+')
           git commit -am "SNAPSHOT: v$NEXT_SNAPSHOT_VERSION"
-          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
-            echo "dry run — created local commit only, skipping 'git push origin main'"
-          else
-            git push origin main
-          fi
+          git push origin main
