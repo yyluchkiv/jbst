@@ -1,2 +1,2 @@
 ### Changelog [v1.75]
-— TBD
+— docs: AGENTS.md — agent build commands, module map, and guardrail rules  
