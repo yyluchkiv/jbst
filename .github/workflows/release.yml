@@ -3,6 +3,11 @@ name: release
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — full rehearsal (guards, notes, version bumps, build + tests) with NO side effects: no deploy, no pushes, no release"
+        type: boolean
+        default: false
 
 concurrency:
   group: release
@@ -78,19 +83,30 @@ jobs:
       - name: "next-release"
         run: ./next-release.sh
 
+      # dry run: same full build with all tests, but 'install' publishes nowhere
+      - name: "maven [verify]"
+        if: ${{ inputs.dry_run }}
+        run: ./mvnw clean install
+
       - name: "maven [verify + github packages]"
+        if: ${{ !inputs.dry_run }}
         run: ./mvnw clean deploy -Pgithub
 
       - name: "git push [RELEASE]"
         run: |
-          # commit author = the official github-actions[bot] account (41898282 is its GitHub
-          # user id) so the RELEASE/SNAPSHOT commits are attributed to the bot, not a person
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # runner git has no identity configured; use the repo owner's usual identity so
+          # the RELEASE/SNAPSHOT commits look the same as the historical manual releases
+          git config user.name "Yurii Luchkiv"
+          git config user.email "yurii.luchkiv@gmail.com"
           git commit -am "RELEASE: ${{ steps.version.outputs.tag }}"
-          git push origin main
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+            echo "dry run — created local commit only, skipping 'git push origin main'"
+          else
+            git push origin main
+          fi
 
       - name: "github release [tag + notes]"
+        if: ${{ !inputs.dry_run }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -106,4 +122,8 @@ jobs:
         run: |
           NEXT_SNAPSHOT_VERSION=$(grep "DOCKER_VERSION:" .github/workflows/main.yml | grep -oE '[0-9]+\.[0-9]+')
           git commit -am "SNAPSHOT: v$NEXT_SNAPSHOT_VERSION"
-          git push origin main
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+            echo "dry run — created local commit only, skipping 'git push origin main'"
+          else
+            git push origin main
+          fi
