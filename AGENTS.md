@@ -45,6 +45,20 @@ JBST is a Java 21 Spring Boot framework providing bootstrapping tools for enterp
 - Do not add tool-attribution trailers or footers to commits or PRs
   (e.g. `Co-Authored-By: …`, `Generated with …`).
 
+## Agent Workflows
+
+Reusable, tool-neutral playbooks live in `agents/workflows/` — follow the matching
+one when the user asks for that action, whatever agent tool you are running in:
+
+- `plan-create.md` — write a plan file to `assets/plans/` for user review (no code).
+- `plan-execute.md` — implement an approved, merged plan in its own PR.
+- `ship.md` — ship the current branch as a self-merging squash PR (`./ship.sh`).
+- `ship-fast.md` — same but skipping tests (`./ship.sh --fast`); only on explicit user request.
+
+Keep workflow logic in these playbooks and the scripts they call. Tool-specific
+commands (e.g. `.claude/skills/*`) are thin wrappers over them — when changing a
+workflow, edit the playbook, not the wrappers.
+
 ## Build and Development Commands
 
 All builds go through the **Maven Wrapper** (`./mvnw`, pinned to Maven 3.9.9 via `.mvn/wrapper/maven-wrapper.properties`) — no local Maven installation is required, only a JDK 21 (make sure `JAVA_HOME` points to one).
