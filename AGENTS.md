@@ -54,6 +54,7 @@ one when the user asks for that action, whatever agent tool you are running in:
 - `plan-execute.md` — implement an approved, merged plan in its own PR.
 - `ship.md` — ship the current branch as a self-merging squash PR (`./ship.sh`).
 - `ship-fast.md` — same but skipping tests (`./ship.sh --fast`); only on explicit user request.
+- `scrap.md` — abandon the current worktree (`./scrap.sh --yes`): delete the worktree, its branch, and any pushed remote branch without merging.
 
 Keep workflow logic in these playbooks and the scripts they call. Tool-specific
 commands (e.g. `.claude/skills/*`) are thin wrappers over them — when changing a
