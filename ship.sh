@@ -63,7 +63,10 @@ main() {
     # Not --delete-branch: it checks out main locally, which fails from a
     # worktree (main is checked out in the primary repo) and then skips the
     # remote deletion. Merge first, clean up explicitly afterwards.
-    gh pr merge "$PR_NUMBER" --squash --auto
+    # With no required checks a fresh PR is already in "clean" state and
+    # GitHub rejects enabling auto-merge on it — fall back to merging now.
+    gh pr merge "$PR_NUMBER" --squash --auto \
+        || gh pr merge "$PR_NUMBER" --squash
 
     # No required checks on main -> the merge normally lands in seconds.
     i=0
