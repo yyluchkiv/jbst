@@ -7,3 +7,4 @@
 — build: ship.sh / ship-fast.sh — scripted ship flow (test or compile gate, PR create, squash-merge, branch + worktree cleanup)  
 — docs: tool-neutral agent workflow playbooks in agents/workflows/ (plan-create, plan-execute, ship, ship-fast); .claude/skills become thin wrappers  
 — docs: plan — registration via GitHub OAuth for the IAM server (assets/plans/2026-07-31-github-oauth-registration.md)  
+— build: ship.sh — fall back to a direct squash merge when GitHub rejects auto-merge on an already-clean PR  
