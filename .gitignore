@@ -24,3 +24,6 @@ docker/GeoLite2-City.mmdb
 
 # jars
 artifacts/
+
+# Claude
+.claude/settings.local.json
