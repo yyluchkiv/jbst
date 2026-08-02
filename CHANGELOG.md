@@ -9,3 +9,4 @@
 — docs: plan — registration via GitHub OAuth for the IAM server (assets/plans/2026-07-31-github-oauth-registration.md)  
 — build: ship.sh — fall back to a direct squash merge when GitHub rejects auto-merge on an already-clean PR  
 — build: scrap.sh + scrap workflow/skill — abandon the current worktree (delete worktree, local and remote branch) without merging  
+— build: basic opencode.json configuration — schema reference + AGENTS.md as the instruction source    
